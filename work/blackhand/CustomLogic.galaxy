@@ -84678,9 +84678,6 @@ bool gt_OSVariantsMenuChange_Func (bool testConds, bool runActions) {
 
     TriggerEnable(gt_OSVariantsMenuConfirm, true);
 
-    if ((DialogControlGetSelectedItem(gv_variantsMenuItem[0], gv_host) == 31)) {
-        gv_variantSelection = 30;
-    }
 
     return true;
 }
@@ -84877,6 +84874,10 @@ bool gt_OSVariantsMenuConfirm_Func (bool testConds, bool runActions) {
     }
 
     if ((DialogControlGetSelectedItem(gv_variantsMenuItem[0], gv_host) == 31)) {
+        gv_variantSelection = 30;
+    }
+
+    if ((DialogControlGetSelectedItem(gv_variantsMenuItem[0], gv_host) == 31)) {
     if ((DialogControlGetSelectedItem(gv_variantsMenuItem[0], gv_host) == 19) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
         gv_variantSelection = 1;
         gv_subvariantSelection = 8;
@@ -85027,6 +85028,10 @@ bool gt_OSVariantsMenuConfirm_Func (bool testConds, bool runActions) {
 
     if ((gv_variantSelection == 16)) {
         gf_VE4B8ADE4B896E7BAAA2();
+    }
+
+    if ((gv_variantSelection == 30)) {
+        gf_VE78399E58DB0();
     }
 
     if ((gv_variantSelection == 12) && (gv_subvariantSelection == 1)) {
@@ -85198,9 +85203,6 @@ bool gt_OSVariantsMenuConfirm_Func (bool testConds, bool runActions) {
     TriggerEnable(gt_OSMenus, true);
     TriggerEnable(gt_OSVariantsMenuConfirm, true);
 
-    if ((gv_variantSelection == 30)) {
-        gf_VE78399E58DB0();
-    }
 
     return true;
 
