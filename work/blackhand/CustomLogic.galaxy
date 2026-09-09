@@ -88444,7 +88444,7 @@ void gf_ESShadowKill (int lp_player, int lp_killer) {
         gv_deathMethod[lv_target] = (gv_deathMethod[lv_target] + "w");
         if ((gv_nightSequence == true)) {
             SoundPlay(SoundLink("DarkTemplar_What", -1), PlayerGroupAll(), 100.0, 0.0);
-            Wait(1.2, c_timeGame);
+            Wait(2.6, c_timeGame);
             SoundPlay(SoundLink("DarkTemplar_Attack", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
             auto9B99A3AA_g = PlayerGroupAll();
             auto9B99A3AA_var = -1;
