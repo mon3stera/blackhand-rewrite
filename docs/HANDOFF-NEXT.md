@@ -5,6 +5,39 @@
 
 ---
 
+## 〇、2026-09-09 深夜静态分析结论（新会话接手成果）
+
+### 按钮机制更正（前文档有误）
+
+- **「添加」= `gv_rolesMenusItem[3]`，「移除」= `gv_rolesMenusItem[4]`**（旧文档把 item[4] 当添加，错）。item[8]/[9] 是上下移箭头。
+- 启用点在 `gt_OSRoleSelect_Func`（当前 HEAD 约 85965 行）：大角色重复判定 `|| (gv_variantSelection == 1) || == 4 || == 8~12` 时**无条件禁用**；否则按容量启用。**这个 variant 子句是原图自带的**（bh-src gt_OSRoleSelect 相对 563 行），不是任何一改引入的。
+- 添加点击处理在 `gt_OSRoleManipulate_Func`，条件只有：roleSelection≠0、roleCategory≠0、非大角色重复、容量未满——无变体限制。
+
+### 变体编号对照（关键！）
+
+菜单 idx（当前 HEAD，30 项）→ `gv_variantSelection`：
+1红与蓝→8、2红与蓝[进阶]→9、3标准→10、4传统→4、5线索→7、6/7/8 随机:家族荣耀/黑手&三合/异端→**1**(子1/2/3)、**9 自设→3**、10保存格→6、11随机:血锈→(1,子5)……
+
+- **变体 1 是「随机」系，不是自设！自设 = 变体 3。** 变体 3 不在禁用子句里 → **只要映射正确，自设的添加按钮本来就能亮**。
+- 前一 Agent 的死胡同根源：测试构建强制 `gv_variantSelection = 1`（为绕过 Test Document 大厅属性为空）→ 列表确实显示了，但变体 1 恰好命中禁用子句 → **添加永远不亮**。方向性死路，与面板/映射编辑无关。
+- 该强制补丁只存在于 `backup/shw45-mess`，当前 HEAD（reset 后）没有 `c_bhSoloBuild`，是干净的。
+
+### 截图报错的定位（用户提供的游戏内截图）
+
+- 报错行号 54396（gf_OSInitializeOptionsScreen 内）与 84735（gt_OSVariantsMenuConfirm_Func 内）**只与 `backup/shw45-mess` 的行号吻合** → 截图是影武者时期的旧构建，不代表当前 HEAD。
+- 两处报错都是 `DialogControlSetEnabled(gv_optionsPanelItem[lv_a], ...)` 循环行报 `triggerControl=0` → **整个选项面板（顶部白天时长栏）的控件句柄全为 0**。
+- 唯一可能：`DialogCreate` 失败（脚本中无任何 `DialogDestroy`）。结合截图中「本地玩家 是新的主机」刷屏 15 次 → **怀疑初始化（含 gf_OSInitializeOptionsScreen）被反复执行，累积创建对话框撞上引擎上限，后期创建返回 0**；第一次创建的旧对话框仍显示在屏上，但全局变量已被 0 覆盖。真实大厅主机稳定只跑一次，所以原图线上正常——这就是「Test Document 特有环境问题」的具体机制（待实测确认）。
+
+### 下一步（基线测试，用户操作）
+
+1. 进 `boot2-pristine.SC2Map`：自设→选角色→看添加是否亮；顶部选项栏是否正常。
+2. 进 `boot2-clean-add.SC2Map`（= 当前 HEAD d80a6e7）：同上。
+3. 会话代理通过 ssh 读最新 `*ScriptError.txt` 判断：当前构建是否仍出现 optionsPanelItem=0 中断。
+4. 若 clean-add 添加可亮 → 面板问题在当前基线上**不存在**，直接按 HANDOFF-SHADOW 第七节清单重启影武者接入（跳过强制 variantSelection=1，改用其它 Test Document 适配手段）。
+5. 若仍报 optionsPanelItem=0 → 给 `gf_OSInitializeOptionsScreen` 开头加防重入守卫（如 `gv_variantsMenuItem[0] != 0` 直接 return），使初始化只生效一次。
+
+---
+
 ## 一、用户当前要求（原话）
 
 > 「不行，我还是感觉你没找对地方，依旧请你 reset 到一个这个添加按钮还能用的地方，我准备重开会话了」
