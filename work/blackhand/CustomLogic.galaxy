@@ -10391,6 +10391,10 @@ void gf_SequencePrep () {
                 gv_visitation[lv_a] = gv_action[lv_a][0];
             }
 
+            if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 31) && (gv_action[lv_a][0] > 0) && (gv_action[lv_a][1] > 0)) {
+                gv_visitation[lv_a] = gv_action[lv_a][0];
+            }
+
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 3) && (gv_action[lv_a][0] > 0)) {
                 gv_visitation[lv_a] = gv_action[lv_a][0];
             }
