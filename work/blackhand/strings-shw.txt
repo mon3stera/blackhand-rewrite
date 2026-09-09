@@ -13,3 +13,5 @@ Param/Value/SHWDEST2=你的目标一昨晚去了「
 Param/Value/SHWDEST3=」的家。
 Param/Value/SHWNIGHT=<s val="ModLeftSize16Bold"><c val="9B30FF">你听见黑暗中传来一声极短的破风声，随后一切归于死寂...</c></s>
 Param/Value/SOLOON=-solo 已启用：空位已自动补满，可以开始游戏。
+Param/Value/SHWSEL1=<s val="ModLeftSize16">你改为选择 </s><s val="ModLeftSize16Bold">
+Param/Value/SHWSEL2=<s val="ModLeftSize16">你将选择 </s><s val="ModLeftSize16Bold">
