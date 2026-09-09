@@ -224,7 +224,7 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 - **heredoc 脚本里的裸换行就是新语句**：`python <<EOF` 失败后，下一行的 `scp && git` 仍会执行——打包脚本的断言失败不阻止部署脏包。打包+部署+提交应显式 `&&` 链接，或先跑完打包脚本确认成功
 - **验证断言别写子串包含**：`s.count('(16) || (30) || (31))) {')` 这类短串会同时命中浏览白名单和映射白名单（互为子串），count 是 11 不是预期 6——断言计数前先确认模式唯一性
 - **断言过度也会误报**：①`assert 'KEY' not in s` 全文件禁键——键可能在别处有合法用途（F0A13008 是审查官能力文本，不能因一次误用就全文禁令）；②GameStrings 行尾是 `\r\n`，比对空值键要 `l.replace('\\r','')`；③`s.find('函数名')` 找到的是**首次出现**（可能是文件前部的原型声明），定位调用点要用带 `();` 的完整调用文本或在函数行号区间内找
-- **测试指令**：`-reveal`（`gt_BHRevealRoles`，仅主机、游戏开始后）私密列出全部玩家序号+角色名，用于验证影武者探员线索/调查结果等
+- **测试指令**：`-reveal`（`gt_BHRevealRoles`，仅主机、游戏开始后）私密列出全部玩家**带色名字**（电脑N，N=玩家编号；投票面板左侧是楼层序，与编号无关）+角色名，用于验证调查结果/案底等
 - 运行期报错先分新旧：`triggerControl(值:0)`、`StringWord(值:0)`、`CameraSetBounds region(值:0)`、`gv_roll点冷却 int[2] 越界` 等均为基线/单人测试固有，不是新改动引入
 
 ### 单人测试模式（-solo）
@@ -287,4 +287,4 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 | `docs/GALAXY-PIPELINE.md` | Galaxy 直写、打包、启动链路技术细节 |
 | `docs/SHADOW-ROLE.md` | 影武者实现规格（作为"新角色"样板） |
 | `docs/HANDOFF-SHADOW.md` | **影武者接入交接文档**：当前损坏状态、槽位误判（池3/18=小金执行者）、自设面板双硬编码机制、重置方案与重做清单 |
-| `docs/HANDOFF-NEXT.md` | **【先读这份】** 当前进度交接：影武者/观察者/预设（捕风捉影、烙印）均已接入，最新部署 shw73（`-reveal` 测试指令），含逐版改动记录与待验证点 |
+| `docs/HANDOFF-NEXT.md` | **【先读这份】** 当前进度交接：影武者/观察者/预设均已接入，最新部署 shw82（影武者目标转换规则：女巫替换/switched 解析只作用于目标一，`-reveal` 显示玩家名），含逐版改动记录与待验证点 |
