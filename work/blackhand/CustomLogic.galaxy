@@ -88513,30 +88513,27 @@ bool gt_BHSolo_Init () {
     return true;
 }
 
-// 空槽位补为混合阵营（前 3 个非主机槽黑手党、其余市民），保留已有选择
+// 全部 15 个空槽位补为混合阵营（前 3 个非主机槽黑手党、其余市民），保留已有选择；
+// 与 gt_Init2 的虚拟玩家补满行为一致，避免部分填写时出现无角色玩家
 void gf_BHSoloFill () {
     int lv_a = 1;
-    int lv_n = PlayerGroupCount(gv_currentPlayers);
 
     for ( ; lv_a <= 15 ; lv_a += 1 ) {
-        if (lv_a <= lv_n) {
-            if ((gv_categoriesArray[lv_a] == 0) || (gv_rolesArray[lv_a] == 0)) {
-                if ((lv_a <= 3) && (lv_a != gv_host)) {
-                    gv_categoriesArray[lv_a] = 2;
-                    gv_rolesArray[lv_a] = 1;
-                }
-                else {
-                    gv_categoriesArray[lv_a] = 1;
-                    gv_rolesArray[lv_a] = 1;
-                }
-
+        if ((gv_categoriesArray[lv_a] == 0) || (gv_rolesArray[lv_a] == 0)) {
+            if ((lv_a <= 3) && (lv_a != gv_host)) {
+                gv_categoriesArray[lv_a] = 2;
+                gv_rolesArray[lv_a] = 1;
+            }
+            else {
+                gv_categoriesArray[lv_a] = 1;
+                gv_rolesArray[lv_a] = 1;
             }
 
         }
 
     }
 
-    gv_rolesAssigned = lv_n;
+    gv_rolesAssigned = 15;
 }
 
 bool gt_BHSolo_Func (bool testConds, bool runActions) {
