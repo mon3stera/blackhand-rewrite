@@ -16,7 +16,8 @@
 - 按钮布局事实：`[5]`=右（目标一）、`[6]`=左（目标二），白天投票面板会盖住[5]显示黄色投票键——这是原图双目标角色（如催眠师(3,4)）共有的表现，夜晚面板才是纯双目标按钮。
 - SHW 文案现 17 条（含 SHWSEL1/2）。
 
-**待用户验证 boot2-shw62**（提交 `d149eaf`，修白天死亡信息缺失：死亡描述门写反——原版义警模式 `gv_deathDesc[目标]` 初始 false、首杀走 `lv_c == false` 分支追加主描述并置位（同尸二杀才去重），我错放进了 `deathDesc == true` 分支导致 deathText 永远为空；已按原版模式重写并回读校验）**）：
+**待用户验证 boot2-shw63**（提交 `961eff2`，击杀演出顺序修正：出刀声原在函数顶部公用块先于语音播放，现击杀分支顺序= DT语音(DarkTemplar_What，用户已认可) → Wait1.2 → DarkTemplar_Attack 刀声 → 全场红字 → 目标私息；被挡分支= 出刀声 → 破风声私息+紫闪）**）：
+- 旧记录（shw62，`d149eaf`）：死亡描述首杀模式修复；shw61（`0e27511`）：编译错误修复；shw57（`57997b5`）：死亡方式 w；strings 23 条）：（提交 `d149eaf`，修白天死亡信息缺失：死亡描述门写反——原版义警模式 `gv_deathDesc[目标]` 初始 false、首杀走 `lv_c == false` 分支追加主描述并置位（同尸二杀才去重），我错放进了 `deathDesc == true` 分支导致 deathText 永远为空；已按原版模式重写并回读校验）**）：
 - 旧记录（shw61，`0e27511`）：编译错误修复（soundlink/自动变量）；shw60（`5399e45`）：DT 语音；shw59（`35f5419`）：出场流程；shw57（`57997b5`）：死亡方式 w；strings 23 条）：（提交 `0e27511`，修 shw59/60 引入的编译错误：①gf_BHNotify 形参 sound→soundlink（SoundLink() 返回 soundlink）；②gf_ESShadowKill 补 auto9B99A3AA_g/_var 声明。**教训：往生成代码插 while 广播循环必须同时在函数声明区补自动变量；涉及 SoundLink 传参一律 soundlink**。DT 语音待听验：DarkTemplar_What 首选，备选 _Yes/_Ready/_Pissed）**）：
 - 旧记录（shw60，`5399e45`）：击杀流程语音化；shw59（`35f5419`）：出场流程+gf_BHNotify；shw57（`57997b5`）：死亡方式 w；strings 23 条）：（提交 `5399e45`，击杀「台词」改为 DT 语音：`SoundLink("DarkTemplar_What",-1)` 随机语音 + `DarkTemplar_Attack` 刀声，删 SHWQUOTE 文本；若语音错/无声，备选 `DarkTemplar_Yes/_Ready/_Pissed`，ScriptError 里 SoundPlay 无效参数可辅助判断。红字 SHWHEAR/私息路由不变；strings 23 条）**）：
 - 旧记录（shw59，`35f5419`）：出场流程+gf_BHNotify；shw57（`57997b5`）：死亡方式 w；shw55（`ceeaf78`）：阵营「无」；（提交 `35f5419`，影武者夜间击杀补全出场流程：台词 SHWQUOTE「我从阴影中现身」→ Zeratul 音效 → 全场红字 SHWHEAR 破风声 → 目标私息 SHWNIGHT；新增 gf_BHNotify（虚拟补位目标的私密消息改发主机，solo 可见；SHWNIGHT×2/SHWSURV/被救治提示 4 处走路由）。注：51592af 又只提交了 strings，代码在 35f5419；shw58 没有代码改动请勿使用）**）：
