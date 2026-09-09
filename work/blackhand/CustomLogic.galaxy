@@ -84217,7 +84217,7 @@ bool gt_OSVariantsMenuChange_Func (bool testConds, bool runActions) {
         }
 
     }
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 1) && (GameAttributeGameValue("[bnet:local/0.0/179588]1") != "0001")) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 1)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/3F016CAB"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/8FB2B4AB"), PlayerGroupAll());
         if ((gv_variantSelection != 8)) {
@@ -84228,7 +84228,7 @@ bool gt_OSVariantsMenuChange_Func (bool testConds, bool runActions) {
         }
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 2) && (GameAttributeGameValue("[bnet:local/0.0/179588]1") != "0001")) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 2)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/4610F1FF"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/627D5B79"), PlayerGroupAll());
         if ((gv_variantSelection != 9)) {
@@ -84239,7 +84239,7 @@ bool gt_OSVariantsMenuChange_Func (bool testConds, bool runActions) {
         }
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 3) && (GameAttributeGameValue("[bnet:local/0.0/179588]1") != "0001")) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 3)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/68FCAC5F"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/F83AC5E1"), PlayerGroupAll());
         if ((gv_variantSelection != 10)) {
@@ -84250,7 +84250,7 @@ bool gt_OSVariantsMenuChange_Func (bool testConds, bool runActions) {
         }
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 4) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 4)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/F3D84196"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/CFB542E7"), PlayerGroupAll());
         if ((gv_variantSelection != 4)) {
@@ -84261,7 +84261,7 @@ bool gt_OSVariantsMenuChange_Func (bool testConds, bool runActions) {
         }
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 5) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 5)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/E5186063"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/7AFF8F1C"), PlayerGroupAll());
         if ((gv_variantSelection != 7)) {
@@ -84272,7 +84272,7 @@ bool gt_OSVariantsMenuChange_Func (bool testConds, bool runActions) {
         }
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 6) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 6)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/79A3EEB5"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/0FA8481D"), PlayerGroupAll());
         if (((gv_variantSelection != 1) || (gv_subvariantSelection != 1))) {
@@ -84283,7 +84283,7 @@ bool gt_OSVariantsMenuChange_Func (bool testConds, bool runActions) {
         }
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 7) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 7)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/0330753F"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/931EB187"), PlayerGroupAll());
         if (((gv_variantSelection != 1) || (gv_subvariantSelection != 2))) {
@@ -84294,7 +84294,7 @@ bool gt_OSVariantsMenuChange_Func (bool testConds, bool runActions) {
         }
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 8) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 8)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/E2735C25"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/39D7B856"), PlayerGroupAll());
         if (((gv_variantSelection != 1) || (gv_subvariantSelection != 3))) {
@@ -84305,7 +84305,7 @@ bool gt_OSVariantsMenuChange_Func (bool testConds, bool runActions) {
         }
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 9) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 9)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/88E492BF"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/3522986A"), PlayerGroupAll());
         if ((gv_variantSelection != 3)) {
@@ -84316,7 +84316,7 @@ bool gt_OSVariantsMenuChange_Func (bool testConds, bool runActions) {
         }
     }
 
-    if ((((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 10) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) || ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 1) && (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0001")))) {
+    if ((((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 10)) || ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 1) && (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0001")))) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/A1B713D9"), PlayerGroupAll());
         if (((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 1) && (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0001"))) {
             libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/7BE830C2"), PlayerGroupAll());
@@ -84332,7 +84332,7 @@ bool gt_OSVariantsMenuChange_Func (bool testConds, bool runActions) {
         }
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 11) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 11)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/DB4A1BDF"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/A7D8F883"), PlayerGroupAll());
         if (((gv_variantSelection != 1) || (gv_subvariantSelection != 3))) {
@@ -84343,7 +84343,7 @@ bool gt_OSVariantsMenuChange_Func (bool testConds, bool runActions) {
         }
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 12) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 12)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/ED6CE465"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/506C2689"), PlayerGroupAll());
         if (((gv_variantSelection != 1) || (gv_subvariantSelection != 3))) {
@@ -84354,7 +84354,7 @@ bool gt_OSVariantsMenuChange_Func (bool testConds, bool runActions) {
         }
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 13) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 13)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/B75F58C8"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/C5FD21FD"), PlayerGroupAll());
         if (((gv_variantSelection != 1) || (gv_subvariantSelection != 3))) {
@@ -84365,103 +84365,103 @@ bool gt_OSVariantsMenuChange_Func (bool testConds, bool runActions) {
         }
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 14) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 14)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/2AA24843"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/D4D7A43F"), PlayerGroupAll());
         DialogControlSetEnabled(gv_variantsMenuItem[1], PlayerGroupSingle(gv_host), true);
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 15) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 15)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/2890F5FD"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/728FFD35"), PlayerGroupAll());
         DialogControlSetEnabled(gv_variantsMenuItem[1], PlayerGroupSingle(gv_host), true);
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 16) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 16)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/3389470C"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/7A9CBEDE"), PlayerGroupAll());
         DialogControlSetEnabled(gv_variantsMenuItem[1], PlayerGroupSingle(gv_host), true);
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 17) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 17)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/950E6113"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/317DAC85"), PlayerGroupAll());
         DialogControlSetEnabled(gv_variantsMenuItem[1], PlayerGroupSingle(gv_host), true);
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 18) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 18)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/035EC30B"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/C01C6C2F"), PlayerGroupAll());
         DialogControlSetEnabled(gv_variantsMenuItem[1], PlayerGroupSingle(gv_host), true);
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 19) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 19)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/F64195DF"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/D58053BF"), PlayerGroupAll());
         DialogControlSetEnabled(gv_variantsMenuItem[1], PlayerGroupSingle(gv_host), true);
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 22) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 22)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/827C2E38"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/91A16E7C"), PlayerGroupAll());
         DialogControlSetEnabled(gv_variantsMenuItem[1], PlayerGroupSingle(gv_host), true);
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 21) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 21)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/0C43F0E0"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/CE4BA2AB"), PlayerGroupAll());
         DialogControlSetEnabled(gv_variantsMenuItem[1], PlayerGroupSingle(gv_host), true);
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 20) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 20)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/5E6A733E"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/91BF68D5"), PlayerGroupAll());
         DialogControlSetEnabled(gv_variantsMenuItem[1], PlayerGroupSingle(gv_host), true);
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 24) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 24)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/3A1DAD60"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/FE6DE5AC"), PlayerGroupAll());
         DialogControlSetEnabled(gv_variantsMenuItem[1], PlayerGroupSingle(gv_host), true);
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 25) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 25)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/A1722F62"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/83D8F426"), PlayerGroupAll());
         DialogControlSetEnabled(gv_variantsMenuItem[1], PlayerGroupSingle(gv_host), true);
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 23) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 23)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/05C28F25"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/1D703A08"), PlayerGroupAll());
         DialogControlSetEnabled(gv_variantsMenuItem[1], PlayerGroupSingle(gv_host), true);
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 26) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 26)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/DEBA277C"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/F7936E66"), PlayerGroupAll());
         DialogControlSetEnabled(gv_variantsMenuItem[1], PlayerGroupSingle(gv_host), true);
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 27) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 27)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/4B0CA30C"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/EFF42286"), PlayerGroupAll());
         DialogControlSetEnabled(gv_variantsMenuItem[1], PlayerGroupSingle(gv_host), true);
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 28) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 28)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/819D0E5B"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/EC04961A"), PlayerGroupAll());
         DialogControlSetEnabled(gv_variantsMenuItem[1], PlayerGroupSingle(gv_host), true);
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 29) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 29)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/7F686D9A"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/37112CB6"), PlayerGroupAll());
         DialogControlSetEnabled(gv_variantsMenuItem[1], PlayerGroupSingle(gv_host), true);
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 30) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 30)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/8BCA718D"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/9C72CE00"), PlayerGroupAll());
         DialogControlSetEnabled(gv_variantsMenuItem[1], PlayerGroupSingle(gv_host), true);
