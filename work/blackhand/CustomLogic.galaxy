@@ -219,7 +219,7 @@ int gv_rolesAssigned;
 const bool c_bhSoloBuild = true;
 
 bool gv_soloTest;
-void gf_BHNotify (text lp_msg, int lp_target, sound lp_sound);
+void gf_BHNotify (text lp_msg, int lp_target, soundlink lp_sound);
 trigger gt_BHSolo;
 int[16] gv_rolesArray;
 bool[9][41][10] gv_roleOptionAllowed;
@@ -88411,6 +88411,8 @@ void gf_ESShadowKill (int lp_player, int lp_killer) {
     // Variable Declarations
     int lv_target;
     int lv_x;
+    playergroup auto9B99A3AA_g;
+    int auto9B99A3AA_var;
 
     // Variable Initialization
     lv_target = lp_player;
@@ -88540,7 +88542,7 @@ void gf_RAShadowActions (int lp_player) {
 
 
 // 目标不是真实在线玩家（虚拟补位）时，私密消息改发主机，单人测试可见；真实玩家仍只发本人
-void gf_BHNotify (text lp_msg, int lp_target, sound lp_sound) {
+void gf_BHNotify (text lp_msg, int lp_target, soundlink lp_sound) {
     if ((PlayerStatus(lp_target) == c_playerStatusActive)) {
         gf_CBSystemMessage(lp_msg, lp_target, lp_target, 0, lp_sound, Color(0,0,0));
     }
