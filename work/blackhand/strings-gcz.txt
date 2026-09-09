@@ -2,7 +2,6 @@
 Param/Value/GCZNAME=<c val="00FF00">观察者</c>
 Param/Value/GCZDESC=沉默的夜行者，常年在屋顶与窗棂之间穿行，注视着小镇的每一扇门。<n/><n/><c val="BBDDFF">每晚观察一名玩家（可以是自己）：天亮时，你将得知昨晚有哪些角色造访了目标的房屋。</c>
 Param/Value/GCZABIL=- 每晚观察一人，天亮时得知哪些角色造访了目标的房屋。
-Param/Value/GCZCRIME=非法窥探
 Param/Value/GCZTAG= (<c val="00FF00">观察</c>)
 Param/Value/GCZGOAL=一个彻夜注视小镇街道的守望者，谨慎地帮助市民。
 Param/Value/GCZACH=<s val="International17"><c val="FFFF00">观察者注视着夜晚的街道。推理你看到的到访者!</c></s>
