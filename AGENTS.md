@@ -199,6 +199,13 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 - 行动按钮函数 `gf_RA*Actions`（每个存活其他玩家行配按钮）+ `gf_RAActions` 分发 + **AS 按钮点击触发器 A/B 两个都要写分支**（只写 A：按钮可见但点击不生效）
 - `gf_SequencePrep`（记账）/ `gf_SequenceKills`（结算）/ `gf_CheckEnd`（残局计数、归零条件、数量比较）/ 阵营校验
 
+**第 8.5 步：夜间目标的效果转换（欺骗者 / 女巫 / 巴士司机）** —— **新增带夜间目标的角色必须考虑这三者对目标的影响**：
+
+- **机制**：巴士司机交换与欺骗者藏身转向**共用 `gv_switched` 映射**（`switched[对象]=转向对象`）；女巫控制走 `gv_witched[受害者]=女巫`，结算时重写受害者 `visitation = 女巫的action[1]`（~10936 块），并在造访目的地被交换时连锁重写访客 visitation（~10959）。
+- **原图标准模式**：效果按「造访目的地」投递（杀手杀 `visitation` 所指）→ 巴士/欺骗者经 visitation 重写自然生效，女巫控住也只改 visitation 就能带偏效果。走这条模式的新角色**无需额外代码**。
+- **按目标身份直接投递的角色（如影武者）必须显式解析**：分发块里先判女巫控制（`gv_witched[自己]!=0 && gv_witchEligible && 未入狱 && 女巫有action[1]` → 目标替换为女巫的action[1]），再过 `gv_switched` 解析（例：盯3、3是欺骗者转向7 → 实际看7动线、杀7）。**哪些槽位可被转换是设计决策**，必须在角色卡特性里写明（影武者：目标一可被交换、目标二无法以任何形式被交换——`action[x][1]` 全脚本只有重置和本人按钮写入，结构性不可转）。
+- 设计核对清单：①哪个/哪些槽位可被女巫替换 ②可否被 switched 转换 ③被转换后判定与效果是否都落在转换后的目标 ④角色卡特性是否已向玩家说明 ⑤造访记录（visitation）是否要体现转换（影武者保持"表象去原目标"，观察者看得到）。
+
 **第 9 步：击杀函数（`gf_ES*Kill`）死亡信息三件套**
 - 字母码 `gv_deathMethod[目标]`：**用新码**（`K` 是连环杀手的，SK 函数里也有一份，锚点必须带函数特有上下文）；验尸官(1,10)选项2 私密播报扫描块（~13620）加对应字母分支
 - 公示描述 `gv_deathText[目标]`：**照抄义警模式**（约 26440 行）——`gv_deathDesc[目标]` 初始 false；`if(deathDesc==true){第一段; lv_c=true;} deathDesc=true; if(lv_c==false){主描述}`。主描述在 `lv_c==false`（首杀常态）追加；**放反了 deathText 永远为空、白天没有死亡信息**
@@ -216,6 +223,7 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 - **python 补丁断言失败时，同一命令块里后续的 commit/打包命令照常执行**——先单独跑补丁确认 exit 0，再做提交打包；曾连续两次只提交了 strings、代码没进包
 - **heredoc 脚本里的裸换行就是新语句**：`python <<EOF` 失败后，下一行的 `scp && git` 仍会执行——打包脚本的断言失败不阻止部署脏包。打包+部署+提交应显式 `&&` 链接，或先跑完打包脚本确认成功
 - **验证断言别写子串包含**：`s.count('(16) || (30) || (31))) {')` 这类短串会同时命中浏览白名单和映射白名单（互为子串），count 是 11 不是预期 6——断言计数前先确认模式唯一性
+- **断言过度也会误报**：①`assert 'KEY' not in s` 全文件禁键——键可能在别处有合法用途（F0A13008 是审查官能力文本，不能因一次误用就全文禁令）；②GameStrings 行尾是 `\r\n`，比对空值键要 `l.replace('\\r','')`；③`s.find('函数名')` 找到的是**首次出现**（可能是文件前部的原型声明），定位调用点要用带 `();` 的完整调用文本或在函数行号区间内找
 - **测试指令**：`-reveal`（`gt_BHRevealRoles`，仅主机、游戏开始后）私密列出全部玩家序号+角色名，用于验证影武者探员线索/调查结果等
 - 运行期报错先分新旧：`triggerControl(值:0)`、`StringWord(值:0)`、`CameraSetBounds region(值:0)`、`gv_roll点冷却 int[2] 越界` 等均为基线/单人测试固有，不是新改动引入
 
@@ -256,6 +264,7 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 - 原图限制：需要 `gv_oP[玩家][1] == true`（会员），非会员扣 500 积分；测试构建下两处都已放开（`gt_Prefer_Func`，约 65210 / 65251 行）
 - `-solo` 会 `TriggerEnable(gt_Prefer, true)`（该触发器在别处会被关闭）
 - **新角色必须设置拼音名**：`gv_roleNameInput[池][角色] = "xxx";`，否则 `-prefer` 找不到它（影武者 = `yingwuzhe`）
+- **测试构建下 prefer 必中（预锁，shw77 起）**：真实分发在 `gf_OSComputeOptions`（同函数兼营大厅几率模拟，`gv_emulate` 区分）。玩家按**随机顺序**处理、无 prefer 的电脑会随机占槽，原 solo 强制块轮到时槽已被占即静默落空（"将被首选"只是登记确认，不代表生效）。现为 `gf_OSRandomize` 之后预锁：`lv_bhPreferSlot[玩家]=槽`/`lv_bhReserved[槽]`，有 prefer 者强制改抽锁定槽，无 prefer 者抽到被锁槽拒绝重抽。**新增角色无需为此改动**，拼音存在即可被锁。
 
 ## 环境
 
