@@ -226,6 +226,7 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 - **白名单行的右括号层数不一致（shw84 事故）**：11 处编辑白名单 if 行并非统一 `== X)))` 结尾——部分行是 **4 层右括号**（`== X))))`）。用统一子串 ` || (X == 31)))` → `)))` 替换会把 4 层行削掉一层 → `if` 解析失败、**整个脚本读取失败**。摘除 OR 项必须**逐行**处理：定位含该项的行 → 去掉 ` || (…)` 整项 → 逐行断言 `(``)` 配平。且配平检查必须**先剥离字符串字面量**（61017 行含 `"("` 字面量，裸计数是已知误报）。
 - **锁定???随机系机制（枷锁/血锈/捕风捉影模式）**：预览列表（`gv_rolesMenusItem[2]`）是**静态文本**，??? = 直接 `DialogControlAddItem(roleNameArray[8][1])`（随机组 8/1 = ??? 角色）。槽位若经 bank 填 (8,1) 会被 `gf_VLoadSaveSlot` 校验（category>5）清零——原图 sotd 系是**绕过 bank 直接写 slots**。捕风捉影方案：真阵容进 slots（开局正常发牌）→ VLoadSaveSlot 后 `RemoveAllItems` + 重填 15 个 ??? + bank 掩写 (8,1)；从 11 处白名单摘掉 variantSelection 即锁定编辑。
 - **断言过度也会误报**：①`assert 'KEY' not in s` 全文件禁键——键可能在别处有合法用途（F0A13008 是审查官能力文本，不能因一次误用就全文禁令）；②GameStrings 行尾是 `\r\n`，比对空值键要 `l.replace('\\r','')`；③`s.find('函数名')` 找到的是**首次出现**（可能是文件前部的原型声明），定位调用点要用带 `();` 的完整调用文本或在函数行号区间内找
+- **斜体（shw87 已实证）**：SC2 富文本无斜体直标签（`<i>` 无效）；斜体 = 字体样式 Italic 标志 + `<s val="样式名">`。地图 `NewFontStyles.SC2Style` 已加 `ModItalic`（fontflags="Italic"）与 `ModItalic2`（styleflags="Italic"），**两种属性都渲染为斜体**（游戏内实证 B/C 均斜）。玩家输入 `-rename <i>x</i>` 经 `gf_BHItalicize` 改写为 `<s val="ModItalic">x</s>`（大小写两种闭合标签都处理），可与 `<c val>` 彩色标签叠加。字体用 `#FontStandard` 保证 CJK。注意：带标签名字参与"按名字喊话"匹配时需照原样输入标签。
 - **测试指令**：`-reveal`（`gt_BHRevealRoles`，仅主机、游戏开始后）私密列出全部玩家**带色名字**（电脑N，N=玩家编号；投票面板左侧是楼层序，与编号无关）+角色名，用于验证调查结果/案底等
 - 运行期报错先分新旧：`triggerControl(值:0)`、`StringWord(值:0)`、`CameraSetBounds region(值:0)`、`gv_roll点冷却 int[2] 越界` 等均为基线/单人测试固有，不是新改动引入
 
