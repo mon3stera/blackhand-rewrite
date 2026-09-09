@@ -88846,6 +88846,7 @@ void gf_ESShadowKill (int lp_player, int lp_killer) {
         else {
             gv_placedNote[lv_target] = gv_deathNote[lp_killer];
             gv_diedAtNight[lv_target] = true;
+            gv_e78AAFE7BDAAE4BA8BE5AE9E[lp_killer][1] = true;
             if (((gv_nightSequence == true) || (gv_deathDescriptions == true))) {
                 lv_c = false;
                 if ((gv_deathDesc[lv_target] == true)) {
