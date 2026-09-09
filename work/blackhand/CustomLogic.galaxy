@@ -219,6 +219,7 @@ int gv_rolesAssigned;
 const bool c_bhSoloBuild = true;
 
 bool gv_soloTest;
+void gf_BHNotify (text lp_msg, int lp_target, sound lp_sound);
 trigger gt_BHSolo;
 int[16] gv_rolesArray;
 bool[9][41][10] gv_roleOptionAllowed;
@@ -88427,25 +88428,40 @@ void gf_ESShadowKill (int lp_player, int lp_killer) {
         }
 
         if ((gv_nightSequence == true)) {
-            gf_CBSystemMessage(StringExternal("Param/Value/SHWNIGHT"), lv_target, lv_target, 0, SoundLink("Silent", -1), Color(0,0,0));
+            gf_BHNotify(StringExternal("Param/Value/SHWNIGHT"), lv_target, SoundLink("Silent", -1));
             gf_FlashScreen(Color(100.00, 0.00, 100.00), lv_target, 3.0, 50.0);
             Wait(RandomFixed(0.4, 0.8), c_timeGame);
         }
 
-        gf_CBSystemMessage(StringExternal("Param/Value/SHWSURV"), lv_target, lv_target, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+        gf_BHNotify(StringExternal("Param/Value/SHWSURV"), lv_target, SoundLink("UI_TipSelect", -1));
         gf_CBSystemMessage(StringExternal("Param/Value/B9CD6B48"), lp_killer, lp_killer, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
     }
     else {
         gv_specialCasePlayer[lv_target][12] += 1;
         gv_deathMethod[lv_target] = (gv_deathMethod[lv_target] + "w");
         if ((gv_nightSequence == true)) {
-            gf_CBSystemMessage(StringExternal("Param/Value/SHWNIGHT"), lv_target, lv_target, 0, SoundLink("Silent", -1), Color(0,0,0));
+            auto9B99A3AA_g = PlayerGroupAll();
+            auto9B99A3AA_var = -1;
+            while (true) {
+                auto9B99A3AA_var = PlayerGroupNextPlayer(auto9B99A3AA_g, auto9B99A3AA_var);
+                if (auto9B99A3AA_var < 0) { break; }
+                gf_CBSystemMessage(StringExternal("Param/Value/SHWQUOTE"), auto9B99A3AA_var, 16, 0, SoundLink("Silent", -1), Color(0,0,0));
+            }
+            SoundPlay(SoundLink("Zeratul_AttackImpact", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+            auto9B99A3AA_g = PlayerGroupAll();
+            auto9B99A3AA_var = -1;
+            while (true) {
+                auto9B99A3AA_var = PlayerGroupNextPlayer(auto9B99A3AA_g, auto9B99A3AA_var);
+                if (auto9B99A3AA_var < 0) { break; }
+                gf_CBSystemMessage(StringExternal("Param/Value/SHWHEAR"), auto9B99A3AA_var, 16, 0, SoundLink("Silent", -1), Color(0,0,0));
+            }
+            gf_BHNotify(StringExternal("Param/Value/SHWNIGHT"), lv_target, SoundLink("Silent", -1));
             gf_FlashScreen(Color(100.00, 0.00, 100.00), lv_target, 3.0, 50.0);
             Wait(RandomFixed(0.4, 0.8), c_timeGame);
         }
 
         if ((gv_roleOptions[3][31][1] == false) && (gv_healing[lv_target] > 0) && (gv_zuosi[lv_target] == false)) {
-            gf_CBSystemMessage(StringExternal("Param/Value/DB5AD8F8"), lv_target, lv_target, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+            gf_BHNotify(StringExternal("Param/Value/DB5AD8F8"), lv_target, SoundLink("UI_TipSelect", -1));
             gf_FlashScreen(Color(0.00, 100.00, 0.00), lv_target, 3.0, 0.0);
             gv_healing[lv_target] -= 1;
             gv_deathMethod[lv_target] = (gv_deathMethod[lv_target] + "h");
@@ -88524,6 +88540,17 @@ void gf_RAShadowActions (int lp_player) {
             }
             DialogControlSetVisible(gv_actionDialogItem[lv_a][6], PlayerGroupSingle(lp_player), false);
         }
+    }
+}
+
+
+// 目标不是真实在线玩家（虚拟补位）时，私密消息改发主机，单人测试可见；真实玩家仍只发本人
+void gf_BHNotify (text lp_msg, int lp_target, sound lp_sound) {
+    if ((PlayerStatus(lp_target) == c_playerStatusActive)) {
+        gf_CBSystemMessage(lp_msg, lp_target, lp_target, 0, lp_sound, Color(0,0,0));
+    }
+    else {
+        gf_CBSystemMessage(lp_msg, gv_host, gv_host, 0, lp_sound, Color(0,0,0));
     }
 }
 
