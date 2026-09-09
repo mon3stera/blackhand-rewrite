@@ -1,0 +1,251 @@
+//==================================================================================================
+// 
+// Generated Map Script
+// 
+// Name:   Just Another StarCraft II Map
+// 
+//==================================================================================================
+include "TriggerLibs/NativeLib"
+
+//--------------------------------------------------------------------------------------------------
+// Library Initialization
+//--------------------------------------------------------------------------------------------------
+void InitLibs () {
+    libNtve_InitLib();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Global Variables
+//--------------------------------------------------------------------------------------------------
+int gv_killCount;
+int gv_buffShown;
+int gv_buffBtn3;
+int gv_buffBtn2;
+int gv_buffBtn1;
+int gv_buffDialog;
+
+void InitGlobals () {
+    gv_buffBtn3 = c_invalidDialogControlId;
+    gv_buffBtn2 = c_invalidDialogControlId;
+    gv_buffBtn1 = c_invalidDialogControlId;
+    gv_buffDialog = c_invalidDialogId;
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger Variables
+//--------------------------------------------------------------------------------------------------
+trigger gt_UntitledTrigger002;
+trigger gt_UntitledTrigger003;
+trigger gt_UntitledTrigger004;
+trigger gt_BuffChoice;
+trigger gt_Buff1;
+trigger gt_Buff2;
+trigger gt_Buff3;
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Untitled Trigger 002
+//--------------------------------------------------------------------------------------------------
+bool gt_UntitledTrigger002_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaSubtitle, StringExternal("Param/Value/62B531FB"));
+    libNtve_gf_UnitCreateFacingPoint(3, "Marine", 0, 1, Point(64.0, 64.0), Point(64.0, 64.0));
+    CameraPan(1, Point(64.0, 64.0), 0.0, -1, 10.0, false);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_UntitledTrigger002_Init () {
+    gt_UntitledTrigger002 = TriggerCreate("gt_UntitledTrigger002_Func");
+    TriggerAddEventMapInit(gt_UntitledTrigger002);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Untitled Trigger 003
+//--------------------------------------------------------------------------------------------------
+bool gt_UntitledTrigger003_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaSubtitle, StringExternal("Param/Value/143E6AEB"));
+    libNtve_gf_UnitCreateFacingPoint(1, "Zergling", 0, 2, Point(RandomFixed(16.0, 112.0), RandomFixed(16.0, 112.0)), Point(64.0, 64.0));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_UntitledTrigger003_Init () {
+    gt_UntitledTrigger003 = TriggerCreate("gt_UntitledTrigger003_Func");
+    TriggerAddEventTimePeriodic(gt_UntitledTrigger003, 8.0, c_timeGame);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Untitled Trigger 004
+//--------------------------------------------------------------------------------------------------
+bool gt_UntitledTrigger004_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaSubtitle, IntToText(gv_killCount));
+    gv_killCount += 1;
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_UntitledTrigger004_Init () {
+    gt_UntitledTrigger004 = TriggerCreate("gt_UntitledTrigger004_Func");
+    TriggerAddEventUnitDied(gt_UntitledTrigger004, null);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: BuffChoice
+//--------------------------------------------------------------------------------------------------
+bool gt_BuffChoice_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((gv_buffShown == 0))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    DialogCreate(500, 400, c_anchorCenter, 0, 0, true);
+    gv_buffDialog = DialogLastCreated();
+    libNtve_gf_CreateDialogItemButton(gv_buffDialog, 200, 50, c_anchorTopLeft, 50, 50, StringToText(""), StringExternal("Param/Value/B706AA54"), "");
+    gv_buffBtn1 = DialogControlLastCreated();
+    libNtve_gf_CreateDialogItemButton(gv_buffDialog, 200, 50, c_anchorTopLeft, 50, 120, StringToText(""), StringExternal("Param/Value/C41D9E45"), "");
+    gv_buffBtn2 = DialogControlLastCreated();
+    libNtve_gf_CreateDialogItemButton(gv_buffDialog, 200, 50, c_anchorTopLeft, 50, 190, StringToText(""), StringExternal("Param/Value/08A28785"), "");
+    gv_buffBtn3 = DialogControlLastCreated();
+    DialogSetVisible(gv_buffDialog, PlayerGroupAll(), true);
+    gv_buffShown = 1;
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_BuffChoice_Init () {
+    gt_BuffChoice = TriggerCreate("gt_BuffChoice_Func");
+    TriggerAddEventTimePeriodic(gt_BuffChoice, 12.0, c_timeGame);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Buff1
+//--------------------------------------------------------------------------------------------------
+bool gt_Buff1_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((EventDialogControl() == gv_buffBtn1))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libNtve_gf_UnitCreateFacingPoint(2, "Marine", 0, 1, Point(64.0, 64.0), Point(64.0, 64.0));
+    DialogSetVisible(gv_buffDialog, PlayerGroupAll(), false);
+    BankLoad("verify", 1);
+    BankSave(BankLastCreated());
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_Buff1_Init () {
+    gt_Buff1 = TriggerCreate("gt_Buff1_Func");
+    TriggerAddEventDialogControl(gt_Buff1, c_playerAny, c_invalidDialogControlId, c_triggerControlEventTypeClick);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Buff2
+//--------------------------------------------------------------------------------------------------
+bool gt_Buff2_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((EventDialogControl() == gv_buffBtn2))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libNtve_gf_UnitCreateFacingPoint(1, "Marauder", 0, 1, Point(64.0, 64.0), Point(64.0, 64.0));
+    DialogSetVisible(gv_buffDialog, PlayerGroupAll(), false);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_Buff2_Init () {
+    gt_Buff2 = TriggerCreate("gt_Buff2_Func");
+    TriggerAddEventDialogControl(gt_Buff2, c_playerAny, c_invalidDialogControlId, c_triggerControlEventTypeClick);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Buff3
+//--------------------------------------------------------------------------------------------------
+bool gt_Buff3_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((EventDialogControl() == gv_buffBtn3))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    libNtve_gf_UnitCreateFacingPoint(1, "ThorAP", 0, 1, Point(64.0, 64.0), Point(64.0, 64.0));
+    DialogSetVisible(gv_buffDialog, PlayerGroupAll(), false);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_Buff3_Init () {
+    gt_Buff3 = TriggerCreate("gt_Buff3_Func");
+    TriggerAddEventDialogControl(gt_Buff3, c_playerAny, c_invalidDialogControlId, c_triggerControlEventTypeClick);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger Initialization
+//--------------------------------------------------------------------------------------------------
+void InitTriggers () {
+    gt_UntitledTrigger002_Init();
+    gt_UntitledTrigger003_Init();
+    gt_UntitledTrigger004_Init();
+    gt_BuffChoice_Init();
+    gt_Buff1_Init();
+    gt_Buff2_Init();
+    gt_Buff3_Init();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Map Initialization
+//--------------------------------------------------------------------------------------------------
+void InitMap () {
+    InitLibs();
+    InitGlobals();
+    InitTriggers();
+}

@@ -1,0 +1,108 @@
+﻿0|Abort Mission
+1|Alert
+2|Button Pressed
+3|Camera Moves
+4|Chat Message
+5|Cheat Used
+6|Command Error
+7|Conversation Reply Selected
+8|Custom Dialog Dismissed
+9|Cutscene Bookmark Fired
+10|Cutscene EndScene Fired
+11|Data Conversation State Changed
+12|Dialog Item Is Used
+13|Effect Used
+14|Effect Used From Scope
+15|Game Credits Finished
+16|Game Day/Night State Change
+17|Game Menu Item Selected
+18|Generic Event
+19|HeroTalent Tree Selected
+20|HeroTalent Tree Selection Panel Hidden
+21|HeroTalent Tree Selection Panel Shown
+22|Hotkey Pressed
+23|Key Pressed
+24|Load Game Finished
+25|Map Initialization
+26|Mercenary Panel Exited
+27|Mercenary Panel Purchase
+28|Mercenary Panel Selection Changed
+29|Mission Archive Panel Play Scene
+30|Mission Archives Panel Exited
+31|Mission Archives Panel Play Mission
+32|Mission Archives Panel Selection Changed
+33|Mouse Clicked
+34|Mouse Moved
+35|Mouse Wheel
+36|Movie Finished
+37|Movie Function
+38|Movie Started
+39|Periodic Event
+40|Planet Panel Birth Complete
+41|Planet Panel Canceled
+42|Planet Panel Death Complete
+43|Planet Panel Launched
+44|Planet Panel Planet Selected
+45|Planet Panel Pressed Replay Button
+46|Player Changes Alliances
+47|Player Joins Game
+48|Player Leaves Game
+49|Player Ping
+50|Player Property Changed
+51|Player Sends AI Wave
+52|Player Skips Trigger
+53|Player Upgrade Changed
+54|Purchase Category Selected
+55|Purchase Exit
+56|Purchase Item Selected
+57|Purchase Made
+58|Research Panel Close Button Clicked
+59|Research Panel Research Button Clicked
+60|Research Panel Selection Changed
+61|Resources Requested
+62|Resources Traded
+63|Save Game Finished
+64|Save Game Started
+65|Target Mode Updated
+66|Time Elapsed
+67|Timer Expires
+68|Unit Absorbs Damage
+69|Unit Acquires Powerup
+70|Unit Acquires Target
+71|Unit Arming Progress
+72|Unit Attribute Change
+73|Unit Becomes Idle
+74|Unit Behavior Changes
+75|Unit Behavior Changes From Category
+76|Unit Changes Ability Auto Cast State
+77|Unit Construction Progress
+78|Unit Dies
+79|Unit Enters/Leaves Point
+80|Unit Enters/Leaves Range Of Unit
+81|Unit Enters/Leaves Region
+82|Unit Gains Experience
+83|Unit Gains Experience Level
+84|Unit Is Attacked
+85|Unit Is Being Removed
+86|Unit Is Clicked
+87|Unit Is Created
+88|Unit is Healed
+89|Unit Is Highlighted
+90|Unit Is Issued Order
+91|Unit Is Revived
+92|Unit Is Selected
+93|Unit Learn Progress
+94|Unit Loads/Unloads Cargo
+95|Unit Manipulates Inventory
+96|Unit Owner Changes
+97|Unit Property Changes
+98|Unit Research Progress
+99|Unit Revive Progress
+100|Unit Specialization Progress
+101|Unit Spends Vital
+102|Unit Starts Attacking
+103|Unit Takes Damage
+104|Unit Training Progress
+105|Unit Uses Ability
+106|Victory Panel Exited
+107|Victory Panel Play Mission Again

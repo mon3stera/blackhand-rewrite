@@ -1,0 +1,12 @@
+﻿DocInfo/DescLong=Completely devoid of any description whatsoever.
+DocInfo/DescShort=Any
+DocInfo/Name=Just Another StarCraft II Map
+MapInfo/Player00/Name=Neutral
+MapInfo/Player01/Name=Player 1
+MapInfo/Player02/Name=Hostile
+Param/Value/08A28785=精英
+Param/Value/143E6AEB=spawn
+Param/Value/62B531FB=rogue_start
+Param/Value/ADFBAA21=unit died
+Param/Value/B706AA54=增援
+Param/Value/C41D9E45=重装

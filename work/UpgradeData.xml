@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog>
+    <CUpgrade id="RogueStartSpeed">
+        <MaxLevel value="1"/>
+        <EffectArray Reference="Unit,Marine,Speed" Value="1.25"/>
+        <AffectedUnitArray value="Marine"/>
+    </CUpgrade>
+    <CUpgrade id="RogueTestAtk">
+        <MaxLevel value="1"/>
+        <EffectArray Reference="Effect,GuassRifle,Amount" Value="50"/>
+        <AffectedUnitArray value="Marine"/>
+    </CUpgrade>
+    <CUpgrade id="RogueAtk">
+        <MaxLevel value="99"/>
+        <EffectArray Reference="Effect,GuassRifle,Amount" Value="1"/>
+        <AffectedUnitArray value="Marine"/>
+    </CUpgrade>
+    <CUpgrade id="RogueAtkSpeed">
+        <MaxLevel value="99"/>
+        <EffectArray Operation="Multiply" Reference="Weapon,GuassRifle,Period" Value="0.9"/>
+        <AffectedUnitArray value="Marine"/>
+    </CUpgrade>
+    <CUpgrade id="RogueMoveSpeed">
+        <MaxLevel value="99"/>
+        <EffectArray Reference="Unit,Marine,Speed" Value="0.1"/>
+        <AffectedUnitArray value="Marine"/>
+    </CUpgrade>
+    <CUpgrade id="RogueLife">
+        <MaxLevel value="99"/>
+        <EffectArray Reference="Unit,Marine,LifeMax" Value="10"/>
+        <EffectArray Reference="Unit,Marine,LifeStart" Value="10"/>
+        <AffectedUnitArray value="Marine"/>
+    </CUpgrade>
+    <CUpgrade id="RogueShield">
+        <MaxLevel value="99"/>
+        <EffectArray Reference="Unit,Marine,ShieldsMax" Value="10"/>
+        <EffectArray Reference="Unit,Marine,ShieldsStart" Value="10"/>
+        <AffectedUnitArray value="Marine"/>
+    </CUpgrade>
+</Catalog>

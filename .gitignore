@@ -1,0 +1,16 @@
+# 二进制/大文件（可由脚本或原图重新生成）
+*.SC2Map
+*.SC2Mod
+*.s2ma
+*.SC2Bank
+*.png
+*.jpg
+
+# 从原图提取的大体积中间产物
+work/bh-src/MapScript.galaxy
+work/bh-src/zhCN-GameStrings.txt
+work/bh-src/zhCN-TriggerStrings.txt
+
+# 本地临时
+*.log
+__pycache__/

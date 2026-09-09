@@ -1,0 +1,14 @@
+﻿Trigger/Name/06CB2E0B=Untitled Trigger 002
+Trigger/Name/2E622C84=Buff1
+Trigger/Name/4D29BE28=Untitled Trigger 004
+Trigger/Name/9590D8D8=Untitled Trigger 003
+Trigger/Name/A802B394=Melee Initialization
+Trigger/Name/D5F08C9A=Buff3
+Trigger/Name/E0A8AD76=BuffChoice
+Trigger/Name/F51FFA87=Buff2
+Variable/Name/02523C0A=BuffShown
+Variable/Name/0B871FDF=BuffBtn2
+Variable/Name/3915C665=KillCount
+Variable/Name/90774CE7=BuffBtn1
+Variable/Name/C2C93877=BuffBtn3
+Variable/Name/FB8FEBBD=BuffDialog

@@ -1,0 +1,121 @@
+# Finish configuring the remaining BuffChoice parameters (buttons 2-3 + show).
+
+$TRIGGER = "BuffChoice"
+
+$trees = Get-Trees
+$listTree = $trees[0]; $elemTree = $trees[1]
+$main = Find-Main
+
+function Find-TriggerNode([IntPtr]$tree, [string]$name) {
+  $cur = Get-Root $tree
+  while ($cur -ne [IntPtr]::Zero) {
+    if ((Get-NodeText $tree $cur) -eq $name) { return $cur }
+    $cur = Get-Next $tree $cur
+  }
+  return [IntPtr]::Zero
+}
+
+function Get-GroupNode([IntPtr]$tree, [string]$trigger, [string]$group) {
+  $t = Find-TriggerNode $tree $trigger
+  if ($t -eq [IntPtr]::Zero) { return [IntPtr]::Zero }
+  $c = Get-Child $tree $t
+  while ($c -ne [IntPtr]::Zero) {
+    if ((Get-NodeText $tree $c) -eq $group) { return $c }
+    $c = Get-Next $tree $c
+  }
+  return [IntPtr]::Zero
+}
+
+function Get-GroupChildren([IntPtr]$tree, [string]$trigger, [string]$group) {
+  $g = Get-GroupNode $tree $trigger $group
+  if ($g -eq [IntPtr]::Zero) { return @() }
+  $res = @(); $a = Get-Child $tree $g
+  while ($a -ne [IntPtr]::Zero) { $res += $a; $a = Get-Next $tree $a }
+  return $res
+}
+
+function Node-At([int]$i) { return (Get-GroupChildren $elemTree $TRIGGER "Actions")[$i] }
+
+function Set-ParamVar([IntPtr]$node, [int]$pi, [string]$var) {
+  Click-Node $elemTree $node
+  Start-Sleep -Milliseconds 1000
+  $btns = Get-ParamButtons $main
+  Click-Btn $btns[$pi]
+  Start-Sleep -Milliseconds 1800
+  $d = Find-Dialog
+  if ((Get-WindowTitle $d) -ne "Any Variable") {
+    $vb = Find-Child $d "Button\|&Variable"
+    if ($vb -ne [IntPtr]::Zero) { Click-Btn $vb; Start-Sleep -Milliseconds 1400 }
+  }
+  Set-DialogVariable $d $var
+  Start-Sleep -Milliseconds 900
+}
+
+function Set-ParamFunc([IntPtr]$node, [int]$pi, [string]$func) {
+  Click-Node $elemTree $node
+  Start-Sleep -Milliseconds 1000
+  $btns = Get-ParamButtons $main
+  Click-Btn $btns[$pi]
+  Start-Sleep -Milliseconds 1800
+  $d = Find-Dialog
+  Click-Btn (Find-Child $d "Button\|&Function")
+  Start-Sleep -Milliseconds 1800
+  $lv = Filter-List $d 43 42 $func
+  $idx = Find-ListIndexByText $lv $func
+  if ($idx -lt 0) { Write-Output ("  !! 找不到函数: " + $func); Click-Btn (Find-Child $d "Button\|Cancel"); return }
+  Set-ListSel $lv $idx
+  Start-Sleep -Milliseconds 500
+  Click-Btn (Find-Child $d "Button\|&OK")
+  Start-Sleep -Milliseconds 1800
+}
+
+function Set-ParamText([IntPtr]$node, [int]$pi, [string]$text) {
+  Click-Node $elemTree $node
+  Start-Sleep -Milliseconds 1000
+  $btns = Get-ParamButtons $main
+  Click-Btn $btns[$pi]
+  Start-Sleep -Milliseconds 1800
+  Set-DialogText (Find-Dialog) $text
+  Start-Sleep -Milliseconds 900
+}
+
+function Set-ParamInt([IntPtr]$node, [int]$pi, [string]$val) {
+  Click-Node $elemTree $node
+  Start-Sleep -Milliseconds 1000
+  $btns = Get-ParamButtons $main
+  Click-Btn $btns[$pi]
+  Start-Sleep -Milliseconds 1800
+  Set-DialogInt (Find-Dialog) $val
+  Start-Sleep -Milliseconds 900
+}
+
+$stale = Find-Dialog
+if ($stale -ne [IntPtr]::Zero) { Click-Btn (Find-Child $stale "Button\|Cancel"); Start-Sleep -Milliseconds 1000 }
+
+Click-Node $listTree (Find-TriggerNode $listTree $TRIGGER)
+Start-Sleep -Milliseconds 1500
+
+$labels = @("医疗兵", "精英")
+$ys = @("120", "190")
+for ($k = 0; $k -lt 2; $k++) {
+  $btnAction = 4 + $k * 2
+  $setAction = $btnAction + 1
+  Write-Output ("--- 按钮 " + ($k + 2) + " (" + $labels[$k] + ") 动作[" + $btnAction + "] ---")
+  Set-ParamVar (Node-At $btnAction) 0 "BuffDialog"
+  Set-ParamText (Node-At $btnAction) 7 $labels[$k]
+  Set-ParamInt (Node-At $btnAction) 5 $ys[$k]
+  Set-ParamVar (Node-At $setAction) 0 ("BuffBtn" + ($k + 2))
+  Set-ParamFunc (Node-At $setAction) 1 "Last Created Dialog Item"
+}
+
+Write-Output "=== 显示动作 8 ==="
+Set-ParamVar (Node-At 8) 1 "BuffDialog"
+
+Write-Output "=== 结果 ==="
+$i = 0
+foreach ($a in (Get-GroupChildren $elemTree $TRIGGER "Actions")) { Write-Output ("  [" + $i + "] " + (Get-NodeText $elemTree $a)); $i++ }
+
+Write-Output "=== 保存 ==="
+[void][SC2]::SendMessage($main, 0x0111, [IntPtr]15, [IntPtr]::Zero)
+Start-Sleep -Milliseconds 6000
+Write-Output ("title: " + (Get-WindowTitle $main))

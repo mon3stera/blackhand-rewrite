@@ -1,0 +1,9 @@
+BH/NoDeath=<s val="ModCenterSize28Bold"><c val="FFFFFF">昨晚没有人死亡。</c></s>
+BH/DayStart=<s val="ModCenterSize28Bold"><c val="FFFFFF">天亮了。开始讨论。</c></s>
+BH/DiscussEnd=<s val="ModCenterSize28Bold"><c val="FFFFFF">讨论结束，开始投票。</c></s>
+BH/VoteEnd=<s val="ModCenterSize28Bold"><c val="FFFFFF">投票结束。</c></s>
+BH/NoTrial=<s val="ModCenterSize28Bold"><c val="FFFFFF">没有人被多数票提名，今天不会进行审判。</c></s>
+BH/TrialStart=<s val="ModCenterSize28Bold"><c val="FFFFFF">审判开始：有罪请按“有罪”，无罪请按“无罪”。</c></s>
+BH/Executed=<s val="ModCenterSize28Bold"><c val="FFAA00">被处决了。</c></s>
+BH/NotExecuted=<s val="ModCenterSize28Bold"><c val="FFFFFF">没有被处决。</c></s>
+BH/Nominated=<s val="ModCenterSize28Bold"><c val="FFFFFF">被提名审判。</c></s>

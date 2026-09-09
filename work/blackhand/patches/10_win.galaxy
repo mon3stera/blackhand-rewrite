@@ -1,0 +1,45 @@
+//==============================================================
+// 判胜：第一阶段只做三种结局
+//   1 = 城镇胜利   2 = 黑手党胜利   3 = 连环杀手胜利
+//==============================================================
+
+int gf_CheckEnd () {
+    int lv_a;
+    int lv_town = 0;
+    int lv_mafia = 0;
+    int lv_sk = 0;
+
+    if (c_bhDebugNoWin == true) {
+        return 0;
+    }
+
+    for (lv_a = 1; lv_a <= 15; lv_a += 1) {
+        if (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) {
+            if (gv_roles[lv_a][1] == c_bhTown) {
+                lv_town += 1;
+            }
+
+            if (gv_roles[lv_a][1] == c_bhMafia) {
+                lv_mafia += 1;
+            }
+
+            if ((gv_roles[lv_a][1] == c_bhNeutral) && (gv_roles[lv_a][0] == c_bhSerialKiller)) {
+                lv_sk += 1;
+            }
+        }
+    }
+
+    if ((lv_town >= 1) && (lv_mafia == 0) && (lv_sk == 0)) {
+        return 1;
+    }
+
+    if ((lv_town == 0) && (lv_sk == 0) && (lv_mafia >= 1)) {
+        return 2;
+    }
+
+    if ((lv_town == 0) && (lv_mafia == 0) && (lv_sk >= 1)) {
+        return 3;
+    }
+
+    return 0;
+}

@@ -1,0 +1,188 @@
+//==================================================================================================
+// 
+// Generated Map Script
+// 
+// Name:   Just Another StarCraft II Map
+// 
+//==================================================================================================
+include "TriggerLibs/NativeLib"
+
+//--------------------------------------------------------------------------------------------------
+// Library Initialization
+//--------------------------------------------------------------------------------------------------
+void InitLibs () {
+    libNtve_InitLib();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger Variables
+//--------------------------------------------------------------------------------------------------
+trigger gt_MeleeInitialization;
+trigger gt_UntitledTrigger001;
+trigger gt_UntitledTrigger002;
+trigger gt_UntitledTrigger003;
+trigger gt_UntitledTrigger004;
+trigger gt_UntitledTrigger005;
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Melee Initialization
+//--------------------------------------------------------------------------------------------------
+bool gt_MeleeInitialization_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    MeleeInitResources();
+    MeleeInitUnits();
+    MeleeInitAI();
+    MeleeInitOptions();
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_MeleeInitialization_Init () {
+    gt_MeleeInitialization = TriggerCreate("gt_MeleeInitialization_Func");
+    TriggerAddEventMapInit(gt_MeleeInitialization);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Untitled Trigger 001
+//--------------------------------------------------------------------------------------------------
+bool gt_UntitledTrigger001_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Conditions
+    if (testConds) {
+        if (!((UnitGetOwner(EventUnit()) == 1))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    UnitSetTeamColorIndex(EventUnit(), 1);
+    UnitSetCustomValue(UnitLastCreated(), 0, 100.0);
+    DialogDestroy(DialogLastCreated());
+    UnitRemove(EventUnit());
+    DialogControlSetVisible(DialogControlLastCreated(), PlayerGroupAll(), true);
+    DialogSetVisible(DialogLastCreated(), PlayerGroupAll(), true);
+    UIClearMessages(PlayerGroupAll(), c_messageAreaAll);
+    CameraPan(1, RegionGetCenter(EventUnitRegion()), 2.0, -1, 10.0, false);
+    UnitKill(EventUnit());
+    DialogControlCreate(DialogLastCreated(), c_triggerControlTypeButton);
+    DialogCreate(500, 400, c_anchorCenter, 0, 0, true);
+    Wait(2.0, c_timeGame);
+    if (true) {
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_UntitledTrigger001_Init () {
+    gt_UntitledTrigger001 = TriggerCreate("gt_UntitledTrigger001_Func");
+    TriggerAddEventButtonPressed(gt_UntitledTrigger001, c_playerAny, null);
+    TriggerAddEventDialogControl(gt_UntitledTrigger001, c_playerAny, c_invalidDialogControlId, c_triggerControlEventTypeClick);
+    TriggerAddEventUnitDied(gt_UntitledTrigger001, null);
+    TriggerAddEventTimePeriodic(gt_UntitledTrigger001, 5.0, c_timeGame);
+    TriggerAddEventMapInit(gt_UntitledTrigger001);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Untitled Trigger 002
+//--------------------------------------------------------------------------------------------------
+bool gt_UntitledTrigger002_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaSubtitle, StringExternal("Param/Value/62B531FB"));
+    libNtve_gf_UnitCreateFacingPoint(1, "Marine", 0, 1, PlayerStartLocation(1), UnitGetPosition(EventUnit()));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_UntitledTrigger002_Init () {
+    gt_UntitledTrigger002 = TriggerCreate("gt_UntitledTrigger002_Func");
+    TriggerAddEventMapInit(gt_UntitledTrigger002);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Untitled Trigger 003
+//--------------------------------------------------------------------------------------------------
+bool gt_UntitledTrigger003_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaSubtitle, StringExternal("Param/Value/143E6AEB"));
+    libNtve_gf_UnitCreateFacingPoint(1, "Zergling", 0, 2, PlayerStartLocation(1), PlayerStartLocation(1));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_UntitledTrigger003_Init () {
+    gt_UntitledTrigger003 = TriggerCreate("gt_UntitledTrigger003_Func");
+    TriggerAddEventTimePeriodic(gt_UntitledTrigger003, 5.0, c_timeGame);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Untitled Trigger 004
+//--------------------------------------------------------------------------------------------------
+bool gt_UntitledTrigger004_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaSubtitle, StringExternal("Param/Value/ADFBAA21"));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_UntitledTrigger004_Init () {
+    gt_UntitledTrigger004 = TriggerCreate("gt_UntitledTrigger004_Func");
+    TriggerAddEventUnitDied(gt_UntitledTrigger004, null);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: Untitled Trigger 005
+//--------------------------------------------------------------------------------------------------
+bool gt_UntitledTrigger005_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_UntitledTrigger005_Init () {
+    gt_UntitledTrigger005 = TriggerCreate("gt_UntitledTrigger005_Func");
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger Initialization
+//--------------------------------------------------------------------------------------------------
+void InitTriggers () {
+    gt_MeleeInitialization_Init();
+    gt_UntitledTrigger001_Init();
+    gt_UntitledTrigger002_Init();
+    gt_UntitledTrigger003_Init();
+    gt_UntitledTrigger004_Init();
+    gt_UntitledTrigger005_Init();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Map Initialization
+//--------------------------------------------------------------------------------------------------
+void InitMap () {
+    InitLibs();
+    InitTriggers();
+}

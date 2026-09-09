@@ -1,0 +1,155 @@
+//==============================================================
+// 白天：死亡播报 → 讨论 → 实名投票 → 审判 → 处决 → 判胜
+//   替换原 auto_gf_DayTransition_TriggerFunc
+//==============================================================
+
+bool auto_gf_DayTransition_TriggerFunc (bool testConds, bool runActions) {
+    int lv_a;
+    int lv_top;
+    int lv_topCount;
+    int lv_alive;
+    int lv_guilty;
+    bool lv_anyDead;
+    bool lv_trial;
+
+    if (!runActions) {
+        return true;
+    }
+
+    gv_dayNumber += 1;
+    gf_BHLog("phase", "day", IntToString(gv_dayNumber));
+
+    gv_isNight = false;
+    gv_dayOver = false;
+    gv_voteOn = false;
+    gv_trialOn = false;
+
+    for (lv_a = 1; lv_a <= 15; lv_a += 1) {
+        if (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) {
+            libNtve_gf_ShowHideUnit(gv_unit[lv_a], true);
+            UnitSetPosition(gv_unit[lv_a], gv_playerLocation[lv_a], false);
+        }
+    }
+
+    // ---- 昨夜死亡播报 ----
+    lv_anyDead = false;
+
+    for (lv_a = 1; lv_a <= 15; lv_a += 1) {
+        if (gv_diedAtNight[lv_a] == true) {
+            lv_anyDead = true;
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, (StringExternal("Param/Value/2BD5A382") + TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/94B5D4FC")));
+            SoundPlay(SoundLink("UI_TerranPing", -1), PlayerGroupAll(), 100.0, 0.0);
+            Wait(3.0, c_timeGame);
+        }
+    }
+
+    if (lv_anyDead == false) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, StringExternal("BH/NoDeath"));
+        Wait(2.0, c_timeGame);
+    }
+
+    if (gf_CheckEnd() != 0) {
+        gf_EndGame(gf_CheckEnd());
+        return true;
+    }
+
+    // ---- 讨论 ----
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, StringExternal("BH/DayStart"));
+    gf_TBStartTimer2((60.0 * gv_discussionLength), StringExternal("Param/Value/02FE7FA6"));
+    Wait((60.0 * gv_discussionLength), c_timeGame);
+    gf_TBEndTimer();
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, StringExternal("BH/DiscussEnd"));
+    Wait(1.0, c_timeGame);
+
+    // ---- 实名投票 ----
+    for (lv_a = 1; lv_a <= 15; lv_a += 1) {
+        if (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) {
+            gv_dayAction[lv_a] = true;
+        }
+    }
+
+    gf_ASStartVote();
+    gf_TBStartTimer2((60.0 * gv_dayLength), StringExternal("Param/Value/02FE7FA6"));
+    Wait((60.0 * gv_dayLength), c_timeGame);
+    gf_TBEndTimer();
+    gf_ASStopVote();
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, StringExternal("BH/VoteEnd"));
+    Wait(1.0, c_timeGame);
+
+    lv_top = 0;
+    lv_topCount = 0;
+    lv_alive = PlayerGroupCount(gv_alivePlayers);
+
+    for (lv_a = 1; lv_a <= 15; lv_a += 1) {
+        if (gv_voteCount[lv_a] > lv_topCount) {
+            lv_topCount = gv_voteCount[lv_a];
+            lv_top = lv_a;
+        }
+    }
+
+    lv_trial = false;
+
+    if ((lv_top > 0) && ((lv_topCount * 2) > lv_alive)) {
+        lv_trial = true;
+    }
+
+    if (lv_trial == false) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, StringExternal("BH/NoTrial"));
+        Wait(2.0, c_timeGame);
+    }
+    else {
+        // ---- 审判 ----
+        gv_trialOn = true;
+        gv_bhTrialTarget = lv_top;
+        gv_trialVotes[0] = 0;
+
+        for (lv_a = 1; lv_a <= 15; lv_a += 1) {
+            gv_playerVote[lv_a] = 0;
+        }
+
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, (StringToText("") + TextWithColor(StringToText(gv_name[lv_top]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_top])) + StringExternal("BH/Nominated")));
+        SoundPlay(SoundLink("UI_TerranPing", -1), PlayerGroupAll(), 100.0, 0.0);
+        Wait(2.0, c_timeGame);
+
+        gf_ASShowBox();
+        TriggerEnable(gt_ASTrialVote, true);
+
+        for (lv_a = 1; lv_a <= 15; lv_a += 1) {
+            if (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) {
+                DialogControlSetVisible(gv_actionDialogItem[lv_top][3], PlayerGroupSingle(lv_a), true);
+                DialogControlSetVisible(gv_actionDialogItem[lv_top][4], PlayerGroupSingle(lv_a), true);
+            }
+        }
+
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, StringExternal("BH/TrialStart"));
+        gf_TBStartTimer2((60.0 * gv_trialLength), StringExternal("Param/Value/02FE7FA6"));
+        Wait((60.0 * gv_trialLength), c_timeGame);
+        gf_TBEndTimer();
+        TriggerEnable(gt_ASTrialVote, false);
+
+        lv_guilty = gv_trialVotes[0];
+
+        if ((lv_guilty * 2) > lv_alive) {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, (StringToText("") + TextWithColor(StringToText(gv_name[lv_top]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_top])) + StringExternal("BH/Executed")));
+            gv_executed[lv_top] = true;
+            gf_KillPlayer(lv_top, false);
+            Wait(3.0, c_timeGame);
+        }
+        else {
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, (StringToText("") + TextWithColor(StringToText(gv_name[lv_top]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_top])) + StringExternal("BH/NotExecuted")));
+            Wait(2.0, c_timeGame);
+        }
+
+        gv_trialOn = false;
+    }
+
+    gf_ASEndActions();
+
+    if (gf_CheckEnd() != 0) {
+        gf_EndGame(gf_CheckEnd());
+        return true;
+    }
+
+    gf_NightTransition();
+    return true;
+}

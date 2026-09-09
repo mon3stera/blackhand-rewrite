@@ -1,0 +1,1545 @@
+﻿0|Accept Surrender
+1|Action Group
+2|Activate Ability Cooldowns
+3|Activate/Deactivate Bullies In Region
+4|Actor Add Orient Update
+5|Actor Scope Move To
+6|Actor Set Reference
+7|Add Ability
+8|Add Actions To Action Queue
+9|Add Ammo To Magazine
+10|Add Attack Wave Unit Types (Liberty)
+11|Add Attack Wave Unit Types (Swarm)
+12|Add Attack Wave Waypoint
+13|Add Behavior
+14|Add Behavior (Player)
+15|Add Charge Full Regen Time For Game
+16|Add Charge Full Regen Time For Player
+17|Add Charge Full Regen Time For Unit
+18|Add Charge Full Regen Time For Unit Ability
+19|Add Charge Full Regen Time For Unit Behavior
+20|Add Charge Remaining Regen Time For Game
+21|Add Charge Remaining Regen Time For Player
+22|Add Charge Remaining Regen Time For Unit
+23|Add Charge Remaining Regen Time For Unit Ability
+24|Add Charge Remaining Regen Time For Unit Behavior
+25|Add Charge Used For Game
+26|Add Charge Used For Player
+27|Add Charge Used For Unit
+28|Add Charge Used For Unit Ability
+29|Add Charge Used For Unit Behavior
+30|Add Circle To Region
+31|Add Cooldown For Game
+32|Add Cooldown For Player
+33|Add Cooldown For Unit Ability
+34|Add Cooldown For Unit Behavior
+35|Add Cutscene Filter
+36|Add Escort Unit To Attack Wave
+37|Add Escort UnitType To Attack Wave
+38|Add Global Cutscene Filter
+39|Add Graph Data Point
+40|Add Integer Data to Stat Event
+41|Add Item To Inventory
+42|Add Learn Ability Level For Unit
+43|Add Level To Unit Ability
+44|Add List Item
+45|Add Mission Archive
+46|Add Mission Archive Achievement
+47|Add New Bully
+48|Add Path Display Waypoint
+49|Add Player Group To Player Group
+50|Add Player Response
+51|Add Player Talent
+52|Add Player To Leaderboard
+53|Add Player To Player Group
+54|Add Real Data to Stat Event
+55|Add Rectangle To Region
+56|Add Region To Region
+57|Add Skill Points To Unit Learn Ability
+58|Add String Data to Stat Event
+59|Add To Achievement Term Quantity
+60|Add Unit Group To Attack Wave
+61|Add Unit Group To Control Group
+62|Add Unit Group To Unit Group
+63|Add Unit To Attack Wave
+64|Add Unit To Control Group
+65|Add Unit To Shared Tracked Unit List
+66|Add Unit To Unit Group
+67|Add Upgrade Level For Player
+68|Add Victory Panel Achievement
+69|Add Victory Panel Custom Statistic Line
+70|Add Victory Panel Tracked Statistic
+71|Add Weapon To Unit
+72|Add/Remove UI Frame Type For Global Filter List
+73|Allow Cheat
+74|Allow Trigger To Be Skipped
+75|Allow/Disallow Ability For Player
+76|Allow/Disallow Behavior For Player
+77|Allow/Disallow Unit For Player
+78|Allow/Disallow Upgrade For Player
+79|Anchor Dialog To Unit
+80|Anchor Leaderboard
+81|Anchor Timer Window
+82|Apply Camera Object
+83|Apply Camera Property
+84|Apply Global Texture Group
+85|Apply Player Skin
+86|Apply Player Skin (Replacing Existing Unit)
+87|Attach Actor To Actor
+88|Attach Actor To Unit
+89|Attach Dialog Item To Dialog Item
+90|Attach Dialog To Dialog
+91|Attach Dialog To Unit
+92|Attach Model To Actor
+93|Attach Model To Unit
+94|Attach Model To Unit (Inherit Visibility)
+95|Attach Ping To Unit
+96|Attach Region To Unit
+97|Attach Text Tag To Unit
+98|Attach Text Tag To Unit Attach Point
+99|Auto-Reveal Region
+100|Award Achievement
+101|Backup Bank
+102|Beacon Alert
+103|Beacon Clear Target
+104|Beacon Set AutoCast
+105|Beacon Set Target Point
+106|Beacon Set Target Unit
+107|BitMaskAddBitMask
+108|BitMaskAndBitMask
+109|BitMaskInvert
+110|BitMaskLeftShift
+111|BitMaskOrBitMask
+112|BitMaskReset
+113|BitMaskRightShift
+114|BitMaskSetIndex
+115|BitMaskXorBitMask
+116|Break
+117|Build
+118|Call Original Tactical AI Think
+119|Call Unit Ability Tactical Script
+120|Campaign Mode
+121|Cancel Attack Wave
+122|Catalog Field Value Modify
+123|Catalog Field Value Modify (Based On Default Value)
+124|Catalog Field Value Set
+125|Catalog Field Value Set As Real
+126|Catalog Link Replace
+127|Catalog Reference Modify
+128|Catalog Reference Modify (Based On Default Value)
+129|Catalog Reference Set
+130|Catalog Reference Set As Real
+131|Challenge Mode
+132|Change Empty Unit Variables In Events
+133|Change Owner
+134|Change Unit Damage
+135|Change Unit Height
+136|Cinematic Mode
+137|Clear Action Queue
+138|Clear Alerts
+139|Clear All Tip Alerts
+140|Clear Animation
+141|Clear Animation On Doodads In Region
+142|Clear BattleNet Button Offset
+143|Clear Build Queue
+144|Clear Camera Channel
+145|Clear Camera Channel On Portrait
+146|Clear Cloaked Attacker
+147|Clear Control Group
+148|Clear Cooldowns For Unit
+149|Clear Cutscene Filter
+150|Clear Data Table
+151|Clear Data Table - Instance
+152|Clear Global Cutscene Filters
+153|Clear List Selection
+154|Clear Path Display Waypoints
+155|Clear Player Response
+156|Clear Portrait Animation
+157|Clear Research Queue
+158|Clear Selected Planet
+159|Clear Stock
+160|Clear Subtitle Position Dialog
+161|Clear Subtitle Position Dialog Item
+162|Clear Text Messages
+163|Clear Text Messages for Game User
+164|Clear Train Queue
+165|Clear Unit Info
+166|Clear Unit Selection
+167|Clear Victory Panel Custom Statistic Table
+168|Console Command
+169|Continue
+170|Copy Data Table - Instance
+171|Copy Unit Control Groups
+172|Count Object As Already Made
+173|Create Actor
+174|Create Actor At Point
+175|Create Actor Region
+176|Create Actor Scope
+177|Create Alert At Point
+178|Create Alert At Unit
+179|Create Alert With No Source
+180|Create Bank Section
+181|Create Cargo Units
+182|Create Cheat
+183|Create Conversation
+184|Create Conversation Reply
+185|Create Cutscene
+186|Create Cutscene at Position
+187|Create Data Table - Instance
+188|Create Dialog
+189|Create Dialog Item
+190|Create Dialog Item (Achievement)
+191|Create Dialog Item (Button)
+192|Create Dialog Item (Check Box)
+193|Create Dialog Item (Image)
+194|Create Dialog Item (Label)
+195|Create Dialog Item From Template
+196|Create Dialog Item In Panel
+197|Create Dialog Item In Panel From Template
+198|Create Effect At Point (From Player)
+199|Create Effect At Point (From Unit)
+200|Create Effect On Unit (From Player)
+201|Create Effect On Unit (From Unit)
+202|Create Explosion At Point
+203|Create Inventory Item
+204|Create Leaderboard
+205|Create Look At Target At Point
+206|Create Look At Target At Unit Attach Point
+207|Create Loot At Point
+208|Create Loot At Unit
+209|Create Mercenary
+210|Create Message Log Entry
+211|Create Model At Point
+212|Create Model With Point Facing
+213|Create Objective
+214|Create Objective For Players
+215|Create Path Display For Unit
+216|Create Path Display For Unit Type
+217|Create Ping (Deprecated)
+218|Create Ping Facing Angle
+219|Create Ping From Data
+220|Create Ping With Point Facing
+221|Create Planet
+222|Create Portrait
+223|Create Purchase Category
+224|Create Purchase Group
+225|Create Purchase Item
+226|Create Random Item Loot At Point
+227|Create Research Category
+228|Create Research Item
+229|Create Research Tier
+230|Create Revealer
+231|Create Saved Game
+232|Create Stat Event
+233|Create Text Tag
+234|Create Timer Window
+235|Create Tip
+236|Create Tutorial
+237|Create Units Facing Angle
+238|Create Units Facing Point
+239|Create Units With Default Facing
+240|Create Units With Point Facing
+241|Critical Section
+242|Current Trigger Thread SetFlags
+243|Custom Script
+244|Cutscene Fade
+245|Cycle
+246|Damage Unit (From Unit)
+247|Debug Message
+248|Declare Next Town
+249|Declare Town Specific Slot
+250|Default Economy
+251|Default Expansion
+252|Delete Campaign Save
+253|Delete Saved Campaign Banks
+254|Destroy All Dialog Items
+255|Destroy All Dialogs
+256|Destroy All Objectives
+257|Destroy All Pings
+258|Destroy All Planets
+259|Destroy All Portraits
+260|Destroy All Purchase Categories
+261|Destroy All Purchase Groups
+262|Destroy All Purchase Items
+263|Destroy All Research Categories
+264|Destroy All Research Tiers
+265|Destroy All Tips
+266|Destroy All Tutorials
+267|Destroy Dialog
+268|Destroy Dialog Item
+269|Destroy Effects
+270|Destroy HelpItem
+271|Destroy Leaderboard
+272|Destroy Mercenary
+273|Destroy Objective
+274|Destroy Path Display
+275|Destroy Path Displays For Players
+276|Destroy Ping
+277|Destroy Planet
+278|Destroy Portrait
+279|Destroy Purchase Category
+280|Destroy Purchase Group
+281|Destroy Purchase Item
+282|Destroy Research Category
+283|Destroy Research Item
+284|Destroy Research Tier
+285|Destroy Revealer
+286|Destroy Text Tag
+287|Destroy Timer Window
+288|Destroy Trigger
+289|Dialog Item Advance Animation
+290|Dialog Item Force Transition
+291|Dialog Item Invoke As String
+292|Dialog Item Invoke As Text
+293|Dialog Item Request Focus
+294|Dialog Item Send Animation Event
+295|Dialog Item Send Animation Event 2
+296|Dialog Item Set Animation Speed
+297|Dialog Item Set Animation Time
+298|Disable Achievements
+299|Display Boss Bar
+300|Display Custom Dialog
+301|Display Help Page
+302|Display Screen Button
+303|Display Screen Image
+304|Display Screen Label
+305|Do - While
+306|Enable Campaign Completed Saves
+307|Enable Campaign Saves
+308|Enable Harvesting
+309|Enable Stock
+310|Enable/Disable Ability For Unit
+311|Enable/Disable AI Option For Unit
+312|Enable/Disable All Score Tracking
+313|Enable/Disable Command Type
+314|Enable/Disable Debug Message Type
+315|Enable/Disable Debug Messages
+316|Enable/Disable Dialog Item
+317|Enable/Disable Drag Selection
+318|Enable/Disable Experience Gain For Unit
+319|Enable/Disable Fog
+320|Enable/Disable Fog At Ultra
+321|Enable/Disable Help Panel Tech Glossary Button
+322|Enable/Disable Help Panel Tech Tree Button
+323|Enable/Disable Hotkey
+324|Enable/Disable Leaderboard State
+325|Enable/Disable Melee Option For Player
+326|Enable/Disable Mercenary Panel Close Button
+327|Enable/Disable Mercenary Panel Dismiss Button
+328|Enable/Disable Mouse Cursor Auto Hide
+329|Enable/Disable Ping Panel
+330|Enable/Disable Planet Panel Close Button
+331|Enable/Disable Planet Panel Dismiss Button
+332|Enable/Disable Revealer
+333|Enable/Disable Score Tracking
+334|Enable/Disable Script Control For Unit
+335|Enable/Disable Script Control For Unit Group
+336|Enable/Disable Selection Type
+337|Enable/Disable Soundtrack Continuous
+338|Enable/Disable Soundtrack Shuffle
+339|Enable/Disable SpecificTech Tree Requirements
+340|Enable/Disable Suicide For Unit
+341|Enable/Disable Suicide For Unit Group
+342|Enable/Disable Tactical For Unit
+343|Enable/Disable Tactical For Unit Group
+344|Enable/Disable Tech Tree Requirements
+345|Enable/Disable Tech Tree Restrictions
+346|Enable/Disable Visibility
+347|Enable/Disable Wave Use For Unit
+348|Enable/Disable Wave Use For Unit Group
+349|End Game For Player
+350|Engine Reset
+351|Erase Achievement
+352|Error Message
+353|Explore/Unexplore Area
+354|Fade Dialog Item Transparency
+355|Fade In/Out
+356|Fill Area Visibility
+357|Flash Screen Button
+358|Flash Unit Selection
+359|Follow Unit Group with Camera
+360|For Each Ability On Unit
+361|For Each Behavior On Unit
+362|For Each Catalog Entry In Catalog
+363|For Each Integer
+364|For Each Integer Deprecated
+365|For Each Learnable Ability On Unit
+366|For Each Player In Player Group
+367|For Each Player In Player Group Deprecated
+368|For Each Real
+369|For Each Real Deprecated
+370|For Each Scope Field Value In Catalog Field Scope Array
+371|For Each UI Frame
+372|For Each Unit In Unit Group
+373|For Each Unit In Unit Group Deprecated
+374|For Each User Data Instance In User Type
+375|For Each User Data Value In User Type Field Array
+376|For Each Value In Catalog Field Array
+377|Force Follow Unit Group with Camera
+378|Force Portrait Transition On/Off
+379|ForEachSetBitInBitMask
+380|ForEachUnSetBitInBitMask
+381|Game Set Quit On Quit Button
+382|Game Wait For Resources To Complete
+383|GameSetNextCampaignIndex
+384|Global Cinematic Setting
+385|Global Cinematic Setting (Fixed Seed On/Off)
+386|Global Suicide
+387|Go To Cutscene Bookmark
+388|Go To Next Cutscene Bookmark
+389|Hide All Cinematic Portraits
+390|Hide All Custom Menu Dialog Items
+391|Hide Cinematic Text
+392|Hide Text Crawl
+393|Hide Unit Status Bar
+394|Hookup Dialog Item
+395|Hookup Standard Dialog Item
+396|Hookup Unit Status Dialog Item
+397|If Then Else
+398|If Then Else-If
+399|Init Campaign Harvesting
+400|Init Campaign Towns
+401|Init Melee AI
+402|Insert Sound Channel Digital Effect
+403|Issue AI Order
+404|Issue Order
+405|Issue Order To Unit Group
+406|Kick From Game
+407|Kill Actor Scope
+408|Kill All Particles
+409|Kill Doodads In Region
+410|Kill Model
+411|Kill Unit
+412|Lane Waypoint Add
+413|Lane Waypoint Calc Closest Data For Lane
+414|Lane Waypoint Clear All
+415|Launch Nydus Link
+416|Limit Bully Rebuild To Nearest Town
+417|Limit Bully Wave Gather To Nearest Town
+418|Load Animation for Unit Type
+419|Load Data Conversation Lines And Choices
+420|Load Data Conversation State Value
+421|Load Data Conversation State Values
+422|Load Model Animation
+423|Load Overriding Animation for Unit Type
+424|Load Overriding Model Animation
+425|Load Unit Model
+426|Load User Data Instance
+427|Load User Data Type
+428|Load User Data Value Into Variable
+429|Load Variable Value Into User Data
+430|Lock Ally Color Setting
+431|Lock Camera Input
+432|Lock Camera Mouse Relative Mode On/Off
+433|Lock Flyer Helper Display
+434|Lock Game Speed
+435|Lock Status Bar Display
+436|Make Actor Face Angle
+437|Make Actor Look At Actor
+438|Make Actor Look At Actor (Custom)
+439|Make Actor Stop Looking
+440|Make Actor Stop Looking (Custom)
+441|Make Always
+442|Make Camera Look At
+443|Make Camera Look At And Follow Actor
+444|Make Camera Look At And Follow Unit
+445|Make Once
+446|Make Ping Face Angle
+447|Make Point Face Angle
+448|Make Unit Face Angle
+449|Make Unit Face Point
+450|Make Unit Invulnerable
+451|Make Unit Look At Actor
+452|Make Unit Look At Point
+453|Make Unit Look At Unit
+454|Make Unit Stop Looking
+455|Make Unit Uncommandable
+456|Mark Conversation Reply As Read/Unread
+457|Mark Data Conversation Choice As Picked/Unpicked
+458|Mark Data Conversation Choice As Read/Unread
+459|Mark Sound For Duration Preload
+460|Minimize Leaderboard
+461|Modify Cooldown For Unit
+462|Modify Creep
+463|Modify Player Property (Integer)
+464|Modify Player Property (Real)
+465|Modify Player Score (Integer)
+466|Modify Player Score (Real)
+467|Modify User Data (Ability Command)
+468|Modify User Data (Actor)
+469|Modify User Data (Color)
+470|Modify User Data (Compare)
+471|Modify User Data (Game Link)
+472|Modify User Data (Image Attach)
+473|Modify User Data (Image Edge)
+474|Modify User Data (Image)
+475|Modify User Data (Integer)
+476|Modify User Data (Model)
+477|Modify User Data (Movie)
+478|Modify User Data (Real)
+479|Modify User Data (Sound)
+480|Modify User Data (String)
+481|Modify User Data (Text)
+482|Modify User Data (Unit)
+483|Modify User Data (Upgrade)
+484|Modify User Data (User)
+485|Modify Variable (Integer)
+486|Modify Variable (Real)
+487|Move Blockers From Point For Unit Type
+488|Move Blockers From Unit For Unit Type
+489|Move Boss Bar
+490|Move Dialog
+491|Move Dialog Item
+492|Move Inventory Item
+493|Move Leaderboard
+494|Move Objective to after Objective
+495|Move Objective to before Objective
+496|Move Objective to Beginning
+497|Move Objective to End
+498|Move Ping
+499|Move Point
+500|Move Region
+501|Move Sound
+502|Move Timer Window
+503|Move Unit Instantly
+504|Movie Add SubTitle (String)
+505|Movie Add SubTitle (Text)
+506|Movie Add Trigger Function
+507|Movie Dynamic Subtitles and Duration
+508|Movie Start Recording
+509|Movie Stop Recording
+510|Mute/Unmute Portrait
+511|Mute/Unmute Sound Channel
+512|Online Map To Map Load
+513|Open Bank
+514|Open Inventory Container
+515|Open or Close Debug Window
+516|Order Set Flag
+517|Order Set Target Item
+518|Order Set Target Passenger
+519|Order Set Target Point
+520|Order Set Target Unit
+521|Order Transport to Unload All then Despawn
+522|Order Workers to Gather Nearby Resources
+523|Orphan Actor Scope
+524|Overlay Image
+525|Override Player Option
+526|Pan Camera
+527|Pathing Add No Fly Zone
+528|Pathing Remove No Fly Zones In Region
+529|Pause AI Time
+530|Pause All Units In Unit Group
+531|Pause Cutscene
+532|Pause Mission Time
+533|Pause Sound
+534|Pause Sound Channel
+535|Pause Soundtrack
+536|Pause Tradeshow Game Time Remaining
+537|Pause/Resume/Cancel Unit Progress Bar
+538|Pause/Unpause Action Queue
+539|Pause/Unpause All Charges For Game
+540|Pause/Unpause All Charges For Player
+541|Pause/Unpause All Cooldowns For Game
+542|Pause/Unpause All Cooldowns For Player
+543|Pause/Unpause All Units
+544|Pause/Unpause Portrait
+545|Pause/Unpause Text Tag
+546|Pause/Unpause Time Of Day
+547|Pause/Unpause Timer
+548|Pause/Unpause Unit
+549|Pause/Unpause Water Transition
+550|Performance Test Get FPS
+551|Performance Test Start
+552|Performance Test Stop
+553|Pick Each Bank Backup
+554|Pick Each Integer
+555|Pick Each Integer Deprecated
+556|Pick Each Player In Player Group
+557|Pick Each Player In Player Group Deprecated
+558|Pick Each Unit In Unit Group
+559|Pick Each Unit In Unit Group Deprecated
+560|Ping Minimap
+561|Ping Minimap Possible Enemy Start Locations
+562|Play Animation
+563|Play Animation On Doodads In Region
+564|Play Announcer Number Sound
+565|Play Cutscene
+566|Play Cutscene Range Over Time
+567|Play Movie Texture On Unit Actor
+568|Play Portrait Animation
+569|Play Sound
+570|Play Sound At Point
+571|Play Sound Link as Music
+572|Play Sound On Unit
+573|Play Sound Scene
+574|Play Soundtrack
+575|Play Transmission Cue Sound
+576|Player Add Label
+577|Player Add Reward
+578|Player Remove All Labels
+579|Player Remove Label
+580|Pop Texture Group
+581|Position Subtitle to Dialog
+582|Position Subtitle to Dialog Item
+583|Preload Asset
+584|Preload Bank
+585|Preload Data Conversation Lines
+586|Preload Data Conversation Lines For Next Map
+587|Preload Image
+588|Preload Layout
+589|Preload Model
+590|Preload Model Animation
+591|Preload Model Object
+592|Preload Movie
+593|Preload Object
+594|Preload Scene
+595|Preload Script
+596|Preload Sound
+597|Preload Sound Object
+598|Preload Soundtrack
+599|Preload Unit
+600|Profile Run Start
+601|Profile Run Stop
+602|Pulse Screen Image
+603|Purchase Mercenary
+604|Purchase Purchase Item
+605|Purchase Research Item
+606|Push Texture Group
+607|Put Unit InTransport
+608|Query Animation Length By Identifier
+609|Query Animation Length By Props
+610|Query Sound Duration
+611|Refresh Boss Bar
+612|Register Events
+613|Reload Bank
+614|Remove Ability
+615|Remove All Bullies
+616|Remove All Conversation Replies
+617|Remove All Conversations
+618|Remove All Graph Data Points
+619|Remove All List Items
+620|Remove All Players From Player Group
+621|Remove All Units From Unit Group
+622|Remove Bank
+623|Remove Bank Backup
+624|Remove Bank Key
+625|Remove Bank Section
+626|Remove Behavior
+627|Remove Behavior (Player)
+628|Remove Behaviors By Category
+629|Remove Charge Used For Game
+630|Remove Charge Used For Player
+631|Remove Charge Used For Unit
+632|Remove Charge Used For Unit Ability
+633|Remove Charge Used For Unit Behavior
+634|Remove Conversation
+635|Remove Conversation Reply
+636|Remove Cooldown For Game
+637|Remove Cooldown For Player
+638|Remove Cooldown For Unit
+639|Remove Cooldown For Unit Ability
+640|Remove Cooldown For Unit Behavior
+641|Remove Cutscene Filter
+642|Remove Data Table Value
+643|Remove Death Models in Region
+644|Remove Death Models in Region Immediately
+645|Remove Doodads in Region
+646|Remove Global Cutscene Filter
+647|Remove Global Texture Group
+648|Remove Inventory Item
+649|Remove List Item
+650|Remove Mission Archive
+651|Remove Player From Leaderboard
+652|Remove Player From Player Group
+653|Remove Player Group From Player Group
+654|Remove Player Response
+655|Remove Player Talent
+656|Remove Sound Channel Digital Effect
+657|Remove Unit
+658|Remove Unit From All Waves
+659|Remove Unit From All Waves And Set Home
+660|Remove Unit From Control Group
+661|Remove Unit From Unit Group
+662|Remove Unit Group From All Waves
+663|Remove Unit Group From All Waves And Set Home
+664|Remove Unit Group From Control Group
+665|Remove Unit Group From Unit Group
+666|Remove Weapon From Unit
+667|Repeat
+668|Repeat Forever
+669|Replace Unit
+670|Replace Unit Ability
+671|Rescue Unit
+672|Rescue Unit Group
+673|Research
+674|Reset Ability Cooldowns
+675|Reset All User Data
+676|Reset Bully Rebuild Counts In Region
+677|Reset Data Conversation Line Players
+678|Reset Data Conversation Lines And Choices
+679|Reset Data Conversation State Values
+680|Reset Fog of War Alpha
+681|Reset Leaderboard Position
+682|Reset Movement Speed
+683|Reset Timer Window Position
+684|Reset Unit Info Button - Ability Tooltip
+685|Reset Unit Info Button - Button Tooltip
+686|Reset Unit Info Button - Item Tooltip
+687|Reset Unit Learn Ability
+688|Reset Unit Seed
+689|Reset User Data Instance
+690|Reset User Data Type
+691|Reset User Data Value
+692|Restart Game
+693|Restart Timer
+694|Restore Bank Backup
+695|Restore Camera
+696|Restore Unit
+697|Restore Unit Selection
+698|Return
+699|Reveal Area
+700|Revive Unit
+701|Run All Attack Waves
+702|Run All Attack Waves For All Personalities
+703|Run Attack Wave
+704|Run Cinematic
+705|Run Data Conversation
+706|Run Trigger
+707|Run Trigger By Name
+708|Save Bank
+709|Save Camera
+710|Save Data Conversation Lines And Choices
+711|Save Data Conversation State Value
+712|Save Data Conversation State Values
+713|Save Data Table Value (Ability Command)
+714|Save Data Table Value (Ability Command) - Instance
+715|Save Data Table Value (Actor Scope)
+716|Save Data Table Value (Actor Scope) - Instance
+717|Save Data Table Value (Actor)
+718|Save Data Table Value (Actor) - Instance
+719|Save Data Table Value (AI Filter)
+720|Save Data Table Value (AI Filter) - Instance
+721|Save Data Table Value (Bank)
+722|Save Data Table Value (Bank) - Instance
+723|Save Data Table Value (Boolean)
+724|Save Data Table Value (Boolean) - Instance
+725|Save Data Table Value (Byte)
+726|Save Data Table Value (Byte) - Instance
+727|Save Data Table Value (Camera Object)
+728|Save Data Table Value (Camera Object) - Instance
+729|Save Data Table Value (Cinematic)
+730|Save Data Table Value (Cinematic) - Instance
+731|Save Data Table Value (Color)
+732|Save Data Table Value (Color) - Instance
+733|Save Data Table Value (Control)
+734|Save Data Table Value (Control) - Instance
+735|Save Data Table Value (Conversation Reply)
+736|Save Data Table Value (Conversation Reply) - Instance
+737|Save Data Table Value (Conversation)
+738|Save Data Table Value (Conversation) - Instance
+739|Save Data Table Value (Dialog Item)
+740|Save Data Table Value (Dialog Item) - Instance
+741|Save Data Table Value (Dialog)
+742|Save Data Table Value (Dialog) - Instance
+743|Save Data Table Value (Difficulty Level)
+744|Save Data Table Value (Difficulty Level) - Instance
+745|Save Data Table Value (Doodad)
+746|Save Data Table Value (Doodad) - Instance
+747|Save Data Table Value (Integer)
+748|Save Data Table Value (Integer) - Instance
+749|Save Data Table Value (Marker)
+750|Save Data Table Value (Marker) - Instance
+751|Save Data Table Value (Objective)
+752|Save Data Table Value (Objective) - Instance
+753|Save Data Table Value (Order)
+754|Save Data Table Value (Order) - Instance
+755|Save Data Table Value (Ping)
+756|Save Data Table Value (Ping) - Instance
+757|Save Data Table Value (Planet)
+758|Save Data Table Value (Planet) - Instance
+759|Save Data Table Value (Player Color)
+760|Save Data Table Value (Player Color) - Instance
+761|Save Data Table Value (Player Group)
+762|Save Data Table Value (Player Group) - Instance
+763|Save Data Table Value (Point)
+764|Save Data Table Value (Point) - Instance
+765|Save Data Table Value (Portrait)
+766|Save Data Table Value (Portrait) - Instance
+767|Save Data Table Value (Real)
+768|Save Data Table Value (Real) - Instance
+769|Save Data Table Value (Region)
+770|Save Data Table Value (Region) - Instance
+771|Save Data Table Value (Revealer)
+772|Save Data Table Value (Revealer) - Instance
+773|Save Data Table Value (Sound Link)
+774|Save Data Table Value (Sound Link) - Instance
+775|Save Data Table Value (Sound)
+776|Save Data Table Value (Sound) - Instance
+777|Save Data Table Value (String)
+778|Save Data Table Value (String) - Instance
+779|Save Data Table Value (Text Tag)
+780|Save Data Table Value (Text Tag) - Instance
+781|Save Data Table Value (Text)
+782|Save Data Table Value (Text) - Instance
+783|Save Data Table Value (Timer)
+784|Save Data Table Value (Timer) - Instance
+785|Save Data Table Value (Transmission Source)
+786|Save Data Table Value (Transmission Source) - Instance
+787|Save Data Table Value (Transmission)
+788|Save Data Table Value (Transmission) - Instance
+789|Save Data Table Value (Trigger)
+790|Save Data Table Value (Trigger) - Instance
+791|Save Data Table Value (Unit Filter)
+792|Save Data Table Value (Unit Filter) - Instance
+793|Save Data Table Value (Unit Group)
+794|Save Data Table Value (Unit Group) - Instance
+795|Save Data Table Value (Unit Reference)
+796|Save Data Table Value (Unit Reference) - Instance
+797|Save Data Table Value (Unit)
+798|Save Data Table Value (Unit) - Instance
+799|Save Data Table Value (Wave Info)
+800|Save Data Table Value (Wave Info) - Instance
+801|Save Data Table Value (Wave Target)
+802|Save Data Table Value (Wave Target) - Instance
+803|Save Data Table Value (Wave)
+804|Save Data Table Value (Wave) - Instance
+805|Save User Data Instance
+806|Save User Data Type
+807|Scout
+808|Select List Item
+809|Select Main Shadow Light
+810|Select Next Subgroup
+811|Select Previous Subgroup
+812|Select/Deselect Unit
+813|Select/Deselect Unit Group
+814|Send Actor Message
+815|Send Actor Message As Text
+816|Send Actor Message As Text Via Name
+817|Send Actor Message To Actor Region
+818|Send Actor Message To Actor Region With Filters
+819|Send Actor Message To Game Region
+820|Send Actor Message To Game Region With Filters
+821|Send Actor Message To Scope
+822|Send Actor Message To Unit
+823|Send Actor Message Via Name
+824|Send Attack Wave
+825|Send Generic Event
+826|Send Stat Event
+827|Send Transmission (Simple)
+828|Send Transmission For Player
+829|Set Ability Default Submenu
+830|Set Achievement Panel Category
+831|Set Achievement Term Quantity
+832|Set Achievement Toast Style
+833|Set Alignment Of Text Tag
+834|Set All Sound Channel Volumes
+835|Set All Sound Channel Volumes (Standard Timing)
+836|Set All States
+837|Set Alliance
+838|Set Alliance (One-Way)
+839|Set Alliance Aspect
+840|Set Alliance Aspect For Player Group
+841|Set Alliance Between Two Player Groups
+842|Set Alliance For Player Group
+843|Set Animation Completion
+844|Set Animation Duration
+845|Set Animation Time
+846|Set Animation Time Scale
+847|Set APM
+848|Set Attack Wave Bully Percent
+849|Set Attack Wave Gather Early No Replace
+850|Set Attack Wave Gather Point
+851|Set Attack Wave Keep Alive
+852|Set Background Border Size Of Text Tag
+853|Set Background Image Of Text Tag
+854|Set Background Model
+855|Set Background Offset Of Text Tag
+856|Set Bank Option
+857|Set BattleNet Button Offset
+858|Set Behavior Count
+859|Set Boss Bar Boss
+860|Set Boss Bar Current Value
+861|Set Boss Bar Maximum Value
+862|Set Boss Bar Race
+863|Set Bully Rebuild Delay
+864|Set Camera Bounds
+865|Set Camera Channel
+866|Set Camera Channel On Portrait
+867|Set Camera Data
+868|Set Camera Mouse Rotation Speed
+869|Set Camera Object Property
+870|Set Camera Object Target
+871|Set Campaign Progress Campaign Finished
+872|Set Campaign Progress Image
+873|Set Campaign Progress Text
+874|Set Campaign Progress Tutorial Finished
+875|Set Challenge Completed
+876|Set Challenge High Score
+877|Set Challenge Score Text
+878|Set Character Sheet Description Text
+879|Set Character Sheet Model
+880|Set Character Sheet Name Text
+881|Set Charge Remaining
+882|Set Cinematic Transition Style
+883|Set Color Of Text Tag
+884|Set Command Type Disabled Message
+885|Set Conversation Reply Text
+886|Set Coop Flag
+887|Set Creep Speed
+888|Set Custom Menu Dialog Item Shortcut
+889|Set Custom Menu Dialog Item Text
+890|Set Cutscene Filter
+891|Set Cutscene Time
+892|Set Data Conversation Camera
+893|Set Data Conversation Choice Picked Count
+894|Set Data Conversation Line Picked Count
+895|Set Data Conversation Line Players
+896|Set Data Conversation Listener Gender
+897|Set Data Conversation Portrait
+898|Set Data Conversation State
+899|Set Data Conversation Unit
+900|Set Day Length
+901|Set Debug Message File
+902|Set Debug Message Filter
+903|Set Debug Message Name
+904|Set Debug Window Message Color
+905|Set Default Gather Point For Personality
+906|Set Default Melee Options For All Players
+907|Set Default Soundtrack
+908|Set Defense Radii
+909|Set Dialog Background
+910|Set Dialog Enabled
+911|Set Dialog Fullscreen
+912|Set Dialog Item Accept Mouse
+913|Set Dialog Item Achievement
+914|Set Dialog Item Actor
+915|Set Dialog Item Allowed Mouse Buttons
+916|Set Dialog Item Alpha Mask
+917|Set Dialog Item Animation
+918|Set Dialog Item Animation Duration
+919|Set Dialog Item Animation Index
+920|Set Dialog Item Animation Time
+921|Set Dialog Item Background Visible
+922|Set Dialog Item Behavior
+923|Set Dialog Item Blend Mode
+924|Set Dialog Item Border Color
+925|Set Dialog Item Border Image
+926|Set Dialog Item Border Visible
+927|Set Dialog Item Camera
+928|Set Dialog Item Checked
+929|Set Dialog Item Click On Down
+930|Set Dialog Item Color
+931|Set Dialog Item Current Value
+932|Set Dialog Item Custom Tooltip
+933|Set Dialog Item Cutscene
+934|Set Dialog Item Desaturated
+935|Set Dialog Item Desaturation Color
+936|Set Dialog Item Edit Value
+937|Set Dialog Item Fill Color
+938|Set Dialog Item Flash
+939|Set Dialog Item Force Visible
+940|Set Dialog Item Handle
+941|Set Dialog Item Hotkey
+942|Set Dialog Item Hover Image
+943|Set Dialog Item Image
+944|Set Dialog Item Image Type
+945|Set Dialog Item Light
+946|Set Dialog Item Maximum Value
+947|Set Dialog Item Minimum Value
+948|Set Dialog Item Model
+949|Set Dialog Item Movie
+950|Set Dialog Item Muted
+951|Set Dialog Item Observed Type
+952|Set Dialog Item Paused
+953|Set Dialog Item PlayerId
+954|Set Dialog Item Render Priority
+955|Set Dialog Item Render Type
+956|Set Dialog Item Rotation
+957|Set Dialog Item Score Value Link
+958|Set Dialog Item Size
+959|Set Dialog Item Size to Parent
+960|Set Dialog Item State Index
+961|Set Dialog Item Style
+962|Set Dialog Item Submenu
+963|Set Dialog Item Team Color
+964|Set Dialog Item Team Color Index
+965|Set Dialog Item Text
+966|Set Dialog Item Text Writeout
+967|Set Dialog Item Text Writeout Duration
+968|Set Dialog Item Tiled
+969|Set Dialog Item Tint Color
+970|Set Dialog Item to Use Aspect Uncorrection
+971|Set Dialog Item Toggled
+972|Set Dialog Item Tooltip
+973|Set Dialog Item Transition Model
+974|Set Dialog Item Unit
+975|Set Dialog Item Unit Group
+976|Set Dialog Item Unit Link
+977|Set Dialog Item Use Transition
+978|Set Dialog Observed Type
+979|Set Dialog Offscreen
+980|Set Dialog Render Priority
+981|Set Dialog RTT Channel
+982|Set Dialog Size
+983|Set Dialog Title
+984|Set Dialog Transparency
+985|Set Difficulty Parameter
+986|Set Edge Image Of Text Tag
+987|Set Enforce Fog Of War Of Text Tag
+988|Set Faded Transparency Of Text Tag
+989|Set Flag
+990|Set Fog Color
+991|Set Fog Color Over Time
+992|Set Fog Density
+993|Set Fog Density Over Time
+994|Set Fog Falloff
+995|Set Fog Falloff Over Time
+996|Set Fog of War Alpha
+997|Set Fog Start Height
+998|Set Fog Start Height Over Time
+999|Set Font Size Of Text Tag
+1000|Set Game Menu Dialog Item Shortcut
+1001|Set Game Menu Dialog Item Text
+1002|Set Game Pausing Allowed
+1003|Set Game Speed
+1004|Set Gap Width For Timer Window
+1005|Set Gas Peon Count Override
+1006|Set Global Cutscene Filter
+1007|Set Global Time Scale
+1008|Set Graph Data Color
+1009|Set Graph Data Name
+1010|Set Graph Maximum X Visible
+1011|Set Graph Maximum Y Visible
+1012|Set Graph Minimum X Visible
+1013|Set Graph Minimum Y Visible
+1014|Set Gravity Of Text Tag
+1015|Set Harvest Rate
+1016|Set Height For Timer Window
+1017|Set Help Item Darkened When Viewed
+1018|Set Help Panel Default Visibility
+1019|Set Hero Leader Panel Enabled
+1020|Set Hot Key Profile
+1021|Set Ignored By Wave
+1022|Set Leaderboard Column Width
+1023|Set Leaderboard Columns
+1024|Set Leaderboard Group For Row
+1025|Set Leaderboard Groups
+1026|Set Leaderboard Item Alignment
+1027|Set Leaderboard Item Background Color
+1028|Set Leaderboard Item Font Size
+1029|Set Leaderboard Item Icon
+1030|Set Leaderboard Item Progress Color
+1031|Set Leaderboard Item Progress Range
+1032|Set Leaderboard Item Progress Value
+1033|Set Leaderboard Item Sort Order
+1034|Set Leaderboard Item Text
+1035|Set Leaderboard Item Text Color
+1036|Set Leaderboard Minimize Button Color
+1037|Set Leaderboard Name
+1038|Set Leaderboard Player Column
+1039|Set Leaderboard Rows
+1040|Set Leaderboard Sort Column
+1041|Set Lighting
+1042|Set Lighting For Player
+1043|Set Main Town
+1044|Set Maximum Size Of Text Tag
+1045|Set Mercenary Availability Text
+1046|Set Mercenary Cost
+1047|Set Mercenary CostText
+1048|Set Mercenary Description Text
+1049|Set Mercenary Player Group
+1050|Set Mercenary Portrait Image
+1051|Set Mercenary Portrait Model
+1052|Set Mercenary Recently Purchased
+1053|Set Mercenary Scene
+1054|Set Mercenary Special Text
+1055|Set Mercenary State
+1056|Set Mercenary Title Text
+1057|Set Mercenary Unit Text
+1058|Set Minimap Background Color
+1059|Set Minimap Bounds
+1060|Set Minimum Bully Count
+1061|Set Minimum Game Speed
+1062|Set Minimum Letterbox Height
+1063|Set Mission Archive Best Time Text
+1064|Set Mission Archive Bonus Text
+1065|Set Mission Archive Bonus Title
+1066|Set Mission Archive Button Image
+1067|Set Mission Archive Button Text
+1068|Set Mission Archive Difficulty Best Time Text
+1069|Set Mission Archive Difficulty Completed
+1070|Set Mission Archive Mission Image
+1071|Set Mission Archive Mission Text
+1072|Set Mission Archive Priority
+1073|Set Mission Archive Research Text
+1074|Set Mission Archive Research Title
+1075|Set Mission Archive Scene Image
+1076|Set Mission Archive Scene Text
+1077|Set Mission Archive State
+1078|Set Next Loading Screen
+1079|Set Next Loading Screen Image Scale
+1080|Set Next Loading Screen Text Position
+1081|Set Next Map
+1082|Set Next Mission Difficulty
+1083|Set Next Movie
+1084|Set Num Scouts
+1085|Set Objective Description
+1086|Set Objective Players
+1087|Set Objective Priority
+1088|Set Objective State
+1089|Set Objective Text
+1090|Set Objective Type
+1091|Set Path Display Abil Class Filter
+1092|Set Path Display Color
+1093|Set Path Display Destination Point
+1094|Set Path Display Destination Unit
+1095|Set Path Display Line Texture
+1096|Set Path Display Line Tile Length
+1097|Set Path Display Line Width
+1098|Set Path Display Minimum Linear Distance
+1099|Set Path Display Minimum Travel Distance
+1100|Set Path Display Minimum Turn Count
+1101|Set Path Display Source Point
+1102|Set Path Display Source Unit
+1103|Set Path Display Step Midpoint
+1104|Set Path Display Step Model
+1105|Set Path Display Step Model Scale
+1106|Set Path Display Visibility
+1107|Set Ping Color
+1108|Set Ping Depth
+1109|Set Ping Duration
+1110|Set Ping Model
+1111|Set Ping Observer Display
+1112|Set Ping Players
+1113|Set Ping Scale
+1114|Set Ping Tooltip
+1115|Set Ping Use Player Vision
+1116|Set Ping Use Unit Team Color
+1117|Set Ping Use Unit Visibility
+1118|Set Planet Background Model
+1119|Set Planet Bonus Text
+1120|Set Planet Bonus Title
+1121|Set Planet Contact Actor
+1122|Set Planet Contact Model
+1123|Set Planet Contact Name
+1124|Set Planet Contact Title
+1125|Set Planet Contact Tooltip
+1126|Set Planet Description
+1127|Set Planet Frame Text
+1128|Set Planet Mission Name
+1129|Set Planet Mission Title
+1130|Set Planet Model
+1131|Set Planet Name
+1132|Set Planet Panel Background Image
+1133|Set Planet Panel Close Button Shortcut
+1134|Set Planet Panel Close Button Text
+1135|Set Planet Panel Close Button Tooltip
+1136|Set Planet Panel Contact Button State
+1137|Set Planet Players
+1138|Set Planet Primary Objective Text
+1139|Set Planet Primary Objective Title
+1140|Set Planet Research Text
+1141|Set Planet Research Title
+1142|Set Planet Reward Text
+1143|Set Planet Reward Title
+1144|Set Planet Secondary Objective Text
+1145|Set Planet Secondary Objective Title
+1146|Set Planet State
+1147|Set Planet Technology Icon
+1148|Set Planet Technology Name
+1149|Set Planet Technology Text
+1150|Set Planet Technology Title
+1151|Set Planet Technology Tooltip
+1152|Set Planet Technology Unit
+1153|Set Planet Tooltip
+1154|Set Playable Map Area
+1155|Set Player Bounds
+1156|Set Player Color
+1157|Set Player Commander
+1158|Set Player Commander Level
+1159|Set Player Commander Mastery Level
+1160|Set Player Death Timer
+1161|Set Player Difficulty Level
+1162|Set Player Hero
+1163|Set Player Mount
+1164|Set Player Race
+1165|Set Player Skin
+1166|Set Player Spray
+1167|Set Point Height
+1168|Set Portrait Actor
+1169|Set Portrait Border Texture
+1170|Set Portrait Camera
+1171|Set Portrait Channel
+1172|Set Portrait Light
+1173|Set Portrait Model
+1174|Set Portrait Model And Play Animation
+1175|Set Portrait Mouse Target
+1176|Set Portrait Position
+1177|Set Portrait Render Type
+1178|Set Portrait Size
+1179|Set Portrait Team Color
+1180|Set Portrait Tint Color
+1181|Set Portrait Transition Model
+1182|Set Position Of Text Tag
+1183|Set Production Cap For Player
+1184|Set Purchase Category Name
+1185|Set Purchase Category Players
+1186|Set Purchase Category Slot
+1187|Set Purchase Category State
+1188|Set Purchase Group Icon
+1189|Set Purchase Group Name
+1190|Set Purchase Group Players
+1191|Set Purchase Group Slot
+1192|Set Purchase Group State
+1193|Set Purchase Group Tooltip
+1194|Set Purchase Group Unit
+1195|Set Purchase Item Cost
+1196|Set Purchase Item Description
+1197|Set Purchase Item Icon
+1198|Set Purchase Item Movie
+1199|Set Purchase Item Name
+1200|Set Purchase Item Players
+1201|Set Purchase Item Recently Purchased
+1202|Set Purchase Item Slot
+1203|Set Purchase Item State
+1204|Set Purchase Item Tooltip
+1205|Set Random Seed
+1206|Set Rebuild Count (Default)
+1207|Set Rebuild Count (Specific)
+1208|Set Research Category Current Level
+1209|Set Research Category Last Level
+1210|Set Research Category Name
+1211|Set Research Item Confirmation
+1212|Set Research Item Description
+1213|Set Research Item Icon
+1214|Set Research Item Movie
+1215|Set Research Item Name
+1216|Set Research Item Recently Purchased
+1217|Set Research Item State
+1218|Set Research Item Tooltip
+1219|Set Research Tier Max Purchases Allowed
+1220|Set Research Tier Required Level
+1221|Set Resource Trade Countdown Time
+1222|Set Resource Trading Allowed
+1223|Set Resource Trading Major Step
+1224|Set Resource Trading Minor Step
+1225|Set Restart Loading Screen Tip
+1226|Set Score Timer
+1227|Set Scout Times
+1228|Set Screen Button Border Image
+1229|Set Screen Button Flashing Border Image
+1230|Set Screen Mode
+1231|Set Selected Hero Talent Tree
+1232|Set Selected Mercenary
+1233|Set Selected Mission Archive
+1234|Set Selected Planet
+1235|Set Selected Purchase Category
+1236|Set Selected Purchase Item
+1237|Set Selected Research Item
+1238|Set Sound Channel Volume
+1239|Set Sound Factors
+1240|Set Sound Listener Gender
+1241|Set Sound Reverb For Players
+1242|Set Sound Volume
+1243|Set Soundtrack Delay
+1244|Set Starting Resources For All Players
+1245|Set Starting Resources For Player
+1246|Set Starting Units For All Players
+1247|Set Starting Units For Player
+1248|Set State
+1249|Set State Of Unit Filter
+1250|Set Stock
+1251|Set StockAlias
+1252|Set StockEx
+1253|Set StockExpand
+1254|Set StockFree
+1255|Set StockOpt
+1256|Set StockTown
+1257|Set StockUnitNext
+1258|Set Style For Timer Window
+1259|Set Tactical AI Range
+1260|Set Tactical AI Think
+1261|Set Talent Tier Enabled
+1262|Set Talent Tree Hero Level
+1263|Set Talent Tree Pause Game When Selection Panel Shown
+1264|Set Talent Tree Selection Panel Auto Show
+1265|Set Talent Tree Selection Panel Dismiss Allowed
+1266|Set Talent Upgrade Required
+1267|Set Talents Enabled
+1268|Set Target Escort For Attack Waves
+1269|Set Target Escort For Attack Waves, No Leashing
+1270|Set Target Gather Defense For Attack Waves
+1271|Set Target Gather Offense For Attack Waves
+1272|Set Target Melee For Attack Waves
+1273|Set Target Melee Harass For Attack Waves
+1274|Set Target Merge For Attack Waves
+1275|Set Target Patrol For Attack Waves
+1276|Set Target Player For Attack Waves
+1277|Set Target Point For Attack Waves
+1278|Set Target Region For Attack/Defense Waves
+1279|Set Target Unit For Attack Waves
+1280|Set Target UnitArea For Attack Waves
+1281|Set Target UnitGroup For Attack Waves
+1282|Set Targeting Order
+1283|Set Tech Flag State
+1284|Set Text Alignment Of Text Tag
+1285|Set Text Expression Token
+1286|Set Text Of Text Tag
+1287|Set Time Format For Timer Window
+1288|Set Time Of Day
+1289|Set Time Of Day (Hours, Minutes, Seconds)
+1290|Set Time Of Day (Seconds)
+1291|Set Time of Day Lighting
+1292|Set Time of Day Lighting For Player
+1293|Set Time Of Text Tag
+1294|Set Timer For Timer Window
+1295|Set Timer Window Color
+1296|Set Timer Window Image Type
+1297|Set Timer Window Progress Color
+1298|Set Title For Timer Window
+1299|Set Tradeshow Game Time Remaining
+1300|Set Transition Map
+1301|Set Transmission Source Bypass Message Log
+1302|Set Transmission Source Pause Allowed
+1303|Set Transmission Source Streaming Allowed
+1304|Set Unit Attribute Point
+1305|Set Unit Behavior Duration
+1306|Set Unit Behavior Duration Remaining
+1307|Set Unit Behavior Spawn Count
+1308|Set Unit Behavior User Data
+1309|Set Unit Color
+1310|Set Unit Custom Value
+1311|Set Unit Evaluation Custom Index
+1312|Set Unit Highlight Cursor
+1313|Set Unit Info
+1314|Set Unit Info Button - Ability Tooltip
+1315|Set Unit Info Button - Button Tooltip
+1316|Set Unit Info Button - Item Tooltip
+1317|Set Unit Info SubTip
+1318|Set Unit Info Text
+1319|Set Unit Info Tip
+1320|Set Unit Model Variation
+1321|Set Unit Ping Cursor
+1322|Set Unit Progress
+1323|Set Unit Property
+1324|Set Unit Scale
+1325|Set Unit Seed
+1326|Set Unit State
+1327|Set Upgrade Level For Player
+1328|Set Variable
+1329|Set Variable (Param)
+1330|Set Velocity Of Text Tag
+1331|Set Victory Panel Achievements Title
+1332|Set Victory Panel Background Image
+1333|Set Victory Panel Background Model
+1334|Set Victory Panel Custom Statistic Text
+1335|Set Victory Panel Custom Statistic Value
+1336|Set Victory Panel Mission Text
+1337|Set Victory Panel Mission Title
+1338|Set Victory Panel Reward Credits
+1339|Set Victory Panel Reward Text
+1340|Set Victory Panel Reward Title
+1341|Set Victory Panel Statistics Title
+1342|Set Victory Panel Summary Background Image
+1343|Set Victory Panel Time Text
+1344|Set Victory Panel Time Title
+1345|Set Victory Panel Victory Text
+1346|Set Visibility Type Of Text Tag
+1347|Set Water State
+1348|Set Weapon Cooldown Remaining
+1349|Shake Camera
+1350|Shake Camera Using Preset
+1351|Share Vision of Unit
+1352|Show Cinematic Text
+1353|Show Custom Menu
+1354|Show Mission Archive in Missions Completed Total
+1355|Show Standard Menu
+1356|Show Text Crawl
+1357|Show Unit Status Bar
+1358|Show/Hide Ability For Unit
+1359|Show/Hide Achievement Panel
+1360|Show/Hide Alert Type
+1361|Show/Hide All Leaderboards
+1362|Show/Hide Background For Text Tag
+1363|Show/Hide Boss Bar
+1364|Show/Hide Conversation
+1365|Show/Hide Custom Menu Dialog Item
+1366|Show/Hide Cutscene
+1367|Show/Hide Data Conversation Line For Observers
+1368|Show/Hide Dialog
+1369|Show/Hide Dialog Background
+1370|Show/Hide Dialog Item
+1371|Show/Hide Doodads In Region
+1372|Show/Hide Environment
+1373|Show/Hide Game Menu Dialog Item
+1374|Show/Hide Game UI
+1375|Show/Hide Help For Unit
+1376|Show/Hide Help Panel Tech Tree Race
+1377|Show/Hide Leaderboard
+1378|Show/Hide Leaderboard Item Progress Bar
+1379|Show/Hide Leaderboard Minimize Button
+1380|Show/Hide Message Log
+1381|Show/Hide Minimap Camera Field of View
+1382|Show/Hide Mouse Cursor
+1383|Show/Hide Objective
+1384|Show/Hide Ping
+1385|Show/Hide Placement Models
+1386|Show/Hide Player Pings
+1387|Show/Hide Portrait
+1388|Show/Hide Resource
+1389|Show/Hide Screen Button
+1390|Show/Hide Screen Image
+1391|Show/Hide Screen Label
+1392|Show/Hide Terrain
+1393|Show/Hide Text Shadow For Text Tag
+1394|Show/Hide Text Tag
+1395|Show/Hide Timer Window
+1396|Show/Hide Timer Window Border
+1397|Show/Hide Timer Window Progress Bar
+1398|Show/Hide UI Frame
+1399|Show/Hide Unit
+1400|Show/Hide World
+1401|Simulate Data Conversation
+1402|Skip Remaining Actions
+1403|Skip To Sound Offset
+1404|Sleep/WakeUp Unit
+1405|Start AI
+1406|Start AI Personalities For All Players
+1407|Start AI Personality For Player
+1408|Start Campaign AI For All Players
+1409|Start Campaign AI For Player
+1410|Start Melee AI For All Players
+1411|Start Timer
+1412|Stop All Attack Waves For Personality
+1413|Stop All Model Sounds
+1414|Stop All Transmissions
+1415|Stop All Trigger Sounds
+1416|Stop All Video Textures On Unit
+1417|Stop Cinematic
+1418|Stop Cutscene
+1419|Stop Data Conversation
+1420|Stop Flashing Screen Button
+1421|Stop Group Transmissions
+1422|Stop Pulsing Screen Image
+1423|Stop Shaking Camera
+1424|Stop Sound
+1425|Stop Sound Channel
+1426|Stop Sound Link Currently Playing as Music
+1427|Stop Soundtrack (Current & Queued)
+1428|Stop Soundtrack (Current)
+1429|Stop Timer
+1430|Stop Transmission
+1431|Stop Trigger
+1432|Store Actor For Unit
+1433|Store Boolean
+1434|Store Integer
+1435|Store Ping For Unit
+1436|Store Point
+1437|Store Point For Unit
+1438|Store Real
+1439|Store String
+1440|Store Text
+1441|Store Text Tag For Unit
+1442|Store Unit
+1443|Store Unit Selection
+1444|Story Create Planet Panel
+1445|Story Mode
+1446|Story Set Change
+1447|Switch
+1448|Tactical AI - Cast
+1449|Tactical AI - Flee
+1450|Tactical AI Filter Alliance
+1451|Tactical AI Filter Energy
+1452|Tactical AI Filter In Combat
+1453|Tactical AI Filter Life
+1454|Tactical AI Filter Life Lost
+1455|Tactical AI Filter Life Modifier
+1456|Tactical AI Filter Life Per Marker
+1457|Tactical AI Filter Life Sort Reference
+1458|Tactical AI Filter Markers
+1459|Tactical AI Filter Melee
+1460|Tactical AI Filter Movement Plane
+1461|Tactical AI Filter Range
+1462|Tactical AI Filter Remove Self
+1463|Tactical AI Filter Shields
+1464|Tactical AI Filter Unit Filter
+1465|Talent Tree Clear Tier
+1466|Text Message
+1467|Text Message to Game User
+1468|Train
+1469|Transfer Behavior
+1470|Transmission Comment (Conversation)
+1471|Transmission Comment (Sound)
+1472|Transmission Is Complete
+1473|Transport Disable AutoPickup
+1474|Transport Set Panic
+1475|Transport Set Return
+1476|Turn Ability Highlight On/Off
+1477|Turn All Animation Properties Off
+1478|Turn All Attack Waves On/Off
+1479|Turn Animation Properties Off
+1480|Turn Animation Properties On
+1481|Turn Animation Properties On With Blend In/Out
+1482|Turn Attack Wave On/Off
+1483|Turn Button Highlight On/Off
+1484|Turn Camera Height Displacement On/Off
+1485|Turn Camera Height Smoothing On/Off
+1486|Turn Camera Mouse Rotation On/Off
+1487|Turn Camera Vertical Field Of View On/Off
+1488|Turn Fixed Random Seed On/Off
+1489|Turn Leaderboard Minimize Button On/Off
+1490|Turn Player Flag On/Off
+1491|Turn Portrait Background On/Off
+1492|Turn Portrait Border On/Off
+1493|Turn Portrait Fullscreen On/Off
+1494|Turn Portrait Offscreen On/Off
+1495|Turn Portrait Transition On/Off
+1496|Turn Transmission Option On/Off
+1497|Turn Trigger On/Off
+1498|Unit Object Group Call For Help
+1499|Unit Show Kill Display
+1500|Unit Stats Start
+1501|Unit Stats Stop
+1502|Unit XP Add XP
+1503|Unit XP Set Current Level
+1504|Unit XP Set Current XP
+1505|Unit XP Set XP For Level
+1506|Unload Animation for Unit Type
+1507|Unload Model Animation
+1508|Unload Unit Model
+1509|Unlock Ally Color Setting
+1510|Unlock Flyer Helper Display
+1511|Unlock Status Bar Display
+1512|Update Revealer
+1513|Use Model Camera
+1514|Wait
+1515|Wait for Animation
+1516|Wait for Animation Length Queries
+1517|Wait For Bank
+1518|Wait For Condition
+1519|Wait For Condition With Maximum Duration
+1520|Wait For Cutscene To End
+1521|Wait For Portrait To Load
+1522|Wait For Profiler Logging To End
+1523|Wait For Sound
+1524|Wait For Sound Durations
+1525|Wait For Soundtrack
+1526|Wait For Timer
+1527|Wait For Transmission
+1528|Wait For Trigger
+1529|Wait Until Unit Becomes Idle
+1530|Wait Until Unit Group Becomes Idle
+1531|Wave Add Info
+1532|Wave Add Unit
+1533|Wave Add Unit Priority
+1534|Wave Delete
+1535|Wave Info Attack
+1536|Wave Info Suicide
+1537|Wave Merge
+1538|Wave Remove Unit
+1539|Wave Set
+1540|Wave Set Type
+1541|Wave Target Add Waypoint
+1542|Wave Target Clear Waypoints
+1543|While
+1544|Zoom Camera

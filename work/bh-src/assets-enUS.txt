@@ -1,0 +1,4 @@
+DocInfo/Author=Dark.Revenant
+DocInfo/DescLong=Asset files used in -Mafia- to ease up on bandwidth.
+DocInfo/DescShort=Assets for Mafia
+DocInfo/Name=Mafia Assets A

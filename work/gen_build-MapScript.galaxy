@@ -1,0 +1,153 @@
+//==================================================================================================
+// 
+// Generated Map Script
+// 
+// Name:   Just Another StarCraft II Map
+// 
+//==================================================================================================
+include "TriggerLibs/NativeLib"
+
+//--------------------------------------------------------------------------------------------------
+// Library Initialization
+//--------------------------------------------------------------------------------------------------
+void InitLibs () {
+    libNtve_InitLib();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Global Variables
+//--------------------------------------------------------------------------------------------------
+int gv_killCount;
+int gv_loopI;
+
+void InitGlobals () {
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger Variables
+//--------------------------------------------------------------------------------------------------
+trigger gt_GenInit;
+trigger gt_GenSpawn;
+trigger gt_GenKill;
+trigger gt_GenLoop;
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: GenInit
+//--------------------------------------------------------------------------------------------------
+bool gt_GenInit_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaSubtitle, StringExternal("Param/Value/AF901A7F"));
+    libNtve_gf_UnitCreateFacingPoint(1, "Marine", 0, 1, Point(64.0, 64.0), Point(64.0, 64.0));
+    CameraPan(1, Point(64.0, 64.0), 0.0, 0.0, 0.0, true);
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_GenInit_Init () {
+    gt_GenInit = TriggerCreate("gt_GenInit_Func");
+    TriggerAddEventMapInit(gt_GenInit);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: GenSpawn
+//--------------------------------------------------------------------------------------------------
+bool gt_GenSpawn_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaSubtitle, StringExternal("Param/Value/7578A740"));
+    libNtve_gf_UnitCreateFacingPoint(1, "Zergling", 0, 2, Point(RandomFixed(20.0, 100.0), RandomFixed(20.0, 100.0)), Point(64.0, 64.0));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_GenSpawn_Init () {
+    gt_GenSpawn = TriggerCreate("gt_GenSpawn_Func");
+    TriggerAddEventTimePeriodic(gt_GenSpawn, 4.5, c_timeGame);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: GenKill
+//--------------------------------------------------------------------------------------------------
+bool gt_GenKill_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    gv_killCount += 1;
+    if ((gv_killCount >= 3)) {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaSubtitle, StringExternal("Param/Value/C07EC13F"));
+    }
+    else {
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaSubtitle, IntToText(gv_killCount));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_GenKill_Init () {
+    gt_GenKill = TriggerCreate("gt_GenKill_Func");
+    TriggerAddEventUnitDied(gt_GenKill, null);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger: GenLoop
+//--------------------------------------------------------------------------------------------------
+bool gt_GenLoop_Func (bool testConds, bool runActions) {
+    // Automatic Variable Declarations
+    const int auto8648749F_ae = 3;
+    const int auto8648749F_ai = 1;
+
+    // Conditions
+    if (testConds) {
+        if (!((gv_killCount >= 3))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    gv_loopI = 1;
+    for ( ; ( (auto8648749F_ai >= 0 && gv_loopI <= auto8648749F_ae) || (auto8648749F_ai < 0 && gv_loopI >= auto8648749F_ae) ) ; gv_loopI += auto8648749F_ai ) {
+        libNtve_gf_UnitCreateFacingPoint(1, "Marine", 0, 1, Point(64.0, 64.0), Point(64.0, 64.0));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_GenLoop_Init () {
+    gt_GenLoop = TriggerCreate("gt_GenLoop_Func");
+    TriggerAddEventTimePeriodic(gt_GenLoop, 30.0, c_timeGame);
+}
+
+//--------------------------------------------------------------------------------------------------
+// Trigger Initialization
+//--------------------------------------------------------------------------------------------------
+void InitTriggers () {
+    gt_GenInit_Init();
+    gt_GenSpawn_Init();
+    gt_GenKill_Init();
+    gt_GenLoop_Init();
+}
+
+//--------------------------------------------------------------------------------------------------
+// Map Initialization
+//--------------------------------------------------------------------------------------------------
+void InitMap () {
+    InitLibs();
+    InitGlobals();
+    InitTriggers();
+}

@@ -1,0 +1,36 @@
+﻿DocInfo/HowToPlayAdvanced00=主机设置游戏的设定或读取已保存的设定。通过运行"保存格"模式创建你的最佳保存。
+DocInfo/HowToPlayAdvanced01=为了提升定制性，大多数角色都有一些特定的进阶选项。
+DocInfo/HowToPlayAdvanced02=一些设定有一些特殊规则，像是随机角色列表。
+DocInfo/HowToPlayAdvanced03=获取积分来解锁模型或彩色名字。
+DocInfo/HowToPlayAdvanced04=在死后可继续玩俄罗斯轮盘!
+DocInfo/HowToPlayBasic00=你会被指定为一个角色，你的角色会列出你的取胜目标和你的能力。
+DocInfo/HowToPlayBasic01=在白天时投票处 决某人并祈祷在夜晚中生存。
+DocInfo/HowToPlayBasic02=一次再一次地说谎，并做所有你能做的去生存。
+DocInfo/HowToPlayWinning00=计划，密谋，说谎，甚至用谋爱使你通往胜利。不同的角色有不同的取胜目标!
+DocInfo/PatchNote021=修复bug：
+DocInfo/PatchNote022=冤魂ON的时候可以正确的干掉保镖
+DocInfo/PatchNote023=冤魂无论开关，两次后都会清理目标
+DocInfo/PatchNote024=生存触发的无限食物bug
+Param/Value/03FBCCCA=狱警
+Param/Value/0839886A=<s val="ModLeftSize16"><c val="FFFF00">你的其中一个目标在夜间s亡了，你的另一个目标将会自爱！</c></s>
+Param/Value/0AA7E5E4=<s val="ModLeftSize16"><c val="FF0000">与你命运相连的人已经死了！你无法按捺自己的悲伤选择了自爱！</c></c></s>
+Param/Value/0DE54F3E=<s val="ModLeftSize16Bold"><c val="FF0000">由于你被沉默了，所以你的投票进入了冷却。</c></s>
+Param/Value/21DBC70C=</c>你对派对不感兴趣！</s>
+Param/Value/301AE4CD=X
+Param/Value/41F2CA8F=<s val="ModLeftSize16"><c val="FFFF00">你的其中一个目标在夜间s亡了，你的另一个目标将会自爱！</c></s>
+Param/Value/4A3DB6EC=<s val="ModLeftSize16"><c val="FFFF00">你的其中一个目标在夜间s亡了，你的另一个目标将会自爱！</c></s>
+Param/Value/5057FF81=狱警
+Param/Value/585EDE81=<s val="ModLeftSize16"><c val="FF0000">与你命运相连的人已经死了！你无法按捺自己的悲伤选择了自爱！</c></c></s>
+Param/Value/61145576=狱警
+Param/Value/6C6425BE=狱警
+Param/Value/7AD0422A=<s val="ModLeftSize16Bold"><c val="FF0000">由于你被沉默了，所以你的投票进入了冷却。</c></s>
+Param/Value/A6C64DBC=狱警
+Param/Value/A774DC65=狱警
+Param/Value/AA153491=狱警
+Param/Value/CEFBFA48=狱警
+Param/Value/E17C7D77=<s val="ModLeftSize16Bold"><c val="FF0000">由于你被沉默了，所以你的投票进入了冷却。</c></s>
+Param/Value/E2698E2B=狱警
+Param/Value/E2EBC4F0=狱警
+Param/Value/E7C920A0=狱警
+Param/Value/EE146726=狱警
+Param/Value/F023F597=<s val="ModLeftSize16"><c val="FF0000">与你命运相连的人已经死了！你无法按捺自己的悲伤选择了自爱！</c></c></s>

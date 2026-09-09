@@ -1,0 +1,41 @@
+==========================================================================================
+### gf_ASShowBox
+==========================================================================================
+ 38989 void gf_ASShowBox () {
+ 39009 DialogSetVisible(gv_actionDialog[0], PlayerGroupAll(), true);
+ 39010 DialogSetVisible(gv_actionDialog[1], PlayerGroupAll(), false);
+ 39014   for ( ; ( (auto4E75B69E_ai >= 0 && lv_a <= auto4E75B69E_ae) || (auto4E75B69E_ai < 0 && lv_a >= auto4E75B69E_ae) ) ; lv_a += auto4E75B69E_ai ) {
+ 39017     for ( ; ( (auto5E90569A_ai >= 0 && lv_b <= auto5E90569A_ae) || (auto5E90569A_ai < 0 && lv_b >= auto5E90569A_ae) ) ; lv_b += auto5E90569A_ai ) {
+ 39023     for ( ; ( (autoC439D232_ai >= 0 && lv_b <= autoC439D232_ae) || (autoC439D232_ai < 0 && lv_b >= autoC439D232_ae) ) ; lv_b += autoC439D232_ai ) {
+ 39028     if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
+ 39030       for ( ; ( (auto81858446_ai >= 0 && lv_b <= auto81858446_ae) || (auto81858446_ai < 0 && lv_b >= auto81858446_ae) ) ; lv_b += auto81858446_ai ) {
+ 39034     else {
+ 39035     libNtve_gf_SetDialogItemText(gv_e695B0E5AD97E7BC96E58FB7E7898C[lv_a], (StringExternal("Param/Value/C7ED945B") + StringExternal("Param/Value/301AE4CD") + StringExternal("Param/Value/82D600C4")), PlayerGroupAll());
+ 39037       for ( ; ( (auto09F4D8E4_ai >= 0 && lv_b <= auto09F4D8E4_ae) || (auto09F4D8E4_ai < 0 && lv_b >= auto09F4D8E4_ae) ) ; lv_b += auto09F4D8E4_ai ) {
+==========================================================================================
+### gf_ASInitializeActionDialogs
+==========================================================================================
+ 38920 void gf_ASInitializeActionDialogs () {
+ 38933 libNtve_gf_SetDialogItemRenderPriority(gv_actionDialogItem[0][0], 400, PlayerGroupAll());
+ 38934 libNtve_gf_CreateDialogItemImage(gv_actionDialog[1], 170, 152, c_anchorCenter, 0, 0, StringToText(""), "scale.dds", c_triggerImageTypeNormal, false, Color(100,100,100), c_triggerBlendModeNormal);
+ 38938   for ( ; ( (autoA851CD19_ai >= 0 && lv_a <= autoA851CD19_ae) || (autoA851CD19_ai < 0 && lv_a >= autoA851CD19_ae) ) ; lv_a += autoA851CD19_ai ) {
+ 38939     if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
+ 38943     libNtve_gf_SetDialogItemText(DialogControlLastCreated(), (StringExternal("Param/Value/975A53A7") + IntToText(gv_playerSpot[lv_a]) + StringExternal("Param/Value/59BC12FC")), PlayerGroupAll());
+ 38955     libNtve_gf_SetDialogItemText(gv_actionDialogItem[lv_a][1], (StringExternal("Param/Value/74E60796") + IntToText(0) + StringExternal("Param/Value/7ADBC36E")), PlayerGroupAll());
+ 38957     libNtve_gf_CreateDialogItemButton(gv_actionDialog[0], 126, 30, c_anchorTopRight, 60, (15 + (30 * (gv_playerSpot[lv_a] - 1))), StringToText(""), StringToText(""), "VoteHighlight.dds");
+ 38959     libNtve_gf_SetDialogItemImage(gv_actionDialogItem[lv_a][2], "VoteNormal.dds", PlayerGroupAll());
+ 38960     libNtve_gf_SetDialogItemImageType(gv_actionDialogItem[lv_a][2], c_triggerImageTypeNormal, PlayerGroupAll());
+ 38962     libNtve_gf_CreateDialogItemButton(gv_actionDialog[1], 186, 48, c_anchorRight, 0, 0, StringToText(""), StringToText(""), "guilty enable.dds");
+ 38964     libNtve_gf_SetDialogItemImage(gv_actionDialogItem[lv_a][3], "guilty enable.dds", PlayerGroupAll());
+ 38965     libNtve_gf_SetDialogItemImageType(gv_actionDialogItem[lv_a][3], c_triggerImageTypeNormal, PlayerGroupAll());
+ 38967     libNtve_gf_CreateDialogItemButton(gv_actionDialog[1], 186, 48, c_anchorLeft, 0, 0, StringToText(""), StringToText(""), "innocent enable.dds");
+ 38969     libNtve_gf_SetDialogItemImage(gv_actionDialogItem[lv_a][4], "innocent enable.dds", PlayerGroupAll());
+ 38970     libNtve_gf_SetDialogItemImageType(gv_actionDialogItem[lv_a][4], c_triggerImageTypeNormal, PlayerGroupAll());
+ 38972     libNtve_gf_CreateDialogItemButton(gv_actionDialog[0], 60, 30, c_anchorTopRight, 60, (15 + (30 * (gv_playerSpot[lv_a] - 1))), StringExternal("Param/Value/0F0E5931"), StringToText(""), "ActionSmallHighlight.dds");
+ 38974     libNtve_gf_SetDialogItemImage(gv_actionDialogItem[lv_a][5], "ActionSmallNormal.dds", PlayerGroupAll());
+ 38975     libNtve_gf_SetDialogItemImageType(gv_actionDialogItem[lv_a][5], c_triggerImageTypeNormal, PlayerGroupAll());
+ 38976     libNtve_gf_SetDialogItemRenderPriority(gv_actionDialogItem[lv_a][5], 600, PlayerGroupAll());
+ 38978     libNtve_gf_CreateDialogItemButton(gv_actionDialog[0], 60, 30, c_anchorTopRight, 120, (15 + (30 * (gv_playerSpot[lv_a] - 1))), StringExternal("Param/Value/A104E4A2"), StringToText(""), "ActionSmallHighlight.dds");
+ 38980     libNtve_gf_SetDialogItemImage(gv_actionDialogItem[lv_a][6], "ActionSmallNormal.dds", PlayerGroupAll());
+ 38981     libNtve_gf_SetDialogItemImageType(gv_actionDialogItem[lv_a][6], c_triggerImageTypeNormal, PlayerGroupAll());
+ 38982     libNtve_gf_SetDialogItemRenderPriority(gv_actionDialogItem[lv_a][6], 600, PlayerGroupAll());

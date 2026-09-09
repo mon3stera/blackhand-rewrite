@@ -1,0 +1,7 @@
+Trigger/Name/1300DA15=GenInit
+Trigger/Name/6F062318=GenSpawn
+Trigger/Name/898ED0DF=GenKill
+Variable/Name/587A5003=GenShown
+Variable/Name/697F7691=GenBtn1
+Variable/Name/844E8553=GenDialog
+Variable/Name/B333CC71=KillCount

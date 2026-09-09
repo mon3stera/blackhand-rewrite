@@ -1,0 +1,327 @@
+//==================================================================================================
+// 黑手：升温 —— 肉鸽验证脚本（手写 Galaxy，不经编辑器触发器编译）
+// 开局 1 个陆战队员（移速 3.5）；跳虫周期性进攻；每 5 杀三选一属性奖励
+//==================================================================================================
+include "TriggerLibs/NativeLib"
+
+//--------------------------------------------------------------------------------------------------
+// 全局变量
+//--------------------------------------------------------------------------------------------------
+int gv_killCount;
+unit gv_hero;
+int gv_nextBuff;
+int gv_dialogOpen;
+int gv_opt1;
+int gv_opt2;
+int gv_opt3;
+int gv_buffDialog;
+int gv_btn1;
+int gv_btn2;
+int gv_btn3;
+
+trigger gt_Init;
+trigger gt_Spawn;
+trigger gt_Kill;
+trigger gt_BuffChoice;
+trigger gt_Buff1;
+trigger gt_Buff2;
+trigger gt_Buff3;
+
+//--------------------------------------------------------------------------------------------------
+// 奖励：名称、描述、生效
+//--------------------------------------------------------------------------------------------------
+text OptionName (int opt) {
+    if (opt == 1) {
+        return StringToText("攻击");
+    }
+
+    if (opt == 2) {
+        return StringToText("攻速");
+    }
+
+    if (opt == 3) {
+        return StringToText("移速");
+    }
+
+    if (opt == 4) {
+        return StringToText("生命");
+    }
+
+    return StringToText("护盾");
+}
+
+text OptionDesc (int opt) {
+    if (opt == 1) {
+        return StringToText("+1 点攻击力");
+    }
+
+    if (opt == 2) {
+        return StringToText("+10% 攻击速度");
+    }
+
+    if (opt == 3) {
+        return StringToText("+0.1 移动速度");
+    }
+
+    if (opt == 4) {
+        return StringToText("+10 最大生命");
+    }
+
+    return StringToText("+10 最大护盾");
+}
+
+void ApplyOption (int opt) {
+    if (opt == 1) {
+        TechTreeUpgradeAddLevel(1, "RogueAtk", 1);
+    }
+    else if (opt == 2) {
+        TechTreeUpgradeAddLevel(1, "RogueAtkSpeed", 1);
+    }
+    else if (opt == 3) {
+        TechTreeUpgradeAddLevel(1, "RogueMoveSpeed", 1);
+    }
+    else if (opt == 4) {
+        TechTreeUpgradeAddLevel(1, "RogueLife", 1);
+    }
+    else {
+        TechTreeUpgradeAddLevel(1, "RogueShield", 1);
+    }
+}
+
+//--------------------------------------------------------------------------------------------------
+// 三选一对话框
+//--------------------------------------------------------------------------------------------------
+void BuildBuffDialog () {
+    int[5] lv_pool;
+    int lv_i;
+    int lv_j;
+    int lv_t;
+
+    lv_i = 0;
+    while (lv_i < 5) {
+        lv_pool[lv_i] = lv_i + 1;
+        lv_i += 1;
+    }
+
+    lv_i = 4;
+    while (lv_i > 0) {
+        lv_j = RandomInt(0, lv_i);
+        lv_t = lv_pool[lv_i];
+        lv_pool[lv_i] = lv_pool[lv_j];
+        lv_pool[lv_j] = lv_t;
+        lv_i -= 1;
+    }
+
+    gv_opt1 = lv_pool[0];
+    gv_opt2 = lv_pool[1];
+    gv_opt3 = lv_pool[2];
+
+    gv_buffDialog = DialogCreate(780, 260, c_anchorTop, 0, 30, false);
+    libNtve_gf_CreateDialogItemLabel(gv_buffDialog, 760, 30, c_anchorTop, 0, 8, StringToText("选择一项奖励"), ColorWithAlpha(0, 0, 0, 0), false, 0.0);
+
+    libNtve_gf_CreateDialogItemButton(gv_buffDialog, 240, 70, c_anchorTop, -250, 45, StringToText(""), OptionName(gv_opt1), "");
+    gv_btn1 = DialogControlLastCreated();
+    libNtve_gf_CreateDialogItemLabel(gv_buffDialog, 240, 30, c_anchorTop, -250, 120, OptionDesc(gv_opt1), ColorWithAlpha(0, 0, 0, 0), false, 0.0);
+
+    libNtve_gf_CreateDialogItemButton(gv_buffDialog, 240, 70, c_anchorTop, 0, 45, StringToText(""), OptionName(gv_opt2), "");
+    gv_btn2 = DialogControlLastCreated();
+    libNtve_gf_CreateDialogItemLabel(gv_buffDialog, 240, 30, c_anchorTop, 0, 120, OptionDesc(gv_opt2), ColorWithAlpha(0, 0, 0, 0), false, 0.0);
+
+    libNtve_gf_CreateDialogItemButton(gv_buffDialog, 240, 70, c_anchorTop, 250, 45, StringToText(""), OptionName(gv_opt3), "");
+    gv_btn3 = DialogControlLastCreated();
+    libNtve_gf_CreateDialogItemLabel(gv_buffDialog, 240, 30, c_anchorTop, 250, 120, OptionDesc(gv_opt3), ColorWithAlpha(0, 0, 0, 0), false, 0.0);
+
+    DialogSetVisible(gv_buffDialog, PlayerGroupSingle(1), true);
+    gv_dialogOpen = 1;
+}
+
+void CloseBuffDialog () {
+    DialogSetVisible(gv_buffDialog, PlayerGroupSingle(1), false);
+    DialogDestroy(gv_buffDialog);
+    gv_dialogOpen = 0;
+    gv_nextBuff += 3;
+}
+
+//--------------------------------------------------------------------------------------------------
+// 触发器：开局
+//--------------------------------------------------------------------------------------------------
+bool gt_Init_Func (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+
+    TechTreeUpgradeAddLevel(1, "RogueStartSpeed", 1);
+    TechTreeUpgradeAddLevel(1, "RogueTestAtk", 1);
+    libNtve_gf_UnitCreateFacingPoint(1, "Marine", 0, 1, Point(64.0, 64.0), Point(64.0, 64.0));
+    gv_hero = UnitLastCreated();
+    CameraPan(1, Point(64.0, 64.0), 0.0, 0, 0, false);
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaSubtitle, StringToText("speed=") + FixedToText(UnitGetPropertyFixed(UnitLastCreated(), c_unitPropMovementSpeed, c_unitPropCurrent), 2));
+    return true;
+}
+
+void gt_Init_Init () {
+    gt_Init = TriggerCreate("gt_Init_Func");
+    TriggerAddEventMapInit(gt_Init);
+}
+
+//--------------------------------------------------------------------------------------------------
+// 触发器：刷怪
+//--------------------------------------------------------------------------------------------------
+bool gt_Spawn_Func (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+
+    libNtve_gf_UnitCreateFacingPoint(1, "Zergling", 0, 2, Point(RandomFixed(16.0, 112.0), RandomFixed(16.0, 112.0)), Point(64.0, 64.0));
+    UnitIssueOrder(UnitLastCreated(), OrderTargetingPoint(AbilityCommand("attack", 0), Point(64.0, 64.0)), c_orderQueueAddToEnd);
+    return true;
+}
+
+void gt_Spawn_Init () {
+    gt_Spawn = TriggerCreate("gt_Spawn_Func");
+    TriggerAddEventTimePeriodic(gt_Spawn, 6.0, c_timeGame);
+}
+
+//--------------------------------------------------------------------------------------------------
+// 触发器：击杀计数
+//--------------------------------------------------------------------------------------------------
+bool gt_Kill_Func (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+
+    if (UnitGetOwner(EventUnit()) == 2) {
+        gv_killCount += 1;
+        UIDisplayMessage(PlayerGroupAll(), c_messageAreaSubtitle, IntToText(gv_killCount));
+    }
+
+    return true;
+}
+
+void gt_Kill_Init () {
+    gt_Kill = TriggerCreate("gt_Kill_Func");
+    TriggerAddEventUnitDied(gt_Kill, null);
+}
+
+//--------------------------------------------------------------------------------------------------
+// 触发器：奖励轮询
+//--------------------------------------------------------------------------------------------------
+bool gt_BuffChoice_Func (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+
+    if (gv_killCount >= gv_nextBuff && gv_dialogOpen == 0) {
+        BuildBuffDialog();
+    }
+
+    return true;
+}
+
+void gt_BuffChoice_Init () {
+    gt_BuffChoice = TriggerCreate("gt_BuffChoice_Func");
+    TriggerAddEventTimePeriodic(gt_BuffChoice, 0.5, c_timeGame);
+}
+
+//--------------------------------------------------------------------------------------------------
+// 触发器：按钮点击
+//--------------------------------------------------------------------------------------------------
+bool gt_Buff1_Func (bool testConds, bool runActions) {
+    if (testConds) {
+        if (!(EventDialogControl() == gv_btn1)) {
+            return false;
+        }
+    }
+
+    if (!runActions) {
+        return true;
+    }
+
+    ApplyOption(gv_opt1);
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaSubtitle, StringToText("buff: ") + OptionName(gv_opt1) + StringToText(" hp=") + FixedToText(UnitGetPropertyFixed(gv_hero, c_unitPropLifeMax, c_unitPropCurrent), 0) + StringToText(" spd=") + FixedToText(UnitGetPropertyFixed(gv_hero, c_unitPropMovementSpeed, c_unitPropCurrent), 2));
+    CloseBuffDialog();
+    return true;
+}
+
+void gt_Buff1_Init () {
+    gt_Buff1 = TriggerCreate("gt_Buff1_Func");
+    TriggerAddEventDialogControl(gt_Buff1, c_playerAny, c_invalidDialogControlId, c_triggerControlEventTypeClick);
+}
+
+bool gt_Buff2_Func (bool testConds, bool runActions) {
+    if (testConds) {
+        if (!(EventDialogControl() == gv_btn2)) {
+            return false;
+        }
+    }
+
+    if (!runActions) {
+        return true;
+    }
+
+    ApplyOption(gv_opt2);
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaSubtitle, StringToText("buff: ") + OptionName(gv_opt2) + StringToText(" hp=") + FixedToText(UnitGetPropertyFixed(gv_hero, c_unitPropLifeMax, c_unitPropCurrent), 0) + StringToText(" spd=") + FixedToText(UnitGetPropertyFixed(gv_hero, c_unitPropMovementSpeed, c_unitPropCurrent), 2));
+    CloseBuffDialog();
+    return true;
+}
+
+void gt_Buff2_Init () {
+    gt_Buff2 = TriggerCreate("gt_Buff2_Func");
+    TriggerAddEventDialogControl(gt_Buff2, c_playerAny, c_invalidDialogControlId, c_triggerControlEventTypeClick);
+}
+
+bool gt_Buff3_Func (bool testConds, bool runActions) {
+    if (testConds) {
+        if (!(EventDialogControl() == gv_btn3)) {
+            return false;
+        }
+    }
+
+    if (!runActions) {
+        return true;
+    }
+
+    ApplyOption(gv_opt3);
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaSubtitle, StringToText("buff: ") + OptionName(gv_opt3) + StringToText(" hp=") + FixedToText(UnitGetPropertyFixed(gv_hero, c_unitPropLifeMax, c_unitPropCurrent), 0) + StringToText(" spd=") + FixedToText(UnitGetPropertyFixed(gv_hero, c_unitPropMovementSpeed, c_unitPropCurrent), 2));
+    CloseBuffDialog();
+    return true;
+}
+
+void gt_Buff3_Init () {
+    gt_Buff3 = TriggerCreate("gt_Buff3_Func");
+    TriggerAddEventDialogControl(gt_Buff3, c_playerAny, c_invalidDialogControlId, c_triggerControlEventTypeClick);
+}
+
+//--------------------------------------------------------------------------------------------------
+// 初始化
+//--------------------------------------------------------------------------------------------------
+void InitLibs () {
+    libNtve_InitLib();
+}
+
+void InitGlobals () {
+    gv_killCount = 0;
+    gv_nextBuff = 3;
+    gv_dialogOpen = 0;
+    gv_hero = null;
+    gv_buffDialog = c_invalidDialogId;
+    gv_btn1 = c_invalidDialogControlId;
+    gv_btn2 = c_invalidDialogControlId;
+    gv_btn3 = c_invalidDialogControlId;
+}
+
+void InitTriggers () {
+    gt_Init_Init();
+    gt_Spawn_Init();
+    gt_Kill_Init();
+    gt_BuffChoice_Init();
+    gt_Buff1_Init();
+    gt_Buff2_Init();
+    gt_Buff3_Init();
+}
+
+void InitMap () {
+    InitLibs();
+    InitGlobals();
+    InitTriggers();
+}

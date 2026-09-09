@@ -1,0 +1,27 @@
+include "TriggerLibs/NativeLib"
+
+trigger gt_Init;
+
+bool gt_Init_Func (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaSubtitle, StringToText("min1 ok"));
+    libNtve_gf_UnitCreateFacingPoint(1, "Marine", 0, 1, Point(64.0, 64.0), Point(64.0, 64.0));
+    return true;
+}
+
+void gt_Init_Init () {
+    gt_Init = TriggerCreate("gt_Init_Func");
+    TriggerAddEventMapInit(gt_Init);
+}
+
+void InitLibs () {
+    libNtve_InitLib();
+}
+
+void InitMap () {
+    InitLibs();
+    gt_Init_Init();
+}

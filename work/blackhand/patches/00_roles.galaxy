@@ -1,0 +1,89 @@
+//==============================================================
+// 黑手：升温 重写 —— 角色与阵营常量
+// 池：1 = 城镇，2 = 黑手党，3 = 中立
+//==============================================================
+
+const int c_bhTown = 1;
+const int c_bhMafia = 2;
+const int c_bhNeutral = 3;
+
+const int c_bhCitizen = 1;      // 市民        (池1 id1)
+const int c_bhSheriff = 2;      // 警长        (池1 id2)
+const int c_bhInvestigator = 4; // 探员        (池1 id4)
+const int c_bhEscort = 5;       // 舞娘        (池1 id5)
+const int c_bhVigilante = 6;    // 义警        (池1 id6)
+
+const int c_bhGodfather = 2;    // 教父        (池2 id2)
+const int c_bhConsigliere = 4;  // 参谋        (池2 id4)
+const int c_bhMafiaEscort = 3;  // 陪侍        (池2 id3)
+
+const int c_bhSerialKiller = 1; // 连环杀手    (池3 id1)
+
+const int c_bhPlayers = 15;     // 一局人数
+
+// 重写用到的状态
+bool[16] gv_bhVoted;        // 白天是否已投票
+int gv_bhTrialTarget;       // 当前被审判的玩家
+
+// 调试开关（正式构建时把两个都改成 false）
+const bool c_bhDebugNoWin = true;   // true = 不判胜，便于单人测试循环
+const bool c_bhDebugFast = true;    // true = 极短昼夜，便于快速验证
+const bool c_bhDebugHandle = true;  // true = 用合成 handle，不调用原生 PlayerHandle    // true = 极短昼夜，便于快速验证
+
+void gf_BHLog (string lp_section, string lp_key, string lp_value) {
+    bank lv_bank;
+
+    lv_bank = BankLoad("BHLog.SC2Bank", 1);
+    BankValueSetFromString(lv_bank, lp_section, lp_key, lp_value);
+    BankValueSetFromString(lv_bank, "meta", "tick", IntToString(StringToInt(BankValueGetAsString(lv_bank, "meta", "tick")) + 1));
+    BankSave(lv_bank);
+}
+
+
+//==============================================================
+// 本地测试支持：没有真实 PlayerHandle 时合成一个稳定的假 handle
+//   原图用 PlayerHandle() 做银行键/存档格/白名单（共 501 处）。
+//   本地单人局 handle 为空，银行和预设就全废了；这里兜一个
+//   "1-S2-1-100X" 形式的假 handle，让读写能正常跑。
+//   注意：bh_map.py 会把整个脚本里的 PlayerHandle( 替换成 gf_BHHandle(，
+//   只有本函数内部保留原生调用（用哨兵保护，避免递归）。
+//==============================================================
+string gf_BHHandle (int lp_player) {
+    string lv_handle;
+
+    // 本地调试：空槽位调用原生 PlayerHandle 会抛异常并中断调用方触发器
+    // （实测把 gf_ValidateandSetup 打断，导致大厅预设/角色列表全空），
+    // 所以调试模式下完全不碰原生。
+    if (c_bhDebugHandle) {
+        return "1-S2-1-" + IntToString(1000 + lp_player);
+    }
+
+    lv_handle = PlayerHandle(lp_player);
+
+    if (lv_handle != "") {
+        return lv_handle;
+    }
+
+    return "1-S2-1-" + IntToString(1000 + lp_player);
+}
+
+
+//==============================================================
+// 本地测试支持：银行读取的 null 保护
+//   BankValueGetAsString 对不存在的键返回 null（不是 ""），
+//   原图直接把它喂给 StringWord()/StringSub() 会抛异常，
+//   中断 gt_Init2_Func 等初始化触发器，导致大厅预设与角色列表全空。
+//   bh_map.py 会把脚本里所有 BankValueGetAsString( 换成 gf_BHBankGet(，
+//   本函数内部保留原生调用（哨兵保护，避免递归）。
+//==============================================================
+string gf_BHBankGet (bank lp_bank, string lp_section, string lp_key) {
+    string lv_value;
+
+    lv_value = BankValueGetAsString(lp_bank, lp_section, lp_key);
+
+    if (lv_value == null) {
+        return "";
+    }
+
+    return lv_value;
+}

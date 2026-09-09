@@ -1,0 +1,484 @@
+==========================================================================================
+### auto_gf_DayTransition_TriggerFunc
+==========================================================================================
+  6815 bool auto_gf_DayTransition_TriggerFunc (bool testConds, bool runActions) {
+  6897 gv_nightProcessingPhase = false;
+  6900   while (true) {
+  6902   if (autoE5ABDFBB_var < 0) { break; }
+  6903     if ((PlayerGroupHasPlayer(gv_alivePlayers, autoE5ABDFBB_var) == false)) {
+  6906     else {
+  6909   gf_ELAddMessage(StringToText(""), autoE5ABDFBB_var, Color(0.00, 0.00, 0.00), 16, 1);
+  6910   gf_ELAddMessage((StringExternal("Param/Value/164FE5CA") + IntToText(gv_dayNumber) + StringExternal("Param/Value/237DA40A")), autoE5ABDFBB_var, Color(50.20, 40.00, 0.00), 16, 1);
+  6911   gf_CBClearChat(autoE5ABDFBB_var);
+  6913   if ((gv_iTSCHRISTMAS == false)) {
+  6918 gv_willsAllowed = true;
+  6919 gv_wasExecution = false;
+  6920 gv_trialOn = false;
+  6921 gv_voteOn = false;
+  6922 gv_marshalled = false;
+  6925   for (;; auto55AE3517_u -= 1) {
+  6927   if (auto55AE3517_var == null) { break; }
+  6928   libNtve_gf_ShowHideUnit(auto55AE3517_var, true);
+  6930 UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, (StringExternal("Param/Value/A145F317") + IntToText(gv_dayNumber) + StringExternal("Param/Value/40A14F27")));
+  6931 libNtve_gf_SetDialogItemText(gv_dayBoxItem, (StringExternal("Param/Value/B0D170E8") + IntToText(gv_dayNumber)), PlayerGroupAll());
+  6932 libNtve_gf_SetDialogItemColor(gv_dayBoxItem, Color(100.00, 80.00, 0.00), PlayerGroupAll());
+  6933 gv_dayOver = false;
+  6934 SoundPlay(SoundLink("UI_TerranReminderPing", -1), PlayerGroupAll(), 100.0, 0.0);
+  6937   while (true) {
+  6939   if (autoBB39C463_var < 0) { break; }
+  6940   libNtve_gf_ShowHideUnit(gv_unit[autoBB39C463_var], true);
+  6944   if ((gv_iTSCHRISTMAS == false)) {
+  6948   if ((gv_pendingLeaves > 0)) {
+  6950     for ( ; ( (auto2FDD9555_ai >= 0 && lv_a <= auto2FDD9555_ae) || (auto2FDD9555_ai < 0 && lv_a >= auto2FDD9555_ae) ) ; lv_a += auto2FDD9555_ai ) {
+  6951       if (((gv_pendingLeaves & (1 << lv_a)) > 0)) {
+  6954         while (true) {
+  6956         if (autoD1583574_var < 0) { break; }
+  6962   gv_pendingLeaves = 0;
+  6965   if ((gv_dayNumber == 2)) {
+  6967     for ( ; ( (auto393014BF_ai >= 0 && lv_a <= auto393014BF_ae) || (auto393014BF_ai < 0 && lv_a >= auto393014BF_ae) ) ; lv_a += auto393014BF_ai ) {
+  6968     gf_CBSystemMessage(StringExternal("Param/Value/916DDF72"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+  6972 Wait(3.0, c_timeGame);
+  6975   if ((gv_startonDay == true) && (gv_lynchonDay1 == false) && (gv_dayNumber == 1)) {
+  6979   else {
+  6980     if ((gv_startDayWithDiscussion == true)) {
+  6984     else {
+  6989 Wait(0.01, c_timeGame);
+  6992   for ( ; ( (autoFCEAC8C5_ai >= 0 && lv_a <= autoFCEAC8C5_ae) || (autoFCEAC8C5_ai < 0 && lv_a >= autoFCEAC8C5_ae) ) ; lv_a += autoFCEAC8C5_ai ) {
+  6996   for ( ; ( (autoBCDF4814_ai >= 0 && lv_a <= autoBCDF4814_ae) || (autoBCDF4814_ai < 0 && lv_a >= autoBCDF4814_ae) ) ; lv_a += autoBCDF4814_ai ) {
+  7002   gv_executionCount = 0;
+  7006     if ((gv_specialCasePlayer[lv_a][14] < 10)) {
+  7010     if ((gv_specialCasePlayer[lv_a][18] < 2)) {
+  7014     if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
+  7018     if ((gv_diedAtNight[lv_a] == true)) {
+  7022     if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 19)) {
+  7027     for ( ; ( (autoD108C221_ai >= 0 && lv_c <= autoD108C221_ae) || (autoD108C221_ai < 0 && lv_c >= autoD108C221_ae) ) ; lv_c += autoD108C221_ai ) {
+  7031   if ((gv_dayNumber <= 2)) {
+  7033   else {
+  7034   gv_tieTicker += 1;
+  7035   TriggerEnable(gt_Suicide, true);
+  7037   if ((gv_dayNumber == 3) && (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0003")) {
+  7039     for ( ; ( (auto9633164E_ai >= 0 && lv_a <= auto9633164E_ae) || (auto9633164E_ai < 0 && lv_a >= auto9633164E_ae) ) ; lv_a += auto9633164E_ai ) {
+  7045   if ((lv_y > 0)) {
+  7046   gv_tieTicker = 0;
+  7048   CameraSetBounds(PlayerGroupAll(), RegionEntireMap(), true);
+  7051     while (true) {
+  7053     if (auto6092BAB0_var < 0) { break; }
+  7055       if ((lv_x == 1)) {
+  7057       gf_CameraAction(auto6092BAB0_var, CameraInfoFromId(1072), 3.0, RandomInt(1, 2), 2.0);
+  7060       if ((lv_x == 2)) {
+  7062       gf_CameraAction(auto6092BAB0_var, CameraInfoFromId(1073), 3.0, RandomInt(1, 2), 2.0);
+  7065       if ((lv_x == 3)) {
+  7067       gf_CameraAction(auto6092BAB0_var, CameraInfoFromId(1074), 3.0, RandomInt(1, 2), 2.0);
+  7070       if ((lv_x == 4)) {
+  7072       gf_CameraAction(auto6092BAB0_var, CameraInfoFromId(1075), 3.0, RandomInt(1, 2), 2.0);
+  7075       if ((lv_x == 5)) {
+  7077       gf_CameraAction(auto6092BAB0_var, CameraInfoFromId(1076), 3.0, RandomInt(1, 2), 2.0);
+  7081     if ((lv_y > 13)) {
+  7082     UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, StringExternal("Param/Value/F77657AF"));
+  7084     else {
+  7085       if ((lv_y > 11)) {
+  7086       UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, StringExternal("Param/Value/8E39A0E0"));
+  7088       else {
+  7089         if ((lv_y > 9)) {
+  7090         UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, StringExternal("Param/Value/F5763903"));
+  7092         else {
+  7093           if ((lv_y > 7)) {
+  7094           UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, StringExternal("Param/Value/7DD6AE53"));
+  7096           else {
+  7097             if ((lv_y > 5)) {
+  7098             UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, StringExternal("Param/Value/97C207B6"));
+  7100             else {
+  7101               if ((lv_y > 3)) {
+  7102               UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, StringExternal("Param/Value/FD10C1C2"));
+  7104               else {
+  7105                 if ((lv_y > 1)) {
+  7106                 UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, StringExternal("Param/Value/BC7F6349"));
+  7108                 else {
+  7109                 UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, StringExternal("Param/Value/472848E9"));
+  7117   Wait(3.0, c_timeGame);
+  7119     for ( ; ( (auto7674A8E9_ai >= 0 && lv_a <= auto7674A8E9_ae) || (auto7674A8E9_ai < 0 && lv_a >= auto7674A8E9_ae) ) ; lv_a += auto7674A8E9_ai ) {
+  7123     while ((lv_b[0] <= 15)) {
+  7125       if ((lv_b[lv_a] == 0)) {
+  7128         if ((gv_diedAtNight[lv_a] == true)) {
+  7129         SoundPlay(SoundLink("PhotonCannon_AttackImpact", -1), PlayerGroupAll(), 100.0, 0.0);
+  7134           while (true) {
+  7136           if (auto900C9AF9_var < 0) { break; }
+  7137             if ((lv_x == 1)) {
+  7141             if ((lv_x == 2)) {
+  7145             if ((lv_x == 3)) {
+  7149             if ((gv_placeofDeath[lv_a] == 0)) {
+  7150             CameraSetValue(auto900C9AF9_var, c_cameraValueYaw, (AngleBetweenPoints(gv_houseOutsideLocation[gv_playerHouse[lv_a]], gv_houseLocation[gv_playerHouse[lv_a]]) + RandomFixed(-30.0, 30.0)), 0.0, 0, 0);
+  7153             else {
+  7157             if ((lv_x == 1)) {
+  7158             gf_CameraAction(auto900C9AF9_var, CameraInfoFromId(1161), RandomFixed(4.0, 12.0), RandomInt(1, 4), 1.0);
+  7161             if ((lv_x == 2)) {
+  7162             gf_CameraAction(auto900C9AF9_var, CameraInfoFromId(1162), RandomFixed(4.0, 12.0), RandomInt(1, 4), 1.0);
+  7165             if ((lv_x == 3)) {
+  7166             gf_CameraAction(auto900C9AF9_var, CameraInfoFromId(1163), RandomFixed(4.0, 12.0), RandomInt(1, 4), 1.0);
+  7170           if ((gv_suicide[lv_a] == true)) {
+  7173             while (true) {
+  7175             if (auto24EE17C7_var < 0) { break; }
+  7179             if ((lv_x == 1)) {
+  7183             if ((lv_x == 2)) {
+  7184               if ((gv_isAMan[lv_a] == true)) {
+  7187               else {
+  7192             if ((lv_x == 3)) {
+  7193               if ((gv_isAMan[lv_a] == true)) {
+  7196               else {
+  7201             if ((lv_x == 4)) {
+  7202               if ((gv_isAMan[lv_a] == true)) {
+  7205               else {
+  7210             if ((lv_x == 5)) {
+  7211               if ((gv_isAMan[lv_a] == true)) {
+  7214               else {
+  7219             if ((lv_x == 6)) {
+  7220               if ((gv_isAMan[lv_a] == true)) {
+  7223               else {
+  7228             if ((lv_x == 7)) {
+  7232             if ((lv_x == 8)) {
+  7236             if ((lv_x == 9)) {
+  7240             if ((lv_x == 10)) {
+  7241               if ((gv_isAMan[lv_a] == true)) {
+  7244               else {
+  7249           Wait(4.0, c_timeGame);
+  7251           else {
+  7254             while (true) {
+  7256             if (auto7B149306_var < 0) { break; }
+  7260             if ((lv_x == 1)) {
+  7264             if ((lv_x == 2)) {
+  7265               if ((gv_isAMan[lv_a] == true)) {
+  7268               else {
+  7273             if ((lv_x == 3)) {
+  7277             if ((lv_x == 4)) {
+  7281             if ((lv_x == 5)) {
+  7285             if ((lv_x == 6)) {
+  7289             if ((lv_x == 7)) {
+  7293             if ((lv_x == 8)) {
+  7297             if ((lv_x == 9)) {
+  7301             if ((lv_x == 10)) {
+  7305           Wait(3.0, c_timeGame);
+  7306             if ((gv_deathDescriptions == true)) {
+  7308             UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, (StringExternal("Param/Value/7C79B0B9") + gv_deathText[lv_a] + StringExternal("Param/Value/9F68748D")));
+  7309               if ((gv_e586A4E9AD82log[lv_a] == false)) {
+  7312                 while (true) {
+  7314                 if (autoB60EDEDB_var < 0) { break; }
+  7315                 gf_ELAddMessage((StringExternal("Param/Value/B2693123") + gv_deathText[lv_a] + StringExternal("Param/Value/637F6CB9")), autoB60EDEDB_var, Color(100.00, 50.20, 50.20), lv_a, 0);
+  7319             Wait(4.0, c_timeGame);
+  7321             else {
+  7322             Wait(1.0, c_timeGame);
+  7326           if ((gv_janitized[lv_a] == 0)) {
+  7327             if ((gv_variant == "clue")) {
+  7329             libNtve_gf_SetDialogItemText(gv_deadBoxItem[3], gv_deadBoxText[0], PlayerGroupAll());
+  7330               if ((gv_suicide[lv_a] == true)) {
+  7332               libNtve_gf_SetDialogItemTooltip(gv_deadBoxItem[3], gv_deadBoxText[1], PlayerGroupAll());
+  7334               else {
+  7336               libNtve_gf_SetDialogItemTooltip(gv_deadBoxItem[3], gv_deadBoxText[1], PlayerGroupAll());
+  7339             else {
+  7340               if ((gv_pretenderFramed[lv_a] != 0)) {
+  7343                 while (true) {
+  7345                 if (auto35CDC5AB_var < 0) { break; }
+  7350               libNtve_gf_SetDialogItemText(gv_deadBoxItem[3], gv_deadBoxText[0], PlayerGroupAll());
+  7351                 if ((gv_suicide[lv_a] == true)) {
+  7353                 libNtve_gf_SetDialogItemTooltip(gv_deadBoxItem[3], gv_deadBoxText[1], PlayerGroupAll());
+  7355                 else {
+  7357                 libNtve_gf_SetDialogItemTooltip(gv_deadBoxItem[3], gv_deadBoxText[1], PlayerGroupAll());
+  7360               else {
+  7361                 if ((gv_e586A4E9AD82log[lv_a] == true)) {
+  7363                 else {
+  7366                   while (true) {
+  7368                   if (auto4244A5D4_var < 0) { break; }
+  7374               libNtve_gf_SetDialogItemText(gv_deadBoxItem[3], gv_deadBoxText[0], PlayerGroupAll());
+  7375                 if ((gv_suicide[lv_a] == true)) {
+  7377                 libNtve_gf_SetDialogItemTooltip(gv_deadBoxItem[3], gv_deadBoxText[1], PlayerGroupAll());
+  7379                 else {
+  7381                 libNtve_gf_SetDialogItemTooltip(gv_deadBoxItem[3], gv_deadBoxText[1], PlayerGroupAll());
+  7385             if (((StringLength(gv_lastWill[lv_a][0]) >= 1) || (StringLength(gv_lastWill[lv_a][1]) >= 1))) {
+  7386             Wait(1.0, c_timeGame);
+  7389               while (true) {
+  7391               if (autoEBEB4433_var < 0) { break; }
+  7392                 if ((gv_isAMan[lv_a] == true)) {
+  7395                 else {
+  7399             Wait(1.0, c_timeGame);
+  7402               while (true) {
+  7404               if (autoD3D4148A_var < 0) { break; }
+  7408             Wait(4.0, c_timeGame);
+  7410             else {
+  7411               if ((gv_variant == "clue")) {
+  7412               Wait(1.0, c_timeGame);
+  7414               else {
+  7415               Wait(4.0, c_timeGame);
+  7419           else {
+  7420             if ((gv_zuosi[lv_a] == true)) {
+  7423               while (true) {
+  7425               if (autoEA5AB9E3_var < 0) { break; }
+  7430             libNtve_gf_SetDialogItemText(gv_deadBoxItem[3], gv_deadBoxText[0], PlayerGroupAll());
+  7432             libNtve_gf_SetDialogItemTooltip(gv_deadBoxItem[3], gv_deadBoxText[1], PlayerGroupAll());
+  7433               if (((StringLength(gv_lastWill[lv_a][0]) >= 1) || (StringLength(gv_lastWill[lv_a][1]) >= 1))) {
+  7434               Wait(1.0, c_timeGame);
+  7437                 while (true) {
+  7439                 if (auto61BB23A1_var < 0) { break; }
+  7440                   if ((gv_isAMan[lv_a] == true)) {
+  7441                   gf_CBSystemMessage(StringExternal("Param/Value/38B77385"), auto61BB23A1_var, lv_a, 0, SoundLink("UI_BnetPanelTransition", -1), Color(0.00, 0.00, 0.00));
+  7443                   else {
+  7444                   gf_CBSystemMessage(StringExternal("Param/Value/9F21C8C4"), auto61BB23A1_var, lv_a, 0, SoundLink("UI_BnetPanelTransition", -1), Color(0.00, 0.00, 0.00));
+  7447               Wait(4.0, c_timeGame);
+  7449               else {
+  7450               Wait(4.0, c_timeGame);
+  7453             else {
+  7454               if (((gv_roles[gv_janitized[lv_a]][1] == 2) || (gv_roles[gv_janitized[lv_a]][1] == 5)) && (gv_roles[gv_janitized[lv_a]][0] == 6)) {
+  7460               while (true) {
+  7462               if (auto26B1AFDD_var < 0) { break; }
+  7467             libNtve_gf_SetDialogItemText(gv_deadBoxItem[3], gv_deadBoxText[0], PlayerGroupAll());
+  7469             libNtve_gf_SetDialogItemTooltip(gv_deadBoxItem[3], gv_deadBoxText[1], PlayerGroupAll());
+  7470               if (((StringLength(gv_lastWill[lv_a][0]) >= 1) || (StringLength(gv_lastWill[lv_a][1]) >= 1))) {
+  7471               Wait(1.0, c_timeGame);
+  7474                 while (true) {
+  7476                 if (autoFD6A8D36_var < 0) { break; }
+  7477                   if ((gv_isAMan[lv_a] == true)) {
+  7478                   gf_CBSystemMessage(StringExternal("Param/Value/EDC1D984"), autoFD6A8D36_var, lv_a, 0, SoundLink("UI_BnetPanelTransition", -1), Color(0.00, 0.00, 0.00));
+  7480                   else {
+  7481                   gf_CBSystemMessage(StringExternal("Param/Value/568B900A"), autoFD6A8D36_var, lv_a, 0, SoundLink("UI_BnetPanelTransition", -1), Color(0.00, 0.00, 0.00));
+  7484               Wait(4.0, c_timeGame);
+  7486               else {
+  7487               Wait(4.0, c_timeGame);
+  7491           if ((StringLength(gv_placedNote[lv_a]) >= 1)) {
+  7494             while (true) {
+  7496             if (auto2A28F1E2_var < 0) { break; }
+  7497               if ((gv_isAMan[lv_a] == true)) {
+  7498               gf_CBSystemMessage((StringExternal("Param/Value/000D3D47")), auto2A28F1E2_var, 0, 0, SoundLink("UI_BnetPanelTransition", -1), Color(0.00, 0.00, 0.00));
+  7500               else {
+  7501               gf_CBSystemMessage((StringExternal("Param/Value/3D8CA038")), auto2A28F1E2_var, 0, 0, SoundLink("UI_BnetPanelTransition", -1), Color(0.00, 0.00, 0.00));
+  7504           Wait(1.0, c_timeGame);
+  7507             while (true) {
+  7509             if (auto01FA27E9_var < 0) { break; }
+  7512           Wait(4.0, c_timeGame);
+  7522     while (true) {
+  7524     if (autoB20B86BC_var < 0) { break; }
+  7529   CameraSetBounds(PlayerGroupAll(), RegionFromId(1), true);
+  7534   for ( ; ( (autoA8A96F96_ai >= 0 && lv_a <= autoA8A96F96_ae) || (autoA8A96F96_ai < 0 && lv_a >= autoA8A96F96_ae) ) ; lv_a += autoA8A96F96_ai ) {
+  7535     if ((gv_remembered[lv_a][1] != 0)) {
+  7540   if ((lv_y >= 1) && (gv_roleOptions[3][7][0] == true)) {
+  7541   CameraSetBounds(PlayerGroupAll(), RegionEntireMap(), true);
+  7544     while (true) {
+  7546     if (autoD6F18739_var < 0) { break; }
+  7548       if ((lv_x == 1)) {
+  7552       if ((lv_x == 2)) {
+  7556       if ((lv_x == 3)) {
+  7560       if ((lv_x == 4)) {
+  7564       if ((lv_x == 5)) {
+  7569   Wait(2.0, c_timeGame);
+  7571     for ( ; ( (autoA18F9382_ai >= 0 && lv_a <= autoA18F9382_ae) || (autoA18F9382_ai < 0 && lv_a >= autoA18F9382_ae) ) ; lv_a += autoA18F9382_ai ) {
+  7575     while ((lv_b[0] <= 15)) {
+  7577       if ((lv_b[lv_a] == 0)) {
+  7580         if ((gv_remembered[lv_a][1] != 0)) {
+  7581         SoundPlay(SoundLink("Mohandar_WeaponEnd", -1), PlayerGroupAll(), 100.0, 0.0);
+  7584           while (true) {
+  7586           if (autoE719BC47_var < 0) { break; }
+  7587           gf_ELAddMessage((StringExternal("Param/Value/EE3D1F39") + gv_roleNameArray[gv_remembered[lv_a][1]][gv_remembered[lv_a][0]] + StringExternal("Param/Value/FC269184")), autoE719BC47_var, Color(50.20, 50.20, 50.20), 16, 0);
+  7589         UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, (StringExternal("Param/Value/CAE2236B") + gv_roleNameArray[gv_remembered[lv_a][1]][gv_remembered[lv_a][0]] + StringExternal("Param/Value/BBE3E5FD")));
+  7590         Wait(4.0, c_timeGame);
+  7598     while (true) {
+  7600     if (auto55B2B9D4_var < 0) { break; }
+  7605   CameraSetBounds(PlayerGroupAll(), RegionFromId(1), true);
+  7608 Wait(0.01, c_timeGame);
+  7613   while (true) {
+  7615   if (auto0CD6DA43_var < 0) { break; }
+  7616   gf_CBAllowDisallowChatting(auto0CD6DA43_var, ge_Allow_Allow);
+  7618   if ((gv_tieTicker == 5)) {
+  7621     while (true) {
+  7623     if (auto53397FFE_var < 0) { break; }
+  7624     gf_CBSystemMessage(StringExternal("Param/Value/B87BD74A"), auto53397FFE_var, 16, 0, SoundLink("UI_TerranKlaxonAlert", -1), Color(0,0,0));
+  7626   Wait(4.0, c_timeGame);
+  7629   if ((gf_CheckEnd() != 0)) {
+  7630   gf_EndGame(gf_CheckEnd());
+  7631   return true;
+  7634 TriggerExecute(gt_DaySequence, false, false);
+  7635 return true;
+==========================================================================================
+### auto_gf_NightTransition_TriggerFunc
+==========================================================================================
+  9357 bool auto_gf_NightTransition_TriggerFunc (bool testConds, bool runActions) {
+  9412   if ((gv_oldLynchType != -1)) {
+  9413   gv_lynchType = gv_oldLynchType;
+  9417   for ( ; ( (auto7BA6BEA3_ai >= 0 && lv_a <= auto7BA6BEA3_ae) || (auto7BA6BEA3_ai < 0 && lv_a >= auto7BA6BEA3_ae) ) ; lv_a += auto7BA6BEA3_ai ) {
+  9419     if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
+  9420     libNtve_gf_SetDialogItemText(gv_e695B0E5AD97E7BC96E58FB7E7898C[lv_a], (StringExternal("Param/Value/78AFFF0B") + IntToText(gv_playerSpot[lv_a]) + StringExternal("Param/Value/D37C2D51")), PlayerGroupAll());
+  9422     else {
+  9423     libNtve_gf_SetDialogItemText(gv_e695B0E5AD97E7BC96E58FB7E7898C[lv_a], (StringExternal("Param/Value/1F1C1971") + StringExternal("Param/Value/5BD6AA85") + StringExternal("Param/Value/ABDFEC05")), PlayerGroupAll());
+  9425     if ((gv_noobMode[lv_a] == true) && (gv_tutorial[4] == false)) {
+  9426     gf_CBSystemMessage(StringExternal("Param/Value/EA524563"), lv_a, 0, 0, SoundLink("UI_TipPanelHighlight", -1), Color(0.00, 0.00, 0.00));
+  9427     gf_CBSystemMessage(StringExternal("Param/Value/4AF70F1B"), lv_a, 0, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+  9432 gv_dayActions = false;
+  9433 gv_court = false;
+  9436 TriggerEnable(gt_ASJail, false);
+  9437 TriggerEnable(gt_ASKidnap, false);
+  9439   for ( ; ( (autoEA98D387_ai >= 0 && lv_a <= autoEA98D387_ae) || (autoEA98D387_ai < 0 && lv_a >= autoEA98D387_ae) ) ; lv_a += autoEA98D387_ai ) {
+  9441     if ((gv_corpse[lv_a] != null)) {
+  9449   while (true) {
+  9451   if (auto8AC47C69_var < 0) { break; }
+  9452   gf_ELAddMessage(StringToText(""), auto8AC47C69_var, Color(0.00, 0.00, 0.00), 16, 1);
+  9453   gf_ELAddMessage((StringExternal("Param/Value/8B8A0F39") + IntToText(gv_dayNumber) + StringExternal("Param/Value/BED1CEE7")), auto8AC47C69_var, Color(0.00, 40.00, 50.20), 16, 1);
+  9454   gf_CBAllowDisallowChatting(auto8AC47C69_var, ge_Allow_Disallow);
+  9455   gf_CBDimChat(auto8AC47C69_var);
+  9457   if ((gv_iTSCHRISTMAS == false)) {
+  9464   for (;; autoBEEBDF8C_u -= 1) {
+  9466   if (autoBEEBDF8C_var == null) { break; }
+  9467   libNtve_gf_ShowHideUnit(autoBEEBDF8C_var, false);
+  9469 TriggerExecute(gt_NPNightStart, false, false);
+  9470 UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, (StringExternal("Param/Value/DC3398E5") + IntToText(gv_dayNumber) + StringExternal("Param/Value/8BCB9851")));
+  9471 libNtve_gf_SetDialogItemText(gv_dayBoxItem, (StringExternal("Param/Value/25756CA9") + IntToText(gv_dayNumber)), PlayerGroupAll());
+  9472 libNtve_gf_SetDialogItemColor(gv_dayBoxItem, Color(0.00, 80.00, 100.00), PlayerGroupAll());
+  9474 SoundPlay(SoundLink("UI_TerranPing", -1), PlayerGroupAll(), 100.0, 0.0);
+  9475 gv_isNight = true;
+  9476   if ((gv_iTSCHRISTMAS == false)) {
+  9480 Wait(3.0, c_timeGame);
+  9481 CameraSetBounds(PlayerGroupAll(), RegionEntireMap(), true);
+  9484   while (true) {
+  9486   if (autoDE7827D9_var < 0) { break; }
+  9492   while (true) {
+  9494   if (autoB970DE11_var < 0) { break; }
+  9496   libNtve_gf_ShowHideUnit(gv_unit[autoB970DE11_var], false);
+  9501   while (true) {
+  9503   if (autoCB6A2F04_var < 0) { break; }
+  9504   gf_CBClearChat(autoCB6A2F04_var);
+  9506 Wait(0.5, c_timeGame);
+  9509 gf_TBStartTimer2((60.0 * gv_nightLength), StringExternal("Param/Value/02FE7FA6"));
+  9511   if ((lv_z <= 2)) {
+  9512     if ((gv_iTSCHRISTMAS == false)) {
+  9513     SoundPlay(SoundLink("GameMusicTerr223", -1), PlayerGroupAll(), 100.0, 0.0);
+  9518   else {
+  9519     if ((gv_iTSCHRISTMAS == false)) {
+  9520     SoundPlay(SoundLink("GameMusicTerr2232", -1), PlayerGroupAll(), 100.0, 0.0);
+  9525 gf_DEBUG("Starting night prep code");
+  9526 gv_mafiaTarget = 0;
+  9527 gv_mafiaHitman = 0;
+  9528 gv_triadTarget = 0;
+  9529 gv_triadHitman = 0;
+  9530 gv_cultTarget = 0;
+  9531 gv_cultSmiteTarget = 0;
+  9532 gv_cultConverter = 0;
+  9535   for ( ; ( (autoDEE7CD8E_ai >= 0 && lv_a <= autoDEE7CD8E_ae) || (autoDEE7CD8E_ai < 0 && lv_a >= autoDEE7CD8E_ae) ) ; lv_a += autoDEE7CD8E_ai ) {
+  9536     if ((gv_dayNumber == 1) && (gv_roles[lv_a][1] == 3) && ((gv_roles[lv_a][0] == 8) || (gv_roles[lv_a][0] == 10))) {
+  9537     gv_cultOriginalMemberCount += 1;
+  9538     gv_cultSmiteRequirement = (gv_cultOriginalMemberCount * 2);
+  9541     if ((gv_dayNumber == 1) && (gv_cultOriginalMemberCount > 4)) {
+  9542     gv_cultEvilDescend = (gv_cultOriginalMemberCount * 3);
+  9543     gv_cultEvilDescend += 1;
+  9547     if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == false)) {
+  9552     for ( ; ( (autoC9C65FFF_ai >= 0 && lv_b <= autoC9C65FFF_ae) || (autoC9C65FFF_ai < 0 && lv_b >= autoC9C65FFF_ae) ) ; lv_b += autoC9C65FFF_ai ) {
+  9553       if ((gv_jestered[lv_a][lv_b] == true)) {
+  9558     if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == false) && (lv_d == true) && (gv_specialCasePlayer[lv_a][13] == 0)) {
+  9562     if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (lv_d == true)) {
+  9566     if ((((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 13)) || ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 9)) || ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 9)))) {
+  9568     else {
+  9571     if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 12)) {
+  9576     if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 11)) {
+  9580     if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
+  9622   gv_punishTarget = 0;
+  9623     if ((gv_cooldown[lv_a] > 0)) {
+  9627     if ((gv_htraped[lv_a] > 0)) {
+  9631     if ((gv_mtraped[lv_a] > 0)) {
+  9635     if ((gv_ttraped[lv_a] > 0)) {
+  9639     if ((gv_netraped[lv_a] > 0)) {
+  9644   if ((gv_cultCooldown > 0)) {
+  9645   gv_cultCooldown -= 1;
+  9648 gf_RSConversions();
+  9650   for ( ; ( (auto74011C39_ai >= 0 && lv_a <= auto74011C39_ae) || (auto74011C39_ai < 0 && lv_a >= auto74011C39_ae) ) ; lv_a += auto74011C39_ai ) {
+  9651   gf_RAActionsBase(lv_a);
+  9653 gf_DEBUG("Completed conversions");
+  9654 Wait(0.0, c_timeGame);
+  9655 gf_RSTownSetup();
+  9656 gf_RSMafiaSetup2();
+  9657 gf_RSTriadSetup();
+  9658 gf_RSNeutralSetup();
+  9659 TriggerEnable(gt_ASActionButtonATown, true);
+  9660 TriggerEnable(gt_ASActionButtonATown2, true);
+  9661 TriggerEnable(gt_ASActionButtonBTown, true);
+  9662 TriggerEnable(gt_ASActionButtonAMafia, true);
+  9663 TriggerEnable(gt_ASActionButtonAMafia2, true);
+  9664 TriggerEnable(gt_ASActionButtonATriad, true);
+  9665 TriggerEnable(gt_ASActionButtonATriad2, true);
+  9666 TriggerEnable(gt_ASActionButtonANeutral, true);
+  9667 TriggerEnable(gt_ASActionButtonBNeutral, true);
+  9668 TriggerEnable(gt_ASMafiaTarget, true);
+  9669 TriggerEnable(gt_ASTriadTarget, true);
+  9670 TriggerEnable(gt_ASCultSmite, true);
+  9671 gf_DEBUG("Completed action panel setup");
+  9673   for ( ; ( (autoE78B30C9_ai >= 0 && lv_a <= autoE78B30C9_ae) || (autoE78B30C9_ai < 0 && lv_a >= autoE78B30C9_ae) ) ; lv_a += autoE78B30C9_ai ) {
+  9674     if ((((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 13)) || ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 9)) || ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 9)))) {
+  9679 TriggerEnable(gt_NPNightCamera, true);
+  9680 TriggerExecute(gt_NPNightCamera, true, false);
+  9681 gf_DEBUG("Finished night prep");
+  9682 Wait(0.0, c_timeGame);
+  9685   for ( ; ( (auto40C46C48_ai >= 0 && lv_a <= auto40C46C48_ae) || (auto40C46C48_ai < 0 && lv_a >= auto40C46C48_ae) ) ; lv_a += auto40C46C48_ai ) {
+  9686     if ((gv_noobMode[lv_a] == true) && (gv_tutorial[5] == false)) {
+  9687     gf_CBSystemMessage(StringExternal("Param/Value/0E7FEDC9"), lv_a, 0, 0, SoundLink("UI_TipPanelHighlight", -1), Color(0.00, 0.00, 0.00));
+  9692 Wait(5.0, c_timeGame);
+  9694   for ( ; ( (auto88A88B54_ai >= 0 && lv_a <= auto88A88B54_ae) || (auto88A88B54_ai < 0 && lv_a >= auto88A88B54_ae) ) ; lv_a += auto88A88B54_ai ) {
+  9695     if ((gv_noobMode[lv_a] == true) && (gv_tutorial[6] == false)) {
+  9696     gf_CBSystemMessage(StringExternal("Param/Value/C74E5821"), lv_a, 0, 0, SoundLink("UI_TipPanelHighlight", -1), Color(0.00, 0.00, 0.00));
+  9701   if ((gv_dayNumber == 1)) {
+  9704     while (true) {
+  9706     if (auto1F7B5C7C_var < 0) { break; }
+  9707     gf_CBSystemMessage(StringExternal("Param/Value/1656D701"), auto1F7B5C7C_var, 0, 0, SoundLink("UI_PTTStop", -1), Color(0.00, 0.00, 0.00));
+  9711 Wait(5.0, c_timeGame);
+  9713   for ( ; ( (autoCE949EAF_ai >= 0 && lv_a <= autoCE949EAF_ae) || (autoCE949EAF_ai < 0 && lv_a >= autoCE949EAF_ae) ) ; lv_a += autoCE949EAF_ai ) {
+  9714     if ((gv_noobMode[lv_a] == true) && (gv_tutorial[7] == false)) {
+  9715     gf_CBSystemMessage(StringExternal("Param/Value/70BB29B3"), lv_a, 0, 0, SoundLink("UI_TipPanelHighlight", -1), Color(0.00, 0.00, 0.00));
+  9720 Wait(((gv_nightLength * 60.0) - 20.0), c_timeGame);
+  9723   while (true) {
+  9725   if (auto9B56A341_var < 0) { break; }
+  9726   gf_CBSystemMessage(StringExternal("Param/Value/B6C2B70D"), auto9B56A341_var, 0, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+  9728 Wait(10.0, c_timeGame);
+  9729 TriggerEnable(gt_NPNightCamera, false);
+  9730 Wait(0.25, c_timeGame);
+  9733   while (true) {
+  9735   if (auto1D25B969_var < 0) { break; }
+  9736   gf_CBAssignUnassignChatChannel(auto1D25B969_var, 0, ge_Clear_DoNotClear);
+  9737   gf_CBHighlightText(auto1D25B969_var, ge_Highlight_Regular);
+  9738   gf_CBDimChat(auto1D25B969_var);
+  9739   gf_CBAllowDisallowChatting(auto1D25B969_var, ge_Allow_Disallow);
+  9742 gf_ASEndActions();
+  9743 gf_TBEndTimer();
+  9744   if ((lv_z <= 2)) {
+  9745     if ((gv_iTSCHRISTMAS == false)) {
+  9750   else {
+  9751     if ((gv_iTSCHRISTMAS == false)) {
+  9757   for ( ; ( (auto4F704C9B_ai >= 0 && lv_a <= auto4F704C9B_ae) || (auto4F704C9B_ai < 0 && lv_a >= auto4F704C9B_ae) ) ; lv_a += auto4F704C9B_ai ) {
+  9761     if ((gv_roles[lv_a][0] == 11) && (gv_roles[lv_a][1] == 3) && (gv_e5AEA1E8AEA1E68A80E883BDEFBC9F[lv_a] < 2)) {
+  9766 gf_DEBUG("about to close menu");
+  9768   for ( ; ( (auto14AAFAF6_ai >= 0 && lv_a <= auto14AAFAF6_ae) || (auto14AAFAF6_ai < 0 && lv_a >= auto14AAFAF6_ae) ) ; lv_a += auto14AAFAF6_ai ) {
+  9769     if ((gv_roles[lv_a][0] == 26) && (gv_roles[lv_a][1] == 1)) {
+  9770     gf_ASE8A792E889B2E98089E9A1B9E585B3E997AD(lv_a);
+  9775   for ( ; ( (autoBB8A1698_ai >= 0 && lv_a <= autoBB8A1698_ae) || (autoBB8A1698_ai < 0 && lv_a >= autoBB8A1698_ae) ) ; lv_a += autoBB8A1698_ai ) {
+  9776     if (((gv_roles[lv_a][0] == 5) || (gv_roles[lv_a][0] == 14) || (gv_roles[lv_a][0] == 15)) && ((gv_roles[lv_a][1] == 2) || (gv_roles[lv_a][1] == 5))) {
+  9777     gf_ASE8A792E889B2E98089E9A1B9E585B3E997AD(lv_a);
+  9781 Wait(2.0, c_timeGame);
+  9782   if ((lv_z <= 2)) {
+  9784   else {
+  9785     if ((gv_iTSCHRISTMAS == false)) {
+  9786     SoundPlay(SoundLink("GameMusicTerr2233", -1), PlayerGroupAll(), 100.0, 0.0);
+  9791 TriggerExecute(gt_NPNightEnd, false, false);
+  9792 gv_isNight = false;
+  9793 TriggerExecute(gt_NightSequence, false, false);
+  9794 return true;
+==========================================================================================
+### auto_gf_SequencePrep_TriggerFunc
+==========================================================================================
+[auto_gf_SequencePrep_TriggerFunc 未找到]
+==========================================================================================
+### auto_gf_SequenceKills_TriggerFunc
+==========================================================================================
+[auto_gf_SequenceKills_TriggerFunc 未找到]
+==========================================================================================
+### auto_gf_SequenceAfter_TriggerFunc
+==========================================================================================
+[auto_gf_SequenceAfter_TriggerFunc 未找到]
+==========================================================================================
+### auto_gf_SequenceAfter2_TriggerFunc
+==========================================================================================
+[auto_gf_SequenceAfter2_TriggerFunc 未找到]
+==========================================================================================
+### auto_gf_SequenceBullshit_TriggerFunc
+==========================================================================================
+[auto_gf_SequenceBullshit_TriggerFunc 未找到]

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Desc>
+
+                <Frame type="TalkerPanel" name="GameUI/UIContainer/FullscreenUpperContainer/TalkerPanel" template="TalkerPanel/TalkerPanelTemplate" file="GameUI">
+                    <Anchor side="Top" relative="$parent/ResourcePanel" pos="Max" offset="10"/>
+                    <Anchor side="Right" relative="$parent" pos="Max" offset="-4000"/>
+                    <Height val="1"/>
+                    <Width val="1"/>
+                </Frame>
+
+                <Frame type="MessageDisplay" name="GameUI/UIContainer/FullscreenUpperContainer/ChatDisplay" file="GameUI">
+                    <AlternateTime val="true"/>
+                    <MaxMessages val="1"/>
+                    <MessageDuration val="1"/>
+                    <FadeDuration val="1"/>
+                    <Style val="ChatDisplayInternational"/>
+                    <AcceptsMouse val="false"/>
+                    <BatchText val="true"/>
+                    <Anchor side="Bottom" relative="$parent" pos="Max" offset="-4000"/>
+                    <Anchor side="Left" relative="$parent" pos="Mid" offset="0"/>
+                    <Anchor side="Right" relative="$parent" pos="Mid" offset="0"/>
+                    <Width val="1"/>
+                    <Height val="1"/>
+                </Frame>
+
+                <Frame type="MessageDisplay" name="GameUI/UIContainer/FullscreenUpperContainer/ReplayChatDisplay" file="GameUI">
+                    <MaxMessages val="1"/>
+                    <MessageDuration val="1"/>
+                    <FadeDuration val="1"/>
+                    <Style val="ChatDisplayInternational"/>
+                    <AcceptsMouse val="false"/>
+                    <BatchText val="true"/>
+                    <Anchor side="Left" relative="$parent/ChatDisplay" pos="Min" offset="0"/>
+                    <Anchor side="Bottom" relative="$parent/ChatDisplay" pos="Min" offset="-4000"/>
+                    <Anchor side="Right" relative="$parent/ChatDisplay" pos="Max" offset="0"/>
+                    <Height val="1"/>
+                </Frame>
+				
+				<Frame type="ChatBar" name="GameUI/UIContainer/FullscreenUpperContainer/ChatBar" template="ChatBar/ChatBarTemplate" file="GameUI">
+					<Anchor side="Bottom" relative="$parent" pos="Max" offset="10"/>
+                    <Anchor side="Left" relative="$parent" pos="Min" offset="10"/>
+                    <Width val="800"/>
+                    <Height val="84"/>
+                </Frame>
+				
+				<Frame type="Image" name="ChatBar/ChatBarTemplate/RecipientImage" file="ChatBar">
+					<Texture val="@@UI/ResourceIconMinerals" layer="0"/>
+					<TextureType val="Normal" layer="0"/>
+					<Anchor side="Top" relative="$parent" pos="Min" offset="21"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="4000"/>            
+					<Width val="1"/>
+					<Height val="1"/>
+				</Frame>
+
+				<Frame type="Label" name="ChatBar/ChatBarTemplate/RecipientLabel" file="ChatBar">
+					<Style val="ChatBarRecipient"/>
+					<Anchor side="Top" relative="$parent" pos="Min" offset="4000"/>
+					<Anchor side="Left" relative="$parent/RecipientImage" pos="Max" offset="5"/>
+					<Width val="1"/>
+					<Height val="1"/>
+				</Frame>
+				
+				<Frame type="Frame" name="WaitingForPlayersDialog/EditBoxContainer" file="WaitingForPlayersDialog">
+					<CollapseLayout val="true"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="60"/>
+					<Anchor side="Bottom" relative="$parent" pos="Max" offset="-4000"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="-60"/>
+					<Height val="1"/>
+				</Frame>
+				
+				<Frame type="Image" name="WaitingForPlayersDialog/EditBoxContainer/ChatBackground" file="WaitingForPlayersDialog">
+					<Texture val="@@UI/WaitingForPlayerChatBox" layer="0"/>
+					<TextureType val="EndCap" layer="0"/>
+					<Anchor side="Top" relative="$parent" pos="Min" offset="4000"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+					<Height val="1"/>
+				</Frame>
+
+				<Frame type="EditBox" name="WaitingForPlayersDialog/EditBoxContainer/ChatEditBox" template="StandardTemplates/StandardEditBoxTemplate" file="WaitingForPlayersDialog">
+					<Image val="ChatBackground"/>
+					<Insets top="0" left="0" bottom="0" right="0"/>
+					<Style val="GlueEditBox"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Bottom" relative="$parent" pos="Max" offset="4000"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+					<Height val="1"/>
+				</Frame>
+				
+				<Frame type="Frame" name="GameMenuDialogMainPanelTemplate/MessageLogButton" template="StandardTemplates/StandardMenuButtonTemplate" file="GameMenuDialog">
+					<Anchor side="Left" relative="$parent" pos="Mid" offset="5350"/>
+					<Anchor side="Right" relative="$parent" pos="Mid" offset="3550"/>
+					<Height val="1"/>
+                    <Width val="1"/>
+					<Visible val="false"/>
+				</Frame>
+				
+				<Frame type="Button" name="GameMenuDialogMainPanelTemplate/MessageLogButton/Button" file="GameMenuDialog">
+					<Shortcut val="@UI/GameMenuQuit_Hotkey"/>
+					<Text val="MAFIA"/>
+					<Height val="1"/>
+                    <Width val="1"/>
+					<Visible val="false"/>
+				</Frame>
+				
+				<Frame type="MessageLogDialog" name="MessageLogDialogTemplate" file="MessageLogDialog">
+					<Anchor side="Top" relative="$parent" pos="Min" offset="4000"/>
+					<Anchor side="Left" relative="$parent" pos="Min" offset="0"/>
+					<Anchor side="Right" relative="$parent" pos="Max" offset="0"/>
+				    <Height val="1"/>
+					<Visible val="false"/>
+				</Frame>
+</Desc>

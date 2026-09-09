@@ -1,0 +1,354 @@
+{
+  "events": {
+    "Button Pressed": {
+      "ntve_id": "4537C855",
+      "params": [
+        {
+          "paramdef": "19E462A8",
+          "value_kind": "Preset:2999701E"
+        },
+        {
+          "paramdef": "92855A3A",
+          "value_kind": "Preset:C9DCA6C0"
+        }
+      ]
+    },
+    "Dialog Item Is Used": {
+      "ntve_id": "B5222B7D",
+      "params": [
+        {
+          "paramdef": "47F2C8FB",
+          "value_kind": "Preset:2999701E"
+        },
+        {
+          "paramdef": "01D07B8F",
+          "value_kind": "Preset:F13E3BA1"
+        },
+        {
+          "paramdef": "B371ABF2",
+          "value_kind": "Preset:9D6C743C"
+        }
+      ]
+    },
+    "Unit Dies": {
+      "ntve_id": "00000090",
+      "params": [
+        {
+          "paramdef": "00000159",
+          "value_kind": "Preset:C84C7A78"
+        }
+      ]
+    },
+    "Timer Expires": {
+      "ntve_id": "00000049",
+      "params": []
+    },
+    "Periodic Event": {
+      "ntve_id": "6D565EB4",
+      "params": [
+        {
+          "paramdef": "4AB413B8",
+          "value_kind": "Value:5"
+        },
+        {
+          "paramdef": "3E8E573F",
+          "value_kind": "Preset:00000013"
+        }
+      ]
+    },
+    "Chat Message": {
+      "ntve_id": "00000121",
+      "params": [
+        {
+          "paramdef": "00000191",
+          "value_kind": "Preset:2999701E"
+        },
+        {
+          "paramdef": "00000193",
+          "value_kind": "Preset:00000073"
+        }
+      ]
+    },
+    "Map Initialization": {
+      "ntve_id": "00000120",
+      "params": []
+    }
+  },
+  "conditions": {
+    "(Owner of (Triggering unit)) == 1": {
+      "ntve_id": "C439C375",
+      "params": [
+        {
+          "paramdef": "ABB380C4",
+          "value_kind": "FunctionCall:00000081"
+        },
+        {
+          "paramdef": "51567265",
+          "value_kind": "Preset:1E7A4625"
+        },
+        {
+          "paramdef": "4A15EC5F",
+          "value_kind": "Value:1"
+        }
+      ]
+    }
+  },
+  "actions": {
+    "Clear Text Messages": {
+      "ntve_id": "33E26C4B",
+      "params": [
+        {
+          "paramdef": "CCFF1CD5",
+          "value_kind": "FunctionCall:00000192"
+        },
+        {
+          "paramdef": "D8219C9F",
+          "value_kind": "Preset:2D7D4A59"
+        }
+      ]
+    },
+    "Run Trigger": {
+      "ntve_id": "00000116",
+      "params": [
+        {
+          "paramdef": "00000183",
+          "value_kind": "Preset:00000065"
+        },
+        {
+          "paramdef": "00000184",
+          "value_kind": "Preset:00000068"
+        }
+      ]
+    },
+    "Open Bank": {
+      "ntve_id": "00000292",
+      "params": [
+        {
+          "paramdef": "00000499",
+          "value_kind": "Value:1"
+        }
+      ]
+    },
+    "For Each Unit In Unit Group": {
+      "ntve_id": "00000327",
+      "params": [
+        {
+          "paramdef": "00000618",
+          "value_kind": "FunctionCall:00000141"
+        }
+      ]
+    },
+    "For Each Player In Player Group": {
+      "ntve_id": "B525B112",
+      "params": [
+        {
+          "paramdef": "A4B226A9",
+          "value_kind": "FunctionCall:00000192"
+        }
+      ]
+    },
+    "For Each Integer": {
+      "ntve_id": "66474248",
+      "params": [
+        {
+          "paramdef": "F13E2CDE",
+          "value_kind": "Value:1"
+        },
+        {
+          "paramdef": "C25E6187",
+          "value_kind": "Value:10"
+        },
+        {
+          "paramdef": "F3144A4A",
+          "value_kind": "Value:1"
+        }
+      ]
+    },
+    "Issue Order": {
+      "ntve_id": "00000089",
+      "params": [
+        {
+          "paramdef": "00000156",
+          "value_kind": "FunctionCall:00000092"
+        },
+        {
+          "paramdef": "00000157",
+          "value_kind": "FunctionCall:59BA1DDF"
+        },
+        {
+          "paramdef": "00000158",
+          "value_kind": "Preset:00000039"
+        }
+      ]
+    },
+    "Play Sound": {
+      "ntve_id": "651D9322",
+      "params": [
+        {
+          "paramdef": "4FD0F5E6",
+          "value_kind": "Preset:8229CCB3"
+        },
+        {
+          "paramdef": "420B8251",
+          "value_kind": "FunctionCall:00000192"
+        },
+        {
+          "paramdef": "83444B10",
+          "value_kind": "Value:100.0"
+        },
+        {
+          "paramdef": "1D1E66BC",
+          "value_kind": "Value:0.0"
+        }
+      ]
+    },
+    "Pan Camera": {
+      "ntve_id": "DC635AEF",
+      "params": [
+        {
+          "paramdef": "171CA5E8",
+          "value_kind": "Value:1"
+        },
+        {
+          "paramdef": "1E118562",
+          "value_kind": "FunctionCall:00000039"
+        },
+        {
+          "paramdef": "92625A62",
+          "value_kind": "Value:2"
+        },
+        {
+          "paramdef": "E863F6C2",
+          "value_kind": "Preset:4D47A35C"
+        },
+        {
+          "paramdef": "A91C853D",
+          "value_kind": "Value:10.0"
+        },
+        {
+          "paramdef": "AB07BE98",
+          "value_kind": "Preset:00000072"
+        }
+      ]
+    },
+    "Create Units Facing Angle": {
+      "ntve_id": "6C39A0DF",
+      "params": [
+        {
+          "paramdef": "972A74CB",
+          "value_kind": "Value:1"
+        },
+        {
+          "paramdef": "5AC69524",
+          "value_kind": "empty"
+        },
+        {
+          "paramdef": "1EC7B7A1",
+          "value_kind": "Value:1"
+        },
+        {
+          "paramdef": "5908CAE6",
+          "value_kind": "Value:270.0"
+        }
+      ]
+    },
+    "Kill Unit": {
+      "ntve_id": "00000077",
+      "params": [
+        {
+          "paramdef": "00000136",
+          "value_kind": "FunctionCall:00000092"
+        }
+      ]
+    },
+    "Create Dialog Item": {
+      "ntve_id": "1005DE91",
+      "params": [
+        {
+          "paramdef": "018A24CC",
+          "value_kind": "FunctionCall:20E3B9BE"
+        },
+        {
+          "paramdef": "84675940",
+          "value_kind": "Preset:74C50A96"
+        }
+      ]
+    },
+    "Create Dialog": {
+      "ntve_id": "BD9AF7D6",
+      "params": [
+        {
+          "paramdef": "0A54556D",
+          "value_kind": "Value:500"
+        },
+        {
+          "paramdef": "2E6CF4F4",
+          "value_kind": "Value:400"
+        },
+        {
+          "paramdef": "F4B2815D",
+          "value_kind": "Preset:8094C4C1"
+        },
+        {
+          "paramdef": "D323187B",
+          "value_kind": "Value:0"
+        },
+        {
+          "paramdef": "6580A7BB",
+          "value_kind": "Value:0"
+        },
+        {
+          "paramdef": "AB235258",
+          "value_kind": "Preset:440EEF91"
+        }
+      ]
+    },
+    "Wait": {
+      "ntve_id": "00000242",
+      "params": [
+        {
+          "paramdef": "00000419",
+          "value_kind": "Value:2"
+        },
+        {
+          "paramdef": "00000420",
+          "value_kind": "Preset:00000013"
+        }
+      ]
+    },
+    "Modify Variable (Integer)": {
+      "ntve_id": "A0F31305",
+      "params": [
+        {
+          "paramdef": "5BFF7323",
+          "value_kind": "Preset:00000085"
+        },
+        {
+          "paramdef": "6725C0EB",
+          "value_kind": "Value:1"
+        }
+      ]
+    },
+    "Set Variable": {
+      "ntve_id": "00000136",
+      "params": []
+    },
+    "If Then Else": {
+      "ntve_id": "00000137",
+      "params": []
+    },
+    "Text Message": {
+      "ntve_id": "0366EE04",
+      "params": [
+        {
+          "paramdef": "0D120C33",
+          "value_kind": "FunctionCall:00000192"
+        },
+        {
+          "paramdef": "A4C19F41",
+          "value_kind": "Preset:875889C8"
+        }
+      ]
+    }
+  }
+}

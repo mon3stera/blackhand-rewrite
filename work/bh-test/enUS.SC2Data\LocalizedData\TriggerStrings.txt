@@ -1,0 +1,6 @@
+﻿Trigger/Name/06CB2E0B=Untitled Trigger 002
+Trigger/Name/2FB66DC2=Untitled Trigger 001
+Trigger/Name/34DB7A6E=Untitled Trigger 005
+Trigger/Name/4D29BE28=Untitled Trigger 004
+Trigger/Name/9590D8D8=Untitled Trigger 003
+Trigger/Name/A802B394=Melee Initialization

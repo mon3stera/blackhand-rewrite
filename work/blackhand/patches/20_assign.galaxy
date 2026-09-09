@@ -1,0 +1,208 @@
+//==============================================================
+// 角色分配：固定阵容（按存活人数自适应），随后沿用原图的身份展示
+//   黑手党 = 人数/5（向下取整），连环杀手 = 人数>=4 时 1 个，
+//   其余为城镇：警长/探员/义警/舞娘 优先，剩余市民。
+//==============================================================
+
+void gf_DisplayRoles () {
+    int lv_a;
+    int lv_n;
+    int lv_i;
+    int lv_j;
+    int lv_tmp;
+    int lv_mafia;
+    int lv_sk;
+    int lv_town;
+    int[16] lv_order;
+    int[16] lv_pool;
+    int[16] lv_role;
+
+    lv_n = 0;
+
+    for (lv_a = 1; lv_a <= 15; lv_a += 1) {
+        if (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) {
+            lv_n += 1;
+            lv_order[lv_n] = lv_a;
+        }
+    }
+
+    lv_mafia = lv_n / 5;
+    lv_sk = 0;
+
+    if (lv_n >= 4) {
+        lv_sk = 1;
+    }
+
+    lv_town = lv_n - lv_mafia - lv_sk;
+    lv_i = 0;
+
+    if (lv_town >= 1) {
+        lv_i += 1;
+        lv_pool[lv_i] = c_bhTown;
+        lv_role[lv_i] = c_bhSheriff;
+    }
+
+    if (lv_town >= 3) {
+        lv_i += 1;
+        lv_pool[lv_i] = c_bhTown;
+        lv_role[lv_i] = c_bhInvestigator;
+    }
+
+    if (lv_town >= 4) {
+        lv_i += 1;
+        lv_pool[lv_i] = c_bhTown;
+        lv_role[lv_i] = c_bhVigilante;
+    }
+
+    if (lv_town >= 5) {
+        lv_i += 1;
+        lv_pool[lv_i] = c_bhTown;
+        lv_role[lv_i] = c_bhEscort;
+    }
+
+    if (lv_mafia >= 1) {
+        lv_i += 1;
+        lv_pool[lv_i] = c_bhMafia;
+        lv_role[lv_i] = c_bhGodfather;
+    }
+
+    if (lv_mafia >= 2) {
+        lv_i += 1;
+        lv_pool[lv_i] = c_bhMafia;
+        lv_role[lv_i] = c_bhConsigliere;
+    }
+
+    if (lv_mafia >= 3) {
+        lv_i += 1;
+        lv_pool[lv_i] = c_bhMafia;
+        lv_role[lv_i] = c_bhMafiaEscort;
+    }
+
+    if (lv_sk >= 1) {
+        lv_i += 1;
+        lv_pool[lv_i] = c_bhNeutral;
+        lv_role[lv_i] = c_bhSerialKiller;
+    }
+
+    while (lv_i < lv_n) {
+        lv_i += 1;
+        lv_pool[lv_i] = c_bhTown;
+        lv_role[lv_i] = c_bhCitizen;
+    }
+
+    for (lv_i = lv_n; lv_i >= 2; lv_i -= 1) {
+        lv_j = RandomInt(1, lv_i);
+        lv_tmp = lv_pool[lv_i];
+        lv_pool[lv_i] = lv_pool[lv_j];
+        lv_pool[lv_j] = lv_tmp;
+        lv_tmp = lv_role[lv_i];
+        lv_role[lv_i] = lv_role[lv_j];
+        lv_role[lv_j] = lv_tmp;
+    }
+
+    for (lv_i = 1; lv_i <= lv_n; lv_i += 1) {
+        gv_roles[lv_order[lv_i]][1] = lv_pool[lv_i];
+        gv_roles[lv_order[lv_i]][0] = lv_role[lv_i];
+        gf_BHLog("roles", "p" + IntToString(lv_order[lv_i]), IntToString(lv_pool[lv_i]) + "/" + IntToString(lv_role[lv_i]));
+    }
+
+    gf_BHLog("meta", "players", IntToString(lv_n));
+
+    if (c_bhDebugFast == true) {
+        gv_dayLength = 0.1;
+        gv_nightLength = 0.1;
+        gv_discussionLength = 0.05;
+        gv_trialLength = 0.1;
+    }
+
+    SoundPlay(SoundLink("Protoss_DeathFX", -1), PlayerGroupAll(), 100.0, 0.0);
+    lv_a = 1;
+    for (lv_a = 1; lv_a <= 15; lv_a += 1) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
+            gv_e8B7B3E8BDA6EFBC9F[lv_a] += 4;
+            BankValueSetFromString(gv_bank[lv_a], "RQ", "#RQ", IntToString(gv_e8B7B3E8BDA6EFBC9F[lv_a]));
+            UIDisplayMessage(PlayerGroupSingle(lv_a), c_messageAreaDirective, (StringExternal("Param/Value/B19D7861") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]] + StringExternal("Param/Value/4C861665")));
+        }
+
+    }
+    Wait(2.0, c_timeGame);
+    lv_a = 1;
+    for (lv_a = 1; lv_a <= 15; lv_a += 1) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
+            if ((gv_roles[lv_a][1] == 1)) {
+                gf_RTTownRoleText(lv_a);
+            }
+
+            if ((gv_roles[lv_a][1] == 2)) {
+                gf_RTMafiaRoleText(lv_a);
+            }
+
+            if ((gv_roles[lv_a][1] == 3)) {
+                gf_RTNeutralRoleText(lv_a);
+                if ((gv_roles[lv_a][0] == 16)) {
+                    gv_immuneChance[lv_a] = 1;
+                }
+
+            }
+
+            if ((gv_roles[lv_a][1] == 5)) {
+                gf_RTTriadRoleText(lv_a);
+            }
+
+        }
+
+    }
+    lv_a = 1;
+    for (lv_a = 1; lv_a <= 15; lv_a += 1) {
+        UIDisplayMessage(PlayerGroupSingle(lv_a), c_messageAreaDirective, (StringExternal("Param/Value/B7DEA7B8") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]] + StringExternal("Param/Value/DE81B665") + gv_roleBoxText[lv_a][4] + StringExternal("Param/Value/9BF5ADE5")));
+    }
+    Wait(3.0, c_timeGame);
+    libNtve_gf_CreateDialogItemImage(gv_roleBox, 400, 550, c_anchorTopRight, 0, 0, StringToText(""), "Assets\\Textures\\ui_battlenet_settings_windowframe_sub01.dds", c_triggerImageTypeBorder, true, Color(100,100,100), c_triggerBlendModeNormal);
+    gv_roleBoxItem[0] = DialogControlLastCreated();
+    libNtve_gf_SetDialogItemRenderPriority(gv_roleBoxItem[0], 400, PlayerGroupAll());
+    DialogControlFadeTransparency(gv_roleBoxItem[0], PlayerGroupAll(), 0.0, 50.0);
+    libNtve_gf_CreateDialogItemButton(gv_roleBox, 40, 40, c_anchorTopRight, 0, 0, StringExternal("Param/Value/84CC3F4A"), StringToText(""), "Assets\\Textures\\ui_checkboxbutton_normaloverpressedover_terran.dds");
+    gv_roleBoxItem[1] = DialogControlLastCreated();
+    libNtve_gf_SetDialogItemImage(gv_roleBoxItem[1], "Assets\\Textures\\ui_checkboxbutton_normalpressed_terran.dds", PlayerGroupAll());
+    libNtve_gf_SetDialogItemClickOnDown(gv_roleBoxItem[1], true, PlayerGroupAll());
+    DialogControlCreate(gv_roleBox, c_triggerControlTypeLabel);
+    gv_roleBoxItem[2] = DialogControlLastCreated();
+    DialogControlSetSize(gv_roleBoxItem[2], PlayerGroupAll(), 380, 35);
+    DialogControlSetPosition(gv_roleBoxItem[2], PlayerGroupAll(), c_anchorTopLeft, 310, 10);
+    DialogControlCreate(gv_roleBox, c_triggerControlTypeLabel);
+    gv_roleBoxItem[3] = DialogControlLastCreated();
+    DialogControlSetSize(gv_roleBoxItem[3], PlayerGroupAll(), 380, 485);
+    DialogControlSetPosition(gv_roleBoxItem[3], PlayerGroupAll(), c_anchorTopLeft, 310, 55);
+    libNtve_gf_CreateDialogItemImage(gv_roleBox, 300, 300, c_anchorTopRight, 400, 250, StringToText(""), "Assets\\Textures\\ui_battlenet_settings_windowframe_sub01.dds", c_triggerImageTypeBorder, true, Color(100,100,100), c_triggerBlendModeNormal);
+    gv_roleBoxItem[4] = DialogControlLastCreated();
+    libNtve_gf_SetDialogItemRenderPriority(gv_roleBoxItem[4], 400, PlayerGroupAll());
+    DialogControlFadeTransparency(gv_roleBoxItem[4], PlayerGroupAll(), 0.0, 50.0);
+    DialogControlCreate(gv_roleBox, c_triggerControlTypeLabel);
+    gv_roleBoxItem[5] = DialogControlLastCreated();
+    DialogControlSetSize(gv_roleBoxItem[5], PlayerGroupAll(), 280, 280);
+    DialogControlSetPosition(gv_roleBoxItem[5], PlayerGroupAll(), c_anchorBottomLeft, 10, 10);
+    libNtve_gf_CreateDialogItemButton(gv_roleBox, 30, 30, c_anchorBottomLeft, 270, 270, StringExternal("Param/Value/9B3061C4"), StringToText(""), "Assets\\Textures\\ui_checkboxbutton_normaloverpressedover_terran.dds");
+    gv_roleBoxItem[6] = DialogControlLastCreated();
+    libNtve_gf_SetDialogItemImage(gv_roleBoxItem[6], "Assets\\Textures\\ui_checkboxbutton_normalpressed_terran.dds", PlayerGroupAll());
+    libNtve_gf_SetDialogItemClickOnDown(gv_roleBoxItem[6], true, PlayerGroupAll());
+    lv_a = 1;
+    for (lv_a = 1; lv_a <= 15; lv_a += 1) {
+        libNtve_gf_SetDialogItemText(gv_roleBoxItem[2], (StringExternal("Param/Value/474D74F4") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]] + StringExternal("Param/Value/5E339950") + StringExternal("Param/Value/012A76EE") + StringToText(gv_name[lv_a]) + StringExternal("Param/Value/2C65D68E")), PlayerGroupSingle(lv_a));
+        libNtve_gf_SetDialogItemText(gv_roleBoxItem[3], (StringExternal("Param/Value/66C04CC2") + gv_roleBoxText[lv_a][0] + StringExternal("Param/Value/ECC70246") + gv_roleBoxText[lv_a][1] + StringExternal("Param/Value/6652BFA1") + gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/3FF3BC1E") + gv_roleBoxText[lv_a][3] + StringExternal("Param/Value/C980A51C")), PlayerGroupSingle(lv_a));
+        libNtve_gf_SetDialogItemTooltip(gv_roleBoxItem[3], (StringExternal("Param/Value/9A551D61") + gv_roleBoxText[lv_a][6] + StringExternal("Param/Value/ED29A62C")), PlayerGroupSingle(lv_a));
+        if ((((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 7)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 14)) || (gv_roles[lv_a][1] == 2) || ((gv_roles[lv_a][1] == 3) && ((gv_roles[lv_a][0] == 8) || (gv_roles[lv_a][0] == 10))) || (gv_roles[lv_a][1] == 5))) {
+            libNtve_gf_SetDialogItemText(gv_roleBoxItem[5], gv_roleBoxText[lv_a][5], PlayerGroupSingle(lv_a));
+            DialogControlSetVisible(gv_roleBoxItem[4], PlayerGroupSingle(lv_a), true);
+            DialogControlSetVisible(gv_roleBoxItem[5], PlayerGroupSingle(lv_a), true);
+            DialogControlSetVisible(gv_roleBoxItem[6], PlayerGroupSingle(lv_a), true);
+        }
+        else {
+            DialogControlSetVisible(gv_roleBoxItem[4], PlayerGroupSingle(lv_a), false);
+            DialogControlSetVisible(gv_roleBoxItem[5], PlayerGroupSingle(lv_a), false);
+            DialogControlSetVisible(gv_roleBoxItem[6], PlayerGroupSingle(lv_a), false);
+        }
+    }
+    DialogSetVisible(gv_roleBox, PlayerGroupAll(), true);
+    DialogControlSetVisible(gv_roleBoxItem[3], PlayerGroupAll(), true);
+    DialogControlSetVisible(gv_roleBoxItem[2], PlayerGroupAll(), true);
+}

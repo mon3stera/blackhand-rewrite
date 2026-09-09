@@ -1,0 +1,243 @@
+//==============================================================
+// 夜晚：行动面板 + 行动结算
+//   替换 auto_gf_NightTransition_TriggerFunc / gf_Sequence*
+//
+//   角色能力（第一阶段 9 角色）
+//     警长(1,2)   调查目标是否有案底（教父免疫，显示无案底）
+//     探员(1,4)   目标今晚是否出门 + 是否可疑
+//     舞娘(1,5)   限制目标今晚行动
+//     义警(1,6)   击杀目标
+//     教父(2,2)   击杀目标（夜间无敌，调查免疫）
+//     陪侍(2,3)   限制目标今晚行动
+//     参谋(2,4)   得知目标的真实角色
+//     连环杀手(3,1) 击杀目标
+//     市民(1,1)   无行动
+//==============================================================
+
+bool gf_BHIsEvil (int lp_player) {
+    if (gv_roles[lp_player][1] == c_bhMafia) {
+        return true;
+    }
+
+    if ((gv_roles[lp_player][1] == c_bhNeutral) && (gv_roles[lp_player][0] == c_bhSerialKiller)) {
+        return true;
+    }
+
+    return false;
+}
+
+void gf_BHKillAtNight (int lp_target) {
+    if (gv_diedAtNight[lp_target] == true) {
+        return;
+    }
+
+    if ((gv_roles[lp_target][1] == c_bhMafia) && (gv_roles[lp_target][0] == c_bhGodfather)) {
+        return;
+    }
+
+    gv_diedAtNight[lp_target] = true;
+    gv_deathMethod[lp_target] = (gv_deathMethod[lp_target] + "V");
+    gv_deathText[lp_target] = (gv_deathText[lp_target] + StringExternal("Param/Value/94B5D4FC"));
+    gf_KillPlayer(lp_target, false);
+}
+
+void gf_BHResolveNight () {
+    int lv_a;
+    int lv_target;
+    int lv_mafiaTarget;
+    int lv_best;
+    int[16] lv_votes;
+
+    lv_mafiaTarget = 0;
+
+    for (lv_a = 1; lv_a <= 15; lv_a += 1) {
+        gv_roleblocked[lv_a] = 0;
+        gv_visitation[lv_a] = 0;
+        lv_votes[lv_a] = 0;
+    }
+
+    for (lv_a = 1; lv_a <= 15; lv_a += 1) {
+        if (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) {
+            if ((gv_action[lv_a][0] > 0) && (gv_action[lv_a][0] != lv_a)) {
+                gv_visitation[lv_a] = gv_action[lv_a][0];
+            }
+        }
+    }
+
+    // 舞娘 / 陪侍：限制目标本夜行动
+    for (lv_a = 1; lv_a <= 15; lv_a += 1) {
+        if (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) {
+            if (gv_visitation[lv_a] > 0) {
+                if (((gv_roles[lv_a][1] == c_bhTown) && (gv_roles[lv_a][0] == c_bhEscort))
+                    || ((gv_roles[lv_a][1] == c_bhMafia) && (gv_roles[lv_a][0] == c_bhMafiaEscort))) {
+                    gv_roleblocked[gv_visitation[lv_a]] = 1;
+                }
+            }
+        }
+    }
+
+    // 黑手党击杀目标：教父优先，其次按成员多数
+    for (lv_a = 1; lv_a <= 15; lv_a += 1) {
+        if (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) {
+            if ((gv_roles[lv_a][1] == c_bhMafia) && (gv_roles[lv_a][0] == c_bhGodfather)) {
+                if ((gv_roleblocked[lv_a] == 0) && (gv_visitation[lv_a] > 0)) {
+                    lv_mafiaTarget = gv_visitation[lv_a];
+                }
+            }
+        }
+    }
+
+    if (lv_mafiaTarget == 0) {
+        for (lv_a = 1; lv_a <= 15; lv_a += 1) {
+            if (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) {
+                if ((gv_roles[lv_a][1] == c_bhMafia) && (gv_roleblocked[lv_a] == 0) && (gv_visitation[lv_a] > 0)) {
+                    lv_votes[gv_visitation[lv_a]] += 1;
+                }
+            }
+        }
+
+        lv_best = 0;
+
+        for (lv_a = 1; lv_a <= 15; lv_a += 1) {
+            if (lv_votes[lv_a] > lv_best) {
+                lv_best = lv_votes[lv_a];
+                lv_mafiaTarget = lv_a;
+            }
+        }
+    }
+
+    // 义警 / 连环杀手 击杀
+    for (lv_a = 1; lv_a <= 15; lv_a += 1) {
+        if (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) {
+            if ((gv_roleblocked[lv_a] == 0) && (gv_visitation[lv_a] > 0)) {
+                lv_target = 0;
+
+                if ((gv_roles[lv_a][1] == c_bhTown) && (gv_roles[lv_a][0] == c_bhVigilante)) {
+                    lv_target = gv_visitation[lv_a];
+                }
+
+                if ((gv_roles[lv_a][1] == c_bhNeutral) && (gv_roles[lv_a][0] == c_bhSerialKiller)) {
+                    lv_target = gv_visitation[lv_a];
+                }
+
+                if (lv_target > 0) {
+                    gf_BHKillAtNight(lv_target);
+                }
+            }
+        }
+    }
+
+    if (lv_mafiaTarget > 0) {
+        gf_BHKillAtNight(lv_mafiaTarget);
+    }
+
+    // 调查类：警长 / 探员 / 参谋
+    for (lv_a = 1; lv_a <= 15; lv_a += 1) {
+        if (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) {
+            if ((gv_roleblocked[lv_a] == 0) && (gv_visitation[lv_a] > 0)) {
+                lv_target = gv_visitation[lv_a];
+
+                if ((gv_roles[lv_a][1] == c_bhTown) && (gv_roles[lv_a][0] == c_bhSheriff)) {
+                    if ((gv_roles[lv_target][1] == c_bhMafia) && (gv_roles[lv_target][0] == c_bhGodfather)) {
+                        gf_CBSystemMessage(StringExternal("Param/Value/D903D005"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0, 0, 0));
+                    }
+                    else {
+                        if (gf_BHIsEvil(lv_target) == true) {
+                            gf_CBSystemMessage(StringExternal("Param/Value/33FE9712"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0, 0, 0));
+                        }
+                        else {
+                            gf_CBSystemMessage(StringExternal("Param/Value/D903D005"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0, 0, 0));
+                        }
+                    }
+                }
+
+                if ((gv_roles[lv_a][1] == c_bhTown) && (gv_roles[lv_a][0] == c_bhInvestigator)) {
+                    if (gv_visitation[lv_target] > 0) {
+                        gf_CBSystemMessage(StringExternal("Param/Value/BBABB1F7"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0, 0, 0));
+                    }
+                    else {
+                        gf_CBSystemMessage(StringExternal("Param/Value/E338915A"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0, 0, 0));
+                    }
+
+                    if ((gv_roles[lv_target][1] == c_bhMafia) && (gv_roles[lv_target][0] != c_bhGodfather)) {
+                        gf_CBSystemMessage(StringExternal("Param/Value/BD797B72"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0, 0, 0));
+                    }
+                    else {
+                        if ((gv_roles[lv_target][1] == c_bhNeutral) && (gv_roles[lv_target][0] == c_bhSerialKiller)) {
+                            gf_CBSystemMessage(StringExternal("Param/Value/9373FEE1"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0, 0, 0));
+                        }
+                        else {
+                            gf_CBSystemMessage(StringExternal("Param/Value/81E0ADE5"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0, 0, 0));
+                        }
+                    }
+                }
+
+                if ((gv_roles[lv_a][1] == c_bhMafia) && (gv_roles[lv_a][0] == c_bhConsigliere)) {
+                    gf_CBSystemMessage((StringExternal("Param/Value/0AF4DC68") + gv_roleNameArray[gv_roles[lv_target][1]][gv_roles[lv_target][0]] + StringExternal("Param/Value/DD766C5E")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0, 0, 0));
+                }
+            }
+        }
+    }
+}
+
+bool auto_gf_NightTransition_TriggerFunc (bool testConds, bool runActions) {
+    int lv_a;
+
+    if (!runActions) {
+        return true;
+    }
+
+    gf_BHLog("phase", "night", IntToString(gv_dayNumber));
+
+    gv_isNight = true;
+    gv_dayOver = false;
+    gv_voteOn = false;
+    gv_trialOn = false;
+
+    for (lv_a = 1; lv_a <= 15; lv_a += 1) {
+        gv_action[lv_a][0] = 0;
+        gv_action[lv_a][1] = 0;
+        gv_visitation[lv_a] = 0;
+        gv_roleblocked[lv_a] = 0;
+        gv_diedAtNight[lv_a] = false;
+        gv_deathText[lv_a] = null;
+        gv_deathMethod[lv_a] = "";
+        gv_dayAction[lv_a] = false;
+        gv_playerVote[lv_a] = 0;
+        gv_voteCount[lv_a] = 0;
+        gv_skipVote[lv_a] = false;
+        gv_bhVoted[lv_a] = false;
+    }
+
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, (StringExternal("Param/Value/DC3398E5") + IntToText(gv_dayNumber) + StringExternal("Param/Value/8BCB9851")));
+    SoundPlay(SoundLink("UI_TerranPing", -1), PlayerGroupAll(), 100.0, 0.0);
+    Wait(3.0, c_timeGame);
+
+    gf_ASShowBox();
+    gf_RSTownSetup();
+    gf_RSMafiaSetup2();
+    gf_RSNeutralSetup();
+
+    TriggerEnable(gt_ASActionButtonATown, true);
+    TriggerEnable(gt_ASActionButtonATown2, true);
+    TriggerEnable(gt_ASActionButtonBTown, true);
+    TriggerEnable(gt_ASActionButtonAMafia, true);
+    TriggerEnable(gt_ASActionButtonAMafia2, true);
+    TriggerEnable(gt_ASMafiaTarget, true);
+    TriggerEnable(gt_ASActionButtonANeutral, true);
+    TriggerEnable(gt_ASActionButtonBNeutral, true);
+
+    gf_TBStartTimer2((60.0 * gv_nightLength), StringExternal("Param/Value/02FE7FA6"));
+    Wait(((gv_nightLength * 60.0) - 10.0), c_timeGame);
+    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, StringExternal("Param/Value/B6C2B70D"));
+    Wait(10.0, c_timeGame);
+
+    gf_ASEndActions();
+    gf_TBEndTimer();
+
+    gf_BHResolveNight();
+
+    gv_isNight = false;
+    gf_DayTransition();
+    return true;
+}
