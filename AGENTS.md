@@ -45,7 +45,7 @@
 - 链路：变体菜单 `gv_variantsMenuItem[0]` 第 N 项 → `gt_OSVariantsMenuChange_Func`（显示描述，**每个菜单项都要有分支，否则无说明且右下标签残留上一个变体名**）→ `gt_OSVariantsMenuConfirm_Func`（SelectedItem → `gv_variantSelection` 映射 + 末尾分发调 `gf_V*Options()`）→ V 函数（=OSActivateOptions 的预设变体：重建面板 + 填 `lv_category`/`lv_role` 槽位串 + `gf_VLoadSaveSlot(0,...)`）。
 - **槽位串语义**：`lv_category`/`lv_role` 按槽位空格分隔；槽位=「池 角色号」。**随机组槽 = category 4 + 随机池角色号**：4[2]=城镇随机、4[3]=黑手随机、4[4]=政府(zf)、4[5]=城镇调查、4[6]=保护、4[14]=中立温和、4[12]/4[13]=致命类。预设按人数逐档（15/14/13/12 人），≤11 人走拒绝提示分支。
 - **现有自加预设**：菜单第 31 项「烙印」（`BHYIN01`，原为悬挂未定义键）→ variant 30 → `gf_VE78399E58DB0`；第 32 项「捕风捉影」（`GCZBNAME`）→ variant 31 → `gf_VBFCZOptions`（15 人=侦探/观察者/4城镇随机/城镇调查/政府/保护/教父(2,2)/陪侍(2,3)/黑手随机/影武者(3,31)/女巫(3,4)/中立温和，14/13/12 人递减城镇随机）。女巫=3/4、教父=2/2、陪侍=2/3。
-- **预设允许增删改角色的白名单**（???类变体如随机:血锈保持锁定）：①目录浏览白名单（`gt_OSMenus_Func`，6 处 `gv_variantSelection == 16)))` 结尾的变体串）②选中映射白名单（`gt_OSRoleSelect_Func`，5 处 `== 12)))` 结尾的变体串）。两者都需含新预设的 variantSelection；添加按钮禁用集 `[1,4,8,9,10,11,12]` 不用动。
+- **预设允许增删改角色的白名单**（???类变体如随机:血锈保持锁定）：①目录浏览白名单（`gt_OSMenus_Func`，6 处 `gv_variantSelection == 16)))` 结尾的变体串）②选中映射白名单（`gt_OSRoleSelect_Func`，5 处 `== 12)))` 结尾的变体串）。两者都需含新预设的 variantSelection；③**动作执行层排除集**：`gt_OSRoleManipulate` 的条件排除 {1,4,8,9,10,11,12,14}（管 item[3]添加/item[4]移除/上下移的**执行**）+ 预览列表选中处理（~86811）的 `!= 1`（选中点亮移除按钮）——**锁定型预设（???类）必须把 variantSelection 加进③和添加按钮禁用集**，只摘①②会像 shw85 那样仍可移除。
 - **注意**：预设再次点「采纳设定」会重新跑 fill 覆盖手动修改（原图语义）。
 
 ## 标准循环
