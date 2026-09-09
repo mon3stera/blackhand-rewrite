@@ -53900,9 +53900,6 @@ void gf_OSInitializeOptionsScreen () {
     }
 
     if (true) {
-        DialogControlAddItem(gv_variantsMenuItem[0], PlayerGroupAll(), StringExternal("Param/Value/327C3349"));
-        DialogControlAddItem(gv_variantsMenuItem[0], PlayerGroupAll(), StringExternal("Param/Value/497CD93D"));
-        DialogControlAddItem(gv_variantsMenuItem[0], PlayerGroupAll(), StringExternal("Param/Value/1206C5DC"));
         DialogControlSelectItem(gv_variantsMenuItem[0], PlayerGroupAll(), 1);
     }
 
