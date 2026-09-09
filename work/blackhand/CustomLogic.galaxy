@@ -51583,9 +51583,6 @@ void gf_OSLoadBase64 (int lp_player) {
     DialogControlSetVisible(gv_rolePanelItem[13], PlayerGroupAll(), false);
     libNtve_gf_SetDialogItemCurrentValue(gv_rolePanelItem[12], 0.0, PlayerGroupAll());
     libNtve_gf_SetDialogItemText(gv_rolePanelItem[13], StringToText(""), PlayerGroupAll());
-    DialogControlSelectItem(gv_rolesMenusItem[0], PlayerGroupAll(), 0);
-    DialogControlSelectItem(gv_rolesMenusItem[1], PlayerGroupAll(), 0);
-    DialogControlSelectItem(gv_rolesMenusItem[2], PlayerGroupAll(), 0);
     DialogControlRemoveAllItems(gv_rolesMenusItem[0], PlayerGroupAll());
     DialogControlRemoveAllItems(gv_rolesMenusItem[1], PlayerGroupAll());
     DialogControlRemoveAllItems(gv_rolesMenusItem[2], PlayerGroupAll());
@@ -84678,9 +84675,6 @@ bool gt_OSVariantsMenuConfirm_Func (bool testConds, bool runActions) {
     DialogControlSetVisible(gv_rolePanelItem[13], PlayerGroupAll(), false);
     libNtve_gf_SetDialogItemCurrentValue(gv_rolePanelItem[12], 0.0, PlayerGroupAll());
     libNtve_gf_SetDialogItemText(gv_rolePanelItem[13], StringToText(""), PlayerGroupAll());
-    DialogControlSelectItem(gv_rolesMenusItem[0], PlayerGroupAll(), 0);
-    DialogControlSelectItem(gv_rolesMenusItem[1], PlayerGroupAll(), 0);
-    DialogControlSelectItem(gv_rolesMenusItem[2], PlayerGroupAll(), 0);
     DialogControlRemoveAllItems(gv_rolesMenusItem[0], PlayerGroupAll());
     DialogControlRemoveAllItems(gv_rolesMenusItem[1], PlayerGroupAll());
     DialogControlRemoveAllItems(gv_rolesMenusItem[2], PlayerGroupAll());
@@ -86282,7 +86276,6 @@ bool gt_OSMenus_Func (bool testConds, bool runActions) {
         }
         libNtve_gf_SetDialogItemCurrentValue(gv_rolePanelItem[12], 0.0, PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_rolePanelItem[13], StringToText(""), PlayerGroupAll());
-        DialogControlSelectItem(gv_rolesMenusItem[1], PlayerGroupAll(), 0);
         DialogControlRemoveAllItems(gv_rolesMenusItem[1], PlayerGroupAll());
         gv_roleSelection = 0;
         if ((gv_roleCategory == 1)) {
@@ -87061,9 +87054,6 @@ bool gt_OSStartGame_Func (bool testConds, bool runActions) {
     TriggerEnable(gt_OSCancelGame, true);
     Wait(15.0, c_timeGame);
     if ((gv_variantSelection == 1)) {
-        DialogControlSelectItem(gv_rolesMenusItem[0], PlayerGroupAll(), 0);
-        DialogControlSelectItem(gv_rolesMenusItem[1], PlayerGroupAll(), 0);
-        DialogControlSelectItem(gv_rolesMenusItem[2], PlayerGroupAll(), 0);
         DialogControlRemoveAllItems(gv_rolesMenusItem[0], PlayerGroupAll());
         DialogControlRemoveAllItems(gv_rolesMenusItem[1], PlayerGroupAll());
         DialogControlRemoveAllItems(gv_rolesMenusItem[2], PlayerGroupAll());
