@@ -41356,10 +41356,6 @@ void gf_RTTownRoleText (int lp_player) {
     }
 
     if ((gv_roles[lv_a][0] == 31)) {
-        if ((gv_bankRoleAchievements[lv_a][1][31] == 0)) {
-            gf_CBSystemMessage(StringExternal("Param/Value/GCZACH"), lv_a, 0, 0, SoundLink("UI_TipPanelHighlight", -1), Color(0.00, 0.00, 0.00));
-        }
-
         gv_roleBoxText[lv_a][0] = (gv_roleBoxText[lv_a][0] + StringExternal("Param/Value/GCZTAG"));
         gv_roleBoxText[lv_a][4] = StringExternal("Param/Value/GCZGOAL");
         gv_roleBoxText[lv_a][1] = StringExternal("Param/Value/GCZABIL");
@@ -88564,7 +88560,9 @@ void gf_VE78399E58DB0 () {
     DialogControlSetEnabled(gv_optionsPanelItem[24], PlayerGroupSingle(gv_host), false);
     DialogControlSetEnabled(gv_optionsPanelItem[27], PlayerGroupSingle(gv_host), false);
     DialogControlSetEnabled(gv_optionsPanelItem[29], PlayerGroupSingle(gv_host), false);
-    DialogControlSetEnabled(gv_optionsPanelItem[31], PlayerGroupSivoid gf_VBFCZOptions () {
+    DialogControlSetEnabled(gv_optionsPanelItem[31], PlayerGroupSingle(gv_host), false);
+}
+void gf_VBFCZOptions () {
     int init_i;
 
     // Variable Declarations
@@ -88771,8 +88769,6 @@ void gf_VE78399E58DB0 () {
     DialogControlSetEnabled(gv_optionsPanelItem[27], PlayerGroupSingle(gv_host), false);
     DialogControlSetEnabled(gv_optionsPanelItem[29], PlayerGroupSingle(gv_host), false);
     DialogControlSetEnabled(gv_optionsPanelItem[31], PlayerGroupSingle(gv_host), false);
-}
-ngle(gv_host), false);
 }
 
 
