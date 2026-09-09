@@ -84677,6 +84677,11 @@ bool gt_OSVariantsMenuChange_Func (bool testConds, bool runActions) {
     }
 
     TriggerEnable(gt_OSVariantsMenuConfirm, true);
+
+    if ((DialogControlGetSelectedItem(gv_variantsMenuItem[0], gv_host) == 31)) {
+        gv_variantSelection = 30;
+    }
+
     return true;
 }
 
@@ -84872,9 +84877,6 @@ bool gt_OSVariantsMenuConfirm_Func (bool testConds, bool runActions) {
     }
 
     if ((DialogControlGetSelectedItem(gv_variantsMenuItem[0], gv_host) == 31)) {
-        gv_variantSelection = 30;
-    }
-
     if ((DialogControlGetSelectedItem(gv_variantsMenuItem[0], gv_host) == 19) && ((GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0002") || (GameAttributeGameValue("[bnet:local/0.0/179588]1") == "0004"))) {
         gv_variantSelection = 1;
         gv_subvariantSelection = 8;
@@ -85195,11 +85197,13 @@ bool gt_OSVariantsMenuConfirm_Func (bool testConds, bool runActions) {
     TriggerEnable(gt_OSSliders, true);
     TriggerEnable(gt_OSMenus, true);
     TriggerEnable(gt_OSVariantsMenuConfirm, true);
-    return true;
 
     if ((gv_variantSelection == 30)) {
         gf_VE78399E58DB0();
     }
+
+    return true;
+
 }
 
 //--------------------------------------------------------------------------------------------------
