@@ -88440,14 +88440,9 @@ void gf_ESShadowKill (int lp_player, int lp_killer) {
         gv_specialCasePlayer[lv_target][12] += 1;
         gv_deathMethod[lv_target] = (gv_deathMethod[lv_target] + "w");
         if ((gv_nightSequence == true)) {
-            auto9B99A3AA_g = PlayerGroupAll();
-            auto9B99A3AA_var = -1;
-            while (true) {
-                auto9B99A3AA_var = PlayerGroupNextPlayer(auto9B99A3AA_g, auto9B99A3AA_var);
-                if (auto9B99A3AA_var < 0) { break; }
-                gf_CBSystemMessage(StringExternal("Param/Value/SHWQUOTE"), auto9B99A3AA_var, 16, 0, SoundLink("Silent", -1), Color(0,0,0));
-            }
-            SoundPlay(SoundLink("Zeratul_AttackImpact", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+            SoundPlay(SoundLink("DarkTemplar_What", -1), PlayerGroupAll(), 100.0, 0.0);
+            Wait(1.2, c_timeGame);
+            SoundPlay(SoundLink("DarkTemplar_Attack", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
             auto9B99A3AA_g = PlayerGroupAll();
             auto9B99A3AA_var = -1;
             while (true) {
