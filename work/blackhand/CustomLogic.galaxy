@@ -4408,12 +4408,12 @@ void gf_InitializeVariables () {
     gv_roleDescriptionArray[1][31] = StringExternal("Param/Value/GCZDESC");
     gv_roleInvestigatorArray[1][31][0] = gv_investigatorE9A38EE8A1A31;
     gv_roleInvestigatorArray[1][31][1] = gv_investigatorE9A38EE8A1A32;
-    gv_e78AAFE7BDAAE58FAFE883BD[1][31] = StringExternal("Param/Value/F0A13008");
+    gv_e78AAFE7BDAAE58FAFE883BD[1][31] = StringExternal("Param/Value/GCZBLANK");
     gv_roleOptions[1][31][10] = true;
     gv_roleDescriptionArray[1][30] = StringExternal("Param/Value/F0A13002");
     gv_roleInvestigatorArray[1][30][0] = gv_investigatorE9A38EE8A1A31;
     gv_roleInvestigatorArray[1][30][1] = gv_investigatorE9A38EE8A1A32;
-    gv_e78AAFE7BDAAE58FAFE883BD[1][30] = StringExternal("Param/Value/F0A13008");
+    gv_e78AAFE7BDAAE58FAFE883BD[1][30] = StringExternal("Param/Value/GCZBLANK");
     gv_roleOptions[1][30][10] = true;
     gv_channelTextColor[1] = Color(78.43, 78.43, 78.43);
     gv_textBackgroundColor1[1] = Color(15.69, 7.84, 7.84);
