@@ -221,6 +221,7 @@ const bool c_bhSoloFill = false;   // 大厅测试：不脚本人机塞满，空
 
 bool gv_soloTest;
 void gf_BHNotify (text lp_msg, int lp_target, soundlink lp_sound);
+bool gf_BHRestrictAllowed (int lp_target);
 trigger gt_BHSolo;
 trigger gt_BHItalicTest;
 int[16] gv_rolesArray;
@@ -9847,6 +9848,13 @@ bool auto_gf_NightTransition_TriggerFunc (bool testConds, bool runActions) {
     return true;
 }
 
+//--------------------------------------------------------------------------------------------------
+// shw90: 退伍军人(1,17)「无法被限制」——舞娘类限制(1,5/2,3/5,3)对其无效（原图文案承诺但无实现）
+//--------------------------------------------------------------------------------------------------
+bool gf_BHRestrictAllowed (int lp_target) {
+    return !((gv_roles[lp_target][1] == 1) && (gv_roles[lp_target][0] == 17));
+}
+
 void gf_SequencePrep () {
     // Variable Declarations
     int lv_a;
@@ -11189,15 +11197,17 @@ void gf_SequenceBullshit () {
     for ( ; ( (auto25CE18D3_ai >= 0 && lv_a <= auto25CE18D3_ae) || (auto25CE18D3_ai < 0 && lv_a >= auto25CE18D3_ae) ) ; lv_a += auto25CE18D3_ai ) {
         if ((((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 5) && (gv_roleOptions[1][5][0] == true)) || ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 3) && (gv_roleOptions[2][3][1] == true)) || ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 3) && (gv_roleOptions[5][3][1] == true))) && (gv_visitation[lv_a] > 0)) {
             gv_e78AAFE7BDAAE4BA8BE5AE9E[lv_a][4] = true;
-            gv_roleblocked[gv_visitation[lv_a]] = lv_a;
-            gv_visitation[gv_visitation[lv_a]] = 0;
+            if ((gf_BHRestrictAllowed(gv_visitation[lv_a]) == true)) {
+                gv_roleblocked[gv_visitation[lv_a]] = lv_a;
+                gv_visitation[gv_visitation[lv_a]] = 0;
+            }
         }
 
     }
     lv_temp = 0;
     lv_a = 1;
     for ( ; ( (autoC5005E28_ai >= 0 && lv_a <= autoC5005E28_ae) || (autoC5005E28_ai < 0 && lv_a >= autoC5005E28_ae) ) ; lv_a += autoC5005E28_ai ) {
-        if ((((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 5)) || ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 3)) || ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 3))) && (gv_visitation[lv_a] > 0) && (gv_roleblocked[lv_a] == 0)) {
+        if ((((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 5)) || ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 3)) || ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 3))) && (gv_visitation[lv_a] > 0) && (gv_roleblocked[lv_a] == 0) && (gf_BHRestrictAllowed(gv_visitation[lv_a]) == true)) {
             lv_temp += 1;
             lv_e8A2ABE9A284E99990E588B6[gv_visitation[lv_a]] = lv_a;
             lv_e9A284E99990E588B6[lv_a] = gv_visitation[lv_a];
@@ -11885,15 +11895,17 @@ void gf_SequenceBullshitBackup () {
         if ((((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 5) && (gv_roleOptions[1][5][0] == true)) || ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 3) && (gv_roleOptions[2][3][1] == true)) || ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 3) && (gv_roleOptions[5][3][1] == true))) && (gv_visitation[lv_a] > 0)) {
             gv_e78AAFE7BDAAE4BA8BE5AE9E[lv_a][3] = true;
             gv_e78AAFE7BDAAE4BA8BE5AE9E[lv_a][4] = true;
-            gv_roleblocked[gv_visitation[lv_a]] = lv_a;
-            gv_visitation[gv_visitation[lv_a]] = 0;
+            if ((gf_BHRestrictAllowed(gv_visitation[lv_a]) == true)) {
+                gv_roleblocked[gv_visitation[lv_a]] = lv_a;
+                gv_visitation[gv_visitation[lv_a]] = 0;
+            }
         }
 
     }
     lv_temp = 0;
     lv_a = 1;
     for ( ; ( (auto0A687440_ai >= 0 && lv_a <= auto0A687440_ae) || (auto0A687440_ai < 0 && lv_a >= auto0A687440_ae) ) ; lv_a += auto0A687440_ai ) {
-        if ((((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 5)) || ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 3)) || ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 3))) && (gv_visitation[lv_a] > 0) && (gv_roleblocked[lv_a] == 0)) {
+        if ((((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 5)) || ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 3)) || ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 3))) && (gv_visitation[lv_a] > 0) && (gv_roleblocked[lv_a] == 0) && (gf_BHRestrictAllowed(gv_visitation[lv_a]) == true)) {
             lv_temp += 1;
             lv_e8A2ABE9A284E99990E588B6[gv_visitation[lv_a]] = lv_a;
             lv_e9A284E99990E588B6[lv_a] = gv_visitation[lv_a];
