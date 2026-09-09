@@ -217,6 +217,7 @@ int[32] gv_optionsPanelItem;
 int gv_rolesAssigned;
 // 测试构建：允许把电脑玩家当成占位玩家（正式发布改为 false）
 const bool c_bhSoloBuild = true;
+const bool c_bhSoloFill = false;   // 大厅测试：不脚本人机塞满，空位由大厅自行加电脑/玩家
 
 bool gv_soloTest;
 void gf_BHNotify (text lp_msg, int lp_target, soundlink lp_sound);
@@ -56000,7 +56001,7 @@ bool gt_Init2_Func (bool testConds, bool runActions) {
     SoundChannelMute(PlayerGroupAll(), c_soundCategoryAmbient, true);
     GameTimeOfDaySet("16:00:00");
     GameTimeOfDayPause(true);
-    if ((c_bhSoloBuild == true)) {
+    if ((c_bhSoloFill == true)) {
         for ( lv_a = 1 ; lv_a <= 15 ; lv_a += 1 ) {
             if ((PlayerGroupHasPlayer(gv_players, lv_a) == false)) {
                 PlayerGroupAdd(gv_players, lv_a);
@@ -89156,7 +89157,7 @@ bool gt_BHSolo_Func (bool testConds, bool runActions) {
 
     gv_soloTest = true;
     TriggerEnable(gt_Prefer, true);
-    // 不自动填角色：虚拟玩家由 gt_Init2 的 c_bhSoloBuild 块补满，角色由测试者自设手动配置
+    // 不自动填角色：空位由大厅自行加电脑（c_bhSoloFill=false 时 Init2 不再虚拟补位）
     gf_CBSystemMessage(StringExternal("Param/Value/SOLOON"), EventPlayer(), 0, 0, SoundLink("UI_TipSelect", -1), Color(0, 0, 0));
     return true;
 }
