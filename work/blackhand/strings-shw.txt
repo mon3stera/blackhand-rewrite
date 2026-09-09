@@ -1,0 +1,15 @@
+Param/Value/SHWNAME=<c val="C0C0C0">影武者</c>
+Param/Value/SHWDESC=隐于市井的暗杀者，无声无息，专为灭口而行。<n/><n/><c val="BBDDFF">每晚选择两名玩家：若目标一造访目标二家中，或整夜未曾出门，天亮时目标一将死去。你将得知目标一的真实去向。</c><n/><n/><c val="AA9988">你在夜晚无法被杀死。</c>
+Param/Value/SHWOPT2=攻击无视无敌和救治
+Param/Value/SHWCRIME=非法闯入，谋杀
+Param/Value/SHWBOX4=你是受雇于复仇的影子，行动无声，见血封喉。
+Param/Value/SHWBOX1=- 每晚选择两名玩家：若目标一造访目标二家中，或整夜未曾出门，目标一将死去。
+Param/Value/SHWBOX3=- 你将得知目标一的真实去向。
+Param/Value/SHWBOX5=- 你的攻击无视无敌和救治。
+Param/Value/SHWTGT1=目标一
+Param/Value/SHWTGT2=目标二
+Param/Value/SHWDEST1=你的目标一昨晚没有出门。
+Param/Value/SHWDEST2=你的目标一昨晚去了「
+Param/Value/SHWDEST3=」的家。
+Param/Value/SHWNIGHT=<s val="ModLeftSize16Bold"><c val="9B30FF">你听见黑暗中传来一声极短的破风声，随后一切归于死寂...</c></s>
+Param/Value/SOLOON=-solo 已启用：空位已自动补满，可以开始游戏。
