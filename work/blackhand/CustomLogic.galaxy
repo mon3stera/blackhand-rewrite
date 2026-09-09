@@ -69804,7 +69804,7 @@ bool gt_BHRevealRoles_Func (bool testConds, bool runActions) {
     lv_a = 1;
     while (lv_a <= 15) {
         if ((PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true)) {
-            gf_CBSystemMessage((FixedToText(lv_a, 0) + StringExternal("Param/Value/BHREVEAL2") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]]), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+            gf_CBSystemMessage((TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/BHREVEAL2") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]]), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
         }
         lv_a += 1;
     }
