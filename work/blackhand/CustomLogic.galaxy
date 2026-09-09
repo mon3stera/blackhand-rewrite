@@ -52182,6 +52182,8 @@ bool auto_gf_OSComputeOptions_TriggerFunc (bool testConds, bool runActions) {
     playergroup lv_benefactors;
     int lv_l;
     int lv_ll;
+    int[16] lv_bhPreferSlot;
+    bool[16] lv_bhReserved;
 
     // Automatic Variable Declarations
     const int auto167539B5_ae = 15;
@@ -52369,6 +52371,28 @@ bool auto_gf_OSComputeOptions_TriggerFunc (bool testConds, bool runActions) {
     Wait(0.0, c_timeReal);
     gf_OSRandomize();
     Wait(0.0, c_timeReal);
+    lv_a = 1;
+    for ( ; lv_a <= 15 ; lv_a += 1 ) {
+        lv_bhPreferSlot[lv_a] = 0;
+        lv_bhReserved[lv_a] = false;
+    }
+
+    lv_a = 1;
+    for ( ; lv_a <= 15 ; lv_a += 1 ) {
+        if ((PlayerGroupHasPlayer(gv_tempPlayerGroup, lv_a) == true) && (gv_prefer[lv_a][0] != "")) {
+            lv_b = 1;
+            for ( ; lv_b <= gv_tempPlayers ; lv_b += 1 ) {
+                if ((gv_prefer[lv_a][0] == gv_roleNameInput[gv_semifinalRole[lv_b][1]][gv_semifinalRole[lv_b][0]])) {
+                    lv_bhPreferSlot[lv_a] = lv_b;
+                    lv_bhReserved[lv_b] = true;
+                }
+
+            }
+
+        }
+
+    }
+
     lv_b = 0;
     lv_a = 1;
     for ( ; ( (auto02425F32_ai >= 0 && lv_a <= auto02425F32_ae) || (auto02425F32_ai < 0 && lv_a >= auto02425F32_ae) ) ; lv_a += auto02425F32_ai ) {
@@ -52441,6 +52465,10 @@ bool auto_gf_OSComputeOptions_TriggerFunc (bool testConds, bool runActions) {
                     lv_x = RandomInt(1, gv_tempPlayers);
                     if ((lv_t[lv_x][0] == false)) {
                         lv_zzz = true;
+                        if ((lv_bhPreferSlot[lv_a] != 0)) {
+                            lv_x = lv_bhPreferSlot[lv_a];
+                        }
+
                         if ((lv_ll < 250)) {
                             lv_ll += 1;
                             if ((gv_prefer[lv_a][0] != "")) {
@@ -52467,6 +52495,10 @@ bool auto_gf_OSComputeOptions_TriggerFunc (bool testConds, bool runActions) {
                                 }
 
                             }
+                        }
+
+                        if ((lv_bhPreferSlot[lv_a] == 0) && (lv_bhReserved[lv_x] == true)) {
+                            lv_zzz = false;
                         }
 
                         if ((c_bhSoloBuild == true) && (gv_prefer[lv_a][0] != "")) {
