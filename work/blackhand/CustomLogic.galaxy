@@ -88421,7 +88421,6 @@ void gf_ESShadowKill (int lp_player, int lp_killer) {
     // Implementation
     if ((gv_nightSequence == true)) {
         Wait(RandomFixed(0.3, 0.6), c_timeGame);
-        SoundPlay(SoundLink("Zeratul_AttackImpact", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
         Wait(RandomFixed(0.6, 1.0), c_timeGame);
     }
 
@@ -88431,6 +88430,7 @@ void gf_ESShadowKill (int lp_player, int lp_killer) {
         }
 
         if ((gv_nightSequence == true)) {
+            SoundPlay(SoundLink("Zeratul_AttackImpact", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
             gf_BHNotify(StringExternal("Param/Value/SHWNIGHT"), lv_target, SoundLink("Silent", -1));
             gf_FlashScreen(Color(100.00, 0.00, 100.00), lv_target, 3.0, 50.0);
             Wait(RandomFixed(0.4, 0.8), c_timeGame);
