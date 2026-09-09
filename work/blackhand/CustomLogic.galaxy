@@ -85534,6 +85534,9 @@ bool gt_OSRoleManipulate_Func (bool testConds, bool runActions) {
         if (!((gv_variantSelection != 14))) {
             return false;
         }
+        if (!((gv_variantSelection != 31))) {
+            return false;
+        }
     }
 
     // Actions
@@ -86446,7 +86449,7 @@ bool gt_OSRoleSelect_Func (bool testConds, bool runActions) {
 
     }
 
-    if ((((gv_roleCategory == 1) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 23) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 14) && (gv_bigRoleAssigned[2] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 20) && (gv_bigRoleAssigned[4] == true)) || ((gv_roleCategory == 2) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[0] == true)) || ((gv_roleCategory == 5) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[5] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 10) && (gv_bigRoleAssigned[3] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[6] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 19) && (gv_bigRoleAssigned[1] == true)) || (gv_variantSelection == 1) || (gv_variantSelection == 4) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12))) {
+    if ((((gv_roleCategory == 1) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 23) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 14) && (gv_bigRoleAssigned[2] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 20) && (gv_bigRoleAssigned[4] == true)) || ((gv_roleCategory == 2) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[0] == true)) || ((gv_roleCategory == 5) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[5] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 10) && (gv_bigRoleAssigned[3] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[6] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 19) && (gv_bigRoleAssigned[1] == true)) || (gv_variantSelection == 1) || (gv_variantSelection == 4) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12) || (gv_variantSelection == 31))) {
         DialogControlSetEnabled(gv_rolesMenusItem[3], PlayerGroupSingle(gv_host), false);
     }
     else {
@@ -86804,7 +86807,7 @@ bool gt_OSMenus_Func (bool testConds, bool runActions) {
         TriggerEnable(gt_OSMenus, true);
     }
 
-    if ((EventDialogControl() == gv_rolesMenusItem[2]) && (gv_variantSelection != 1) && (DialogControlGetSelectedItem(EventDialogControl(), gv_host) >= 1)) {
+    if ((EventDialogControl() == gv_rolesMenusItem[2]) && (gv_variantSelection != 1) && (gv_variantSelection != 31) && (DialogControlGetSelectedItem(EventDialogControl(), gv_host) >= 1)) {
         lv_a = 1;
         for ( ; ( (auto70359D9D_ai >= 0 && lv_a <= auto70359D9D_ae) || (auto70359D9D_ai < 0 && lv_a >= auto70359D9D_ae) ) ; lv_a += auto70359D9D_ai ) {
             if ((PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true) && (lv_a != gv_host)) {
