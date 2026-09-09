@@ -25,3 +25,6 @@ Param/Value/F2239D82=- 你推断出他可能是侦探、监视者、密探/先�
 // -reveal 测试指令（仅主机）
 Param/Value/BHREVEAL=<c val="FF9900">—— 全体玩家身份（测试） ——</c>
 Param/Value/BHREVEAL2=<c val="CCCCCC">号 :</c> 
+// 警长可查出影武者
+Param/Value/SHWSW=可查出影武者
+Param/Value/SHWREV=<s val="ModLeftSize16Bold"><c val="FFFF88">你的目标是一个 </c><c val="C0C0C0">影武者</c><c val="FFFF88">!</c></s>
