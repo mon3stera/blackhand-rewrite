@@ -215,6 +215,11 @@ int[14] gv_rolePanelItem;
 int gv_optionsPanel;
 int[32] gv_optionsPanelItem;
 int gv_rolesAssigned;
+// 测试构建：允许把电脑玩家当成占位玩家（正式发布改为 false）
+const bool c_bhSoloBuild = true;
+
+bool gv_soloTest;
+trigger gt_BHSolo;
 int[16] gv_rolesArray;
 bool[9][41][10] gv_roleOptionAllowed;
 bool[9][41][10] gv_roleOptionExists;
@@ -976,6 +981,8 @@ void gf_InitializeOther ();
 void gf_DefaultRoleOptions ();
 void gf_MakeHelpMenu ();
 void gf_DisplayRoles ();
+bool gt_BHSolo_Init ();
+void gf_BHSoloFill ();
 void gf_WorldDestroyer ();
 void gf_DayTransition ();
 void gf_CheckVoteWin ();
@@ -43420,7 +43427,7 @@ bool gf_OSCheckOptionsA (bool lp_error) {
     }
 
     if ((lv_validity == true)) {
-        if ((gv_rolesAssigned < PlayerGroupCount(gv_currentPlayers)) && (gv_variantSelection != 1) && (gv_variantSelection != 4)) {
+        if ((gv_rolesAssigned < PlayerGroupCount(gv_currentPlayers)) && (gv_variantSelection != 1) && (gv_variantSelection != 4) && (gv_soloTest == false)) {
             lv_validity = false;
             if ((lp_error == true)) {
                 auto84663EDF_g = gv_players;
@@ -43434,7 +43441,7 @@ bool gf_OSCheckOptionsA (bool lp_error) {
 
         }
 
-        if ((gv_rolesAssigned > PlayerGroupCount(gv_currentPlayers)) && (gv_variantSelection != 1) && (gv_variantSelection != 4)) {
+        if ((gv_rolesAssigned > PlayerGroupCount(gv_currentPlayers)) && (gv_variantSelection != 1) && (gv_variantSelection != 4) && (gv_soloTest == false)) {
             lv_validity = false;
             if ((lp_error == true)) {
                 auto06F90637_g = gv_players;
@@ -52310,6 +52317,18 @@ bool auto_gf_OSComputeOptions_TriggerFunc (bool testConds, bool runActions) {
                             }
                         }
 
+                        if ((c_bhSoloBuild == true) && (gv_prefer[lv_a][0] != "")) {
+                            lv_b = 1;
+                            for ( ; lv_b <= gv_tempPlayers ; lv_b += 1 ) {
+                                if ((lv_t[lv_b][0] == false) && (gv_prefer[lv_a][0] == gv_roleNameInput[gv_semifinalRole[lv_b][1]][gv_semifinalRole[lv_b][0]])) {
+                                    lv_x = lv_b;
+                                    lv_zzz = true;
+                                }
+
+                            }
+
+                        }
+
                         if ((lv_zzz == true)) {
                             PlayerGroupRemove(lv_patrons, lv_a);
                             PlayerGroupRemove(lv_benefactors, lv_a);
@@ -55779,7 +55798,7 @@ bool gt_Init2_Func (bool testConds, bool runActions) {
     GameTimeOfDayPause(true);
     lv_a = 1;
     for ( ; ( (autoA1853CA2_ai >= 0 && lv_a <= autoA1853CA2_ae) || (autoA1853CA2_ai < 0 && lv_a >= autoA1853CA2_ae) ) ; lv_a += autoA1853CA2_ai ) {
-        if ((PlayerStatus(lv_a) == c_playerStatusActive) && (PlayerType(lv_a) != c_playerTypeComputer) && (PlayerType(lv_a) != c_playerTypeHostile) && (PlayerType(lv_a) != c_playerTypeNeutral) && (PlayerType(lv_a) != c_playerTypeReferee) && (PlayerType(lv_a) != c_playerTypeSpectator)) {
+        if ((PlayerStatus(lv_a) == c_playerStatusActive) && ((PlayerType(lv_a) != c_playerTypeComputer) || (c_bhSoloBuild == true)) && (PlayerType(lv_a) != c_playerTypeHostile) && (PlayerType(lv_a) != c_playerTypeNeutral) && (PlayerType(lv_a) != c_playerTypeReferee) && (PlayerType(lv_a) != c_playerTypeSpectator)) {
             BankLoad("MBank13", lv_a);
             gv_bank[lv_a] = BankLastCreated();
             BankOptionSet(gv_bank[lv_a], c_bankOptionSignature, true);
@@ -56218,6 +56237,21 @@ bool gt_Init2_Func (bool testConds, bool runActions) {
     TriggerEnable(gt_ADAntiAFKHostingPeriod, true);
     TipAlertPanelClear(PlayerGroupAll());
     gv_holdYourHorses = true;
+    if ((c_bhSoloBuild == true)) {
+        for ( lv_a = 1 ; lv_a <= 15 ; lv_a += 1 ) {
+            if ((PlayerGroupHasPlayer(gv_players, lv_a) == false)) {
+                PlayerGroupAdd(gv_players, lv_a);
+                PlayerGroupAdd(gv_currentPlayers, lv_a);
+                PlayerGroupAdd(gv_alivePlayers, lv_a);
+                gv_name[lv_a] = ("电脑" + IntToString(lv_a));
+                gv_playerColor[lv_a] = 1;
+                gv_playerHouse[lv_a] = RandomInt(0, 24);
+            }
+
+        }
+
+    }
+
     return true;
 }
 
@@ -56359,6 +56393,7 @@ bool gt_E98081E7A4BC_Func (bool testConds, bool runActions) {
 void gt_E98081E7A4BC_Init () {
     gt_E98081E7A4BC = TriggerCreate("gt_E98081E7A4BC_Func");
     TriggerAddEventChatMessage(gt_E98081E7A4BC, c_playerAny, "-gift ", false);
+    gt_BHSolo_Init();
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -57683,7 +57718,7 @@ bool gt_AccountIDHandler_Func (bool testConds, bool runActions) {
         }
 
         lv_t = gv_globalT;
-        if ((lv_b == 5)) {
+        if ((lv_b == 5) && (c_bhSoloBuild == false)) {
             lv_x = 5;
         }
         else {
@@ -63343,7 +63378,7 @@ bool gt_DetectLeave_Func (bool testConds, bool runActions) {
 
     lv_a = 1;
     for ( ; ( (auto225D97DD_ai >= 0 && lv_a <= auto225D97DD_ae) || (auto225D97DD_ai < 0 && lv_a >= auto225D97DD_ae) ) ; lv_a += auto225D97DD_ai ) {
-        if ((PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true) && ((PlayerStatus(lv_a) == c_playerStatusLeft) || (PlayerStatus(lv_a) != c_playerStatusActive))) {
+        if ((PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true) && ((PlayerStatus(lv_a) == c_playerStatusLeft) || ((PlayerStatus(lv_a) != c_playerStatusActive) && (c_bhSoloBuild == false)))) {
             PlayerGroupRemove(gv_currentPlayers, lv_a);
             if ((gv_name[lv_a] == "")) {
                 if ((gv_silentlyQuit[lv_a] == false)) {
@@ -65197,7 +65232,7 @@ bool gt_Prefer_Func (bool testConds, bool runActions) {
             return false;
         }
 
-        if (!((gv_oP[EventPlayer()][1] == true))) {
+        if (!(((gv_oP[EventPlayer()][1] == true) || (c_bhSoloBuild == true)))) {
             return false;
         }
     }
@@ -65238,7 +65273,7 @@ bool gt_Prefer_Func (bool testConds, bool runActions) {
                             gf_CBSystemMessage((StringExternal("Param/Value/4BC28B75") + gv_roleNameArray[lv_a][lv_b] + StringExternal("Param/Value/D663A24F")), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
                             gv_prefer[EventPlayer()][lv_n] = lv_s;
                             lv_c[1] = true;
-                            if ((gv_oP[EventPlayer()][1] == false)) {
+                            if ((gv_oP[EventPlayer()][1] == false) && (c_bhSoloBuild == false)) {
                                 gf_CBSystemMessage(StringExternal("Param/Value/3674FEEF"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
                                 gv_bankGeneralIntegers[EventPlayer()][3] -= 500;
                                 gv_points[EventPlayer()] -= 500;
@@ -88391,4 +88426,51 @@ void gf_RAShadowActions (int lp_player) {
             DialogControlSetVisible(gv_actionDialogItem[lv_a][6], PlayerGroupSingle(lp_player), false);
         }
     }
+}
+
+
+// ===== 单人测试模式（-solo，仅测试构建生效）=====
+
+bool gt_BHSolo_Init () {
+    gt_BHSolo = TriggerCreate("gt_BHSolo_Func");
+    TriggerAddEventChatMessage(gt_BHSolo, c_playerAny, "-solo", false);
+    return true;
+}
+
+// 空槽位补为混合阵营（前 3 个非主机槽黑手党、其余市民），保留已有选择
+void gf_BHSoloFill () {
+    int lv_a = 1;
+    int lv_n = PlayerGroupCount(gv_currentPlayers);
+
+    for ( ; lv_a <= 15 ; lv_a += 1 ) {
+        if (lv_a <= lv_n) {
+            if ((gv_categoriesArray[lv_a] == 0) || (gv_rolesArray[lv_a] == 0)) {
+                if ((lv_a <= 3) && (lv_a != gv_host)) {
+                    gv_categoriesArray[lv_a] = 2;
+                    gv_rolesArray[lv_a] = 1;
+                }
+                else {
+                    gv_categoriesArray[lv_a] = 1;
+                    gv_rolesArray[lv_a] = 1;
+                }
+
+            }
+
+        }
+
+    }
+
+    gv_rolesAssigned = lv_n;
+}
+
+bool gt_BHSolo_Func (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+
+    gv_soloTest = true;
+    TriggerEnable(gt_Prefer, true);
+    gf_BHSoloFill();
+    gf_CBSystemMessage(StringExternal("Param/Value/SOLOON"), EventPlayer(), 0, 0, SoundLink("UI_TipSelect", -1), Color(0, 0, 0));
+    return true;
 }
