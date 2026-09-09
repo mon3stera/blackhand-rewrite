@@ -19,3 +19,8 @@ Param/Value/GCZTAIL2= 访问了你的房屋。
 Param/Value/GCZNONE=昨晚没有人造访你的目标。
 Param/Value/GCZNOSELF=昨晚没有人造访你的房屋。
 Param/Value/F2239D82=- 你推断出他可能是侦探、监视者、密探/先锋、纵火者、影武者、观察者。
+// 预设：捕风捉影（菜单第32项，variantSelection=31）+ 烙印菜单名修复
+Param/Value/BHYIN01=<s val="ModCenterSize24Bold"><c val="FF3232">烙印</c></s>
+Param/Value/GCZBNAME=<s val="ModCenterSize24Bold"><c val="8822CC">捕风捉影</c></s>
+Param/Value/GCZBBTN=<s val="ModCenterSize24Bold"><c val="8822CC">捕风捉影</c></s>
+Param/Value/GCZBDESC=侦探与观察者联手排查<n/>4名城镇随机、城镇调查、政府、保护保驾护航<n/>教父、陪侍与黑手随机潜伏暗处<n/>影武者、女巫与中立温和混迹其间<n/><n/><n/><n/><n/><n/><s val="ModCenterSize18Bold">12-15人可用</s>
