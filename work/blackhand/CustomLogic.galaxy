@@ -85828,7 +85828,7 @@ bool gt_OSRoleSelect_Func (bool testConds, bool runActions) {
 
         }
 
-        if (((gv_variantSelection == 1) || (gv_variantSelection == 3) || (gv_variantSelection == 5) || (gv_variantSelection == 6) || (gv_variantSelection == 7) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12)) || (gv_variantSelection == 14) || (gv_variantSelection == 15) || (gv_variantSelection == 16) || (gv_variantSelection == 30) || (gv_variantSelection == 31))) {
+        if (((gv_variantSelection == 1) || (gv_variantSelection == 3) || (gv_variantSelection == 5) || (gv_variantSelection == 6) || (gv_variantSelection == 7) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12) || (gv_variantSelection == 14) || (gv_variantSelection == 15) || (gv_variantSelection == 16) || (gv_variantSelection == 30) || (gv_variantSelection == 31))) {
             if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 1)) {
                 gv_roleSelection = 1;
             }
@@ -85964,7 +85964,7 @@ bool gt_OSRoleSelect_Func (bool testConds, bool runActions) {
 
         }
 
-        if (((gv_variantSelection == 1) || (gv_variantSelection == 3) || (gv_variantSelection == 5) || (gv_variantSelection == 6) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12)) || (gv_variantSelection == 14) || (gv_variantSelection == 15) || (gv_variantSelection == 16) || (gv_variantSelection == 30) || (gv_variantSelection == 31))) {
+        if (((gv_variantSelection == 1) || (gv_variantSelection == 3) || (gv_variantSelection == 5) || (gv_variantSelection == 6) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12) || (gv_variantSelection == 14) || (gv_variantSelection == 15) || (gv_variantSelection == 16) || (gv_variantSelection == 30) || (gv_variantSelection == 31))) {
             if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 1)) {
                 gv_roleSelection = 1;
             }
@@ -86073,7 +86073,7 @@ bool gt_OSRoleSelect_Func (bool testConds, bool runActions) {
     }
 
     if ((gv_roleCategory == 5)) {
-        if (((gv_variantSelection == 1) || (gv_variantSelection == 3) || (gv_variantSelection == 5) || (gv_variantSelection == 6) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12)) || (gv_variantSelection == 14) || (gv_variantSelection == 15) || (gv_variantSelection == 16) || (gv_variantSelection == 30) || (gv_variantSelection == 31))) {
+        if (((gv_variantSelection == 1) || (gv_variantSelection == 3) || (gv_variantSelection == 5) || (gv_variantSelection == 6) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12) || (gv_variantSelection == 14) || (gv_variantSelection == 15) || (gv_variantSelection == 16) || (gv_variantSelection == 30) || (gv_variantSelection == 31))) {
             if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 1)) {
                 gv_roleSelection = 1;
             }
@@ -86182,7 +86182,7 @@ bool gt_OSRoleSelect_Func (bool testConds, bool runActions) {
     }
 
     if ((gv_roleCategory == 3)) {
-        if (((gv_variantSelection == 1) || (gv_variantSelection == 3) || (gv_variantSelection == 5) || (gv_variantSelection == 6) || (gv_variantSelection == 7) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12)) || (gv_variantSelection == 14) || (gv_variantSelection == 15) || (gv_variantSelection == 16) || (gv_variantSelection == 30) || (gv_variantSelection == 31))) {
+        if (((gv_variantSelection == 1) || (gv_variantSelection == 3) || (gv_variantSelection == 5) || (gv_variantSelection == 6) || (gv_variantSelection == 7) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12) || (gv_variantSelection == 14) || (gv_variantSelection == 15) || (gv_variantSelection == 16) || (gv_variantSelection == 30) || (gv_variantSelection == 31))) {
             if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 1)) {
                 gv_roleSelection = 1;
             }
@@ -86256,7 +86256,7 @@ bool gt_OSRoleSelect_Func (bool testConds, bool runActions) {
     }
 
     if ((gv_roleCategory == 4)) {
-        if (((gv_variantSelection == 1) || (gv_variantSelection == 3) || (gv_variantSelection == 5) || (gv_variantSelection == 6) || (gv_variantSelection == 7) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12)) || (gv_variantSelection == 14) || (gv_variantSelection == 15) || (gv_variantSelection == 16) || (gv_variantSelection == 30) || (gv_variantSelection == 31))) {
+        if (((gv_variantSelection == 1) || (gv_variantSelection == 3) || (gv_variantSelection == 5) || (gv_variantSelection == 6) || (gv_variantSelection == 7) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12) || (gv_variantSelection == 14) || (gv_variantSelection == 15) || (gv_variantSelection == 16) || (gv_variantSelection == 30) || (gv_variantSelection == 31))) {
             if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 1)) {
                 gv_roleSelection = 1;
             }
@@ -86474,7 +86474,7 @@ bool gt_OSMenus_Func (bool testConds, bool runActions) {
 
         }
 
-        if (((gv_variantSelection == 1) || (gv_variantSelection == 3) || (gv_variantSelection == 5) || (gv_variantSelection == 6) || (gv_variantSelection == 7) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12) || (gv_variantSelection == 14) || (gv_variantSelection == 15) || (gv_variantSelection == 16)) || (gv_variantSelection == 30) || (gv_variantSelection == 31))) {
+        if (((gv_variantSelection == 1) || (gv_variantSelection == 3) || (gv_variantSelection == 5) || (gv_variantSelection == 6) || (gv_variantSelection == 7) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12) || (gv_variantSelection == 14) || (gv_variantSelection == 15) || (gv_variantSelection == 16) || (gv_variantSelection == 30) || (gv_variantSelection == 31))) {
             if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 1)) {
                 gv_roleCategory = 1;
             }
@@ -86531,7 +86531,7 @@ bool gt_OSMenus_Func (bool testConds, bool runActions) {
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/DA3D48CB") + gv_roleNameArray[gv_roleCategory][3] + StringExternal("Param/Value/CB7482A6")));
             }
 
-            if (((gv_variantSelection == 1) || (gv_variantSelection == 3) || (gv_variantSelection == 5) || (gv_variantSelection == 6) || (gv_variantSelection == 7) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12) || (gv_variantSelection == 14) || (gv_variantSelection == 15) || (gv_variantSelection == 16)) || (gv_variantSelection == 30) || (gv_variantSelection == 31))) {
+            if (((gv_variantSelection == 1) || (gv_variantSelection == 3) || (gv_variantSelection == 5) || (gv_variantSelection == 6) || (gv_variantSelection == 7) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12) || (gv_variantSelection == 14) || (gv_variantSelection == 15) || (gv_variantSelection == 16) || (gv_variantSelection == 30) || (gv_variantSelection == 31))) {
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/0513EB01") + gv_roleNameArray[gv_roleCategory][1] + StringExternal("Param/Value/A94FCB6C")));
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/C7CB7361") + gv_roleNameArray[gv_roleCategory][2] + StringExternal("Param/Value/40A0CC6D")));
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/99E8BEC7") + gv_roleNameArray[gv_roleCategory][4] + StringExternal("Param/Value/10E9D94E")));
@@ -86574,7 +86574,7 @@ bool gt_OSMenus_Func (bool testConds, bool runActions) {
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/82831AF4") + gv_roleNameArray[gv_roleCategory][3] + StringExternal("Param/Value/951376D7")));
             }
 
-            if (((gv_variantSelection == 1) || (gv_variantSelection == 3) || (gv_variantSelection == 5) || (gv_variantSelection == 6) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12) || (gv_variantSelection == 14) || (gv_variantSelection == 15) || (gv_variantSelection == 16)) || (gv_variantSelection == 30) || (gv_variantSelection == 31))) {
+            if (((gv_variantSelection == 1) || (gv_variantSelection == 3) || (gv_variantSelection == 5) || (gv_variantSelection == 6) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12) || (gv_variantSelection == 14) || (gv_variantSelection == 15) || (gv_variantSelection == 16) || (gv_variantSelection == 30) || (gv_variantSelection == 31))) {
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/E01BC381") + gv_roleNameArray[gv_roleCategory][1] + StringExternal("Param/Value/582C9006")));
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/2AEFED98") + gv_roleNameArray[gv_roleCategory][4] + StringExternal("Param/Value/12DBCBD2")));
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/351B78DC") + gv_roleNameArray[gv_roleCategory][2] + StringExternal("Param/Value/953CBFCE")));
@@ -86608,7 +86608,7 @@ bool gt_OSMenus_Func (bool testConds, bool runActions) {
         }
 
         if ((gv_roleCategory == 5)) {
-            if (((gv_variantSelection == 1) || (gv_variantSelection == 3) || (gv_variantSelection == 5) || (gv_variantSelection == 6) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12) || (gv_variantSelection == 14) || (gv_variantSelection == 15) || (gv_variantSelection == 16)) || (gv_variantSelection == 30) || (gv_variantSelection == 31))) {
+            if (((gv_variantSelection == 1) || (gv_variantSelection == 3) || (gv_variantSelection == 5) || (gv_variantSelection == 6) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12) || (gv_variantSelection == 14) || (gv_variantSelection == 15) || (gv_variantSelection == 16) || (gv_variantSelection == 30) || (gv_variantSelection == 31))) {
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/66BC3736") + gv_roleNameArray[gv_roleCategory][1] + StringExternal("Param/Value/8FA9DA23")));
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/66C44C4D") + gv_roleNameArray[gv_roleCategory][4] + StringExternal("Param/Value/6BB7D96E")));
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/D2FB1014") + gv_roleNameArray[gv_roleCategory][2] + StringExternal("Param/Value/603CFA9F")));
@@ -86642,7 +86642,7 @@ bool gt_OSMenus_Func (bool testConds, bool runActions) {
         }
 
         if ((gv_roleCategory == 3)) {
-            if (((gv_variantSelection == 1) || (gv_variantSelection == 3) || (gv_variantSelection == 5) || (gv_variantSelection == 6) || (gv_variantSelection == 7) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12) || (gv_variantSelection == 14) || (gv_variantSelection == 15) || (gv_variantSelection == 16)) || (gv_variantSelection == 30) || (gv_variantSelection == 31))) {
+            if (((gv_variantSelection == 1) || (gv_variantSelection == 3) || (gv_variantSelection == 5) || (gv_variantSelection == 6) || (gv_variantSelection == 7) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12) || (gv_variantSelection == 14) || (gv_variantSelection == 15) || (gv_variantSelection == 16) || (gv_variantSelection == 30) || (gv_variantSelection == 31))) {
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/8CC4B9F9") + gv_roleNameArray[gv_roleCategory][1] + StringExternal("Param/Value/8D31E702")));
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/C280A36D") + gv_roleNameArray[gv_roleCategory][5] + StringExternal("Param/Value/25536CBF")));
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/28289682") + gv_roleNameArray[gv_roleCategory][9] + StringExternal("Param/Value/3DBD18CA")));
@@ -86665,7 +86665,7 @@ bool gt_OSMenus_Func (bool testConds, bool runActions) {
         }
 
         if ((gv_roleCategory == 4)) {
-            if (((gv_variantSelection == 1) || (gv_variantSelection == 3) || (gv_variantSelection == 5) || (gv_variantSelection == 6) || (gv_variantSelection == 7) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12) || (gv_variantSelection == 14) || (gv_variantSelection == 15) || (gv_variantSelection == 16)) || (gv_variantSelection == 30) || (gv_variantSelection == 31))) {
+            if (((gv_variantSelection == 1) || (gv_variantSelection == 3) || (gv_variantSelection == 5) || (gv_variantSelection == 6) || (gv_variantSelection == 7) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12) || (gv_variantSelection == 14) || (gv_variantSelection == 15) || (gv_variantSelection == 16) || (gv_variantSelection == 30) || (gv_variantSelection == 31))) {
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/BB061658") + gv_roleNameArray[gv_roleCategory][1] + StringExternal("Param/Value/F45292C0")));
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/46B35E16") + gv_roleNameArray[gv_roleCategory][2] + StringExternal("Param/Value/F27F3572")));
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/6B4F4573") + gv_roleNameArray[gv_roleCategory][4] + StringExternal("Param/Value/1F841032")));
