@@ -85196,6 +85196,10 @@ bool gt_OSVariantsMenuConfirm_Func (bool testConds, bool runActions) {
     TriggerEnable(gt_OSMenus, true);
     TriggerEnable(gt_OSVariantsMenuConfirm, true);
     return true;
+
+    if ((gv_variantSelection == 30)) {
+        gf_VE78399E58DB0();
+    }
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -85203,10 +85207,6 @@ void gt_OSVariantsMenuConfirm_Init () {
     gt_OSVariantsMenuConfirm = TriggerCreate("gt_OSVariantsMenuConfirm_Func");
     TriggerAddEventDialogControl(gt_OSVariantsMenuConfirm, c_playerAny, c_invalidDialogControlId, c_triggerControlEventTypeClick);
 
-    if ((gv_variantSelection == 30)) {
-        gf_VE78399E58DB0();
-    }
-}
 
 //--------------------------------------------------------------------------------------------------
 // Trigger: OS - Role Manipulate
