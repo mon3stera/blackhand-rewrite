@@ -88422,7 +88422,13 @@ void gf_ESShadowKill (int lp_player, int lp_killer) {
             gv_immuneChance[lv_target] = (gv_immuneChance[lv_target] - 1);
         }
 
-        gf_CBSystemMessage(StringExternal("Param/Value/0BE95EEB"), lv_target, lv_target, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+        if ((gv_nightSequence == true)) {
+            gf_CBSystemMessage(StringExternal("Param/Value/SHWNIGHT"), lv_target, lv_target, 0, SoundLink("Silent", -1), Color(0,0,0));
+            gf_FlashScreen(Color(100.00, 0.00, 100.00), lv_target, 3.0, 50.0);
+            Wait(RandomFixed(0.4, 0.8), c_timeGame);
+        }
+
+        gf_CBSystemMessage(StringExternal("Param/Value/SHWSURV"), lv_target, lv_target, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
         gf_CBSystemMessage(StringExternal("Param/Value/B9CD6B48"), lp_killer, lp_killer, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
     }
     else {

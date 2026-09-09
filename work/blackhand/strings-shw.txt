@@ -15,3 +15,4 @@ Param/Value/SHWNIGHT=<s val="ModLeftSize16Bold"><c val="9B30FF">你听见黑暗�
 Param/Value/SOLOON=-solo 已启用：空位已自动补满，可以开始游戏。
 Param/Value/SHWSEL1=<s val="ModLeftSize16">你改为选择 </s><s val="ModLeftSize16Bold">
 Param/Value/SHWSEL2=<s val="ModLeftSize16">你将选择 </s><s val="ModLeftSize16Bold">
+Param/Value/SHWSURV=<s val="ModLeftSize16Bold"><c val="AAFF00">有人试图暗杀你，但你在他的攻击下存活了。</c></s>
