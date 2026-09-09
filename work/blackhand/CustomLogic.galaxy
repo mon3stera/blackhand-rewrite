@@ -52346,6 +52346,10 @@ bool auto_gf_OSComputeOptions_TriggerFunc (bool testConds, bool runActions) {
             gv_variant = "ranked D1";
         }
 
+        if ((gv_variantSelection == 31)) {
+            gv_variant = "bfcz";
+        }
+
     }
     TriggerEnable(gt_RepickHost, false);
     TriggerEnable(gt_RepickHostButtonEFBC9F, false);
@@ -60573,7 +60577,7 @@ bool gt_SetupDone_Func (bool testConds, bool runActions) {
         gf_CBDimChat(auto0165DB70_var);
         gf_CBAllowDisallowChatting(auto0165DB70_var, ge_Allow_Disallow);
     }
-    if ((gv_variant == "sotd")) {
+    if (((gv_variant == "sotd") || (gv_variant == "bfcz"))) {
         autoEDCD1153_g = gv_currentPlayers;
         autoEDCD1153_var = -1;
         while (true) {
@@ -88751,24 +88755,105 @@ void gf_VBFCZOptions () {
     lv_str[7] = gv_mafiaWeights;
     lv_str[8] = gv_neutralWeights;
     lv_str[9] = gv_triadWeights;
+    lv_c = RandomInt(1, 4);
+    if ((lv_c == 1)) {
+        gv_setupInfo[1] = StringExternal("Param/Value/GCZBSUBA");
     if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
-        lv_category = "1 1 4 4 4 4 4 4 4 2 2 4 3 3 4";
-        lv_role = "4 31 2 2 2 2 5 4 6 2 3 3 31 4 14";
-    }
+            lv_category = "1 1 4 4 4 4 4 4 4 2 2 4 3 3 4";
+            lv_role = "4 31 2 2 2 2 5 4 6 2 3 3 31 4 14";
+        }
 
-    if ((PlayerGroupCount(gv_currentPlayers) == 14)) {
-        lv_category = "1 1 4 4 4 4 4 4 2 2 4 3 3 4";
-        lv_role = "4 31 2 2 2 5 4 6 2 3 3 31 4 14";
-    }
+        if ((PlayerGroupCount(gv_currentPlayers) == 14)) {
+            lv_category = "1 1 4 4 4 4 4 4 2 2 4 3 3 4";
+            lv_role = "4 31 2 2 2 5 4 6 2 3 3 31 4 14";
+        }
 
-    if ((PlayerGroupCount(gv_currentPlayers) == 13)) {
-        lv_category = "1 1 4 4 4 4 4 2 2 4 3 3 4";
-        lv_role = "4 31 2 2 5 4 6 2 3 3 31 4 14";
-    }
+        if ((PlayerGroupCount(gv_currentPlayers) == 13)) {
+            lv_category = "1 1 4 4 4 4 4 2 2 4 3 3 4";
+            lv_role = "4 31 2 2 5 4 6 2 3 3 31 4 14";
+        }
 
-    if ((PlayerGroupCount(gv_currentPlayers) == 12)) {
-        lv_category = "1 1 4 4 4 4 4 2 2 4 3 3";
-        lv_role = "4 31 2 2 5 4 6 2 3 3 31 4";
+        if ((PlayerGroupCount(gv_currentPlayers) == 12)) {
+            lv_category = "1 1 4 4 4 4 4 2 2 4 3 3";
+            lv_role = "4 31 2 2 5 4 6 2 3 3 31 4";
+        }
+    }
+    else if ((lv_c == 2)) {
+        gv_setupInfo[1] = StringExternal("Param/Value/GCZBSUBB");
+        if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
+            lv_category = "1 4 4 4 4 4 4 4 4 2 2 4 3 3 4";
+            lv_role = "31 5 6 6 2 2 2 2 4 2 3 3 31 31 14";
+        }
+
+
+        if ((PlayerGroupCount(gv_currentPlayers) == 14)) {
+            lv_category = "1 4 4 4 4 4 4 4 2 2 4 3 3 4";
+            lv_role = "31 5 6 6 2 2 2 4 2 3 3 31 31 14";
+        }
+
+
+        if ((PlayerGroupCount(gv_currentPlayers) == 13)) {
+            lv_category = "1 4 4 4 4 4 4 2 2 4 3 3 4";
+            lv_role = "31 5 6 6 2 2 4 2 3 3 31 31 14";
+        }
+
+
+        if ((PlayerGroupCount(gv_currentPlayers) == 12)) {
+            lv_category = "1 4 4 4 4 4 2 2 4 3 3 4";
+            lv_role = "31 5 6 6 2 4 2 3 3 31 31 14";
+        }
+    }
+    else if ((lv_c == 3)) {
+        lv_str[4] = "10000 01000 0 11010 10000 0000 0000 0000 00111 00000 00001 01100 110000 00000 1 00111 00000 00001 100";
+        gv_setupInfo[1] = StringExternal("Param/Value/GCZBSUBC");
+        if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
+            lv_category = "1 4 4 4 4 4 4 4 4 4 3 3 3 4 4";
+            lv_role = "31 5 5 6 4 2 2 2 2 2 31 31 31 13 14";
+        }
+
+
+        if ((PlayerGroupCount(gv_currentPlayers) == 14)) {
+            lv_category = "1 4 4 4 4 4 4 4 4 3 3 3 4 4";
+            lv_role = "31 5 5 6 4 2 2 2 2 31 31 31 13 14";
+        }
+
+
+        if ((PlayerGroupCount(gv_currentPlayers) == 13)) {
+            lv_category = "1 4 4 4 4 4 4 4 3 3 3 4 4";
+            lv_role = "31 5 5 6 4 2 2 2 31 31 31 13 14";
+        }
+
+
+        if ((PlayerGroupCount(gv_currentPlayers) == 12)) {
+            lv_category = "1 4 4 4 4 4 4 3 3 3 4 4";
+            lv_role = "31 5 5 6 4 2 2 31 31 31 13 14";
+        }
+    }
+    else {
+        lv_str[4] = "10000 01000 0 11010 10000 0000 0000 0000 00111 00000 00001 01100 110000 00000 1 00111 00000 00001 100";
+        gv_setupInfo[1] = StringExternal("Param/Value/GCZBSUBD");
+        if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
+            lv_category = "1 1 1 4 4 4 4 4 4 2 4 4 3 4 4";
+            lv_role = "31 9 15 6 5 2 2 2 2 2 3 3 31 13 14";
+        }
+
+
+        if ((PlayerGroupCount(gv_currentPlayers) == 14)) {
+            lv_category = "1 1 1 4 4 4 4 4 2 4 4 3 4 4";
+            lv_role = "31 9 15 6 5 2 2 2 2 3 3 31 13 14";
+        }
+
+
+        if ((PlayerGroupCount(gv_currentPlayers) == 13)) {
+            lv_category = "1 1 1 4 4 4 4 2 4 4 3 4 4";
+            lv_role = "31 9 15 6 5 2 2 2 3 3 31 13 14";
+        }
+
+
+        if ((PlayerGroupCount(gv_currentPlayers) == 12)) {
+            lv_category = "1 1 1 4 4 4 2 4 4 3 4 4";
+            lv_role = "31 9 15 6 5 2 2 3 3 31 13 14";
+        }
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) != 1) && (PlayerGroupCount(gv_currentPlayers) <= 11)) {
