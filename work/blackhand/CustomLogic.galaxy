@@ -221,6 +221,7 @@ const bool c_bhSoloBuild = true;
 bool gv_soloTest;
 void gf_BHNotify (text lp_msg, int lp_target, soundlink lp_sound);
 trigger gt_BHSolo;
+trigger gt_BHItalicTest;
 int[16] gv_rolesArray;
 bool[9][41][10] gv_roleOptionAllowed;
 bool[9][41][10] gv_roleOptionExists;
@@ -1269,6 +1270,8 @@ void gf_CBHighlightText (int lp_player, int lp_highlight);
 void gf_CBAddChat (int lp_player, string lp_message, text lp_title, bool lp_boolean);
 void gf_CBWhisper (int lp_player, int lp_recipient, string lp_message, text lp_name);
 void gf_CBSystemMessage (text lp_message, int lp_player, int lp_sender, int lp_option, soundlink lp_sound, color lp_color);
+string gf_BHItalicize (string lp_s);
+bool gt_BHItalicTest_Init ();
 void gf_CBClearChat (int lp_player);
 void gf_CBDimChat (int lp_player);
 void gf_CBMagnifyOnOff (int lp_player, int lp_magnify);
@@ -56595,6 +56598,7 @@ void gt_E98081E7A4BC_Init () {
     gt_E98081E7A4BC = TriggerCreate("gt_E98081E7A4BC_Func");
     TriggerAddEventChatMessage(gt_E98081E7A4BC, c_playerAny, "-gift ", false);
     gt_BHSolo_Init();
+    gt_BHItalicTest_Init();
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -61030,7 +61034,7 @@ bool gt_TypeName_Func (bool testConds, bool runActions) {
                             gf_CBSystemMessage(StringExternal("Param/Value/CD23E253"), EventPlayer(), 0, 0, SoundLink("UI_GenericError", -1), Color(0,0,0));
                         }
                         else {
-                            gv_name[EventPlayer()] = StringSub(EventChatMessage(false), 2, StringLength(EventChatMessage(false)));
+                            gv_name[EventPlayer()] = gf_BHItalicize(StringSub(EventChatMessage(false), 2, StringLength(EventChatMessage(false))));
                         }
                     }
                 }
@@ -66964,7 +66968,7 @@ bool gt_Rename_Func (bool testConds, bool runActions) {
 
     if ((lv_hit != 0)) {
         lv_a = lv_hit;
-        gv_name[lv_a] = StringSub(EventChatMessage(false), lv_z, StringLength(EventChatMessage(false)));
+        gv_name[lv_a] = gf_BHItalicize(StringSub(EventChatMessage(false), lv_z, StringLength(EventChatMessage(false))));
         TextTagDestroy(gv_nameTag[lv_a]);
         TextTagCreate(TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])), 28, UnitGetPosition(gv_unit[lv_a]), 1.0, true, false, PlayerGroupAll());
         TextTagAttachToUnit(TextTagLastCreated(), gv_unit[lv_a], 1.5);
@@ -89154,5 +89158,33 @@ bool gt_BHSolo_Func (bool testConds, bool runActions) {
     TriggerEnable(gt_Prefer, true);
     // 不自动填角色：虚拟玩家由 gt_Init2 的 c_bhSoloBuild 块补满，角色由测试者自设手动配置
     gf_CBSystemMessage(StringExternal("Param/Value/SOLOON"), EventPlayer(), 0, 0, SoundLink("UI_TipSelect", -1), Color(0, 0, 0));
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+// BH italic support: rewrite <i>x</i> to style tag; -italictest broadcasts candidates
+//--------------------------------------------------------------------------------------------------
+string gf_BHItalicize (string lp_s) {
+    lp_s = StringReplaceWord(lp_s, "<i>", "<s val=\"ModItalic\">", c_stringReplaceAll, c_stringCase);
+    lp_s = StringReplaceWord(lp_s, "</i>", "</s>", c_stringReplaceAll, c_stringCase);
+    lp_s = StringReplaceWord(lp_s, "<I>", "<s val=\"ModItalic\">", c_stringReplaceAll, c_stringCase);
+    lp_s = StringReplaceWord(lp_s, "</I>", "</s>", c_stringReplaceAll, c_stringCase);
+    return lp_s;
+}
+
+bool gt_BHItalicTest_Func (bool testConds, bool runActions) {
+    if (!runActions) {
+        return true;
+    }
+
+    gf_CBSystemMessage(StringToText("A-<i>italic Italic 斜体测试</i>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
+    gf_CBSystemMessage(StringToText("B-<s val=\"ModItalic\">italic Italic 斜体测试</s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
+    gf_CBSystemMessage(StringToText("C-<s val=\"ModItalic2\">italic Italic 斜体测试</s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
+    return true;
+}
+
+bool gt_BHItalicTest_Init () {
+    gt_BHItalicTest = TriggerCreate("gt_BHItalicTest_Func");
+    TriggerAddEventChatMessage(gt_BHItalicTest, c_playerAny, "-italictest", false);
     return true;
 }
