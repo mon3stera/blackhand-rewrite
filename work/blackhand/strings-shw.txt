@@ -20,3 +20,5 @@ Param/Value/SHWDEATH1=死者身上只有一道极细的伤口，像是被一柄�
 Param/Value/SHWDEATH2=死者倒在门前，神情平静，仿佛至死都未察觉任何人靠近。
 Param/Value/SHWDEATH3=现场没有任何搏斗痕迹，只有一抹消散如烟的黑影。
 Param/Value/SHWDM=死者死于无声无息的刺杀手法。
+Param/Value/SHWQUOTE=<s val="ModLeftSize16"><c val="C0C0C0">「我从阴影中现身。」</c></s>
+Param/Value/SHWHEAR=<s val="ModLeftSize16"><c val="FF0000">你听到一声极轻的破风声掠过耳畔...</c></s>
