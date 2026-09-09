@@ -12806,6 +12806,10 @@ void gf_SequenceKills () {
 
         if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 31) && (gv_action[lv_a][0] > 0) && (gv_action[lv_a][1] > 0)) {
             lv_tShadow = gv_action[lv_a][0];
+            if ((gv_witched[lv_a] != 0) && (gv_witchEligible[lv_a] == true) && (gv_jailed[lv_a] == 0) && (gv_action[gv_witched[lv_a]][1] > 0)) {
+                lv_tShadow = gv_action[gv_witched[lv_a]][1];
+            }
+
             if ((gv_switched[lv_tShadow] != 0)) {
                 lv_tShadow = gv_switched[lv_tShadow];
             }
