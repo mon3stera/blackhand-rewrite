@@ -16,7 +16,8 @@
 - 按钮布局事实：`[5]`=右（目标一）、`[6]`=左（目标二），白天投票面板会盖住[5]显示黄色投票键——这是原图双目标角色（如催眠师(3,4)）共有的表现，夜晚面板才是纯双目标按钮。
 - SHW 文案现 17 条（含 SHWSEL1/2）。
 
-**待用户验证 boot2-shw51**（提交 `fdd94d3`，新增：`-solo` 的 gf_BHSoloFill 改为补满全部 15 槽、rolesAssigned=15，与 Init2 虚拟玩家行为对齐）**）：
+**待用户验证 boot2-shw52**（提交 `fb96148`，新增：①帮助面板影武者卡特性两行化；②出现几率/预计数量修复——`gf_OSComputeOptions` 里几率清零/计数/标志重置/归一化 5 个角色号循环上界 `gv_townMax`(30)→31，入配置后几率正确累计（此前 0%/1000））**）：
+- 旧记录（shw51，提交 `fdd94d3`）：`-solo` 的 gf_BHSoloFill 补满全部 15 槽、rolesAssigned=15；shw50（`c563399`）：`-prefer/-blacklist` 拼音循环上界→31；shw49（`f7772e7`）：被无敌挡下也播破风声+SHWSURV；strings 共 18 条）：（提交 `fdd94d3`，新增：`-solo` 的 gf_BHSoloFill 改为补满全部 15 槽、rolesAssigned=15，与 Init2 虚拟玩家行为对齐）**）：
 - 旧记录（shw50，提交 `c563399`）：`-prefer/-blacklist` 拼音匹配循环上界 19/24/29 → 31，`yingwuzhe` 可识别；shw49（`f7772e7`）：被无敌挡下也播破风声+SHWSURV；strings 共 18 条）：（提交 `c563399`，新增：`-prefer/-blacklist` 等拼音匹配的角色号循环上界 19/24/29 → 31，`yingwuzhe` 现在可被识别；上版 shw49 的破风声/SHWSURV 修复同样适用）**）
 - 旧记录（shw49，提交 `f7772e7`）：影武者攻击被无敌挡下时目标也播 SHWNIGHT 破风声演出，SK 借用的存活文案换成影武者专属 SHWSURV；strings 共 18 条）：（提交 `f7772e7`，新增：影武者攻击被无敌挡下时目标也播 SHWNIGHT 破风声演出，SK 借用的存活文案换成影武者专属 SHWSURV；strings 共 18 条）：
 - 帮助面板（出现几率/预计出现数量那张角色卡页）已收录影武者：`gf_MakeHelpMenu` 角色循环上界从 `gv_townMax`(30) 放宽到 31 + `gv_roleOptions[3][31][10]=true` 常驻收录；卡片由 `gf_RTNeutralRoleText(0)` 的 (3,31) 分支生成
