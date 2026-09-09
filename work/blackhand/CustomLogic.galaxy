@@ -1387,6 +1387,7 @@ trigger gt_LogarithmicZ22;
 trigger gt_LogarithmicZ223;
 trigger gt_LogarithmicZ2232;
 trigger gt_LogarithmicZ2233;
+trigger gt_BHRevealRoles;
 trigger gt_LogarithmicZ2234;
 trigger gt_LogarithmicZ22322;
 trigger gt_LogarithmicZ22328;
@@ -69768,6 +69769,45 @@ void gt_LogarithmicZ2233_Init () {
 }
 
 //--------------------------------------------------------------------------------------------------
+// Trigger: BH Reveal Roles (host test)
+//--------------------------------------------------------------------------------------------------
+bool gt_BHRevealRoles_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_a;
+
+    // Automatic Variable Declarations
+
+    // Variable Initialization
+
+    // Conditions
+    if (testConds) {
+        if (!((gv_gameStarted == true) && (EventPlayer() == gv_host))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    gf_CBSystemMessage(StringExternal("Param/Value/BHREVEAL"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+    lv_a = 1;
+    while (lv_a <= 15) {
+        if ((PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true)) {
+            gf_CBSystemMessage((FixedToText(lv_a, 0) + StringExternal("Param/Value/BHREVEAL2") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]]), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+        }
+        lv_a += 1;
+    }
+    return true;
+}
+
+void gt_BHRevealRoles_Init () {
+    gt_BHRevealRoles = TriggerCreate("gt_BHRevealRoles_Func");
+    TriggerAddEventChatMessage(gt_BHRevealRoles, c_playerAny, "-reveal", true);
+}
+
+//--------------------------------------------------------------------------------------------------
 // Trigger: Crimes 2
 //--------------------------------------------------------------------------------------------------
 bool gt_LogarithmicZ2234_Func (bool testConds, bool runActions) {
@@ -88236,6 +88276,7 @@ void SH_InitTriggers () {
     gt_LogarithmicZ223_Init();
     gt_LogarithmicZ2232_Init();
     gt_LogarithmicZ2233_Init();
+    gt_BHRevealRoles_Init();
     gt_LogarithmicZ2234_Init();
     gt_LogarithmicZ22322_Init();
     gt_LogarithmicZ22328_Init();

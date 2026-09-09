@@ -22,3 +22,6 @@ Param/Value/SHWDEATH3=现场没有任何搏斗痕迹，只有一抹消散如烟�
 Param/Value/SHWDM=死者死于无声无息的刺杀手法。
 Param/Value/SHWHEAR=<s val="ModLeftSize16"><c val="FF0000">你听到一声极轻的破风声掠过耳畔...</c></s>
 Param/Value/F2239D82=- 你推断出他可能是侦探、监视者、密探/先锋、纵火者、影武者。
+// -reveal 测试指令（仅主机）
+Param/Value/BHREVEAL=<c val="FF9900">—— 全体玩家身份（测试） ——</c>
+Param/Value/BHREVEAL2=<c val="CCCCCC">号 :</c> 
