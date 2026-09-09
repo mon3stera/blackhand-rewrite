@@ -16,7 +16,7 @@
 - 按钮布局事实：`[5]`=右（目标一）、`[6]`=左（目标二），白天投票面板会盖住[5]显示黄色投票键——这是原图双目标角色（如催眠师(3,4)）共有的表现，夜晚面板才是纯双目标按钮。
 - SHW 文案现 17 条（含 SHWSEL1/2）。
 
-**待用户验证 boot2-shw48**（提交 `beef916`，前版 shw47 的验证点同样适用）：
+**待用户验证 boot2-shw49**（提交 `f7772e7`，新增：影武者攻击被无敌挡下时目标也播 SHWNIGHT 破风声演出，SK 借用的存活文案换成影武者专属 SHWSURV；strings 共 18 条）：
 - 帮助面板（出现几率/预计出现数量那张角色卡页）已收录影武者：`gf_MakeHelpMenu` 角色循环上界从 `gv_townMax`(30) 放宽到 31 + `gv_roleOptions[3][31][10]=true` 常驻收录；卡片由 `gf_RTNeutralRoleText(0)` 的 (3,31) 分支生成
 - 「你拥有夜间无敌」已从能力([1])挪到特性([2])（TownRoleText/NeutralRoleText 两处分支）
 - 已确认 ScriptError 里的 `triggerControl(值:0)`（54610/84742）、`StringWord(值:0)`、`CameraSetBounds region(值:0)` 均为基线/单人测试固有，非影武者引入
