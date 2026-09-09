@@ -289,4 +289,4 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 | `docs/GALAXY-PIPELINE.md` | Galaxy 直写、打包、启动链路技术细节 |
 | `docs/SHADOW-ROLE.md` | 影武者实现规格（作为"新角色"样板） |
 | `docs/HANDOFF-SHADOW.md` | **影武者接入交接文档**：当前损坏状态、槽位误判（池3/18=小金执行者）、自设面板双硬编码机制、重置方案与重做清单 |
-| `docs/HANDOFF-NEXT.md` | **【先读这份】** 当前进度交接：影武者/观察者/预设均已接入，最新部署 shw82（影武者目标转换规则：女巫替换/switched 解析只作用于目标一，`-reveal` 显示玩家名），含逐版改动记录与待验证点 |
+| `docs/HANDOFF-NEXT.md` | **【先读这份】** 当前进度交接：影武者/观察者/预设均已接入，最新部署 shw85（捕风捉影=锁定???随机子变体 A-D；影武者目标转换规则：女巫替换/switched 解析只作用于目标一），含逐版改动记录与待验证点 |
