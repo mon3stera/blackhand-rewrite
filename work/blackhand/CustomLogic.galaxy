@@ -88758,7 +88758,7 @@ void gf_VBFCZOptions () {
     lv_c = RandomInt(1, 4);
     if ((lv_c == 1)) {
         gv_setupInfo[1] = StringExternal("Param/Value/GCZBSUBA");
-    if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
+        if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
             lv_category = "1 1 4 4 4 4 4 4 4 2 2 4 3 3 4";
             lv_role = "4 31 2 2 2 2 5 4 6 2 3 3 31 4 14";
         }
