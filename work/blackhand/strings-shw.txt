@@ -28,3 +28,4 @@ Param/Value/BHREVEAL2=<c val="CCCCCC">号 :</c>
 // 警长可查出影武者
 Param/Value/SHWSW=可查出影武者
 Param/Value/SHWREV=<s val="ModLeftSize16Bold"><c val="FFFF88">你的目标是一个 </c><c val="C0C0C0">影武者</c><c val="FFFF88">!</c></s>
+Param/Value/SHWBOX6=<n/>- 你的目标一可以被交换，但是目标二无法以任何形式被交换。
