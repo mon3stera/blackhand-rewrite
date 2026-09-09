@@ -127,7 +127,7 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 | 监禁 | `E79B91E7A681` | 狱警、审讯者、绑架者 |
 | 精神不稳定 | `E7B2BEE7A59E` | 退伍军人、小丑 |
 | 锋利工具 | `E9948BE588A9E5B7A5E585B7` | 女巫、巫医、瘟疫散布者、医生 |
-| **风衣（侦探类）** | `E9A38EE8A1A3` | 纵火者、影武者 |
+| **风衣（侦探类）** | `E9A38EE8A1A3` | 纵火者、影武者、观察者 |
 | 武器 | `E6ADA6E599A8` | 连环杀手 |
 | 不断移动 | `E4B88DE696ADE7A7BBE58AA8` | 巴士司机、保镖、冤魂 |
 | 秘密会面 | `E7A798E5AF86E4BC9AE99DA2` | 共济会成员、协教徒 |
@@ -175,7 +175,9 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 **第 4 步：帮助面板（角色参考卡页）**
 - `gf_MakeHelpMenu` 的角色号循环上界 ≥ 新角色号（原图从 `gv_townMax`=30 起往下数）+ 第 1 步的 `[10]` 标志
 
-**第 5 步：自设面板列表 + 选中映射** —— 见铁律 3.1，段内末尾追加，两处条数一致，脚本校验
+**第 5 步：自设面板列表 + 选中映射** —— 见铁律 3.1，段内末尾追加，两处条数一致，脚本校验。**各段索引按 `gv_roleCategory` 独立计数**（黑手D等段从 1 重新开始），往某段末尾追加不影响其他段的映射
+
+**第 5.5 步：审查页（灵魂猜测页）** —— `gf_ASE5AEA1E69FA5E98089E9A1B92` 的 `lp_picked` 列表上界常量 + `gt_ASE5AEA1E69FA5E7A1AEE5AE9A_Func` 确认映射。**该映射用「SelectedItem + 分段偏移」跳过无名角色**（如城镇 >=22 加 1 跳过 1/22 空位）：新角色排在无名空位之后时，上界 +N 且按 `SelectedItem >= 新起点` 加差值偏移（城镇观察者=上界 31 且 `>=30` 减 1；影武者=中立上界 18 且 `>=18` 加 12）。改完用「选中第 N 项 → 角色号」逐项推算核对
 
 **第 6 步：拼音匹配循环上界** —— `gt_Prefer_Func`(29)、`gt_Blacklist_Func`(24)、`gt_Init2_Func` 黑名单校验(19) 放宽到 ≥ 新角色号（`gt_Change_Func`=40 够用）；循环里 `roleNameArray != null` 自动跳过空位，放宽无害。不放宽的症状：`-prefer 拼音` 报「不是一个角色」
 
