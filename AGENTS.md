@@ -30,8 +30,8 @@
 3.3 **判定槽位空闲必须查原图 `work/bh-src/MapScript.galaxy`**，不能凭「没有名称数组」下结论：
    - 池 3 / 18 = **小金执行者**（`gv_roleNameInput[3][18] = "xiaojinzhixingzhe"` + options + 权重），**已被误覆盖过一次**，不要再用；
    - 池 3 / 13 = `duoluoshenpanzhe`（旧堕落审判者），原图**只有拼音名和开关、没有名称/描述**，是真正可复用的遗留空槽；其行为代码仍在（见 3.2）。
-3.4 **Test Document 的大厅属性为空** → `gv_variantSelection` 不落在任何分档里 → **自设角色列表全空、添加按钮不亮**。测试构建下必须在 `gt_OSMenus_Func` 开头强制 `gv_variantSelection = 1`（`c_bhSoloBuild` 守卫）。
-4. **改角色要同时改多处**：名称/描述数组 → GameStrings → 能力开关 → 自设面板 → 选择映射 → 行动按钮 → 夜晚准备/结算。漏一处就"看起来加了但没生效"。
+3.4 **Test Document 的大厅属性为空**：当前基线**已不需要**强制 `gv_variantSelection = 1`——那是 shw45 时期的死路补丁（变体 1=随机系会命中 `gt_OSRoleSelect_Func` 的禁用子句，添加按钮永远不亮）。当前基线在 Test Document 下自设路径直接可用，**不要再加变体强制补丁**。
+4. **改角色要同时改多处**：完整清单见下方「新增角色端到端流程」。漏一处就"看起来加了但没生效"。
 5. **回退文件前先列出已完成的所有改动**，`git checkout` 会把未提交的清理一起还原。
 6. **部署用新文件名**（编辑器打开中的地图被锁定），部署后确认 `scp` 无 `failed to upload`。
 7. **每次改完立刻提交**，提交信息写清"第几步 / 改了什么"。
@@ -152,6 +152,56 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 3. 运行时案底标记 —— 在角色自己的行动/结算代码里设置 `gv_e78AAFE7BDAAE4BA8BE5AE9E[玩家][索引]`
 4. 警长消息 —— 无需配置（自动取角色名）；若该角色应免疫调查，才设「免疫调查」开关
 
+### 新增角色端到端流程（影武者 池3/31 已端到端验收，2026-09-10）
+
+按顺序走，每一小步「改 → 静态校验 → 提交」：
+
+**第 0 步：选槽位** —— 先查 3.3 确认空闲；**角色号 > 30 会触发一整类循环上界问题**（第 4/6/7 步），能用 ≤30 的空槽就用 ≤30。
+
+**第 1 步：角色定义块**（`gf_InitializeVariables`，搜最近角色的定义块照抄结构）
+- `gv_roleNameArray` / `gv_roleDescriptionArray` / `gv_roleOptionsText` / `gv_roleOptionsImportant` / `gv_roleOptionExists` / `gv_roleOptions` / `gv_bankSaveWeights` / `gv_roleInvestigatorArray[池][号][0..1]` / 图鉴案底 `gv_e78AAFE7BDAAE58FAFE883BD[池][号]`
+- 拼音 `gv_roleNameInput[池][号]`（在 `gf_InitializeOther`）
+- 要常驻帮助面板：`gv_roleOptions[池][号][10] = true;`
+
+**第 2 步：GameStrings**（`work/blackhand/strings-<角色>.txt`，打包时 `--strings` 传入）
+- 名称/描述/开关标签/夜间演出/死亡描述/验尸官线索等键；键名用角色前缀（影武者=SHW*）
+- **共享键可覆盖**：`merge_strings` 对已存在的键整行替换。探员类别枚举（如侦探类 `F2239D82`）在尾部追加新角色名即可，共用该类的所有角色一起更新
+
+**第 3 步：角色卡分支（两份，必须逐字段一致）**
+- `gf_RTTownRoleText` / `gf_RTNeutralRoleText`（按池放）各加 `if (((gv_roles[lv_a][1] == 池) && (gv_roles[lv_a][0] == 号)))` 分支
+- 阵营行 `[0]` 照抄同类：中立致命 = `CE62498E("无") + lv_t[2] + D7C97124(" (致命)")`——影武者曾因 NeutralRoleText 副本漏了「无」前缀，卡片只显示「(致命)」
+- `[1]` 能力、`[2]` 特性、`[4]` 目标、`[6]` winList 自动；**多行追加必须用带 `<n/>` 的键**（`4467A310` 带换行、`1045F9FD` 不带会拼在同一行）
+
+**第 4 步：帮助面板（角色参考卡页）**
+- `gf_MakeHelpMenu` 的角色号循环上界 ≥ 新角色号（原图从 `gv_townMax`=30 起往下数）+ 第 1 步的 `[10]` 标志
+
+**第 5 步：自设面板列表 + 选中映射** —— 见铁律 3.1，段内末尾追加，两处条数一致，脚本校验
+
+**第 6 步：拼音匹配循环上界** —— `gt_Prefer_Func`(29)、`gt_Blacklist_Func`(24)、`gt_Init2_Func` 黑名单校验(19) 放宽到 ≥ 新角色号（`gt_Change_Func`=40 够用）；循环里 `roleNameArray != null` 自动跳过空位，放宽无害。不放宽的症状：`-prefer 拼音` 报「不是一个角色」
+
+**第 7 步：几率/预计数量（随机池可见性）** —— `gf_OSComputeOptions` 里 5 处角色号循环（几率清零、模拟标志重置、几率计数、标志重置、归一化）原上界 `gv_townMax`。不放宽的症状：出现几率恒 0%、预计数量是未归一化的累加值（曾显示 1000）
+
+**第 8 步：行动面板 + 夜晚逻辑**
+- 行动按钮函数 `gf_RA*Actions`（每个存活其他玩家行配按钮）+ `gf_RAActions` 分发 + **AS 按钮点击触发器 A/B 两个都要写分支**（只写 A：按钮可见但点击不生效）
+- `gf_SequencePrep`（记账）/ `gf_SequenceKills`（结算）/ `gf_CheckEnd`（残局计数、归零条件、数量比较）/ 阵营校验
+
+**第 9 步：击杀函数（`gf_ES*Kill`）死亡信息三件套**
+- 字母码 `gv_deathMethod[目标]`：**用新码**（`K` 是连环杀手的，SK 函数里也有一份，锚点必须带函数特有上下文）；验尸官(1,10)选项2 私密播报扫描块（~13620）加对应字母分支
+- 公示描述 `gv_deathText[目标]`：**照抄义警模式**（约 26440 行）——`gv_deathDesc[目标]` 初始 false；`if(deathDesc==true){第一段; lv_c=true;} deathDesc=true; if(lv_c==false){主描述}`。主描述在 `lv_c==false`（首杀常态）追加；**放反了 deathText 永远为空、白天没有死亡信息**
+- 夜间演出顺序（用户认可）：语音（如 `SoundLink("DarkTemplar_What",-1)`）→ `Wait` 语音时长（2.6s）→ 刀声 → 全场红字广播 → 目标私息。**函数顶部不要放公用出刀声**（会抢在语音前播放）
+
+**第 10 步：私密消息路由** —— 发给击杀/治疗目标的私息走 `gf_BHNotify`（目标非真实在线玩家=虚拟补位时改发 `gv_host`，solo 可见；真实玩家只发本人）。否则 solo 局里「只有音效没有文字」
+
+**第 11 步：静态校验 + 打包部署** —— 逐函数落点 + 配平 + 条数校验 → `sc2pack` 打新文件名 → scp → 游戏内验证（帮助面板、对局内角色卡、`-prefer`、探员线索、死亡信息、残局判定）
+
+### Galaxy 语言层陷阱（生成代码惯例）
+
+- **SoundLink 的类型是 `soundlink`**，不是 `sound`。自定义函数收音效参数必须声明 `soundlink`；写错则所有调用处「参数类型同函数定义不匹配」，并连带整个脚本解析失败（整图报废，游戏内红屏报错）
+- **插入 while 广播循环必须在函数声明区补** `playergroup autoXXX_g;` 和 `int autoXXX_var;`（每个函数的自动变量各自声明；漏声明 = 解析函数行出错，脚本读取失败）
+- **多函数共用的字符串不能做唯一锚点**（`DB5AD8F8`、`gv_deathDesc[...] = true` 等在多个杀手函数出现）：锚点必须带函数特有上下文（如角色号判断行、专属文本键）
+- **python 补丁断言失败时，同一命令块里后续的 commit/打包命令照常执行**——先单独跑补丁确认 exit 0，再做提交打包；曾连续两次只提交了 strings、代码没进包
+- 运行期报错先分新旧：`triggerControl(值:0)`、`StringWord(值:0)`、`CameraSetBounds region(值:0)`、`gv_roll点冷却 int[2] 越界` 等均为基线/单人测试固有，不是新改动引入
+
 ### 单人测试模式（-solo）
 
 **地图的起始门槛 = 4 人**：`gf_OS...` 初始化里 `PlayerGroupCount(gv_currentPlayers) <= 3` 会把角色串清空（`lv_str[0]`/`lv_str[2]` 全 0），于是 `gv_rolesAssigned != lv_b` 校验失败、开不了局。变体预设（如烙印）本身按人数逐档填写（约 50188 行起 `PlayerGroupCount(gv_tempPlayerGroup) == N` 分支），所以 1 人用变体是能开的；**自设路径**才会被门槛卡住。
@@ -164,12 +214,12 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 | `gv_rolesArray[槽]` | 该槽选择的**角色号** |
 | `gv_rolesAssigned` | 已选角色数量，必须等于非空槽位数 `lv_b` |
 
-`-solo` 命令做的事（聊天输入）：
+`-solo` 命令做的事（聊天输入，shw53 起定型）：
 
-1. `gv_soloTest = true`
-2. `gf_BHSoloFill()`：把 1..玩家数 范围内为空的槽位填成 **市民**（池 1 / 角色 1），保留已有选择
-3. `gv_rolesAssigned = PlayerGroupCount(gv_currentPlayers)`
-4. 绕过两处 `gv_rolesAssigned < / > PlayerGroupCount(...)` 校验（条件里加 `&& (gv_soloTest == false)`）
+1. `gv_soloTest = true` → 放行两处 `gv_rolesAssigned < / > PlayerGroupCount(...)` 校验（条件里加 `&& (gv_soloTest == false)`，约 43462 / 43476 行）
+2. `TriggerEnable(gt_Prefer, true)`（该触发器在别处会被关闭）
+
+**不再自动填角色**（`gf_BHSoloFill` 已删除；shw51 的「补满 15 槽」方案废弃——它把所有空槽填上角色后，虚拟补位判断「无空槽」反而不补人）。角色全部由测试者在自设里手动配置，空槽交给 `gt_Init2` 的虚拟补位。
 
 聊天命令注册方式：`TriggerCreate` + `TriggerAddEventChatMessage(trigger, c_playerAny, "-solo", false)`，在 `InitTriggers` 里调用 `gt_BHSolo_Init();`。
 
@@ -179,11 +229,9 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 
 | 位置 | 作用 |
 |---|---|
-| `gt_Init2_Func` 末尾 | 把 1~15 号**空槽位**加入 `gv_players`/`gv_currentPlayers`/`gv_alivePlayers`，名字「电脑N」，随机房屋 |
+| `gt_Init2_Func` **实现开头** | 把 1~15 号**空槽位**加入 `gv_players`/`gv_currentPlayers`/`gv_alivePlayers`，名字「电脑N」，随机房屋。**必须在主玩家循环之前**——曾放在函数末尾（隔了 Wait 2+3+5 秒），发角色/建夜间面板时玩家还没补齐，夜间面板只剩自己一行 |
 | `gt_Init2_Func` 玩家收集过滤 | 允许 `c_playerTypeComputer` 也算玩家 |
 | `gt_DetectLeave_Func`（约 63356 行） | 不再把「未激活」当成「离开」（否则虚拟玩家会被判退场） |
-
-`-solo` 的 `gf_BHSoloFill()` 空位填充为**混合阵营**（前 3 个非主机槽位黑手党、其余市民），否则会因「缺少对立的阵营」校验失败。
 
 `-prefer`（原图自带的优选命令，按**拼音**匹配 `gv_roleNameInput[池][角色]`）：
 
@@ -213,4 +261,4 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 | `docs/GALAXY-PIPELINE.md` | Galaxy 直写、打包、启动链路技术细节 |
 | `docs/SHADOW-ROLE.md` | 影武者实现规格（作为"新角色"样板） |
 | `docs/HANDOFF-SHADOW.md` | **影武者接入交接文档**：当前损坏状态、槽位误判（池3/18=小金执行者）、自设面板双硬编码机制、重置方案与重做清单 |
-| `docs/HANDOFF-NEXT.md` | **【先读这份】** 自设面板「添加」按钮问题交接：当前 reset 点、已排查线索、影武者工作所在分支、下一步建议 |
+| `docs/HANDOFF-NEXT.md` | **【先读这份】** 当前进度交接：影武者已端到端验收（至 shw65），含逐版改动记录与待验证点 |
