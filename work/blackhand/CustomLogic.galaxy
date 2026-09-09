@@ -55824,6 +55824,21 @@ bool gt_Init2_Func (bool testConds, bool runActions) {
     SoundChannelMute(PlayerGroupAll(), c_soundCategoryAmbient, true);
     GameTimeOfDaySet("16:00:00");
     GameTimeOfDayPause(true);
+    if ((c_bhSoloBuild == true)) {
+        for ( lv_a = 1 ; lv_a <= 15 ; lv_a += 1 ) {
+            if ((PlayerGroupHasPlayer(gv_players, lv_a) == false)) {
+                PlayerGroupAdd(gv_players, lv_a);
+                PlayerGroupAdd(gv_currentPlayers, lv_a);
+                PlayerGroupAdd(gv_alivePlayers, lv_a);
+                gv_name[lv_a] = ("电脑" + IntToString(lv_a));
+                gv_playerColor[lv_a] = 1;
+                gv_playerHouse[lv_a] = RandomInt(0, 24);
+            }
+
+        }
+
+    }
+
     lv_a = 1;
     for ( ; ( (autoA1853CA2_ai >= 0 && lv_a <= autoA1853CA2_ae) || (autoA1853CA2_ai < 0 && lv_a >= autoA1853CA2_ae) ) ; lv_a += autoA1853CA2_ai ) {
         if ((PlayerStatus(lv_a) == c_playerStatusActive) && ((PlayerType(lv_a) != c_playerTypeComputer) || (c_bhSoloBuild == true)) && (PlayerType(lv_a) != c_playerTypeHostile) && (PlayerType(lv_a) != c_playerTypeNeutral) && (PlayerType(lv_a) != c_playerTypeReferee) && (PlayerType(lv_a) != c_playerTypeSpectator)) {
@@ -56265,21 +56280,6 @@ bool gt_Init2_Func (bool testConds, bool runActions) {
     TriggerEnable(gt_ADAntiAFKHostingPeriod, true);
     TipAlertPanelClear(PlayerGroupAll());
     gv_holdYourHorses = true;
-    if ((c_bhSoloBuild == true)) {
-        for ( lv_a = 1 ; lv_a <= 15 ; lv_a += 1 ) {
-            if ((PlayerGroupHasPlayer(gv_players, lv_a) == false)) {
-                PlayerGroupAdd(gv_players, lv_a);
-                PlayerGroupAdd(gv_currentPlayers, lv_a);
-                PlayerGroupAdd(gv_alivePlayers, lv_a);
-                gv_name[lv_a] = ("电脑" + IntToString(lv_a));
-                gv_playerColor[lv_a] = 1;
-                gv_playerHouse[lv_a] = RandomInt(0, 24);
-            }
-
-        }
-
-    }
-
     return true;
 }
 
