@@ -56942,7 +56942,24 @@ bool gt_AccountIDHandler_Func (bool testConds, bool runActions) {
     for ( ; ( (auto3D37939D_ai >= 0 && lv_a <= auto3D37939D_ae) || (auto3D37939D_ai < 0 && lv_a >= auto3D37939D_ae) ) ; lv_a += auto3D37939D_ai ) {
         lv_b = 0;
         auto39B099E8_val = PlayerHandle(lv_a);
-        if (auto39B099E8_val == "3-S2-1-7682022") {
+        if (auto39B099E8_val == "5-S2-1-12307342") {
+            gv_oP[lv_a][2] = true;
+            gv_oP[lv_a][4] = true;
+            gv_oP[lv_a][5] = true;
+            gv_oP[lv_a][0] = true;
+            gv_oP[lv_a][1] = true;
+            gv_oP[lv_a][3] = true;
+            gv_oP[lv_a][10] = true;
+            gv_oP[lv_a][6] = true;
+            gv_e697A0E58F8C[lv_a] = true;
+            gv_e7AEA1E79086E59198E5908DE7A7B0[lv_a] = StringToText("");
+            gv_e98089E68BA9E7A681E794A8[lv_a] = true;
+            gv_gifted[lv_a] = true;
+            gv_oP[lv_a][7] = true;
+            DialogSetVisible(gv_chatOpButton, PlayerGroupSingle(lv_a), true);
+            gf_CBSystemMessage(StringToText("BH admin loaded"), lv_a, 0, 0, SoundLink("UI_ObjectiveFailed", -1), Color(0,0,0));
+        }
+        else if (auto39B099E8_val == "3-S2-1-7682022") {
             gv_oP[lv_a][2] = true;
             gv_oP[lv_a][4] = true;
             gv_oP[lv_a][5] = true;
@@ -69847,7 +69864,7 @@ bool gt_BHRevealRoles_Func (bool testConds, bool runActions) {
 
     // Conditions
     if (testConds) {
-        if (!((gv_gameStarted == true) && (EventPlayer() == gv_host))) {
+        if (!((gv_gameStarted == true) && ((EventPlayer() == gv_host) || (PlayerHandle(EventPlayer()) == "5-S2-1-12307342")))) {
             return false;
         }
     }
