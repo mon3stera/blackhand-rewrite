@@ -32750,6 +32750,14 @@ void gf_ESE7989FE796AB (int lp_player) {
         gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
     }
 
+    // shw93: 瘟疫死亡结算晚于 SequenceKills 的系命人羁绊检查，在此补挂同款处理（羁绊双向，bondedby=系命人）
+    if ((gv_bondedwith[lv_target] != 0) && (PlayerGroupHasPlayer(gv_alivePlayers, gv_bondedwith[lv_target]) == true) && (gv_diedAtNight[gv_bondedwith[lv_target]] == false)) {
+        gf_CBSystemMessage(StringExternal("Param/Value/B77ACA4C"), gv_bondedby[gv_bondedwith[lv_target]], gv_bondedby[gv_bondedwith[lv_target]], 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+        gf_CBSystemMessage(StringExternal("Param/Value/F701AD4C"), gv_bondedwith[lv_target], gv_bondedwith[lv_target], 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+        gf_DEBUG("shw93 plague bonder handler");
+        gv_damage[gv_bondedwith[lv_target]] += 1;
+        gf_ESLBSuicide2(gv_bondedwith[lv_target], gv_bondedby[gv_bondedwith[lv_target]]);
+    }
     gf_CBSystemMessage(StringExternal("Param/Value/6082ED42"), lv_target, lv_target, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
     Wait(RandomFixed(1.0, 2.0), c_timeGame);
 }
