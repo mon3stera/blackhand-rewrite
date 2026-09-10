@@ -247,6 +247,26 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 
 **第 11 步：静态校验 + 打包部署** —— 逐函数落点 + 配平 + 条数校验 → 打新文件名 → scp → 游戏内验证（帮助面板、对局内角色卡、`-prefer`、探员线索、死亡信息、残局判定）
 
+### 措辞约定：访问 vs 造访（shw110/111 沉淀）
+
+- **自设/新角色的文案统一说「访问」**，不说「去了某人家中」「整夜未出门」「造访」。行为兜底规则写成一句特性行：**「如果目标一没有行动，则视作访问自己。」**（影武者 SHWBOX9）——有了它就不需要再解释「未出门」分支。
+- 已按此措辞改写的键：影武者 SHWMODE1/2、SHWBOX7、SHWDEST1-3；观察者 GCZABIL（=「每晚观察一个人，获知有哪些角色访问了他。」）、GCZDESC、GCZNONE、GCZNOSELF、GCZACH。
+- **原图自带的「造访」措辞保留不动**（用户 2026-09 明确）：`4A05D9F1`/`B9374B9B`（造访按钮标题）、`63403919`/`65E3235B`/`A14EF820`/`A5E3465E`/`D881AB31`（女巫控制与低语提示）、`C48670E6`（庇护者描述）、`DocInfo/PatchNote110`。不要顺手全局替换。
+
+### 夜晚镜头体系（gf_NP*Camera，shw107/108 沉淀）
+
+夜晚相机触发器 `gt_NPNightCamera` 启用期间，一个分发块（约 75003 行）按角色把每个玩家指派到一组固定循环机位 `gf_NP*Camera`：Dead / Jail(1,13狱警等) / Authority 政府厅(1,12)(1,19)(3,12) / Panorama 全景(1,2)(1,6)(3,7)**(3,13)** / Walk 街道 / Nature / Warehouse(2,5池非9) / Church(1,7)(1,14) / Evil(1,10)(3,4)(3,8)(3,10) / Paranoid(1,15)(1,17)(3,11)(3,14) / Stalker(1,4)(3,1)(3,5)(1,27)(1,28) / **Vantage 高点窥视(1,8)(1,16)(3,9)(1,31观察者)(3,31影武者)**。
+
+- 新角色**必须**在分发块里指派一个镜头组，否则该角色夜晚没有专属循环镜头（无报错，纯缺失）。
+- 原图遗留缺口：**史官 (1,30) 至今没有任何镜头组**（用户暂未要求补）。
+- 组的选择按气质套用现成主题即可（用户认可：影武者/观察者=监视者的 Vantage，堕落审判者=警长的 Panorama）。
+
+### 行动面板与开关按钮（shw110 沉淀）
+
+- 双目标按钮 [5]/[6] 在 gf_ASShowBox 前的创建函数（约 39360）定位：`[5]` anchorTopRight **x=60（右）**、`[6]` anchorTopRight **x=120（左）**。点击处理在 `gt_ASActionButtonA/BNeutral_Func`（A=[5]→action[0]，B=[6]→action[1]）。视觉上「目标一在左、目标二在右」需**只对影武者**在 `gf_RAShadowActions` 里用 `DialogControlSetPosition(PlayerGroupSingle(lp_player))` 对调 x（120/60），不改写入槽位、不影响共用 [5]/[6] 的其他角色（巴士司机等）。
+- 「开关」按钮（`gv_switchButtonItem`，tooltip 键 `94249CFE` 限定名单）由 `gt_ASSwitchButton_Func` 按角色分支处理（(3,15)冤魂 / (3,14)瘟疫 / (3,3)小丑 / **(3,31)影武者**）。新角色要支持开关：①在 `gt_ASSwitchButton_Func` 加角色分支（切换变量+播报状态）②在该角色 `gf_RA*Actions` 开头 `DialogControlSetEnabled(gv_switchButtonItem, …)` 启用并顺带播报当前状态（=每夜开始的状态提示，影武者借此实现模式提示）。
+- 共用 `gv_e5BC80E585B3` 开关变量的角色（小丑/冤魂/影武者）互不冲突，分支各自独立。
+
 ### 打包管线（shw96 事故沉淀）
 
 **boot2 系列地图只能用「复制上一版 + `sc2map.write` 直写 CustomLogic.galaxy」，绝不能用 `tools/sc2pack.py`**（shw96 事故：误用 sc2pack 后触发器读到旧脚本，游戏报「脚本读取失败：无法找到函数」+ 一串 UI layout 红字）。两条管线的区别：
