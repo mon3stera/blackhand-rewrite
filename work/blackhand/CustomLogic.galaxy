@@ -75079,7 +75079,7 @@ bool gt_NPNightCamera_Func (bool testConds, bool runActions) {
                         gf_NPStalkerCamera(lv_a);
                     }
 
-                    if ((((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 8)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 16)) || ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 9)))) {
+                    if ((((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 8)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 16)) || ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 9)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 31)) || ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 31)))) {
                         gf_NPVantageCamera(lv_a);
                     }
 
