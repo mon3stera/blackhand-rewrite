@@ -66107,7 +66107,7 @@ bool gt_TXGuess_Func (bool testConds, bool runActions) {
     string lv_s;
     int lv_i;
     int lv_j;
-    string lv_r;
+    text lv_r;
 
     // Automatic Variable Declarations
 
@@ -66159,7 +66159,7 @@ bool gt_TXGuess_Func (bool testConds, bool runActions) {
         return true;
     }
 
-    lv_r = "";
+    lv_r = null;
     lv_i = 1;
     for ( ; (lv_i <= 5) ; lv_i += 1 ) {
         lv_j = 1;
@@ -66172,13 +66172,13 @@ bool gt_TXGuess_Func (bool testConds, bool runActions) {
 
     }
 
-    if ((lv_r == "")) {
+    if ((lv_r == null)) {
         gf_CBSystemMessage(StringExternal("Param/Value/TXUNKNOWN"), lv_p, lv_p, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
         return true;
     }
 
     gv_txGuess[lv_p] = lv_s;
-    gf_CBSystemMessage((StringExternal("Param/Value/TXGUESSA") + StringToText(gv_name[gv_action[lv_p][0]]) + StringExternal("Param/Value/TXGUESSB") + StringToText(lv_r) + StringExternal("Param/Value/TXGUESSC")), lv_p, lv_p, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    gf_CBSystemMessage((StringExternal("Param/Value/TXGUESSA") + StringToText(gv_name[gv_action[lv_p][0]]) + StringExternal("Param/Value/TXGUESSB") + lv_r + StringExternal("Param/Value/TXGUESSC")), lv_p, lv_p, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
     return true;
 }
 
