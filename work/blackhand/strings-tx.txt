@@ -28,8 +28,8 @@ Param/Value/TXGUESSA=你猜测「
 Param/Value/TXGUESSB=」是个「
 Param/Value/TXGUESSC=」。
 Param/Value/TXHEAR=<s val="ModLeftSize16"><c val="FF0000">天选者对罪人降下了神罚……</c></s>
-Param/Value/TXDEATH1=死者被一道天雷劈成了焦炭。
-Param/Value/TXDEATH2=死者浑身焦黑，死于雷击。
+Param/Value/TXDEATH1=一道撕裂夜空的电光落下，死者甚至没能留下全尸。
+Param/Value/TXDEATH2=死者触怒了天威，在苍穹落雷中灰飞烟灭。
 Param/Value/TXDM=死者死于雷击。
 Param/Value/TXREV1=<s val="ModLeftSize16">雷鸣炸响在审判台上空——
 Param/Value/TXREV2=竟是「天选者」！天命不容处决，众人把他从台上放了下来。</s>
