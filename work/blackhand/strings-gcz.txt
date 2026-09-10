@@ -38,3 +38,5 @@ Param/Value/GCZJSUBB=大审判 B
 Param/Value/GCZJSUBC=大审判 C
 Param/Value/GCZJSUBD=大审判 D
 Param/Value/GCZJBTN=<s val="ModCenterSize24Bold"><c val="8822CC">大审判</c></s>
+Param/Value/GCZBOX1=- 你不会被退伍军人的警戒杀死。
+Param/Value/GCZBOX2=<n/>- 你可以观察你自己。

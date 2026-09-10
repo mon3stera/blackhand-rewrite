@@ -10297,6 +10297,10 @@ void gf_SequencePrep () {
                 gv_veteranEligible[lv_a] = false;
             }
 
+            if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 31)) {
+                gv_veteranEligible[lv_a] = false;
+            }
+
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 17)) {
                 gv_busEligible[lv_a] = false;
                 gv_witchEligible[lv_a] = false;
@@ -41482,7 +41486,8 @@ void gf_RTTownRoleText (int lp_player) {
         gv_roleBoxText[lv_a][0] = (gv_roleBoxText[lv_a][0] + StringExternal("Param/Value/GCZTAG"));
         gv_roleBoxText[lv_a][4] = StringExternal("Param/Value/GCZGOAL");
         gv_roleBoxText[lv_a][1] = StringExternal("Param/Value/GCZABIL");
-        gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/EC757040");
+        gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/GCZBOX1");
+        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/GCZBOX2"));
         SoundPlay(SoundLink("Ghost_What", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
     }
 
