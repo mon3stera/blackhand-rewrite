@@ -217,7 +217,7 @@ int[32] gv_optionsPanelItem;
 int gv_rolesAssigned;
 // 测试构建：允许把电脑玩家当成占位玩家（正式发布改为 false）
 const bool c_bhSoloBuild = true;
-const bool c_bhSoloFill = false;   // 大厅测试：不脚本人机塞满，空位由大厅自行加电脑/玩家
+const bool c_bhSoloFill = true;    // 虚拟补位总开关：true=开局自动补「电脑N」到15人（本地测试）；发布改回 false 即可
 
 bool gv_soloTest;
 void gf_BHNotify (text lp_msg, int lp_target, soundlink lp_sound);
