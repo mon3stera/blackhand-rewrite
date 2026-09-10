@@ -52163,7 +52163,7 @@ void gf_OSLoadBase64 (int lp_player) {
     int lv_x;
 
     // Automatic Variable Declarations
-    const int auto3508CF23_ae = 32;
+    const int auto3508CF23_ae = 31;
     const int auto3508CF23_ai = 1;
     const int autoC043592C_ae = 11;
     const int autoC043592C_ai = 1;
@@ -54660,7 +54660,7 @@ void gf_OSInitializeOptionsScreen () {
     const int auto3833B1D6_ai = 1;
     const int autoAB01386F_ae = 11;
     const int autoAB01386F_ai = 1;
-    const int autoD02CB81C_ae = 32;
+    const int autoD02CB81C_ae = 31;
     const int autoD02CB81C_ai = 1;
 
     // Variable Initialization
@@ -55256,7 +55256,7 @@ void gf_OSCloseOptionsScreen () {
     // Automatic Variable Declarations
     const int auto389BE0FB_ae = 9;
     const int auto389BE0FB_ai = 1;
-    const int autoAA8D2539_ae = 32;
+    const int autoAA8D2539_ae = 31;
     const int autoAA8D2539_ai = 1;
     const int auto243166A9_ae = 20;
     const int auto243166A9_ai = 1;
@@ -85643,7 +85643,7 @@ bool gt_OSVariantsMenuConfirm_Func (bool testConds, bool runActions) {
     int lv_a;
 
     // Automatic Variable Declarations
-    const int auto74E062BB_ae = 32;
+    const int auto74E062BB_ae = 31;
     const int auto74E062BB_ai = 1;
     const int autoDD2FF323_ae = 11;
     const int autoDD2FF323_ai = 1;
