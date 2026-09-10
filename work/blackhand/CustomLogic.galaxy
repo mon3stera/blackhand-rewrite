@@ -21215,6 +21215,8 @@ void gf_ETLbWin2 () {
 void gf_ETCorruptInquisitorWin () {
     // Variable Declarations
     int lv_a;
+    int lv_ci;
+    int lv_shw;
     bool[6] lv_b;
 
     // Automatic Variable Declarations
@@ -21225,9 +21227,28 @@ void gf_ETCorruptInquisitorWin () {
 
     // Implementation
     SoundPlay(SoundLink("GameMusicTerr2233222224", -1), PlayerGroupAll(), 100.0, 0.0);
+    lv_ci = 0;
+    lv_shw = 0;
     lv_a = 1;
     for ( ; ( (autoC2FB24DF_ai >= 0 && lv_a <= autoC2FB24DF_ae) || (autoC2FB24DF_ai < 0 && lv_a >= autoC2FB24DF_ae) ) ; lv_a += autoC2FB24DF_ai ) {
-        if ((((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 2)) || ((gv_executed[lv_a] == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 3)) || ((gv_e8B58CE9ACBCE782B9E695B0[lv_a] >= 3) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 17)) || ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 4)) || ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 6) && (gv_executionWin[lv_a] == true) && ((gv_roleOptions[3][6][2] == false) || (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true))) || ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 7)) || ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 11)) || ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 12)) || ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 13)))) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
+            if ((gv_roles[lv_a][1] == 3)) {
+                if ((gv_roles[lv_a][0] == 13)) {
+                    lv_ci = 1;
+                }
+
+                if ((gv_roles[lv_a][0] == 31)) {
+                    lv_shw = 1;
+                }
+
+            }
+
+        }
+
+    }
+    lv_a = 1;
+    for ( ; ( (autoC2FB24DF_ai >= 0 && lv_a <= autoC2FB24DF_ae) || (autoC2FB24DF_ai < 0 && lv_a >= autoC2FB24DF_ae) ) ; lv_a += autoC2FB24DF_ai ) {
+        if ((((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 2)) || ((gv_executed[lv_a] == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 3)) || ((gv_e8B58CE9ACBCE782B9E695B0[lv_a] >= 3) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 17)) || ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 4)) || ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 6) && (gv_executionWin[lv_a] == true) && ((gv_roleOptions[3][6][2] == false) || (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true))) || ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 7)) || ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 11)) || ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 12)) || ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 13)) || ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 31) && (lv_ci == 0)))) {
             SoundPlay(SoundLink("UI_MissionComplete", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
             gf_FlashScreen(Color(73.33, 26.67, 33.33), lv_a, 2.0, 0.0);
             libNtve_gf_SetDialogItemText(gv_endButtonItem, StringExternal("Param/Value/1A115671"), PlayerGroupSingle(lv_a));
@@ -21251,7 +21272,18 @@ void gf_ETCorruptInquisitorWin () {
             }
 
         }
-        gf_WinScreen("WinNeutral.dds", lv_a);
+        if ((lv_ci == 1)) {
+            gf_WinScreen("WinCorruptInquisitor.dds", lv_a);
+        }
+        else {
+            if ((lv_shw == 1)) {
+                gf_WinScreen("WinShadow.dds", lv_a);
+            }
+            else {
+                gf_WinScreen("WinNeutral.dds", lv_a);
+            }
+
+        }
     }
     Wait(5.0, c_timeGame);
 }
