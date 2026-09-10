@@ -12207,6 +12207,8 @@ void gf_SequenceBullshitBackup () {
 
 void gf_SequenceKills () {
     // Variable Declarations
+    const int auto6593898B_ae = 15;
+    const int auto6593898B_ai = 1;
     int lv_a;
     int lv_x;
     int lv_y;
@@ -12322,6 +12324,14 @@ void gf_SequenceKills () {
         gv_cultSmiteCount -= gv_cultSmiteRequirement;
     }
 
+    // shw91: 恶化循环前移（原在 SequenceAfter）——只恶化已有旧毒，当夜新感染当晚不再 +1
+    lv_a = 1;
+    for ( ; ( (auto6593898B_ai >= 0 && lv_a <= auto6593898B_ae) || (auto6593898B_ai < 0 && lv_a >= auto6593898B_ae) ) ; lv_a += auto6593898B_ai ) {
+        if ((gv_e7989FE796ABE782B9E695B0[lv_a] > 0)) {
+            gv_e7989FE796ABE782B9E695B0[lv_a] += 1;
+        }
+
+    }
     lv_a = 1;
     for ( ; ( (auto8638ECFE_ai >= 0 && lv_a <= auto8638ECFE_ae) || (auto8638ECFE_ai < 0 && lv_a >= auto8638ECFE_ae) ) ; lv_a += auto8638ECFE_ai ) {
         if ((gv_visitation[lv_a] != 0) && (gv_roleblocked[lv_a] == 0) && (gv_e7989FE796ABE58589E78EAF[gv_visitation[lv_a]] == true) && (PlayerGroupHasPlayer(gv_alivePlayers, gv_visitation[lv_a]) == true)) {
@@ -13284,13 +13294,6 @@ void gf_SequenceAfter () {
 
     // Implementation
     gf_DEBUG("Starting phase 3 night actions");
-    lv_a = 1;
-    for ( ; ( (auto6593898B_ai >= 0 && lv_a <= auto6593898B_ae) || (auto6593898B_ai < 0 && lv_a >= auto6593898B_ae) ) ; lv_a += auto6593898B_ai ) {
-        if ((gv_e7989FE796ABE782B9E695B0[lv_a] > 0)) {
-            gv_e7989FE796ABE782B9E695B0[lv_a] += 1;
-        }
-
-    }
     lv_a = 1;
     for ( ; ( (autoCE3FD9CE_ai >= 0 && lv_a <= autoCE3FD9CE_ae) || (autoCE3FD9CE_ai < 0 && lv_a >= autoCE3FD9CE_ae) ) ; lv_a += autoCE3FD9CE_ai ) {
         if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 14)) {
