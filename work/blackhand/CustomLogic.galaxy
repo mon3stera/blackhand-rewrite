@@ -3673,15 +3673,15 @@ bool auto_gf_ValidateandSetup_TriggerFunc (bool testConds, bool runActions) {
 
     // Implementation
     if ((PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true)) {
-        if ((BankSectionExists(gv_bank[lv_a], "QQ") == true) && (BankVerify(gv_bank[lv_a]) == true)) {
+        if ((BankSectionExists(gv_bank[lv_a], "QQ") == true) && ((c_bhSoloBuild == true) || (BankVerify(gv_bank[lv_a]) == true))) {
             gv_oP[lv_a][8] = true;
         }
 
-        if ((BankSectionExists(gv_bank[lv_a], "gift") == true) && (BankVerify(gv_bank[lv_a]) == true)) {
+        if ((BankSectionExists(gv_bank[lv_a], "gift") == true) && ((c_bhSoloBuild == true) || (BankVerify(gv_bank[lv_a]) == true))) {
             gv_gifted[lv_a] = true;
         }
 
-        if ((BankSectionExists(gv_bank[lv_a], "I") == true) && (BankVerify(gv_bank[lv_a]) == true)) {
+        if ((BankSectionExists(gv_bank[lv_a], "I") == true) && ((c_bhSoloBuild == true) || (BankVerify(gv_bank[lv_a]) == true))) {
             gf_CDisassembleMainBank(lv_a);
             gf_CDisassembleSaveSlotBank(lv_a);
             gv_gamesPlayed[lv_a] = gv_bankGeneralIntegers[lv_a][4];
