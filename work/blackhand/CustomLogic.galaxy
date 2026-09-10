@@ -10703,26 +10703,22 @@ void gf_SequencePrep () {
     gf_DEBUG("Action handler");
     lv_a = 1;
     for ( ; ( (auto67E4E4BC_ai >= 0 && lv_a <= auto67E4E4BC_ae) || (auto67E4E4BC_ai < 0 && lv_a >= auto67E4E4BC_ae) ) ; lv_a += auto67E4E4BC_ai ) {
-        if ((gv_punishVotes[lv_a] == gv_punishVotes[lv_punishmaxone]) && (gv_punishVotes[lv_a] > 0)) {
-            lv_punishlist[lv_tie] = lv_punishmaxone;
-            lv_punishtie += 1;
+        if ((gv_punishVotes[lv_a] == gv_punishVotes[lv_punishmaxone]) && (gv_punishVotes[lv_a] > 0) && (lv_punishmaxone != 0)) {
             lv_punishlist[lv_tie] = lv_a;
+            lv_tie += 1;
         }
         else {
             if ((gv_punishVotes[lv_a] > gv_punishVotes[lv_punishmaxone]) && (gv_punishVotes[lv_a] > 0)) {
                 lv_punishmaxone = lv_a;
-                lv_punishtie = 0;
-                lv_b = 1;
-                for ( ; ( (auto9C78C65B_ai >= 0 && lv_b <= auto9C78C65B_ae) || (auto9C78C65B_ai < 0 && lv_b >= auto9C78C65B_ae) ) ; lv_b += auto9C78C65B_ai ) {
-                    lv_punishlist[lv_b] = 0;
-                }
+                lv_tie = 1;
+                lv_punishlist[0] = lv_a;
             }
 
         }
     }
     if ((lv_punishmaxone != 0)) {
-        if ((lv_punishtie > 0)) {
-            gv_punishTarget = lv_punishlist[RandomInt(0, lv_punishlist[0])];
+        if ((lv_tie > 1)) {
+            gv_punishTarget = lv_punishlist[RandomInt(0, (lv_tie - 1))];
         }
         else {
             gv_punishTarget = lv_punishmaxone;
