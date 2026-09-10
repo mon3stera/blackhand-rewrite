@@ -31,6 +31,7 @@ Param/Value/SHWREV=<s val="ModLeftSize16Bold"><c val="FFFF88">你的目标是一
 Param/Value/SHWBOX6=<n/>- 你的目标一可以被交换，但是目标二无法以任何形式被交换。
 Param/Value/DBSCRIME=操纵审判
 Param/Value/4881041F=- 他像是个警长、副手、恐吓者/封口、审ji官、处刑者，或堕落审判者。
-Param/Value/SHWMODE1=<s val="ModLeftSize16"><c val="0080C0">模式一（直击）：若目标一造访目标二家中，或整夜未出门，目标一将死去。</c></s>
+Param/Value/SHWMODE1=<s val="ModLeftSize16"><c val="0080C0">模式一（直击）：若目标一造访目标二家中、造访你家，或整夜未出门，目标一将死去。</c></s>
 Param/Value/SHWMODE2=<s val="ModLeftSize16"><c val="0080C0">模式二（追击）：你的刀将飞向目标一今晚造访的目标；目标一未出门，则仍杀目标一。</c></s>
 Param/Value/SHWBOX7=<n/>- 输入 -on / -off 切换攻击模式：模式一直击（命中条件见能力）；模式二追击（刀飞向目标一造访的目标，目标一未出门则仍杀目标一）。
+Param/Value/SHWBOX8=<n/>- 若目标一造访你的家，无论何种攻击模式，目标一都将死去。
