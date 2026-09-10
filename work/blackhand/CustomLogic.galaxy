@@ -41775,6 +41775,14 @@ void gf_RTTownRoleText (int lp_player) {
         if ((gv_roleOptions[3][31][1] == true)) {
             gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/SHWBOX5"));
         }
+
+        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/SHWBOX7"));
+        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/SHWBOX8"));
+        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/SHWBOX9"));
+        gv_roleBoxText[lv_a][3] = StringExternal("Param/Value/D19448B8");
+        SoundPlay(SoundLink("Hercules_What", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
+    }
+
     if (((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 32))) {
         gv_roleBoxText[lv_a][0] = (StringExternal("Param/Value/CE62498E") + lv_t[2] + StringExternal("Param/Value/D7C97124"));
         gv_roleBoxText[lv_a][6] = gf_RTMakeWinList(gv_roles[lv_a][1], gv_roles[lv_a][0]);
@@ -41788,13 +41796,6 @@ void gf_RTTownRoleText (int lp_player) {
         gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXBOX3"));
         gv_roleBoxText[lv_a][3] = StringExternal("Param/Value/D19448B8");
         SoundPlay(SoundLink("Carrier_Attack", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
-    }
-
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/SHWBOX7"));
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/SHWBOX8"));
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/SHWBOX9"));
-        gv_roleBoxText[lv_a][3] = StringExternal("Param/Value/D19448B8");
-        SoundPlay(SoundLink("Hercules_What", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
     }
 
     if ((gv_roles[lv_a][0] == 14)) {
@@ -43365,6 +43366,14 @@ void gf_RTNeutralRoleText (int lp_player) {
         if ((gv_roleOptions[3][31][1] == true)) {
             gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/SHWBOX5"));
         }
+
+        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/SHWBOX7"));
+        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/SHWBOX8"));
+        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/SHWBOX9"));
+        gv_roleBoxText[lv_a][3] = StringExternal("Param/Value/D19448B8");
+        SoundPlay(SoundLink("Hercules_What", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
+    }
+
     if (((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 32))) {
         gv_roleBoxText[lv_a][0] = (StringExternal("Param/Value/CE62498E") + lv_t[2] + StringExternal("Param/Value/D7C97124"));
         gv_roleBoxText[lv_a][6] = gf_RTMakeWinList(gv_roles[lv_a][1], gv_roles[lv_a][0]);
@@ -43378,13 +43387,6 @@ void gf_RTNeutralRoleText (int lp_player) {
         gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXBOX3"));
         gv_roleBoxText[lv_a][3] = StringExternal("Param/Value/D19448B8");
         SoundPlay(SoundLink("Carrier_Attack", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
-    }
-
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/SHWBOX7"));
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/SHWBOX8"));
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/SHWBOX9"));
-        gv_roleBoxText[lv_a][3] = StringExternal("Param/Value/D19448B8");
-        SoundPlay(SoundLink("Hercules_What", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
     }
 
     if (((gv_roles[lv_a][0] == 8) || (gv_roles[lv_a][0] == 10))) {
