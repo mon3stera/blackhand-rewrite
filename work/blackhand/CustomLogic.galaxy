@@ -75043,7 +75043,7 @@ bool gt_NPNightCamera_Func (bool testConds, bool runActions) {
                         gf_NPAuthorityCamera(lv_a);
                     }
 
-                    if ((((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 2)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 6)) || ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 7)))) {
+                    if ((((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 2)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 6)) || ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 7)) || ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 13)))) {
                         gf_NPPanoramaCamera(lv_a);
                     }
 
