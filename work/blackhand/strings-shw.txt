@@ -8,9 +8,9 @@ Param/Value/SHWBOX3=- 你将得知目标一的真实去向。
 Param/Value/SHWBOX5=<n/>- 你的追击无视无敌和救治。
 Param/Value/SHWTGT1=目标一
 Param/Value/SHWTGT2=目标二
-Param/Value/SHWDEST1=你的目标一昨晚没有出门。
-Param/Value/SHWDEST2=你的目标一昨晚去了「
-Param/Value/SHWDEST3=」的家。
+Param/Value/SHWDEST1=你的目标一昨晚没有行动。
+Param/Value/SHWDEST2=你的目标一昨晚访问了「
+Param/Value/SHWDEST3=」。
 Param/Value/SHWNIGHT=<s val="ModLeftSize16Bold"><c val="9B30FF">你听见黑暗中传来一声极短的破风声，随后一切归于死寂...</c></s>
 Param/Value/SOLOON=-solo 已启用：大厅空位将在开局后补满虚拟玩家，请自行配置角色。
 Param/Value/SHWSEL1=<s val="ModLeftSize16">你改为选择 </s><s val="ModLeftSize16Bold">
@@ -31,10 +31,12 @@ Param/Value/SHWREV=<s val="ModLeftSize16Bold"><c val="FFFF88">你的目标是一
 Param/Value/SHWBOX6=<n/>- 你的目标一可以被交换，但是目标二无法以任何形式被交换。
 Param/Value/DBSCRIME=操纵审判
 Param/Value/4881041F=- 他像是个警长、副手、恐吓者/封口、审ji官、处刑者，或堕落审判者。
-Param/Value/SHWMODE1=<s val="ModLeftSize16"><c val="0080C0">当前模式：若目标一去了目标二家中或整夜未出门，则击杀目标一（无视无敌和救治）。</c></s>
-Param/Value/SHWMODE2=<s val="ModLeftSize16"><c val="0080C0">当前模式：击杀目标一今晚造访的目标；目标一未出门，则击杀目标一。</c></s>
-Param/Value/SHWBOX7=<n/>- 输入 -on / -off 切换攻击模式：若目标一去了目标二家中或整夜未出门，则击杀目标一，这次击杀无视无敌和救治；或是攻击目标一的目标。
+Param/Value/SHWMODE1=<s val="ModLeftSize16"><c val="0080C0">当前模式：若目标一访问了目标二，则击杀目标一（无视无敌和救治）。</c></s>
+Param/Value/SHWMODE2=<s val="ModLeftSize16"><c val="0080C0">当前模式：击杀目标一今晚访问的目标；目标一没有行动，则击杀目标一。</c></s>
+Param/Value/SHWBOX7=<n/>- 输入 -on / -off 切换攻击模式：若目标一访问了目标二，则击杀目标一，这次击杀无视无敌和救治；或是攻击目标一的目标。
 Param/Value/SHWBOX8=<n/>- 如果目标一的目标是你，则你会攻击目标一。
 Param/Value/SHWDEATH4=死者被一把刀刺穿了。
 Param/Value/SHWDEATH5=他被劈成两半了。
 Param/Value/SHWDEATH6=死者身中数刀。
+Param/Value/94249CFE=<c val="004080">点击来改变你的开关状态<n/>限定：瘟疫散布者 冤魂 小丑 影武者</c>
+Param/Value/SHWBOX9=<n/>- 如果目标一没有行动，则视作访问自己。
