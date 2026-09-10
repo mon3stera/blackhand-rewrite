@@ -27,10 +27,10 @@ Param/Value/TXUNKNOWN=没有找到这个角色的拼音，猜测没有记录。
 Param/Value/TXGUESSA=你猜测「
 Param/Value/TXGUESSB=」是个「
 Param/Value/TXGUESSC=」。
-Param/Value/TXHEAR=<c val="FF0000">天选者对罪人降下了神罚……</c>
+Param/Value/TXHEAR=<s val="ModLeftSize16"><c val="FF0000">天选者对罪人降下了神罚……</c></s>
 Param/Value/TXDEATH1=死者被一道天雷劈成了焦炭。
 Param/Value/TXDEATH2=死者浑身焦黑，死于雷击。
 Param/Value/TXDM=死者死于雷击。
-Param/Value/TXREV1=雷鸣炸响在审判台上空——
-Param/Value/TXREV2=竟是「天选者」！天命不容处决，众人把他从台上放了下来。
-Param/Value/TXSPARE=天选者今日受天命庇护，无法被审判。
+Param/Value/TXREV1=<s val="ModLeftSize16">雷鸣炸响在审判台上空——
+Param/Value/TXREV2=竟是「天选者」！天命不容处决，众人把他从台上放了下来。</s>
+Param/Value/TXSPARE=<s val="ModLeftSize16">天选者今日受天命庇护，无法被审判。</s>
