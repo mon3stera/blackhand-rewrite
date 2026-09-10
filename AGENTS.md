@@ -363,3 +363,12 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 | `docs/SHADOW-ROLE.md` | 影武者实现规格（作为"新角色"样板） |
 | `docs/HANDOFF-SHADOW.md` | **影武者接入交接文档**：当前损坏状态、槽位误判（池3/18=小金执行者）、自设面板双硬编码机制、重置方案与重做清单 |
 | `docs/HANDOFF-NEXT.md` | **【先读这份】** 当前进度交接：影武者/观察者/预设均已接入，最新部署 shw85（捕风捉影=锁定???随机子变体 A-D；影武者目标转换规则：女巫替换/switched 解析只作用于目标一），含逐版改动记录与待验证点 |
+
+### 审判台免死与处决点体系（shw114 沉淀，天选者 3/32）
+
+- **处决只有一个收口函数 `gf_EExecution`**，但有 9 个调用点：`gf_CheckVoteWin` 直决 lynType（3 处 lv_winner + 1 处缩进 20）、marshalled/court 路径、`gf_Trial` 的 `trialDefense==false` 自动处决（2 处）、`gf_TrialVoteResults` 有罪判决（1 处）、marshalled 命中 `lv_hit` 路径。**每处都要单独包守卫**（行级精确匹配包 else，不要子串替换——20 空格行会含 12 空格子串）。
+- **审判有罪判决的免死走「重定向到无罪分支」**：把 `gf_TrialVoteResults` 的 `if (有罪)` 条件追加 `&& !protected`，免死者在 else（无罪）分支开头做揭露广播——无罪分支自带「放下台走回座位+白天继续投票+结束进夜」的完整恢复逻辑，**不要**在有罪分支里跳过 EExecution（那会让白天流程悬死）。直决路径的免死则用 `gf_TXSpare`（揭露+走回+复制 EExecution 的日终尾巴：ASEndActions/TriggerStop(gt_DaySequence)/CheckEnd→NightTransition）。
+- **「当天不能再投」= 审判发起点禁投**：在 `gf_Trial(lv_X)` 各发起点前查 `gf_TXSparedToday`，命中则广播提示并跳过（不重置投票面板也行，白天计时器继续）；禁止再次上台而不是在台上二次豁免。
+- 新命令注册样板：`gt_TXGuess_Init()`（TriggerCreate+TriggerAddEventChatMessage）+ 在 `InitTriggers` 跟随 `gt_Prefer_Init();` 调用；输入解析用 `StringReplaceWord(StringSub(EventChatMessage(false), …), " ", …)` + `StringCase(s,false)` 转小写后与 `gv_roleNameInput[池][号]` 比对。
+- 拼音匹配循环共 3 处需随 >30 号角色放宽：Prefer `autoA667E0B3_ae`、Blacklist `auto06C73FD2_ae`、Init2 黑名单校验 `auto6D231E76_ae`；另 gf_OSLoadBase64/gf_OSInitializeOptionsScreen/gf_OSCloseOptionsScreen/gt_OSVariantsMenuConfirm 四处角色循环 + `gf_OSGenerateChances` 5 处几率循环 + 槽位加载校验 `> 31` 同步放宽到新角色号。
+- 验尸官死因字母码新增时：扫描块（~13809）逐字母 if 链里加分支；`T`/`X` 已被占用（Trap/Kill 等），天选者用 `G`。
