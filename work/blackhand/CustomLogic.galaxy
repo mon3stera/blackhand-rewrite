@@ -86079,14 +86079,6 @@ bool gt_OSRoleSelect_Func (bool testConds, bool runActions) {
             }
 
             if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 26)) {
-                gv_roleSelection = 28;
-            }
-
-            if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 27)) {
-                gv_roleSelection = 29;
-            }
-
-            if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 28)) {
                 gv_roleSelection = 31;
             }
 
@@ -86706,8 +86698,6 @@ bool gt_OSMenus_Func (bool testConds, bool runActions) {
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/69577858") + gv_roleNameArray[gv_roleCategory][24] + StringExternal("Param/Value/8D16FC3F")));
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/092F7C09") + gv_roleNameArray[gv_roleCategory][25] + StringExternal("Param/Value/34AA96E1")));
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/E23A600A") + gv_roleNameArray[gv_roleCategory][26] + StringExternal("Param/Value/DA2F57DE")));
-                DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/24A75045") + gv_roleNameArray[gv_roleCategory][28] + StringExternal("Param/Value/CEFB6BC8")));
-                DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/E49D49F4") + gv_roleNameArray[gv_roleCategory][29] + StringExternal("Param/Value/F63CDC9A")));
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/E49D49F4") + gv_roleNameArray[gv_roleCategory][31] + StringExternal("Param/Value/F63CDC9A")));
             }
 
