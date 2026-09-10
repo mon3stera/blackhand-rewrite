@@ -33606,13 +33606,12 @@ void gf_TXReveal (int lp_player) {
     // Implementation
     gv_txSparedDay[lp_player] = gv_dayNumber;
     SoundPlay(SoundLink("Karass_PlasmaSurgeLaunch", -1), PlayerGroupAll(), 100.0, 0.0);
-    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, (StringExternal("Param/Value/TXREV1") + TextWithColor(StringToText(gv_name[lp_player]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lp_player])) + StringExternal("Param/Value/TXREV2")));
-    autoTXREV_g = gv_currentPlayers;
+    autoTXREV_g = PlayerGroupAll();
     autoTXREV_var = -1;
     while (true) {
         autoTXREV_var = PlayerGroupNextPlayer(autoTXREV_g, autoTXREV_var);
         if (autoTXREV_var < 0) { break; }
-        gf_ELAddMessage((StringExternal("Param/Value/TXREV1") + TextWithColor(StringToText(gv_name[lp_player]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lp_player])) + StringExternal("Param/Value/TXREV2")), autoTXREV_var, Color(100.00, 80.00, 20.00), 16, 0);
+        gf_CBSystemMessage((StringExternal("Param/Value/TXREV1") + TextWithColor(StringToText(gv_name[lp_player]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lp_player])) + StringExternal("Param/Value/TXREV2")), autoTXREV_var, 0, 0, SoundLink("Silent", -1), Color(100.00, 80.00, 20.00));
     }
 }
 
