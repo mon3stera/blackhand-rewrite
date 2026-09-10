@@ -44208,6 +44208,10 @@ bool gf_OSCheckOptionsA (bool lp_error) {
                 lv_c[3] = true;
             }
 
+            if ((gv_categoriesArray[lv_a] == 3) && (gv_rolesArray[lv_a] == 32)) {
+                lv_c[4] = true;
+            }
+
             if ((gv_categoriesArray[lv_a] == 3) && (gv_rolesArray[lv_a] == 12)) {
                 lv_c[4] = true;
             }
