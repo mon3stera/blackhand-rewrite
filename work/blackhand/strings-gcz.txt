@@ -1,10 +1,10 @@
 // 观察者(城镇 1/31) 文案
 Param/Value/GCZNAME=<c val="00FF00">观察者</c>
-Param/Value/GCZDESC=沉默的夜行者，常年在屋顶与窗棂之间穿行，注视着小镇的每一扇门。<n/><n/><c val="BBDDFF">每晚观察一名玩家（可以是自己）：天亮时，你将得知昨晚有哪些角色造访了目标的房屋。</c>
-Param/Value/GCZABIL=- 每晚观察一人，天亮时得知哪些角色造访了目标的房屋。
+Param/Value/GCZDESC=沉默的夜行者，常年在屋顶与窗棂之间穿行，注视着小镇的每一扇门。<n/><n/><c val="BBDDFF">每晚观察一名玩家（可以是自己）：天亮时，你将得知昨晚有哪些角色访问了目标。</c>
+Param/Value/GCZABIL=- 每晚观察一个人，获知有哪些角色访问了他。
 Param/Value/GCZTAG= (<c val="00FF00">观察</c>)
 Param/Value/GCZGOAL=一个彻夜注视小镇街道的守望者，谨慎地帮助市民。
-Param/Value/GCZACH=<s val="International17"><c val="FFFF00">观察者注视着夜晚的街道。推理你看到的到访者!</c></s>
+Param/Value/GCZACH=<s val="International17"><c val="FFFF00">观察者注视着夜晚的街道。推理你看到的访问者!</c></s>
 Param/Value/GCZBTN=观察
 Param/Value/GCZSEL1=你决定观察 
 Param/Value/GCZSEL2= 的房屋。
@@ -15,8 +15,8 @@ Param/Value/GCZSELFRE=你改变了观察目标：你自己。
 Param/Value/GCZSEP=、
 Param/Value/GCZTAIL= 访问了你的目标。
 Param/Value/GCZTAIL2= 访问了你的房屋。
-Param/Value/GCZNONE=昨晚没有人造访你的目标。
-Param/Value/GCZNOSELF=昨晚没有人造访你的房屋。
+Param/Value/GCZNONE=昨晚没有人访问你的目标。
+Param/Value/GCZNOSELF=昨晚没有人访问你的房屋。
 Param/Value/F2239D82=- 你推断出他可能是侦探、监视者、密探/先锋、纵火者、影武者、观察者。
 // 预设：捕风捉影（菜单第32项，variantSelection=31）+ 烙印菜单名修复
 Param/Value/BHYIN01=<s val="ModCenterSize24Bold"><c val="FF3232">烙印</c></s>
