@@ -255,6 +255,17 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 - **sc2pack.py（rogue 等独立图用）**：把给定 galaxy **替换进 MapScript.galaxy 并剥触发器**——boot2 的触发器函数不在手写脚本里，替换后 MapScript 缺触发器函数、CustomLogic 还是旧版，必炸。
 - 打包后回读校验目标是包内 **`CustomLogic.galaxy` 成员**（不是 MapScript）；同时确认 `Triggers` 成员仍在、MapScript 仍含 `include "CustomLogic"`。
 
+### 胜利图（结算画面）体系（shw98/99 沉淀）
+
+分发链：`gf_CheckEnd` 返回码 → `gf_EndGame(lp_end)` → 每码一个 `gf_ET*Win()`（约 20193–21390 行）→ 内部 `gf_WinScreen("<图>.dds", 玩家)` **全场同一张图** + 逐玩家胜利者判定（`gv_won=true`、bank 胜/败场计数 `[6]/[7]`、胜负按钮文案）。图码对照：1城镇 WinTown / 2黑手 WinMafia / 13三合 WinTriad / 3SK WinSerialKiller / 5生存者 WinSurvivor / 6小丑 WinJester / 7女巫 WinWitch / 8纵火 WinArsonist / 9处刑者 WinExecutioner / 10失忆 WinAmnesiac / 11邪教 WinCult / 12杀人狂 WinMassMurderer / 14审计 WinAuditor / 15法官 WinJudge / 16审判者+影武 / 17瘟疫 WinplaguerReal / 18冤魂 Winpossessio / 19系命 Winlifebonder / 20赌鬼 Winpossessio / 4无人 WinNobody。
+
+- **图的位置**：原图那批（WinTown/WinMafia/…）在 `mm2.SC2Mod` 依赖里；**自加图放地图归档根目录即可覆盖/新增**（shw98 的 `WinCorruptInquisitor.dds`、`WinShadow.dds`）。
+- **DDS 规格**（与作者自加图一致）：732×376、24bit 未压缩、无 mipmap，文件=128 字节头+RGB 字节（825824 字节整）。**头里的 mask 标注与实际字节序不符——按「bytes→PIL RGB」直读直写颜色即正确**，转制方法：`hdr = 旧图[:128]` + `Image.open(png).convert('RGB').resize((732,376)).tobytes()`。出图用 GPT 时给参考图（`~/win-ref/` 四张解包 PNG）+ 三条约束：无人物只留一件道具、涂鸦泼漆大字、混凝土墙底。
+- **新增致命系角色的胜利三件套**：①`gf_CheckEnd` 主链加/并入判胜块（**必须用 shw96 语义**：城镇0+其他致命系0+邪教0+`(黑+三)<=1`+自己≥1，不要复刻原版 `黑=0&&三=0`）②`gf_ET*Win` 的胜利者名单加自己（漏了会像影武者 shw98 前那样「赢了却被记败场+失败音效」）③专属图 dds 入包+分支接线。
+- **return 16 是共享块**：主链/2人残局/平局区三处 return 16 都进 `gf_ETCorruptInquisitorWin`，该函数服务一群中立（生存者/小丑/赌鬼/女巫/处刑者/失忆者/审计官/杀人狂/审判者/影武者）。函数开头先扫描存活定胜者（`lv_ci`/`lv_shw`，审判者优先——其雷击无视无敌），图按胜者分支；新角色并入时同步改扫描、名单、图分支三处。
+- **已知死代码**：`gf_ETGamblerWin`（WinJester）无调用者；赌鬼实际走 `gf_ETE8B58CE9ACBC` 与冤魂共用 `Winpossessio.dds`；作者做好的 `Wingambler.dds`（骰子图，风格偏离原版）躺在包里未接线。
+- 2 人残局区（~15910）与平局区（~16115）的 return 16 独立于主链，改主链语义时不要漏了核对这三处的一致性（shw99 后主链=审判者/影武者 `(黑+三)<=1`，残局区维持原样）。
+
 ### Galaxy 语言层陷阱（生成代码惯例）
 
 - **SoundLink 的类型是 `soundlink`**，不是 `sound`。自定义函数收音效参数必须声明 `soundlink`；写错则所有调用处「参数类型同函数定义不匹配」，并连带整个脚本解析失败（整图报废，游戏内红屏报错）
