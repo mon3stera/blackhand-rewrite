@@ -1127,6 +1127,7 @@ bool gf_TXSparedToday (int lp_player);
 bool gf_TXSpare (int lp_player);
 void gf_TXReveal (int lp_player);
 void gf_TXBanMsg (int lp_player);
+void gf_TXResumeDay ();
 void gf_ESTraperKill (int lp_player);
 void gf_RSConversions ();
 void gf_RSTownSetup ();
@@ -8081,6 +8082,7 @@ bool auto_gf_CheckVoteWin_TriggerFunc (bool testConds, bool runActions) {
             Wait(3.0, c_timeGame);
             if ((gf_TXSparedToday(lv_winner) == true)) {
                 gf_TXBanMsg(lv_winner);
+                gf_TXResumeDay();
             }
             else {
             gf_Trial(lv_winner);
@@ -8099,6 +8101,7 @@ bool auto_gf_CheckVoteWin_TriggerFunc (bool testConds, bool runActions) {
             Wait(3.0, c_timeGame);
             if ((gf_TXSparedToday(lv_winner) == true)) {
                 gf_TXBanMsg(lv_winner);
+                gf_TXResumeDay();
             }
             else {
             gf_Trial(lv_winner);
@@ -8354,6 +8357,7 @@ bool auto_gf_CheckVoteWin_TriggerFunc (bool testConds, bool runActions) {
                     Wait(3.0, c_timeGame);
                     if ((gf_TXSparedToday(lv_winner) == true)) {
                         gf_TXBanMsg(lv_winner);
+                        gf_TXResumeDay();
                     }
                     else {
                     gf_Trial(lv_winner);
@@ -9293,6 +9297,7 @@ bool auto_gf_TrialVoteResults_TriggerFunc (bool testConds, bool runActions) {
     else {
         if ((gf_TXProtected(lp_player) == true)) {
             gf_TXReveal(lp_player);
+            Wait(1.5, c_timeGame);
         }
 
         if ((gv_trialPausesDay == true)) {
@@ -33629,6 +33634,17 @@ void gf_TXBanMsg (int lp_player) {
         if (autoTXBAN_var < 0) { break; }
         gf_CBSystemMessage(StringExternal("Param/Value/TXSPARE"), autoTXBAN_var, 0, 0, SoundLink("Silent", -1), Color(0,0,0));
     }
+}
+
+void gf_TXResumeDay () {
+    if ((gv_trialPausesDay == true)) {
+        TimerPause(gv_overtimer, false);
+        GameTimeOfDaySetLength(gv_tempLength);
+    }
+
+    UIClearMessages(PlayerGroupAll(), c_messageAreaDirective);
+    gv_trialOn = false;
+    gf_ASStartVote();
 }
 
 bool gf_TXSpare (int lp_player) {
@@ -71706,6 +71722,7 @@ bool gt_DaySequence_Func (bool testConds, bool runActions) {
                     Wait(3.0, c_timeGame);
                     if ((gf_TXSparedToday(lv_winner) == true)) {
                         gf_TXBanMsg(lv_winner);
+                        gf_TXResumeDay();
                     }
                     else {
                     gf_Trial(lv_winner);
