@@ -1,19 +1,33 @@
 // 天选者 (3/32) 文案
 Param/Value/TXNAME=<c val="6BDED2">天选者</c>
-Param/Value/TXDESC=众神遗落人间的执行者，以天雷涤荡罪恶。<n/><n/><c val="BBDDFF">每晚选择一名玩家降下雷击，无视无敌和救治，最多三次。雷击生效前，你可以猜测目标的身份；若猜对，次日你无法被处死。</c><n/><n/><c val="AA9988">你在夜晚无法被杀死。</c>
+Param/Value/TXDESC=众神遗落人间的执行者，以天雷涤荡罪恶。<n/><n/><c val="BBDDFF">每晚选择一个人降下雷击。雷击生效前，你可以输入 -guess 猜测目标的身份；若猜对，次日当你被判处有罪时，将向全场揭示你的身份并被释放。</c><n/><n/><c val="AA9988">你在夜晚无法被杀死。</c>
 Param/Value/TXCRIME=非法闯入，谋杀
-Param/Value/TXBOX1=- 每晚选择一名玩家降下雷击，无视无敌和救治，最多三次。
-Param/Value/TXBOX2=- 雷击生效前，你可以输入 -guess 目标角色的拼音 猜测其身份；若猜对，次日你无法被处死。
-Param/Value/TXBOX3=<n/>- 你的雷击始终命中你所选的目标，无法被任何方式转移。<n/>- 天命不容处决：被投有罪时，将向全场揭露你的身份并把你放下来，当天你不能再被投票。
-Param/Value/TXBOX4=众神的怒火借你之手降落到人间，罪恶无处可逃。
-Param/Value/TXACK=你在心中默念对目标的猜测，结果将在雷击降临时揭晓。
+Param/Value/TXBOX1=每晚选择一个人降下雷击。
+Param/Value/TXBOX2=- 雷击生效前，你可以输入 -guess 目标角色的拼音 猜测其身份；输入 -guess（不带参数）取消猜测。
+Param/Value/TXBOXINV=- 你拥有夜间无敌。
+Param/Value/TXBOXNOIGN=- 你的雷击无视无敌和救治。
+Param/Value/TXSTRIKE3=- 你可以雷击3次。
+Param/Value/TXSTRIKE4=- 你可以雷击4次。
+Param/Value/TXSTRIKE5=- 你可以雷击5次。
+Param/Value/TXBOXGUESS=- 若你猜对了角色，在次日，当你被判处有罪时，将会向全场揭示你的身份，并将你释放。在该天的剩余时间内，你无法再被投票。
+Param/Value/TXBOXFIXED=- 你的雷击目标无法被任何方式影响。
+Param/Value/TXOPT4=雷击四次
+Param/Value/TXOPT5=雷击五次
 Param/Value/TXNOTGT=你今晚还没有选择雷击目标。
 Param/Value/TXGUESSOK=雷云中传来低语——你猜对了。明天你将受天命庇护，无法被处死。
 Param/Value/TXGUESSBAD=雷云中传来低语——你猜错了。
 Param/Value/TXSTRIKE=你降下了天雷。
-Param/Value/TXNOSTRIKE=你的雷击已经用尽。
+Param/Value/TXNOSTRIKE=<c val="FF0000">你无法再降下天雷了。</c>
 Param/Value/TXTGTDEAD=你的目标已经死了，雷击落空。
-Param/Value/TXHEAR=你听到头顶一声炸雷，一道白光直落人间……
+Param/Value/TXTIPGUESS=你可以使用-guess来猜测你将要惩罚的人的身份。
+Param/Value/TXTCOUNTA=你有
+Param/Value/TXTCOUNTB=次雷击次数剩余。
+Param/Value/TXCANCELOK=你收回了猜测。
+Param/Value/TXUNKNOWN=没有找到这个角色的拼音，猜测没有记录。
+Param/Value/TXGUESSA=你猜测「
+Param/Value/TXGUESSB=」是个「
+Param/Value/TXGUESSC=」。
+Param/Value/TXHEAR=<c val="FF0000">天选者对罪人降下了神罚……</c>
 Param/Value/TXDEATH1=死者被一道天雷劈成了焦炭。
 Param/Value/TXDEATH2=死者浑身焦黑，死于雷击。
 Param/Value/TXDM=死者死于雷击。

@@ -4814,6 +4814,14 @@ void gf_InitializeVariables () {
     gv_roleOptionsImportant[3][32][0] = 2;
     gv_roleOptions[3][32][0] = true;
     gv_roleOptionsText[3][32][0] = StringExternal("Param/Value/04B49A5F");
+    gv_roleOptionExists[3][32][2] = true;
+    gv_roleOptionsImportant[3][32][2] = 2;
+    gv_roleOptions[3][32][2] = false;
+    gv_roleOptionsText[3][32][2] = StringExternal("Param/Value/TXOPT4");
+    gv_roleOptionExists[3][32][3] = true;
+    gv_roleOptionsImportant[3][32][3] = 2;
+    gv_roleOptions[3][32][3] = false;
+    gv_roleOptionsText[3][32][3] = StringExternal("Param/Value/TXOPT5");
     gv_roleOptions[3][32][10] = true;
     gv_e78AAFE7BDAAE58FAFE883BD[3][32] = StringExternal("Param/Value/TXCRIME");
     gv_roleNameArray[3][13] = StringExternal("Param/Value/1963A32D");
@@ -35846,6 +35854,14 @@ void gf_RSNeutralSetup () {
 
                     if ((gv_roles[lv_a][0] == 32)) {
                         gf_RASerialKillerActions(lv_a);
+                        if ((gv_txStrikes[lv_a] <= 0)) {
+                            gf_CBSystemMessage(StringExternal("Param/Value/TXNOSTRIKE"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                        }
+                        else {
+                            gf_CBSystemMessage(StringExternal("Param/Value/TXTIPGUESS"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                            gf_CBSystemMessage((StringExternal("Param/Value/TXTCOUNTA") + IntToText(gv_txStrikes[lv_a]) + StringExternal("Param/Value/TXTCOUNTB")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                        }
+
                         if ((gv_roleOptions[3][32][0] == true)) {
                             gv_immune[lv_a][0] = true;
                         }
@@ -41790,10 +41806,35 @@ void gf_RTTownRoleText (int lp_player) {
         gv_roleBoxText[lv_a][1] = StringExternal("Param/Value/TXBOX1");
         gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/TXBOX2");
         if ((gv_roleOptions[3][32][0] == true)) {
-            gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310"));
+            gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXBOXINV"));
         }
 
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXBOX3"));
+        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXBOXNOIGN"));
+        if ((gv_roleOptions[3][32][3] == true)) {
+            gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXSTRIKE5"));
+        }
+        else {
+            if ((gv_roleOptions[3][32][2] == true)) {
+                gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXSTRIKE4"));
+            }
+            else {
+                gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXSTRIKE3"));
+            }
+
+        }
+
+        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXBOXGUESS"));
+        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXBOXFIXED"));
+        gv_txStrikes[lv_a] = 3;
+        if ((gv_roleOptions[3][32][3] == true)) {
+            gv_txStrikes[lv_a] = 5;
+        }
+        else {
+            if ((gv_roleOptions[3][32][2] == true)) {
+                gv_txStrikes[lv_a] = 4;
+            }
+
+        }
         gv_roleBoxText[lv_a][3] = StringExternal("Param/Value/D19448B8");
         SoundPlay(SoundLink("Carrier_Attack", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
     }
@@ -43381,10 +43422,35 @@ void gf_RTNeutralRoleText (int lp_player) {
         gv_roleBoxText[lv_a][1] = StringExternal("Param/Value/TXBOX1");
         gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/TXBOX2");
         if ((gv_roleOptions[3][32][0] == true)) {
-            gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310"));
+            gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXBOXINV"));
         }
 
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXBOX3"));
+        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXBOXNOIGN"));
+        if ((gv_roleOptions[3][32][3] == true)) {
+            gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXSTRIKE5"));
+        }
+        else {
+            if ((gv_roleOptions[3][32][2] == true)) {
+                gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXSTRIKE4"));
+            }
+            else {
+                gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXSTRIKE3"));
+            }
+
+        }
+
+        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXBOXGUESS"));
+        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXBOXFIXED"));
+        gv_txStrikes[lv_a] = 3;
+        if ((gv_roleOptions[3][32][3] == true)) {
+            gv_txStrikes[lv_a] = 5;
+        }
+        else {
+            if ((gv_roleOptions[3][32][2] == true)) {
+                gv_txStrikes[lv_a] = 4;
+            }
+
+        }
         gv_roleBoxText[lv_a][3] = StringExternal("Param/Value/D19448B8");
         SoundPlay(SoundLink("Carrier_Attack", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
     }
@@ -66048,6 +66114,9 @@ bool gt_Prefer_Func (bool testConds, bool runActions) {
 bool gt_TXGuess_Func (bool testConds, bool runActions) {
     int lv_p;
     string lv_s;
+    int lv_i;
+    int lv_j;
+    string lv_r;
 
     // Automatic Variable Declarations
 
@@ -66078,8 +66147,17 @@ bool gt_TXGuess_Func (bool testConds, bool runActions) {
     }
 
     lv_p = EventPlayer();
-    lv_s = StringReplaceWord(StringSub(EventChatMessage(false), 8, StringLength(EventChatMessage(false))), " ", "", c_stringReplaceAll, c_stringCase);
+    lv_s = StringReplaceWord(StringSub(EventChatMessage(false), 7, StringLength(EventChatMessage(false))), " ", "", c_stringReplaceAll, c_stringCase);
     lv_s = StringCase(lv_s, false);
+    if ((StringLength(lv_s) < 1)) {
+        if ((gv_txGuess[lv_p] != "")) {
+            gv_txGuess[lv_p] = "";
+            gf_CBSystemMessage(StringExternal("Param/Value/TXCANCELOK"), lv_p, lv_p, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+        }
+
+        return true;
+    }
+
     if ((gv_txStrikes[lv_p] <= 0)) {
         gf_CBSystemMessage(StringExternal("Param/Value/TXNOSTRIKE"), lv_p, lv_p, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
         return true;
@@ -66090,18 +66168,32 @@ bool gt_TXGuess_Func (bool testConds, bool runActions) {
         return true;
     }
 
-    if ((StringLength(lv_s) < 1)) {
+    lv_r = "";
+    lv_i = 1;
+    for ( ; (lv_i <= 5) ; lv_i += 1 ) {
+        lv_j = 1;
+        for ( ; (lv_j <= 32) ; lv_j += 1 ) {
+            if ((gv_roleNameInput[lv_i][lv_j] == lv_s)) {
+                lv_r = gv_roleNameArray[lv_i][lv_j];
+            }
+
+        }
+
+    }
+
+    if ((lv_r == "")) {
+        gf_CBSystemMessage(StringExternal("Param/Value/TXUNKNOWN"), lv_p, lv_p, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
         return true;
     }
 
     gv_txGuess[lv_p] = lv_s;
-    gf_CBSystemMessage(StringExternal("Param/Value/TXACK"), lv_p, lv_p, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    gf_CBSystemMessage((StringExternal("Param/Value/TXGUESSA") + StringToText(gv_name[gv_action[lv_p][0]]) + StringExternal("Param/Value/TXGUESSB") + StringToText(lv_r) + StringExternal("Param/Value/TXGUESSC")), lv_p, lv_p, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
     return true;
 }
 
 void gt_TXGuess_Init () {
     gt_TXGuess = TriggerCreate("gt_TXGuess_Func");
-    TriggerAddEventChatMessage(gt_TXGuess, c_playerAny, "-guess ", false);
+    TriggerAddEventChatMessage(gt_TXGuess, c_playerAny, "-guess", false);
 }
 
 void gt_Prefer_Init () {
