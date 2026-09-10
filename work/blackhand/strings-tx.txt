@@ -1,0 +1,22 @@
+// 天选者 (3/32) 文案
+Param/Value/TXNAME=<c val="FFD700">天选者</c>
+Param/Value/TXDESC=众神遗落人间的执行者，以天雷涤荡罪恶。<n/><n/><c val="BBDDFF">每晚选择一名玩家降下雷击，无视无敌和救治，最多三次。雷击生效前，你可以猜测目标的身份；若猜对，次日你无法被处死。</c><n/><n/><c val="AA9988">你在夜晚无法被杀死。</c>
+Param/Value/TXCRIME=非法闯入，谋杀
+Param/Value/TXBOX1=- 每晚选择一名玩家降下雷击，无视无敌和救治，最多三次。
+Param/Value/TXBOX2=- 雷击生效前，你可以输入 -guess 目标角色的拼音 猜测其身份；若猜对，次日你无法被处死。
+Param/Value/TXBOX3=<n/>- 你的雷击始终命中你所选的目标，无法被任何方式转移。<n/>- 天命不容处决：被投有罪时，将向全场揭露你的身份并把你放下来，当天你不能再被投票。
+Param/Value/TXBOX4=众神的怒火借你之手降落到人间，罪恶无处可逃。
+Param/Value/TXACK=你在心中默念对目标的猜测，结果将在雷击降临时揭晓。
+Param/Value/TXNOTGT=你今晚还没有选择雷击目标。
+Param/Value/TXGUESSOK=雷云中传来低语——你猜对了。明天你将受天命庇护，无法被处死。
+Param/Value/TXGUESSBAD=雷云中传来低语——你猜错了。
+Param/Value/TXSTRIKE=你降下了天雷。
+Param/Value/TXNOSTRIKE=你的雷击已经用尽。
+Param/Value/TXTGTDEAD=你的目标已经死了，雷击落空。
+Param/Value/TXHEAR=你听到头顶一声炸雷，一道白光直落人间……
+Param/Value/TXDEATH1=死者被一道天雷劈成了焦炭。
+Param/Value/TXDEATH2=死者浑身焦黑，死于雷击。
+Param/Value/TXDM=死者死于雷击。
+Param/Value/TXREV1=雷鸣炸响在审判台上空——
+Param/Value/TXREV2=竟是「天选者」！天命不容处决，众人把他从台上放了下来。
+Param/Value/TXSPARE=天选者今日受天命庇护，无法被审判。
