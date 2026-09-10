@@ -32,6 +32,7 @@ ALIAS = {
     '影武者': (3, 31),
     '观察者': (1, 31),
     '???': (8, 1),
+    '天选者': (3, 32),
 }
 
 # 池3 固定角色 → 中立子层（致命=默认；其余两集合来自随机槽 4/13、4/14 的选项清单）
@@ -48,6 +49,7 @@ SLOT_ALIAS = {
 
 # 随机槽(池4) → (层序, 层内序)。层: 1城镇 2黑手 3三合会 4中立致命 5中立邪恶 6中立温和
 SLOT_TIER = {
+    1: (7, 1),
     2: (1, 1), 6: (1, 2), 5: (1, 3), 4: (1, 4), 7: (1, 5), 8: (1, 6),
     3: (2, 1), 9: (2, 2), 10: (2, 3), 11: (2, 4),
     15: (3, 1), 16: (3, 2), 17: (3, 3), 18: (3, 4),
@@ -231,7 +233,7 @@ def gen_function(spec, slots, name_idx):
     out.append('    lv_role = "";')
     out.append('')
     out.append('    // Implementation')
-    out.append('    libNtve_gf_SetDialogItemText(gv_confirmationButtonItem[1], StringExternal("Param/Value/GCZJBTN"), PlayerGroupAll());')
+    out.append(f'    libNtve_gf_SetDialogItemText(gv_confirmationButtonItem[1], StringExternal("Param/Value/{spec.get("btn_key", "GCZJBTN")}"), PlayerGroupAll());')
     for k in ['C264FEA4', 'C1E1492C', 'FF2C2A34', 'FBD78287', '36EB4524']:
         out.append(f'    DialogControlAddItem(gv_rolesMenusItem[0], PlayerGroupAll(), StringExternal("Param/Value/{k}"));')
     for grp, keys in [(3, ['B4F7A9F6', 'F429FE99', 'E4DDE61D']),
@@ -269,7 +271,6 @@ def gen_function(spec, slots, name_idx):
     fill_start = tail_src.find('    gv_bankSaveStrings[0][0][0] = StringWord(lv_str[1], 1);')
     fill_end = tail_src.find('\n}\n', fill_start)
     out.append(tail_src[fill_start:fill_end + 3].rstrip())
-    out.append('}')
     return '\n'.join(out) + '\n'
 
 

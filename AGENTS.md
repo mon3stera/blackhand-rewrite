@@ -45,7 +45,7 @@
 
 - 链路：变体菜单 `gv_variantsMenuItem[0]` 第 N 项 → `gt_OSVariantsMenuChange_Func`（显示描述，**每个菜单项都要有分支，否则无说明且右下标签残留上一个变体名**）→ `gt_OSVariantsMenuConfirm_Func`（SelectedItem → `gv_variantSelection` 映射 + 末尾分发调 `gf_V*Options()`）→ V 函数（=OSActivateOptions 的预设变体：重建面板 + 填 `lv_category`/`lv_role` 槽位串 + `gf_VLoadSaveSlot(0,...)`）。
 - **槽位串语义**：`lv_category`/`lv_role` 按槽位空格分隔；槽位=「池 角色号」。**随机组槽 = category 4 + 随机池角色号**：4[2]=城镇随机、4[3]=黑手随机、4[4]=政府(zf)、4[5]=城镇调查、4[6]=保护、4[14]=中立温和、4[12]/4[13]=致命类。预设按人数逐档（15/14/13/12 人），≤11 人走拒绝提示分支。
-- **现有自加预设**：菜单第 31 项「烙印」（`BHYIN01`，原为悬挂未定义键）→ variant 30 → `gf_VE78399E58DB0`；第 32 项「捕风捉影」（`GCZBNAME`）→ variant 31 → `gf_VBFCZOptions`（15 人=侦探/观察者/4城镇随机/城镇调查/政府/保护/教父(2,2)/陪侍(2,3)/黑手随机/影武者(3,31)/女巫(3,4)/中立温和，14/13/12 人递减城镇随机）。女巫=3/4、教父=2/2、陪侍=2/3。
+- **现有自加预设**：菜单第 31 项「烙印」（`BHYIN01`，原为悬挂未定义键）→ variant 30 → `gf_VE78399E58DB0`；第 32 项「捕风捉影」（`GCZBNAME`）→ variant 31 → `gf_VBFCZOptions`（15 人=侦探/观察者/4城镇随机/城镇调查/政府/保护/教父(2,2)/陪侍(2,3)/黑手随机/影武者(3,31)/女巫(3,4)/中立温和，14/13/12 人递减城镇随机）。女巫=3/4、教父=2/2、陪侍=2/3。第 33 项「大审判」（`GCZJNAME`）→ variant 32 → `gf_VDSPOptions`；**第 34 项「随机：天谴」（`GCZTNAME`，天选者同款渐变 FFFFFF99-FFFF8800）→ variant 33 → `gf_VTQOptions`（shw133）**：锁定型四子变体 A-D，固定天选者(3,32)，D 档固定 医生+瘟疫散布者×2（瘟疫散布者=3/14，非温和层按致命排序）；开局白字广播条件追加 `gv_variant == "tq"`；锁定三件套（RoleManipulate 排除 / 预览选中 / 添加按钮禁用集）均已含 33。
 - **预设允许增删改角色的白名单**（???类变体如随机:血锈保持锁定）：①目录浏览白名单（`gt_OSMenus_Func`，6 处 `gv_variantSelection == 16)))` 结尾的变体串）②选中映射白名单（`gt_OSRoleSelect_Func`，5 处 `== 12)))` 结尾的变体串）。两者都需含新预设的 variantSelection；③**动作执行层排除集**：`gt_OSRoleManipulate` 的条件排除 {1,4,8,9,10,11,12,14}（管 item[3]添加/item[4]移除/上下移的**执行**）+ 预览列表选中处理（~86811）的 `!= 1`（选中点亮移除按钮）——**锁定型预设（???类）必须把 variantSelection 加进③和添加按钮禁用集**，只摘①②会像 shw85 那样仍可移除。
 - **注意**：预设再次点「采纳设定」会重新跑 fill 覆盖手动修改（原图语义）。
 
@@ -60,7 +60,7 @@ python3 tools/preset_gen.py work/presets/<名字>.json --selfcheck  # 与源码�
 
 - **规格**：`work/presets/*.json`，字段见 `work/presets/dashenpan.json`（大审判，生成器回归样板）。`fixed`=固定角色、`randoms`=[随机槽别名,数量]、`enable_overrides`=按子变体覆盖随机槽选项、`decrement`=人数递减时优先删的随机槽。
 - **角色名解析**：生成器每次运行时从 `CustomLogic.galaxy` + 基线 GameStrings 抽取 `gv_roleNameArray` 全表（含随机槽名），别名表 `ALIAS`/`SLOT_ALIAS` 在文件头部维护（影武者/观察者等非 hex 名称键的角色必须登记）。
-- **生成的函数体尾部**（VLoadSaveSlot 填充 + ??? 锁定覆写 + 选项禁用）从 `gf_VBFCZOptions` 原样克隆，与现行锁定机制保持同构；按钮文本键固定 `GCZJBTN`，换名改源码键或生成器常量。
+- **生成的函数体尾部**（VLoadSaveSlot 填充 + ??? 锁定覆写 + 选项禁用）从 `gf_VBFCZOptions` 原样克隆，与现行锁定机制保持同构；克隆尾已含函数收尾 `}`，生成器**不再**追加（shw133 曾因多一个 `}` 导致整体配平 -1，插入前必须 `count('{')==count('}')` 断言）。按钮文本键默认 `GCZJBTN`，规格里加 `"btn_key": "GCZTBTN"` 即可换。
 
 ### 随机槽使能串语义（lv_str[4]，实测解码）
 
