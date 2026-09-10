@@ -52764,6 +52764,8 @@ bool auto_gf_OSComputeOptions_TriggerFunc (bool testConds, bool runActions) {
     int lv_ll;
     int[16] lv_bhPreferSlot;
     bool[16] lv_bhReserved;
+    bool lv_bhOK;
+    int lv_bhP;
 
     // Automatic Variable Declarations
     const int auto167539B5_ae = 15;
@@ -52970,9 +52972,10 @@ bool auto_gf_OSComputeOptions_TriggerFunc (bool testConds, bool runActions) {
         if ((PlayerGroupHasPlayer(gv_tempPlayerGroup, lv_a) == true) && (gv_prefer[lv_a][0] != "")) {
             lv_b = 1;
             for ( ; lv_b <= gv_tempPlayers ; lv_b += 1 ) {
-                if ((gv_prefer[lv_a][0] == gv_roleNameInput[gv_semifinalRole[lv_b][1]][gv_semifinalRole[lv_b][0]])) {
+                if ((lv_bhReserved[lv_b] == false) && (gv_prefer[lv_a][0] == gv_roleNameInput[gv_semifinalRole[lv_b][1]][gv_semifinalRole[lv_b][0]])) {
                     lv_bhPreferSlot[lv_a] = lv_b;
                     lv_bhReserved[lv_b] = true;
+                    break;
                 }
 
             }
@@ -53060,14 +53063,38 @@ bool auto_gf_OSComputeOptions_TriggerFunc (bool testConds, bool runActions) {
                         if ((lv_ll < 250)) {
                             lv_ll += 1;
                             if ((gv_prefer[lv_a][0] != "")) {
-                                lv_zzz = false;
-                                lv_b = 0;
-                                for ( ; ( (autoD5AB48FF_ai >= 0 && lv_b <= autoD5AB48FF_ae) || (autoD5AB48FF_ai < 0 && lv_b >= autoD5AB48FF_ae) ) ; lv_b += autoD5AB48FF_ai ) {
-                                    if ((gv_prefer[lv_a][lv_b] == gv_roleNameInput[gv_semifinalRole[lv_x][1]][gv_semifinalRole[lv_x][0]])) {
-                                        lv_zzz = true;
+                                lv_bhOK = false;
+                                lv_b = 1;
+                                for ( ; lv_b <= gv_tempPlayers ; lv_b += 1 ) {
+                                    if ((lv_t[lv_b][0] == false)) {
+                                        lv_bhP = 0;
+                                        for ( ; lv_bhP <= 14 ; lv_bhP += 1 ) {
+                                            if ((gv_prefer[lv_a][lv_bhP] == gv_roleNameInput[gv_semifinalRole[lv_b][1]][gv_semifinalRole[lv_b][0]])) {
+                                                lv_bhOK = true;
+                                            }
+
+                                        }
+
                                     }
 
                                 }
+
+                                if ((lv_bhOK == true)) {
+                                    lv_zzz = false;
+                                    lv_b = 0;
+                                    for ( ; ( (autoD5AB48FF_ai >= 0 && lv_b <= autoD5AB48FF_ae) || (autoD5AB48FF_ai < 0 && lv_b >= autoD5AB48FF_ae) ) ; lv_b += autoD5AB48FF_ai ) {
+                                        if ((gv_prefer[lv_a][lv_b] == gv_roleNameInput[gv_semifinalRole[lv_x][1]][gv_semifinalRole[lv_x][0]])) {
+                                            lv_zzz = true;
+                                        }
+
+                                    }
+
+                                }
+
+                                else {
+                                    lv_ll += 250;
+                                }
+
                             }
                             else {
                                 lv_ll += 250;
