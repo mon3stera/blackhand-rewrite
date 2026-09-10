@@ -245,7 +245,15 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 
 **第 10 步：私密消息路由** —— 发给击杀/治疗目标的私息走 `gf_BHNotify`（目标非真实在线玩家=虚拟补位时改发 `gv_host`，solo 可见；真实玩家只发本人）。否则 solo 局里「只有音效没有文字」
 
-**第 11 步：静态校验 + 打包部署** —— 逐函数落点 + 配平 + 条数校验 → `sc2pack` 打新文件名 → scp → 游戏内验证（帮助面板、对局内角色卡、`-prefer`、探员线索、死亡信息、残局判定）
+**第 11 步：静态校验 + 打包部署** —— 逐函数落点 + 配平 + 条数校验 → 打新文件名 → scp → 游戏内验证（帮助面板、对局内角色卡、`-prefer`、探员线索、死亡信息、残局判定）
+
+### 打包管线（shw96 事故沉淀）
+
+**boot2 系列地图只能用「复制上一版 + `sc2map.write` 直写 CustomLogic.galaxy」，绝不能用 `tools/sc2pack.py`**（shw96 事故：误用 sc2pack 后触发器读到旧脚本，游戏报「脚本读取失败：无法找到函数」+ 一串 UI layout 红字）。两条管线的区别：
+
+- **boot2 系（黑手：升温）**：包内结构 = 基线 `Triggers` + 2.7KB `MapScript.galaxy`（只含 `include "TriggerLibs/NativeLib"` 和 `include "CustomLogic"`）+ 完整 `CustomLogic.galaxy` 成员。**触发器链引用的是 CustomLogic 里的函数**。打包 = `shutil.copyfile(上一版地图, 新地图)` + `sc2map.write(新地图, 'CustomLogic.galaxy', 源码bytes)`；无新文案时连 GameStrings 都不用动（上一版已含全部累积键）。
+- **sc2pack.py（rogue 等独立图用）**：把给定 galaxy **替换进 MapScript.galaxy 并剥触发器**——boot2 的触发器函数不在手写脚本里，替换后 MapScript 缺触发器函数、CustomLogic 还是旧版，必炸。
+- 打包后回读校验目标是包内 **`CustomLogic.galaxy` 成员**（不是 MapScript）；同时确认 `Triggers` 成员仍在、MapScript 仍含 `include "CustomLogic"`。
 
 ### Galaxy 语言层陷阱（生成代码惯例）
 
