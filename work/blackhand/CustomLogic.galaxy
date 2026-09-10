@@ -89501,7 +89501,13 @@ void gf_ESShadowKill (int lp_player, int lp_killer) {
 
                 gv_deathDesc[lv_target] = true;
                 if ((lv_c == false)) {
-                    lv_x = RandomInt(1, 3);
+                    if ((gv_e5BC80E585B3[lp_killer] == true)) {
+                        lv_x = RandomInt(1, 3);
+                    }
+                    else {
+                        lv_x = RandomInt(4, 5);
+                    }
+
                     if ((lv_x == 1)) {
                         gv_deathText[lv_target] = (gv_deathText[lv_target] + StringExternal("Param/Value/SHWDEATH1"));
                     }
@@ -89512,6 +89518,14 @@ void gf_ESShadowKill (int lp_player, int lp_killer) {
 
                     if ((lv_x == 3)) {
                         gv_deathText[lv_target] = (gv_deathText[lv_target] + StringExternal("Param/Value/SHWDEATH3"));
+                    }
+
+                    if ((lv_x == 4)) {
+                        gv_deathText[lv_target] = (gv_deathText[lv_target] + StringExternal("Param/Value/SHWDEATH4"));
+                    }
+
+                    if ((lv_x == 5)) {
+                        gv_deathText[lv_target] = (gv_deathText[lv_target] + StringExternal("Param/Value/SHWDEATH5"));
                     }
 
                 }
