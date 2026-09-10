@@ -4790,6 +4790,16 @@ void gf_InitializeVariables () {
     gv_roleInvestigatorArray[3][12][1] = gv_investigatorE585ACE585B1E59CBAE689802;
     gv_e78AAFE7BDAAE58FAFE883BD[3][12] = StringExternal("Param/Value/619149CC");
     gv_e78AAFE7BDAAE58FAFE883BD[3][31] = StringExternal("Param/Value/SHWCRIME");
+    gv_roleNameArray[3][13] = StringExternal("Param/Value/1963A32D");
+    gv_roleDescriptionArray[3][13] = StringExternal("Param/Value/9510AB12");
+    gv_roleInvestigatorArray[3][13][0] = gv_investigatorE588A4E696ADE58A9B1;
+    gv_roleInvestigatorArray[3][13][1] = gv_investigatorE588A4E696ADE58A9B2;
+    gv_roleOptionExists[3][13][1] = true;
+    gv_roleOptionsImportant[3][13][1] = 2;
+    gv_roleOptions[3][13][1] = true;
+    gv_roleOptionsText[3][13][1] = StringExternal("Param/Value/04B49A5F");
+    gv_roleOptions[3][13][10] = true;
+    gv_e78AAFE7BDAAE58FAFE883BD[3][13] = StringExternal("Param/Value/DBSCRIME");
     gv_roleOptionExists[3][12][0] = true;
     gv_roleOptionExists[3][12][1] = true;
     gv_roleOptionExists[3][12][2] = true;
@@ -15896,7 +15906,7 @@ int gf_CheckEnd () {
         }
 
     }
-    if ((PlayerGroupCount(gv_alivePlayers) == 2) && ((lv_x[2] + lv_x[6] + lv_x[14] + lv_x[24]) >= 1) && ((lv_x[1] + lv_x[15]) >= 1)) {
+    if ((PlayerGroupCount(gv_alivePlayers) == 2) && ((lv_x[2] + lv_x[6] + lv_x[14] + lv_x[24] + lv_x[18]) >= 1) && ((lv_x[1] + lv_x[15]) >= 1)) {
         if ((lv_x[6] >= 1)) {
             return 8;
         }
@@ -15912,10 +15922,13 @@ int gf_CheckEnd () {
         if ((lv_x[24] >= 1)) {
             return 16;
         }
+        if ((lv_x[18] >= 1)) {
+            return 16;
+        }
 
     }
 
-    if ((PlayerGroupCount(gv_alivePlayers) == 2) && (lv_x[0] == 0) && (lv_x[1] == 0) && (lv_x[15] == 0) && (lv_x[3] == 0) && (lv_x[4] == 0) && (lv_x[5] == 0) && (lv_x[7] == 0) && (lv_x[8] == 0) && (lv_x[9] == 0) && (lv_x[12] == 0) && (lv_x[13] == 0) && (lv_x[16] == 0) && (lv_x[17] == 0) && (lv_x[19] == 0) && (lv_x[20] == 0) && (lv_x[21] == 0) && (lv_x[22] == 0) && (lv_x[23] == 0) && ((lv_x[2] + lv_x[6] + lv_x[14] + lv_x[24]) == 2)) {
+    if ((PlayerGroupCount(gv_alivePlayers) == 2) && (lv_x[0] == 0) && (lv_x[1] == 0) && (lv_x[15] == 0) && (lv_x[3] == 0) && (lv_x[4] == 0) && (lv_x[5] == 0) && (lv_x[7] == 0) && (lv_x[8] == 0) && (lv_x[9] == 0) && (lv_x[12] == 0) && (lv_x[13] == 0) && (lv_x[16] == 0) && (lv_x[17] == 0) && (lv_x[19] == 0) && (lv_x[20] == 0) && (lv_x[21] == 0) && (lv_x[22] == 0) && (lv_x[23] == 0) && ((lv_x[2] + lv_x[6] + lv_x[14] + lv_x[24] + lv_x[18]) == 2)) {
         if ((lv_x[6] >= 1)) {
             return 8;
         }
@@ -15929,6 +15942,9 @@ int gf_CheckEnd () {
         }
 
         if ((lv_x[24] >= 1)) {
+            return 16;
+        }
+        if ((lv_x[18] >= 1)) {
             return 16;
         }
 
@@ -16096,7 +16112,7 @@ int gf_CheckEnd () {
     }
 
     if ((((lv_x[10] == 2) && (gv_dayOver == false)) || (gv_tieTicker >= 7))) {
-        if (((((gv_roleOptions[1][1][1] == false) || (lv_x[11] == 0)) && ((lv_x[1] + (lv_x[5] + (lv_x[16] + (lv_x[17] + lv_x[21])))) < lv_x[0]) && ((lv_x[15] + (lv_x[5] + (lv_x[16] + (lv_x[17] + lv_x[21])))) < lv_x[0])) || ((gv_roleOptions[1][1][1] == true) && (lv_x[11] > 0) && ((lv_x[1] + (lv_x[5] + (lv_x[16] + (lv_x[17] + lv_x[21])))) <= lv_x[0]) && ((lv_x[15] + (lv_x[5] + (lv_x[16] + (lv_x[17] + lv_x[21])))) <= lv_x[0]))) && ((lv_x[2] + (lv_x[5] + (lv_x[16] + (lv_x[17] + lv_x[21])))) < lv_x[0]) && ((lv_x[6] + (lv_x[5] + (lv_x[16] + (lv_x[17] + lv_x[21])))) < lv_x[0]) && ((lv_x[13] + lv_x[24] + (lv_x[5] + (lv_x[16] + lv_x[17]))) < lv_x[0]) && ((lv_x[14] + (lv_x[5] + (lv_x[16] + (lv_x[17] + lv_x[21])))) < lv_x[0]) && ((lv_x[18] + lv_x[24] + (lv_x[5] + (lv_x[16] + (lv_x[17] + lv_x[21])))) < lv_x[0]) && (lv_x[0] > 0)) {
+        if (((((gv_roleOptions[1][1][1] == false) || (lv_x[11] == 0)) && ((lv_x[1] + (lv_x[5] + (lv_x[16] + (lv_x[17] + lv_x[21])))) < lv_x[0]) && ((lv_x[15] + (lv_x[5] + (lv_x[16] + (lv_x[17] + lv_x[21])))) < lv_x[0])) || ((gv_roleOptions[1][1][1] == true) && (lv_x[11] > 0) && ((lv_x[1] + (lv_x[5] + (lv_x[16] + (lv_x[17] + lv_x[21])))) <= lv_x[0]) && ((lv_x[15] + (lv_x[5] + (lv_x[16] + (lv_x[17] + lv_x[21])))) <= lv_x[0]))) && ((lv_x[2] + (lv_x[5] + (lv_x[16] + (lv_x[17] + lv_x[21])))) < lv_x[0]) && ((lv_x[6] + (lv_x[5] + (lv_x[16] + (lv_x[17] + lv_x[21])))) < lv_x[0]) && ((lv_x[13] + lv_x[24] + lv_x[18] + (lv_x[5] + (lv_x[16] + lv_x[17]))) < lv_x[0]) && ((lv_x[14] + (lv_x[5] + (lv_x[16] + (lv_x[17] + lv_x[21])))) < lv_x[0]) && ((lv_x[18] + lv_x[24] + (lv_x[5] + (lv_x[16] + (lv_x[17] + lv_x[21])))) < lv_x[0]) && (lv_x[0] > 0)) {
             if ((gv_roleOptions[1][1][1] == true) && (lv_x[11] == lv_x[0])) {
                 gv_specialCaseFlag[0] = 1;
             }
@@ -84338,7 +84354,7 @@ bool gt_ASE5AEA1E69FA5E7A1AEE5AE9A_Func (bool testConds, bool runActions) {
     }
 
     if ((gv_e5AEA1E69FA5E998B5E890A5E98089E68BA9[EventPlayer()] == 3) && (gv_e5AEA1E69FA5E8A792E889B2E98089E68BA9[EventPlayer()] >= 18)) {
-        lv_b += 12;
+        lv_b += 13;
     }
 
     if ((gv_e5AEA1E69FA5E998B5E890A5E98089E68BA9[EventPlayer()] == 2) && (gv_e5AEA1E69FA5E8A792E889B2E98089E68BA9[EventPlayer()] >= 12)) {
@@ -84349,9 +84365,8 @@ bool gt_ASE5AEA1E69FA5E7A1AEE5AE9A_Func (bool testConds, bool runActions) {
         lv_b += 2;
     }
 
-    if ((gv_e5AEA1E69FA5E998B5E890A5E98089E68BA9[EventPlayer()] == 3) && (gv_e5AEA1E69FA5E8A792E889B2E98089E68BA9[EventPlayer()] >= 13)) {
-        lv_b += 1;
-    }
+    // shw94: 3/13 堕落审判者已起名，审查页跳过13的旧偏移规则删除（>=18 偏移改为 +13 直达 3/31）
+
 
     if ((gv_roleNameArray[lv_a][lv_b] != null)) {
         if ((gv_action[EventPlayer()][0] != 0)) {
@@ -86399,6 +86414,9 @@ bool gt_OSRoleSelect_Func (bool testConds, bool runActions) {
             if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 17)) {
                 gv_roleSelection = 31;
             }
+            if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 18)) {
+                gv_roleSelection = 13;
+            }
 
         }
 
@@ -86807,6 +86825,7 @@ bool gt_OSMenus_Func (bool testConds, bool runActions) {
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/72418A81") + gv_roleNameArray[gv_roleCategory][16] + StringExternal("Param/Value/23D0FD71")));
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/D89BFDF1") + gv_roleNameArray[gv_roleCategory][17] + StringExternal("Param/Value/258B2E40")));
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/D89BFDF1") + gv_roleNameArray[gv_roleCategory][31] + StringExternal("Param/Value/258B2E40")));
+                DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/D89BFDF1") + gv_roleNameArray[gv_roleCategory][13] + StringExternal("Param/Value/258B2E40")));
             }
 
         }
