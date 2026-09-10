@@ -1,7 +1,7 @@
 // 天选者 (3/32) 文案
 Param/Value/TXNAME=<c val="6BDED2">天选者</c>
 Param/Value/TXDESC=众神遗落人间的执行者，以天雷涤荡罪恶。<n/><n/><c val="BBDDFF">每晚选择一个人降下雷击。雷击生效前，你可以输入 -guess 猜测目标的身份；若猜对，次日当你被判处有罪时，将向全场揭示你的身份并被释放。</c><n/><n/><c val="AA9988">你在夜晚无法被杀死。</c>
-Param/Value/TXCRIME=非法闯入，谋杀
+Param/Value/TXCRIME=谋杀
 Param/Value/TXBOX1=每晚选择一个人降下雷击。
 Param/Value/TXBOX2=- 雷击生效前，你可以输入 -guess 目标角色的拼音 猜测其身份；输入 -guess（不带参数）取消猜测。
 Param/Value/TXBOXINV=- 你拥有夜间无敌。
