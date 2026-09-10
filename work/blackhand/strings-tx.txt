@@ -1,5 +1,5 @@
 // 天选者 (3/32) 文案
-Param/Value/TXNAME=<c val="5CCBBF">天选者</c>
+Param/Value/TXNAME=<c val="6BDED2">天选者</c>
 Param/Value/TXDESC=众神遗落人间的执行者，以天雷涤荡罪恶。<n/><n/><c val="BBDDFF">每晚选择一名玩家降下雷击，无视无敌和救治，最多三次。雷击生效前，你可以猜测目标的身份；若猜对，次日你无法被处死。</c><n/><n/><c val="AA9988">你在夜晚无法被杀死。</c>
 Param/Value/TXCRIME=非法闯入，谋杀
 Param/Value/TXBOX1=- 每晚选择一名玩家降下雷击，无视无敌和救治，最多三次。
