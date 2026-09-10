@@ -214,7 +214,7 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 **第 3 步：角色卡分支（两份，必须逐字段一致）**
 - `gf_RTTownRoleText` / `gf_RTNeutralRoleText`（按池放）各加 `if (((gv_roles[lv_a][1] == 池) && (gv_roles[lv_a][0] == 号)))` 分支
 - 阵营行 `[0]` 照抄同类：中立致命 = `CE62498E("无") + lv_t[2] + D7C97124(" (致命)")`——影武者曾因 NeutralRoleText 副本漏了「无」前缀，卡片只显示「(致命)」
-- `[1]` 能力、`[2]` 特性、`[4]` 目标、`[6]` winList 自动；**多行追加必须用带 `<n/>` 的键**（`4467A310` 带换行、`1045F9FD` 不带会拼在同一行）
+- `[1]` 能力、`[2]` 特性、`[4]` 目标、`[6]` winList 自动；**多行追加时换行写进各自键内容开头（`<n/>- …`）**。**`4467A310` 不是通用换行键（shw124 事故）——它是影武者夜间无敌整行键，内容=`<n/>- 你拥有夜间无敌。`（`1045F9FD`=同一句不带换行版）**；当它被当换行键连用时每行都会多挂一句「你拥有夜间无敌」。追加自己的特性行 = 键内容自带 `<n/>` 前缀，然后 `+ 一个键` 直接拼。
 
 **第 4 步：帮助面板（角色参考卡页）**
 - `gf_MakeHelpMenu` 的角色号循环上界 ≥ 新角色号（原图从 `gv_townMax`=30 起往下数）+ 第 1 步的 `[10]` 标志
@@ -375,4 +375,5 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 - **循环上界放宽前必须确认循环体访问的数组身份（shw115 事故）**：Batch A 曾把 4 处 `auto*_ae = 31→32` 一律当角色循环放宽，实际 `auto3508CF23`(gf_OSLoadBase64)/`autoD02CB81C`(gf_OSInitializeOptionsScreen)/`autoAA8D2539`(gf_OSCloseOptionsScreen)/`auto74E062BB`(gt_OSVariantsMenuConfirm) 遍历的是 **`gv_optionsPanelItem`（`int[32]`，最大下标 31 的面板按钮数组）**——[32] 越界 ScriptError 打断选项屏初始化，整个自设/变体选择框全部消失。修正=回退 31（shw115）。教训：**改上界前先看循环体第一行访问的数组名和声明维度**（`gv_optionsPanelItem[32]`、`gv_blacklist[16][26]`、`gv_roleChance[9][41]`），角色数组（roleNameArray 等 [6][41]）才能放宽。另 Init2 的 `auto6D231E76` 是黑名单分词槽循环（写 `gv_blacklist[..][lv_b]`，维度 26），31 本就越界属基线噪声，与角色号无关，勿动。
 - **克隆卡片分支时锚点必须含分支闭合（shw117 事故）**：Batch A 把 (3,32) 角色卡分支插在影武者 (3,31) 分支**内部**（SHWBOX5 条件之后、SHWBOX7 无条件尾巴之前）——外层 if 要求角色 31、内层要求 32 永远互斥，分支成死代码，角色卡全空但配平/条目数校验都发现不了（嵌套不破坏计数）。**插入角色分支的正确锚点 = 影武者分支的 `SoundPlay(SoundLink("Hercules_What"...));` + 其闭合 `}` 之后**；校验要打印插入点前后各 10 行确认「上一行的 `}` 闭合的是影武者分支」。
 - **数量型文案 + 选项开关（shw120）**：文案里的数字随开关变化时，不要写死一个键——按选项分支选 3/4/5 三个键（卡片）或 `IntToText` 组装（夜 tip「你有X次…」）。数值本体（雷击次数 `gv_txStrikes`）在**角色卡分支里按选项赋值**（卡片函数游戏开始时每玩家执行一次，选项此时已定稿；帮助面板以 lv_a=0 调用同函数，写 `[0]` 无害）。`-guess` 无参数=取消：聊天注册只挂 `"-guess"`（不带尾空格），解析 `StringSub(msg, 7, …)` 空串即取消——一个注册同时覆盖带参与不带参，避免双事件重复触发。全场红字=键内嵌 `<c val="FF0000">`、`gf_CBSystemMessage` 的 Color 参数保持 `(0,0,0)`（与原图 90AC4EBA 杀人广播一致）。
+- **特性行换行规范（shw124 事故）**：原图没有「纯换行」共用键。给 `gv_roleBoxText[][2]` 追加多行时，把 `<n/>` 写进**每个键内容的开头**，代码侧逐键 `+ StringExternal(...)` 即可；不要复用任何原图键当换行前缀（先解包确认键内容再用——`4467A310`/`1045F9FD` 是「你拥有夜间无敌」行，被误当换行键后每行开头都会重复这句）。
 - **`gv_roleNameArray` 元素是 `text` 不是 `string`（shw123 事故）**：临时变量接收 `roleNameArray[..][..]`（StringExternal 返回 text）必须声明 `text`，否则脚本读取失败「不正确的类型（不允许进行隐式强制转换）」并红屏。配套规则：text 判空用 `== null`（不能用 `== ""`）、初始化 `lv_r = null;`、拼接直接 `+ lv_r +`；`StringToText()` 只用于 string→text 转换。同样注意 `gv_roleNameInput` 是 string（拼音比对不受影响）。

@@ -41797,25 +41797,25 @@ void gf_RTTownRoleText (int lp_player) {
         gv_roleBoxText[lv_a][1] = StringExternal("Param/Value/TXBOX1");
         gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/TXBOX2");
         if ((gv_roleOptions[3][32][0] == true)) {
-            gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXBOXINV"));
+            gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310"));
         }
 
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXBOXNOIGN"));
+        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXBOXNOIGN"));
         if ((gv_roleOptions[3][32][3] == true)) {
-            gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXSTRIKE5"));
+            gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXSTRIKE5"));
         }
         else {
             if ((gv_roleOptions[3][32][2] == true)) {
-                gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXSTRIKE4"));
+                gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXSTRIKE4"));
             }
             else {
-                gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXSTRIKE3"));
+                gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXSTRIKE3"));
             }
 
         }
 
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXBOXGUESS"));
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXBOXFIXED"));
+        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXBOXGUESS"));
+        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXBOXFIXED"));
         gv_txStrikes[lv_a] = 3;
         if ((gv_roleOptions[3][32][3] == true)) {
             gv_txStrikes[lv_a] = 5;
@@ -43413,25 +43413,25 @@ void gf_RTNeutralRoleText (int lp_player) {
         gv_roleBoxText[lv_a][1] = StringExternal("Param/Value/TXBOX1");
         gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/TXBOX2");
         if ((gv_roleOptions[3][32][0] == true)) {
-            gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXBOXINV"));
+            gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310"));
         }
 
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXBOXNOIGN"));
+        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXBOXNOIGN"));
         if ((gv_roleOptions[3][32][3] == true)) {
-            gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXSTRIKE5"));
+            gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXSTRIKE5"));
         }
         else {
             if ((gv_roleOptions[3][32][2] == true)) {
-                gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXSTRIKE4"));
+                gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXSTRIKE4"));
             }
             else {
-                gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXSTRIKE3"));
+                gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXSTRIKE3"));
             }
 
         }
 
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXBOXGUESS"));
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310") + StringExternal("Param/Value/TXBOXFIXED"));
+        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXBOXGUESS"));
+        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXBOXFIXED"));
         gv_txStrikes[lv_a] = 3;
         if ((gv_roleOptions[3][32][3] == true)) {
             gv_txStrikes[lv_a] = 5;
