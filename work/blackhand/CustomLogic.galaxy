@@ -33601,7 +33601,18 @@ void gf_ESThunderKill (int lp_target, int lp_killer) {
 
         }
         else {
-            gv_deathText[lv_target] = (gv_deathText[lv_target] + StringExternal("Param/Value/TXDEATH1"));
+            // shw173：首次死亡描述也随机二选一。
+            // 原先是固定 TXDEATH1，而玩家绝大多数是"第一次死"，等于第二种文案永远看不到
+            //（RandomInt 本身没问题：上界是含的，原图用它做 1-based 玩家下标 PlayerGroupPlayer(g, RandomInt(1, gv_tempPlayers))）。
+            lv_x = RandomInt(1, 2);
+            if ((lv_x == 1)) {
+                gv_deathText[lv_target] = (gv_deathText[lv_target] + StringExternal("Param/Value/TXDEATH1"));
+            }
+
+            if ((lv_x == 2)) {
+                gv_deathText[lv_target] = (gv_deathText[lv_target] + StringExternal("Param/Value/TXDEATH2"));
+            }
+
         }
         gv_deathDesc[lv_target] = true;
         if ((gv_nightSequence == true)) {

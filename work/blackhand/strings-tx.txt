@@ -28,7 +28,7 @@ Param/Value/TXUNKNOWN=<s val="ModLeftSize16">没有找到这个角色的拼音�
 Param/Value/TXGUESSA=<s val="ModLeftSize16">你猜测「
 Param/Value/TXGUESSB=」是个「
 Param/Value/TXGUESSC=」。</s>
-Param/Value/TXHEAR=<s val="ModLeftSize16"><c val="FF0000">天选者对罪人降下了神罚……</c></s>
+Param/Value/TXHEAR=<s val="ModLeftSize16"><c val="FF0000">天选者对罪人降下了神罚...</c></s>
 Param/Value/TXDEATH1=一道撕裂夜空的电光落下，死者甚至没能留下全尸。
 Param/Value/TXDEATH2=死者触怒了天威，在苍穹落雷中灰飞烟灭。
 Param/Value/TXDM=<s val="ModLeftSize16">死者死于雷击。</s>
