@@ -10,4 +10,12 @@
          故中文回落改由脚本按字符白名单分流，见 gf_BHNameLatinOnly / gf_BHItalicize -->
     <Constant name="SHWItalicLora" val="Fonts\Lora-Italic.ttf" />
     <Style name="ModItalicLora" font="#SHWItalicLora" />
+    <!-- shw164 试验：PT Serif Italic（用户指定对比）与 1.2× 放大版（只把 unitsPerEm 改小，
+         同字号下字形整体放大 1.2 倍；两份都带 Reserved Font Name，放大版已按 OFL 改名） -->
+    <Constant name="SHWItalicPT" val="Fonts\PT_Serif-Italic.ttf" />
+    <Style name="ModItalicPT" font="#SHWItalicPT" />
+    <Constant name="SHWItalicLoraBig" val="Fonts\BH-Serif-Big.ttf" />
+    <Style name="ModItalicLoraBig" font="#SHWItalicLoraBig" />
+    <Constant name="SHWItalicPTBig" val="Fonts\BH-PTSerif-Big.ttf" />
+    <Style name="ModItalicPTBig" font="#SHWItalicPTBig" />
 </StyleFile>

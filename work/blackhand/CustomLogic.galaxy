@@ -90802,12 +90802,14 @@ bool gt_BHItalicTest_Func (bool testConds, bool runActions) {
     }
 
     gf_CBSystemMessage(StringToText("A-<i>italic Italic 斜体测试</i>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    gf_CBSystemMessage(StringToText("B-<s val=\"ModItalic\">italic Italic 斜体测试</s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    gf_CBSystemMessage(StringToText("C-<s val=\"ModItalic2\">italic Italic 斜体测试</s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    // shw163：斜体两路自检（都包在 24px 容器里，顺便验字号是否跟随容器）
-    gf_CBSystemMessage((StringToText("<s val=\"ModCenterSize24Bold\">拉丁名斜体(应为Lora衬线)：") + StringToText(gf_BHItalicize("<i>Abc</i>")) + StringToText("</s>")), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    gf_CBSystemMessage((StringToText("<s val=\"ModCenterSize24Bold\">中文名斜体(应为自带字体)：") + StringToText(gf_BHItalicize("<i>影缝</i>")) + StringToText("</s>")), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    gf_CBSystemMessage((StringToText("<s val=\"ModCenterSize24Bold\">24px容器里的你的名字：") + StringToText(gv_name[EventPlayer()]) + StringToText("</s>")), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
+    // shw164：按卡面标题的真实构图（24px 粗体 + 角色名 + 名字）对比四种斜体字面
+    gf_CBSystemMessage(StringToText("<s val=\"ModLeftSize24Bold\">24px·① Lora：天选者 - <s val=\"ModItalicLora\">Anon Chihaya</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
+    gf_CBSystemMessage(StringToText("<s val=\"ModLeftSize24Bold\">24px·② PT衬线：天选者 - <s val=\"ModItalicPT\">Anon Chihaya</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
+    gf_CBSystemMessage(StringToText("<s val=\"ModLeftSize24Bold\">24px·③ Lora放大1.2：天选者 - <s val=\"ModItalicLoraBig\">Anon Chihaya</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
+    gf_CBSystemMessage(StringToText("<s val=\"ModLeftSize24Bold\">24px·④ PT放大1.2：天选者 - <s val=\"ModItalicPTBig\">Anon Chihaya</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
+    gf_CBSystemMessage(StringToText("<s val=\"ModLeftSize20Bold\">20px 面板：①<s val=\"ModItalicLora\">Anon Chihaya</s> ②<s val=\"ModItalicPT\">Anon Chihaya</s> ③<s val=\"ModItalicLoraBig\">Anon Chihaya</s> ④<s val=\"ModItalicPTBig\">Anon Chihaya</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
+    gf_CBSystemMessage(StringToText("<s val=\"ModLeftSize20Bold\">16px 公屏：①<s val=\"ModItalicLora\">Anon Chihaya</s> ②<s val=\"ModItalicPT\">Anon Chihaya</s> ③<s val=\"ModItalicLoraBig\">Anon Chihaya</s> ④<s val=\"ModItalicPTBig\">Anon Chihaya</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
+    gf_CBSystemMessage((StringToText("<s val=\"ModLeftSize20Bold\">你当前的名字：") + StringToText(gv_name[EventPlayer()]) + StringToText("</s>")), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
     return true;
 }
 
