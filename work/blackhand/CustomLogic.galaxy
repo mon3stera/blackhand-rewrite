@@ -33591,6 +33591,11 @@ void gf_ESThunderKill (int lp_target, int lp_killer) {
         }
         gv_deathDesc[lv_target] = true;
         if ((gv_nightSequence == true)) {
+            // shw168：神罚红字之前先起雷声、再落高阶圣堂武士的语音（与影武者夜间 DarkTemplar_What → DarkTemplar_Attack 同一套写法）
+            SoundPlay(SoundLink("Ambience_Thunder_OneShot", -1), PlayerGroupAll(), 100.0, 0.0);
+            Wait(RandomFixed(1.0, 1.4), c_timeGame);
+            SoundPlay(SoundLink("HighTemplar_What", -1), PlayerGroupAll(), 100.0, 0.0);
+            Wait(RandomFixed(1.6, 2.0), c_timeGame);
             autoTXHEAR_g = PlayerGroupAll();
             autoTXHEAR_var = -1;
             while (true) {
