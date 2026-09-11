@@ -37,3 +37,4 @@ Param/Value/TXSPARE=<s val="ModLeftSize16">天选者今日受天命庇护，无�
 Param/Value/TXGOD1=你的洞察获得了神明的认可。
 Param/Value/TXGOD2=你成功洞悉了凡人的罪过，众神给予你一次额外的雷击机会。
 Param/Value/TXBOXGOD=<n/>- 猜对两次身份，众神将赐予你一次额外的雷击机会（整局最多一次）。
+Param/Value/TXCARD=<c val="FFB41E">

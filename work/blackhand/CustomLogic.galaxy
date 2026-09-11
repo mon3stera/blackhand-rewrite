@@ -6577,6 +6577,17 @@ void gf_MakeHelpMenu () {
                             libNtve_gf_SetDialogItemColor(gv_roleHelpPanelItem[lv_x][0], Color(50.20, 50.20, 50.20), PlayerGroupAll());
                         }
 
+                        // shw146：自加中立角色补上帮助面板卡片底色 + 首字母着色（原图链只写到角色 16，>16 会保持创建色=白）
+                        if ((lv_role == 31)) {
+                            lv_t[5] = StringExternal("Param/Value/SHWCARD");
+                            libNtve_gf_SetDialogItemColor(gv_roleHelpPanelItem[lv_x][0], Color(75.29, 75.29, 75.29), PlayerGroupAll());
+                        }
+
+                        if ((lv_role == 32)) {
+                            lv_t[5] = StringExternal("Param/Value/TXCARD");
+                            libNtve_gf_SetDialogItemColor(gv_roleHelpPanelItem[lv_x][0], Color(100.00, 70.59, 11.76), PlayerGroupAll());
+                        }
+
                         libNtve_gf_CreateDialogItemLabel(gv_roleHelpPanel, 36, 24, c_anchorLeft, ((30 * lv_x) - 3), 2, (lv_t[5] + StringToText(StringCase(StringSub(gv_roleNameInput[lv_category][lv_role], 1, 1), true)) + StringExternal("Param/Value/01EDEAB5")), ColorWithAlpha(0,0,0,0), false, 0.0);
                         gv_roleHelpPanelItem[lv_x][1] = DialogControlLastCreated();
                         libNtve_gf_SetDialogItemRenderPriority(gv_roleHelpPanelItem[lv_x][1], 700, PlayerGroupAll());
