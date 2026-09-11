@@ -165,7 +165,7 @@ python3 tools/boot2_build.py --out work/boot2-<name>.SC2Map      # 八件套 + �
 
 - **凡是「手工塞进当次产物」的资源都会在下次打包时静默消失**（斜体样式 shw88–153、胜利图 shw100–168 都栽在这里）：任何自加资源必须登记进打包管线 + 回读断言，不能只 `sc2map.write` 一次。
 - **编辑器另存过的图不能直接玩 / 发布**（2026-09-12 实证）：编辑器保存会把包内 `BankList.xml` 重写成引擎自带的 5 条，**丢掉 `MBank13` / `key` 声明 → 每局清档**（与 shw137 同源）。用户在编辑器里改完地图信息后的正确流程：① `scp` 把图拉回来 ② **只注入元数据成员**（`DocumentHeader`、`DocumentInfo`、`DocumentInfo.version`、zhCN `GameStrings.txt`；`(attributes)` 是 MPQ 特殊成员，`mpqtool replace` 写不进去、报 `SFileAddFileEx err 10003`，实测只有二进制噪声、可跳过）③ 再跑一次 `boot2_build.py`（第 ⑧ 件把 BankList 写回）④ 部署新文件名。
-  - **不要拿编辑器存出来的整图当基线**：它已含全部自加资源，再打包会重复写入，包体从 16.4 MB 虚胖到 18.2 MB（无重名成员，纯体积浪费）。
+  - **编辑器另存的整图可以直接当基线**（shw184 起）：打包器写成员前先比字节、相同就跳过（`put()`），实测只比输入多 277 字节。旧结论「会虚胖 1.8 MB」已随 shw183 的内容比较失效。**游戏属性/隐藏属性只能靠这条路**：它们在 XML 成员 `Attributes`（`<AttributeHidden Namespace="999" Id="…"/>`）与二进制 `(attributes)` 里，后者 StormLib 写不了（名字以 `(` 开头一律 `SFileAddFileEx err 10003`）。
   - 注入元数据时先比对 `DocumentHeader` 的可读串差异，确认**只有 `DocInfo/PatchNote*` 与 `DocInfo/Desc*` 变化**（变体、依赖、玩家槽位未动）再落盘。
 - 胜利图出图规格：732×376（系命人 377）×24bit 未压缩无 mipmap，文件长 = 128 字节头 + w×h×3；头 128 字节在 732×376 各图间完全一致，可直接复用（`data/*.dds` + 同名 PNG 源文件留档）。**像素必须按 BGR 存放**（DDS 的 mask 是小端 DWORD，24bit 打包内存序为 B,G,R）——写成 RGB 会让红蓝互换（金色→蓝色、血红→蓝、红金小丑帽→紫，shw169 事故）。出图走 `python3 tools/png2windds.py <源图.png> <输出.dds>`，不要手搓 `tobytes()`。
 - **字节序验证必须用有颜色的参照图**：灰度/单色图（作者的 `WinPlaguerReal.dds` 是灰字）分不出 RGB/BGR，当年据此误判成 RGB。对照用 `work/mm2.SC2Mod` 的 `WinMafia.dds`（BGR=血红 ✓）/ `WinJester.dds`（BGR=红金小丑帽 ✓）。
