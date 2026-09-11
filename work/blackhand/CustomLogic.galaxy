@@ -21466,6 +21466,7 @@ void gf_ETCorruptInquisitorWin () {
     int lv_a;
     int lv_ci;
     int lv_shw;
+    int lv_tx;
     bool[6] lv_b;
 
     // Automatic Variable Declarations
@@ -21478,6 +21479,7 @@ void gf_ETCorruptInquisitorWin () {
     SoundPlay(SoundLink("GameMusicTerr2233222224", -1), PlayerGroupAll(), 100.0, 0.0);
     lv_ci = 0;
     lv_shw = 0;
+    lv_tx = 0;
     lv_a = 1;
     for ( ; ( (autoC2FB24DF_ai >= 0 && lv_a <= autoC2FB24DF_ae) || (autoC2FB24DF_ai < 0 && lv_a >= autoC2FB24DF_ae) ) ; lv_a += autoC2FB24DF_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
@@ -21488,6 +21490,10 @@ void gf_ETCorruptInquisitorWin () {
 
                 if ((gv_roles[lv_a][0] == 31)) {
                     lv_shw = 1;
+                }
+
+                if ((gv_roles[lv_a][0] == 32)) {
+                    lv_tx = 1;
                 }
 
             }
@@ -21529,7 +21535,14 @@ void gf_ETCorruptInquisitorWin () {
                 gf_WinScreen("WinShadow.dds", lv_a);
             }
             else {
-                gf_WinScreen("WinNeutral.dds", lv_a);
+                // shw169：天选者用自己的胜利图（此前落在 WinNeutral 占位图）
+                if ((lv_tx == 1)) {
+                    gf_WinScreen("WinChosen.dds", lv_a);
+                }
+                else {
+                    gf_WinScreen("WinNeutral.dds", lv_a);
+                }
+
             }
 
         }

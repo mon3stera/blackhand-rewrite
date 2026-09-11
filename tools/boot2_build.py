@@ -68,6 +68,29 @@ def write_fonts(archive: Path) -> list[str]:
         done.append(member)
     return done
 
+
+# 地图根目录贴图（自加胜利图）：包内成员名 ← data/ 下的文件
+# shw169：shw98 加的两张胜利图只手工塞进当次产物，shw100 起每版都丢（结算画面按图名找不到贴图）
+DDS_DIR = ROOT / 'data'
+DDS_ASSETS = [
+    ('WinCorruptInquisitor.dds', 'WinCorruptInquisitor.dds'),
+    ('WinShadow.dds', 'WinShadow.dds'),
+    ('WinChosen.dds', 'WinChosen.dds'),
+]
+
+
+def write_dds(archive: Path) -> list[str]:
+    """把自加贴图写进包内根目录；缺文件或回读不一致直接抛错。"""
+    done = []
+    for member, name in DDS_ASSETS:
+        src = DDS_DIR / name
+        assert src.exists(), f'贴图源文件不存在: {src}'
+        data = src.read_bytes()
+        sc2map.write(archive, member, data)
+        assert sc2map.read(archive, member) == data, f'贴图回读不一致: {member}'
+        done.append(member)
+    return done
+
 # 必须在包内 zhCN 表里能查到的自加键（缺任一 → 界面会显示原始键名）
 MUST_HAVE_KEYS = [
     'Param/Value/SHWNAME',
@@ -201,21 +224,25 @@ def main() -> int:
     fonts = write_fonts(out)
     print(f"4) 包内字体 {len(fonts)} 个 ← {FONT_DIR.name}/: {[Path(f).name for f in fonts]}")
 
-    # 5) 合并自加文案
+    # 5) 自加贴图（胜利图等，写在地图根目录；漏了就是结算画面找不到贴图）
+    dds = write_dds(out)
+    print(f"5) 根目录贴图 {len(dds)} 张 ← {DDS_DIR.name}/: {dds}")
+
+    # 6) 合并自加文案
     entries = {}
     if not args.skip_strings:
         paths = [Path(p) for p in args.strings] if args.strings else sorted(ROOT.glob(STRINGS_GLOB))
         assert paths, '找不到任何 strings 源文件'
         entries = collect_strings(paths)
-        print(f"5) 合并文案 {len(entries)} 条 ← {[p.name for p in paths]}")
+        print(f"6) 合并文案 {len(entries)} 条 ← {[p.name for p in paths]}")
 
         merged = sc2map.merge_strings(sc2map.read(out, ZH_STRINGS), entries)
         sc2map.write(out, ZH_STRINGS, merged)
 
-    # 6) BankList 预加载表
+    # 7) BankList 预加载表
     fix = subprocess.run([sys.executable, str(ROOT / 'tools' / 'banklist_fix.py'), str(out)],
                          capture_output=True, text=True)
-    print(f"6) {fix.stdout.strip() or fix.stderr.strip()}")
+    print(f"7) {fix.stdout.strip() or fix.stderr.strip()}")
 
     if fix.returncode != 0:
         print('✗ banklist_fix 失败，停止')
@@ -229,10 +256,11 @@ def main() -> int:
     files = subprocess.run([str(ROOT / 'tools' / 'mpqc' / 'mpqtool'), 'list', str(out)],
                            capture_output=True, text=True).stdout
     font_missing = [m for m, _ in FONTS if Path(m).name not in files]
+    dds_missing = [m for m, _ in DDS_ASSETS if m not in files]
 
     print(f"   回读: zhCN {len(zh.splitlines())} 行；Triggers={'Triggers' in files}；"
           f"BankList={'BankList.xml' in files}；自加键缺失={missing or '无'}；"
-          f"样式缺失={style_missing or '无'}；字体缺失={font_missing or '无'}")
+          f"样式缺失={style_missing or '无'}；字体缺失={font_missing or '无'}；贴图缺失={dds_missing or '无'}")
 
     if missing:
         print('✗ 自加键缺失，界面会显示原始键名')
@@ -244,6 +272,10 @@ def main() -> int:
 
     if font_missing:
         print('✗ 包内字体缺失，斜体字面会回落到系统字体')
+        return 1
+
+    if dds_missing:
+        print('✗ 自加贴图缺失，结算画面按图名找不到贴图')
         return 1
 
     print(f"✓ 打包完成 {out}  ({out.stat().st_size} 字节)")
