@@ -155,22 +155,12 @@ void gf_SHBank2 (int lp_slot, string lp_tag) {
     lv_b = BankLoad("MBank13", lp_slot);
     lv_s = (lv_s + "v1n=" + BankName(lv_b) + ";v1p=" + IntToString(BankPlayer(lv_b)) + ";v1sc=" + IntToString(BankSectionCount(lv_b)) + ";v1I=" + BoolFlag(BankSectionExists(lv_b, "I")) + ";");
 
-    lv_b = BankPreload("MBank13", lp_slot);
-    lv_s = (lv_s + "v2a=" + IntToString(BankSectionCount(lv_b)) + ";");
-    BankWait(lv_b);
-    lv_s = (lv_s + "v2b=" + IntToString(BankSectionCount(lv_b)) + ";v2I=" + BoolFlag(BankSectionExists(lv_b, "I")) + ";v2B=" + BankValueGetAsString(lv_b, "I", "B") + ";");
-
     lv_b = BankLoad("MBank13", lp_slot);
     BankReload(lv_b);
     lv_s = (lv_s + "v3=" + IntToString(BankSectionCount(lv_b)) + ";v3I=" + BoolFlag(BankSectionExists(lv_b, "I")) + ";");
 
     lv_b = BankLoad("key", lp_slot);
     lv_s = (lv_s + "v4n=" + BankName(lv_b) + ";v4sc=" + IntToString(BankSectionCount(lv_b)) + ";");
-
-    lv_b = BankPreload("MBank13", lp_slot);
-    BankWait(lv_b);
-    lv_b = BankLoad("MBank13", lp_slot);
-    lv_s = (lv_s + "v5=" + IntToString(BankSectionCount(lv_b)) + ";v5I=" + BoolFlag(BankSectionExists(lv_b, "I")) + ";v5B=" + BankValueGetAsString(lv_b, "I", "B") + ";");
 
     BankLoad("SHBKPB", lp_slot);
     gv_shProbeBank = BankLastCreated();
