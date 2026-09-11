@@ -16,11 +16,11 @@
 
 1. **大括号配平定位函数体**，不要用文本锚点。同一段代码在多个函数里出现，`replace(..., 1)` 会命中错的。
 2. **插入后必须验证落点**：①全文 `{}` 配平 = 0；②**打印目标分支/函数的行号范围和条目数**，确认代码在正确的位置。只看配平不够——曾连续三次把代码插进错误的分支。
-   - **Galaxy 声明必须先于语句（shw137 事故）**：函数/块内**所有局部变量声明（含 `int autoXXX;`、`const int autoXXX_ae = N;`）必须在任何语句之前**。往函数里插探针/逻辑时，插桩点只能选在 `// Actions`（或已存在的语句）之后——插在声明块中间会让编译器在下一条声明处报 `解析函数行出错，可能有无效的变量名/函数调用，或是函数结尾缺失`（dbg9 报 `int init_i;`）。`gt_Init2_Func` 的声明块很长（头部 auto 变量 + `// Variable Declarations` + `// Automatic Variable Declarations` 一直排到 `// Variable Initialization`），**不要在函数开头插任何东西**。
-   - **自动变量必须有声明（shw139 事故）**：SC2 生成代码的循环写法 `for ( ; ( (autoXXXX_ai >= 0 && lv_a <= autoXXXX_ae) || …) ; lv_a += autoXXXX_ai )` **依赖声明区的 `const int autoXXXX_ae = N; const int autoXXXX_ai = 1;`**（动态上界的写成 `int autoXXXX_ae;`，在体里赋值如 `autoXXXX_ae = gv_townMax;`）。漏掉 → 游戏内报 `解析for时出错，可能缺少分号`、**整个脚本读取失败**。自加函数（尤其 preset_gen 生成的 V 函数）必须把参考函数 `gf_VBFCZOptions` 的 `// Automatic Variable Declarations` 块一并克隆；**每次改完脚本跑 `python3 tools/galaxy_lint.py`**（全文配平 + 962 个函数的 auto 变量声明检查，退出码非 0 即禁止打包）。
-   - 追加规则：**修改 `if (...)` 条件时必须打印整行人工核对**。`()` 配平检查发现不了"括号位置错"——曾把 `!= 4)) {` 改成 `!= 4)) && (X) {`，配平通过但 `&&` 跑到了 `if` 外面，游戏报"需要一个左大括号"。正确形式是把新条件并入 `if` 内：`... && (X)) {`。
-2a. **python 批量补丁：插入偏移必须在所有前置 replace 之后重新测量**（shw67 事故）。先 `rep()` 文件前部内容会使先前算好的 `start/end` 偏移失效，再用旧偏移做 `src[:end] + 插入 + src[end:]` 会把新函数插进行中间 → 整个脚本读取失败 → 游戏取名后卡死。正确顺序：①提取函数体（`\n}\n` 定位）→ ②对**提取文本**做所有替换 → ③做完其它 rep 后**重新 index 测插入点** → ④断言插入点前是 `}`/行首结构。插入后必须断言新函数定义位于行首且前后结构完整。
-2b. **用字符串切片拼接 `if` 条件时逐行验证 `()` 配平**（shw69 事故）：`w[:-3]` 这类切片会把 `...16))) {` 削成 `...16))`，再拼 `|| (X))) {` 会多出一个 `)`——全文配平仍是 0，但该行 if 解析失败、脚本读取失败。修完必须对**每个被改的 if 行单独做 `line.count('(')==line.count(')')`** 检查。
+   - **Galaxy 声明必须先于语句（shw137 事故）**：函数/块内**所有局部变量声明（含 `int autoXXX;`、`const int autoXXX_ae = N;`）必须在任何语句之前**。插桩点只能选在 `// Actions` 或已有语句之后；插进声明块中间 → 编译器在下一条声明处报 `解析函数行出错，可能有无效的变量名/函数调用，或是函数结尾缺失`（dbg9 报 `int init_i;`）。`gt_Init2_Func` 的声明块很长（auto 变量 + `// Variable Declarations` + `// Automatic Variable Declarations` 一直排到 `// Variable Initialization`），**不要在函数开头插任何东西**。
+   - **自动变量必须有声明（shw139 事故）**：生成的循环写法 `for ( ; ( (autoXXXX_ai >= 0 && lv_a <= autoXXXX_ae) || …) ; lv_a += autoXXXX_ai )` **依赖声明区的 `const int autoXXXX_ae = N; const int autoXXXX_ai = 1;`**（动态上界写 `int autoXXXX_ae;` 再在体里赋值）。漏掉 → 游戏内 `解析for时出错，可能缺少分号`、**整个脚本读取失败**。自加函数（尤其 preset_gen 生成的 V 函数）必须克隆参考函数 `gf_VBFCZOptions` 的声明块；**改完必跑 `python3 tools/galaxy_lint.py`**（配平 + 962 函数 auto 声明检查，非 0 禁止打包）。
+   - **改 `if (...)` 条件必须打印整行人工核对**：`()` 配平检查发现不了"括号位置错"——曾把 `!= 4)) {` 改成 `!= 4)) && (X) {`，配平过但 `&&` 跑到 `if` 外面，游戏报"需要一个左大括号"。正确写法是把新条件并入 `if` 内：`... && (X)) {`。
+2a. **python 批量补丁：插入偏移必须在所有前置 replace 之后重新测量**（shw67 事故）。用旧偏移做插入会把新函数插进行中间 → 脚本读取失败 → 游戏取名后卡死。顺序：①提取函数体（`\n}\n` 定位）②对**提取文本**做替换 ③做完其它 rep 后**重新 index 测插入点** ④断言插入点前是 `}`/行首结构，插入后断言新函数位于行首且结构完整。
+2b. **用切片拼 `if` 条件时逐行验证 `()` 配平**（shw69 事故）：`w[:-3]` 会把 `...16))) {` 削成 `...16))`，再拼 `|| (X))) {` 多一个 `)`——全文配平仍是 0 但该行解析失败。修完必须对**每个被改的 if 行**做 `line.count('(')==line.count(')')`。
 3. **两套角色面板别搞混**（踩坑高发区）：
    - 自设界面（玩家可见）：`gv_rolesMenusItem[1]`，`gf_OSE...` 内按 `gv_roleCategory` 分支，约 86150–86300 行，**逐角色硬编码**；
    - 审查页：`gv_e8A792E889B2E68EA7E4BBB6`，`gf_ASE5AEA1E69FA5E98089E9A1B92`，约 38802 行。
@@ -47,9 +47,9 @@
 
 - 链路：变体菜单 `gv_variantsMenuItem[0]` 第 N 项 → `gt_OSVariantsMenuChange_Func`（显示描述，**每个菜单项都要有分支，否则无说明且右下标签残留上一个变体名**）→ `gt_OSVariantsMenuConfirm_Func`（SelectedItem → `gv_variantSelection` 映射 + 末尾分发调 `gf_V*Options()`）→ V 函数（=OSActivateOptions 的预设变体：重建面板 + 填 `lv_category`/`lv_role` 槽位串 + `gf_VLoadSaveSlot(0,...)`）。
 - **槽位串语义**：`lv_category`/`lv_role` 按槽位空格分隔；槽位=「池 角色号」。**随机组槽 = category 4 + 随机池角色号**：4[2]=城镇随机、4[3]=黑手随机、4[4]=政府(zf)、4[5]=城镇调查、4[6]=保护、4[14]=中立温和、4[12]/4[13]=致命类。预设按人数逐档（15/14/13/12 人），≤11 人走拒绝提示分支。
-- **现有自加预设**：菜单第 31 项「烙印」（`BHYIN01`，原为悬挂未定义键）→ variant 30 → `gf_VE78399E58DB0`；第 32 项「捕风捉影」（`GCZBNAME`）→ variant 31 → `gf_VBFCZOptions`（15 人=侦探/观察者/4城镇随机/城镇调查/政府/保护/教父(2,2)/陪侍(2,3)/黑手随机/影武者(3,31)/女巫(3,4)/中立温和，14/13/12 人递减城镇随机）。女巫=3/4、教父=2/2、陪侍=2/3。第 33 项「大审判」（`GCZJNAME`）→ variant 32 → `gf_VDSPOptions`；**第 34 项「随机：天谴」（`GCZTNAME`，天选者同款渐变 FFFFFF99-FFFF8800）→ variant 33 → `gf_VTQOptions`（shw133）**：锁定型四子变体 A-D，固定天选者(3,32)，D 档固定 医生+瘟疫散布者×2（瘟疫散布者=3/14，非温和层按致命排序）；开局白字广播条件追加 `gv_variant == "tq"`；锁定三件套（RoleManipulate 排除 / 预览选中 / 添加按钮禁用集）均已含 33。
-- **预设允许增删改角色的白名单**（???类变体如随机:血锈保持锁定）：①目录浏览白名单（`gt_OSMenus_Func`，6 处 `gv_variantSelection == 16)))` 结尾的变体串）②选中映射白名单（`gt_OSRoleSelect_Func`，5 处 `== 12)))` 结尾的变体串）。两者都需含新预设的 variantSelection；③**动作执行层排除集**：`gt_OSRoleManipulate` 的条件排除 {1,4,8,9,10,11,12,14}（管 item[3]添加/item[4]移除/上下移的**执行**）+ 预览列表选中处理（~86811）的 `!= 1`（选中点亮移除按钮）——**锁定型预设（???类）必须把 variantSelection 加进③和添加按钮禁用集**，只摘①②会像 shw85 那样仍可移除。
-- **注意**：预设再次点「采纳设定」会重新跑 fill 覆盖手动修改（原图语义）。
+- **现有自加预设**：第 31 项「烙印」（`BHYIN01`，原为悬挂键）→ variant 30 → `gf_VE78399E58DB0`；第 32 项「捕风捉影」（`GCZBNAME`）→ variant 31 → `gf_VBFCZOptions`（15 人=侦探/观察者/4城镇随机/城镇调查/政府/保护/教父(2,2)/陪侍(2,3)/黑手随机/影武者(3,31)/女巫(3,4)/中立温和；14/13/12 人递减城镇随机）；第 33 项「大审判」（`GCZJNAME`）→ variant 32 → `gf_VDSPOptions`；第 34 项「随机：天谴」（`GCZTNAME`，渐变 FFFFFF99-FFFF8800）→ variant 33 → `gf_VTQOptions`（shw133）：锁定型四子变体 A-D，固定天选者(3,32)，D 档固定 医生+瘟疫散布者×2；开局白字广播条件追加 `gv_variant == "tq"`。女巫=3/4、教父=2/2、陪侍=2/3、瘟疫散布者=3/14。
+- **预设白名单（允许增删改角色）**：①目录浏览 `gt_OSMenus_Func`（6 处 `== 16)))` 结尾的变体串）②选中映射 `gt_OSRoleSelect_Func`（5 处 `== 12)))`）——两者都要含新 variantSelection；③**动作执行层**：`gt_OSRoleManipulate` 排除集 {1,4,8,9,10,11,12,14}（item[3]添加/item[4]移除/上下移）+ 预览选中处理（~86811）的 `!= 1`。**锁定型预设（???类）必须同时改③与添加按钮禁用集**，只摘①②会像 shw85 那样仍可移除。
+- **注意**：预设再点「采纳设定」会重跑 fill 覆盖手动修改（原图语义）。
 
 ### 预设生成器（tools/preset_gen.py，shw95 后加入）
 
@@ -62,14 +62,14 @@ python3 tools/preset_gen.py work/presets/<名字>.json --selfcheck  # 与源码�
 
 - **规格**：`work/presets/*.json`，字段见 `work/presets/dashenpan.json`（大审判，生成器回归样板）。`fixed`=固定角色、`randoms`=[随机槽别名,数量]、`enable_overrides`=按子变体覆盖随机槽选项、`decrement`=人数递减时优先删的随机槽。
 - **角色名解析**：生成器每次运行时从 `CustomLogic.galaxy` + 基线 GameStrings 抽取 `gv_roleNameArray` 全表（含随机槽名），别名表 `ALIAS`/`SLOT_ALIAS` 在文件头部维护（影武者/观察者等非 hex 名称键的角色必须登记）。
-- **生成的函数体尾部**（VLoadSaveSlot 填充 + ??? 锁定覆写 + 选项禁用）从 `gf_VBFCZOptions` 原样克隆，与现行锁定机制保持同构；克隆尾已含函数收尾 `}`，生成器**不再**追加（shw133 曾因多一个 `}` 导致整体配平 -1，插入前必须 `count('{')==count('}')` 断言）。按钮文本键默认 `GCZJBTN`，规格里加 `"btn_key": "GCZTBTN"` 即可换。
+- **函数体尾部**（VLoadSaveSlot 填充 + ??? 锁定覆写 + 选项禁用）从 `gf_VBFCZOptions` 原样克隆；克隆尾已含收尾 `}`，生成器**不再**追加（shw133 因多一个 `}` 导致配平 -1；插入前必须 `count('{')==count('}')`）。按钮文本键默认 `GCZJBTN`，规格加 `"btn_key": "GCZTBTN"` 可换。
 
 ### 随机槽使能串语义（lv_str[4]，实测解码）
 
 - **结构**：19 个空格分词 = 随机槽 4/1..4/19（词序=槽号）。`gf_VLoadSaveSlot` 按 `roleOptionExists[4][槽][位]` 逐位解析：第 b 位字符 '1'/'0' 设 `gv_roleOptions[4][槽][b]`，**字符串不够长时该位回落到 `gv_defaultRoleOptions`**——所以 "0"（单字符）= 只显式关掉第 0 位、其余默认。
 - **位串按位对齐**：必须从第 0 位写起；尾随 0 可省略（省略=默认，各"不包括X"选项默认值几乎都是 false/不过滤）。
 - **随机槽选项目录**（生成器运行时自动抽取，写规格时照抄大厅原文标签）：4/1 全体随机=[不包括致命/黑手D/城镇/中立/三合会]；4/2 城镇随机=[致命/zf/调查/保护/权力]；4/3 黑手D随机=[不包括 致命角色]；4/4 城镇zf=[市民/共济会成员/市长执法长/共济会长老/g告员]；4/5 城镇调查=[法医/警长/探员联邦探员/侦探/监视者]；4/6 保护=[巴士司机/保镖/医生/舞娘]；4/12 中立致命=[连环爱手/纵火者/爱人狂/瘟疫散布者]；4/13 中立协恶=[致命/协教徒/法官/女巫/审ji官]；4/14 中立温和=[生存者/小丑/处刑者/失忆者/赌鬼]；4/15 三合会随机=[致命]；4/19 中立随机=[致命/协恶/温和]。
-- **只有出现在阵容里的槽位其使能位才有意义**；未用槽位的词写 "0" 即可（捕风捉影/大审判使能串里残留的其它配置是历史包袱，无 gameplay 影响）。
+- **只有出现在阵容里的槽位其使能位才有意义**；未用槽位写 "0" 即可（捕风捉影/大审判串里残留的其它配置是历史包袱，无 gameplay 影响）。
 
 ### 预设座席排序约定（用户规定，生成器内建）
 
@@ -203,20 +203,12 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 
 #### 案底规则（重要：动态而非静态）
 
-- 案底**只记录玩家实际做过的事**，不是角色的固定属性。
-- 例（影武者）：当晚有行动 → 非法闯入（`gv_e78AAFE7BDAAE4BA8BE5AE9E[玩家][0] = true`）；杀了人 → 谋杀（`[1] = true`）；整晚没动 → 两条都不记。
-- 常见罪名索引：`[0]` 非法闯入、`[1]` 谋杀（**游戏内和谐文案为「谋爱」**，教父等原版击杀者同款；文案键 `513FA9C0`/`BE9264D4`，勿自创「谋杀」文案）。
-- 罪名标志的写入位置是两份平行块（visitation 块 ~11430 / action 块 ~12123），每个有夜间行动的角色在其中各有分支；击杀函数 `gf_ES*Kill` 的真击杀分支（`gv_diedAtNight[目标] = true` 处）补写谋杀标志。观察者/监视者的图鉴犯罪可能为**空白**（用自建空值键 `GCZBLANK=`；**不要用 `F0A13008`——那是审查官的能力文本「你可调查2名活人的过往访问」，原图监视者曾错指向它**），不要给它们写案底文案。
-- 调查者（警长/探员）在夜间结算时读取这些标记，任意一条为真就播报「你的目标曾经有过案底！」（文本键 `33FE9712`），否则播报无案底（`D903D005`）。
-- 因此新角色若要"做了才有案底"，必须在**自己的行动/结算代码里**打标记，而不是只写图鉴字段。
-- **案底只在行为真正生效时记录**：攻击被无敌挡下、被救治救回，都**不算**谋杀。例：影武者的谋杀标记只写在 `gf_KillPlayer` 成功执行之后；被无敌/救治拦下时两条罪名都不记。
-
-#### 新增角色时的调查相关清单
-
-1. `gv_roleInvestigatorArray[池][角色][0..1]` —— 探员线索（查上表选类别）
-2. `gv_e78AAFE7BDAAE58FAFE883BD[池][角色]` —— 图鉴案底文本
-3. 运行时案底标记 —— 在角色自己的行动/结算代码里设置 `gv_e78AAFE7BDAAE4BA8BE5AE9E[玩家][索引]`
-4. 警长消息 —— 无需配置（自动取角色名）；若该角色应免疫调查，才设「免疫调查」开关
+- 案底**只记录玩家实际做过的事**，不是角色固定属性。例（影武者）：当晚有行动 → 非法闯入（`gv_e78AAFE7BDAAE4BA8BE5AE9E[玩家][0] = true`）；杀了人 → 谋杀（`[1] = true`）；整晚没动 → 两条都不记。
+- 常见罪名索引：`[0]` 非法闯入、`[1]` 谋杀（**游戏内和谐文案为「谋爱」**，文案键 `513FA9C0`/`BE9264D4`，勿自创「谋杀」文案）。
+- 罪名标志写两份平行块（visitation ~11430 / action ~12123），每个有夜间行动的角色在其中各有分支；击杀函数 `gf_ES*Kill` 的真击杀分支（`gv_diedAtNight[目标] = true` 处）补写谋杀标志。观察者/监视者的图鉴犯罪可为**空白**（自建空值键 `GCZBLANK=`；**不要用 `F0A13008`——那是审查官能力文本，原图监视者曾错指向它**）。
+- 调查者（警长/探员）夜间结算时读这些标记，任一为真播报「你的目标曾经有过案底！」（`33FE9712`），否则 `D903D005`。
+- **案底只在行为真正生效时记录**：攻击被无敌挡下、被救治救回**不算**谋杀（影武者的标记只写在 `gf_KillPlayer` 成功之后）。
+- **新增角色的调查清单**：①`gv_roleInvestigatorArray[池][角色][0..1]` 探员线索（按上表选类别）②`gv_e78AAFE7BDAAE58FAFE883BD[池][角色]` 图鉴案底文本 ③在自己的行动/结算代码里打运行时案底标记 ④警长消息无需配置（自动取角色名），只有该角色应免疫调查时才设「免疫调查」开关。
 
 ### 新增角色端到端流程（影武者 池3/31 已端到端验收，2026-09-10）
 
@@ -236,14 +228,14 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 **第 3 步：角色卡分支（两份，必须逐字段一致）**
 - `gf_RTTownRoleText` / `gf_RTNeutralRoleText`（按池放）各加 `if (((gv_roles[lv_a][1] == 池) && (gv_roles[lv_a][0] == 号)))` 分支
 - 阵营行 `[0]` 照抄同类：中立致命 = `CE62498E("无") + lv_t[2] + D7C97124(" (致命)")`——影武者曾因 NeutralRoleText 副本漏了「无」前缀，卡片只显示「(致命)」
-- `[1]` 能力、`[2]` 特性、`[4]` 目标、`[6]` winList 自动；**多行追加时换行写进各自键内容开头（`<n/>- …`）**。**`4467A310` 不是通用换行键（shw124 事故）——它是影武者夜间无敌整行键，内容=`<n/>- 你拥有夜间无敌。`（`1045F9FD`=同一句不带换行版）**；当它被当换行键连用时每行都会多挂一句「你拥有夜间无敌」。追加自己的特性行 = 键内容自带 `<n/>` 前缀，然后 `+ 一个键` 直接拼。
+- `[1]` 能力、`[2]` 特性、`[4]` 目标、`[6]` winList 自动；追加特性行 = 键内容自带 `<n/>` 前缀再 `+ 一个键`。**换行键陷阱见「特性行换行规范（shw124 事故）」**（`4467A310` 不是通用换行键）。
 
 **第 4 步：帮助面板（角色参考卡页）**
 - `gf_MakeHelpMenu` 的角色号循环上界 ≥ 新角色号（原图从 `gv_townMax`=30 起往下数）+ 第 1 步的 `[10]` 标志
 
 **第 5 步：自设面板列表 + 选中映射** —— 见铁律 3.1，段内末尾追加，两处条数一致，脚本校验。**各段索引按 `gv_roleCategory` 独立计数**（黑手D等段从 1 重新开始），往某段末尾追加不影响其他段的映射
 
-**第 5.5 步：审查页（灵魂猜测页）** —— `gf_ASE5AEA1E69FA5E98089E9A1B92` 的 `lp_picked` 列表上界常量 + `gt_ASE5AEA1E69FA5E7A1AEE5AE9A_Func` 确认映射。**该映射用「SelectedItem + 分段偏移」跳过无名角色**（如城镇 >=22 加 1 跳过 1/22 空位）：新角色排在无名空位之后时，上界 +N 且按 `SelectedItem >= 新起点` 加差值偏移（城镇观察者=上界 31 且 `>=30` 减 1；影武者=中立上界 18 且 `>=18` 加 12）。改完用「选中第 N 项 → 角色号」逐项推算核对
+**第 5.5 步：审查页（灵魂猜测页）** —— `gf_ASE5AEA1E69FA5E98089E9A1B92` 的 `lp_picked` 上界 + `gt_ASE5AEA1E69FA5E7A1AEE5AE9A_Func` 映射。**该映射用「SelectedItem + 分段偏移」跳过无名角色**：新角色排在无名空位之后时要同时调上界与偏移（观察者=城镇上界 31 且 `>=30` 减 1；影武者=中立上界 18 且 `>=18` 加 12）。改完逐项推算「选中第 N 项 → 角色号」核对
 
 **第 6 步：拼音匹配循环上界** —— `gt_Prefer_Func`(29)、`gt_Blacklist_Func`(24)、`gt_Init2_Func` 黑名单校验(19) 放宽到 ≥ 新角色号（`gt_Change_Func`=40 够用）；循环里 `roleNameArray != null` 自动跳过空位，放宽无害。不放宽的症状：`-prefer 拼音` 报「不是一个角色」
 
@@ -253,21 +245,20 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 - 行动按钮函数 `gf_RA*Actions`（每个存活其他玩家行配按钮）+ `gf_RAActions` 分发 + **AS 按钮点击触发器 A/B 两个都要写分支**（只写 A：按钮可见但点击不生效）
 - `gf_SequencePrep`（记账）/ `gf_SequenceKills`（结算）/ `gf_CheckEnd`（残局计数、归零条件、数量比较）/ 阵营校验
 
-**第 8.5 步：夜间目标的效果转换（欺骗者 / 女巫 / 巴士司机）** —— **新增带夜间目标的角色必须考虑这三者对目标的影响**：
+**第 8.5 步：夜间目标的效果转换（欺骗者 / 女巫 / 巴士司机）** —— 新增带夜间目标的角色必须考虑这三者：巴士司机交换与欺骗者转向**共用 `gv_switched`**（`switched[对象]=转向对象`）；女巫控制走 `gv_witched[受害者]=女巫`，结算时重写受害者 `visitation = 女巫的 action[1]`（~10936），造访目的地被交换时连锁重写访客 visitation（~10959）。
 
-- **机制**：巴士司机交换与欺骗者藏身转向**共用 `gv_switched` 映射**（`switched[对象]=转向对象`）；女巫控制走 `gv_witched[受害者]=女巫`，结算时重写受害者 `visitation = 女巫的action[1]`（~10936 块），并在造访目的地被交换时连锁重写访客 visitation（~10959）。
-- **原图标准模式**：效果按「造访目的地」投递（杀手杀 `visitation` 所指）→ 巴士/欺骗者经 visitation 重写自然生效，女巫控住也只改 visitation 就能带偏效果。走这条模式的新角色**无需额外代码**。
-- **按目标身份直接投递的角色（如影武者）必须显式解析**：分发块里先判女巫控制（`gv_witched[自己]!=0 && gv_witchEligible && 未入狱 && 女巫有action[1]` → 目标替换为女巫的action[1]），再过 `gv_switched` 解析（例：盯3、3是欺骗者转向7 → 实际看7动线、杀7）。**哪些槽位可被转换是设计决策**，必须在角色卡特性里写明（影武者：目标一可被交换、目标二无法以任何形式被交换——`action[x][1]` 全脚本只有重置和本人按钮写入，结构性不可转）。
-- 设计核对清单：①哪个/哪些槽位可被女巫替换 ②可否被 switched 转换 ③被转换后判定与效果是否都落在转换后的目标 ④角色卡特性是否已向玩家说明 ⑤造访记录（visitation）是否要体现转换（影武者保持"表象去原目标"，观察者看得到）。
+- **原图标准模式**（效果按"造访目的地"投递，杀手杀 `visitation` 所指）：巴士/欺骗者/女巫经 visitation 重写自然生效，**无需额外代码**。
+- **按目标身份直接投递的角色（如影武者）必须显式解析**：先判女巫控制（`gv_witched[自己]!=0 && gv_witchEligible && 未入狱 && 女巫有 action[1]` → 换成女巫的 action[1]），再过 `gv_switched`（盯 3、3 是欺骗者转向 7 → 实际看/杀 7）。**哪些槽位可被转换是设计决策且必须写进角色卡**（影武者：目标一可被交换，目标二结构性不可转——`action[x][1]` 全脚本只有重置与本人按钮写入）。
+- 核对清单：①哪些槽位可被女巫替换 ②可否被 switched 转换 ③转换后判定与效果是否都落在转换后的目标 ④角色卡是否已说明 ⑤visitation 是否体现转换（影武者保持"表象去原目标"，观察者看得到）。
 
 **第 9 步：击杀函数（`gf_ES*Kill`）死亡信息三件套**
-- 字母码 `gv_deathMethod[目标]`：**用新码**（`K` 是连环杀手的，SK 函数里也有一份，锚点必须带函数特有上下文）；验尸官(1,10)选项2 私密播报扫描块（~13620）加对应字母分支
-- 公示描述 `gv_deathText[目标]`：**照抄义警模式**（约 26440 行）——`gv_deathDesc[目标]` 初始 false；`if(deathDesc==true){第一段; lv_c=true;} deathDesc=true; if(lv_c==false){主描述}`。主描述在 `lv_c==false`（首杀常态）追加；**放反了 deathText 永远为空、白天没有死亡信息**
-- 夜间演出顺序（用户认可）：语音（如 `SoundLink("DarkTemplar_What",-1)`）→ `Wait` 语音时长（2.6s）→ 刀声 → 全场红字广播 → 目标私息。**函数顶部不要放公用出刀声**（会抢在语音前播放）
+- 字母码 `gv_deathMethod[目标]`：**用新码**（`K` 是连环杀手的，SK 函数里也有一份 → 锚点必须带函数特有上下文）；验尸官(1,10)选项2 私密播报扫描块（~13620）加字母分支
+- 公示描述 `gv_deathText[目标]`：**照抄义警模式**（~26440）——`gv_deathDesc` 初始 false；`if(deathDesc==true){第一段; lv_c=true;} deathDesc=true; if(lv_c==false){主描述}`。**放反了 deathText 永远为空、白天没有死亡信息**
+- 演出顺序（用户认可）：语音（如 `SoundLink("DarkTemplar_What",-1)`）→ `Wait` 语音时长（2.6s）→ 刀声 → 全场红字 → 目标私息。**函数顶部不要放公用出刀声**
 
-**第 10 步：私密消息路由** —— 发给击杀/治疗目标的私息走 `gf_BHNotify`（目标非真实在线玩家=虚拟补位时改发 `gv_host`，solo 可见；真实玩家只发本人）。否则 solo 局里「只有音效没有文字」
+**第 10 步：私密消息路由** —— 击杀/治疗目标的私息走 `gf_BHNotify`（目标非真实在线玩家时改发 `gv_host`，solo 可见；真实玩家只发本人），否则 solo 局「只有音效没有文字」。
 
-**第 11 步：静态校验 + 打包部署** —— 逐函数落点 + 配平 + 条数校验 → 打新文件名 → scp → 游戏内验证（帮助面板、对局内角色卡、`-prefer`、探员线索、死亡信息、残局判定）
+**第 11 步：静态校验 + 打包部署** —— 逐函数落点 + 配平 + 条数校验 → 打新文件名 → scp → 游戏内验证（帮助面板、角色卡、`-prefer`、探员线索、死亡信息、残局判定）
 
 ### 措辞约定：访问 vs 造访（shw110/111 沉淀）
 
@@ -291,9 +282,9 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 
 ### BankList.xml —— 「进图即清档」的真正根因（shw137 定案，2026-09-11）
 
-**现象**：私有发布的改版图每局把玩家存档重置（要求重新输名字、积分归零）。实测（`tools/bank_probe_build.py` 探针 bank `SHBKPB`）本地与线上完全一致：t=0、身份就绪后、2 秒后、5 秒后、10 秒后，`BankLoad("MBank13", 1)` **一律返回空档**（`BankSectionCount=0`），而 `BankExists("MBank13",1)=true`、`BankSave` 照常写盘、文件就在硬盘上；线上 `PlayerHandle` 正常（不是身份/时序问题），`BankWait`、轮询重载、纯读取等待、补签名（含 authorID 两种算法）**全部无效**。
+**现象**：私有发布的改版图每局把存档重置（重新输名字、积分归零）。探针实测（`tools/bank_probe_build.py`，bank `SHBKPB`）本地与线上一致：任何时刻 `BankLoad("MBank13", 1)` **都返回空档**（`BankSectionCount=0`），但 `BankExists= true`、`BankSave` 正常写盘、文件就在硬盘上；`BankWait`、轮询重载、纯读取等待、补签名（两种 authorID 算法）**全部无效** —— 不是身份/时序/签名问题。
 
-**根因**：引擎在地图加载时按包内 **`BankList.xml`** 预加载 bank；**不在该表里的 bank，galaxy 的 `BankLoad()` 永远读不出内容**（写入不受影响）。原图包 `BankList.xml` 35 条（含 `MBank13`、`key` × 玩家 1–15），而我们所有构建包里只剩 5 条战役默认项 —— 编辑器只在用 **GUI 的 bank 动作**时登记条目，我们的脚本是手写 Galaxy，于是 `boot2-user.SC2Map` 的这张表退化成默认值 → 读到"未预加载的空 bank" → 原图逻辑按新玩家处理 → 组装空档并保存 → 每局清档。
+**根因**：引擎在地图加载时按包内 **`BankList.xml`** 预加载 bank，**不在表里的 bank，`BankLoad()` 永远读不出内容**（写入不受影响）。原图包 35 条（`MBank13`、`key` × 玩家 1–15），而我们的构建包只剩 5 条战役默认项（编辑器只在用 **GUI bank 动作**时登记条目，手写 Galaxy 不会）→ 读到"未预加载的空 bank" → 原图逻辑按新玩家处理 → 组装空档并保存 → 每局清档。
 
 **修复（两件事，缺一不可 —— 已进管线）**：
 
@@ -316,30 +307,22 @@ python3 tools/banklist_fix.py work/boot2-<name>.SC2Map --check    # 回读校验
 - wait 必须在 `BankLastCreated()` **之后**（dbg2 曾把 `BankWait(gv_bank[lv_a])` 放在赋值前，等的是空句柄 → 无效）；`gv_key[...]` 同理。
 - **实证对照（dbg10 vs dbg11，同一份脚本只差 wait）**：dbg10 无 wait → `L: sc=0`、2 秒后才 `sc=2`；dbg11 有 wait → **`L: sc=2 seI=1 vB=" dddd"`（t=0 即真档）**，用户实测**不再要求输入名字** ✓。
 - 参考表 `data/BankList.original.xml` 取自原图包；工具断言 `MBank13`/`key` 覆盖玩家 1–15、打包后 `Triggers`/`CustomLogic.galaxy` 成员仍在。
-- **打包四件套**（见「打包管线」节，用 `tools/boot2_build.py` 一键完成）= 复制基线 + `sc2map.write(CustomLogic.galaxy)` + **合并自加文案** + `banklist_fix.py`；漏 BankList = 存档读不出来，漏文案 = 界面满是 `Param/Value/XXX` 原始键。
-- 结论修正：shw134「引擎 BankVerify 失败即清空」只是**表象**（未预加载的 bank 本来就空，`BankVerify` 自然 false）；`BankOptionSet(c_bankOptionSignature,true)` 与存档重签**都不是**读档的必要条件（原图档不重签也能读，只要预加载表在 + wait 到位）。社区佐证：GA地精研究院帖「纯galaxy代码的方式不能读取bank？[已解决]」= 拆包发现 `BankList.xml` 机制 +「读取内容之前必须先加一条同步」。
+- 结论修正：shw134「引擎 BankVerify 失败即清空」只是**表象**（未预加载的 bank 本来就空，`BankVerify` 自然 false）；`BankOptionSet(c_bankOptionSignature,true)` 与存档重签**都不是**读档的必要条件。社区佐证：GA地精研究院帖「纯galaxy代码的方式不能读取bank？[已解决]」= 拆包发现 `BankList.xml` 机制 +「读取内容之前必须先加一条同步」。
 
 ### 打包管线（shw96 事故沉淀，shw141 固化为一键工具）
 
-**boot2 系列地图只能用「复制上一版 + `sc2map.write` 直写 CustomLogic.galaxy」，绝不能用 `tools/sc2pack.py`**（shw96 事故：误用 sc2pack 后触发器读到旧脚本，游戏报「脚本读取失败：无法找到函数」+ 一串 UI layout 红字）。两条管线的区别：
-
-**标准做法 = 跑 `tools/boot2_build.py`（打包四件套，别再手搓）**：
+**boot2 系列只能用「复制上一版 + `sc2map.write` 直写 CustomLogic.galaxy」，绝不能用 `tools/sc2pack.py`**（shw96 事故：触发器读到旧脚本 → 「脚本读取失败：无法找到函数」+ UI layout 红字）。标准做法：
 
 ```bash
-python3 tools/boot2_build.py --out work/boot2-shw141.SC2Map      # 基线/脚本/文案/BankList 四件套 + 全部回读断言
+python3 tools/boot2_build.py --out work/boot2-<name>.SC2Map      # 四件套 + 全部回读断言
 ```
 
-1. 复制基线 `work/boot2-user.SC2Map`（含用户的变体修改，**不要覆盖它**）
-2. 直写 `CustomLogic.galaxy`（工作区脚本；打包前自动跑 `galaxy_lint.py`，不通过不打包）
-3. **合并自加文案** `work/blackhand/strings-*.txt` → 包内 `zhCN.SC2Data\LocalizedData\GameStrings.txt`（**shw141 事故：漏了这步 → 界面全是 `Param/Value/XXX` 原始键**；注意 zhCN 才是中文客户端用的表，`sc2map.GAME_STRINGS` 常量指向的是 enUS）
-4. `banklist_fix.py` 写回 `BankList.xml`（漏了 = 每局清档）
+四件套（细节见上节）：①复制基线 `work/boot2-user.SC2Map`（**不要覆盖**）②直写工作区脚本（打包前自动跑 `galaxy_lint.py`，不过不打包）③合并 `strings-*.txt` → 包内 **zhCN** 表（漏 = 界面满是 `Param/Value/XXX` 原始键；`sc2map.GAME_STRINGS` 指的是 enUS，别拿它校验）④`banklist_fix.py` 写回 `BankList.xml`（漏 = 每局清档）。
 
-回读断言：`Triggers` 成员在、`BankList.xml` 在、脚本含 `BankWait`、**`MUST_HAVE_KEYS` 里的自加键全部存在**（缺任一即退出码 1）。**只有基线已经是上一版成品图、且确认累积键齐全时才用 `--skip-strings`。**
-
-- **文案源文件铁律**：`strings-*.txt` 每行一个 `键=值`。**一行粘了两个键会静默吞键**——`strings-gcz.txt` 曾把 `GCZBOX2` 与 `GCZTNAME` 粘在一行，结果天谴菜单名在所有构建里都显示原始键，且 `GCZBOX2` 的值被污染（正是打包工具的 `MUST_HAVE_KEYS` 断言抓出来的）。
-- **boot2 系包内结构**：基线 `Triggers` + 2.7KB `MapScript.galaxy`（只含 `include "TriggerLibs/NativeLib"` 和 `include "CustomLogic"`）+ 完整 `CustomLogic.galaxy` 成员。**触发器链引用的是 CustomLogic 里的函数**。
-- **sc2pack.py（rogue 等独立图用）**：把给定 galaxy **替换进 MapScript.galaxy 并剥触发器**——boot2 的触发器函数不在手写脚本里，替换后 MapScript 缺触发器函数、CustomLogic 还是旧版，必炸。
-- 打包后回读校验目标是包内 **`CustomLogic.galaxy` 成员**（不是 MapScript）；同时确认 `Triggers` 成员仍在、MapScript 仍含 `include "CustomLogic"`。
+- 回读断言：`Triggers` 在、`BankList.xml` 在、脚本含 `BankWait`、**`MUST_HAVE_KEYS` 全部存在**（缺任一即退出码 1）。只有基线已是上一版成品图、且确认键齐全时才用 `--skip-strings`。
+- **文案源文件铁律**：`strings-*.txt` 一行一个 `键=值`；**一行粘两个键会静默吞键**——`strings-gcz.txt` 曾把 `GCZBOX2` 与 `GCZTNAME` 粘一行，导致天谴菜单名在所有构建里都显示原始键、`GCZBOX2` 值被污染（正是 `MUST_HAVE_KEYS` 抓出来的）。
+- **boot2 包内结构**：`Triggers` + 2.7KB `MapScript.galaxy`（只含 `include "TriggerLibs/NativeLib"` 与 `include "CustomLogic"`）+ 完整 `CustomLogic.galaxy`；**触发器链引用 CustomLogic 里的函数**，故回读校验看包内 `CustomLogic.galaxy`（不是 MapScript）。
+- **`sc2pack.py`**（rogue 等独立图用）把 galaxy 塞进 MapScript 并剥触发器 → boot2 缺触发器函数必炸，两条管线不能混。
 
 ### 胜利图（结算画面）体系（shw98/99 沉淀）
 
@@ -354,26 +337,25 @@ python3 tools/boot2_build.py --out work/boot2-shw141.SC2Map      # 基线/脚本
 
 ### Galaxy 语言层陷阱（生成代码惯例）
 
-- **SoundLink 的类型是 `soundlink`**，不是 `sound`。自定义函数收音效参数必须声明 `soundlink`；写错则所有调用处「参数类型同函数定义不匹配」，并连带整个脚本解析失败（整图报废，游戏内红屏报错）
-- **插入 while 广播循环必须在函数声明区补** `playergroup autoXXX_g;` 和 `int autoXXX_var;`（每个函数的自动变量各自声明；漏声明 = 解析函数行出错，脚本读取失败）
-- **多函数共用的字符串不能做唯一锚点**（`DB5AD8F8`、`gv_deathDesc[...] = true` 等在多个杀手函数出现）：锚点必须带函数特有上下文（如角色号判断行、专属文本键）
-- **python 补丁断言失败时，同一命令块里后续的 commit/打包命令照常执行**——先单独跑补丁确认 exit 0，再做提交打包；曾连续两次只提交了 strings、代码没进包
-- **heredoc 脚本里的裸换行就是新语句**：`python <<EOF` 失败后，下一行的 `scp && git` 仍会执行——打包脚本的断言失败不阻止部署脏包。打包+部署+提交应显式 `&&` 链接，或先跑完打包脚本确认成功
-- **验证断言别写子串包含**：`s.count('(16) || (30) || (31))) {')` 这类短串会同时命中浏览白名单和映射白名单（互为子串），count 是 11 不是预期 6——断言计数前先确认模式唯一性
-- **白名单行的右括号层数不一致（shw84 事故）**：11 处编辑白名单 if 行并非统一 `== X)))` 结尾——部分行是 **4 层右括号**（`== X))))`）。用统一子串 ` || (X == 31)))` → `)))` 替换会把 4 层行削掉一层 → `if` 解析失败、**整个脚本读取失败**。摘除 OR 项必须**逐行**处理：定位含该项的行 → 去掉 ` || (…)` 整项 → 逐行断言 `(``)` 配平。且配平检查必须**先剥离字符串字面量**（61017 行含 `"("` 字面量，裸计数是已知误报）。
-- **锁定???随机系机制（枷锁/血锈/捕风捉影模式）**：预览列表（`gv_rolesMenusItem[2]`）是**静态文本**，??? = 直接 `DialogControlAddItem(roleNameArray[8][1])`（随机组 8/1 = ??? 角色）。槽位若经 bank 填 (8,1) 会被 `gf_VLoadSaveSlot` 校验（category>5）清零——原图 sotd 系是**绕过 bank 直接写 slots**。捕风捉影方案：真阵容进 slots（开局正常发牌）→ VLoadSaveSlot 后 `RemoveAllItems` + 重填 15 个 ??? + bank 掩写 (8,1)；从 11 处白名单摘掉 variantSelection 即锁定编辑。
-- **断言过度也会误报**：①`assert 'KEY' not in s` 全文件禁键——键可能在别处有合法用途（F0A13008 是审查官能力文本，不能因一次误用就全文禁令）；②GameStrings 行尾是 `\r\n`，比对空值键要 `l.replace('\\r','')`；③`s.find('函数名')` 找到的是**首次出现**（可能是文件前部的原型声明），定位调用点要用带 `();` 的完整调用文本或在函数行号区间内找
-- **斜体（shw87 已实证）**：SC2 富文本无斜体直标签（`<i>` 无效）；斜体 = 字体样式 Italic 标志 + `<s val="样式名">`。地图 `NewFontStyles.SC2Style` 已加 `ModItalic`（fontflags="Italic"）与 `ModItalic2`（styleflags="Italic"），**两种属性都渲染为斜体**（游戏内实证 B/C 均斜）。玩家输入 `-rename <i>x</i>` 经 `gf_BHItalicize` 改写为 `<s val="ModItalic">x</s>`（大小写两种闭合标签都处理），可与 `<c val>` 彩色标签叠加。字体用 `#FontStandard` 保证 CJK。注意：带标签名字参与"按名字喊话"匹配时需照原样输入标签。
-- **二改红线（无原作者授权）**：本图属未经授权二改，**严禁修改/删除原图硬编码 handle 管理员链的任何既有分支**（~56944 起的 87 个，只能**追加**自己的分支）；给 handle 加权限一律走白名单追加，不动原分支的权限位。若日后公开发布，必须先收回测试放开项：prefer 会员/积分门（65440/65481）、大厅电脑计入（56020）等 `c_bhSoloBuild` 相关旁路。另需**存档迁移说明**：bank 命名空间绑定发布作者，改版发布后玩家原存档（`key`、`MBank13` 两份 .SC2Bank，含积分/成就/模型解锁）留在原作者目录下；脚本无法跨命名空间读取（引擎沙箱），迁移 = 玩家把两个 bank 文件复制到改版作者目录即可（**无需重签**，见下条「不验签设计决定」；签名算法与重签工具 `tools/bank_resign.py` 保留备查）。
-- **不验签设计决定（shw139/143，取代 shw134 的临时旁路）**：目标是**原图存档直接复制即可用**（跨命名空间迁移、不重签）。两处一起关：①脚本侧三处 `BankVerify` 门槛（QQ/gift/I，3676/3680/3684 附近）加常量 `c_bhNoSigVerify = true`（条件前置，`BankVerify` 调用本身不执行）；②`gt_Init2` 银行循环里的 `BankOptionSet(gv_bank[lv_a], c_bankOptionSignature, …)` 由 `true` 改 **`false`**（引擎侧不签也不验；若为 `true`，引擎会对**原作者签名**的档验签失败并清空内存内容 → 脚本看到空档 → 走新玩家分支 → 界面报「存档已重置」）。**文件里原有的 `<Signature>` 行保留不动做兼容**（我们不再重签、也不删签名），防篡改由地图级 Checker 承担（`Math=(points+1)×(points+3)` 等；原图档的 Checker 自洽，可直接验证）。
-  - 历史背景（shw134，已被上条取代）：曾以为引擎 `BankVerify` 失败即清档是唯一根因，只对 `c_bhSoloBuild` 短路放行；后经 BankList 定案证明那只是表象之一。
-  - **迁移操作**：把玩家在原作者命名空间的两份档（`key`、`MBank13`）复制到改版作者命名空间即可（改版私有发布时作者 = 发布者本人 toon），无需重签。重签工具 `tools/bank_resign.py` 仍保留备查（签名 = SHA1(authorID + playerID + bankName + Σ(按名排序的 section.name + Σ(按名排序的 key.name + "Value" + 类型名 + 值))），算法已破解并实测可复现引擎签名）。
+- **SoundLink 的类型是 `soundlink`**（不是 `sound`）。自定义函数收音效参数必须声明 `soundlink`，写错则所有调用处「参数类型同函数定义不匹配」并连带整个脚本解析失败（整图报废、游戏内红屏）。
+- **插入 while 广播循环要在声明区补** `playergroup autoXXX_g;` 与 `int autoXXX_var;`（漏声明 = 解析函数行出错、脚本读取失败）。
+- **多函数共用的字符串不能做唯一锚点**（`DB5AD8F8`、`gv_deathDesc[...] = true` 在多个杀手函数出现）：锚点必须带函数特有上下文（角色号判断行、专属文本键）。
+- **python 补丁断言失败时同命令块里后续的 commit/打包照常执行**——先单独跑补丁确认 exit 0 再提交打包；曾连续两次只提交了 strings、代码没进包。**heredoc 里裸换行就是新语句**：`python <<EOF` 失败后下一行 `scp && git` 照样跑 → 脏包被部署。打包+部署+提交要显式 `&&` 链接。
+- **验证断言别写子串包含**：`s.count('(16) || (30) || (31))) {')` 这类短串会同时命中浏览与映射白名单（互为子串），count 是 11 不是 6——断言前先确认模式唯一。
+- **白名单行的右括号层数不一致（shw84 事故）**：11 处编辑白名单 if 行并非统一 `== X)))` 结尾，部分行是 **4 层**（`== X))))`）。用统一子串替换会把 4 层行削掉一层 → `if` 解析失败、**整个脚本读取失败**。摘 OR 项必须**逐行**：定位含该项的行 → 去掉 ` || (…)` 整项 → 逐行断言 `()` 配平；且配平检查必须**先剥离字符串字面量**（61017 行含 `"("` 字面量，裸计数是已知误报）。
+- **锁定???随机系机制（枷锁/血锈/捕风捉影）**：预览列表（`gv_rolesMenusItem[2]`）是**静态文本**，??? = 直接 `DialogControlAddItem(roleNameArray[8][1])`（随机组 8/1 = ???）。槽位经 bank 填 (8,1) 会被 `gf_VLoadSaveSlot` 校验（category>5）清零——原图 sotd 系是**绕过 bank 直接写 slots**。捕风捉影方案：真阵容进 slots（开局正常发牌）→ VLoadSaveSlot 后 `RemoveAllItems` + 重填 15 个 ??? + bank 掩写 (8,1)；从 11 处白名单摘掉 variantSelection 即锁定编辑。
+- **断言过度也会误报**：①`assert 'KEY' not in s` 全文件禁键——键可能在别处有合法用途（`F0A13008` 是审查官能力文本，不能因一次误用就全文禁令）②GameStrings 行尾是 `\r\n`，比对空值键要 `l.replace('\\r','')` ③`s.find('函数名')` 命中的是**首次出现**（可能是文件前部的原型声明），定位调用点要用带 `();` 的完整调用文本或在函数行号区间内找。
+- **斜体（shw87 已实证）**：SC2 富文本无斜体直标签（`<i>` 无效），斜体 = 字体样式 Italic 标志 + `<s val="样式名">`。地图 `NewFontStyles.SC2Style` 已加 `ModItalic`（fontflags="Italic"）与 `ModItalic2`（styleflags="Italic"），**两种属性都渲染为斜体**（游戏内实证）。玩家输入 `-rename <i>x</i>` 经 `gf_BHItalicize` 改写为 `<s val="ModItalic">x</s>`（大小写闭合标签都处理），可与 `<c val>` 叠加；字体用 `#FontStandard` 保证 CJK。带标签的名字参与「按名字喊话」匹配时需照原样输入标签。
+- **二改红线（无原作者授权）**：**严禁修改/删除原图硬编码 handle 管理员链的任何既有分支**（~56944 起的 87 个，只能**追加**）；给 handle 加权限一律走白名单追加。日后公开发布前必须收回测试放开项：prefer 会员/积分门（65440/65481）、大厅电脑计入（56020）等 `c_bhSoloBuild` 旁路。**存档迁移**：bank 命名空间绑定发布作者，玩家原档（`key`、`MBank13`）留在原作者目录、脚本无法跨命名空间读取（引擎沙箱），迁移 = 把两个 bank 复制到改版作者目录即可（**无需重签**，见下条；重签工具 `tools/bank_resign.py` 备查）。
+- **不验签设计决定（shw139/143，取代 shw134 的临时旁路）**：目标是**原图存档直接复制即可用**（跨命名空间迁移、不重签）。两处一起关：①脚本侧三处 `BankVerify` 门槛（QQ/gift/I，3676/3680/3684 附近）加常量 `c_bhNoSigVerify = true`（条件前置，`BankVerify` 本身不执行）②`gt_Init2` 银行循环的 `BankOptionSet(gv_bank[lv_a], c_bankOptionSignature, …)` 改 **`false`**（引擎侧不签也不验；若为 `true`，引擎对**原作者签名**的档验签失败并清空内存内容 → 脚本看到空档 → 走新玩家分支 → 界面报「存档已重置」）。**原有的 `<Signature>` 行保留不动做兼容**，防篡改由地图级 Checker 承担（`Math=(points+1)×(points+3)` 等）。
+  - 历史背景（shw134，已被上条取代）：曾以为引擎 `BankVerify` 失败即清档是唯一根因，只对 `c_bhSoloBuild` 短路放行；后经 BankList 定案证明那只是表象。
+  - **迁移操作**：把 `key`、`MBank13` 两份档复制到改版作者命名空间即可（私有发布时作者 = 发布者本人 toon），无需重签。重签算法（`tools/bank_resign.py`）= SHA1(authorID + playerID + bankName + Σ(按名排序的 section.name + Σ(按名排序的 key.name + "Value" + 类型名 + 值)))，已实测可复现引擎签名。
 - **测试指令**：`-reveal`（`gt_BHRevealRoles`，仅主机、游戏开始后）私密列出全部玩家**带色名字**（电脑N，N=玩家编号；投票面板左侧是楼层序，与编号无关）+角色名，用于验证调查结果/案底等
 - 运行期报错先分新旧：`triggerControl(值:0)`、`StringWord(值:0)`、`CameraSetBounds region(值:0)`、`gv_roll点冷却 int[2] 越界` 等均为基线/单人测试固有，不是新改动引入
 
 ### 单人测试模式（-solo）
 
-**地图的起始门槛 = 4 人**：`gf_OS...` 初始化里 `PlayerGroupCount(gv_currentPlayers) <= 3` 会把角色串清空（`lv_str[0]`/`lv_str[2]` 全 0），于是 `gv_rolesAssigned != lv_b` 校验失败、开不了局。变体预设（如烙印）本身按人数逐档填写（约 50188 行起 `PlayerGroupCount(gv_tempPlayerGroup) == N` 分支），所以 1 人用变体是能开的；**自设路径**才会被门槛卡住。
+**地图起始门槛 = 4 人**：`gf_OS...` 初始化里 `PlayerGroupCount(gv_currentPlayers) <= 3` 会清空角色串（`lv_str[0]`/`lv_str[2]` 全 0）→ `gv_rolesAssigned != lv_b` 校验失败、开不了局。变体预设按人数逐档填写（~50188 起 `PlayerGroupCount(gv_tempPlayerGroup) == N` 分支），所以 1 人用变体开得起来；**自设路径**才被门槛卡住。
 
 数据模型：
 
@@ -383,14 +365,9 @@ python3 tools/boot2_build.py --out work/boot2-shw141.SC2Map      # 基线/脚本
 | `gv_rolesArray[槽]` | 该槽选择的**角色号** |
 | `gv_rolesAssigned` | 已选角色数量，必须等于非空槽位数 `lv_b` |
 
-`-solo` 命令做的事（聊天输入，shw53 起定型）：
+`-solo` 做的事（聊天输入，shw53 起定型）：①`gv_soloTest = true` 放行两处 `gv_rolesAssigned < / > PlayerGroupCount(...)` 校验（条件加 `&& (gv_soloTest == false)`，~43462/43476）②`TriggerEnable(gt_Prefer, true)`。
 
-1. `gv_soloTest = true` → 放行两处 `gv_rolesAssigned < / > PlayerGroupCount(...)` 校验（条件里加 `&& (gv_soloTest == false)`，约 43462 / 43476 行）
-2. `TriggerEnable(gt_Prefer, true)`（该触发器在别处会被关闭）
-
-**不再自动填角色**（`gf_BHSoloFill` 已删除；shw51 的「补满 15 槽」方案废弃——它把所有空槽填上角色后，虚拟补位判断「无空槽」反而不补人）。角色全部由测试者在自设里手动配置，空槽交给 `gt_Init2` 的虚拟补位。
-
-聊天命令注册方式：`TriggerCreate` + `TriggerAddEventChatMessage(trigger, c_playerAny, "-solo", false)`，在 `InitTriggers` 里调用 `gt_BHSolo_Init();`。
+**不自动填角色**（`gf_BHSoloFill` 已删；shw51 的「补满 15 槽」方案废弃——填满后虚拟补位判「无空槽」反而不补人）：角色由测试者在自设里手动配置，空槽交给 `gt_Init2` 虚拟补位。命令注册 = `TriggerCreate` + `TriggerAddEventChatMessage(trigger, c_playerAny, "-solo", false)`，在 `InitTriggers` 调用 `gt_BHSolo_Init();`。
 
 ### 占位玩家与 -prefer 优选
 
@@ -404,11 +381,10 @@ python3 tools/boot2_build.py --out work/boot2-shw141.SC2Map      # 基线/脚本
 
 `-prefer`（原图自带的优选命令，按**拼音**匹配 `gv_roleNameInput[池][角色]`）：
 
-- 命令：`-prefer yingwuzhe`，多个用逗号：`-prefer yingwuzhe,shimin`
-- 原图限制：需要 `gv_oP[玩家][1] == true`（会员），非会员扣 500 积分；测试构建下两处都已放开（`gt_Prefer_Func`，约 65210 / 65251 行）
-- `-solo` 会 `TriggerEnable(gt_Prefer, true)`（该触发器在别处会被关闭）
-- **新角色必须设置拼音名**：`gv_roleNameInput[池][角色] = "xxx";`，否则 `-prefer` 找不到它（影武者 = `yingwuzhe`）
-- **测试构建下 prefer 必中（预锁，shw77 起）**：真实分发在 `gf_OSComputeOptions`（同函数兼营大厅几率模拟，`gv_emulate` 区分）。玩家按**随机顺序**处理、无 prefer 的电脑会随机占槽，原 solo 强制块轮到时槽已被占即静默落空（"将被首选"只是登记确认，不代表生效）。现为 `gf_OSRandomize` 之后预锁：`lv_bhPreferSlot[玩家]=槽`/`lv_bhReserved[槽]`，有 prefer 者强制改抽锁定槽，无 prefer 者抽到被锁槽拒绝重抽。**新增角色无需为此改动**，拼音存在即可被锁。
+- 命令：`-prefer yingwuzhe`，多个用逗号（`-prefer yingwuzhe,shimin`）
+- 原图限制：需 `gv_oP[玩家][1] == true`（会员），非会员扣 500 积分；测试构建下两处已放开（`gt_Prefer_Func`，~65210/65251）
+- **新角色必须设拼音名**：`gv_roleNameInput[池][角色] = "xxx";`（影武者 = `yingwuzhe`），否则 `-prefer` 找不到它
+- **测试构建下 prefer 必中（预锁，shw77 起）**：真实分发在 `gf_OSComputeOptions`（同函数兼营大厅几率模拟，`gv_emulate` 区分），玩家按随机顺序处理、无 prefer 的电脑随机占槽，原 solo 强制块轮到时槽已被占即静默落空（"将被首选"只是登记，不代表生效）。现为 `gf_OSRandomize` 之后预锁：`lv_bhPreferSlot[玩家]=槽`/`lv_bhReserved[槽]`，有 prefer 者强制改抽锁定槽、无 prefer 者抽到被锁槽拒绝重抽。**新增角色无需改动**，拼音存在即可被锁。
 
 ## 环境
 
@@ -430,30 +406,30 @@ python3 tools/boot2_build.py --out work/boot2-shw141.SC2Map      # 基线/脚本
 | `docs/BLACKHAND-ORIGINAL.md` | 原图逆向笔记（流程、计时、数据模型） |
 | `docs/GALAXY-PIPELINE.md` | Galaxy 直写、打包、启动链路技术细节 |
 | `docs/SHADOW-ROLE.md` | 影武者实现规格（作为"新角色"样板） |
-| `docs/HANDOFF-SHADOW.md` | **影武者接入交接文档**：当前损坏状态、槽位误判（池3/18=小金执行者）、自设面板双硬编码机制、重置方案与重做清单 |
-| `docs/HANDOFF-NEXT.md` | **【先读这份】** 当前进度交接：影武者/观察者/预设均已接入，最新部署 shw85（捕风捉影=锁定???随机子变体 A-D；影武者目标转换规则：女巫替换/switched 解析只作用于目标一），含逐版改动记录与待验证点 |
+| `docs/HANDOFF-SHADOW.md` / `docs/HANDOFF-NEXT.md` | **历史交接文档（已过期，停在 shw85 前后）**：影武者接入、槽位误判、自设面板双硬编码、目标转换规则等背景资料，只作追溯 |
 
 ### 审判台免死与处决点体系（shw114 沉淀，天选者 3/32）
 
-- **处决只有一个收口函数 `gf_EExecution`**，但有 9 个调用点：`gf_CheckVoteWin` 直决 lynType（3 处 lv_winner + 1 处缩进 20）、marshalled/court 路径、`gf_Trial` 的 `trialDefense==false` 自动处决（2 处）、`gf_TrialVoteResults` 有罪判决（1 处）、marshalled 命中 `lv_hit` 路径。**每处都要单独包守卫**（行级精确匹配包 else，不要子串替换——20 空格行会含 12 空格子串）。
-- **审判有罪判决的免死走「重定向到无罪分支」**：把 `gf_TrialVoteResults` 的 `if (有罪)` 条件追加 `&& !protected`，免死者在 else（无罪）分支开头做揭露广播——无罪分支自带「放下台走回座位+白天继续投票+结束进夜」的完整恢复逻辑，**不要**在有罪分支里跳过 EExecution（那会让白天流程悬死）。直决路径的免死则用 `gf_TXSpare`（揭露+走回+复制 EExecution 的日终尾巴：ASEndActions/TriggerStop(gt_DaySequence)/CheckEnd→NightTransition）。
-- **「当天不能再投」= 审判发起点禁投**：在审判发起点（CheckVoteWin 各 lynchType 块 / DaySequence 副本 / `-try` 命令）查 `gf_TXSparedToday`，命中则广播提示。**跳过审判必须同时恢复白天（shw127 事故）**：发起点此时代码已经停了投票面板、（trialPausesDay 时）把昼长改成 90001 并暂停计时器——只广播不恢复 = 白天永久卡死、不上台、模型冻住。恢复用 `gf_TXResumeDay()`（解除计时暂停+还原昼长 + UIClearMessages + trialOn=false + `gf_ASStartVote()`）。`-try` 是手动命令、无暂停/停票前置，只广播不恢复。
-- **洞察机制（shw144）**：`-guess` 猜对时（判定在雷击结算块，`gv_roleNameInput[目标] == gv_txGuess[自己]` 处）`gv_txGuesses[玩家] += 1`：第 1 次私信 `TXGOD1`（你的洞察获得了神明的认可。）；第 2 次私信 `TXGOD2`（…众神给予你一次额外的雷击机会。）并 `gv_txStrikes[玩家] += 1`。**只判 `== 2`** 即天然"整局最多一次"；特性行 `TXBOXGOD` 已挂进天选者角色卡的两处副本（`TXBOXGUESS` 之后、`TXBOXFIXED` 之前，两处必须同步）。
-- **雷击次数的设计决定（用户 2026-09-11 定稿，不要"修正"）**：默认 **3 次**（作者遗留素材 `47843C61` 是 5 次，用户判断「真伤 + 免死同源」下 5 次等于每夜出手、每天免死 → 从头劈到尾，故直接削到 3）。**选项「雷击四次」「雷击五次」保留**（`gv_roleOptions[3][32][2]/[3]`，默认关闭的主机开关）；洞察奖励 `+1` 可与选项叠加，极限配置是 **5+1=6 次**，用户明确接受这个上限（"这是开关，默认关闭，如果有人愿意，他可以设置劈五次"）。改默认值/删选项/加封顶都需先问用户。
-- **`-guess` 的三重前置与「猜测绑定目标」（shw147/148 沉淀）**：0 余额时 `-guess` 在 `gt_TXGuess_Func`（~66230）**存储之前就 return**，猜测根本不会被记录；结算侧天选者块另有独立的 `if ((gv_txStrikes[lv_a] <= 0))` 守卫，`gv_txBlessDay` 只在 `else` 里写 → **无雷击时不可能产生祝福**（UI 层不给按钮只是第三重保险）。另外猜测用 `gv_txGuessTarget[玩家]` **绑定时选中的目标**：结算时要求 `gv_txGuessTarget == gv_action[..][0]` 才判定，否则私信 `TXGUESSVOID`（「猜测只对当时选中的雷击目标生效」）——不做绑定会出现「猜的是 A、祝福却来自杀 B」（换目标，或目标当夜已死导致猜测被带到下一夜）。取消猜测（`-guess` 无参数）与每次真结算都要同时清 `gv_txGuess` 与 `gv_txGuessTarget`。
+- **处决只有一个收口 `gf_EExecution`**，但 9 个调用点：`gf_CheckVoteWin` 直决 lynType（3 处 lv_winner + 1 处缩进 20）、marshalled/court、`gf_Trial` 的 `trialDefense==false` 自动处决（2 处）、`gf_TrialVoteResults` 有罪判决、marshalled 的 `lv_hit`。**每处单独包守卫**，行级精确匹配包 else（不要子串替换——20 空格行含 12 空格子串）。
+- **审判有罪判决的免死走「重定向到无罪分支」**：`gf_TrialVoteResults` 的 `if (有罪)` 追加 `&& !protected`，免死者在 else（无罪）分支开头揭露——无罪分支自带「放下台走回座位+白天继续投票+结束进夜」的完整恢复，**不要**在有罪分支跳过 EExecution（白天流程会悬死）。直决路径的免死用 `gf_TXSpare`（揭露+走回+复制 EExecution 日终尾巴：ASEndActions/TriggerStop(gt_DaySequence)/CheckEnd→NightTransition）。
+- **「当天不能再投」= 在审判发起点禁投**（CheckVoteWin 各 lynchType 块 / DaySequence 副本 / `-try`）查 `gf_TXSparedToday` → 广播提示。**跳过审判必须同时恢复白天（shw127 事故）**：发起点此时已停投票面板、（trialPausesDay 时）把昼长改成 90001 并暂停计时器，只广播不恢复 = 白天永久卡死、不上台、模型冻住。恢复用 `gf_TXResumeDay()`（解除暂停+还原昼长 + UIClearMessages + trialOn=false + `gf_ASStartVote()`）。`-try` 无暂停/停票前置，只广播不恢复。
+- **洞察机制（shw144）**：`-guess` 猜对时（判定在雷击结算块 `gv_roleNameInput[目标] == gv_txGuess[自己]` 处）`gv_txGuesses[玩家] += 1`：第 1 次私信 `TXGOD1`（你的洞察获得了神明的认可。）；第 2 次私信 `TXGOD2`（…众神给予你一次额外的雷击机会。）并 `gv_txStrikes[玩家] += 1`。**只判 `== 2`** 即天然"整局最多一次"；特性行 `TXBOXGOD` 挂在角色卡两处副本（`TXBOXGUESS` 后、`TXBOXFIXED` 前，必须同步）。
+- **雷击次数的设计决定（用户 2026-09-11 定稿，不要"修正"）**：默认 **3 次**（作者遗留素材 `47843C61` 是 5 次；用户判断「真伤 + 免死同源」下 5 次 = 每夜出手 + 每天免死 → 从头劈到尾，故削到 3）。**选项「雷击四次/五次」保留**（`gv_roleOptions[3][32][2]/[3]`，默认关闭的主机开关）；洞察 `+1` 可与选项叠加，极限 **5+1=6 次**，用户明确接受（"这是开关，默认关闭"）。改默认值/删选项/加封顶都要先问用户。
+- **`-guess` 的三重前置与「猜测绑定目标」（shw147/148）**：0 余额时 `-guess` 在 `gt_TXGuess_Func`（~66230）**存储之前就 return**（猜测根本不记录）；结算侧天选者块另有 `if ((gv_txStrikes[lv_a] <= 0))` 守卫，`gv_txBlessDay` 只在 `else` 写 → **无雷击不可能产生祝福**（不给按钮只是第三重保险）。猜测用 `gv_txGuessTarget[玩家]` **绑定时选中的目标**：结算要求 `gv_txGuessTarget == gv_action[..][0]`，否则私信 `TXGUESSVOID`（「猜测只对当时选中的雷击目标生效」）——不绑定会出现「猜 A、祝福来自杀 B」（换目标或目标当夜已死把猜测带到下一夜）。取消猜测与每次真结算都要同时清 `gv_txGuess` 与 `gv_txGuessTarget`。
 - **警长的「可查出X」开关体系与探员枚举（shw149 沉淀）**：
   - **开关槽位**：警长 = 池 1 / 角色 2，`gv_roleOptionExists/Important/Text/Options[1][2][i]` 四件套。原图 0–6 依次为 黑手D三合会 / 连环爱手(3,1) / 纵火者(3,5) / 协教徒(3,8,3,10) / 爱人狂(3,9) / 瘟疫散布者(3,14) / 冤魂(3,15)；自加 **7=影武者(3,31)**、**8=天选者(3,32)**、**9=堕落审判者(3,13)**，默认全部 `true`。
   - **消费点**：`gf_SequenceKills` 警长段（约 13575–13645）是一条 **if/else 链**，每项形如 `if ((gv_roles[gv_visitation[lv_a]][1] == 3) && (gv_roles[gv_visitation[lv_a]][0] == N) && (gv_roleOptions[1][2][i] == true))` → 播报「你的目标是一个 <角色>!」；链尾兜底 `D125BE9B`「你的目标不可疑。」。**漏接分支 = 警长查到该中立致命却报「不可疑」**（堕落审判者当年就是这个状态）。
-  - **帮助面板只画 0..6**：`gf_MakeHelpMenu` 里两条选项行循环的上界常量 `autoCD856455_ae`（角色卡分支）与 `auto2687B3BB_ae`（随机组分支）原为 **6**，必须同步放宽到最大槽位号，否则新开关**看不见**（影武者当年的 `SHWSW` 就是这样隐身了一整个版本）。**自设面板（`gf_OS…`/`gt_OSCheckboxes_Func`）只支持 0..6**：行用的是 `gv_rolePanelItem[lv_a+2]`（勾选框）与 `[lv_a+7]`（文字），而 `gv_rolePanelItem` 是 `int[14]` → `lv_a+7 ≤ 13` ⇒ **索引 7/8/9 无法在自设面板里勾选**，只能是帮助面板可见 + 默认值生效（影武者/天选者/堕落审判者目前都是默认开启、不可关）。
-  - **卡片特性行**：警长卡的特性链在同一函数内（约 41414–41475，「犯罪记录」行 `A5BA7399` 之前按 `gv_roleOptions[1][2][i]` 逐项 `if (lv_c == true) 追加 <n/>- 行 else 首行`），新增开关**必须同时补特性行**，否则开关栏有、特性栏没有（影武者当年缺的就是这行）。
-  - **撰写补丁铁律**：往既有槽位序列尾部追加新槽位时，锚点行必须**保留**——写 `old → old + new`，不要写 `old → new`。shw149 首次补丁把 `gv_roleOptionsText[1][2][7] = SHWSW` 整行替换掉，影武者的开关文字变空，靠落点打印才发现。
-  - **探员枚举（`gv_roleInvestigatorArray` 的线索文本）**：每个类别的线索是「你的目标…」+「他像是个 A、B、C」两句，**共享键**（判断力 = `BD8909A7` + `4881041F`；风衣/侦探类 = `CE7E2D14` + `F2239D82`）。新增角色时**要把它加进对应类别的枚举**，否则玩家永远猜不到这个角色（天选者就漏了）。**规则（用户明确）：枚举里被单独点名的应是中立致命之类值得怀疑的角色，城镇角色不要写进去**——观察者是城镇，故不进风衣名单；阵营由线索首句覆盖。基线里 `89AB9993` 与 `4881041F` 同文但**脚本零引用**（死键），只覆盖真正被引用的那个。
+  - **帮助面板只画 0..6**：`gf_MakeHelpMenu` 里两条选项行循环上界 `autoCD856455_ae`（角色卡分支）与 `auto2687B3BB_ae`（随机组分支）原为 **6**，必须放宽到最大槽位号，否则新开关**看不见**（影武者的 `SHWSW` 因此隐身了一整个版本）。**自设面板（`gf_OS…`/`gt_OSCheckboxes_Func`）只支持 0..6**：行用 `gv_rolePanelItem[lv_a+2]`（勾选框）与 `[lv_a+7]`（文字），而该数组是 `int[14]` ⇒ **索引 7/8/9 无法在自设面板勾选**，只能「帮助面板可见 + 默认值生效」（影武者/天选者/堕落审判者目前都默认开启、不可关）。
+  - **卡片特性行**：警长卡特性链在同一函数（~41414–41475，「犯罪记录」行 `A5BA7399` 之前按 `gv_roleOptions[1][2][i]` 逐项 `if (lv_c == true) 追加 <n/>- 行 else 首行`），新增开关**必须同时补特性行**（影武者当年缺的就是这行）。
+  - **撰写补丁铁律**：往既有槽位序列尾部追加新槽位时锚点行必须**保留**——写 `old → old + new`，不要 `old → new`（shw149 首次补丁把 `gv_roleOptionsText[1][2][7] = SHWSW` 整行换掉 → 影武者开关文字变空，靠落点打印才发现）。
+  - **探员枚举**：类别线索 = 「你的目标…」+「他像是个 A、B、C」两句，**共享键**（判断力 `BD8909A7` + `4881041F`；风衣 `CE7E2D14` + `F2239D82`）。新增角色**要加进对应类别枚举**，否则玩家永远猜不到（天选者就漏了）。**规则（用户明确）：被单独点名的应是中立致命之类值得怀疑的角色，城镇角色不写进去**——观察者是城镇故不进风衣名单，阵营由线索首句覆盖。基线 `89AB9993` 与 `4881041F` 同文但**零引用**（死键），只覆盖真正被引用的那个。
 - 新命令注册样板：`gt_TXGuess_Init()`（TriggerCreate+TriggerAddEventChatMessage）+ 在 `InitTriggers` 跟随 `gt_Prefer_Init();` 调用；输入解析用 `StringReplaceWord(StringSub(EventChatMessage(false), …), " ", …)` + `StringCase(s,false)` 转小写后与 `gv_roleNameInput[池][号]` 比对。
-- 拼音匹配循环共 3 处需随 >30 号角色放宽：Prefer `autoA667E0B3_ae`、Blacklist `auto06C73FD2_ae`、Init2 黑名单校验 `auto6D231E76_ae`；另 gf_OSLoadBase64/gf_OSInitializeOptionsScreen/gf_OSCloseOptionsScreen/gt_OSVariantsMenuConfirm 四处角色循环 + `gf_OSGenerateChances` 5 处几率循环 + 槽位加载校验 `> 31` 同步放宽到新角色号。
-- 验尸官死因字母码新增时：扫描块（~13809）逐字母 if 链里加分支；`T`/`X` 已被占用（Trap/Kill 等），天选者用 `G`。
-- **循环上界放宽前必须确认循环体访问的数组身份（shw115 事故）**：Batch A 曾把 4 处 `auto*_ae = 31→32` 一律当角色循环放宽，实际 `auto3508CF23`(gf_OSLoadBase64)/`autoD02CB81C`(gf_OSInitializeOptionsScreen)/`autoAA8D2539`(gf_OSCloseOptionsScreen)/`auto74E062BB`(gt_OSVariantsMenuConfirm) 遍历的是 **`gv_optionsPanelItem`（`int[32]`，最大下标 31 的面板按钮数组）**——[32] 越界 ScriptError 打断选项屏初始化，整个自设/变体选择框全部消失。修正=回退 31（shw115）。教训：**改上界前先看循环体第一行访问的数组名和声明维度**（`gv_optionsPanelItem[32]`、`gv_blacklist[16][26]`、`gv_roleChance[9][41]`），角色数组（roleNameArray 等 [6][41]）才能放宽。另 Init2 的 `auto6D231E76` 是黑名单分词槽循环（写 `gv_blacklist[..][lv_b]`，维度 26），31 本就越界属基线噪声，与角色号无关，勿动。
-- **帮助面板卡片底色（shw146）**：F1 帮助面板顶部那排角色小卡（`gv_roleHelpPanelItem[lv_x][0]`，贴图 `ui_waiting_playericon.dds`）的**底色是 `gf_MakeHelpMenu` 里逐角色硬编码的 `Color(...)`**，且中立池（`lv_category == 3`）的链**只写到角色 16**——新增中立角色（31 影武者 / 32 天选者）会保持创建色 = **白色**。补法：在角色 13 分支之后、`CreateDialogItemLabel` 之前插入 `if ((lv_role == N))` 分支，设置 ①`lv_t[5] = StringExternal("Param/Value/<角色>CARD")`——该键内容形如 `<c val="RRGGBB">`，用来给卡片右下角的**拼音首字母**上色（配套 `01EDEAB5` = `</c>`）；②`libNtve_gf_SetDialogItemColor(gv_roleHelpPanelItem[lv_x][0], Color(R,G,B), PlayerGroupAll())`。`Color` 是 0–100 分量（`C0C0C0` → `75.29`）。角色循环 `autoDDE9B838` 从 32 **往下**数，所以这两张卡正是面板最左边两张。
-- **克隆卡片分支时锚点必须含分支闭合（shw117 事故）**：Batch A 把 (3,32) 角色卡分支插在影武者 (3,31) 分支**内部**（SHWBOX5 条件之后、SHWBOX7 无条件尾巴之前）——外层 if 要求角色 31、内层要求 32 永远互斥，分支成死代码，角色卡全空但配平/条目数校验都发现不了（嵌套不破坏计数）。**插入角色分支的正确锚点 = 影武者分支的 `SoundPlay(SoundLink("Hercules_What"...));` + 其闭合 `}` 之后**；校验要打印插入点前后各 10 行确认「上一行的 `}` 闭合的是影武者分支」。
-- **数量型文案 + 选项开关（shw120）**：文案里的数字随开关变化时，不要写死一个键——按选项分支选 3/4/5 三个键（卡片）或 `IntToText` 组装（夜 tip「你有X次…」）。数值本体（雷击次数 `gv_txStrikes`）在**角色卡分支里按选项赋值**（卡片函数游戏开始时每玩家执行一次，选项此时已定稿；帮助面板以 lv_a=0 调用同函数，写 `[0]` 无害）。`-guess` 无参数=取消：聊天注册只挂 `"-guess"`（不带尾空格），解析 `StringSub(msg, 7, …)` 空串即取消——一个注册同时覆盖带参与不带参，避免双事件重复触发。全场红字=键内嵌 `<c val="FF0000">`、`gf_CBSystemMessage` 的 Color 参数保持 `(0,0,0)`（与原图 90AC4EBA 杀人广播一致）。 **公屏文本必须自带 `<s val="ModLeftSize16">…</s>` 样式标签（shw129 沉淀）**：`-magnify` 的实现是 `gf_CBMagnifyText` 对公屏对话框里已渲染文本做**样式标签字符串替换**（`gf_ELAddMessage`/`gf_CBSystemMessage` 收到 `gv_magnified` 标志时按大小档替换标签）——没带标签的自加广播不会跟随公屏放大。原图广播模板 = `<s val="ModLeftSize16"><c val="FF0000">文本</c></s>`；跨键拼接的整行（如 TXREV1+名字+TXREV2）把开标签放首键尾、闭标签放末键尾。
-- **特性行换行规范（shw124 事故）**：原图没有「纯换行」共用键。给 `gv_roleBoxText[][2]` 追加多行时，把 `<n/>` 写进**每个键内容的开头**，代码侧逐键 `+ StringExternal(...)` 即可；不要复用任何原图键当换行前缀（先解包确认键内容再用——`4467A310`/`1045F9FD` 是「你拥有夜间无敌」行，被误当换行键后每行开头都会重复这句）。
-- **`gv_roleNameArray` 元素是 `text` 不是 `string`（shw123 事故）**：临时变量接收 `roleNameArray[..][..]`（StringExternal 返回 text）必须声明 `text`，否则脚本读取失败「不正确的类型（不允许进行隐式强制转换）」并红屏。配套规则：text 判空用 `== null`（不能用 `== ""`）、初始化 `lv_r = null;`、拼接直接 `+ lv_r +`；`StringToText()` 只用于 string→text 转换。同样注意 `gv_roleNameInput` 是 string（拼音比对不受影响）。
+- 拼音匹配循环 3 处随 >30 号角色放宽：Prefer `autoA667E0B3_ae`、Blacklist `auto06C73FD2_ae`、Init2 黑名单校验 `auto6D231E76_ae`；另 `gf_OSGenerateChances` 5 处几率循环 + 槽位加载校验 `> 31` 同步放宽（**注意不是** `gf_OSLoadBase64`/`gf_OSInitializeOptionsScreen`/`gf_OSCloseOptionsScreen`/`gt_OSVariantsMenuConfirm` 四处——见下条 shw115）。
+- 验尸官死因字母码：扫描块（~13809）逐字母 if 链加分支；`T`/`X` 已占用，天选者用 `G`。
+- **循环上界放宽前必须确认循环体访问的数组身份（shw115 事故）**：曾把 4 处 `auto*_ae = 31→32` 一律当角色循环放宽，实际 `auto3508CF23`(gf_OSLoadBase64)/`autoD02CB81C`(gf_OSInitializeOptionsScreen)/`autoAA8D2539`(gf_OSCloseOptionsScreen)/`auto74E062BB`(gt_OSVariantsMenuConfirm) 遍历的是 **`gv_optionsPanelItem`（`int[32]`）** → [32] 越界 ScriptError 打断选项屏初始化，整个自设/变体选择框消失；修正=回退 31。教训：**改上界前先看循环体第一行访问的数组名与维度**（`gv_optionsPanelItem[32]`、`gv_blacklist[16][26]`、`gv_roleChance[9][41]`），只有角色数组（roleNameArray 等 `[6][41]`）能放宽。`auto6D231E76` 是黑名单分词槽循环（写 `gv_blacklist[..][lv_b]`，维度 26），31 本就越界属基线噪声，勿动。
+- **帮助面板卡片底色（shw146）**：F1 帮助面板顶部那排小卡（`gv_roleHelpPanelItem[lv_x][0]`，贴图 `ui_waiting_playericon.dds`）的底色是 `gf_MakeHelpMenu` 里**逐角色硬编码的 `Color(...)`**，且中立池（`lv_category == 3`）的链**只写到角色 16**——新增中立角色（31/32）保持创建色 = **白色**。补法：在角色 13 分支之后、`CreateDialogItemLabel` 之前插 `if ((lv_role == N))`，设 ①`lv_t[5] = StringExternal("Param/Value/<角色>CARD")`（内容形如 `<c val="RRGGBB">`，给卡片右下角**拼音首字母**上色，配套 `01EDEAB5` = `</c>`）②`libNtve_gf_SetDialogItemColor(gv_roleHelpPanelItem[lv_x][0], Color(R,G,B), PlayerGroupAll())`。`Color` 是 0–100 分量（`C0C0C0` → `75.29`）。循环 `autoDDE9B838` 从 32 **往下**数 → 这两张卡是最左边两张。
+- **克隆卡片分支时锚点必须含分支闭合（shw117 事故）**：(3,32) 分支曾被插进影武者 (3,31) 分支**内部**（SHWBOX5 条件之后、SHWBOX7 无条件尾巴之前）——外层要 31、内层要 32 永远互斥 → 死代码，角色卡全空但配平/条目数校验都发现不了（嵌套不破坏计数）。**正确锚点 = 影武者分支的 `SoundPlay(SoundLink("Hercules_What"...));` + 其闭合 `}` 之后**，并打印插入点前后各 10 行确认「上一行的 `}` 闭合的是影武者分支」。
+- **数量型文案 + 选项开关（shw120）**：数字随开关变化的文案不要写死一个键——按选项分支选 3/4/5 三个键（卡片）或 `IntToText` 组装（夜 tip「你有X次…」）。数值本体（`gv_txStrikes`）在**角色卡分支里按选项赋值**（卡片函数开局每玩家执行一次，选项此时已定稿；帮助面板以 lv_a=0 调用同函数，写 `[0]` 无害）。`-guess` 无参数=取消：聊天注册只挂 `"-guess"`（不带尾空格），解析 `StringSub(msg, 7, …)` 空串即取消——一个注册覆盖带参与不带参，避免双事件重复触发。全场红字 = 键内嵌 `<c val="FF0000">`、`gf_CBSystemMessage` 的 Color 参数保持 `(0,0,0)`（同原图 90AC4EBA 杀人广播）。
+- **公屏文本必须自带 `<s val="ModLeftSize16">…</s>`（shw129）**：`-magnify` 的实现是 `gf_CBMagnifyText` 对公屏对话框里**已渲染文本做样式标签字符串替换**（`gf_ELAddMessage`/`gf_CBSystemMessage` 收到 `gv_magnified` 标志时按大小档替换标签）→ 没带标签的自加广播不跟随放大。原图模板 = `<s val="ModLeftSize16"><c val="FF0000">文本</c></s>`；跨键拼接的整行（如 TXREV1+名字+TXREV2）开标签放首键尾、闭标签放末键尾。
+- **特性行换行规范（shw124 事故）**：原图没有「纯换行」共用键。给 `gv_roleBoxText[][2]` 追加多行时把 `<n/>` 写进**每个键内容开头**，代码侧逐键 `+ StringExternal(...)`；不要复用任何原图键当换行前缀（先解包确认键内容——`4467A310`/`1045F9FD` 是「你拥有夜间无敌」行，被误当换行键后每行都会重复这句）。
+- **`gv_roleNameArray` 元素是 `text` 不是 `string`（shw123 事故）**：临时变量接 `roleNameArray[..][..]`（StringExternal 返回 text）必须声明 `text`，否则脚本读取失败「不正确的类型（不允许进行隐式强制转换）」并红屏。配套：text 判空用 `== null`（不能 `== ""`）、`lv_r = null;` 初始化、拼接直接 `+ lv_r +`；`StringToText()` 只用于 string→text。注意 `gv_roleNameInput` 是 string（拼音比对不受影响）。
