@@ -30,6 +30,7 @@
 | 天选者(3/32) 规格、洞察/雷击/免死、新角色 UI 坑 | 「天选者 雷击 guess 洞察 卡片底色 换行」 |
 | 审判台免死、处决点、跳过审判恢复白天 | 「审判台 免死 处决 gf_EExecution gf_TXResumeDay」 |
 | 角色号 >30 要放宽的上界、死因字母码、命令注册 | 「上界 放宽 数组身份 shw115 验尸官 字母码 命令注册」 |
+| 夜间按钮点不动、行动面板接线、角色首胜与 -alist、诬陷/栽赃 | 「行动面板 gv_variableOptions 栽赃者 诬陷 首胜 gv_bankRoleAchievements」 |
 
 ## 铁律
 
@@ -82,7 +83,8 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 
 验证：游戏内 `File → Test Document` → 看 `Documents\StarCraft II\GameLogs\*ScriptError.txt`（只看最近一次）；`Script compile error` 必修，运行期参数错误先对照原版同类角色判断是否为原图自带。
 
-- 测试指令 `-reveal`（`gt_BHRevealRoles`，仅主机、游戏开始后）私密列出全部玩家**带色名字**（电脑N，N=玩家编号；投票面板左侧是楼层序，与编号无关）+ 角色名，用于验证调查结果/案底等。
+- 测试指令 `-reveal`（`gt_BHRevealRoles`，游戏开始后；**shw179 起仅管理员 `gv_oP[..][7]` 与二改作者 handle 可用，主机不再可用**）私密列出全部玩家**带色名字**（电脑N，N=玩家编号；投票面板左侧是楼层序，与编号无关）+ 角色名，用于验证调查结果/案底等。
+- **测试指令在发布构建里静默失效**（shw179）：`c_bhSoloBuild = false` 时 `-solo`、`-italictest` 直接 return（不报错、不生效）；`c_bhSoloFill` 关掉后开局不再自动补「电脑N」，要单人开满席请在大厅手动加电脑。
 - 运行期报错先分新旧：`triggerControl(值:0)`、`StringWord(值:0)`、`CameraSetBounds region(值:0)`、`gv_roll点冷却 int[2] 越界` 等均为基线/单人测试固有，不是新改动引入。
 
 ## 角色文案与设计规范
