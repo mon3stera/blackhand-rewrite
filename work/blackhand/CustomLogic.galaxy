@@ -33729,6 +33729,13 @@ void gf_TXBanMsg (int lp_player) {
 }
 
 void gf_TXResumeDay () {
+    // Automatic Variable Declarations
+    playergroup autoTXRES_g;
+    int autoTXRES_var;
+
+    // Variable Initialization
+
+    // Implementation
     if ((gv_trialPausesDay == true)) {
         TimerPause(gv_overtimer, false);
         GameTimeOfDaySetLength(gv_tempLength);
@@ -33736,6 +33743,17 @@ void gf_TXResumeDay () {
 
     UIClearMessages(PlayerGroupAll(), c_messageAreaDirective);
     gv_trialOn = false;
+    // shw167：恢复白天必须把发言权还回去——白天投票判出「上台者」时对全场禁言（7947 行），
+    // 而「今天已被庇护、不能再被处决」的阻止分支（8112/8131/8388/71873）只播报不审判，
+    // 漏掉这一步就会全场失声，直到下一次审判结束或次日白天开始才恢复（玩家实测：天选者被揭示后再被投上台触发）
+    // 写法与「审判结束但未处决」的正常收尾（9438-9455）保持一致
+    autoTXRES_g = PlayerGroupAll();
+    autoTXRES_var = -1;
+    while (true) {
+        autoTXRES_var = PlayerGroupNextPlayer(autoTXRES_g, autoTXRES_var);
+        if (autoTXRES_var < 0) { break; }
+        gf_CBAllowDisallowChatting(autoTXRES_var, ge_Allow_Allow);
+    }
     gf_ASStartVote();
 }
 
