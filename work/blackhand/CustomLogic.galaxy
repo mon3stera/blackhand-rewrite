@@ -4850,7 +4850,6 @@ void gf_InitializeVariables () {
     gv_roleOptions[3][13][1] = true;
     gv_roleOptionsText[3][13][1] = StringExternal("Param/Value/04B49A5F");
     gv_roleOptions[3][13][10] = true;
-    gv_e78AAFE7BDAAE58FAFE883BD[3][13] = StringExternal("Param/Value/DBSCRIME");
     gv_roleOptionExists[3][12][0] = true;
     gv_roleOptionExists[3][12][1] = true;
     gv_roleOptionExists[3][12][2] = true;
