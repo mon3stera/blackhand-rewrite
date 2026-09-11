@@ -10,6 +10,7 @@ shw154 事故沉淀：少了样式表那件 → 名字里的斜体标签找不�
      缺它 = `<i>` 名字经 gf_BHItalicize 改写成 `<s val="ModItalic">` 后无样式可查 → 不渲染斜体）
   4. 合并自加 GameStrings（work/blackhand/strings-*.txt → zhCN.SC2Data\\LocalizedData\\GameStrings.txt）
   5. 写回 BankList.xml（tools/banklist_fix.py；缺它 = BankLoad 永远读空 → 每局清档）
+  6. 补丁说明 + 加载页面（tools/bh_meta.py 读 work/blackhand/patch-notes.txt，可重复执行）
 
 **不要用 tools/sc2pack.py**（boot2 系会剥触发器，shw96 事故）。
 
@@ -31,12 +32,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / 'tools'))
 
+import bh_meta  # noqa: E402
 import sc2map  # noqa: E402
 
 ZH_STRINGS = r'zhCN.SC2Data\LocalizedData\GameStrings.txt'
 DEFAULT_BASE = ROOT / 'work' / 'boot2-user.SC2Map'
 DEFAULT_GALAXY = ROOT / 'work' / 'blackhand' / 'CustomLogic.galaxy'
 STRINGS_GLOB = 'work/blackhand/strings-*.txt'
+NOTES_SRC = ROOT / 'work' / 'blackhand' / 'patch-notes.txt'
 
 # 样式表（斜体等自定义 GameText 样式的定义处）：按 Style name 增量并入包内同名成员
 STYLE_MEMBER = 'NewFontStyles.SC2Style'
@@ -186,6 +189,7 @@ def main() -> int:
     ap.add_argument('--galaxy', default=str(DEFAULT_GALAXY))
     ap.add_argument('--strings', nargs='*', default=None, help='自加文案文件（默认 work/blackhand/strings-*.txt）')
     ap.add_argument('--skip-strings', action='store_true', help='不合并文案（仅当基线已含全部累积键时）')
+    ap.add_argument('--skip-notes', action='store_true', help='不写补丁说明/加载页面（仅供验证包）')
     args = ap.parse_args()
 
     out = Path(args.out)
@@ -230,25 +234,46 @@ def main() -> int:
     dds = write_dds(out)
     print(f"5) 根目录贴图 {len(dds)} 张 ← {DDS_DIR.name}/: {dds}")
 
-    # 6) 合并自加文案
+    # 6) 补丁说明 + 加载页面（写 DocumentHeader/DocumentInfo；zhCN 行并入下面的文案合并，
+    #    因为 MPQ 每次写成员都是追加、旧数据不回收，同一成员一次构建只能写一次）
+    notes_missing = []
+    if NOTES_SRC.exists() and not args.skip_notes:
+        res, extra = bh_meta.apply_file(out, NOTES_SRC, defer_strings=True)
+        print(f"6a) 补丁说明 {[v for v, _, _ in res]}；加载页面已同步 ← {NOTES_SRC.name}")
+    else:
+        extra = {}
+        print('6a) 补丁说明 跳过')
+
+    # 7) 合并自加文案
     entries = {}
     if not args.skip_strings:
         paths = [Path(p) for p in args.strings] if args.strings else sorted(ROOT.glob(STRINGS_GLOB))
         assert paths, '找不到任何 strings 源文件'
         entries = collect_strings(paths)
-        print(f"6) 合并文案 {len(entries)} 条 ← {[p.name for p in paths]}")
+        entries.update(extra)
+        print(f"7) 合并文案 {len(entries)} 条 ← {[p.name for p in paths]}（含补丁说明/加载页面）")
 
         merged = sc2map.merge_strings(sc2map.read(out, ZH_STRINGS), entries)
         sc2map.write(out, ZH_STRINGS, merged)
 
-    # 7) BankList 预加载表
+    # 8) BankList 预加载表
     fix = subprocess.run([sys.executable, str(ROOT / 'tools' / 'banklist_fix.py'), str(out)],
                          capture_output=True, text=True)
-    print(f"7) {fix.stdout.strip() or fix.stderr.strip()}")
+    print(f"8) {fix.stdout.strip() or fix.stderr.strip()}")
 
     if fix.returncode != 0:
         print('✗ banklist_fix 失败，停止')
         return 1
+
+    b = bh_meta.budget(out) if NOTES_SRC.exists() and not args.skip_notes else None
+    if b:
+        print(f"   说明：最新 5 版 {b['shown_lines']}/100 行，最长 {b['longest'][0]}/140 字符")
+        for line in NOTES_SRC.read_text(encoding='utf-8').splitlines():
+            if not line.strip() or line.lstrip().startswith('#') or line.startswith('@release'):
+                continue
+            num = line.split('\t')[0].split('  ')[0].strip()
+            if not re.search(rf'^DocInfo/PatchNote{int(num):03d}=', sc2map.read(out, ZH_STRINGS).decode('utf-8-sig'), re.M):
+                notes_missing.append(num)
 
     # 回读校验
     zh = sc2map.read(out, ZH_STRINGS).decode('utf-8-sig')
@@ -262,10 +287,15 @@ def main() -> int:
 
     print(f"   回读: zhCN {len(zh.splitlines())} 行；Triggers={'Triggers' in files}；"
           f"BankList={'BankList.xml' in files}；自加键缺失={missing or '无'}；"
-          f"样式缺失={style_missing or '无'}；字体缺失={font_missing or '无'}；贴图缺失={dds_missing or '无'}")
+          f"样式缺失={style_missing or '无'}；字体缺失={font_missing or '无'}；贴图缺失={dds_missing or '无'}；"
+          f"说明缺失={notes_missing or '无'}")
 
     if missing:
         print('✗ 自加键缺失，界面会显示原始键名')
+        return 1
+
+    if notes_missing:
+        print('✗ 补丁说明缺失，地图详情里看不到这几条')
         return 1
 
     if style_missing:
@@ -282,6 +312,20 @@ def main() -> int:
 
     print(f"✓ 打包完成 {out}  ({out.stat().st_size} 字节)")
     return 0
+
+
+def _guarded() -> int:
+    try:
+        return main()
+    except BaseException:
+        out = next((a.split('=', 1)[1] for a in sys.argv[1:] if a.startswith('--out=')), None)
+        if out is None and '--out' in sys.argv:
+            i = sys.argv.index('--out')
+            out = sys.argv[i + 1] if i + 1 < len(sys.argv) else None
+        if out and Path(out).exists():
+            Path(out).unlink()
+            print(f'✗ 打包中断，已删除半成品 {out}')
+        raise
 
 
 if __name__ == '__main__':

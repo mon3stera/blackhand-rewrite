@@ -31,6 +31,7 @@
 | 审判台免死、处决点、跳过审判恢复白天 | 「审判台 免死 处决 gf_EExecution gf_TXResumeDay」 |
 | 角色号 >30 要放宽的上界、死因字母码、命令注册 | 「上界 放宽 数组身份 shw115 验尸官 字母码 命令注册」 |
 | 夜间按钮点不动、行动面板接线、角色首胜与 -alist、诬陷/栽赃 | 「行动面板 gv_variableOptions 栽赃者 诬陷 首胜 gv_bankRoleAchievements」 |
+| 改地图详情 / 补丁说明 / 加载页面文本（不经过编辑器） | 「补丁说明 DocInfo PatchNote DocumentInfo 加载页面 LoadingScreen bh_meta」 |
 
 ## 铁律
 
@@ -152,13 +153,15 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 **boot2 系列只能用「复制上一版 + `sc2map.write` 直写 CustomLogic.galaxy」，绝不能用 `tools/sc2pack.py`**（shw96 事故：触发器读到旧脚本 → 「脚本读取失败：无法找到函数」+ UI layout 红字）。标准做法：
 
 ```bash
-python3 tools/boot2_build.py --out work/boot2-<name>.SC2Map      # 七件套 + 全部回读断言
+python3 tools/boot2_build.py --out work/boot2-<name>.SC2Map      # 八件套 + 全部回读断言
 ```
 
-七件套（BankList 那件的根因见记忆）：①复制基线 `work/boot2-user.SC2Map`（**不要覆盖**）②直写工作区脚本（打包前自动跑 `galaxy_lint.py`，不过不打包）③并入样式表 `work/blackhand/NewFontStyles.SC2Style`（斜体 `ModItalic` 的定义处；漏 = 名字里的 `<i>` 改写后无样式可查、不斜体，shw88–153 一直是这个状态）④并入包内字体 `work/blackhand/fonts/` → `Fonts\*.ttf`（斜体字面，OFL 许可文本一起分发；漏 = 斜体回落到游戏字体）⑤自加贴图 `data/*.dds` → 包内**根目录**（自加胜利图；漏 = 结算画面按图名找不到贴图，shw100–168 一直缺 shw98 那两张）⑥合并 `strings-*.txt` → 包内 **zhCN** 表（漏 = 界面满是 `Param/Value/XXX` 原始键；`sc2map.GAME_STRINGS` 指的是 enUS，别拿它校验）⑦`banklist_fix.py` 写回 `BankList.xml`（漏 = 每局清档）。
+八件套（BankList 那件的根因见记忆）：①复制基线 `work/boot2-user.SC2Map`（**不要覆盖**）②直写工作区脚本（打包前自动跑 `galaxy_lint.py`，不过不打包）③并入样式表 `work/blackhand/NewFontStyles.SC2Style`（斜体 `ModItalic` 的定义处；漏 = 名字里的 `<i>` 改写后无样式可查、不斜体，shw88–153 一直是这个状态）④并入包内字体 `work/blackhand/fonts/` → `Fonts\*.ttf`（斜体字面，OFL 许可文本一起分发；漏 = 斜体回落到游戏字体）⑤自加贴图 `data/*.dds` → 包内**根目录**（自加胜利图；漏 = 结算画面按图名找不到贴图，shw100–168 一直缺 shw98 那两张）⑥**补丁说明 + 加载页面**：`tools/bh_meta.py` 读 `work/blackhand/patch-notes.txt` 写进 `DocumentInfo`（版本表）+ `DocumentHeader`（条目表），并把 zhCN 行交给下一步合并 ⑦合并 `strings-*.txt` → 包内 **zhCN** 表（漏 = 界面满是 `Param/Value/XXX` 原始键；`sc2map.GAME_STRINGS` 指的是 enUS，别拿它校验）⑧`banklist_fix.py` 写回 `BankList.xml`（漏 = 每局清档）。
+
+- **MPQ 里每个成员一次构建只能写一次**（2026-09-12 实测）：`sc2map.write` 走 `mpqtool replace`，**旧数据不回收、只追加**——原样重写 zhCN 一次就白胖 306 KB、DocumentHeader 8.8 KB。故 ⑥ 生成 zhCN 行后**必须交给 ⑦ 的合并一起写**，不能自己再写一遍（曾因此一次构建多出 631 KB）。
 
 - **凡是「手工塞进当次产物」的资源都会在下次打包时静默消失**（斜体样式 shw88–153、胜利图 shw100–168 都栽在这里）：任何自加资源必须登记进打包管线 + 回读断言，不能只 `sc2map.write` 一次。
-- **编辑器另存过的图不能直接玩 / 发布**（2026-09-12 实证）：编辑器保存会把包内 `BankList.xml` 重写成引擎自带的 5 条，**丢掉 `MBank13` / `key` 声明 → 每局清档**（与 shw137 同源）。用户在编辑器里改完地图信息后的正确流程：① `scp` 把图拉回来 ② **只注入元数据成员**（`DocumentHeader`、`DocumentInfo`、`DocumentInfo.version`、zhCN `GameStrings.txt`；`(attributes)` 是 MPQ 特殊成员，`mpqtool replace` 写不进去、报 `SFileAddFileEx err 10003`，实测只有二进制噪声、可跳过）③ 再跑一次 `boot2_build.py`（第 ⑦ 件把 BankList 写回）④ 部署新文件名。
+- **编辑器另存过的图不能直接玩 / 发布**（2026-09-12 实证）：编辑器保存会把包内 `BankList.xml` 重写成引擎自带的 5 条，**丢掉 `MBank13` / `key` 声明 → 每局清档**（与 shw137 同源）。用户在编辑器里改完地图信息后的正确流程：① `scp` 把图拉回来 ② **只注入元数据成员**（`DocumentHeader`、`DocumentInfo`、`DocumentInfo.version`、zhCN `GameStrings.txt`；`(attributes)` 是 MPQ 特殊成员，`mpqtool replace` 写不进去、报 `SFileAddFileEx err 10003`，实测只有二进制噪声、可跳过）③ 再跑一次 `boot2_build.py`（第 ⑧ 件把 BankList 写回）④ 部署新文件名。
   - **不要拿编辑器存出来的整图当基线**：它已含全部自加资源，再打包会重复写入，包体从 16.4 MB 虚胖到 18.2 MB（无重名成员，纯体积浪费）。
   - 注入元数据时先比对 `DocumentHeader` 的可读串差异，确认**只有 `DocInfo/PatchNote*` 与 `DocInfo/Desc*` 变化**（变体、依赖、玩家槽位未动）再落盘。
 - 胜利图出图规格：732×376（系命人 377）×24bit 未压缩无 mipmap，文件长 = 128 字节头 + w×h×3；头 128 字节在 732×376 各图间完全一致，可直接复用（`data/*.dds` + 同名 PNG 源文件留档）。**像素必须按 BGR 存放**（DDS 的 mask 是小端 DWORD，24bit 打包内存序为 B,G,R）——写成 RGB 会让红蓝互换（金色→蓝色、血红→蓝、红金小丑帽→紫，shw169 事故）。出图走 `python3 tools/png2windds.py <源图.png> <输出.dds>`，不要手搓 `tobytes()`。

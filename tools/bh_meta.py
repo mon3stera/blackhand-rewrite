@@ -34,8 +34,17 @@ STRINGS = 'zhCN.SC2Data/LocalizedData/GameStrings.txt'
 ZH = 'zhCN'[::-1].encode('ascii')  # b'NChz'
 
 
-def parse_entries(buf):
-    """→ [(off, key, locale, value)]；只认 DocInfo/ 开头的条目表。"""
+LOCALES = {'zhCN', 'enUS', 'zhTW', 'koKR', 'ruRU', 'deDE', 'frFR', 'esES', 'itIT', 'plPL', 'ptBR'}
+KEY_RE = re.compile(rb'^[A-Za-z][A-Za-z0-9_/]*$')
+
+
+def parse_entries(buf, prefix=None):
+    """→ [(off, key, locale, value)]。
+
+    条目表是平铺的 [int16 键长][键][4B locale（字节反序）][int16 值长][值]，
+    键**不限于 DocInfo/**（还混着 MapInfo/Player10/Name 这类），故按结构识别而非按前缀。
+    prefix 只用于过滤读取视图；改写时一律按字节偏移操作，未改动的条目原样保留。
+    """
     i, out = 0, []
     while i < len(buf) - 8:
         klen = struct.unpack_from('<H', buf, i)[0]
@@ -43,7 +52,7 @@ def parse_entries(buf):
             i += 1
             continue
         key = buf[i + 2:i + 2 + klen]
-        if not key.startswith(b'DocInfo/'):
+        if not KEY_RE.match(key):
             i += 1
             continue
         try:
@@ -53,13 +62,18 @@ def parse_entries(buf):
             continue
         p = i + 2 + klen
         loc, vlen = buf[p:p + 4], struct.unpack_from('<H', buf, p + 4)[0]
+        loc_s = loc[::-1].decode('ascii', 'replace')
+        if loc_s not in LOCALES:
+            i += 1
+            continue
         val = buf[p + 6:p + 6 + vlen]
         try:
             val_s = val.decode('utf-8')
         except UnicodeDecodeError:
             i += 1
             continue
-        out.append((i, key_s, loc[::-1].decode('ascii', 'replace'), val_s))
+        if prefix is None or key_s.startswith(prefix):
+            out.append((i, key_s, loc_s, val_s))
         i = p + 6 + vlen
     return out
 
@@ -70,54 +84,67 @@ def encode(key, value, locale=ZH):
     return struct.pack('<H', len(kb)) + kb + locale + struct.pack('<H', len(vb)) + vb
 
 
-def set_notes(path, items, locale='zhCN'):
-    """items: [(编号字符串或完整键, 正文)]；已存在则原地替换，不存在则追加。"""
-    dh = bytearray(sc2map.read(path, HEADER))
-    entries = {(k, loc): (off, k, loc, v) for off, k, loc, v in parse_entries(bytes(dh))}
+def set_notes(path, items, locale='zhCN', write_strings=True):
+    """items: [(编号或完整键, 正文)]；已存在则原字节替换，不存在则追加。
+
+    只动目标条目的字节，其余条目（含 MapInfo/* 等）原样保留 —— 整表重编码会丢数据。
+    """
+    raw = sc2map.read(path, HEADER)
+    all_ents = parse_entries(raw)
+    assert all_ents, 'DocumentHeader 条目表解析失败'
+    table_start = all_ents[0][0]
+
     gs = sc2map.read(path, STRINGS).decode('utf-8')
     lines = gs.split('\n')
-    added, updated = [], []
+    table, added, updated = raw[table_start:], [], []
 
     for num, text in items:
-        key = num if num.startswith('DocInfo/') else f'DocInfo/{num}'
-        old = entries.get((key, locale))
-        if old:
-            off, _, _, oldv = old
-            old_bytes = encode(key, oldv)
-            assert bytes(dh[off:off + len(old_bytes)]) == old_bytes, f'{key} 原有条目编解码不一致'
-            dh[off:off + len(old_bytes)] = encode(key, text)
+        key = num if '/' in num else f'DocInfo/PatchNote{int(num):03d}'
+        hit = [e for e in all_ents if e[1] == key and e[2] == locale]
+
+        if hit:
+            off, _, _, old = hit[0]
+            old_bytes = encode(key, old, locale.encode('ascii')[::-1])
+            assert raw[off:off + len(old_bytes)] == old_bytes, f'{key} 原条目编解码不一致'
+            rel = off - table_start
+            table = table[:rel] + encode(key, text, locale.encode('ascii')[::-1]) + table[rel + len(old_bytes):]
             updated.append(key)
-            # 长度变化会让后续条目偏移失效，故一次只允许等长替换
-            assert len(encode(key, text)) == len(old_bytes), f'{key} 正文长度变化，请逐个改写'
         else:
-            dh += encode(key, text)
+            table = table + encode(key, text, locale.encode('ascii')[::-1])
             added.append(key)
 
         pat = f'{key}='
-        hit = [n for n, l in enumerate(lines) if l.startswith(pat)]
-        if hit:
-            lines[hit[0]] = pat + text
+        got = [n for n, l in enumerate(lines) if l.startswith(pat)]
+        if got:
+            lines[got[0]] = pat + text
         else:
             j = len(lines) - 1
             while j > 0 and lines[j].strip() == '':
                 j -= 1
             lines.insert(j + 1, pat + text)
 
-    sc2map.write(path, HEADER, bytes(dh))
-    sc2map.write(path, STRINGS, '\n'.join(lines).encode('utf-8'))
-    return added, updated
+    sc2map.write(path, HEADER, raw[:table_start] + table)
+
+    pending = {}
+    for ident, text in items:
+        key = ident if '/' in ident else f'DocInfo/PatchNote{int(ident):03d}'
+        pending[key] = text
+
+    if write_strings:
+        sc2map.write(path, STRINGS, '\n'.join(lines).encode('utf-8'))
+
+    return added, updated, pending
 
 
 def budget(path, max_line=140, max_lines=100, shown_versions=5):
     """复刻编辑器「补丁说明」对话框的口径。
 
-    编辑器展示的计数器：
-      总行数 N/100   —— 只统计**最新 5 个版本**（对话框只列这 5 个，游戏内也只显示这 5 个）
-      最长行 N/140   —— 单条说明的字符上限（正文一律单行，中文也按字符算）
+      总行数 N/100  —— 只统计**最新 5 个版本**（对话框与游戏内都只显示最新 5 个）
+      最长行 N/140  —— 单条说明的字符上限（一条 = 一行，中文按字符算）
     """
     di = sc2map.read(path, 'DocumentInfo').decode('utf-8')
-    ents = {k.split('/')[-1]: v for _, k, loc, v in parse_entries(sc2map.read(path, HEADER))
-            if 'PatchNote' in k and loc == 'zhCN'}
+    ents = {k.split('/')[-1]: v
+            for _, k, loc, v in parse_entries(sc2map.read(path, HEADER), 'DocInfo/') if loc == 'zhCN'}
 
     def arr(tag):
         return re.findall(r'<Value>(.*?)</Value>', di[di.find(f'<{tag}>'):di.find(f'</{tag}>')], re.S)
@@ -130,41 +157,136 @@ def budget(path, max_line=140, max_lines=100, shown_versions=5):
         return ents.get(f'PatchNote{int(num):03d}', '')
 
     over = [(n, len(text_of(n))) for g in groups for n in g if len(text_of(n)) > max_line]
-    longest = max(((len(v), k) for k, v in ents.items()), default=(0, ''))
+    notes_only = {k: v for k, v in ents.items() if k.startswith('PatchNote')}
+    longest = max(((len(v), k) for k, v in notes_only.items()), default=(0, ''))
+    shown = sum(len(g) for g in tail)
 
     return {'versions': len(versions), 'last': versions[-1] if versions else '—',
-            'shown_lines': sum(len(g) for g in tail), 'total_lines': sum(len(g) for g in groups),
+            'shown_lines': shown, 'total_lines': sum(len(g) for g in groups),
             'per_version': list(zip(versions[-shown_versions:], [len(g) for g in tail])),
             'longest': longest, 'over': over,
-            'budget_left': max_lines - sum(len(g) for g in tail), 'max_line': max_line}
+            'budget_left': max_lines - shown, 'max_line': max_line}
 
 
 def add_release(path, version, date, notes, max_line=140, max_lines=100):
-    """在 DocumentInfo 的补丁说明表末尾追加一个版本块（三数组同步追加）。"""
-    di = sc2map.read(path, 'DocumentInfo').decode('utf-8')
-    assert di.count('\r\n        </Version>') == 1, 'Version 数组结尾锚点异常'
-    assert di.count('\r\n        </Date>') == 1, 'Date 数组结尾锚点异常'
-    assert di.count('\r\n        </Notes>') == 1, 'Notes 数组结尾锚点异常'
-    for text in notes:
-        assert len(text) <= max_line, f'说明超长（{len(text)} > {max_line}）：{text[:30]}…'
-
+    """新建一个版本块（三数组同步追加）。已存在请改用 ensure_version 并入。"""
     b = budget(path, max_line, max_lines)
     assert b['shown_lines'] + len(notes) <= max_lines, \
         f"最新 5 版说明行数会超限：{b['shown_lines']} + {len(notes)} > {max_lines}（编辑器上限）"
     if b['over']:
         raise AssertionError(f'现有说明已超 {max_line} 字符：{b["over"]}')
 
-    ver = [v for v in re.findall(r'<Value>(.*?)</Value>', di[di.find('<Version>'):di.find('</Version>')], re.S)]
-    if version in ver:
-        raise AssertionError(f'版本 {version} 已存在（当前末版 {ver[-1]}），请换一个版本号')
+    di = sc2map.read(path, 'DocumentInfo').decode('utf-8')
+    for anchor in ('Version', 'Date', 'Notes'):
+        assert di.count(f'\r\n        </{anchor}>') == 1, f'{anchor} 数组结尾锚点异常'
 
-    di = di.replace('\r\n        </Version>', f'\r\n            <Value>{version}</Value>\r\n        </Version>', 1)
-    di = di.replace('\r\n        </Date>', f'\r\n            <Value>{date}</Value>\r\n        </Date>', 1)
-    nums = ','.join(str(n) for n in [int(x) for x in notes])
-    di = di.replace('\r\n        </Notes>', f'\r\n            <Value>{nums}</Value>\r\n        </Notes>', 1)
+    ver = [v.strip() for v in re.findall(r'<Value>(.*?)</Value>', di[di.find('<Version>'):di.find('</Version>')], re.S)]
+    if version in ver:
+        raise AssertionError(f'版本 {version} 已存在（末版 {ver[-1]}）')
+
+    for anchor, text in (('Version', version), ('Date', date),
+                         ('Notes', ','.join(str(int(x)) for x in notes))):
+        di = di.replace(f'\r\n        </{anchor}>',
+                        f'\r\n            <Value>{text}</Value>\r\n        </{anchor}>', 1)
 
     sc2map.write(path, 'DocumentInfo', di.encode('utf-8'))
-    return version, date, nums
+    return version, date, ','.join(str(int(x)) for x in notes)
+
+
+def ensure_version(path, version, date, numbers):
+    """确保 DocumentInfo 里有该版本块，并把 numbers 并入它的说明编号列表。"""
+    di = sc2map.read(path, 'DocumentInfo').decode('utf-8')
+
+    def arr(tag):
+        return re.findall(r'<Value>(.*?)</Value>', di[di.find(f'<{tag}>'):di.find(f'</{tag}>')], re.S)
+
+    versions, notes = [v.strip() for v in arr('Version')], arr('Notes')
+
+    if version not in versions:
+        return add_release(path, version, date, [str(n) for n in numbers])
+
+    idx = versions.index(version)
+    old = [n.strip() for n in notes[idx].split(',') if n.strip()]
+    merged = old + [str(n) for n in numbers if str(n) not in old]
+    if merged == old:
+        return version, date, ','.join(old)
+
+    blk = di[di.find('<Notes>'):di.find('</Notes>')]
+    vals = list(re.finditer(r'<Value>(.*?)</Value>', blk, re.S))
+    m = vals[idx]
+    new_val = ','.join(merged)
+    old_bytes = m.group(0)
+    new_bytes = f'<Value>{new_val}</Value>'
+    at = di.find('<Notes>') + m.start()
+    di = di[:at] + new_bytes + di[at + len(old_bytes):]
+    sc2map.write(path, 'DocumentInfo', di.encode('utf-8'))
+    return version, date, new_val
+
+
+LOADING_KEY = 'LoadingScreen/TextBody'
+LOADING_MARK = '<n/><n/><c val="44FF88">本版更新：</c>'
+
+
+def loading_body(path, notes, title='本版更新：'):
+    """把最新一版的说明写进加载页面正文（幂等：先按标记截断再追加）。
+
+    注意 LoadingScreen/TextBody 同时存在于 DocumentHeader 条目表与 zhCN 表中，
+    两处都要写（编辑器读前者、运行读后者）。
+    """
+    gs = sc2map.read(path, STRINGS).decode('utf-8')
+    m = re.search(rf'^{re.escape(LOADING_KEY)}=(.*)$', gs, re.M)
+    assert m, f'找不到 {LOADING_KEY}'
+    body = m.group(1)
+
+    mark = f'<n/><n/><c val="44FF88">{title}</c>'
+    body = body.split(mark)[0].rstrip() + mark + ''.join(f'<n/>· {t}' for t in notes)
+
+    return body
+
+
+def apply_file(path, notes_path, defer_strings=False):
+    """按源文件写入补丁说明 + 加载页面（打包管线第 ⑧ 步，可重复执行）。
+
+    defer_strings=True 时不写 zhCN，而是把 zhCN 该有的行**返回**给调用方并进文案合并 ——
+    因为 MPQ 每次写成员都是追加、旧数据不回收，同一成员一次构建只能写一次
+    （zhCN 写 3 次 ≈ 白胖 620 KB）。
+    """
+    blocks, cur = [], None
+    for raw in Path(notes_path).read_text(encoding='utf-8').splitlines():
+        line = raw.rstrip()
+        if not line.strip() or line.lstrip().startswith('#'):
+            continue
+        if line.startswith('@release'):
+            _, version, date = line.split()
+            cur = {'version': version, 'date': date, 'notes': []}
+            blocks.append(cur)
+            continue
+        num, _, text = line.partition('\t')
+        if not text:
+            num, _, text = line.partition('  ')
+        assert cur is not None, f'说明前缺少 @release：{line[:30]}'
+        assert num.strip().isdigit() and text.strip(), f'格式错误：{line[:40]}'
+        cur['notes'].append((num.strip(), text.strip()))
+
+    items, out, pending = [], [], {}
+    for b in blocks:
+        assert b['notes'], f"{b['version']} 没有任何说明"
+        b_set = budget(path)
+        for n, t in b['notes']:
+            assert len(t) <= b_set['max_line'], f'第 {n} 条超 {b_set["max_line"]} 字符：{t[:20]}…'
+        ensure_version(path, b['version'], b['date'], [n for n, _ in b['notes']])
+        items += b['notes']
+        out.append((b['version'], [n for n, _ in b['notes']], b['notes']))
+
+    if items:
+        items.append((LOADING_KEY, loading_body(path, [t for _, t in items])))
+
+    if items:
+        added, updated, pending = set_notes(path, items, write_strings=not defer_strings)
+        for version, nums, notes in out:
+            print(f'  版本 {version} 说明 {nums}（正文新增 {len(added)}、改写 {len(updated)}）；加载页面已同步')
+
+    return out, pending
 
 
 def main():
@@ -174,7 +296,7 @@ def main():
     cmd, path = sys.argv[1], sys.argv[2]
 
     if cmd == 'list':
-        for off, key, loc, val in parse_entries(sc2map.read(path, HEADER)):
+        for off, key, loc, val in parse_entries(sc2map.read(path, HEADER), 'DocInfo/'):
             if 'PatchNote' in key:
                 print(f'  [{loc}] {key} = {val[:60]}')
         return 0
@@ -183,8 +305,14 @@ def main():
         rest = sys.argv[3:]
         assert len(rest) % 2 == 0 and rest, '用法：set <map> PatchNote172 "正文" ...'
         items = list(zip(rest[0::2], rest[1::2]))
-        added, updated = set_notes(path, items)
+        added, updated, _ = set_notes(path, items)
         print(f'✓ {path}: 新增 {added}；改写 {updated}')
+        return 0
+
+    if cmd == 'apply':
+        res, _ = apply_file(path, sys.argv[3])
+        if not res:
+            print('（源文件里没有 @release 块）')
         return 0
 
     if cmd == 'release':
