@@ -25,18 +25,18 @@ Param/Value/GCZBBTN=<s val="ModCenterSize24Bold"><c val="8822CC">捕风捉影</c
 Param/Value/BHYINDESC=狱警坐镇的防守反击阵容<n/>3名城镇随机、2保护、2调查与政府护航<n/>教父与2名黑手随机潜伏暗处<n/>双纵火者与中立温和搅局其间<n/><n/><n/><n/><n/><n/><s val="ModCenterSize18Bold">12-15人可用</s>
 Param/Value/GCZBLANK=无
 
-Param/Value/GCZBNAME=<s val="ModCenterSize24Bold"><c val="8822CC">随机：捕风捉影</c></s>
+Param/Value/GCZBNAME=<s val="ModCenterSize24Bold">随机：<c val="C0C0C0">捕风捉影</c></s>
 Param/Value/GCZBDESC=一群调查员正在追查一个神秘的杀手。<n/>该设定至少有一名观察者和一名影武者。<n/><n/><n/><n/><n/><n/><s val="ModCenterSize18Bold">12-15人可用</s>
-Param/Value/GCZBSUBA=捕风捉影 A
-Param/Value/GCZBSUBB=捕风捉影 B
-Param/Value/GCZBSUBC=捕风捉影 C
-Param/Value/GCZBSUBD=捕风捉影 D
-Param/Value/GCZJNAME=随机：大审判
+Param/Value/GCZBSUBA=<c val="C0C0C0">捕风捉影</c> A
+Param/Value/GCZBSUBB=<c val="C0C0C0">捕风捉影</c> B
+Param/Value/GCZBSUBC=<c val="C0C0C0">捕风捉影</c> C
+Param/Value/GCZBSUBD=<c val="C0C0C0">捕风捉影</c> D
+Param/Value/GCZJNAME=<s val="ModCenterSize24Bold">随机：<c val="AAAAAA">大审判</c></s>
 Param/Value/GCZJDESC=城镇的居民惹恼了一位堕落的审判者。<n/>这个设定固定包含一名堕落审判者。
-Param/Value/GCZJSUBA=大审判 A
-Param/Value/GCZJSUBB=大审判 B
-Param/Value/GCZJSUBC=大审判 C
-Param/Value/GCZJSUBD=大审判 D
+Param/Value/GCZJSUBA=<c val="AAAAAA">大审判</c> A
+Param/Value/GCZJSUBB=<c val="AAAAAA">大审判</c> B
+Param/Value/GCZJSUBC=<c val="AAAAAA">大审判</c> C
+Param/Value/GCZJSUBD=<c val="AAAAAA">大审判</c> D
 Param/Value/GCZJBTN=<s val="ModCenterSize24Bold"><c val="8822CC">大审判</c></s>
 Param/Value/GCZBOX1=- 你不会被退伍军人的警戒杀死。
 Param/Value/GCZBOX2=<n/>- 你可以观察你自己。
