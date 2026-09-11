@@ -123,7 +123,9 @@ def set_notes(path, items, locale='zhCN', write_strings=True):
                 j -= 1
             lines.insert(j + 1, pat + text)
 
-    sc2map.write(path, HEADER, raw[:table_start] + table)
+    new_header = raw[:table_start] + table
+    if sc2map.read(path, HEADER) != new_header:
+        sc2map.write(path, HEADER, new_header)
 
     pending = {}
     for ident, text in items:
@@ -131,7 +133,9 @@ def set_notes(path, items, locale='zhCN', write_strings=True):
         pending[key] = text
 
     if write_strings:
-        sc2map.write(path, STRINGS, '\n'.join(lines).encode('utf-8'))
+        new_gs = '\n'.join(lines).encode('utf-8')
+        if sc2map.read(path, STRINGS) != new_gs:
+            sc2map.write(path, STRINGS, new_gs)
 
     return added, updated, pending
 

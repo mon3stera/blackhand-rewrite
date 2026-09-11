@@ -59,6 +59,20 @@ FONTS = [
 ]
 
 
+def put(archive, name, data):
+    """写成员；与包内已有内容完全一致就跳过（MPQ 每次写都是追加、旧数据不回收）。"""
+    try:
+        if sc2map.read(archive, name) == data:
+            print(f"   跳过（内容相同）{name}")
+            return False
+    except Exception:
+        pass
+
+    sc2map.write(archive, name, data)
+
+    return True
+
+
 def write_fonts(archive: Path) -> list[str]:
     """把地图自带字体写进包内 Fonts\\；缺文件或回读不一致直接抛错。"""
     done = []
@@ -66,7 +80,7 @@ def write_fonts(archive: Path) -> list[str]:
         src = FONT_DIR / name
         assert src.exists(), f'字体源文件不存在: {src}'
         data = src.read_bytes()
-        sc2map.write(archive, member, data)
+        put(archive, member, data)
         assert sc2map.read(archive, member) == data, f'字体回读不一致: {member}'
         done.append(member)
     return done
@@ -89,7 +103,7 @@ def write_dds(archive: Path) -> list[str]:
         src = DDS_DIR / name
         assert src.exists(), f'贴图源文件不存在: {src}'
         data = src.read_bytes()
-        sc2map.write(archive, member, data)
+        put(archive, member, data)
         assert sc2map.read(archive, member) == data, f'贴图回读不一致: {member}'
         done.append(member)
     return done
@@ -178,8 +192,22 @@ def merge_styles(archive: Path, src: Path, member: str = STYLE_MEMBER) -> tuple[
         have.add(name)
         added.append(name)
 
-    sc2map.write(archive, member, cur.encode('utf-8'))
+    put(archive, member, cur.encode('utf-8'))
     return added, want
+
+
+def put(archive, name, data, label=''):
+    """写成员；内容与包内已有的完全一致就跳过（MPQ 每次写都是追加、旧数据不回收）。"""
+    try:
+        if sc2map.read(archive, name) == data:
+            print(f"   跳过（内容相同）{name}")
+            return False
+    except Exception:
+        pass
+
+    sc2map.write(archive, name, data)
+
+    return True
 
 
 def main() -> int:
@@ -216,7 +244,7 @@ def main() -> int:
     print(f"1) 基线 {base.name} → {out.name}")
 
     # 2) 直写脚本
-    sc2map.write(out, 'CustomLogic.galaxy', galaxy.read_text(encoding='utf-8').encode('utf-8'))
+    put(out, 'CustomLogic.galaxy', galaxy.read_text(encoding='utf-8').encode('utf-8'))
     back = sc2map.read(out, 'CustomLogic.galaxy').decode('utf-8')
     assert back.count('BankWait(') >= 2, '包内脚本缺 BankWait'
     print(f"2) CustomLogic.galaxy 写入 {len(back.splitlines())} 行（BankWait ×{back.count('BankWait(')}）")
@@ -253,8 +281,9 @@ def main() -> int:
         entries.update(extra)
         print(f"7) 合并文案 {len(entries)} 条 ← {[p.name for p in paths]}（含补丁说明/加载页面）")
 
-        merged = sc2map.merge_strings(sc2map.read(out, ZH_STRINGS), entries)
-        sc2map.write(out, ZH_STRINGS, merged)
+        cur = sc2map.read(out, ZH_STRINGS)
+        merged = sc2map.merge_strings(cur, entries)
+        put(out, ZH_STRINGS, merged)
 
     # 8) BankList 预加载表
     fix = subprocess.run([sys.executable, str(ROOT / 'tools' / 'banklist_fix.py'), str(out)],
