@@ -9,11 +9,18 @@
         [int16 键长][键 UTF-8][4B locale（字节反序，zhCN→b'NChz'）][int16 值长][值 UTF-8]
         平铺在成员尾部，直接在末尾追加即可
   ② zhCN.SC2Data/LocalizedData/GameStrings.txt —— 运行时读的文案，行格式 `DocInfo/PatchNote172=正文`
+  ③ DocumentInfo                       —— 纯 XML 文本，「补丁说明」的版本表（编辑器那个对话框读的就是它）：
+        <PatchNote> 下三个**并行数组**，每个版本一个 <Value>：
+          <Version>…</Version>  版本号（如 1.106）
+          <Date>…</Date>        日期（如 9/12/2026，美式 月/日/年）
+          <Notes>…</Notes>      该版本包含的说明编号，逗号分隔（如 <Value>162,163,164</Value>）
+        ★ 只加 ①② 不加 ③ 的话，编辑器/游戏里根本看不到这条说明（shw180 实测）
 
 用法：
   python3 tools/bh_meta.py list  <map>
   python3 tools/bh_meta.py set   <map> PatchNote172 "正文" [更多 编号 正文 ...]
 """
+import re
 import struct
 import sys
 from pathlib import Path
@@ -101,6 +108,28 @@ def set_notes(path, items, locale='zhCN'):
     return added, updated
 
 
+def add_release(path, version, date, notes, max_line=140):
+    """在 DocumentInfo 的补丁说明表末尾追加一个版本块（三数组同步追加）。"""
+    di = sc2map.read(path, 'DocumentInfo').decode('utf-8')
+    assert di.count('\r\n        </Version>') == 1, 'Version 数组结尾锚点异常'
+    assert di.count('\r\n        </Date>') == 1, 'Date 数组结尾锚点异常'
+    assert di.count('\r\n        </Notes>') == 1, 'Notes 数组结尾锚点异常'
+    for text in notes:
+        assert len(text) <= max_line, f'说明超长（{len(text)} > {max_line}）：{text[:30]}…'
+
+    ver = [v for v in re.findall(r'<Value>(.*?)</Value>', di[di.find('<Version>'):di.find('</Version>')], re.S)]
+    if version in ver:
+        raise AssertionError(f'版本 {version} 已存在（当前末版 {ver[-1]}），请换一个版本号')
+
+    di = di.replace('\r\n        </Version>', f'\r\n            <Value>{version}</Value>\r\n        </Version>', 1)
+    di = di.replace('\r\n        </Date>', f'\r\n            <Value>{date}</Value>\r\n        </Date>', 1)
+    nums = ','.join(str(n) for n in [int(x) for x in notes])
+    di = di.replace('\r\n        </Notes>', f'\r\n            <Value>{nums}</Value>\r\n        </Notes>', 1)
+
+    sc2map.write(path, 'DocumentInfo', di.encode('utf-8'))
+    return version, date, nums
+
+
 def main():
     if len(sys.argv) < 3:
         print(__doc__)
@@ -119,6 +148,24 @@ def main():
         items = list(zip(rest[0::2], rest[1::2]))
         added, updated = set_notes(path, items)
         print(f'✓ {path}: 新增 {added}；改写 {updated}')
+        return 0
+
+    if cmd == 'release':
+        rest = sys.argv[3:]
+        assert len(rest) >= 3, '用法：release <map> <版本号> <日期 月/日/年> <编号1[,编号2...]>'
+        version, date, nums = rest[0], rest[1], [x for x in rest[2].split(',') if x]
+        v, d, n = add_release(path, version, date, nums)
+        print(f'✓ {path}: 新增版本块 {v} / {d} / 说明编号 {n}')
+        return 0
+
+    if cmd == 'versions':
+        di = sc2map.read(path, 'DocumentInfo').decode('utf-8')
+
+        def arr(tag):
+            return re.findall(r'<Value>(.*?)</Value>', di[di.find(f'<{tag}>'):di.find(f'</{tag}>')], re.S)
+
+        for v, d, n in list(zip(arr('Version'), arr('Date'), arr('Notes')))[-6:]:
+            print(f'  {v:<8} {d:<12} {n}')
         return 0
 
     print(__doc__)
