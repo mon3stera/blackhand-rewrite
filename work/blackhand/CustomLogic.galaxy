@@ -56302,6 +56302,8 @@ bool auto_gf_CBMagnifyText_TriggerFunc (bool testConds, bool runActions) {
             lv_t = TextReplaceWord(lv_t, StringExternal("Param/Value/8096F7CD"), StringExternal("Param/Value/6573B824"), c_stringReplaceAll, c_stringCase);
             lv_t = TextReplaceWord(lv_t, StringExternal("Param/Value/E0E26905"), StringExternal("Param/Value/EB8AAA94"), c_stringReplaceAll, c_stringCase);
             lv_t = TextReplaceWord(lv_t, StringExternal("Param/Value/E72096C3"), StringExternal("Param/Value/B643F4B3"), c_stringReplaceAll, c_stringCase);
+            // shw155：斜体名字跟随公屏放大（名字自带 <s val="ModItalic">，不映射就永远停在 16）
+            lv_t = TextReplaceWord(lv_t, StringExternal("Param/Value/SHWMGIA"), StringExternal("Param/Value/SHWMGIC"), c_stringReplaceAll, c_stringCase);
         }
         else {
             if ((lp_magnify == ge_Magnify_Magnify)) {
@@ -56314,6 +56316,8 @@ bool auto_gf_CBMagnifyText_TriggerFunc (bool testConds, bool runActions) {
                 lv_t = TextReplaceWord(lv_t, StringExternal("Param/Value/D55021F2"), StringExternal("Param/Value/1EC44778"), c_stringReplaceAll, c_stringCase);
                 lv_t = TextReplaceWord(lv_t, StringExternal("Param/Value/B1511240"), StringExternal("Param/Value/B39F24BF"), c_stringReplaceAll, c_stringCase);
                 lv_t = TextReplaceWord(lv_t, StringExternal("Param/Value/6FA0EE0B"), StringExternal("Param/Value/2AA804F9"), c_stringReplaceAll, c_stringCase);
+                // shw155：斜体名字跟随公屏放大（名字自带 <s val="ModItalic">，不映射就永远停在 16）
+                lv_t = TextReplaceWord(lv_t, StringExternal("Param/Value/SHWMGIA"), StringExternal("Param/Value/SHWMGIB"), c_stringReplaceAll, c_stringCase);
             }
             else {
                 lv_t = libNtve_gf_DialogItemText(gv_chatBoxItem[lv_b][0], lp_player);
@@ -56333,6 +56337,9 @@ bool auto_gf_CBMagnifyText_TriggerFunc (bool testConds, bool runActions) {
                 lv_t = TextReplaceWord(lv_t, StringExternal("Param/Value/6F4EF53F"), StringExternal("Param/Value/9F6AC829"), c_stringReplaceAll, c_stringCase);
                 lv_t = TextReplaceWord(lv_t, StringExternal("Param/Value/9082C993"), StringExternal("Param/Value/2D9A6768"), c_stringReplaceAll, c_stringCase);
                 lv_t = TextReplaceWord(lv_t, StringExternal("Param/Value/26D00A6C"), StringExternal("Param/Value/03007EFA"), c_stringReplaceAll, c_stringCase);
+                // shw155：斜体名字跟随公屏放大（名字自带 <s val="ModItalic">，不映射就永远停在 16）
+                lv_t = TextReplaceWord(lv_t, StringExternal("Param/Value/SHWMGIB"), StringExternal("Param/Value/SHWMGIA"), c_stringReplaceAll, c_stringCase);
+                lv_t = TextReplaceWord(lv_t, StringExternal("Param/Value/SHWMGIC"), StringExternal("Param/Value/SHWMGIA"), c_stringReplaceAll, c_stringCase);
             }
         }
         libNtve_gf_SetDialogItemText(gv_chatBoxItem[lv_b][0], lv_t, PlayerGroupSingle(lp_player));

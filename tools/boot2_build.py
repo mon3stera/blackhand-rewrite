@@ -65,7 +65,9 @@ MUST_HAVE_KEYS = [
     'Param/Value/DLBOXS',
  'Param/Value/TXACH1', 'Param/Value/TXACH2', 'Param/Value/TXACH3',
  # 影武者成就「影缝」(shw152)
- 'Param/Value/SHACH1', 'Param/Value/SHACH2', 'Param/Value/SHACH3',]
+ 'Param/Value/SHACH1', 'Param/Value/SHACH2', 'Param/Value/SHACH3',
+ # 斜体名字跟随公屏放大：gf_CBMagnifyText 的替换源/目标标签（shw155）
+ 'Param/Value/SHWMGIA', 'Param/Value/SHWMGIB', 'Param/Value/SHWMGIC',]
 
 
 def parse_strings_file(path: Path) -> dict:

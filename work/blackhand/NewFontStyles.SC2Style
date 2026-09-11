@@ -2,4 +2,6 @@
     <Style name="CustomInternational" template="InternationalTemplate" height="20" textcolor="#ColorWhite"/>    
     <Style name="ModItalic" font="#FontStandard" height="16" fontflags="Italic"/>
     <Style name="ModItalic2" font="#FontStandard" height="16" styleflags="Italic"/>
+    <Style name="ModItalic20" font="#FontStandard" height="20" fontflags="Italic"/>
+    <Style name="ModItalic24" font="#FontStandard" height="24" fontflags="Italic"/>
 </StyleFile>
