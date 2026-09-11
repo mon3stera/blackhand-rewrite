@@ -269,9 +269,11 @@ def main() -> int:
     if b:
         print(f"   说明：最新 5 版 {b['shown_lines']}/100 行，最长 {b['longest'][0]}/140 字符")
         for line in NOTES_SRC.read_text(encoding='utf-8').splitlines():
-            if not line.strip() or line.lstrip().startswith('#') or line.startswith('@release'):
+            if not line.strip() or line.lstrip().startswith('#') or line.startswith('@'):
                 continue
             num = line.split('\t')[0].split('  ')[0].strip()
+            if not num.isdigit():
+                continue
             if not re.search(rf'^DocInfo/PatchNote{int(num):03d}=', sc2map.read(out, ZH_STRINGS).decode('utf-8-sig'), re.M):
                 notes_missing.append(num)
 

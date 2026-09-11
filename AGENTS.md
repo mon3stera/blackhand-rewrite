@@ -75,6 +75,9 @@ python3 - <<'EOF'
 ...sc2map.write 写入 CustomLogic.galaxy 与 GameStrings...
 EOF
 
+# ⚠ 打包命令不要写成 `python3 tools/boot2_build.py … | tail -3 && scp …`
+#   管道退出码取的是 tail 的 0 ⇒ 打包失败也会照常部署（2026-09-12 踩过）。用 `set -o pipefail` 或 ${PIPESTATUS[0]}
+
 # 2) 部署到新文件名
 scp -P 2222 work/boot2-<name>.SC2Map "administrator@100.94.140.84:/mnt/d/StarCraft II/Maps/Test/boot2-<name>.SC2Map"
 
