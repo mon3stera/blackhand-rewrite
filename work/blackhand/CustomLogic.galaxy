@@ -56639,7 +56639,7 @@ bool gt_Init2_Func (bool testConds, bool runActions) {
         if ((PlayerStatus(lv_a) == c_playerStatusActive) && ((PlayerType(lv_a) != c_playerTypeComputer) || (c_bhSoloBuild == true)) && (PlayerType(lv_a) != c_playerTypeHostile) && (PlayerType(lv_a) != c_playerTypeNeutral) && (PlayerType(lv_a) != c_playerTypeReferee) && (PlayerType(lv_a) != c_playerTypeSpectator)) {
             BankLoad("MBank13", lv_a);
             gv_bank[lv_a] = BankLastCreated();
-            BankOptionSet(gv_bank[lv_a], c_bankOptionSignature, true);
+            BankOptionSet(gv_bank[lv_a], c_bankOptionSignature, false);   // shw143：引擎侧不签不验——档可跨命名空间直接复制使用（文件里原有的 <Signature> 保留不动做兼容）
             BankWait(gv_bank[lv_a]);
             if ((BankExists("key", lv_a) == true)) {
                 BankLoad("key", lv_a);
