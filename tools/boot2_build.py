@@ -43,6 +43,32 @@ STYLE_MEMBER = 'NewFontStyles.SC2Style'
 STYLE_SRC = ROOT / 'work' / 'blackhand' / 'NewFontStyles.SC2Style'
 STYLE_NAME_RE = re.compile(r'<Style\s+name="([^"]+)"')
 STYLE_ELEM_RE = re.compile(r'<Style\s+[^>]*?/>')
+# 字体相关：<Constant name= val= /> 与 <FontGroup name= >…</FontGroup>（shw159）
+TAG_ELEM_RE = re.compile(r'<(Style|Constant)\s+[^>]*?/>')
+GROUP_ELEM_RE = re.compile(r'<FontGroup\s+name="([^"]+)"\s*>.*?</FontGroup>', re.S)
+ELEM_NAME_RE = re.compile(r'name="([^"]+)"')
+
+# 地图内置字体：包内成员路径 ← work/blackhand/fonts/ 下的文件（OFL，许可文本一起分发）
+FONT_DIR = ROOT / 'work' / 'blackhand' / 'fonts'
+FONTS = [
+    (r'Fonts\PT_Serif-Italic.ttf', 'PT_Serif-Italic.ttf'),
+    (r'Fonts\GreatVibes-Regular.ttf', 'GreatVibes-Regular.ttf'),
+    (r'Fonts\PT_Serif-OFL.txt', 'PT_Serif-OFL.txt'),
+    (r'Fonts\GreatVibes-OFL.txt', 'GreatVibes-OFL.txt'),
+]
+
+
+def write_fonts(archive: Path) -> list[str]:
+    """把地图自带字体写进包内 Fonts\\；缺文件或回读不一致直接抛错。"""
+    done = []
+    for member, name in FONTS:
+        src = FONT_DIR / name
+        assert src.exists(), f'字体源文件不存在: {src}'
+        data = src.read_bytes()
+        sc2map.write(archive, member, data)
+        assert sc2map.read(archive, member) == data, f'字体回读不一致: {member}'
+        done.append(member)
+    return done
 
 # 必须在包内 zhCN 表里能查到的自加键（缺任一 → 界面会显示原始键名）
 MUST_HAVE_KEYS = [
@@ -108,10 +134,19 @@ def merge_styles(archive: Path, src: Path, member: str = STYLE_MEMBER) -> tuple[
     have = set(STYLE_NAME_RE.findall(cur))
     want = STYLE_NAME_RE.findall(src.read_text(encoding='utf-8'))
 
+    text = src.read_text(encoding='utf-8')
+    chunks = GROUP_ELEM_RE.findall(text) + TAG_ELEM_RE.findall(text)
+    # findall 在含分组时会只返回分组 → 用 finditer 取整段
+    # 顺序照文档：先 Constant 再 FontGroup 再 Style（引用解析是否先后无关，但保持规范顺序）
+    tags = [m.group(0) for m in TAG_ELEM_RE.finditer(text)]
+    chunks = [e for e in tags if e.startswith('<Constant')] + \
+             [m.group(0) for m in GROUP_ELEM_RE.finditer(text)] + \
+             [e for e in tags if e.startswith('<Style')]
+
     added = []
-    for elem in STYLE_ELEM_RE.findall(src.read_text(encoding='utf-8')):
-        name = STYLE_NAME_RE.search(elem).group(1)
-        if name in have:
+    for elem in chunks:
+        name = ELEM_NAME_RE.search(elem).group(1)
+        if name in have or f'name="{name}"' in cur:
             continue
         cur = cur.replace('</StyleFile>', f'    {elem}\n</StyleFile>')
         have.add(name)
@@ -164,21 +199,25 @@ def main() -> int:
     added, want_styles = merge_styles(out, STYLE_SRC)
     print(f"3) {STYLE_MEMBER} 样式声明 {len(want_styles)} 条（新增 {added or '无'}）← {STYLE_SRC.name}")
 
-    # 4) 合并自加文案
+    # 4) 地图内置字体（斜体字面，OFL）
+    fonts = write_fonts(out)
+    print(f"4) 包内字体 {len(fonts)} 个 ← {FONT_DIR.name}/: {[Path(f).name for f in fonts]}")
+
+    # 5) 合并自加文案
     entries = {}
     if not args.skip_strings:
         paths = [Path(p) for p in args.strings] if args.strings else sorted(ROOT.glob(STRINGS_GLOB))
         assert paths, '找不到任何 strings 源文件'
         entries = collect_strings(paths)
-        print(f"4) 合并文案 {len(entries)} 条 ← {[p.name for p in paths]}")
+        print(f"5) 合并文案 {len(entries)} 条 ← {[p.name for p in paths]}")
 
         merged = sc2map.merge_strings(sc2map.read(out, ZH_STRINGS), entries)
         sc2map.write(out, ZH_STRINGS, merged)
 
-    # 5) BankList 预加载表
+    # 6) BankList 预加载表
     fix = subprocess.run([sys.executable, str(ROOT / 'tools' / 'banklist_fix.py'), str(out)],
                          capture_output=True, text=True)
-    print(f"5) {fix.stdout.strip() or fix.stderr.strip()}")
+    print(f"6) {fix.stdout.strip() or fix.stderr.strip()}")
 
     if fix.returncode != 0:
         print('✗ banklist_fix 失败，停止')
@@ -191,17 +230,22 @@ def main() -> int:
     style_missing = [n for n in want_styles if f'name="{n}"' not in style_txt]
     files = subprocess.run([str(ROOT / 'tools' / 'mpqc' / 'mpqtool'), 'list', str(out)],
                            capture_output=True, text=True).stdout
+    font_missing = [m for m, _ in FONTS if Path(m).name not in files]
 
     print(f"   回读: zhCN {len(zh.splitlines())} 行；Triggers={'Triggers' in files}；"
           f"BankList={'BankList.xml' in files}；自加键缺失={missing or '无'}；"
-          f"样式缺失={style_missing or '无'}")
+          f"样式缺失={style_missing or '无'}；字体缺失={font_missing or '无'}")
 
     if missing:
         print('✗ 自加键缺失，界面会显示原始键名')
         return 1
 
     if style_missing:
-        print('✗ 样式定义缺失，斜体（<s val="ModItalic">）不会渲染')
+        print('✗ 样式定义缺失，斜体所用的样式查不到')
+        return 1
+
+    if font_missing:
+        print('✗ 包内字体缺失，斜体字面会回落到系统字体')
         return 1
 
     print(f"✓ 打包完成 {out}  ({out.stat().st_size} 字节)")

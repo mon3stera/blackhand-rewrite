@@ -7,4 +7,22 @@
     <Style name="ModItalic32" font="#FontStandard" height="32" fontflags="Italic"/>
     <Style name="ModItalicAuto" font="#FontStandard" fontflags="Italic"/>
     <Style name="ModItalicZero" font="#FontStandard" height="0" fontflags="Italic"/>
+    <!-- shw159：地图内置字体（OFL 授权，许可文本随字体打进 Fonts\）——斜体改用真正的斜体字面 -->
+    <Constant name="SHWItalicPT" val="Fonts\PT_Serif-Italic.ttf" />
+    <Constant name="SHWItalicGV" val="Fonts\GreatVibes-Regular.ttf" />
+    <!-- FontGroup 做西文/中日韩回落的两种顺序（哪个生效由 -italictest 实测） -->
+    <FontGroup name="SHWItalicPTGroupA">
+        <CodepointRange font="#BlizzardGlobal" />
+        <CodepointRange font="#SHWItalicPT" />
+    </FontGroup>
+    <FontGroup name="SHWItalicPTGroupB">
+        <CodepointRange font="#SHWItalicPT" />
+        <CodepointRange font="#BlizzardGlobal" />
+    </FontGroup>
+    <!-- 注意：都不写 height，靠它继承容器字号（同 ModItalicAuto） -->
+    <Style name="ModItalicPT" font="#SHWItalicPT" />
+    <Style name="ModItalicPTG" font="#SHWItalicPTGroupA" />
+    <Style name="ModItalicPTG2" font="#SHWItalicPTGroupB" />
+    <Style name="ModItalicGV" font="#SHWItalicGV" />
+    <Style name="ModItalicPTGi" font="#SHWItalicPTGroupB" styleflags="Italic" />
 </StyleFile>
