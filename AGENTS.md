@@ -60,7 +60,7 @@ python3 tools/preset_gen.py work/presets/<名字>.json              # 校验规�
 python3 tools/preset_gen.py work/presets/<名字>.json --selfcheck  # 与源码中同名函数回归比对（已上线预设必跑）
 ```
 
-- **规格**：`work/presets/*.json`，字段见 `work/presets/dashenpan.json`（大审判，生成器回归样板）。`fixed`=固定角色、`randoms`=[随机槽别名,数量]、`enable_overrides`=按子变体覆盖随机槽选项、`decrement`=人数递减时优先删的随机槽。
+- **规格**：`work/presets/*.json`（样板 `dashenpan.json` 大审判）。字段：`fixed` 固定角色、`randoms`=[随机槽别名,数量]、`enable_overrides` 按子变体覆盖随机槽选项、`decrement` 人数递减优先删的随机槽。
 - **角色名解析**：生成器每次运行时从 `CustomLogic.galaxy` + 基线 GameStrings 抽取 `gv_roleNameArray` 全表（含随机槽名），别名表 `ALIAS`/`SLOT_ALIAS` 在文件头部维护（影武者/观察者等非 hex 名称键的角色必须登记）。
 - **函数体尾部**（VLoadSaveSlot 填充 + ??? 锁定覆写 + 选项禁用）从 `gf_VBFCZOptions` 原样克隆；克隆尾已含收尾 `}`，生成器**不再**追加（shw133 因多一个 `}` 导致配平 -1；插入前必须 `count('{')==count('}')`）。按钮文本键默认 `GCZJBTN`，规格加 `"btn_key": "GCZTBTN"` 可换。
 
@@ -206,7 +206,7 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 - 案底**只记玩家实际做过的事**，不是角色属性。例（影武者）：当晚有行动 → 非法闯入（`gv_e78AAFE7BDAAE4BA8BE5AE9E[玩家][0] = true`）；杀了人 → 谋杀（`[1] = true`）；整晚没动 → 两条都不记。
 - 罪名索引：`[0]` 非法闯入、`[1]` 谋杀（**和谐文案「谋爱」**，键 `513FA9C0`/`BE9264D4`，勿自创「谋杀」文案）。
 - 罪名标志写两份平行块（visitation ~11430 / action ~12123），每个有夜间行动的角色在其中各有分支；击杀函数 `gf_ES*Kill` 的真击杀分支（`gv_diedAtNight[目标] = true` 处）补写谋杀标志。观察者/监视者的图鉴犯罪可为**空白**（自建空值键 `GCZBLANK=`；**不要用 `F0A13008`——那是审查官能力文本，原图监视者曾错指向它**）。
-- 调查者（警长/探员）夜间结算时读这些标记，任一为真播报「你的目标曾经有过案底！」（`33FE9712`），否则 `D903D005`。
+- 调查者夜间结算读这些标记，任一为真播报「你的目标曾经有过案底！」（`33FE9712`），否则 `D903D005`。
 - **案底只在行为真正生效时记录**：攻击被无敌挡下、被救治救回**不算**谋杀（影武者的标记只写在 `gf_KillPlayer` 成功之后）。
 - **新增角色的调查清单**：①`gv_roleInvestigatorArray[池][角色][0..1]` 探员线索（按上表选类别）②`gv_e78AAFE7BDAAE58FAFE883BD[池][角色]` 图鉴案底文本 ③在自己的行动/结算代码里打运行时案底标记 ④警长消息无需配置（自动取角色名），只有该角色应免疫调查时才设「免疫调查」开关。
 
@@ -329,7 +329,7 @@ python3 tools/boot2_build.py --out work/boot2-<name>.SC2Map      # 四件套 + �
 分发链：`gf_CheckEnd` 返回码 → `gf_EndGame(lp_end)` → 每码一个 `gf_ET*Win()`（约 20193–21390 行）→ 内部 `gf_WinScreen("<图>.dds", 玩家)` **全场同一张图** + 逐玩家胜利者判定（`gv_won=true`、bank 胜/败场计数 `[6]/[7]`、胜负按钮文案）。图码对照：1城镇 WinTown / 2黑手 WinMafia / 13三合 WinTriad / 3SK WinSerialKiller / 5生存者 WinSurvivor / 6小丑 WinJester / 7女巫 WinWitch / 8纵火 WinArsonist / 9处刑者 WinExecutioner / 10失忆 WinAmnesiac / 11邪教 WinCult / 12杀人狂 WinMassMurderer / 14审计 WinAuditor / 15法官 WinJudge / 16审判者+影武 / 17瘟疫 WinplaguerReal / 18冤魂 Winpossessio / 19系命 Winlifebonder / 20赌鬼 Winpossessio / 4无人 WinNobody。
 
 - **图的位置**：原图那批在 `mm2.SC2Mod` 依赖里；**自加图放地图归档根目录即可**（shw98 的 `WinCorruptInquisitor.dds`、`WinShadow.dds`）。
-- **DDS 规格**（与作者自加图一致）：732×376、24bit 未压缩、无 mipmap，文件=128 字节头+RGB 字节（825824 字节整）。**头里的 mask 标注与实际字节序不符——按「bytes→PIL RGB」直读直写颜色即正确**，转制方法：`hdr = 旧图[:128]` + `Image.open(png).convert('RGB').resize((732,376)).tobytes()`。出图用 GPT 时给参考图（`~/win-ref/` 四张解包 PNG）+ 三条约束：无人物只留一件道具、涂鸦泼漆大字、混凝土墙底。
+- **DDS 规格**（同作者自加图）：732×376、24bit 未压缩、无 mipmap，文件=128 字节头+RGB（825824 字节）。**头里 mask 与字节序不符——按「bytes→PIL RGB」直读直写即正确**：`hdr = 旧图[:128]` + `Image.open(png).convert('RGB').resize((732,376)).tobytes()`。出图给参考图（`~/win-ref/` 四张 PNG）+ 三条约束：无人物只留一件道具、涂鸦泼漆大字、混凝土墙底。
 - **新增致命系角色的胜利三件套**：①`gf_CheckEnd` 主链并入判胜块（**shw96 语义**：城镇0+其他致命系0+邪教0+`(黑+三)<=1`+自己≥1，别复刻原版 `黑=0&&三=0`）②`gf_ET*Win` 胜利者名单加自己（漏了会像 shw98 前的影武者「赢了却记败场+失败音效」）③专属图 dds 入包+分支接线。
 - **return 16 是共享块**：主链/2人残局/平局区三处 return 16 都进 `gf_ETCorruptInquisitorWin`，该函数服务一群中立（生存者/小丑/赌鬼/女巫/处刑者/失忆者/审计官/杀人狂/审判者/影武者）。函数开头先扫描存活定胜者（`lv_ci`/`lv_shw`，审判者优先——其雷击无视无敌），图按胜者分支；新角色并入时同步改扫描、名单、图分支三处。
 - **已知死代码**：`gf_ETGamblerWin`（WinJester）无调用者；赌鬼实际走 `gf_ETE8B58CE9ACBC` 与冤魂共用 `Winpossessio.dds`；作者做好的 `Wingambler.dds`（骰子图，风格偏离原版）躺在包里未接线。
@@ -343,7 +343,7 @@ python3 tools/boot2_build.py --out work/boot2-<name>.SC2Map      # 四件套 + �
 - **python 补丁断言失败时同命令块里后续的 commit/打包照常执行**——先单独跑补丁确认 exit 0 再提交打包；曾连续两次只提交了 strings、代码没进包。**heredoc 里裸换行就是新语句**：`python <<EOF` 失败后下一行 `scp && git` 照样跑 → 脏包被部署。打包+部署+提交要显式 `&&` 链接。
 - **验证断言别写子串包含**：`s.count('(16) || (30) || (31))) {')` 这类短串会同时命中浏览与映射白名单（互为子串），count 是 11 不是 6——断言前先确认模式唯一。
 - **白名单行的右括号层数不一致（shw84 事故）**：11 处编辑白名单 if 行并非统一 `== X)))` 结尾，部分行是 **4 层**（`== X))))`）。用统一子串替换会把 4 层行削掉一层 → `if` 解析失败、**整个脚本读取失败**。摘 OR 项必须**逐行**：定位含该项的行 → 去掉 ` || (…)` 整项 → 逐行断言 `()` 配平；且配平检查必须**先剥离字符串字面量**（61017 行含 `"("` 字面量，裸计数是已知误报）。
-- **锁定???随机系机制（枷锁/血锈/捕风捉影）**：预览列表（`gv_rolesMenusItem[2]`）是**静态文本**，??? = 直接 `DialogControlAddItem(roleNameArray[8][1])`（随机组 8/1 = ???）。槽位经 bank 填 (8,1) 会被 `gf_VLoadSaveSlot` 校验（category>5）清零——原图 sotd 系是**绕过 bank 直接写 slots**。捕风捉影方案：真阵容进 slots（开局正常发牌）→ VLoadSaveSlot 后 `RemoveAllItems` + 重填 15 个 ??? + bank 掩写 (8,1)；从 11 处白名单摘掉 variantSelection 即锁定编辑。
+- **锁定???随机系机制（枷锁/血锈/捕风捉影）**：预览列表 `gv_rolesMenusItem[2]` 是**静态文本**，??? = 直接 `DialogControlAddItem(roleNameArray[8][1])`。槽位经 bank 填 (8,1) 会被 `gf_VLoadSaveSlot` 校验（category>5）清零 ⇒ 原图 sotd 系**绕过 bank 直接写 slots**。捕风捉影做法：真阵容进 slots → VLoadSaveSlot 后 `RemoveAllItems` + 重填 15 个 ??? + bank 掩写 (8,1)；从 11 处白名单摘掉 variantSelection 即锁定。
 - **断言过度也会误报**：①`assert 'KEY' not in s` 全文件禁键——键别处可能有合法用途（`F0A13008` 是审查官能力文本）②GameStrings 行尾是 `\r\n`，比对空值键要 `l.replace('\\r','')` ③`s.find('函数名')` 命中的是**首次出现**（可能是前部原型声明），定位调用点要用带 `();` 的完整文本或在函数行号区间内找。
 - **斜体（shw87 已实证）**：SC2 富文本无斜体直标签（`<i>` 无效），斜体 = 字体样式 Italic 标志 + `<s val="样式名">`。地图 `NewFontStyles.SC2Style` 已加 `ModItalic`（fontflags="Italic"）/`ModItalic2`（styleflags="Italic"），**两种都渲染为斜体**。玩家输入 `-rename <i>x</i>` 经 `gf_BHItalicize` 改写为 `<s val="ModItalic">x</s>`（大小写闭合标签都处理），可与 `<c val>` 叠加；字体用 `#FontStandard` 保证 CJK。带标签的名字参与「按名字喊话」匹配时需照原样输入标签。
 - **二改红线（无原作者授权）**：**严禁修改/删除原图硬编码 handle 管理员链的任何既有分支**（~56944 起的 87 个，只能**追加**）；给 handle 加权限一律走白名单追加。日后公开发布前必须收回测试放开项：prefer 会员/积分门（65440/65481）、大厅电脑计入（56020）等 `c_bhSoloBuild` 旁路。**存档迁移**：bank 命名空间绑定发布作者，玩家原档（`key`、`MBank13`）留在原作者目录、脚本无法跨命名空间读取（引擎沙箱），迁移 = 把两个 bank 复制到改版作者目录即可（**无需重签**，见下条；重签工具 `tools/bank_resign.py` 备查）。
@@ -367,7 +367,7 @@ python3 tools/boot2_build.py --out work/boot2-<name>.SC2Map      # 四件套 + �
 
 `-solo` 做的事（聊天输入，shw53 起定型）：①`gv_soloTest = true` 放行两处 `gv_rolesAssigned < / > PlayerGroupCount(...)` 校验（条件加 `&& (gv_soloTest == false)`，~43462/43476）②`TriggerEnable(gt_Prefer, true)`。
 
-**不自动填角色**（`gf_BHSoloFill` 已删；shw51 的「补满 15 槽」方案废弃——填满后虚拟补位判「无空槽」反而不补人）：角色由测试者在自设里手动配置，空槽交给 `gt_Init2` 虚拟补位。命令注册 = `TriggerCreate` + `TriggerAddEventChatMessage(trigger, c_playerAny, "-solo", false)`，在 `InitTriggers` 调用 `gt_BHSolo_Init();`。
+**不自动填角色**（`gf_BHSoloFill` 已删；shw51「补满 15 槽」方案废弃——填满后虚拟补位判「无空槽」反而不补人）：角色由测试者在自设里配置，空槽交给 `gt_Init2` 虚拟补位。命令注册 = `TriggerCreate` + `TriggerAddEventChatMessage(trigger, c_playerAny, "-solo", false)`，在 `InitTriggers` 调 `gt_BHSolo_Init();`。
 
 ### 占位玩家与 -prefer 优选
 
@@ -384,7 +384,7 @@ python3 tools/boot2_build.py --out work/boot2-<name>.SC2Map      # 四件套 + �
 - 命令：`-prefer yingwuzhe`，多个用逗号（`-prefer yingwuzhe,shimin`）
 - 原图限制：需 `gv_oP[玩家][1] == true`（会员），非会员扣 500 积分；测试构建下两处已放开（`gt_Prefer_Func`，~65210/65251）
 - **新角色必须设拼音名**：`gv_roleNameInput[池][角色] = "xxx";`（影武者 = `yingwuzhe`），否则 `-prefer` 找不到它
-- **测试构建下 prefer 必中（预锁，shw77 起）**：真实分发在 `gf_OSComputeOptions`（同函数兼营大厅几率模拟，`gv_emulate` 区分），玩家按随机顺序处理、无 prefer 的电脑随机占槽，原 solo 强制块轮到时槽已被占即静默落空（"将被首选"只是登记，不代表生效）。现为 `gf_OSRandomize` 之后预锁：`lv_bhPreferSlot[玩家]=槽`/`lv_bhReserved[槽]`，有 prefer 者强制改抽锁定槽、无 prefer 者抽到被锁槽拒绝重抽。**新增角色无需改动**，拼音存在即可被锁。
+- **测试构建下 prefer 必中（预锁，shw77 起）**：真实分发在 `gf_OSComputeOptions`（兼营大厅几率模拟，`gv_emulate` 区分），原 solo 强制块轮到时槽常已被占而静默落空（"将被首选"只是登记）。现为 `gf_OSRandomize` 之后预锁：`lv_bhPreferSlot[玩家]=槽`/`lv_bhReserved[槽]`，有 prefer 者强制改抽锁定槽、无 prefer 者抽到被锁槽重抽。**新增角色无需改动**，拼音存在即可被锁。
 
 ## 环境
 
