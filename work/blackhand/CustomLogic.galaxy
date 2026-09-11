@@ -16872,7 +16872,7 @@ bool auto_gf_EndGame_TriggerFunc (bool testConds, bool runActions) {
                             while (true) {
                                 autoSHWFR_var = PlayerGroupNextPlayer(autoSHWFR_g, autoSHWFR_var);
                                 if (autoSHWFR_var < 0) { break; }
-                                gf_CBSystemMessage((StringExternal("Param/Value/SHWFR1") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/SHWFR2") + StringToText(gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]]) + StringExternal("Param/Value/SHWFR3")), autoSHWFR_var, lv_a, 0, SoundLink("UI_BnetGameFound", -1), Color(0,0,0));
+                                gf_CBSystemMessage((StringExternal("Param/Value/SHWFR1") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/SHWFR2") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]] + StringExternal("Param/Value/SHWFR3")), autoSHWFR_var, lv_a, 0, SoundLink("UI_BnetGameFound", -1), Color(0,0,0));
                             }
                             gf_GiveBonus(lv_a, 25);
                         }

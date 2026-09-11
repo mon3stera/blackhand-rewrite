@@ -23,6 +23,11 @@ HEAD = re.compile(
     r"region|soundlink|color|timer|order)\s+\w+\s*\("
 )
 AUTO = re.compile(r"\b(auto[0-9A-F]{8}_[a-z]+)\b")
+# 全局 text/string 声明（用于检查转换函数误用）
+DECL = re.compile(r"^(text|string)((?:\[[^\]]*\])*)\s+(\w+)\s*;", re.M)
+# 转换函数：第一个参数期望的类型
+CONV = {"StringToText": "string", "TextToString": "text"}
+CONV_CALL = re.compile(r"\b(StringToText|TextToString)\s*\(\s*(\w+)")
 
 
 def func_ranges(lines: list[str]):
@@ -52,6 +57,26 @@ def lint(path: Path) -> int:
         problems += 1
     else:
         print("✓ 大括号配平 0")
+
+    # text/string 转换误用：text 变量套 StringToText、string 变量套 TextToString
+    types = {}
+    for m in DECL.finditer(text):
+        for _ in range(m.group(2).count("[")):
+            pass
+        types[m.group(3)] = m.group(1)
+    conv_bad = 0
+    for m in CONV_CALL.finditer(text):
+        fn, ident = m.group(1), m.group(2)
+        want = CONV[fn]
+        got = types.get(ident)
+        if got and got != want:
+            ln = text[:m.start()].count("\n") + 1
+            print(f"✗ {ln:6} {fn}({ident}...) 参数需 {want}，但 {ident} 声明为 {got}")
+            conv_bad += 1
+    if conv_bad:
+        problems += conv_bad
+    else:
+        print("✓ text/string 转换无类型误用")
 
     checked = 0
     for start, end in func_ranges(lines):
