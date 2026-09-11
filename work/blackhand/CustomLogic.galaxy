@@ -1300,7 +1300,6 @@ void gf_CBWhisper (int lp_player, int lp_recipient, string lp_message, text lp_n
 void gf_CBSystemMessage (text lp_message, int lp_player, int lp_sender, int lp_option, soundlink lp_sound, color lp_color);
 string gf_BHItalicize (string lp_s);
 bool gf_BHNameLatinOnly (string lp_s);
-text gf_BHItalicText (string lp_s);
 bool gt_BHItalicTest_Init ();
 void gf_CBClearChat (int lp_player);
 void gf_CBDimChat (int lp_player);
@@ -90780,29 +90779,19 @@ bool gf_BHNameLatinOnly (string lp_s) {
     return true;
 }
 
-text gf_BHItalicText (string lp_s) {
-    string lv_open;
-
+string gf_BHItalicize (string lp_s) {
+    // shw163：斜体分两路——纯拉丁用地图内置 Lora 真斜体；含中文等非拉丁字符时用游戏自带字体的
+    // 合成斜体（内置字体没有中日韩字形，直引会变豆腐块；FontGroup/CodepointRange 实测不生效）。
+    // 两个样式都不写 height → 都继承容器字号，天然与周围同高。
     if ((gf_BHNameLatinOnly(lp_s) == true)) {
-        lv_open = "<s val=\"ModItalicLora\">";
+        lp_s = StringReplaceWord(lp_s, "<i>", "<s val=\"ModItalicLora\">", c_stringReplaceAll, c_stringCase);
+        lp_s = StringReplaceWord(lp_s, "<I>", "<s val=\"ModItalicLora\">", c_stringReplaceAll, c_stringCase);
     }
     else {
-        lv_open = "<s val=\"ModItalicAuto\">";
+        lp_s = StringReplaceWord(lp_s, "<i>", "<s val=\"ModItalicAuto\">", c_stringReplaceAll, c_stringCase);
+        lp_s = StringReplaceWord(lp_s, "<I>", "<s val=\"ModItalicAuto\">", c_stringReplaceAll, c_stringCase);
     }
-
-    lp_s = StringReplaceWord(lp_s, "<i>", lv_open, c_stringReplaceAll, c_stringCase);
     lp_s = StringReplaceWord(lp_s, "</i>", "</s>", c_stringReplaceAll, c_stringCase);
-    lp_s = StringReplaceWord(lp_s, "<I>", lv_open, c_stringReplaceAll, c_stringCase);
-    lp_s = StringReplaceWord(lp_s, "</I>", "</s>", c_stringReplaceAll, c_stringCase);
-    return StringToText(lp_s);
-}
-
-string gf_BHItalicize (string lp_s) {
-    // shw158：ModItalicAuto 不写 height → 继承容器字号（-italictest 实证：24px 容器里就是 24px 斜体），
-    // 不再需要逐处按档位映射
-    lp_s = StringReplaceWord(lp_s, "<i>", "<s val=\"ModItalicAuto\">", c_stringReplaceAll, c_stringCase);
-    lp_s = StringReplaceWord(lp_s, "</i>", "</s>", c_stringReplaceAll, c_stringCase);
-    lp_s = StringReplaceWord(lp_s, "<I>", "<s val=\"ModItalicAuto\">", c_stringReplaceAll, c_stringCase);
     lp_s = StringReplaceWord(lp_s, "</I>", "</s>", c_stringReplaceAll, c_stringCase);
     return lp_s;
 }
@@ -90815,20 +90804,10 @@ bool gt_BHItalicTest_Func (bool testConds, bool runActions) {
     gf_CBSystemMessage(StringToText("A-<i>italic Italic 斜体测试</i>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
     gf_CBSystemMessage(StringToText("B-<s val=\"ModItalic\">italic Italic 斜体测试</s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
     gf_CBSystemMessage(StringToText("C-<s val=\"ModItalic2\">italic Italic 斜体测试</s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    // shw158：名字现在用 ModItalicAuto，跟着容器字号走；这条直接用 24px 容器显示本人的名字自检
+    // shw163：斜体两路自检（都包在 24px 容器里，顺便验字号是否跟随容器）
+    gf_CBSystemMessage((StringToText("<s val=\"ModCenterSize24Bold\">拉丁名斜体(应为Lora衬线)：") + StringToText(gf_BHItalicize("<i>Abc</i>")) + StringToText("</s>")), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
+    gf_CBSystemMessage((StringToText("<s val=\"ModCenterSize24Bold\">中文名斜体(应为自带字体)：") + StringToText(gf_BHItalicize("<i>影缝</i>")) + StringToText("</s>")), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
     gf_CBSystemMessage((StringToText("<s val=\"ModCenterSize24Bold\">24px容器里的你的名字：") + StringToText(gv_name[EventPlayer()]) + StringToText("</s>")), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    // shw161：验证「FontGroup 经 Constant 引用」是否生效（T2-T4），T1 为已知的直引对照
-    gf_CBSystemMessage(StringToText("<s val=\"ModCenterSize24Bold\">T1 Lora直引(对照)：<s val=\"ModItalicLora\">Abc 影缝</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    gf_CBSystemMessage(StringToText("<s val=\"ModCenterSize24Bold\">T2 组A→常量：<s val=\"ModItalicLoraCA\">Abc 影缝</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    gf_CBSystemMessage(StringToText("<s val=\"ModCenterSize24Bold\">T3 组B→常量：<s val=\"ModItalicLoraCB\">Abc 影缝</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    gf_CBSystemMessage(StringToText("<s val=\"ModCenterSize24Bold\">T4 组B→常量+斜标：<s val=\"ModItalicLoraCBi\">Abc 影缝</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    gf_CBSystemMessage(StringToText("<s val=\"ModCenterSize24Bold\">T5 PT组B→常量：<s val=\"ModItalicPTCB\">Abc 影缝</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    // shw161 备选：按名字内容分流的两路（T6 纯拉丁应走 Lora、T7 含中文应走游戏字体合成斜体）
-    gf_CBSystemMessage((StringToText("<s val=\"ModCenterSize24Bold\">T6 分流拉丁：") + gf_BHItalicText("<i>Abc</i>") + StringToText("</s>")), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    gf_CBSystemMessage((StringToText("<s val=\"ModCenterSize24Bold\">T7 分流中文：") + gf_BHItalicText("<i>影缝</i>") + StringToText("</s>")), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    // shw157：以下四条整行包在 24px 粗体里，用来判断哪个斜体样式会「跟随容器字号」
-    gf_CBSystemMessage(StringToText("<s val=\"ModCenterSize24Bold\">对照24 | <i>直标签</i> | <s val=\"ModItalic\">16档</s> | <s val=\"ModCenterSize24Bold\"> </s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    gf_CBSystemMessage(StringToText("<s val=\"ModCenterSize24Bold\">24档=<s val=\"ModItalic24\">斜体24</s> 跟随?=<s val=\"ModItalicAuto\">Auto无height</s> 零高?=<s val=\"ModItalicZero\">Zero高度0</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
     return true;
 }
 

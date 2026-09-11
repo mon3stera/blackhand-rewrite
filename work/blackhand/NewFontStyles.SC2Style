@@ -1,49 +1,13 @@
 <StyleFile>
     <Style name="CustomInternational" template="InternationalTemplate" height="20" textcolor="#ColorWhite"/>    
+    <!-- shw88-153 遗留：固定 16px 的斜体（不再使用，留作应急回退） -->
     <Style name="ModItalic" font="#FontStandard" height="16" fontflags="Italic"/>
     <Style name="ModItalic2" font="#FontStandard" height="16" styleflags="Italic"/>
-    <Style name="ModItalic20" font="#FontStandard" height="20" fontflags="Italic"/>
-    <Style name="ModItalic24" font="#FontStandard" height="24" fontflags="Italic"/>
-    <Style name="ModItalic32" font="#FontStandard" height="32" fontflags="Italic"/>
+    <!-- shw163 路线一：含中文等非拉丁字符的名字 → 游戏自带字体 + 合成斜体 -->
     <Style name="ModItalicAuto" font="#FontStandard" fontflags="Italic"/>
-    <Style name="ModItalicZero" font="#FontStandard" height="0" fontflags="Italic"/>
-    <!-- shw159：地图内置字体（OFL 授权，许可文本随字体打进 Fonts\）——斜体改用真正的斜体字面 -->
-    <Constant name="SHWItalicPT" val="Fonts\PT_Serif-Italic.ttf" />
-    <Constant name="SHWItalicGV" val="Fonts\GreatVibes-Regular.ttf" />
-    <!-- shw160：用户指定的 Lora Italic（Cyreal，OFL） -->
+    <!-- shw163 路线二：纯拉丁名字 → 地图内置 Lora Italic 真斜体（OFL，Fonts\Lora-Italic.ttf）
+         不写 height 才会继承容器字号（shw158 实证）；FontGroup/CodepointRange 实测不生效，
+         故中文回落改由脚本按字符白名单分流，见 gf_BHNameLatinOnly / gf_BHItalicize -->
     <Constant name="SHWItalicLora" val="Fonts\Lora-Italic.ttf" />
-    <!-- FontGroup 做西文/中日韩回落的两种顺序（哪个生效由 -italictest 实测） -->
-    <FontGroup name="SHWItalicPTGroupA">
-        <CodepointRange font="#BlizzardGlobal" />
-        <CodepointRange font="#SHWItalicPT" />
-    </FontGroup>
-    <FontGroup name="SHWItalicPTGroupB">
-        <CodepointRange font="#SHWItalicPT" />
-        <CodepointRange font="#BlizzardGlobal" />
-    </FontGroup>
-    <FontGroup name="SHWItalicLoraGroupA">
-        <CodepointRange font="#BlizzardGlobal" />
-        <CodepointRange font="#SHWItalicLora" />
-    </FontGroup>
-    <FontGroup name="SHWItalicLoraGroupB">
-        <CodepointRange font="#SHWItalicLora" />
-        <CodepointRange font="#BlizzardGlobal" />
-    </FontGroup>
-    <!-- shw161：FontGroup 必须先用 Constant 绑定，样式再用 #Constant 引用（直接写组名不生效） -->
-    <Constant name="SHWItalicLoraGA" val="SHWItalicLoraGroupA" />
-    <Constant name="SHWItalicLoraGB" val="SHWItalicLoraGroupB" />
-    <Constant name="SHWItalicPTGB" val="SHWItalicPTGroupB" />
     <Style name="ModItalicLora" font="#SHWItalicLora" />
-    <Style name="ModItalicLoraCA" font="#SHWItalicLoraGA" />
-    <Style name="ModItalicLoraCB" font="#SHWItalicLoraGB" />
-    <Style name="ModItalicLoraCBi" font="#SHWItalicLoraGB" styleflags="Italic" />
-    <Style name="ModItalicPTCB" font="#SHWItalicPTGB" />
-    <Style name="ModItalicLoraG" font="#SHWItalicLoraGroupA" />
-    <Style name="ModItalicLoraG2" font="#SHWItalicLoraGroupB" />
-    <!-- 注意：都不写 height，靠它继承容器字号（同 ModItalicAuto） -->
-    <Style name="ModItalicPT" font="#SHWItalicPT" />
-    <Style name="ModItalicPTG" font="#SHWItalicPTGroupA" />
-    <Style name="ModItalicPTG2" font="#SHWItalicPTGroupB" />
-    <Style name="ModItalicGV" font="#SHWItalicGV" />
-    <Style name="ModItalicPTGi" font="#SHWItalicPTGroupB" styleflags="Italic" />
 </StyleFile>

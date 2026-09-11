@@ -53,10 +53,6 @@ FONT_DIR = ROOT / 'work' / 'blackhand' / 'fonts'
 FONTS = [
     (r'Fonts\Lora-Italic.ttf', 'Lora-Italic.ttf'),
     (r'Fonts\Lora-OFL.txt', 'Lora-OFL.txt'),
-    (r'Fonts\PT_Serif-Italic.ttf', 'PT_Serif-Italic.ttf'),
-    (r'Fonts\GreatVibes-Regular.ttf', 'GreatVibes-Regular.ttf'),
-    (r'Fonts\PT_Serif-OFL.txt', 'PT_Serif-OFL.txt'),
-    (r'Fonts\GreatVibes-OFL.txt', 'GreatVibes-OFL.txt'),
 ]
 
 
