@@ -90784,8 +90784,8 @@ string gf_BHItalicize (string lp_s) {
     // 合成斜体（内置字体没有中日韩字形，直引会变豆腐块；FontGroup/CodepointRange 实测不生效）。
     // 两个样式都不写 height → 都继承容器字号，天然与周围同高。
     if ((gf_BHNameLatinOnly(lp_s) == true)) {
-        lp_s = StringReplaceWord(lp_s, "<i>", "<s val=\"ModItalicLora\">", c_stringReplaceAll, c_stringCase);
-        lp_s = StringReplaceWord(lp_s, "<I>", "<s val=\"ModItalicLora\">", c_stringReplaceAll, c_stringCase);
+        lp_s = StringReplaceWord(lp_s, "<i>", "<s val=\"ModItalicLatin\">", c_stringReplaceAll, c_stringCase);
+        lp_s = StringReplaceWord(lp_s, "<I>", "<s val=\"ModItalicLatin\">", c_stringReplaceAll, c_stringCase);
     }
     else {
         lp_s = StringReplaceWord(lp_s, "<i>", "<s val=\"ModItalicAuto\">", c_stringReplaceAll, c_stringCase);
@@ -90802,14 +90802,11 @@ bool gt_BHItalicTest_Func (bool testConds, bool runActions) {
     }
 
     gf_CBSystemMessage(StringToText("A-<i>italic Italic 斜体测试</i>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    // shw164：按卡面标题的真实构图（24px 粗体 + 角色名 + 名字）对比四种斜体字面
-    gf_CBSystemMessage(StringToText("<s val=\"ModLeftSize24Bold\">24px·① Lora：天选者 - <s val=\"ModItalicLora\">Anon Chihaya</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    gf_CBSystemMessage(StringToText("<s val=\"ModLeftSize24Bold\">24px·② PT衬线：天选者 - <s val=\"ModItalicPT\">Anon Chihaya</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    gf_CBSystemMessage(StringToText("<s val=\"ModLeftSize24Bold\">24px·③ Lora放大1.2：天选者 - <s val=\"ModItalicLoraBig\">Anon Chihaya</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    gf_CBSystemMessage(StringToText("<s val=\"ModLeftSize24Bold\">24px·④ PT放大1.2：天选者 - <s val=\"ModItalicPTBig\">Anon Chihaya</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    gf_CBSystemMessage(StringToText("<s val=\"ModLeftSize20Bold\">20px 面板：①<s val=\"ModItalicLora\">Anon Chihaya</s> ②<s val=\"ModItalicPT\">Anon Chihaya</s> ③<s val=\"ModItalicLoraBig\">Anon Chihaya</s> ④<s val=\"ModItalicPTBig\">Anon Chihaya</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    gf_CBSystemMessage(StringToText("<s val=\"ModLeftSize20Bold\">16px 公屏：①<s val=\"ModItalicLora\">Anon Chihaya</s> ②<s val=\"ModItalicPT\">Anon Chihaya</s> ③<s val=\"ModItalicLoraBig\">Anon Chihaya</s> ④<s val=\"ModItalicPTBig\">Anon Chihaya</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    gf_CBSystemMessage((StringToText("<s val=\"ModLeftSize20Bold\">你当前的名字：") + StringToText(gv_name[EventPlayer()]) + StringToText("</s>")), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
+    // shw165 定稿自检：拉丁名走内置 Blackhand Serif（Lora 放大 1.2×），中文名走游戏字体合成斜体
+    gf_CBSystemMessage(StringToText("<s val=\"ModLeftSize24Bold\">卡面·拉丁名：天选者 - <s val=\"ModItalicLatin\">Anon Chihaya</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
+    gf_CBSystemMessage(StringToText("<s val=\"ModLeftSize24Bold\">卡面·中文名：天选者 - <s val=\"ModItalicAuto\">影缝</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
+    gf_CBSystemMessage(StringToText("<s val=\"ModLeftSize20Bold\">20px 面板：<s val=\"ModItalicLatin\">Anon Chihaya</s> / <s val=\"ModItalicAuto\">影缝</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
+    gf_CBSystemMessage((StringToText("<s val=\"ModLeftSize24Bold\">你当前的名字：") + StringToText(gv_name[EventPlayer()]) + StringToText("</s>")), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
     return true;
 }
 

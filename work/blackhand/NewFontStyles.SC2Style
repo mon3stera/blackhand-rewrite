@@ -1,21 +1,15 @@
 <StyleFile>
     <Style name="CustomInternational" template="InternationalTemplate" height="20" textcolor="#ColorWhite"/>    
-    <!-- shw88-153 遗留：固定 16px 的斜体（不再使用，留作应急回退） -->
-    <Style name="ModItalic" font="#FontStandard" height="16" fontflags="Italic"/>
-    <Style name="ModItalic2" font="#FontStandard" height="16" styleflags="Italic"/>
-    <!-- shw163 路线一：含中文等非拉丁字符的名字 → 游戏自带字体 + 合成斜体 -->
+    <!-- shw165 定稿：名字斜体两条路线，都不写 height → 都继承容器字号（shw158 实证）
+         ① ModItalicAuto：含中文等非拉丁字符的名字 → 游戏自带字体 + 合成斜体
+            （地图内置字体没有中日韩字形，直引会变豆腐块）
+         ② ModItalicLatin：纯拉丁名字 → 地图内置 Blackhand Serif Italic
+            = Lora Italic 放大 1.2×（OFL，Fonts\BH-Serif-Italic.ttf）
+            放大做法：只把 unitsPerEm 改小（2048→1707）、轮廓一个点不动 → 同字号下字形整体大 1.2 倍，
+            这样在 24px 卡面标题里能与汉字齐高；因带 Reserved Font Name，改动版已改名为 Blackhand Serif
+         中文回落为什么不由 FontGroup 做：FontGroup/CodepointRange 在本版本完全不生效（shw159-162 四种写法实测），
+         故由脚本按字符白名单分流，见 gf_BHNameLatinOnly / gf_BHItalicize -->
     <Style name="ModItalicAuto" font="#FontStandard" fontflags="Italic"/>
-    <!-- shw163 路线二：纯拉丁名字 → 地图内置 Lora Italic 真斜体（OFL，Fonts\Lora-Italic.ttf）
-         不写 height 才会继承容器字号（shw158 实证）；FontGroup/CodepointRange 实测不生效，
-         故中文回落改由脚本按字符白名单分流，见 gf_BHNameLatinOnly / gf_BHItalicize -->
-    <Constant name="SHWItalicLora" val="Fonts\Lora-Italic.ttf" />
-    <Style name="ModItalicLora" font="#SHWItalicLora" />
-    <!-- shw164 试验：PT Serif Italic（用户指定对比）与 1.2× 放大版（只把 unitsPerEm 改小，
-         同字号下字形整体放大 1.2 倍；两份都带 Reserved Font Name，放大版已按 OFL 改名） -->
-    <Constant name="SHWItalicPT" val="Fonts\PT_Serif-Italic.ttf" />
-    <Style name="ModItalicPT" font="#SHWItalicPT" />
-    <Constant name="SHWItalicLoraBig" val="Fonts\BH-Serif-Big.ttf" />
-    <Style name="ModItalicLoraBig" font="#SHWItalicLoraBig" />
-    <Constant name="SHWItalicPTBig" val="Fonts\BH-PTSerif-Big.ttf" />
-    <Style name="ModItalicPTBig" font="#SHWItalicPTBig" />
+    <Constant name="SHWItalicFont" val="Fonts\BH-Serif-Italic.ttf" />
+    <Style name="ModItalicLatin" font="#SHWItalicFont" />
 </StyleFile>
