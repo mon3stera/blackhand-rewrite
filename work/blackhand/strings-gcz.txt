@@ -39,7 +39,8 @@ Param/Value/GCZJSUBC=大审判 C
 Param/Value/GCZJSUBD=大审判 D
 Param/Value/GCZJBTN=<s val="ModCenterSize24Bold"><c val="8822CC">大审判</c></s>
 Param/Value/GCZBOX1=- 你不会被退伍军人的警戒杀死。
-Param/Value/GCZBOX2=<n/>- 你可以观察你自己。Param/Value/GCZTNAME=<s val="ModCenterSize24Bold">随机：<c val="FFFFFF99-FFFF8800">天谴</c></s>
+Param/Value/GCZBOX2=<n/>- 你可以观察你自己。
+Param/Value/GCZTNAME=<s val="ModCenterSize24Bold">随机：<c val="FFFFFF99-FFFF8800">天谴</c></s>
 Param/Value/GCZTDESC=众神的使者决定惩罚城镇的罪恶。<n/>该预设固定有一名天选者。<n/><n/><n/><n/><n/><n/><s val="ModCenterSize18Bold">12-15人可用</s>
 Param/Value/GCZTSUBA=<c val="FFFFFF99-FFFF8800">天谴</c> A
 Param/Value/GCZTSUBB=<c val="FFFFFF99-FFFF8800">天谴</c> B

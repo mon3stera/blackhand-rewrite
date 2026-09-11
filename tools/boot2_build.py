@@ -1,0 +1,153 @@
+#!/usr/bin/env python3
+"""boot2 系（黑手：升温）生产打包 —— 一套命令出正式图，避免再漏件。
+
+打包四件套（shw141 事故沉淀：少了第 3 件 → 游戏界面全是 Param/Value/XXX 原始键）：
+
+  1. 复制基线地图（默认 work/boot2-user.SC2Map，含用户的变体修改，不要覆盖它）
+  2. 直写 CustomLogic.galaxy（工作区脚本）
+  3. 合并自加 GameStrings（work/blackhand/strings-*.txt → zhCN.SC2Data\\LocalizedData\\GameStrings.txt）
+  4. 写回 BankList.xml（tools/banklist_fix.py；缺它 = BankLoad 永远读空 → 每局清档）
+
+**不要用 tools/sc2pack.py**（boot2 系会剥触发器，shw96 事故）。
+
+用法：
+    python3 tools/boot2_build.py --out work/boot2-shw141.SC2Map
+    python3 tools/boot2_build.py --out work/boot2-xxx.SC2Map --strings-only-preview
+    python3 tools/boot2_build.py --out work/boot2-shw141.SC2Map --base work/boot2-shw136.SC2Map
+
+退出码：0 = 成功（含全部回读断言），1 = 任一步失败（不会留下半个包）。
+"""
+from __future__ import annotations
+
+import argparse
+import re
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / 'tools'))
+
+import sc2map  # noqa: E402
+
+ZH_STRINGS = r'zhCN.SC2Data\LocalizedData\GameStrings.txt'
+DEFAULT_BASE = ROOT / 'work' / 'boot2-user.SC2Map'
+DEFAULT_GALAXY = ROOT / 'work' / 'blackhand' / 'CustomLogic.galaxy'
+STRINGS_GLOB = 'work/blackhand/strings-*.txt'
+
+# 必须在包内 zhCN 表里能查到的自加键（缺任一 → 界面会显示原始键名）
+MUST_HAVE_KEYS = [
+    'Param/Value/SHWNAME',
+    'Param/Value/SHWDESC',
+    'Param/Value/GCZNAME',
+    'Param/Value/GCZBNAME',
+    'Param/Value/GCZJNAME',
+    'Param/Value/GCZTNAME',
+    'Param/Value/TXNAME',
+    'Param/Value/BHYIN01',
+]
+
+
+def parse_strings_file(path: Path) -> dict:
+    """strings-*.txt → {key: value}；忽略空行与 // 注释。"""
+    out = {}
+    for line in path.read_text(encoding='utf-8').splitlines():
+        s = line.strip()
+        if not s or s.startswith('//'):
+            continue
+        if '=' not in s:
+            continue
+        k, v = s.split('=', 1)
+        out[k.strip()] = v
+    return out
+
+
+def collect_strings(paths: list[Path]) -> dict:
+    merged, dup = {}, []
+    for p in paths:
+        for k, v in parse_strings_file(p).items():
+            if k in merged and merged[k] != v:
+                dup.append(k)
+            merged[k] = v
+    if dup:
+        print(f"  ! 多文件重复键（后写的生效）: {sorted(set(dup))}")
+    return merged
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--out', required=True, help='输出地图（用新文件名，编辑器会锁住已打开的）')
+    ap.add_argument('--base', default=str(DEFAULT_BASE))
+    ap.add_argument('--galaxy', default=str(DEFAULT_GALAXY))
+    ap.add_argument('--strings', nargs='*', default=None, help='自加文案文件（默认 work/blackhand/strings-*.txt）')
+    ap.add_argument('--skip-strings', action='store_true', help='不合并文案（仅当基线已含全部累积键时）')
+    args = ap.parse_args()
+
+    out = Path(args.out)
+    base = Path(args.base)
+    galaxy = Path(args.galaxy)
+
+    assert base.exists(), f'基线不存在: {base}'
+    assert galaxy.exists(), f'脚本不存在: {galaxy}'
+
+    # 0) 脚本静态体检（配平 + 自动变量声明）—— 不通过就不打包
+    lint = subprocess.run([sys.executable, str(ROOT / 'tools' / 'galaxy_lint.py'), str(galaxy)],
+                          capture_output=True, text=True)
+    print(lint.stdout.strip())
+
+    if lint.returncode != 0:
+        print('✗ galaxy_lint 未通过，停止打包')
+        return 1
+
+    if out.exists():
+        print(f"  ! 覆盖已存在的 {out}")
+
+    # 1) 复制基线
+    out.write_bytes(base.read_bytes())
+    print(f"1) 基线 {base.name} → {out.name}")
+
+    # 2) 直写脚本
+    sc2map.write(out, 'CustomLogic.galaxy', galaxy.read_text(encoding='utf-8').encode('utf-8'))
+    back = sc2map.read(out, 'CustomLogic.galaxy').decode('utf-8')
+    assert back.count('BankWait(') >= 2, '包内脚本缺 BankWait'
+    print(f"2) CustomLogic.galaxy 写入 {len(back.splitlines())} 行（BankWait ×{back.count('BankWait(')}）")
+
+    # 3) 合并自加文案
+    entries = {}
+    if not args.skip_strings:
+        paths = [Path(p) for p in args.strings] if args.strings else sorted(ROOT.glob(STRINGS_GLOB))
+        assert paths, '找不到任何 strings 源文件'
+        entries = collect_strings(paths)
+        print(f"3) 合并文案 {len(entries)} 条 ← {[p.name for p in paths]}")
+
+        merged = sc2map.merge_strings(sc2map.read(out, ZH_STRINGS), entries)
+        sc2map.write(out, ZH_STRINGS, merged)
+
+    # 4) BankList 预加载表
+    fix = subprocess.run([sys.executable, str(ROOT / 'tools' / 'banklist_fix.py'), str(out)],
+                         capture_output=True, text=True)
+    print(f"4) {fix.stdout.strip() or fix.stderr.strip()}")
+
+    if fix.returncode != 0:
+        print('✗ banklist_fix 失败，停止')
+        return 1
+
+    # 回读校验
+    zh = sc2map.read(out, ZH_STRINGS).decode('utf-8-sig')
+    missing = [k for k in MUST_HAVE_KEYS if not re.search(rf'^{re.escape(k)}=', zh, re.M)]
+    files = subprocess.run([str(ROOT / 'tools' / 'mpqc' / 'mpqtool'), 'list', str(out)],
+                           capture_output=True, text=True).stdout
+
+    print(f"   回读: zhCN {len(zh.splitlines())} 行；Triggers={'Triggers' in files}；"
+          f"BankList={'BankList.xml' in files}；自加键缺失={missing or '无'}")
+
+    if missing:
+        print('✗ 自加键缺失，界面会显示原始键名')
+        return 1
+
+    print(f"✓ 打包完成 {out}  ({out.stat().st_size} 字节)")
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())

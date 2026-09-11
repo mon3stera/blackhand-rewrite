@@ -301,11 +301,25 @@ python3 tools/banklist_fix.py work/boot2-<name>.SC2Map --check    # 回读校验
 - **打包三件套** = 复制基线 + `sc2map.write(CustomLogic.galaxy)` + `banklist_fix.py`；漏第三步 = 存档又读不出来。
 - 结论修正：shw134「引擎 BankVerify 失败即清空」只是**表象**（未预加载的 bank 本来就空，`BankVerify` 自然 false）；`BankOptionSet(c_bankOptionSignature,true)` 与存档重签**都不是**读档的必要条件（原图档不重签也能读，只要预加载表在 + wait 到位）。社区佐证：GA地精研究院帖「纯galaxy代码的方式不能读取bank？[已解决]」= 拆包发现 `BankList.xml` 机制 +「读取内容之前必须先加一条同步」。
 
-### 打包管线（shw96 事故沉淀）
+### 打包管线（shw96 事故沉淀，shw141 固化为一键工具）
 
 **boot2 系列地图只能用「复制上一版 + `sc2map.write` 直写 CustomLogic.galaxy」，绝不能用 `tools/sc2pack.py`**（shw96 事故：误用 sc2pack 后触发器读到旧脚本，游戏报「脚本读取失败：无法找到函数」+ 一串 UI layout 红字）。两条管线的区别：
 
-- **boot2 系（黑手：升温）**：包内结构 = 基线 `Triggers` + 2.7KB `MapScript.galaxy`（只含 `include "TriggerLibs/NativeLib"` 和 `include "CustomLogic"`）+ 完整 `CustomLogic.galaxy` 成员。**触发器链引用的是 CustomLogic 里的函数**。打包 = `shutil.copyfile(上一版地图, 新地图)` + `sc2map.write(新地图, 'CustomLogic.galaxy', 源码bytes)`；无新文案时连 GameStrings 都不用动（上一版已含全部累积键）。
+**标准做法 = 跑 `tools/boot2_build.py`（打包四件套，别再手搓）**：
+
+```bash
+python3 tools/boot2_build.py --out work/boot2-shw141.SC2Map      # 基线/脚本/文案/BankList 四件套 + 全部回读断言
+```
+
+1. 复制基线 `work/boot2-user.SC2Map`（含用户的变体修改，**不要覆盖它**）
+2. 直写 `CustomLogic.galaxy`（工作区脚本；打包前自动跑 `galaxy_lint.py`，不通过不打包）
+3. **合并自加文案** `work/blackhand/strings-*.txt` → 包内 `zhCN.SC2Data\LocalizedData\GameStrings.txt`（**shw141 事故：漏了这步 → 界面全是 `Param/Value/XXX` 原始键**；注意 zhCN 才是中文客户端用的表，`sc2map.GAME_STRINGS` 常量指向的是 enUS）
+4. `banklist_fix.py` 写回 `BankList.xml`（漏了 = 每局清档）
+
+回读断言：`Triggers` 成员在、`BankList.xml` 在、脚本含 `BankWait`、**`MUST_HAVE_KEYS` 里的自加键全部存在**（缺任一即退出码 1）。**只有基线已经是上一版成品图、且确认累积键齐全时才用 `--skip-strings`。**
+
+- **文案源文件铁律**：`strings-*.txt` 每行一个 `键=值`。**一行粘了两个键会静默吞键**——`strings-gcz.txt` 曾把 `GCZBOX2` 与 `GCZTNAME` 粘在一行，结果天谴菜单名在所有构建里都显示原始键，且 `GCZBOX2` 的值被污染（正是打包工具的 `MUST_HAVE_KEYS` 断言抓出来的）。
+- **boot2 系包内结构**：基线 `Triggers` + 2.7KB `MapScript.galaxy`（只含 `include "TriggerLibs/NativeLib"` 和 `include "CustomLogic"`）+ 完整 `CustomLogic.galaxy` 成员。**触发器链引用的是 CustomLogic 里的函数**。
 - **sc2pack.py（rogue 等独立图用）**：把给定 galaxy **替换进 MapScript.galaxy 并剥触发器**——boot2 的触发器函数不在手写脚本里，替换后 MapScript 缺触发器函数、CustomLogic 还是旧版，必炸。
 - 打包后回读校验目标是包内 **`CustomLogic.galaxy` 成员**（不是 MapScript）；同时确认 `Triggers` 成员仍在、MapScript 仍含 `include "CustomLogic"`。
 
