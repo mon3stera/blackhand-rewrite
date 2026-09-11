@@ -4,4 +4,7 @@
     <Style name="ModItalic2" font="#FontStandard" height="16" styleflags="Italic"/>
     <Style name="ModItalic20" font="#FontStandard" height="20" fontflags="Italic"/>
     <Style name="ModItalic24" font="#FontStandard" height="24" fontflags="Italic"/>
+    <Style name="ModItalic32" font="#FontStandard" height="32" fontflags="Italic"/>
+    <Style name="ModItalicAuto" font="#FontStandard" fontflags="Italic"/>
+    <Style name="ModItalicZero" font="#FontStandard" height="0" fontflags="Italic"/>
 </StyleFile>

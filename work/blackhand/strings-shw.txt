@@ -51,3 +51,4 @@ Param/Value/SHACH3=<s val="ModCenterSize16Bold"><c val="C0C0C0">影缝</c></s>
 Param/Value/SHWMGIA=<s val="ModItalic">
 Param/Value/SHWMGIB=<s val="ModItalic20">
 Param/Value/SHWMGIC=<s val="ModItalic24">
+Param/Value/SHWMGID=<s val="ModItalic32">
