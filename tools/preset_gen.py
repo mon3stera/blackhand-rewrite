@@ -149,8 +149,17 @@ def seat_sort_key(seat):
 
 
 def sort_seats(seats):
-    """层序排列；同层同序内保持用户输入顺序（固定位按用户列出顺序）。"""
-    return [s for _, s in sorted(enumerate(seats), key=lambda p: (seat_sort_key(p[1]), p[0]))]
+    """层序排列；同层同序内按「该座席首次出现」的次序，使相同角色归拢在一起。
+
+    用户口径（shw177）：同一层里重复的角色必须相邻——如两个瘟疫散布者放一起、
+    系命人排在瘟疫下面（而不是被另一张瘟疫散布者从中间隔开）。
+    固定位仍按用户列出顺序（`first` 取首次出现下标），例如 警长 探员 警长 → 警长 警长 探员。
+    """
+    first = {}
+    for i, s in enumerate(seats):
+        first.setdefault(s, i)
+
+    return sorted(seats, key=lambda s: (seat_sort_key(s), first[s]))
 
 
 def encode_enable(info, enable_labels, slot):
