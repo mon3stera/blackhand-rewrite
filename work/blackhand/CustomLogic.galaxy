@@ -17411,7 +17411,7 @@ bool auto_gf_EndGame_TriggerFunc (bool testConds, bool runActions) {
                     if (auto3B7E9C41_var < 0) { break; }
                     gf_CBSystemMessage((StringExternal("Param/Value/SHACH1") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/SHACH2")), auto3B7E9C41_var, lv_a, 0, SoundLink("UI_BnetGameFound", -1), Color(0,0,0));
                 }
-                gf_GiveBonus(lv_a, 300);
+                gf_GiveBonus(lv_a, 500);
             }
 
             gf_DEBUG(("Most InnerL OK  --" + IntToString(lv_a)));
