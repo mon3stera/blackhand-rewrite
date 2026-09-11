@@ -45,6 +45,15 @@ MUST_HAVE_KEYS = [
     'Param/Value/GCZTNAME',
     'Param/Value/TXNAME',
     'Param/Value/BHYIN01',
+    # 警长的「可查出X」开关与播报、影武者/天选者/堕落审判者的卡片特性行（shw149）
+    'Param/Value/SHWBOXS',
+    'Param/Value/SHWREV',
+    'Param/Value/TXSW',
+    'Param/Value/TXREVSH',
+    'Param/Value/TXBOXS',
+    'Param/Value/DLSW',
+    'Param/Value/DLREV',
+    'Param/Value/DLBOXS',
 ]
 
 

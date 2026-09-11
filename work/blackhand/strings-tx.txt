@@ -39,3 +39,8 @@ Param/Value/TXGOD1=<s val="ModLeftSize16">你的洞察获得了神明的认可�
 Param/Value/TXGOD2=<s val="ModLeftSize16">你成功洞悉了凡人的罪过，众神给予你一次额外的雷击机会。</s>
 Param/Value/TXBOXGOD=<n/>- 猜对两次身份，众神将赐予你一次额外的雷击机会（整局最多一次）。
 Param/Value/TXCARD=<c val="FFB41E">
+Param/Value/TXSW=可查出天选者
+Param/Value/TXREVSH=<s val="ModLeftSize16Bold"><c val="FFFF88">你的目标是一个 </c><c val="FFFFFF99-FFFF8800">天选者</c><c val="FFFF88">!</c></s>
+Param/Value/TXBOXS=<n/>- 你能查出天选者。
+Param/Value/TXBOXS0=- 你能查出天选者。
+Param/Value/4881041F=- 他像是个警长、副手、恐吓者/封口、审ji官、处刑者、堕落审判者，或天选者。

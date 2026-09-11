@@ -47,3 +47,7 @@ Param/Value/GCZTSUBB=<c val="FFFFFF99-FFFF8800">天谴</c> B
 Param/Value/GCZTSUBC=<c val="FFFFFF99-FFFF8800">天谴</c> C
 Param/Value/GCZTSUBD=<c val="FFFFFF99-FFFF8800">天谴</c> D
 Param/Value/GCZTBTN=<s val="ModCenterSize24Bold"><c val="FFFFFF99-FFFF8800">天谴</c></s>
+Param/Value/DLSW=可查出堕落审判者
+Param/Value/DLREV=<s val="ModLeftSize16Bold"><c val="FFFF88">你的目标是一个 </c><c val="AAAAAA">堕落审判者</c><c val="FFFF88">!</c></s>
+Param/Value/DLBOXS=<n/>- 你能查出堕落审判者。
+Param/Value/DLBOXS0=- 你能查出堕落审判者。

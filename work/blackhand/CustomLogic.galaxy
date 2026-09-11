@@ -4106,6 +4106,12 @@ void gf_InitializeVariables () {
     gv_roleOptionExists[1][2][7] = true;
     gv_roleOptionsImportant[1][2][7] = 2;
     gv_roleOptionsText[1][2][7] = StringExternal("Param/Value/SHWSW");
+    gv_roleOptionExists[1][2][8] = true;
+    gv_roleOptionsImportant[1][2][8] = 2;
+    gv_roleOptionsText[1][2][8] = StringExternal("Param/Value/TXSW");
+    gv_roleOptionExists[1][2][9] = true;
+    gv_roleOptionsImportant[1][2][9] = 2;
+    gv_roleOptionsText[1][2][9] = StringExternal("Param/Value/DLSW");
     gv_roleNameArray[1][3] = StringExternal("Param/Value/2A308E45");
     gv_roleDescriptionArray[1][3] = StringExternal("Param/Value/380EE88C");
     gv_roleInvestigatorArray[1][3][0] = gv_investigatorE9948BE588A9E5B7A5E585B71;
@@ -5614,6 +5620,8 @@ void gf_DefaultRoleOptions () {
     gv_roleOptions[1][2][5] = true;
     gv_roleOptions[1][2][6] = true;
     gv_roleOptions[1][2][7] = true;
+    gv_roleOptions[1][2][8] = true;
+    gv_roleOptions[1][2][9] = true;
     gv_bankSaveWeights[0][1][2] = 2.0;
     gv_roleOptionAllowed[1][3][0] = true;
     gv_roleOptionAllowed[1][3][1] = true;
@@ -6314,9 +6322,9 @@ void gf_MakeHelpMenu () {
     const int auto16F0029B_ai = -1;
     const int autoDDE9B838_ae = 1;
     const int autoDDE9B838_ai = -1;
-    const int auto2687B3BB_ae = 6;
+    const int auto2687B3BB_ae = 9;
     const int auto2687B3BB_ai = 1;
-    const int autoCD856455_ae = 6;
+    const int autoCD856455_ae = 9;
     const int autoCD856455_ai = 1;
     const int auto8C340AB7_ae = 15;
     const int auto8C340AB7_ai = 1;
@@ -13619,7 +13627,17 @@ void gf_SequenceAfter () {
                                                 gf_CBSystemMessage(StringExternal("Param/Value/SHWREV"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
                                             }
                                             else {
-                                                gf_CBSystemMessage(StringExternal("Param/Value/D125BE9B"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                                                if ((gv_roles[gv_visitation[lv_a]][1] == 3) && (gv_roles[gv_visitation[lv_a]][0] == 32) && (gv_roleOptions[1][2][8] == true)) {
+                                                    gf_CBSystemMessage(StringExternal("Param/Value/TXREVSH"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                                                }
+                                                else {
+                                                    if ((gv_roles[gv_visitation[lv_a]][1] == 3) && (gv_roles[gv_visitation[lv_a]][0] == 13) && (gv_roleOptions[1][2][9] == true)) {
+                                                        gf_CBSystemMessage(StringExternal("Param/Value/DLREV"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                                                    }
+                                                    else {
+                                                        gf_CBSystemMessage(StringExternal("Param/Value/D125BE9B"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -41419,6 +41437,36 @@ void gf_RTTownRoleText (int lp_player) {
             }
             else {
                 gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/AF5B4128");
+            }
+            lv_c = true;
+        }
+
+        if ((gv_roleOptions[1][2][7] == true)) {
+            if ((lv_c == true)) {
+                gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/SHWBOXS"));
+            }
+            else {
+                gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/SHWBOXS0");
+            }
+            lv_c = true;
+        }
+
+        if ((gv_roleOptions[1][2][8] == true)) {
+            if ((lv_c == true)) {
+                gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXBOXS"));
+            }
+            else {
+                gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/TXBOXS0");
+            }
+            lv_c = true;
+        }
+
+        if ((gv_roleOptions[1][2][9] == true)) {
+            if ((lv_c == true)) {
+                gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/DLBOXS"));
+            }
+            else {
+                gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/DLBOXS0");
             }
             lv_c = true;
         }

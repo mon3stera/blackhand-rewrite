@@ -41,3 +41,5 @@ Param/Value/SHWDEATH6=死者身中数刀。
 Param/Value/94249CFE=<c val="004080">点击来改变你的开关状态<n/>限定：瘟疫散布者 冤魂 小丑 影武者</c>
 Param/Value/SHWBOX9=<n/>- 如果目标一没有行动，则视作访问自己。
 Param/Value/SHWCARD=<c val="C0C0C0">
+Param/Value/SHWBOXS=<n/>- 你能查出影武者。
+Param/Value/SHWBOXS0=- 你能查出影武者。
