@@ -227,21 +227,62 @@ LOADING_KEY = 'LoadingScreen/TextBody'
 LOADING_MARK = '<n/><n/><c val="44FF88">本版更新：</c>'
 
 
-def loading_body(path, notes, title='本版更新：'):
-    """把最新一版的说明写进加载页面正文（幂等：先按标记截断再追加）。
-
-    注意 LoadingScreen/TextBody 同时存在于 DocumentHeader 条目表与 zhCN 表中，
-    两处都要写（编辑器读前者、运行读后者）。
-    """
+def loading_body(path, lines, title='本版更新：'):
+    """把给定的说明行渲染进加载页面正文（幂等：先按标记截断再追加）。"""
     gs = sc2map.read(path, STRINGS).decode('utf-8')
     m = re.search(rf'^{re.escape(LOADING_KEY)}=(.*)$', gs, re.M)
     assert m, f'找不到 {LOADING_KEY}'
     body = m.group(1)
 
     mark = f'<n/><n/><c val="44FF88">{title}</c>'
-    body = body.split(mark)[0].rstrip() + mark + ''.join(f'<n/>· {t}' for t in notes)
+    body = body.split(mark)[0].rstrip() + mark + ''.join(f'<n/>· {t}' for t in lines)
 
     return body
+
+
+def pick_notes(path, spec, fresh):
+    """按 @loading 规格取要显示在加载页面的说明正文。
+
+    spec: 'none' | 'latest'（最新 5 版）| 'A-B'（版本区间）| 'v1 v2 ...'
+    fresh: {编号: 正文}，本次要写入的新说明（优先于地图里已有的）
+    """
+    if spec.strip().lower() in ('none', ''):
+        return []
+
+    di = sc2map.read(path, 'DocumentInfo').decode('utf-8')
+
+    def arr(tag):
+        return re.findall(r'<Value>(.*?)</Value>', di[di.find(f'<{tag}>'):di.find(f'</{tag}>')], re.S)
+
+    versions, notes = [v.strip() for v in arr('Version')], arr('Notes')
+    spec = spec.strip()
+
+    if spec.lower() == 'latest':
+        want = versions[-5:]
+    else:
+        want = []
+        for tok in spec.replace(',', ' ').split():
+            if '-' in tok:
+                a, b = tok.split('-', 1)
+                lo, hi = versions.index(a.strip()), versions.index(b.strip())
+                want += versions[lo:hi + 1]
+            else:
+                want.append(tok)
+
+    old_text = {k.split('/')[-1][len('PatchNote'):].lstrip('0') or '0': v
+                for _, k, loc, v in parse_entries(sc2map.read(path, HEADER), 'DocInfo/PatchNote') if loc == 'zhCN'}
+    fresh_map = {str(int(n)): t for n, t in fresh.items()} if fresh else {}
+
+    out = []
+    for v in want:
+        idx = versions.index(v)
+        for num in (n.strip() for n in notes[idx].split(',') if n.strip()):
+            key = str(int(num))
+            t = fresh_map.get(key, old_text.get(key, ''))
+            if t:
+                out.append(t)
+
+    return out
 
 
 def apply_file(path, notes_path, defer_strings=False):
@@ -251,10 +292,13 @@ def apply_file(path, notes_path, defer_strings=False):
     因为 MPQ 每次写成员都是追加、旧数据不回收，同一成员一次构建只能写一次
     （zhCN 写 3 次 ≈ 白胖 620 KB）。
     """
-    blocks, cur = [], None
+    blocks, cur, loading_spec = [], None, 'none'
     for raw in Path(notes_path).read_text(encoding='utf-8').splitlines():
         line = raw.rstrip()
         if not line.strip() or line.lstrip().startswith('#'):
+            continue
+        if line.startswith('@loading'):
+            loading_spec = line.split(None, 1)[1] if len(line.split(None, 1)) > 1 else 'none'
             continue
         if line.startswith('@release'):
             _, version, date = line.split()
@@ -278,8 +322,10 @@ def apply_file(path, notes_path, defer_strings=False):
         items += b['notes']
         out.append((b['version'], [n for n, _ in b['notes']], b['notes']))
 
-    if items:
-        items.append((LOADING_KEY, loading_body(path, [t for _, t in items])))
+    if items and loading_spec.strip().lower() != 'none':
+        shown = pick_notes(path, loading_spec, dict(items))
+        items.append((LOADING_KEY, loading_body(path, shown)))
+        print(f'  加载页面: {loading_spec} → {len(shown)} 条')
 
     if items:
         added, updated, pending = set_notes(path, items, write_strings=not defer_strings)
