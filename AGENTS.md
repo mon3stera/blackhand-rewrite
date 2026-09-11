@@ -27,6 +27,9 @@
 | 探员线索 / 案底 / 警长「可查出X」开关 | 「探员 警长 案底 可查出 gv_roleInvestigatorArray」 |
 | 胜利图、结算画面、dds 出图规格 | 「胜利图 WinScreen dds 图码」 |
 | Galaxy 语言陷阱、补丁与断言踩坑 | 「Galaxy 陷阱 soundlink 断言 白名单 斜体」 |
+| 天选者(3/32) 规格、洞察/雷击/免死、新角色 UI 坑 | 「天选者 雷击 guess 洞察 卡片底色 换行」 |
+| 审判台免死、处决点、跳过审判恢复白天 | 「审判台 免死 处决 gf_EExecution gf_TXResumeDay」 |
+| 角色号 >30 要放宽的上界、死因字母码、命令注册 | 「上界 放宽 数组身份 shw115 验尸官 字母码 命令注册」 |
 
 ## 铁律
 
@@ -52,7 +55,7 @@
    - 池 3 / 18 = **小金执行者**（`gv_roleNameInput[3][18] = "xiaojinzhixingzhe"` + options + 权重），**已被误覆盖过一次**，不要再用；
    - 池 3 / 13 = `duoluoshenpanzhe`（旧堕落审判者），原图**只有拼音名和开关、没有名称/描述**，是真正可复用的遗留空槽；其行为代码仍在（见 3.2）。
 3.4 **Test Document 的大厅属性为空**：当前基线**已不需要**强制 `gv_variantSelection = 1`——那是 shw45 时期的死路补丁（变体 1=随机系会命中 `gt_OSRoleSelect_Func` 的禁用子句，添加按钮永远不亮）。当前基线在 Test Document 下自设路径直接可用，**不要再加变体强制补丁**。
-4. **改角色要同时改多处**：完整清单见下方「新增角色端到端流程」。漏一处就"看起来加了但没生效"。
+4. **改角色要同时改多处**：完整清单见「知识索引」里的记忆（搜「新增角色端到端流程」）。漏一处就"看起来没生效"。
 5. **回退文件前先列出已完成的所有改动**，`git checkout` 会把未提交的清理一起还原。
 6. **部署用新文件名**（编辑器打开中的地图被锁定），部署后确认 `scp` 无 `failed to upload`。
 7. **每次改完立刻提交**，提交信息写清"第几步 / 改了什么"。
@@ -178,29 +181,3 @@ python3 tools/boot2_build.py --out work/boot2-<name>.SC2Map      # 四件套 + �
 | `docs/GALAXY-PIPELINE.md` | Galaxy 直写、打包、启动链路技术细节 |
 | `docs/SHADOW-ROLE.md` | 影武者实现规格（作为"新角色"样板） |
 | `docs/HANDOFF-SHADOW.md` / `docs/HANDOFF-NEXT.md` | **历史交接文档（已过期，停在 shw85 前后）**：影武者接入、槽位误判、自设面板双硬编码、目标转换规则等背景资料，只作追溯 |
-
-### 审判台免死与处决点体系（shw114 沉淀，天选者 3/32）
-
-- **处决只有一个收口 `gf_EExecution`**，但 9 个调用点：`gf_CheckVoteWin` 直决 lynType（3 处 lv_winner + 1 处缩进 20）、marshalled/court、`gf_Trial` 的 `trialDefense==false` 自动处决（2 处）、`gf_TrialVoteResults` 有罪判决、marshalled 的 `lv_hit`。**每处单独包守卫**，行级精确匹配包 else（不要子串替换——20 空格行含 12 空格子串）。
-- **审判有罪判决的免死走「重定向到无罪分支」**：`gf_TrialVoteResults` 的 `if (有罪)` 追加 `&& !protected`，免死者在 else（无罪）分支开头揭露——无罪分支自带「放下台走回座位+白天继续投票+结束进夜」的完整恢复，**不要**在有罪分支跳过 EExecution（白天流程会悬死）。直决路径的免死用 `gf_TXSpare`（揭露+走回+复制 EExecution 日终尾巴：ASEndActions/TriggerStop(gt_DaySequence)/CheckEnd→NightTransition）。
-- **「当天不能再投」= 在审判发起点禁投**（CheckVoteWin 各 lynchType 块 / DaySequence 副本 / `-try`）查 `gf_TXSparedToday` → 广播提示。**跳过审判必须同时恢复白天（shw127 事故）**：发起点此时已停投票面板、（trialPausesDay 时）把昼长改成 90001 并暂停计时器，只广播不恢复 = 白天永久卡死、不上台、模型冻住。恢复用 `gf_TXResumeDay()`（解除暂停+还原昼长 + UIClearMessages + trialOn=false + `gf_ASStartVote()`）。`-try` 无暂停/停票前置，只广播不恢复。
-- **洞察机制（shw144）**：`-guess` 猜对时（判定在雷击结算块 `gv_roleNameInput[目标] == gv_txGuess[自己]` 处）`gv_txGuesses[玩家] += 1`：第 1 次私信 `TXGOD1`（你的洞察获得了神明的认可。）；第 2 次私信 `TXGOD2`（…众神给予你一次额外的雷击机会。）并 `gv_txStrikes[玩家] += 1`。**只判 `== 2`** 即天然"整局最多一次"；特性行 `TXBOXGOD` 挂在角色卡两处副本（`TXBOXGUESS` 后、`TXBOXFIXED` 前，必须同步）。
-- **雷击次数的设计决定（用户 2026-09-11 定稿，不要"修正"）**：默认 **3 次**（作者遗留 `47843C61` 是 5 次；用户判断「真伤 + 免死同源」下 5 次 = 每夜出手 + 每天免死，故削到 3）。**选项「雷击四次/五次」保留**（`gv_roleOptions[3][32][2]/[3]`，默认关闭）；洞察 `+1` 可叠加，极限 **6 次**，用户接受。改默认值/删选项/加封顶都要先问用户。
-- **`-guess` 三重前置 + 猜测绑定目标（shw147/148）**：0 余额时 `-guess` 在 `gt_TXGuess_Func`（~66230）**存储前就 return**；结算侧另有 `gv_txStrikes <= 0` 守卫、`gv_txBlessDay` 只在 `else` 写 → **无雷击不可能产生祝福**（不给按钮只是第三重保险）。`gv_txGuessTarget[玩家]` 绑定当时选中的目标，结算要求 `== gv_action[..][0]`，否则私信 `TXGUESSVOID`——不绑定会出现「猜 A、祝福来自杀 B」。取消猜测与每次真结算都要同时清 `gv_txGuess` 与 `gv_txGuessTarget`。
-- **警长的「可查出X」开关体系与探员枚举（shw149 沉淀）**：
-  - **开关槽位**：警长 = 池 1 / 角色 2，`gv_roleOptionExists/Important/Text/Options[1][2][i]` 四件套。原图 0–6 依次为 黑手D三合会 / 连环爱手(3,1) / 纵火者(3,5) / 协教徒(3,8,3,10) / 爱人狂(3,9) / 瘟疫散布者(3,14) / 冤魂(3,15)；自加 **7=影武者(3,31)**、**8=天选者(3,32)**、**9=堕落审判者(3,13)**，默认全部 `true`。
-  - **消费点**：`gf_SequenceKills` 警长段（约 13575–13645）是一条 **if/else 链**，每项形如 `if ((gv_roles[gv_visitation[lv_a]][1] == 3) && (gv_roles[gv_visitation[lv_a]][0] == N) && (gv_roleOptions[1][2][i] == true))` → 播报「你的目标是一个 <角色>!」；链尾兜底 `D125BE9B`「你的目标不可疑。」。**漏接分支 = 警长查到该中立致命却报「不可疑」**（堕落审判者当年就是这个状态）。
-  - **帮助面板只画 0..6**：`gf_MakeHelpMenu` 两条选项行循环上界 `autoCD856455_ae`（角色卡分支）/`auto2687B3BB_ae`（随机组分支）原为 **6**，须放宽到最大槽位号，否则新开关**看不见**（影武者 `SHWSW` 因此隐身一整个版本）。**自设面板（`gt_OSCheckboxes_Func`）只支持 0..6**：行用 `gv_rolePanelItem[lv_a+2]`/`[lv_a+7]`，该数组 `int[14]` ⇒ **索引 7/8/9 无法勾选**，只能帮助面板可见 + 默认生效。
-  - **卡片特性行**：警长卡特性链在同一函数（~41414–41475，「犯罪记录」行 `A5BA7399` 之前按 `gv_roleOptions[1][2][i]` 逐项 `if (lv_c == true) 追加 <n/>- 行 else 首行`），新增开关**必须同时补特性行**（影武者当年缺的就是这行）。
-  - **撰写补丁铁律**：往既有槽位序列尾部追加新槽位时锚点行必须**保留**——写 `old → old + new`，不要 `old → new`（shw149 首次补丁把 `gv_roleOptionsText[1][2][7] = SHWSW` 整行换掉 → 影武者开关文字变空，靠落点打印才发现）。
-  - **探员枚举**：类别线索 = 「你的目标…」+「他像是个 A、B、C」两句，**共享键**（判断力 `BD8909A7` + `4881041F`；风衣 `CE7E2D14` + `F2239D82`）。新增角色**要加进对应类别枚举**，否则玩家永远猜不到（天选者就漏了）。**规则（用户明确）：被单独点名的应是中立致命之类值得怀疑的角色，城镇角色不写进去**——观察者是城镇故不进风衣名单，阵营由线索首句覆盖。基线 `89AB9993` 与 `4881041F` 同文但**零引用**（死键），只覆盖真正被引用的那个。
-- 新命令注册样板：`gt_TXGuess_Init()`（TriggerCreate+TriggerAddEventChatMessage）+ 在 `InitTriggers` 跟随 `gt_Prefer_Init();` 调用；输入解析用 `StringReplaceWord(StringSub(EventChatMessage(false), …), " ", …)` + `StringCase(s,false)` 转小写后与 `gv_roleNameInput[池][号]` 比对。
-- 拼音匹配循环 3 处随 >30 号角色放宽：Prefer `autoA667E0B3_ae`、Blacklist `auto06C73FD2_ae`、Init2 黑名单校验 `auto6D231E76_ae`；另 `gf_OSGenerateChances` 5 处几率循环 + 槽位加载校验 `> 31` 同步放宽（**注意不是** `gf_OSLoadBase64`/`gf_OSInitializeOptionsScreen`/`gf_OSCloseOptionsScreen`/`gt_OSVariantsMenuConfirm` 四处——见下条 shw115）。
-- 验尸官死因字母码：扫描块（~13809）逐字母 if 链加分支；`T`/`X` 已占用，天选者用 `G`。
-- **循环上界放宽前必须确认循环体访问的数组身份（shw115 事故）**：曾把 4 处 `auto*_ae = 31→32` 一律当角色循环放宽，实际 `auto3508CF23`(gf_OSLoadBase64)/`autoD02CB81C`(gf_OSInitializeOptionsScreen)/`autoAA8D2539`(gf_OSCloseOptionsScreen)/`auto74E062BB`(gt_OSVariantsMenuConfirm) 遍历的是 **`gv_optionsPanelItem`（`int[32]`）** → [32] 越界 ScriptError 打断选项屏初始化，整个自设/变体选择框消失；修正=回退 31。教训：**改上界前先看循环体第一行访问的数组名与维度**（`gv_optionsPanelItem[32]`、`gv_blacklist[16][26]`、`gv_roleChance[9][41]`），只有角色数组（roleNameArray 等 `[6][41]`）能放宽。`auto6D231E76` 是黑名单分词槽循环（写 `gv_blacklist[..][lv_b]`，维度 26），31 本就越界属基线噪声，勿动。
-- **帮助面板卡片底色（shw146）**：F1 面板顶部那排小卡（`gv_roleHelpPanelItem[lv_x][0]`，`ui_waiting_playericon.dds`）底色由 `gf_MakeHelpMenu` **逐角色硬编码 `Color(...)`**，中立池链**只写到角色 16** ⇒ 新增中立角色（31/32）保持创建色 = **白**。补法：角色 13 分支之后、`CreateDialogItemLabel` 之前插 `if ((lv_role == N))`，设 ①`lv_t[5] = StringExternal("Param/Value/<角色>CARD")`（内容形如 `<c val="RRGGBB">`，卡片右下角**拼音首字母**上色，配套 `01EDEAB5` = `</c>`）②`libNtve_gf_SetDialogItemColor(gv_roleHelpPanelItem[lv_x][0], Color(R,G,B), PlayerGroupAll())`。`Color` 0–100 分量（`C0C0C0`→`75.29`）。`autoDDE9B838` 从 32 **往下**数 ⇒ 这两张卡在最左。
-- **克隆卡片分支时锚点必须含分支闭合（shw117 事故）**：(3,32) 分支曾被插进影武者 (3,31) 分支**内部**（SHWBOX5 条件之后、SHWBOX7 无条件尾巴之前）——两层条件互斥 → 死代码（角色卡全空），而配平/条目数校验都发现不了（嵌套不破坏计数）。**正确锚点 = 影武者分支 `SoundPlay(SoundLink("Hercules_What"...));` 与其闭合 `}` 之后**，并打印前后各 10 行确认这个 `}` 闭合的是影武者分支。
-- **数量型文案 + 选项开关（shw120）**：数字随开关变化的文案不要写死一个键——按选项分支选 3/4/5 三个键（卡片）或 `IntToText` 组装（夜 tip「你有X次…」）。数值本体（`gv_txStrikes`）在**角色卡分支里按选项赋值**（卡片函数开局每玩家执行一次，选项此时已定稿；帮助面板以 lv_a=0 调用同函数，写 `[0]` 无害）。`-guess` 无参数=取消：聊天注册只挂 `"-guess"`（不带尾空格），解析 `StringSub(msg, 7, …)` 空串即取消——一个注册覆盖带参与不带参，避免双事件重复触发。全场红字 = 键内嵌 `<c val="FF0000">`、`gf_CBSystemMessage` 的 Color 参数保持 `(0,0,0)`（同原图 90AC4EBA 杀人广播）。
-- **公屏文本必须自带 `<s val="ModLeftSize16">…</s>`（shw129）**：`-magnify` 的实现是 `gf_CBMagnifyText` 对公屏对话框里**已渲染文本做样式标签字符串替换**（`gf_ELAddMessage`/`gf_CBSystemMessage` 收到 `gv_magnified` 标志时按大小档替换标签）→ 没带标签的自加广播不跟随放大。原图模板 = `<s val="ModLeftSize16"><c val="FF0000">文本</c></s>`；跨键拼接的整行（如 TXREV1+名字+TXREV2）开标签放首键尾、闭标签放末键尾。
-- **特性行换行规范（shw124 事故）**：原图没有「纯换行」共用键。给 `gv_roleBoxText[][2]` 追加多行时把 `<n/>` 写进**每个键内容开头**，代码侧逐键 `+ StringExternal(...)`；不要复用任何原图键当换行前缀（先解包确认键内容——`4467A310`/`1045F9FD` 是「你拥有夜间无敌」行，被误当换行键后每行都会重复这句）。
-- **`gv_roleNameArray` 元素是 `text` 不是 `string`（shw123 事故）**：临时变量接 `roleNameArray[..][..]`（StringExternal 返回 text）必须声明 `text`，否则脚本读取失败「不正确的类型（不允许进行隐式强制转换）」并红屏。配套：text 判空用 `== null`（不能 `== ""`）、`lv_r = null;` 初始化、拼接直接 `+ lv_r +`；`StringToText()` 只用于 string→text。注意 `gv_roleNameInput` 是 string（拼音比对不受影响）。
