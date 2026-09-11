@@ -9324,7 +9324,9 @@ bool auto_gf_TrialVoteResults_TriggerFunc (bool testConds, bool runActions) {
         }
     }
     else {
-        if ((gf_TXProtected(lp_player) == true)) {
+        // shw153：揭示只跟「有罪判决」走——受庇护者被判有罪才被重定向到本分支并揭示；
+        // 真无罪/平票（含 0:0）不揭示，也不写 gv_txSparedDay（当天仍可再被提名）
+        if ((gf_TXProtected(lp_player) == true) && (gv_trialVotes[0] > gv_trialVotes[1])) {
             gf_TXReveal(lp_player);
             Wait(1.5, c_timeGame);
         }
