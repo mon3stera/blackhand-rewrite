@@ -433,3 +433,34 @@ python3 tools/boot2_build.py --out work/boot2-<name>.SC2Map      # 四件套 + �
 - **公屏文本必须自带 `<s val="ModLeftSize16">…</s>`（shw129）**：`-magnify` 的实现是 `gf_CBMagnifyText` 对公屏对话框里**已渲染文本做样式标签字符串替换**（`gf_ELAddMessage`/`gf_CBSystemMessage` 收到 `gv_magnified` 标志时按大小档替换标签）→ 没带标签的自加广播不跟随放大。原图模板 = `<s val="ModLeftSize16"><c val="FF0000">文本</c></s>`；跨键拼接的整行（如 TXREV1+名字+TXREV2）开标签放首键尾、闭标签放末键尾。
 - **特性行换行规范（shw124 事故）**：原图没有「纯换行」共用键。给 `gv_roleBoxText[][2]` 追加多行时把 `<n/>` 写进**每个键内容开头**，代码侧逐键 `+ StringExternal(...)`；不要复用任何原图键当换行前缀（先解包确认键内容——`4467A310`/`1045F9FD` 是「你拥有夜间无敌」行，被误当换行键后每行都会重复这句）。
 - **`gv_roleNameArray` 元素是 `text` 不是 `string`（shw123 事故）**：临时变量接 `roleNameArray[..][..]`（StringExternal 返回 text）必须声明 `text`，否则脚本读取失败「不正确的类型（不允许进行隐式强制转换）」并红屏。配套：text 判空用 `== null`（不能 `== ""`）、`lv_r = null;` 初始化、拼接直接 `+ lv_r +`；`StringToText()` 只用于 string→text。注意 `gv_roleNameInput` 是 string（拼音比对不受影响）。
+
+### 成就体系（shw150 沉淀，含自加成就「见微知著」）
+
+两套数组（都在 `gf_CDisassembleMainBank`/`gf_CAssembleMainBank` 的 `I` 段里序列化，见 18575/18849 附近，循环上界 0..70 自动全量，**新增索引不需要改存档格式**）：
+
+| 数组 | 维度 | 用途 |
+|---|---|---|
+| `gv_bankRoleAchievements[16][9][21]` | [玩家][池][角色号] | 角色向成就（以该角色获胜次数等）。**第三维只到 20** → 31/32 号角色**不能**用（越界，见铁律 9） |
+| `gv_bankOtherAchievements[16][71]` | [玩家][成就索引] | 通用/事件成就。0–67 已用；5–8 被列表过滤（`(lv_d <= 4) || (lv_d >= 9)`），24/42 被排除；**自加用 68**（= 见微知著） |
+
+**解锁三件套**（写在 `auto_gf_EndGame_TriggerFunc` 的胜利分支里，模板见索引 63/67 块 ~17320–17378）：
+
+```galaxy
+if ((gv_bankOtherAchievements[lv_a][68] == 0) && <条件>) {
+    gv_bankOtherAchievements[lv_a][68] = 1;
+    autoXXXX_g = gv_currentPlayers; autoXXXX_var = -1;
+    while (true) {                                  // 全场广播（私密成就改成直接发 lv_a）
+        autoXXXX_var = PlayerGroupNextPlayer(autoXXXX_g, autoXXXX_var);
+        if (autoXXXX_var < 0) { break; }
+        gf_CBSystemMessage((StringExternal("Param/Value/<前缀键>") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/<后缀键>")), autoXXXX_var, lv_a, 0, SoundLink("UI_BnetGameFound", -1), Color(0,0,0));
+    }
+    gf_GiveBonus(lv_a, 300);                        // 真加积分（gv_bankGeneralIntegers[玩家][3] + gv_points）
+}
+```
+
+- **广播文案拆两个键**：前缀键 = `<s val="ModCenterSize16">`，后缀键 = `<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSize16Bold"><c val="颜色">成就名</c></s><s val="ModCenterSize16"><c val="44FF88">!</c></s>`（照抄索引 63/67 的既有键形态；颜色用该角色/主题色）。
+- **while 循环的两个变量必须补进该函数的自动变量声明区**（`playergroup autoXXXX_g; int autoXXXX_var;`，EndGame 的声明区 ~16493–16622），否则解析失败。
+- **成就列表的名称映射链也要补**：约 59500 附近 `else if (autoE7789229_val == <索引>) { lv_x = StringExternal("Param/Value/<名称键>"); }`（在 67 之后追加）。名称键 = `<s val="ModCenterSize16Bold"><c val="颜色">成就名</c></s>`，**漏了列表里这一条就是空白**。
+- 自加文案进 `strings-*.txt` 后，记得同时把键加进 `tools/boot2_build.py` 的 `MUST_HAVE_KEYS`（值要**带 `Param/Value/` 前缀**，与既有条目一致，否则回读断言会误判缺失）。
+
+**自加成就「见微知著」（索引 68，300 分，天选者 3/32）**：条件 = `gv_won` + 池3/角色32 + 存活 + `gv_txStrikes <= 0`（雷击用光）+ `gv_txGuesses >= 1`（至少猜对一次）+ `gv_txGuessBad == 0`（只要猜了就必须猜对）。为此新增 `int[16] gv_txGuessBad`（在 `gf_SequenceKills` 天选者块的**猜错**（TXGUESSBAD）与**作废**（TXGUESSVOID，换了目标）两处 `+= 1`；目标当夜已被别人杀死走 TXTGTDEAD，不结算、不记错、猜测保留到下一夜）。用户 2026-09-11 定稿：宁可放宽成「至少猜一次 + 猜了必须对」，不要求每次都猜（每雷击都必须猜对太难）。

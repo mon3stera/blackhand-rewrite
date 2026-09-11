@@ -54,7 +54,7 @@ MUST_HAVE_KEYS = [
     'Param/Value/DLSW',
     'Param/Value/DLREV',
     'Param/Value/DLBOXS',
-]
+ 'Param/Value/TXACH1', 'Param/Value/TXACH2', 'Param/Value/TXACH3',]
 
 
 def parse_strings_file(path: Path) -> dict:

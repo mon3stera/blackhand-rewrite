@@ -500,6 +500,7 @@ int[16] gv_txSparedDay; // 天选者(3/32) 当日已被揭露免死（禁投）
 string[16] gv_txGuess; // 天选者(3/32) 本夜猜测的目标角色拼音
 int[16] gv_txGuesses; // 天选者(3/32) 本局累计猜对次数（shw144：2 次换 1 次额外雷击）
 int[16] gv_txGuessTarget; // 天选者(3/32) 猜测所绑定的雷击目标（0=无；换目标则该次猜测作废，shw148）
+int[16] gv_txGuessBad; // 天选者(3/32) 本局猜错/作废次数（shw150：成就「见微知著」要求为 0）
 int[16] gv_e8B7B3E8BDA6EFBC9F;
 int[2] gv_rollE782B9E586B7E58DB4;
 bool[16][16] gv_e69FA5E8BF87E4BA86;
@@ -922,6 +923,7 @@ void SH_InitGlobals () {
         gv_txGuess[init_i] = "";
         gv_txGuesses[init_i] = 0;
         gv_txGuessTarget[init_i] = 0;
+        gv_txGuessBad[init_i] = 0;
     }
     for (init_i = 0; init_i <= 15; init_i += 1) {
         gv_e5BA87E68AA4E58585E883BD[init_i] = 2;
@@ -13029,12 +13031,14 @@ void gf_SequenceKills () {
                             }
                         }
                         else {
+                            gv_txGuessBad[lv_a] += 1; // shw150：猜错（成就「见微知著」要求从未猜错）
                             gf_CBSystemMessage(StringExternal("Param/Value/TXGUESSBAD"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
                         }
 
                     }
                     else {
                         if ((gv_txGuess[lv_a] != "")) {
+                            gv_txGuessBad[lv_a] += 1; // shw150：猜测作废 = 没有猜对
                             gf_CBSystemMessage(StringExternal("Param/Value/TXGUESSVOID"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
                         }
 
@@ -16615,6 +16619,8 @@ bool auto_gf_EndGame_TriggerFunc (bool testConds, bool runActions) {
     int autoC01E5F6E_var;
     playergroup autoAEAFEF83_g;
     int autoAEAFEF83_var;
+    playergroup auto7A68C0DE_g;
+    int auto7A68C0DE_var;
 
     // Variable Initialization
 
@@ -17375,6 +17381,19 @@ bool auto_gf_EndGame_TriggerFunc (bool testConds, bool runActions) {
                     gf_CBSystemMessage((StringExternal("Param/Value/CBD0DAA7") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/2928A34A")), auto78FB6D58_var, lv_a, 0, SoundLink("UI_BnetGameFound", -1), Color(0,0,0));
                 }
                 gf_GiveBonus(lv_a, 150);
+            }
+
+            // shw150 成就「见微知著」：天选者(3/32) 取胜 + 用完所有雷击次数 + 至少猜对过一次 + 从未猜错
+            if ((gv_bankOtherAchievements[lv_a][68] == 0) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_won[lv_a] == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 32) && (gv_txStrikes[lv_a] <= 0) && (gv_txGuesses[lv_a] >= 1) && (gv_txGuessBad[lv_a] == 0)) {
+                gv_bankOtherAchievements[lv_a][68] = 1;
+                auto7A68C0DE_g = gv_currentPlayers;
+                auto7A68C0DE_var = -1;
+                while (true) {
+                    auto7A68C0DE_var = PlayerGroupNextPlayer(auto7A68C0DE_g, auto7A68C0DE_var);
+                    if (auto7A68C0DE_var < 0) { break; }
+                    gf_CBSystemMessage((StringExternal("Param/Value/TXACH1") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/TXACH2")), auto7A68C0DE_var, lv_a, 0, SoundLink("UI_BnetGameFound", -1), Color(0,0,0));
+                }
+                gf_GiveBonus(lv_a, 300);
             }
 
             gf_DEBUG(("Most InnerL OK  --" + IntToString(lv_a)));
@@ -59509,6 +59528,9 @@ bool gt_Stats_Func (bool testConds, bool runActions) {
                     }
                     else if (autoE7789229_val == 67) {
                         lv_x = StringExternal("Param/Value/8A231E2D");
+                    }
+                    else if (autoE7789229_val == 68) {
+                        lv_x = StringExternal("Param/Value/TXACH3");
                     }
                     else {
                         lv_x = null;
