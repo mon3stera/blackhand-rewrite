@@ -33572,6 +33572,7 @@ void gf_ESThunderKill (int lp_target, int lp_killer) {
     // Variable Declarations
     int lv_target;
     int lv_x;
+    fixed lv_voiceLen;
 
     // Automatic Variable Declarations
     playergroup autoTXHEAR_g;
@@ -33604,11 +33605,18 @@ void gf_ESThunderKill (int lp_target, int lp_killer) {
         }
         gv_deathDesc[lv_target] = true;
         if ((gv_nightSequence == true)) {
-            // shw168：神罚红字之前先起雷声、再落高阶圣堂武士的语音（与影武者夜间 DarkTemplar_What → DarkTemplar_Attack 同一套写法）
-            SoundPlay(SoundLink("Ambience_Thunder_OneShot", -1), PlayerGroupAll(), 100.0, 0.0);
-            Wait(RandomFixed(1.0, 1.4), c_timeGame);
+            // shw171：先播高阶圣堂武士的语音，**等它真正播完**再落雷声与红字。
+            // shw168 用的是固定 1.6–2.0 秒等待，语音比这长，红字就压着语音出来了。
+            // SoundLengthSync 返回秒（fixed），与官方 libNtve 字幕时长 ((1000 * FixedToInt(SoundLengthSync(...))) + 400) 同源；
+            // 查不到时长（返回 0，资源未就绪）时回落到 2.5 秒兜底。
+            lv_voiceLen = SoundLengthSync(SoundLink("HighTemplar_What", -1));
+            if ((lv_voiceLen < 1.0) || (lv_voiceLen > 8.0)) {
+                lv_voiceLen = 2.5; // 0/异常值兜底：既防资源未就绪，也防单位不是秒（否则会卡住整段夜间演出）
+            }
             SoundPlay(SoundLink("HighTemplar_What", -1), PlayerGroupAll(), 100.0, 0.0);
-            Wait(RandomFixed(1.6, 2.0), c_timeGame);
+            Wait((lv_voiceLen + 0.4), c_timeGame);
+            SoundPlay(SoundLink("Ambience_Thunder_OneShot", -1), PlayerGroupAll(), 100.0, 0.0);
+            Wait(RandomFixed(0.5, 0.8), c_timeGame);
             autoTXHEAR_g = PlayerGroupAll();
             autoTXHEAR_var = -1;
             while (true) {
