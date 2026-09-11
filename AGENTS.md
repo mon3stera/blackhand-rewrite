@@ -23,6 +23,10 @@
 | 单人测试、虚拟占位补位、-prefer 优选 | 「单人测试 -solo 占位玩家 prefer」 |
 | 新增/改造角色（11 步流程、清单、死亡三件套） | 「新增角色端到端流程」「一个角色要改的地方」 |
 | 夜晚镜头组、行动面板/开关按钮、访问措辞 | 「夜晚镜头体系 行动面板 开关按钮 措辞 访问」 |
+| 「进图即清档」根因、bank 预加载与 BankWait | 「bank 清档 BankList BankWait」 |
+| 探员线索 / 案底 / 警长「可查出X」开关 | 「探员 警长 案底 可查出 gv_roleInvestigatorArray」 |
+| 胜利图、结算画面、dds 出图规格 | 「胜利图 WinScreen dds 图码」 |
+| Galaxy 语言陷阱、补丁与断言踩坑 | 「Galaxy 陷阱 soundlink 断言 白名单 斜体」 |
 
 ## 铁律
 
@@ -55,6 +59,8 @@
 8. **测试地图统一放 `D:\StarCraft II\Maps\Test\`**，不要放桌面。
 9. **角色号上限红线**：`gv_bankRoleAchievements` 维度是 `int[16][9][21]`——角色卡分支里 `[xx][1][角色号]` 用 21 以上的角色号会数组越界（ScriptError 41358）；31 号角色**不得**做银行成就检查。`gf_VLoadSaveSlot` 的槽位加载校验曾用 `> gv_townMax(30)` 把 31 号槽清零（预设列表空行+实际阵容缺人），已放宽为 `> 31`；再加大于 31 的角色号需同步放宽。
 
+- **`SoundLink` 的参数类型是 `soundlink`**（不是 `sound`）：自定义函数收音效参数写错类型 → 所有调用处报「参数类型同函数定义不匹配」并连带整个脚本解析失败（整图报废）。
+
 ## 标准循环
 
 ```bash
@@ -72,6 +78,9 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 ```
 
 验证：游戏内 `File → Test Document` → 看 `Documents\StarCraft II\GameLogs\*ScriptError.txt`（只看最近一次）；`Script compile error` 必修，运行期参数错误先对照原版同类角色判断是否为原图自带。
+
+- 测试指令 `-reveal`（`gt_BHRevealRoles`，仅主机、游戏开始后）私密列出全部玩家**带色名字**（电脑N，N=玩家编号；投票面板左侧是楼层序，与编号无关）+ 角色名，用于验证调查结果/案底等。
+- 运行期报错先分新旧：`triggerControl(值:0)`、`StringWord(值:0)`、`CameraSetBounds region(值:0)`、`gv_roll点冷却 int[2] 越界` 等均为基线/单人测试固有，不是新改动引入。
 
 ## 角色文案与设计规范
 
@@ -126,73 +135,12 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 | 中立·温和 | 一般无夜间无敌 |
 | 城镇 | 无夜间无敌；调查/保护类有各自开关 |
 
-### 探员消息 / 警长消息 / 案底
+### 银行与存档（不验签设计决定 + 迁移）
 
-| 项 | 字段 | 说明 |
-|---|---|---|
-| 警长 | 自动 | 警长拿到目标的**精确角色名**（`gv_roleNameArray[池][角色]`），无需配置；只有开了「免疫调查」的角色才查不到 |
-| 探员 | `gv_roleInvestigatorArray[池][角色][0..1]` | 两个字段成组（[0] 主线索、[1] 附加线索） |
-| 案底（图鉴） | `gv_e78AAFE7BDAAE58FAFE883BD[池][角色]` | 角色图鉴里显示的"典型案底" |
-| 案底（运行时） | `gv_e78AAFE7BDAAE4BA8BE5AE9E[玩家][罪名索引]` | 玩家**实际做过**的事，调查时逐条判断 |
-
-#### 探员类别对照表
-
-| 类别 | 常量后缀 | 典型角色 |
-|---|---|---|
-| 市民类 | `E5B882E6B091E7B1BB` | 市民、**拥有调查免疫的角色**、间谍 |
-| 判断力 | `E588A4E696ADE58A9B` | 警长、审计官 |
-| 危险物品 | `E58DB1E999A9E789A9E59381` | 法医、陷害者（一般调查免疫） |
-| 强大气场 | `E5BCBAE5A4A7E6B094E59CBA` | 教父、龙头（一般调查免疫） |
-| 水管工 | `E6B0B4E7AEA1E5B7A5` | 审查员、陪侍、交际花、舞娘 |
-| 监禁 | `E79B91E7A681` | 狱警、审讯者、绑架者 |
-| 精神不稳定 | `E7B2BEE7A59E` | 退伍军人、小丑 |
-| 锋利工具 | `E9948BE588A9E5B7A5E585B7` | 女巫、巫医、瘟疫散布者、医生 |
-| **风衣（侦探类）** | `E9A38EE8A1A3` | 纵火者、影武者、观察者 |
-| 武器 | `E6ADA6E599A8` | 连环杀手 |
-| 不断移动 | `E4B88DE696ADE7A7BBE58AA8` | 巴士司机、保镖、冤魂 |
-| 秘密会面 | `E7A798E5AF86E4BC9AE99DA2` | 共济会成员、协教徒 |
-| 魅力 | `E9AD85E58A9B` | 市长、执法长、征募官 |
-| **善于解读（探员类）** | `E59684E4BA8EE8A7A3E8AFBB` | 探员、联邦探员、参谋、伪装者、栽赃者、管家、渗透、诬陷 |
-
-写法：`gv_roleInvestigatorArray[池][角色][0] = gv_investigator<后缀>1;`，`[1]` 用同后缀加 `2`。
-
-#### 案底规则（重要：动态而非静态）
-
-- 案底**只记玩家实际做过的事**，不是角色属性。例（影武者）：当晚有行动 → 非法闯入（`gv_e78AAFE7BDAAE4BA8BE5AE9E[玩家][0] = true`）；杀了人 → 谋杀（`[1] = true`）；整晚没动 → 两条都不记。
-- 罪名索引：`[0]` 非法闯入、`[1]` 谋杀（**和谐文案「谋爱」**，键 `513FA9C0`/`BE9264D4`，勿自创「谋杀」文案）。
-- 罪名标志写两份平行块（visitation ~11430 / action ~12123），每个有夜间行动的角色在其中各有分支；击杀函数 `gf_ES*Kill` 的真击杀分支（`gv_diedAtNight[目标] = true` 处）补写谋杀标志。观察者/监视者的图鉴犯罪可为**空白**（自建空值键 `GCZBLANK=`；**不要用 `F0A13008`——那是审查官能力文本，原图监视者曾错指向它**）。
-- 调查者夜间结算读这些标记，任一为真播报「你的目标曾经有过案底！」（`33FE9712`），否则 `D903D005`。
-- **案底只在行为真正生效时记录**：攻击被无敌挡下、被救治救回**不算**谋杀（影武者的标记只写在 `gf_KillPlayer` 成功之后）。
-- **新增角色的调查清单**：①`gv_roleInvestigatorArray[池][角色][0..1]` 探员线索（按上表选类别）②`gv_e78AAFE7BDAAE58FAFE883BD[池][角色]` 图鉴案底文本 ③在自己的行动/结算代码里打运行时案底标记 ④警长消息无需配置（自动取角色名），只有该角色应免疫调查时才设「免疫调查」开关。
-
-### BankList.xml —— 「进图即清档」的真正根因（shw137 定案，2026-09-11）
-
-**现象**：私有发布的改版图每局把存档重置（重新输名字、积分归零）。探针实测（`tools/bank_probe_build.py`，bank `SHBKPB`）本地/线上一致：`BankLoad("MBank13", 1)` **恒返回空档**（`BankSectionCount=0`），但 `BankExists=true`、`BankSave` 正常写盘；`BankWait`、轮询重载、纯读取等待、补签名（两种 authorID 算法）**全部无效** —— 不是身份/时序/签名问题。
-
-**根因**：引擎在地图加载时按包内 **`BankList.xml`** 预加载 bank，**不在表里的 bank，`BankLoad()` 永远读不出内容**（写入不受影响）。原图包 35 条（`MBank13`、`key` × 玩家 1–15），而我们的构建包只剩 5 条战役默认项（编辑器只在用 **GUI bank 动作**时登记条目，手写 Galaxy 不会）→ 读到"未预加载的空 bank" → 原图逻辑按新玩家处理 → 组装空档并保存 → 每局清档。
-
-**修复（两件事，缺一不可 —— 已进管线）**：
-
-1. **包内必须有 `BankList.xml` 声明**（预加载表，缺了 `BankLoad` 永远读不出内容）：
-
-```bash
-python3 tools/banklist_fix.py work/boot2-<name>.SC2Map            # 写回原图的 BankList.xml（参考 data/BankList.original.xml）
-python3 tools/banklist_fix.py work/boot2-<name>.SC2Map --check    # 回读校验（断言 MBank13/key × 玩家 1..15）
-```
-
-2. **`BankLoad` 之后必须 `BankWait` 同步**（预加载是**异步**的，t=0 直接读会拿到空档；补上表只解决"能不能读"，"何时读完"要靠同步）：
-
-```galaxy
-    BankLoad("MBank13", lv_a);
-    gv_bank[lv_a] = BankLastCreated();
-    BankOptionSet(gv_bank[lv_a], c_bankOptionSignature, true);
-    BankWait(gv_bank[lv_a]);          // shw138：等预加载/选项生效后的读取完成（放在 BankOptionSet 之后）
-```
-
-- wait 必须在 `BankLastCreated()` **之后**（dbg2 曾把 `BankWait(gv_bank[lv_a])` 放在赋值前，等的是空句柄 → 无效）；`gv_key[...]` 同理。
-- **实证对照（dbg10 vs dbg11，同一份脚本只差 wait）**：dbg10 无 wait → `L: sc=0`、2 秒后才 `sc=2`；dbg11 有 wait → **`L: sc=2 seI=1 vB=" dddd"`（t=0 即真档）**，用户实测**不再要求输入名字** ✓。
-- 参考表 `data/BankList.original.xml` 取自原图包；工具断言 `MBank13`/`key` 覆盖 1–15、`Triggers`/`CustomLogic.galaxy` 成员仍在。
-- 结论修正：shw134「引擎 BankVerify 失败即清空」只是**表象**（未预加载的 bank 本来就空，`BankVerify` 自然 false）；`BankOptionSet(c_bankOptionSignature,true)` 与重签**都不是**读档必要条件。社区佐证：GA地精研究院帖「纯galaxy代码的方式不能读取bank？[已解决]」= 拆包发现 `BankList.xml` +「读内容之前先加一条同步」。
+- **不验签设计决定（shw139/143，取代 shw134 的临时旁路）**：目标是**原图存档直接复制即可用**（跨命名空间迁移、不重签）。两处一起关：①脚本侧三处 `BankVerify` 门槛（QQ/gift/I，3676/3680/3684 附近）加常量 `c_bhNoSigVerify = true`（条件前置，`BankVerify` 本身不执行）②`gt_Init2` 银行循环的 `BankOptionSet(gv_bank[lv_a], c_bankOptionSignature, …)` 改 **`false`**（引擎侧不签也不验；若为 `true`，引擎对**原作者签名**的档验签失败并清空内存内容 → 脚本看到空档 → 走新玩家分支 → 界面报「存档已重置」）。**原有的 `<Signature>` 行保留不动做兼容**，防篡改由地图级 Checker 承担（`Math=(points+1)×(points+3)` 等）。
+  - 历史（shw134，已被取代）：曾以为引擎 `BankVerify` 失败即清档是唯一根因，只对 `c_bhSoloBuild` 短路放行；BankList 定案证明那只是表象。
+- **迁移操作**：把 `key`、`MBank13` 两份档复制到改版作者命名空间即可（私有发布时作者 = 发布者本人 toon），**无需重签**。重签算法（`tools/bank_resign.py` 备查）= SHA1(authorID + playerID + bankName + Σ(按名排序的 section.name + Σ(按名排序的 key.name + "Value" + 类型名 + 值)))，已实测可复现引擎签名。
+- **「进图即清档」的根因与实证在记忆里**：搜「bank 清档 BankList BankWait」——包内 `BankList.xml` 必须声明 `MBank13`/`key`（否则 `BankLoad` 永远空档），且 `BankLoad` 后必须 `BankWait` 同步；两件事分别由打包管线的 `banklist_fix.py` 与脚本内 `BankWait` 保证，**漏任一件症状都是每局清档**。
 
 ### 打包管线（shw96 事故沉淀，shw141 固化为一键工具）
 
@@ -202,41 +150,12 @@ python3 tools/banklist_fix.py work/boot2-<name>.SC2Map --check    # 回读校验
 python3 tools/boot2_build.py --out work/boot2-<name>.SC2Map      # 四件套 + 全部回读断言
 ```
 
-四件套（细节见上节）：①复制基线 `work/boot2-user.SC2Map`（**不要覆盖**）②直写工作区脚本（打包前自动跑 `galaxy_lint.py`，不过不打包）③合并 `strings-*.txt` → 包内 **zhCN** 表（漏 = 界面满是 `Param/Value/XXX` 原始键；`sc2map.GAME_STRINGS` 指的是 enUS，别拿它校验）④`banklist_fix.py` 写回 `BankList.xml`（漏 = 每局清档）。
+四件套（BankList 那件的根因见记忆）：①复制基线 `work/boot2-user.SC2Map`（**不要覆盖**）②直写工作区脚本（打包前自动跑 `galaxy_lint.py`，不过不打包）③合并 `strings-*.txt` → 包内 **zhCN** 表（漏 = 界面满是 `Param/Value/XXX` 原始键；`sc2map.GAME_STRINGS` 指的是 enUS，别拿它校验）④`banklist_fix.py` 写回 `BankList.xml`（漏 = 每局清档）。
 
 - 回读断言：`Triggers` 在、`BankList.xml` 在、脚本含 `BankWait`、**`MUST_HAVE_KEYS` 全部存在**（缺任一即退出码 1）。只有基线已是上一版成品图、且确认键齐全时才用 `--skip-strings`。
 - **文案源文件铁律**：`strings-*.txt` 一行一个 `键=值`；**一行粘两个键会静默吞键**——`strings-gcz.txt` 曾把 `GCZBOX2` 与 `GCZTNAME` 粘一行，导致天谴菜单名在所有构建里都显示原始键、`GCZBOX2` 值被污染（正是 `MUST_HAVE_KEYS` 抓出来的）。
 - **boot2 包内结构**：`Triggers` + 2.7KB `MapScript.galaxy`（只含 `include "TriggerLibs/NativeLib"` 与 `include "CustomLogic"`）+ 完整 `CustomLogic.galaxy`；**触发器链引用 CustomLogic 里的函数**，故回读校验看包内 `CustomLogic.galaxy`（不是 MapScript）。
 - **`sc2pack.py`**（rogue 等独立图用）把 galaxy 塞进 MapScript 并剥触发器 → boot2 缺触发器函数必炸，两条管线不能混。
-
-### 胜利图（结算画面）体系（shw98/99 沉淀）
-
-分发链：`gf_CheckEnd` 返回码 → `gf_EndGame(lp_end)` → 每码一个 `gf_ET*Win()`（约 20193–21390 行）→ 内部 `gf_WinScreen("<图>.dds", 玩家)` **全场同一张图** + 逐玩家胜利者判定（`gv_won=true`、bank 胜/败场计数 `[6]/[7]`、胜负按钮文案）。图码对照：1城镇 WinTown / 2黑手 WinMafia / 13三合 WinTriad / 3SK WinSerialKiller / 5生存者 WinSurvivor / 6小丑 WinJester / 7女巫 WinWitch / 8纵火 WinArsonist / 9处刑者 WinExecutioner / 10失忆 WinAmnesiac / 11邪教 WinCult / 12杀人狂 WinMassMurderer / 14审计 WinAuditor / 15法官 WinJudge / 16审判者+影武 / 17瘟疫 WinplaguerReal / 18冤魂 Winpossessio / 19系命 Winlifebonder / 20赌鬼 Winpossessio / 4无人 WinNobody。
-
-- **图的位置**：原图那批在 `mm2.SC2Mod` 依赖里；**自加图放地图归档根目录即可**（shw98 的 `WinCorruptInquisitor.dds`、`WinShadow.dds`）。
-- **DDS 规格**（同作者自加图）：732×376、24bit 未压缩、无 mipmap，文件=128 字节头+RGB（825824 字节）。**头里 mask 与字节序不符——按「bytes→PIL RGB」直读直写即正确**：`hdr = 旧图[:128]` + `Image.open(png).convert('RGB').resize((732,376)).tobytes()`。出图给参考图（`~/win-ref/` 四张 PNG）+ 三条约束：无人物只留一件道具、涂鸦泼漆大字、混凝土墙底。
-- **新增致命系角色的胜利三件套**：①`gf_CheckEnd` 主链并入判胜块（**shw96 语义**：城镇0+其他致命系0+邪教0+`(黑+三)<=1`+自己≥1，别复刻原版 `黑=0&&三=0`）②`gf_ET*Win` 胜利者名单加自己（漏了会像 shw98 前的影武者「赢了却记败场+失败音效」）③专属图 dds 入包+分支接线。
-- **return 16 是共享块**：主链/2人残局/平局区三处 return 16 都进 `gf_ETCorruptInquisitorWin`，该函数服务一群中立（生存者/小丑/赌鬼/女巫/处刑者/失忆者/审计官/杀人狂/审判者/影武者）。函数开头先扫描存活定胜者（`lv_ci`/`lv_shw`，审判者优先——其雷击无视无敌），图按胜者分支；新角色并入时同步改扫描、名单、图分支三处。
-- **已知死代码**：`gf_ETGamblerWin`（WinJester）无调用者；赌鬼实际走 `gf_ETE8B58CE9ACBC` 与冤魂共用 `Winpossessio.dds`；作者做好的 `Wingambler.dds`（骰子图，风格偏离原版）躺在包里未接线。
-- 2 人残局区（~15910）与平局区（~16115）的 return 16 独立于主链，改主链语义时不要漏了核对这三处的一致性（shw99 后主链=审判者/影武者 `(黑+三)<=1`，残局区维持原样）。
-
-### Galaxy 语言层陷阱（生成代码惯例）
-
-- **SoundLink 的类型是 `soundlink`**（不是 `sound`）。自定义函数收音效参数必须声明 `soundlink`，写错则所有调用处「参数类型同函数定义不匹配」并连带整个脚本解析失败（整图报废、游戏内红屏）。
-- **插入 while 广播循环要在声明区补** `playergroup autoXXX_g;` / `int autoXXX_var;`（漏声明 = 解析函数行出错）。
-- **多函数共用的字符串不能做唯一锚点**（`DB5AD8F8`、`gv_deathDesc[...] = true` 在多个杀手函数出现）：锚点必须带函数特有上下文（角色号判断行、专属文本键）。
-- **python 补丁断言失败时同命令块里后续的 commit/打包照常执行**——先单独跑补丁确认 exit 0 再提交打包；曾连续两次只提交了 strings、代码没进包。**heredoc 里裸换行就是新语句**：`python <<EOF` 失败后下一行 `scp && git` 照样跑 → 脏包被部署。打包+部署+提交要显式 `&&` 链接。
-- **验证断言别写子串包含**：`s.count('(16) || (30) || (31))) {')` 这类短串会同时命中浏览与映射白名单（互为子串），count 是 11 不是 6——断言前先确认模式唯一。
-- **白名单行的右括号层数不一致（shw84 事故）**：11 处编辑白名单 if 行并非统一 `== X)))` 结尾，部分行是 **4 层**（`== X))))`）。用统一子串替换会把 4 层行削掉一层 → `if` 解析失败、**整个脚本读取失败**。摘 OR 项必须**逐行**：定位含该项的行 → 去掉 ` || (…)` 整项 → 逐行断言 `()` 配平；且配平检查必须**先剥离字符串字面量**（61017 行含 `"("` 字面量，裸计数是已知误报）。
-- **锁定???随机系机制（枷锁/血锈/捕风捉影）**：预览列表 `gv_rolesMenusItem[2]` 是**静态文本**，??? = 直接 `DialogControlAddItem(roleNameArray[8][1])`。槽位经 bank 填 (8,1) 会被 `gf_VLoadSaveSlot` 校验（category>5）清零 ⇒ 原图 sotd 系**绕过 bank 直接写 slots**。捕风捉影做法：真阵容进 slots → VLoadSaveSlot 后 `RemoveAllItems` + 重填 15 个 ??? + bank 掩写 (8,1)；从 11 处白名单摘掉 variantSelection 即锁定。
-- **断言过度也会误报**：①`assert 'KEY' not in s` 全文件禁键——键别处可能有合法用途（`F0A13008` 是审查官能力文本）②GameStrings 行尾是 `\r\n`，比对空值键要 `l.replace('\\r','')` ③`s.find('函数名')` 命中的是**首次出现**（可能是前部原型声明），定位调用点要用带 `();` 的完整文本或在函数行号区间内找。
-- **斜体（shw87 已实证）**：SC2 富文本无斜体直标签（`<i>` 无效），斜体 = 字体样式 Italic 标志 + `<s val="样式名">`。地图 `NewFontStyles.SC2Style` 已加 `ModItalic`（fontflags="Italic"）/`ModItalic2`（styleflags="Italic"），**两种都渲染为斜体**。玩家输入 `-rename <i>x</i>` 经 `gf_BHItalicize` 改写为 `<s val="ModItalic">x</s>`（大小写闭合标签都处理），可与 `<c val>` 叠加；字体用 `#FontStandard` 保证 CJK。带标签的名字参与「按名字喊话」匹配时需照原样输入标签。
-- **二改红线（无原作者授权）**：**严禁修改/删除原图硬编码 handle 管理员链的任何既有分支**（~56944 起的 87 个，只能**追加**）；给 handle 加权限一律走白名单追加。日后公开发布前必须收回测试放开项：prefer 会员/积分门（65440/65481）、大厅电脑计入（56020）等 `c_bhSoloBuild` 旁路。**存档迁移**：bank 命名空间绑定发布作者，玩家原档（`key`、`MBank13`）留在原作者目录、脚本无法跨命名空间读取（引擎沙箱），迁移 = 把两个 bank 复制到改版作者目录即可（**无需重签**，见下条；重签工具 `tools/bank_resign.py` 备查）。
-- **不验签设计决定（shw139/143，取代 shw134 的临时旁路）**：目标是**原图存档直接复制即可用**（跨命名空间迁移、不重签）。两处一起关：①脚本侧三处 `BankVerify` 门槛（QQ/gift/I，3676/3680/3684 附近）加常量 `c_bhNoSigVerify = true`（条件前置，`BankVerify` 本身不执行）②`gt_Init2` 银行循环的 `BankOptionSet(gv_bank[lv_a], c_bankOptionSignature, …)` 改 **`false`**（引擎侧不签也不验；若为 `true`，引擎对**原作者签名**的档验签失败并清空内存内容 → 脚本看到空档 → 走新玩家分支 → 界面报「存档已重置」）。**原有的 `<Signature>` 行保留不动做兼容**，防篡改由地图级 Checker 承担（`Math=(points+1)×(points+3)` 等）。
-  - 历史背景（shw134，已被上条取代）：曾以为引擎 `BankVerify` 失败即清档是唯一根因，只对 `c_bhSoloBuild` 短路放行；后经 BankList 定案证明那只是表象。
-  - **迁移操作**：把 `key`、`MBank13` 两份档复制到改版作者命名空间即可（私有发布时作者 = 发布者本人 toon），无需重签。重签算法（`tools/bank_resign.py`）= SHA1(authorID + playerID + bankName + Σ(按名排序的 section.name + Σ(按名排序的 key.name + "Value" + 类型名 + 值)))，已实测可复现引擎签名。
-- **测试指令**：`-reveal`（`gt_BHRevealRoles`，仅主机、游戏开始后）私密列出全部玩家**带色名字**（电脑N，N=玩家编号；投票面板左侧是楼层序，与编号无关）+角色名，用于验证调查结果/案底等
-- 运行期报错先分新旧：`triggerControl(值:0)`、`StringWord(值:0)`、`CameraSetBounds region(值:0)`、`gv_roll点冷却 int[2] 越界` 等均为基线/单人测试固有，不是新改动引入
 
 ## 环境
 
