@@ -1,0 +1,5 @@
+<StyleFile>
+    <Style name="CustomInternational" template="InternationalTemplate" height="20" textcolor="#ColorWhite"/>    
+    <Style name="ModItalic" font="#FontStandard" height="16" fontflags="Italic"/>
+    <Style name="ModItalic2" font="#FontStandard" height="16" styleflags="Italic"/>
+</StyleFile>
