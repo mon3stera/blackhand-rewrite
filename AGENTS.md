@@ -276,16 +276,29 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 
 **根因**：引擎在地图加载时按包内 **`BankList.xml`** 预加载 bank；**不在该表里的 bank，galaxy 的 `BankLoad()` 永远读不出内容**（写入不受影响）。原图包 `BankList.xml` 35 条（含 `MBank13`、`key` × 玩家 1–15），而我们所有构建包里只剩 5 条战役默认项 —— 编辑器只在用 **GUI 的 bank 动作**时登记条目，我们的脚本是手写 Galaxy，于是 `boot2-user.SC2Map` 的这张表退化成默认值 → 读到"未预加载的空 bank" → 原图逻辑按新玩家处理 → 组装空档并保存 → 每局清档。
 
-**修复（已进管线，任何构建都必须做）**：
+**修复（两件事，缺一不可 —— 已进管线）**：
+
+1. **包内必须有 `BankList.xml` 声明**（预加载表，缺了 `BankLoad` 永远读不出内容）：
 
 ```bash
 python3 tools/banklist_fix.py work/boot2-<name>.SC2Map            # 写回原图的 BankList.xml（参考 data/BankList.original.xml）
 python3 tools/banklist_fix.py work/boot2-<name>.SC2Map --check    # 回读校验（断言 MBank13/key × 玩家 1..15）
 ```
 
+2. **`BankLoad` 之后必须 `BankWait` 同步**（预加载是**异步**的，t=0 直接读会拿到空档；补上表只解决"能不能读"，"何时读完"要靠同步）：
+
+```galaxy
+    BankLoad("MBank13", lv_a);
+    gv_bank[lv_a] = BankLastCreated();
+    BankOptionSet(gv_bank[lv_a], c_bankOptionSignature, true);
+    BankWait(gv_bank[lv_a]);          // shw138：等预加载/选项生效后的读取完成（放在 BankOptionSet 之后）
+```
+
+- wait 必须在 `BankLastCreated()` **之后**（dbg2 曾把 `BankWait(gv_bank[lv_a])` 放在赋值前，等的是空句柄 → 无效）；`gv_key[...]` 同理。
+- **实证对照（dbg10 vs dbg11，同一份脚本只差 wait）**：dbg10 无 wait → `L: sc=0`、2 秒后才 `sc=2`；dbg11 有 wait → **`L: sc=2 seI=1 vB=" dddd"`（t=0 即真档）**，用户实测**不再要求输入名字** ✓。
 - 参考表 `data/BankList.original.xml` 取自原图包；工具断言 `MBank13`/`key` 覆盖玩家 1–15、打包后 `Triggers`/`CustomLogic.galaxy` 成员仍在。
 - **打包三件套** = 复制基线 + `sc2map.write(CustomLogic.galaxy)` + `banklist_fix.py`；漏第三步 = 存档又读不出来。
-- 结论修正：shw134「引擎 BankVerify 失败即清空」只是**表象**（未预加载的 bank 本来就空，`BankVerify` 自然 false）；`BankOptionSet(c_bankOptionSignature,true)` 与存档重签**都不是**读档的必要条件（原图档不重签也能读，只要预加载表在）。
+- 结论修正：shw134「引擎 BankVerify 失败即清空」只是**表象**（未预加载的 bank 本来就空，`BankVerify` 自然 false）；`BankOptionSet(c_bankOptionSignature,true)` 与存档重签**都不是**读档的必要条件（原图档不重签也能读，只要预加载表在 + wait 到位）。社区佐证：GA地精研究院帖「纯galaxy代码的方式不能读取bank？[已解决]」= 拆包发现 `BankList.xml` 机制 +「读取内容之前必须先加一条同步」。
 
 ### 打包管线（shw96 事故沉淀）
 
