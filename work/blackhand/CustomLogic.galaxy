@@ -55359,7 +55359,10 @@ void gf_OSInitializeOptionsScreen () {
         TriggerExecute(gt_OSVariantsMenuConfirm, false, false);
     }
 
-    DialogControlAddItem(gv_variantsMenuItem[0], PlayerGroupAll(), StringExternal("Param/Value/BHYIN01"));
+    // shw174：烙印（BHYIN01 / variant 30）未做完，暂时不列入变体菜单（第 31 项已摘除，
+    // 其后三项索引整体前移 1：捕风捉影=31、大审判=32、天谴=33）。
+    // 代码与文案（gf_VE78399E58DB0 / BHYIN01 / BHYINDESC）全部保留，做完只要把下面这行加回来。
+    // DialogControlAddItem(gv_variantsMenuItem[0], PlayerGroupAll(), StringExternal("Param/Value/BHYIN01"));
     DialogControlAddItem(gv_variantsMenuItem[0], PlayerGroupAll(), StringExternal("Param/Value/GCZBNAME"));
     DialogControlAddItem(gv_variantsMenuItem[0], PlayerGroupAll(), StringExternal("Param/Value/GCZJNAME"));
     DialogControlAddItem(gv_variantsMenuItem[0], PlayerGroupAll(), StringExternal("Param/Value/GCZTNAME"));
@@ -85935,23 +85938,17 @@ bool gt_OSVariantsMenuChange_Func (bool testConds, bool runActions) {
     }
 
     if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 31)) {
-        libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/BHYIN01"), PlayerGroupAll());
-        libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/BHYINDESC"), PlayerGroupAll());
-        DialogControlSetEnabled(gv_variantsMenuItem[1], PlayerGroupSingle(gv_host), true);
-    }
-
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 32)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/GCZBNAME"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/GCZBDESC"), PlayerGroupAll());
         DialogControlSetEnabled(gv_variantsMenuItem[1], PlayerGroupSingle(gv_host), true);
     }
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 33)) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 32)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/GCZJNAME"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/GCZJDESC"), PlayerGroupAll());
         DialogControlSetEnabled(gv_variantsMenuItem[1], PlayerGroupSingle(gv_host), true);
     }
 
-    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 34)) {
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 33)) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/GCZTNAME"), PlayerGroupAll());
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/GCZTDESC"), PlayerGroupAll());
         DialogControlSetEnabled(gv_variantsMenuItem[1], PlayerGroupSingle(gv_host), true);
@@ -85959,18 +85956,14 @@ bool gt_OSVariantsMenuChange_Func (bool testConds, bool runActions) {
 
 
     if ((DialogControlGetSelectedItem(gv_variantsMenuItem[0], gv_host) == 31)) {
-        gv_variantSelection = 30;
-    }
-
-    if ((DialogControlGetSelectedItem(gv_variantsMenuItem[0], gv_host) == 32)) {
         gv_variantSelection = 31;
     }
 
-    if ((DialogControlGetSelectedItem(gv_variantsMenuItem[0], gv_host) == 33)) {
+    if ((DialogControlGetSelectedItem(gv_variantsMenuItem[0], gv_host) == 32)) {
         gv_variantSelection = 32;
     }
 
-    if ((DialogControlGetSelectedItem(gv_variantsMenuItem[0], gv_host) == 34)) {
+    if ((DialogControlGetSelectedItem(gv_variantsMenuItem[0], gv_host) == 33)) {
         gv_variantSelection = 33;
     }
     TriggerEnable(gt_OSVariantsMenuConfirm, true);
