@@ -12,6 +12,16 @@
 - 基线地图：`work/boot2-user.SC2Map`（含用户的变体修改，**不要覆盖**）；
 - 仓库：https://github.com/mon3stera/blackhand-rewrite（私有）。
 
+## 知识索引（AGENTS.md 放通用知识，专题在记忆里）
+
+**本文件只放「每个任务都用得上」的铁律、标准循环与红线**；下列专题已迁入项目记忆，用 `ctx_search` 按表格里的关键词检索（不要凭印象改，先搜）：
+
+| 要做的事 | 检索词 |
+|---|---|
+| 加/改成就、成就存档兼容、见微知著 | 「成就体系 见微知著 gv_bankOtherAchievements A3」 |
+| 加/改变体预设、随机槽选项、座席排序 | 「预设系统 preset_gen 随机槽使能串 座席排序」 |
+| 单人测试、虚拟占位补位、-prefer 优选 | 「单人测试 -solo 占位玩家 prefer」 |
+
 ## 铁律
 
 1. **大括号配平定位函数体**，不要用文本锚点。同一段代码在多个函数里出现，`replace(..., 1)` 会命中错的。
@@ -42,45 +52,6 @@
 7. **每次改完立刻提交**，提交信息写清"第几步 / 改了什么"。
 8. **测试地图统一放 `D:\StarCraft II\Maps\Test\`**，不要放桌面。
 9. **角色号上限红线**：`gv_bankRoleAchievements` 维度是 `int[16][9][21]`——角色卡分支里 `[xx][1][角色号]` 用 21 以上的角色号会数组越界（ScriptError 41358）；31 号角色**不得**做银行成就检查。`gf_VLoadSaveSlot` 的槽位加载校验曾用 `> gv_townMax(30)` 把 31 号槽清零（预设列表空行+实际阵容缺人），已放宽为 `> 31`；再加大于 31 的角色号需同步放宽。
-
-## 预设（变体）系统
-
-- 链路：变体菜单 `gv_variantsMenuItem[0]` 第 N 项 → `gt_OSVariantsMenuChange_Func`（显示描述，**每个菜单项都要有分支，否则无说明且右下标签残留上一个变体名**）→ `gt_OSVariantsMenuConfirm_Func`（SelectedItem → `gv_variantSelection` 映射 + 末尾分发调 `gf_V*Options()`）→ V 函数（=OSActivateOptions 的预设变体：重建面板 + 填 `lv_category`/`lv_role` 槽位串 + `gf_VLoadSaveSlot(0,...)`）。
-- **槽位串语义**：`lv_category`/`lv_role` 按槽位空格分隔；槽位=「池 角色号」。**随机组槽 = category 4 + 随机池角色号**：4[2]=城镇随机、4[3]=黑手随机、4[4]=政府(zf)、4[5]=城镇调查、4[6]=保护、4[14]=中立温和、4[12]/4[13]=致命类。预设按人数逐档（15/14/13/12 人），≤11 人走拒绝提示分支。
-- **现有自加预设**：第 31 项「烙印」（`BHYIN01`，原为悬挂键）→ variant 30 → `gf_VE78399E58DB0`；第 32 项「捕风捉影」（`GCZBNAME`）→ variant 31 → `gf_VBFCZOptions`（15 人=侦探/观察者/4城镇随机/城镇调查/政府/保护/教父(2,2)/陪侍(2,3)/黑手随机/影武者(3,31)/女巫(3,4)/中立温和；14/13/12 人递减城镇随机）；第 33 项「大审判」（`GCZJNAME`）→ variant 32 → `gf_VDSPOptions`；第 34 项「随机：天谴」（`GCZTNAME`，渐变 FFFFFF99-FFFF8800）→ variant 33 → `gf_VTQOptions`（shw133）：锁定型四子变体 A-D，固定天选者(3,32)，D 档固定 医生+瘟疫散布者×2；开局白字广播条件追加 `gv_variant == "tq"`。女巫=3/4、教父=2/2、陪侍=2/3、瘟疫散布者=3/14。
-- **预设白名单（允许增删改角色）**：①目录浏览 `gt_OSMenus_Func`（6 处 `== 16)))` 结尾的变体串）②选中映射 `gt_OSRoleSelect_Func`（5 处 `== 12)))`）——两者都要含新 variantSelection；③**动作执行层**：`gt_OSRoleManipulate` 排除集 {1,4,8,9,10,11,12,14}（item[3]添加/item[4]移除/上下移）+ 预览选中处理（~86811）的 `!= 1`。**锁定型预设（???类）必须同时改③与添加按钮禁用集**，只摘①②会像 shw85 那样仍可移除。
-- **注意**：预设再点「采纳设定」会重跑 fill 覆盖手动修改（原图语义）。
-
-### 预设生成器（tools/preset_gen.py，shw95 后加入）
-
-新增/调整随机系列锁定预设**不要手写函数体**，用生成器：
-
-```bash
-python3 tools/preset_gen.py work/presets/<名字>.json              # 校验规格 → 生成 <名字>.galaxy.txt + 打印接线清单
-python3 tools/preset_gen.py work/presets/<名字>.json --selfcheck  # 与源码中同名函数回归比对（已上线预设必跑）
-```
-
-- **规格**：`work/presets/*.json`（样板 `dashenpan.json` 大审判）。字段：`fixed` 固定角色、`randoms`=[随机槽别名,数量]、`enable_overrides` 按子变体覆盖随机槽选项、`decrement` 人数递减优先删的随机槽。
-- **角色名解析**：生成器每次运行时从 `CustomLogic.galaxy` + 基线 GameStrings 抽取 `gv_roleNameArray` 全表（含随机槽名），别名表 `ALIAS`/`SLOT_ALIAS` 在文件头部维护（影武者/观察者等非 hex 名称键的角色必须登记）。
-- **函数体尾部**（VLoadSaveSlot 填充 + ??? 锁定覆写 + 选项禁用）从 `gf_VBFCZOptions` 原样克隆；克隆尾已含收尾 `}`，生成器**不再**追加（shw133 因多一个 `}` 导致配平 -1；插入前必须 `count('{')==count('}')`）。按钮文本键默认 `GCZJBTN`，规格加 `"btn_key": "GCZTBTN"` 可换。
-
-### 随机槽使能串语义（lv_str[4]，实测解码）
-
-- **结构**：19 个空格分词 = 随机槽 4/1..4/19（词序=槽号）。`gf_VLoadSaveSlot` 按 `roleOptionExists[4][槽][位]` 逐位解析：第 b 位字符 '1'/'0' 设 `gv_roleOptions[4][槽][b]`，**字符串不够长时该位回落到 `gv_defaultRoleOptions`**——所以 "0"（单字符）= 只显式关掉第 0 位、其余默认。
-- **位串按位对齐**：必须从第 0 位写起；尾随 0 可省略（省略=默认，各"不包括X"选项默认值几乎都是 false/不过滤）。
-- **随机槽选项目录**（生成器运行时自动抽取，写规格时照抄大厅原文标签）：4/1 全体随机=[不包括致命/黑手D/城镇/中立/三合会]；4/2 城镇随机=[致命/zf/调查/保护/权力]；4/3 黑手D随机=[不包括 致命角色]；4/4 城镇zf=[市民/共济会成员/市长执法长/共济会长老/g告员]；4/5 城镇调查=[法医/警长/探员联邦探员/侦探/监视者]；4/6 保护=[巴士司机/保镖/医生/舞娘]；4/12 中立致命=[连环爱手/纵火者/爱人狂/瘟疫散布者]；4/13 中立协恶=[致命/协教徒/法官/女巫/审ji官]；4/14 中立温和=[生存者/小丑/处刑者/失忆者/赌鬼]；4/15 三合会随机=[致命]；4/19 中立随机=[致命/协恶/温和]。
-- **只有出现在阵容里的槽位其使能位才有意义**；未用槽位写 "0" 即可（捕风捉影/大审判串里残留的其它配置是历史包袱，无 gameplay 影响）。
-
-### 预设座席排序约定（用户规定，生成器内建）
-
-理论上游玩不受顺序影响，但面板展示顺序约定如下，生成器 `seat_sort_key` 已内建：
-
-1. **阵营序**：城镇 → 黑手党 → 三合会 → 中立致命 → 中立邪恶 → 中立温和
-2. **城镇内**：固定位（按规格列出顺序）→ 城镇随机 → 城镇保护 → 城镇调查 → **城镇政府（最后）**
-3. **黑手党/三合会内**：固定位 → 随机 → 致命/支援/欺诈等其他随机槽
-4. **中立内**：致命固定位（堕落审判者/瘟疫等）→ 中立致命槽 → 中立邪恶槽 → 温和固定位（小丑/处刑者等，集合见生成器 `NEUTRAL_MILD_ROLES`）→ 中立温和槽
-
-新增池 3 固定角色时，若它属于温和层需同步 `NEUTRAL_MILD_ROLES`，属于协恶层同步 `NEUTRAL_EVIL_ROLES`，否则会被排进致命层。
 
 ## 标准循环
 
@@ -353,39 +324,6 @@ python3 tools/boot2_build.py --out work/boot2-<name>.SC2Map      # 四件套 + �
 - **测试指令**：`-reveal`（`gt_BHRevealRoles`，仅主机、游戏开始后）私密列出全部玩家**带色名字**（电脑N，N=玩家编号；投票面板左侧是楼层序，与编号无关）+角色名，用于验证调查结果/案底等
 - 运行期报错先分新旧：`triggerControl(值:0)`、`StringWord(值:0)`、`CameraSetBounds region(值:0)`、`gv_roll点冷却 int[2] 越界` 等均为基线/单人测试固有，不是新改动引入
 
-### 单人测试模式（-solo）
-
-**地图起始门槛 = 4 人**：`gf_OS...` 初始化里 `PlayerGroupCount(gv_currentPlayers) <= 3` 会清空角色串（`lv_str[0]`/`lv_str[2]` 全 0）→ `gv_rolesAssigned != lv_b` 校验失败、开不了局。变体预设按人数逐档填写（~50188 起 `PlayerGroupCount(gv_tempPlayerGroup) == N` 分支），所以 1 人用变体开得起来；**自设路径**才被门槛卡住。
-
-数据模型：
-
-| 字段 | 含义 |
-|---|---|
-| `gv_categoriesArray[槽]` | 该槽选择的角色**池**（1 城镇 / 2 黑手党 / 3 中立 / 4 随机 / 5 三合会 / 8 随机组） |
-| `gv_rolesArray[槽]` | 该槽选择的**角色号** |
-| `gv_rolesAssigned` | 已选角色数量，必须等于非空槽位数 `lv_b` |
-
-`-solo` 做的事（聊天输入，shw53 起定型）：①`gv_soloTest = true` 放行两处 `gv_rolesAssigned < / > PlayerGroupCount(...)` 校验（条件加 `&& (gv_soloTest == false)`，~43462/43476）②`TriggerEnable(gt_Prefer, true)`。
-
-**不自动填角色**（`gf_BHSoloFill` 已删；shw51「补满 15 槽」方案废弃——填满后虚拟补位判「无空槽」反而不补人）：角色由测试者在自设里配置，空槽交给 `gt_Init2` 虚拟补位。命令注册 = `TriggerCreate` + `TriggerAddEventChatMessage(trigger, c_playerAny, "-solo", false)`，在 `InitTriggers` 调 `gt_BHSolo_Init();`。
-
-### 占位玩家与 -prefer 优选
-
-`c_bhSoloBuild`（脚本常量，测试构建 = true）：
-
-| 位置 | 作用 |
-|---|---|
-| `gt_Init2_Func` **实现开头** | 把 1~15 号**空槽位**加入 `gv_players`/`gv_currentPlayers`/`gv_alivePlayers`，名字「电脑N」，随机房屋。**必须在主玩家循环之前**——曾放在函数末尾（隔了 Wait 2+3+5 秒），发角色/建夜间面板时玩家还没补齐，夜间面板只剩自己一行 |
-| `gt_Init2_Func` 玩家收集过滤 | 允许 `c_playerTypeComputer` 也算玩家 |
-| `gt_DetectLeave_Func`（约 63356 行） | 不再把「未激活」当成「离开」（否则虚拟玩家会被判退场） |
-
-`-prefer`（原图自带的优选命令，按**拼音**匹配 `gv_roleNameInput[池][角色]`）：
-
-- 命令：`-prefer yingwuzhe`，多个用逗号（`-prefer yingwuzhe,shimin`）
-- 原图限制：需 `gv_oP[玩家][1] == true`（会员），非会员扣 500 积分；测试构建下两处已放开（`gt_Prefer_Func`，~65210/65251）
-- **新角色必须设拼音名**：`gv_roleNameInput[池][角色] = "xxx";`（影武者 = `yingwuzhe`），否则 `-prefer` 找不到它
-- **测试构建下 prefer 必中（预锁，shw77 起）**：真实分发在 `gf_OSComputeOptions`（兼营大厅几率模拟，`gv_emulate` 区分），原 solo 强制块轮到时槽常已被占而静默落空（"将被首选"只是登记）。现为 `gf_OSRandomize` 之后预锁：`lv_bhPreferSlot[玩家]=槽`/`lv_bhReserved[槽]`，有 prefer 者强制改抽锁定槽、无 prefer 者抽到被锁槽重抽。**新增角色无需改动**，拼音存在即可被锁。
-
 ## 环境
 
 | 项 | 值 |
@@ -433,38 +371,3 @@ python3 tools/boot2_build.py --out work/boot2-<name>.SC2Map      # 四件套 + �
 - **公屏文本必须自带 `<s val="ModLeftSize16">…</s>`（shw129）**：`-magnify` 的实现是 `gf_CBMagnifyText` 对公屏对话框里**已渲染文本做样式标签字符串替换**（`gf_ELAddMessage`/`gf_CBSystemMessage` 收到 `gv_magnified` 标志时按大小档替换标签）→ 没带标签的自加广播不跟随放大。原图模板 = `<s val="ModLeftSize16"><c val="FF0000">文本</c></s>`；跨键拼接的整行（如 TXREV1+名字+TXREV2）开标签放首键尾、闭标签放末键尾。
 - **特性行换行规范（shw124 事故）**：原图没有「纯换行」共用键。给 `gv_roleBoxText[][2]` 追加多行时把 `<n/>` 写进**每个键内容开头**，代码侧逐键 `+ StringExternal(...)`；不要复用任何原图键当换行前缀（先解包确认键内容——`4467A310`/`1045F9FD` 是「你拥有夜间无敌」行，被误当换行键后每行都会重复这句）。
 - **`gv_roleNameArray` 元素是 `text` 不是 `string`（shw123 事故）**：临时变量接 `roleNameArray[..][..]`（StringExternal 返回 text）必须声明 `text`，否则脚本读取失败「不正确的类型（不允许进行隐式强制转换）」并红屏。配套：text 判空用 `== null`（不能 `== ""`）、`lv_r = null;` 初始化、拼接直接 `+ lv_r +`；`StringToText()` 只用于 string→text。注意 `gv_roleNameInput` 是 string（拼音比对不受影响）。
-
-### 成就体系（shw150 沉淀，含自加成就「见微知著」）
-
-两套数组（都在 `gf_CDisassembleMainBank`/`gf_CAssembleMainBank` 的 `I` 段里序列化，见 18575/18849 附近，循环上界 0..70 自动全量，**新增索引不需要改存档格式**）：
-
-| 数组 | 维度 | 用途 |
-|---|---|---|
-| `gv_bankRoleAchievements[16][9][21]` | [玩家][池][角色号] | 角色向成就（以该角色获胜次数等）。**第三维只到 20** → 31/32 号角色**不能**用（越界，见铁律 9） |
-| `gv_bankOtherAchievements[16][71]` | [玩家][成就索引] | 通用/事件成就。0–67 已用；5–8 被列表过滤（`(lv_d <= 4) || (lv_d >= 9)`），24/42 被排除；**自加用 68**（= 见微知著） |
-
-**解锁三件套**（写在 `auto_gf_EndGame_TriggerFunc` 的胜利分支里，模板见索引 63/67 块 ~17320–17378）：
-
-```galaxy
-if ((gv_bankOtherAchievements[lv_a][68] == 0) && <条件>) {
-    gv_bankOtherAchievements[lv_a][68] = 1;
-    autoXXXX_g = gv_currentPlayers; autoXXXX_var = -1;
-    while (true) {                                  // 全场广播（私密成就改成直接发 lv_a）
-        autoXXXX_var = PlayerGroupNextPlayer(autoXXXX_g, autoXXXX_var);
-        if (autoXXXX_var < 0) { break; }
-        gf_CBSystemMessage((StringExternal("Param/Value/<前缀键>") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/<后缀键>")), autoXXXX_var, lv_a, 0, SoundLink("UI_BnetGameFound", -1), Color(0,0,0));
-    }
-    gf_GiveBonus(lv_a, 300);                        // 真加积分（gv_bankGeneralIntegers[玩家][3] + gv_points）
-}
-```
-
-- **广播文案拆两个键**：前缀键 = `<s val="ModCenterSize16">`，后缀键 = `<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSize16Bold"><c val="颜色">成就名</c></s><s val="ModCenterSize16"><c val="44FF88">!</c></s>`（照抄索引 63/67 的既有键形态；颜色用该角色/主题色）。
-- **while 循环的两个变量必须补进该函数的自动变量声明区**（`playergroup autoXXXX_g; int autoXXXX_var;`，EndGame 的声明区 ~16493–16622），否则解析失败。
-- **成就列表的名称映射链也要补**：约 59500 附近 `else if (autoE7789229_val == <索引>) { lv_x = StringExternal("Param/Value/<名称键>"); }`（在 67 之后追加）。名称键 = `<s val="ModCenterSize16Bold"><c val="颜色">成就名</c></s>`，**漏了列表里这一条就是空白**。
-- 自加文案进 `strings-*.txt` 后，记得同时把键加进 `tools/boot2_build.py` 的 `MUST_HAVE_KEYS`（值要**带 `Param/Value/` 前缀**，与既有条目一致，否则回读断言会误判缺失）。
-
-- **第二处名称链 = 管理命令 `-achieve <玩家名> <索引>`**（`gt_Achieve_Func`，需 `gv_oP[玩家][1]`，~60820，用的键与列表链**不同**）：漏补分支 → 该命令播报名字是 `null`（原图 67 号就缺）。过滤同列表；写入**无上界校验**（`-achieve x 99` 越界写）。这条路径可用来**实测成就播报**。
-
-**存档兼容性（用户 2026-09-11 提问定案）**：`A2`（角色向）= 4 段×20 词、`A3`（通用）= **71 词**，都是**定长全量词表**（每次写满，与是否解锁无关，18583–18596 / 18586）⇒ **索引不越界就零兼容影响**（老档那些位本来就是 0）。**扩容**（>70 个通用成就 / 角色号 >20）要三件套：扩数组维度 + 扩读写上界 + **读取加空串保护**——`StringWord` 越界返回 `""`，`StringToInt("")` 会报触发器错误并**中断读档函数**（先例 18506；读档被打断 ⇒ 后面 Reports/Blacklist/胜场都不加载 ⇒ 看着像清档）。也可**新开 key/section**（如 `I/A5`，已不验签故无签名障碍）：只在一处判空、老结构不动，但**清理/重置路径（58817 清分、`gf_CDisassembleMainBank`、保存格）要同步清**。空位：**68 已用，69/70 可用**，另 17/34/62 亦空；5–8/42 被显示过滤排除。
-
-**自加成就「见微知著」（索引 68，300 分，天选者 3/32）**：条件 = `gv_won` + 池3/角色32 + 存活 + `gv_txStrikes <= 0`（雷击用光）+ `gv_txGuesses >= 1`（至少猜对一次）+ `gv_txGuessBad == 0`（只要猜了就必须猜对）。为此新增 `int[16] gv_txGuessBad`（在 `gf_SequenceKills` 天选者块的**猜错**（TXGUESSBAD）与**作废**（TXGUESSVOID，换了目标）两处 `+= 1`；目标当夜已被别人杀死走 TXTGTDEAD，不结算、不记错、猜测保留到下一夜）。用户 2026-09-11 定稿：宁可放宽成「至少猜一次 + 猜了必须对」，不要求每次都猜（每雷击都必须猜对太难）。
