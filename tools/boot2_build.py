@@ -51,6 +51,8 @@ ELEM_NAME_RE = re.compile(r'name="([^"]+)"')
 # 地图内置字体：包内成员路径 ← work/blackhand/fonts/ 下的文件（OFL，许可文本一起分发）
 FONT_DIR = ROOT / 'work' / 'blackhand' / 'fonts'
 FONTS = [
+    (r'Fonts\Lora-Italic.ttf', 'Lora-Italic.ttf'),
+    (r'Fonts\Lora-OFL.txt', 'Lora-OFL.txt'),
     (r'Fonts\PT_Serif-Italic.ttf', 'PT_Serif-Italic.ttf'),
     (r'Fonts\GreatVibes-Regular.ttf', 'GreatVibes-Regular.ttf'),
     (r'Fonts\PT_Serif-OFL.txt', 'PT_Serif-OFL.txt'),

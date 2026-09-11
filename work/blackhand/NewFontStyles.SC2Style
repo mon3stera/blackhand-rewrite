@@ -10,6 +10,8 @@
     <!-- shw159：地图内置字体（OFL 授权，许可文本随字体打进 Fonts\）——斜体改用真正的斜体字面 -->
     <Constant name="SHWItalicPT" val="Fonts\PT_Serif-Italic.ttf" />
     <Constant name="SHWItalicGV" val="Fonts\GreatVibes-Regular.ttf" />
+    <!-- shw160：用户指定的 Lora Italic（Cyreal，OFL） -->
+    <Constant name="SHWItalicLora" val="Fonts\Lora-Italic.ttf" />
     <!-- FontGroup 做西文/中日韩回落的两种顺序（哪个生效由 -italictest 实测） -->
     <FontGroup name="SHWItalicPTGroupA">
         <CodepointRange font="#BlizzardGlobal" />
@@ -19,6 +21,17 @@
         <CodepointRange font="#SHWItalicPT" />
         <CodepointRange font="#BlizzardGlobal" />
     </FontGroup>
+    <FontGroup name="SHWItalicLoraGroupA">
+        <CodepointRange font="#BlizzardGlobal" />
+        <CodepointRange font="#SHWItalicLora" />
+    </FontGroup>
+    <FontGroup name="SHWItalicLoraGroupB">
+        <CodepointRange font="#SHWItalicLora" />
+        <CodepointRange font="#BlizzardGlobal" />
+    </FontGroup>
+    <Style name="ModItalicLora" font="#SHWItalicLora" />
+    <Style name="ModItalicLoraG" font="#SHWItalicLoraGroupA" />
+    <Style name="ModItalicLoraG2" font="#SHWItalicLoraGroupB" />
     <!-- 注意：都不写 height，靠它继承容器字号（同 ModItalicAuto） -->
     <Style name="ModItalicPT" font="#SHWItalicPT" />
     <Style name="ModItalicPTG" font="#SHWItalicPTGroupA" />
