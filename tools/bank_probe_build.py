@@ -234,10 +234,17 @@ def patch(src: str, wait: bool, keep_saves: bool, poll: bool, waitload: bool = F
     anchor = "bool gt_Init2_Func (bool testConds, bool runActions) {\n"
     src = src.replace(anchor, anchor + "    int autoSHBKa;\n    int autoSHBKi;\n", 1)
     if matrix:
-        a = "    int autoSHBKa;\n    int autoSHBKi;\n"
-        assert src.count(a) == 1
-        src = src.replace(a, a + '    gf_SHBankInit();\n    gf_SHBank2(1, "T0");\n', 1)
-        log.append("matrix T0 inserted")
+        # Galaxy 铁律：局部变量声明必须全部位于语句之前 —— 语句只能插在 "// Actions" 之后
+        hdr = "bool gt_Init2_Func (bool testConds, bool runActions) {"
+        assert src.count(hdr) == 1, f"gt_Init2 头部锚点 {src.count(hdr)}"
+        fstart = src.index(hdr)
+        mark = "    // Actions\n"
+        mpos = src.index(mark, fstart)
+        body_line = src[mpos + len(mark):].split("\n", 1)[0]
+        assert not body_line.lstrip().startswith(("int ", "string", "const ", "unit", "bool ", "bank ")),             f"插入点后仍是声明: {body_line!r}"
+        calls = '    gf_SHBankInit();\n    gf_SHBank2(1, "T0");\n'
+        src = src[:mpos + len(mark)] + calls + src[mpos + len(mark):]
+        log.append("matrix T0 inserted @ " + body_line.strip()[:50])
 
     log.append("auto vars declared")
 
