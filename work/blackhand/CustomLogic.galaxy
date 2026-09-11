@@ -60819,6 +60819,12 @@ bool gt_Achieve_Func (bool testConds, bool runActions) {
             else if (autoD1168222_val == 66) {
                 lv_x = StringExternal("Param/Value/85558714");
             }
+            else if (autoD1168222_val == 67) {
+                lv_x = StringExternal("Param/Value/8A231E2D");
+            }
+            else if (autoD1168222_val == 68) {
+                lv_x = StringExternal("Param/Value/TXACH3");
+            }
             else {
                 lv_x = null;
             }
