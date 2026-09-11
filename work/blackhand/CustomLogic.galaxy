@@ -35886,11 +35886,13 @@ void gf_RSNeutralSetup () {
                     }
 
                     if ((gv_roles[lv_a][0] == 32)) {
-                        gf_RASerialKillerActions(lv_a);
+                        // shw147：没有雷击余额时不给目标按钮（只有提示），也不提示 -guess
                         if ((gv_txStrikes[lv_a] <= 0)) {
+                            gf_RANoActions(lv_a);
                             gf_CBSystemMessage(StringExternal("Param/Value/TXNOSTRIKE"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
                         }
                         else {
+                            gf_RASerialKillerActions(lv_a);
                             gf_CBSystemMessage(StringExternal("Param/Value/TXTIPGUESS"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
                             gf_CBSystemMessage((StringExternal("Param/Value/TXTCOUNTA") + IntToText(gv_txStrikes[lv_a]) + StringExternal("Param/Value/TXTCOUNTB")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
                         }

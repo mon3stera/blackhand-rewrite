@@ -1,7 +1,7 @@
 Param/Value/SHWNAME=<c val="C0C0C0">影武者</c>
-Param/Value/SHWDESC=隐于市井的暗杀者，无声无息，专为灭口而行。<n/><n/><c val="BBDDFF">每晚选择两名玩家，效果取决于你的攻击模式。你将得知目标一的真实去向。</c><n/><n/><c val="AA9988">你在夜晚无法被杀死。</c>
+Param/Value/SHWDESC=隐于市井的刺客，无声无息，专为灭口而行。<n/><n/><c val="BBDDFF">每晚选择两名玩家，效果取决于你的攻击模式。你将得知目标一的真实去向。</c><n/><n/><c val="AA9988">你在夜晚无法被爱死。</c>
 Param/Value/SHWOPT2=追击无视无敌和救治
-Param/Value/SHWCRIME=非法闯入，谋杀
+Param/Value/SHWCRIME=非法闯入，谋爱
 Param/Value/SHWBOX4=你是受雇于复仇的影子，行动无声，见血封喉。
 Param/Value/SHWBOX1=- 每晚选择两名玩家，效果取决于你的攻击模式。
 Param/Value/SHWBOX3=- 你将得知目标一的真实去向。
@@ -15,11 +15,11 @@ Param/Value/SHWNIGHT=<s val="ModLeftSize16Bold"><c val="9B30FF">你听见黑暗�
 Param/Value/SOLOON=-solo 已启用：大厅空位将在开局后补满虚拟玩家，请自行配置角色。
 Param/Value/SHWSEL1=<s val="ModLeftSize16">你改为选择 </s><s val="ModLeftSize16Bold">
 Param/Value/SHWSEL2=<s val="ModLeftSize16">你将选择 </s><s val="ModLeftSize16Bold">
-Param/Value/SHWSURV=<s val="ModLeftSize16Bold"><c val="AAFF00">有人试图暗杀你，但你在他的攻击下存活了。</c></s>
+Param/Value/SHWSURV=<s val="ModLeftSize16Bold"><c val="AAFF00">有人试图取你性命，但你在他的攻击下存活了。</c></s>
 Param/Value/SHWDEATH1=死者身上只有一道极细的伤口，像是被一柄薄刃一闪而过。
 Param/Value/SHWDEATH2=死者倒在门前，神情平静，仿佛至死都未察觉任何人靠近。
 Param/Value/SHWDEATH3=现场没有任何搏斗痕迹，只有一抹消散如烟的黑影。
-Param/Value/SHWDM=死者死于无声无息的刺杀手法。
+Param/Value/SHWDM=死者死于无声无息的行刺手法。
 Param/Value/SHWHEAR=<s val="ModLeftSize16"><c val="FF0000">你听到一声极轻的破风声掠过耳畔...</c></s>
 Param/Value/F2239D82=- 你推断出他可能是侦探、监视者、密探/先锋、纵火者、影武者。
 // -reveal 测试指令（仅主机）
@@ -31,9 +31,9 @@ Param/Value/SHWREV=<s val="ModLeftSize16Bold"><c val="FFFF88">你的目标是一
 Param/Value/SHWBOX6=<n/>- 你的目标一可以被交换，但是目标二无法以任何形式被交换。
 Param/Value/DBSCRIME=操纵审判
 Param/Value/4881041F=- 他像是个警长、副手、恐吓者/封口、审ji官、处刑者，或堕落审判者。
-Param/Value/SHWMODE1=<s val="ModLeftSize16"><c val="0080C0">当前模式：若目标一访问了目标二，则击杀目标一（无视无敌和救治）。</c></s>
-Param/Value/SHWMODE2=<s val="ModLeftSize16"><c val="0080C0">当前模式：击杀目标一今晚访问的目标；目标一没有行动，则击杀目标一。</c></s>
-Param/Value/SHWBOX7=<n/>- 输入 -on / -off 切换攻击模式：若目标一访问了目标二，则击杀目标一，这次击杀无视无敌和救治；或是攻击目标一的目标。
+Param/Value/SHWMODE1=<s val="ModLeftSize16"><c val="0080C0">当前模式：若目标一访问了目标二，则击爱目标一（无视无敌和救治）。</c></s>
+Param/Value/SHWMODE2=<s val="ModLeftSize16"><c val="0080C0">当前模式：击爱目标一今晚访问的目标；目标一没有行动，则击爱目标一。</c></s>
+Param/Value/SHWBOX7=<n/>- 输入 -on / -off 切换攻击模式：若目标一访问了目标二，则击爱目标一，这次击爱无视无敌和救治；或是攻击目标一的目标。
 Param/Value/SHWBOX8=<n/>- 如果目标一的目标是你，则你会攻击目标一。
 Param/Value/SHWDEATH4=死者被一把刀刺穿了。
 Param/Value/SHWDEATH5=他被劈成两半了。
