@@ -21,6 +21,8 @@
 | 加/改成就、成就存档兼容、见微知著 | 「成就体系 见微知著 gv_bankOtherAchievements A3」 |
 | 加/改变体预设、随机槽选项、座席排序 | 「预设系统 preset_gen 随机槽使能串 座席排序」 |
 | 单人测试、虚拟占位补位、-prefer 优选 | 「单人测试 -solo 占位玩家 prefer」 |
+| 新增/改造角色（11 步流程、清单、死亡三件套） | 「新增角色端到端流程」「一个角色要改的地方」 |
+| 夜晚镜头组、行动面板/开关按钮、访问措辞 | 「夜晚镜头体系 行动面板 开关按钮 措辞 访问」 |
 
 ## 铁律
 
@@ -124,24 +126,6 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 | 中立·温和 | 一般无夜间无敌 |
 | 城镇 | 无夜间无敌；调查/保护类有各自开关 |
 
-### 一个角色要改的地方（清单）
-
-1. 名称/描述数组 + 完整定义块（`roleNameArray` / `roleDescriptionArray` / `roleInvestigatorArray` / 四组开关数组）
-2. GameStrings 文案（名称、描述、开关标签、夜间演出文本）
-3. 自设面板列表（`gv_rolesMenusItem[1]`）
-4. 选中映射（`gt_OSRoleSelect_Func`，按列表索引 → 角色号）
-5. 行动按钮（`gf_RA*Actions` + 分发链）
-6. 夜晚准备（`gf_SequencePrep`）与结算（`gf_SequenceKills`）
-7. 击杀助手（`gf_ES*Kill`）
-8. **角色卡正文分支**（`gv_roleBoxText[lv_a][0..4]`，约 40620–42000 行）—— 这一段是**按 `gv_roles[lv_a][0]`（角色号）逐个硬编码**的，**不区分池**！踩过的坑：影武者是池 3 角色 13，而原图已有的 `if ((gv_roles[lv_a][0] == 13))` 分支是**池 1 角色 13（狱警）**，于是影武者套用了别人的正文。
-   - 必须把已有分支限定池：`if (((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 13)))`
-   - 再新增自己的分支：`if (((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 13)))`
-   - `[0]` 角色介绍（会拼在「你的角色是 X」后面）、`[1]` 能力、`[2]` 特性、`[4]` 目标；`[6]` 由 `gf_RTMakeWinList` 自动生成
-   - 另有两处角色详情：`gv_roleDescriptionArray[池][角色]`（约 86118 行，自设面板详情）和 `gv_roleBoxText`（游戏内角色卡）
-9. 可选：变体角色串
-
-> 漏任何一处都会出现"看起来加了但没生效"。改完按 `docs/ROLE-PIPELINE.md` 第 4 节逐项验证。
-
 ### 探员消息 / 警长消息 / 案底
 
 | 项 | 字段 | 说明 |
@@ -180,76 +164,6 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 - 调查者夜间结算读这些标记，任一为真播报「你的目标曾经有过案底！」（`33FE9712`），否则 `D903D005`。
 - **案底只在行为真正生效时记录**：攻击被无敌挡下、被救治救回**不算**谋杀（影武者的标记只写在 `gf_KillPlayer` 成功之后）。
 - **新增角色的调查清单**：①`gv_roleInvestigatorArray[池][角色][0..1]` 探员线索（按上表选类别）②`gv_e78AAFE7BDAAE58FAFE883BD[池][角色]` 图鉴案底文本 ③在自己的行动/结算代码里打运行时案底标记 ④警长消息无需配置（自动取角色名），只有该角色应免疫调查时才设「免疫调查」开关。
-
-### 新增角色端到端流程（影武者 池3/31 已端到端验收，2026-09-10）
-
-按顺序走，每一小步「改 → 静态校验 → 提交」：
-
-**第 0 步：选槽位** —— 先查 3.3 确认空闲；**角色号 > 30 会触发一整类循环上界问题**（第 4/6/7 步），能用 ≤30 的空槽就用 ≤30。
-
-**第 1 步：角色定义块**（`gf_InitializeVariables`，搜最近角色的定义块照抄结构）
-- `gv_roleNameArray` / `gv_roleDescriptionArray` / `gv_roleOptionsText` / `gv_roleOptionsImportant` / `gv_roleOptionExists` / `gv_roleOptions` / `gv_bankSaveWeights` / `gv_roleInvestigatorArray[池][号][0..1]` / 图鉴案底 `gv_e78AAFE7BDAAE58FAFE883BD[池][号]`
-- 拼音 `gv_roleNameInput[池][号]`（在 `gf_InitializeOther`）
-- 要常驻帮助面板：`gv_roleOptions[池][号][10] = true;`
-
-**第 2 步：GameStrings**（`work/blackhand/strings-<角色>.txt`，打包时 `--strings` 传入）
-- 名称/描述/开关标签/夜间演出/死亡描述/验尸官线索等键；键名用角色前缀（影武者=SHW*）
-- **共享键可覆盖**：`merge_strings` 对已存在的键整行替换。探员类别枚举（如侦探类 `F2239D82`）在尾部追加新角色名即可，共用该类的所有角色一起更新
-
-**第 3 步：角色卡分支（两份，必须逐字段一致）**
-- `gf_RTTownRoleText` / `gf_RTNeutralRoleText`（按池放）各加 `if (((gv_roles[lv_a][1] == 池) && (gv_roles[lv_a][0] == 号)))` 分支
-- 阵营行 `[0]` 照抄同类：中立致命 = `CE62498E("无") + lv_t[2] + D7C97124(" (致命)")`——影武者曾因 NeutralRoleText 副本漏了「无」前缀，卡片只显示「(致命)」
-- `[1]` 能力、`[2]` 特性、`[4]` 目标、`[6]` winList 自动；追加特性行 = 键内容自带 `<n/>` 前缀再 `+ 一个键`。**换行键陷阱见「特性行换行规范（shw124 事故）」**（`4467A310` 不是通用换行键）。
-
-**第 4 步：帮助面板（角色参考卡页）**
-- `gf_MakeHelpMenu` 的角色号循环上界 ≥ 新角色号（原图从 `gv_townMax`=30 起往下数）+ 第 1 步的 `[10]` 标志
-
-**第 5 步：自设面板列表 + 选中映射** —— 见铁律 3.1，段内末尾追加，两处条数一致，脚本校验。**各段索引按 `gv_roleCategory` 独立计数**（黑手D等段从 1 重新开始），往某段末尾追加不影响其他段的映射
-
-**第 5.5 步：审查页（灵魂猜测页）** —— `gf_ASE5AEA1E69FA5E98089E9A1B92` 的 `lp_picked` 上界 + `gt_ASE5AEA1E69FA5E7A1AEE5AE9A_Func` 映射。**该映射用「SelectedItem + 分段偏移」跳过无名角色**：新角色排在无名空位之后时要同时调上界与偏移（观察者=城镇上界 31 且 `>=30` 减 1；影武者=中立上界 18 且 `>=18` 加 12）。改完逐项推算「选中第 N 项 → 角色号」核对
-
-**第 6 步：拼音匹配循环上界** —— `gt_Prefer_Func`(29)、`gt_Blacklist_Func`(24)、`gt_Init2_Func` 黑名单校验(19) 放宽到 ≥ 新角色号（`gt_Change_Func`=40 够用）；循环里 `roleNameArray != null` 自动跳过空位，放宽无害。不放宽的症状：`-prefer 拼音` 报「不是一个角色」
-
-**第 7 步：几率/预计数量（随机池可见性）** —— `gf_OSComputeOptions` 里 5 处角色号循环（几率清零、模拟标志重置、几率计数、标志重置、归一化）原上界 `gv_townMax`。不放宽的症状：出现几率恒 0%、预计数量是未归一化的累加值（曾显示 1000）
-
-**第 8 步：行动面板 + 夜晚逻辑**
-- 行动按钮函数 `gf_RA*Actions`（每个存活其他玩家行配按钮）+ `gf_RAActions` 分发 + **AS 按钮点击触发器 A/B 两个都要写分支**（只写 A：按钮可见但点击不生效）
-- `gf_SequencePrep`（记账）/ `gf_SequenceKills`（结算）/ `gf_CheckEnd`（残局计数、归零条件、数量比较）/ 阵营校验
-
-**第 8.5 步：夜间目标的效果转换（欺骗者 / 女巫 / 巴士司机）** —— 巴士司机交换与欺骗者转向**共用 `gv_switched`**（`switched[对象]=转向对象`）；女巫控制走 `gv_witched[受害者]=女巫`，结算时重写受害者 `visitation = 女巫的 action[1]`（~10936），造访目的地被交换时连锁重写访客 visitation（~10959）。
-
-- **原图标准模式**（效果按"造访目的地"投递，杀手杀 `visitation` 所指）：巴士/欺骗者/女巫经 visitation 重写自然生效，**无需额外代码**。
-- **按目标身份直接投递的角色（如影武者）必须显式解析**：先判女巫控制（`gv_witched[自己]!=0 && gv_witchEligible && 未入狱 && 女巫有 action[1]` → 换成女巫的 action[1]），再过 `gv_switched`（盯 3、3 是欺骗者转向 7 → 实际看/杀 7）。**哪些槽位可被转换是设计决策且必须写进角色卡**（影武者：目标一可被交换，目标二结构性不可转——`action[x][1]` 全脚本只有重置与本人按钮写入）。
-- 核对清单：①哪些槽位可被女巫替换 ②可否被 switched 转换 ③转换后判定与效果是否都落在转换后的目标 ④角色卡是否已说明 ⑤visitation 是否体现转换（影武者保持"表象去原目标"，观察者看得到）。
-
-**第 9 步：击杀函数（`gf_ES*Kill`）死亡信息三件套**
-- 字母码 `gv_deathMethod[目标]`：**用新码**（`K` 是连环杀手的，SK 函数里也有一份 → 锚点必须带函数特有上下文）；验尸官(1,10)选项2 私密播报扫描块（~13620）加字母分支
-- 公示描述 `gv_deathText[目标]`：**照抄义警模式**（~26440）——`gv_deathDesc` 初始 false；`if(deathDesc==true){第一段; lv_c=true;} deathDesc=true; if(lv_c==false){主描述}`。**放反了 deathText 永远为空、白天没有死亡信息**
-- 演出顺序（用户认可）：语音（如 `SoundLink("DarkTemplar_What",-1)`）→ `Wait` 语音时长（2.6s）→ 刀声 → 全场红字 → 目标私息。**函数顶部不要放公用出刀声**
-
-**第 10 步：私密消息路由** —— 击杀/治疗目标的私息走 `gf_BHNotify`（目标非真实在线玩家时改发 `gv_host`，solo 可见；真实玩家只发本人），否则 solo 局「只有音效没有文字」。
-
-**第 11 步：静态校验 + 打包部署** —— 逐函数落点 + 配平 + 条数校验 → `boot2_build.py` 打新文件名 → scp → 游戏内验证（帮助面板、角色卡、`-prefer`、探员线索、死亡信息、残局判定）
-
-### 措辞约定：访问 vs 造访（shw110/111 沉淀）
-
-- **自设/新角色的文案统一说「访问」**，不说「去了某人家中」「整夜未出门」「造访」。行为兜底规则写成一句特性行：**「如果目标一没有行动，则视作访问自己。」**（影武者 SHWBOX9）——有了它就不需要再解释「未出门」分支。
-- 已按此措辞改写的键：影武者 SHWMODE1/2、SHWBOX7、SHWDEST1-3；观察者 GCZABIL（=「每晚观察一个人，获知有哪些角色访问了他。」）、GCZDESC、GCZNONE、GCZNOSELF、GCZACH。
-- **原图自带的「造访」措辞保留不动**（用户 2026-09 明确）：`4A05D9F1`/`B9374B9B`（造访按钮标题）、`63403919`/`65E3235B`/`A14EF820`/`A5E3465E`/`D881AB31`（女巫控制与低语提示）、`C48670E6`（庇护者描述）、`DocInfo/PatchNote110`。不要顺手全局替换。
-
-### 夜晚镜头体系（gf_NP*Camera，shw107/108 沉淀）
-
-夜晚相机触发器 `gt_NPNightCamera` 启用期间，一个分发块（约 75003 行）按角色把每个玩家指派到一组固定循环机位 `gf_NP*Camera`：Dead / Jail(1,13狱警等) / Authority 政府厅(1,12)(1,19)(3,12) / Panorama 全景(1,2)(1,6)(3,7)**(3,13)** / Walk 街道 / Nature / Warehouse(2,5池非9) / Church(1,7)(1,14) / Evil(1,10)(3,4)(3,8)(3,10) / Paranoid(1,15)(1,17)(3,11)(3,14) / Stalker(1,4)(3,1)(3,5)(1,27)(1,28) / **Vantage 高点窥视(1,8)(1,16)(3,9)(1,31观察者)(3,31影武者)**。
-
-- 新角色**必须**在分发块里指派一个镜头组，否则该角色夜晚没有专属循环镜头（无报错，纯缺失）。
-- 原图遗留缺口：**史官 (1,30) 至今没有任何镜头组**（用户暂未要求补）。
-- 组的选择按气质套用现成主题即可（用户认可：影武者/观察者=监视者的 Vantage，堕落审判者=警长的 Panorama）。
-
-### 行动面板与开关按钮（shw110 沉淀）
-
-- 双目标按钮 [5]/[6] 在 gf_ASShowBox 前的创建函数（约 39360）定位：`[5]` anchorTopRight **x=60（右）**、`[6]` anchorTopRight **x=120（左）**。点击处理在 `gt_ASActionButtonA/BNeutral_Func`（A=[5]→action[0]，B=[6]→action[1]）。视觉上「目标一在左、目标二在右」需**只对影武者**在 `gf_RAShadowActions` 里用 `DialogControlSetPosition(PlayerGroupSingle(lp_player))` 对调 x（120/60），不改写入槽位、不影响共用 [5]/[6] 的其他角色（巴士司机等）。
-- 「开关」按钮（`gv_switchButtonItem`，tooltip 键 `94249CFE` 限定名单）由 `gt_ASSwitchButton_Func` 按角色分支处理（(3,15)冤魂 / (3,14)瘟疫 / (3,3)小丑 / **(3,31)影武者**）。新角色要支持开关：①在 `gt_ASSwitchButton_Func` 加角色分支（切换变量+播报状态）②在该角色 `gf_RA*Actions` 开头 `DialogControlSetEnabled(gv_switchButtonItem, …)` 启用并顺带播报当前状态（=每夜开始的状态提示，影武者借此实现模式提示）。
-- 共用 `gv_e5BC80E585B3` 开关变量的角色（小丑/冤魂/影武者）互不冲突，分支各自独立。
 
 ### BankList.xml —— 「进图即清档」的真正根因（shw137 定案，2026-09-11）
 
