@@ -29,7 +29,15 @@
         <CodepointRange font="#SHWItalicLora" />
         <CodepointRange font="#BlizzardGlobal" />
     </FontGroup>
+    <!-- shw161：FontGroup 必须先用 Constant 绑定，样式再用 #Constant 引用（直接写组名不生效） -->
+    <Constant name="SHWItalicLoraGA" val="SHWItalicLoraGroupA" />
+    <Constant name="SHWItalicLoraGB" val="SHWItalicLoraGroupB" />
+    <Constant name="SHWItalicPTGB" val="SHWItalicPTGroupB" />
     <Style name="ModItalicLora" font="#SHWItalicLora" />
+    <Style name="ModItalicLoraCA" font="#SHWItalicLoraGA" />
+    <Style name="ModItalicLoraCB" font="#SHWItalicLoraGB" />
+    <Style name="ModItalicLoraCBi" font="#SHWItalicLoraGB" styleflags="Italic" />
+    <Style name="ModItalicPTCB" font="#SHWItalicPTGB" />
     <Style name="ModItalicLoraG" font="#SHWItalicLoraGroupA" />
     <Style name="ModItalicLoraG2" font="#SHWItalicLoraGroupB" />
     <!-- 注意：都不写 height，靠它继承容器字号（同 ModItalicAuto） -->

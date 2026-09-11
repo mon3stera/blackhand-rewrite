@@ -90767,12 +90767,12 @@ bool gt_BHItalicTest_Func (bool testConds, bool runActions) {
     gf_CBSystemMessage(StringToText("C-<s val=\"ModItalic2\">italic Italic 斜体测试</s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
     // shw158：名字现在用 ModItalicAuto，跟着容器字号走；这条直接用 24px 容器显示本人的名字自检
     gf_CBSystemMessage((StringToText("<s val=\"ModCenterSize24Bold\">24px容器里的你的名字：") + StringToText(gv_name[EventPlayer()]) + StringToText("</s>")), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    // shw160：地图内置字体候选——Lora Italic 的三种写法 + PT衬线/花体对比（中文用来验回落）
-    gf_CBSystemMessage(StringToText("<s val=\"ModCenterSize24Bold\">T1 Lora直引：<s val=\"ModItalicLora\">Abc 影缝</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    gf_CBSystemMessage(StringToText("<s val=\"ModCenterSize24Bold\">T2 Lora组A(全局在前)：<s val=\"ModItalicLoraG\">Abc 影缝</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    gf_CBSystemMessage(StringToText("<s val=\"ModCenterSize24Bold\">T3 Lora组B(Lora在前)：<s val=\"ModItalicLoraG2\">Abc 影缝</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    gf_CBSystemMessage(StringToText("<s val=\"ModCenterSize24Bold\">T4 PT衬线直引：<s val=\"ModItalicPT\">Abc 影缝</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    gf_CBSystemMessage(StringToText("<s val=\"ModCenterSize24Bold\">T5 花体直引：<s val=\"ModItalicGV\">Abc 影缝</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
+    // shw161：验证「FontGroup 经 Constant 引用」是否生效（T2-T4），T1 为已知的直引对照
+    gf_CBSystemMessage(StringToText("<s val=\"ModCenterSize24Bold\">T1 Lora直引(对照)：<s val=\"ModItalicLora\">Abc 影缝</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
+    gf_CBSystemMessage(StringToText("<s val=\"ModCenterSize24Bold\">T2 组A→常量：<s val=\"ModItalicLoraCA\">Abc 影缝</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
+    gf_CBSystemMessage(StringToText("<s val=\"ModCenterSize24Bold\">T3 组B→常量：<s val=\"ModItalicLoraCB\">Abc 影缝</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
+    gf_CBSystemMessage(StringToText("<s val=\"ModCenterSize24Bold\">T4 组B→常量+斜标：<s val=\"ModItalicLoraCBi\">Abc 影缝</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
+    gf_CBSystemMessage(StringToText("<s val=\"ModCenterSize24Bold\">T5 PT组B→常量：<s val=\"ModItalicPTCB\">Abc 影缝</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
     // shw157：以下四条整行包在 24px 粗体里，用来判断哪个斜体样式会「跟随容器字号」
     gf_CBSystemMessage(StringToText("<s val=\"ModCenterSize24Bold\">对照24 | <i>直标签</i> | <s val=\"ModItalic\">16档</s> | <s val=\"ModCenterSize24Bold\"> </s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
     gf_CBSystemMessage(StringToText("<s val=\"ModCenterSize24Bold\">24档=<s val=\"ModItalic24\">斜体24</s> 跟随?=<s val=\"ModItalicAuto\">Auto无height</s> 零高?=<s val=\"ModItalicZero\">Zero高度0</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
