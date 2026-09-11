@@ -9,7 +9,7 @@
 - 以**原图**（黑手：升温）为基底，通过**外挂 Galaxy 脚本**替换/扩展核心逻辑；
 - 保留原图地形、美术、UI、角色卡、行动面板与演出；
 - 主脚本：`work/blackhand/CustomLogic.galaxy`（唯一维护目标）；
-- 基线地图：`work/boot2-user.SC2Map`（含用户的变体修改 **+ 用户在地图信息里写的原作者署名/下架承诺/游戏内更新日志**，**不要覆盖**；上一代基线备份在 `work/boot2-user.SC2Map.baseline-0909`）；
+- 基线地图：`work/boot2-user.SC2Map`（含用户的变体修改、**游戏属性/隐藏属性**，以及地图信息里的原作者署名/下架承诺/游戏内更新日志，**不要覆盖**）。历次备份：`.baseline-0909`（原图作者版）、`.baseline-0912-pre-attrs`（改图第一版，隐藏属性之前）。用户每次在编辑器里改完（游戏属性只能这么改），都把另存的整图收为新基线 —— 打包器"内容相同就不写"，接管不会虚胖；用户编辑版留档 `work/remote-shw<NNN>-user-edit.SC2Map`）；
 - 仓库：https://github.com/mon3stera/blackhand-rewrite（私有）。
 
 ## 知识索引（AGENTS.md 放通用知识，专题在记忆里）
