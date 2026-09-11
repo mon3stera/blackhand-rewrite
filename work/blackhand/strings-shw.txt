@@ -43,3 +43,7 @@ Param/Value/SHWBOX9=<n/>- 如果目标一没有行动，则视作访问自己。
 Param/Value/SHWCARD=<c val="C0C0C0">
 Param/Value/SHWBOXS=<n/>- 你能查出影武者。
 Param/Value/SHWBOXS0=- 你能查出影武者。
+// 影武者成就「影缝」(shw152)
+Param/Value/SHACH1=<s val="ModCenterSize16">
+Param/Value/SHACH2=<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSize16Bold"><c val="C0C0C0">影缝</c></s><s val="ModCenterSize16"><c val="44FF88">!</c></s>
+Param/Value/SHACH3=<s val="ModCenterSize16Bold"><c val="C0C0C0">影缝</c></s>

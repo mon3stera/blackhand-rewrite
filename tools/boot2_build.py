@@ -54,7 +54,9 @@ MUST_HAVE_KEYS = [
     'Param/Value/DLSW',
     'Param/Value/DLREV',
     'Param/Value/DLBOXS',
- 'Param/Value/TXACH1', 'Param/Value/TXACH2', 'Param/Value/TXACH3',]
+ 'Param/Value/TXACH1', 'Param/Value/TXACH2', 'Param/Value/TXACH3',
+ # 影武者成就「影缝」(shw152)
+ 'Param/Value/SHACH1', 'Param/Value/SHACH2', 'Param/Value/SHACH3',]
 
 
 def parse_strings_file(path: Path) -> dict:
