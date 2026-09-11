@@ -108,7 +108,38 @@ def set_notes(path, items, locale='zhCN'):
     return added, updated
 
 
-def add_release(path, version, date, notes, max_line=140):
+def budget(path, max_line=140, max_lines=100, shown_versions=5):
+    """复刻编辑器「补丁说明」对话框的口径。
+
+    编辑器展示的计数器：
+      总行数 N/100   —— 只统计**最新 5 个版本**（对话框只列这 5 个，游戏内也只显示这 5 个）
+      最长行 N/140   —— 单条说明的字符上限（正文一律单行，中文也按字符算）
+    """
+    di = sc2map.read(path, 'DocumentInfo').decode('utf-8')
+    ents = {k.split('/')[-1]: v for _, k, loc, v in parse_entries(sc2map.read(path, HEADER))
+            if 'PatchNote' in k and loc == 'zhCN'}
+
+    def arr(tag):
+        return re.findall(r'<Value>(.*?)</Value>', di[di.find(f'<{tag}>'):di.find(f'</{tag}>')], re.S)
+
+    versions = [v.strip() for v in arr('Version')]
+    groups = [[n.strip() for n in g.split(',') if n.strip()] for g in arr('Notes')]
+    tail = groups[-shown_versions:]
+
+    def text_of(num):
+        return ents.get(f'PatchNote{int(num):03d}', '')
+
+    over = [(n, len(text_of(n))) for g in groups for n in g if len(text_of(n)) > max_line]
+    longest = max(((len(v), k) for k, v in ents.items()), default=(0, ''))
+
+    return {'versions': len(versions), 'last': versions[-1] if versions else '—',
+            'shown_lines': sum(len(g) for g in tail), 'total_lines': sum(len(g) for g in groups),
+            'per_version': list(zip(versions[-shown_versions:], [len(g) for g in tail])),
+            'longest': longest, 'over': over,
+            'budget_left': max_lines - sum(len(g) for g in tail), 'max_line': max_line}
+
+
+def add_release(path, version, date, notes, max_line=140, max_lines=100):
     """在 DocumentInfo 的补丁说明表末尾追加一个版本块（三数组同步追加）。"""
     di = sc2map.read(path, 'DocumentInfo').decode('utf-8')
     assert di.count('\r\n        </Version>') == 1, 'Version 数组结尾锚点异常'
@@ -116,6 +147,12 @@ def add_release(path, version, date, notes, max_line=140):
     assert di.count('\r\n        </Notes>') == 1, 'Notes 数组结尾锚点异常'
     for text in notes:
         assert len(text) <= max_line, f'说明超长（{len(text)} > {max_line}）：{text[:30]}…'
+
+    b = budget(path, max_line, max_lines)
+    assert b['shown_lines'] + len(notes) <= max_lines, \
+        f"最新 5 版说明行数会超限：{b['shown_lines']} + {len(notes)} > {max_lines}（编辑器上限）"
+    if b['over']:
+        raise AssertionError(f'现有说明已超 {max_line} 字符：{b["over"]}')
 
     ver = [v for v in re.findall(r'<Value>(.*?)</Value>', di[di.find('<Version>'):di.find('</Version>')], re.S)]
     if version in ver:
@@ -157,6 +194,18 @@ def main():
         v, d, n = add_release(path, version, date, nums)
         print(f'✓ {path}: 新增版本块 {v} / {d} / 说明编号 {n}')
         return 0
+
+    if cmd == 'check':
+        b = budget(path)
+        print(f'  版本块 {b["versions"]} 个（游戏内只显示最新 5 个），末版 {b["last"]}')
+        for v, n in b['per_version']:
+            print(f'    {v:<8} 说明 {n} 行')
+        print(f'  最新 5 版合计 {b["shown_lines"]}/{100} 行（编辑器上限，剩余 {b["budget_left"]}）'
+              f'；文件内历史合计 {b["total_lines"]} 行')
+        print(f'  最长说明 {b["longest"][0]}/{b["max_line"]} 字符（{b["longest"][1]}）')
+        if b['over']:
+            print(f'  ✗ 超 {b["max_line"]} 字符的说明：{b["over"]}')
+        return 1 if b['over'] else 0
 
     if cmd == 'versions':
         di = sc2map.read(path, 'DocumentInfo').decode('utf-8')
