@@ -217,6 +217,7 @@ int[32] gv_optionsPanelItem;
 int gv_rolesAssigned;
 // 测试构建：允许把电脑玩家当成占位玩家（正式发布改为 false）
 const bool c_bhSoloBuild = true;
+const bool c_bhNoSigVerify = true;   // 不验签（shw139 设计决定）：存档可跨命名空间直接复制使用；完整性改由地图级 Checker 段承担
 const bool c_bhSoloFill = false;    // 虚拟补位总开关：true=开局自动补「电脑N」到15人（本地测试）；发布改回 false 即可
 
 bool gv_soloTest;
@@ -3673,15 +3674,15 @@ bool auto_gf_ValidateandSetup_TriggerFunc (bool testConds, bool runActions) {
 
     // Implementation
     if ((PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true)) {
-        if ((BankSectionExists(gv_bank[lv_a], "QQ") == true) && ((c_bhSoloBuild == true) || (BankVerify(gv_bank[lv_a]) == true))) {
+        if ((BankSectionExists(gv_bank[lv_a], "QQ") == true) && ((c_bhSoloBuild == true) || (c_bhNoSigVerify == true) || (BankVerify(gv_bank[lv_a]) == true))) {
             gv_oP[lv_a][8] = true;
         }
 
-        if ((BankSectionExists(gv_bank[lv_a], "gift") == true) && ((c_bhSoloBuild == true) || (BankVerify(gv_bank[lv_a]) == true))) {
+        if ((BankSectionExists(gv_bank[lv_a], "gift") == true) && ((c_bhSoloBuild == true) || (c_bhNoSigVerify == true) || (BankVerify(gv_bank[lv_a]) == true))) {
             gv_gifted[lv_a] = true;
         }
 
-        if ((BankSectionExists(gv_bank[lv_a], "I") == true) && ((c_bhSoloBuild == true) || (BankVerify(gv_bank[lv_a]) == true))) {
+        if ((BankSectionExists(gv_bank[lv_a], "I") == true) && ((c_bhSoloBuild == true) || (c_bhNoSigVerify == true) || (BankVerify(gv_bank[lv_a]) == true))) {
             gf_CDisassembleMainBank(lv_a);
             gf_CDisassembleSaveSlotBank(lv_a);
             gv_gamesPlayed[lv_a] = gv_bankGeneralIntegers[lv_a][4];
