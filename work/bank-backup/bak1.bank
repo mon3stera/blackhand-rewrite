@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Bank version="1">
+    <Section name="I">
+        <Key name="A3">
+            <Value string=" 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"/>
+        </Key>
+        <Key name="Reports">
+            <Value string=" 0 0 0 0"/>
+        </Key>
+        <Key name="A2">
+            <Value string=" 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"/>
+        </Key>
+        <Key name="S">
+            <Value string=" -40"/>
+        </Key>
+        <Key name="B">
+            <Value string=" kk"/>
+        </Key>
+        <Key name="Blacklist">
+            <Value string=""/>
+        </Key>
+        <Key name="G">
+            <Value string="  0 0 1 0 0 0 0 0 0"/>
+        </Key>
+    </Section>
+    <Section name="Checker">
+        <Key name="RealOne">
+            <Value string="0"/>
+        </Key>
+        <Key name="Math">
+            <Value string="3"/>
+        </Key>
+        <Key name="Points">
+            <Value string="  0 0 1 0 0 0 0 0 0"/>
+        </Key>
+        <Key name="Calculation">
+            <Value string="0"/>
+        </Key>
+        <Key name="Z">
+            <Value string="0"/>
+        </Key>
+    </Section>
+    <Signature value="4CD91531B4673B7D514D03A1B2489995529C50B2"/>
+</Bank>
