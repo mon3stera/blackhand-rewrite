@@ -150,10 +150,10 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 **boot2 系列只能用「复制上一版 + `sc2map.write` 直写 CustomLogic.galaxy」，绝不能用 `tools/sc2pack.py`**（shw96 事故：触发器读到旧脚本 → 「脚本读取失败：无法找到函数」+ UI layout 红字）。标准做法：
 
 ```bash
-python3 tools/boot2_build.py --out work/boot2-<name>.SC2Map      # 四件套 + 全部回读断言
+python3 tools/boot2_build.py --out work/boot2-<name>.SC2Map      # 五件套 + 全部回读断言
 ```
 
-四件套（BankList 那件的根因见记忆）：①复制基线 `work/boot2-user.SC2Map`（**不要覆盖**）②直写工作区脚本（打包前自动跑 `galaxy_lint.py`，不过不打包）③合并 `strings-*.txt` → 包内 **zhCN** 表（漏 = 界面满是 `Param/Value/XXX` 原始键；`sc2map.GAME_STRINGS` 指的是 enUS，别拿它校验）④`banklist_fix.py` 写回 `BankList.xml`（漏 = 每局清档）。
+五件套（BankList 那件的根因见记忆）：①复制基线 `work/boot2-user.SC2Map`（**不要覆盖**）②直写工作区脚本（打包前自动跑 `galaxy_lint.py`，不过不打包）③并入样式表 `work/blackhand/NewFontStyles.SC2Style`（斜体 `ModItalic` 的定义处；漏 = 名字里的 `<i>` 改写后无样式可查、不斜体，shw88–153 一直是这个状态）④合并 `strings-*.txt` → 包内 **zhCN** 表（漏 = 界面满是 `Param/Value/XXX` 原始键；`sc2map.GAME_STRINGS` 指的是 enUS，别拿它校验）⑤`banklist_fix.py` 写回 `BankList.xml`（漏 = 每局清档）。
 
 - 回读断言：`Triggers` 在、`BankList.xml` 在、脚本含 `BankWait`、**`MUST_HAVE_KEYS` 全部存在**（缺任一即退出码 1）。只有基线已是上一版成品图、且确认键齐全时才用 `--skip-strings`。
 - **文案源文件铁律**：`strings-*.txt` 一行一个 `键=值`；**一行粘两个键会静默吞键**——`strings-gcz.txt` 曾把 `GCZBOX2` 与 `GCZTNAME` 粘一行，导致天谴菜单名在所有构建里都显示原始键、`GCZBOX2` 值被污染（正是 `MUST_HAVE_KEYS` 抓出来的）。
