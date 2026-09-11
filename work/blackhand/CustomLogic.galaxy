@@ -56639,9 +56639,11 @@ bool gt_Init2_Func (bool testConds, bool runActions) {
             BankLoad("MBank13", lv_a);
             gv_bank[lv_a] = BankLastCreated();
             BankOptionSet(gv_bank[lv_a], c_bankOptionSignature, true);
+            BankWait(gv_bank[lv_a]);
             if ((BankExists("key", lv_a) == true)) {
                 BankLoad("key", lv_a);
                 gv_key[lv_a] = BankLastCreated();
+                BankWait(gv_key[lv_a]);
             }
 
             CameraPan(lv_a, PointFromId(1), 0.0, 0, 0, false);
