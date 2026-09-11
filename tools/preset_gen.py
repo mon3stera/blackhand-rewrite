@@ -224,6 +224,16 @@ def gen_function(spec, slots, name_idx):
     out.append('    string lv_category;')
     out.append('    string lv_role;')
     out.append('')
+
+    # 自动变量声明块：从 gf_VBFCZOptions 原样克隆（shw139 事故：漏了它 → 循环变量未声明 → 整脚本编译失败）
+    _src = SRC_GALAXY.read_text(encoding='utf-8')
+    _ref = _src.find('void gf_VBFCZOptions () {')
+    _as = _src.find('    // Automatic Variable Declarations\n', _ref)
+    _ae = _src.find('    // Variable Initialization\n', _as)
+    assert _as > 0 and _ae > _as, '找不到参考函数的自动变量声明块'
+    out.extend(_src[_as:_ae].rstrip('\n').split('\n'))
+    out.append('')
+
     out.append('    // Variable Initialization')
     out.append('    for (init_i = 0; init_i <= 9; init_i += 1) {')
     out.append('        lv_str[init_i] = "";')
@@ -271,7 +281,15 @@ def gen_function(spec, slots, name_idx):
     fill_start = tail_src.find('    gv_bankSaveStrings[0][0][0] = StringWord(lv_str[1], 1);')
     fill_end = tail_src.find('\n}\n', fill_start)
     out.append(tail_src[fill_start:fill_end + 3].rstrip())
-    return '\n'.join(out) + '\n'
+
+    body = '\n'.join(out) + '\n'
+    cut = body.find('// Implementation')
+    used = set(re.findall(r'\b(auto[0-9A-F]{8}_[a-z]+)\b', body))
+    declared = set(re.findall(r'\b(auto[0-9A-F]{8}_[a-z]+)\b', body[:cut]))
+    miss = sorted(used - declared)
+    assert not miss, f'生成的函数缺少自动变量声明: {miss}'
+
+    return body
 
 
 def parse_data_rows(text):

@@ -89832,6 +89832,38 @@ void gf_VTQOptions () {
     string lv_category;
     string lv_role;
 
+    // Automatic Variable Declarations
+    playergroup auto0273280E_g;
+    int auto0273280E_var;
+    const int auto4D4AB1D8_ae = 15;
+    const int auto4D4AB1D8_ai = 1;
+    const int autoEA86016C_ae = 2;
+    const int autoEA86016C_ai = 1;
+    int autoA856AE2B_ae;
+    const int autoA856AE2B_ai = 1;
+    const int auto3050C58F_ae = 4;
+    const int auto3050C58F_ai = 1;
+    const int auto6E06B6D4_ae = 19;
+    const int auto6E06B6D4_ai = 1;
+    const int auto25768141_ae = 5;
+    const int auto25768141_ai = 1;
+    const int auto2D45A815_ae = 11;
+    const int auto2D45A815_ai = 1;
+    const int auto2248F8B5_ae = 2;
+    const int auto2248F8B5_ai = 1;
+    const int autoE07D7BC6_ae = 20;
+    const int autoE07D7BC6_ai = 1;
+    const int auto38CB8688_ae = 3;
+    const int auto38CB8688_ai = 1;
+    const int auto52400039_ae = 12;
+    const int auto52400039_ai = 1;
+    const int autoA35A7A7F_ae = 5;
+    const int autoA35A7A7F_ai = 1;
+    const int auto66552B5F_ae = 11;
+    const int auto66552B5F_ai = 1;
+    const int auto8EA456B6_ae = 3;
+    const int auto8EA456B6_ai = 1;
+
     // Variable Initialization
     for (init_i = 0; init_i <= 9; init_i += 1) {
         lv_str[init_i] = "";
