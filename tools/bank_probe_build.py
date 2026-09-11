@@ -139,15 +139,66 @@ void gf_SHBK (int lp_slot, string lp_tag, bank lp_bank, int lp_mode) {
 
 '''.replace("__REAL_PLAYER__", REAL_PLAYER)
 
+MATRIX_SRC = r'''
+void gf_SHBank2 (int lp_slot, string lp_tag) {
+    bank lv_b;
+    string lv_s;
+    string lv_sec;
 
-def patch(src: str, wait: bool, keep_saves: bool, poll: bool, waitload: bool = False, defer: bool = False) -> tuple[str, list[str]]:
+    gv_shProbeSeq = (gv_shProbeSeq + 1);
+    lv_sec = (lp_tag + IntToString(gv_shProbeSeq));
+    lv_s = "seq=" + IntToString(gv_shProbeSeq) + ";tag=" + lp_tag + ";slot=" + IntToString(lp_slot) + ";";
+    lv_s = (lv_s + "handle=" + PlayerHandle(lp_slot) + ";");
+    lv_s = (lv_s + "bex=" + BoolFlag(BankExists("MBank13", lp_slot)) + ";");
+    lv_s = (lv_s + "kex=" + BoolFlag(BankExists("key", lp_slot)) + ";");
+
+    lv_b = BankLoad("MBank13", lp_slot);
+    lv_s = (lv_s + "v1n=" + BankName(lv_b) + ";v1p=" + IntToString(BankPlayer(lv_b)) + ";v1sc=" + IntToString(BankSectionCount(lv_b)) + ";v1I=" + BoolFlag(BankSectionExists(lv_b, "I")) + ";");
+
+    lv_b = BankPreload("MBank13", lp_slot);
+    lv_s = (lv_s + "v2a=" + IntToString(BankSectionCount(lv_b)) + ";");
+    BankWait(lv_b);
+    lv_s = (lv_s + "v2b=" + IntToString(BankSectionCount(lv_b)) + ";v2I=" + BoolFlag(BankSectionExists(lv_b, "I")) + ";v2B=" + BankValueGetAsString(lv_b, "I", "B") + ";");
+
+    lv_b = BankLoad("MBank13", lp_slot);
+    BankReload(lv_b);
+    lv_s = (lv_s + "v3=" + IntToString(BankSectionCount(lv_b)) + ";v3I=" + BoolFlag(BankSectionExists(lv_b, "I")) + ";");
+
+    lv_b = BankLoad("key", lp_slot);
+    lv_s = (lv_s + "v4n=" + BankName(lv_b) + ";v4sc=" + IntToString(BankSectionCount(lv_b)) + ";");
+
+    lv_b = BankPreload("MBank13", lp_slot);
+    BankWait(lv_b);
+    lv_b = BankLoad("MBank13", lp_slot);
+    lv_s = (lv_s + "v5=" + IntToString(BankSectionCount(lv_b)) + ";v5I=" + BoolFlag(BankSectionExists(lv_b, "I")) + ";v5B=" + BankValueGetAsString(lv_b, "I", "B") + ";");
+
+    BankLoad("SHBKPB", lp_slot);
+    gv_shProbeBank = BankLastCreated();
+    BankValueSetFromString(gv_shProbeBank, lv_sec, "v", lv_s);
+    BankSave(gv_shProbeBank);
+}
+
+bool gt_SHBankLate_Func (bool testConds, bool runActions) {
+    gf_SHBank2(1, "T3");
+    return true;
+}
+
+void gf_SHBankInit () {
+    gt_SHBankLate = TriggerCreate("gt_SHBankLate_Func");
+    TriggerAddEventTimeElapsed(gt_SHBankLate, 10.0, c_timeGame);
+}
+
+'''
+
+
+def patch(src: str, wait: bool, keep_saves: bool, poll: bool, waitload: bool = False, defer: bool = False, matrix: bool = False) -> tuple[str, list[str]]:
     log: list[str] = []
 
     anchor = "bool[16] gv_verified;\n"
     assert src.count(anchor) == 1, f"gv_verified 锚点 {src.count(anchor)}"
     src = src.replace(
         anchor,
-        anchor + "\n// SH bank probe (diagnostic build only)\nbank gv_shProbeBank;\nint gv_shProbeSeq;\n",
+        anchor + "\n// SH bank probe (diagnostic build only)\nbank gv_shProbeBank;\nint gv_shProbeSeq;\ntrigger gt_SHBankLate;\n",
         1,
     )
     log.append("globals: done")
@@ -186,11 +237,18 @@ def patch(src: str, wait: bool, keep_saves: bool, poll: bool, waitload: bool = F
 
     anchor = "bool gt_Init2_Func (bool testConds, bool runActions) {\n"
     assert src.count(anchor) == 1
-    src = src.replace(anchor, PROBE_FUNC + "\n" + anchor, 1)
+    extra = ("\n" + MATRIX_SRC) if matrix else ""
+    src = src.replace(anchor, PROBE_FUNC + extra + "\n" + anchor, 1)
     log.append("probe functions inserted")
 
     anchor = "bool gt_Init2_Func (bool testConds, bool runActions) {\n"
     src = src.replace(anchor, anchor + "    int autoSHBKa;\n    int autoSHBKi;\n", 1)
+    if matrix:
+        a = "    int autoSHBKa;\n    int autoSHBKi;\n"
+        assert src.count(a) == 1
+        src = src.replace(a, a + '    gf_SHBankInit();\n    gf_SHBank2(1, "T0");\n', 1)
+        log.append("matrix T0 inserted")
+
     log.append("auto vars declared")
 
     anchor = '            BankLoad("MBank13", lv_a);\n            gv_bank[lv_a] = BankLastCreated();\n'
@@ -259,6 +317,11 @@ def patch(src: str, wait: bool, keep_saves: bool, poll: bool, waitload: bool = F
             1,
         )
         log.append('defer: 早期 ValidateandSetup 跳过，改到 AccountIDHandler 之后（仅当 I 存在才校验）')
+        if matrix:
+            a2 = '    gf_SHBK(1, "AA", gv_bank[1], 1);\n'
+            assert src.count(a2) == 1
+            src = src.replace(a2, a2 + '    gf_SHBank2(1, "T1");\n', 1)
+            log.append("matrix T1 inserted")
 
 
     anchor = "    TriggerExecute(gt_Stats, false, false);\n"
@@ -269,7 +332,10 @@ def patch(src: str, wait: bool, keep_saves: bool, poll: bool, waitload: bool = F
         '        gf_SHBK(autoSHBKa, "B", gv_bank[autoSHBKa], 2);\n'
         '    }\n\n'
     )
-    src = src.replace(anchor, late + anchor, 1)
+    extra2 = '    gf_SHBank2(1, "T2");\n' if matrix else ''
+    src = src.replace(anchor, extra2 + late + anchor, 1)
+    if matrix:
+        log.append("matrix T2 inserted")
     log.append("B probe loop inserted")
 
     old_v = (
@@ -321,6 +387,7 @@ def main() -> int:
     ap.add_argument("--base", type=Path, default=BASE_DEFAULT)
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--wait", action="store_true", help="插入 BankWait(gv_bank[lv_a])（第二版对照）")
+    ap.add_argument("--matrix", action="store_true", help="插入 bank API 矩阵探针")
     ap.add_argument("--defer", action="store_true", help="把 bank 载入+校验推迟到 AccountIDHandler 之后（修复试验）")
     ap.add_argument("--waitload", action="store_true", help="单次载入后纯读取轮询（不重复 BankLoad）")
     ap.add_argument("--poll", action="store_true", help="载入为空时轮询重载（0.25s x8），用于验证延迟修复")
@@ -331,7 +398,7 @@ def main() -> int:
     src = raw.decode("utf-8").replace("\r\n", "\n")
     assert src.count('BankLoad("MBank13", lv_a);') == 1, "基线不是预期的 boot2 结构"
 
-    out, log = patch(src, args.wait, args.keep_saves, args.poll, args.waitload, args.defer)
+    out, log = patch(src, args.wait, args.keep_saves, args.poll, args.waitload, args.defer, args.matrix)
     for line in log:
         print("  -", line)
 
@@ -346,6 +413,7 @@ def main() -> int:
     assert ('gf_SHBK(lv_a, "P"' in back) == args.poll, "poll 状态不符"
     assert ('gf_SHBK(lv_a, "W"' in back) == args.waitload, "waitload 状态不符"
     assert ('gf_SHBK(1, "AA"' in back) == args.defer, "defer 状态不符"
+    assert ('gf_SHBank2(1, "T0")' in back) == args.matrix, "matrix 状态不符"
     if not args.keep_saves:
         assert not re.search(r"^\s*BankSave\(gv_bank\[", back, re.M), "仍有未拦截的 BankSave"
     assert any("Triggers" in m for m in members), "Triggers 成员丢失"

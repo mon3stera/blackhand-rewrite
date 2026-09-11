@@ -269,6 +269,23 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 - 「开关」按钮（`gv_switchButtonItem`，tooltip 键 `94249CFE` 限定名单）由 `gt_ASSwitchButton_Func` 按角色分支处理（(3,15)冤魂 / (3,14)瘟疫 / (3,3)小丑 / **(3,31)影武者**）。新角色要支持开关：①在 `gt_ASSwitchButton_Func` 加角色分支（切换变量+播报状态）②在该角色 `gf_RA*Actions` 开头 `DialogControlSetEnabled(gv_switchButtonItem, …)` 启用并顺带播报当前状态（=每夜开始的状态提示，影武者借此实现模式提示）。
 - 共用 `gv_e5BC80E585B3` 开关变量的角色（小丑/冤魂/影武者）互不冲突，分支各自独立。
 
+### BankList.xml —— 「进图即清档」的真正根因（shw137 定案，2026-09-11）
+
+**现象**：私有发布的改版图每局把玩家存档重置（要求重新输名字、积分归零）。实测（`tools/bank_probe_build.py` 探针 bank `SHBKPB`）本地与线上完全一致：t=0、身份就绪后、2 秒后、5 秒后、10 秒后，`BankLoad("MBank13", 1)` **一律返回空档**（`BankSectionCount=0`），而 `BankExists("MBank13",1)=true`、`BankSave` 照常写盘、文件就在硬盘上；线上 `PlayerHandle` 正常（不是身份/时序问题），`BankWait`、轮询重载、纯读取等待、补签名（含 authorID 两种算法）**全部无效**。
+
+**根因**：引擎在地图加载时按包内 **`BankList.xml`** 预加载 bank；**不在该表里的 bank，galaxy 的 `BankLoad()` 永远读不出内容**（写入不受影响）。原图包 `BankList.xml` 35 条（含 `MBank13`、`key` × 玩家 1–15），而我们所有构建包里只剩 5 条战役默认项 —— 编辑器只在用 **GUI 的 bank 动作**时登记条目，我们的脚本是手写 Galaxy，于是 `boot2-user.SC2Map` 的这张表退化成默认值 → 读到"未预加载的空 bank" → 原图逻辑按新玩家处理 → 组装空档并保存 → 每局清档。
+
+**修复（已进管线，任何构建都必须做）**：
+
+```bash
+python3 tools/banklist_fix.py work/boot2-<name>.SC2Map            # 写回原图的 BankList.xml（参考 data/BankList.original.xml）
+python3 tools/banklist_fix.py work/boot2-<name>.SC2Map --check    # 回读校验（断言 MBank13/key × 玩家 1..15）
+```
+
+- 参考表 `data/BankList.original.xml` 取自原图包；工具断言 `MBank13`/`key` 覆盖玩家 1–15、打包后 `Triggers`/`CustomLogic.galaxy` 成员仍在。
+- **打包三件套** = 复制基线 + `sc2map.write(CustomLogic.galaxy)` + `banklist_fix.py`；漏第三步 = 存档又读不出来。
+- 结论修正：shw134「引擎 BankVerify 失败即清空」只是**表象**（未预加载的 bank 本来就空，`BankVerify` 自然 false）；`BankOptionSet(c_bankOptionSignature,true)` 与存档重签**都不是**读档的必要条件（原图档不重签也能读，只要预加载表在）。
+
 ### 打包管线（shw96 事故沉淀）
 
 **boot2 系列地图只能用「复制上一版 + `sc2map.write` 直写 CustomLogic.galaxy」，绝不能用 `tools/sc2pack.py`**（shw96 事故：误用 sc2pack 后触发器读到旧脚本，游戏报「脚本读取失败：无法找到函数」+ 一串 UI layout 红字）。两条管线的区别：
