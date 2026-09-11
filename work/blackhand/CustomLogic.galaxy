@@ -49407,23 +49407,23 @@ void gf_VRankedDOptions () {
     gv_roleOptions[4][2][0] = true;
     gv_roleOptions[1][2][2] = true;
     if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
-        lv_str[2] = "1 1 1 1 1 1 1 3 3 3 3 3 3 4 4";
-        lv_str[0] = "2 3 4 4 19 23 24 3 3 3 5 5 1 2 2";
+        lv_str[2] = "1 1 1 1 1 1 1 4 4 3 3 3 3 3 3";
+        lv_str[0] = "2 3 4 4 19 23 24 2 2 5 5 1 3 3 3";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) == 14)) {
-        lv_str[2] = "1 1 1 1 1 1 1 3 3 3 3 3 3 4 0";
-        lv_str[0] = "2 3 4 4 19 23 24 3 3 3 5 5 1 2 0";
+        lv_str[2] = "1 1 1 1 1 1 1 4 3 3 3 3 3 3 0";
+        lv_str[0] = "2 3 4 4 19 23 24 2 5 5 1 3 3 3 0";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) == 13)) {
-        lv_str[2] = "1 1 1 1 1 1 1 3 3 3 3 3 4 0 0";
-        lv_str[0] = "2 3 4 4 19 23 24 3 3 5 5 1 2 0 0";
+        lv_str[2] = "1 1 1 1 1 1 1 4 3 3 3 3 3 0 0";
+        lv_str[0] = "2 3 4 4 19 23 24 2 5 5 1 3 3 0 0";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) != 1) && (PlayerGroupCount(gv_currentPlayers) == 12)) {
-        lv_str[2] = "1 1 1 1 1 1 3 3 3 3 4 4 0 0";
-        lv_str[0] = "2 3 4 19 23 24 3 3 5 1 2 2 0 0 0";
+        lv_str[2] = "1 1 1 1 1 1 4 4 3 3 3 3 0 0";
+        lv_str[0] = "2 3 4 19 23 24 2 2 5 1 3 3 0 0 0";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) != 1) && (PlayerGroupCount(gv_currentPlayers) <= 11)) {
@@ -49562,23 +49562,23 @@ void gf_VRankedDOptions2 () {
     gv_roleOptions[4][2][0] = true;
     gv_roleOptions[1][2][2] = true;
     if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
-        lv_str[2] = "4 1 1 4 1 1 1 3 3 3 3 3 3 4 4";
-        lv_str[0] = "2 3 4 2 19 23 24 3 3 6 5 5 1 2 2";
+        lv_str[2] = "1 1 1 1 1 4 4 4 4 3 3 3 3 3 3";
+        lv_str[0] = "3 4 19 23 24 2 2 2 2 5 5 1 3 3 6";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) == 14)) {
-        lv_str[2] = "4 1 1 4 1 1 1 3 3 3 3 3 3 4 0";
-        lv_str[0] = "2 3 4 2 19 23 24 3 3 6 5 5 1 2 0";
+        lv_str[2] = "1 1 1 1 1 4 4 4 3 3 3 3 3 3 0";
+        lv_str[0] = "3 4 19 23 24 2 2 2 5 5 1 3 3 6 0";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) == 13)) {
-        lv_str[2] = "1 1 1 1 1 1 1 3 3 3 3 3 4 0 0";
-        lv_str[0] = "2 3 4 4 19 23 24 3 3 5 5 1 2 0 0";
+        lv_str[2] = "1 1 1 1 1 1 1 4 3 3 3 3 3 0 0";
+        lv_str[0] = "2 3 4 4 19 23 24 2 5 5 1 3 3 0 0";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) != 1) && (PlayerGroupCount(gv_currentPlayers) == 12)) {
-        lv_str[2] = "1 1 1 1 1 1 3 3 3 3 4 4 0 0";
-        lv_str[0] = "2 3 4 19 23 24 3 3 5 1 2 2 0 0 0";
+        lv_str[2] = "1 1 1 1 1 1 4 4 3 3 3 3 0 0";
+        lv_str[0] = "2 3 4 19 23 24 2 2 5 1 3 3 0 0 0";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) != 1) && (PlayerGroupCount(gv_currentPlayers) <= 11)) {
@@ -50571,23 +50571,23 @@ void gf_VE4B8ADE4B896E7BAAA () {
     lv_str[5] = "1 10110 100 001 11 1010 10 11 10 100 10100";
     gv_defaultRoleOptions[4][2][1] = true;
     if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
-        lv_str[2] = "1 4 4 4 4 4 4 4 3 3 3 3 4 4 4";
-        lv_str[0] = "24 2 2 2 4 4 5 5 15 14 16 17 13 14 4";
+        lv_str[2] = "1 4 4 4 4 4 4 4 4 3 3 3 4 3 4";
+        lv_str[0] = "24 2 2 2 5 5 4 4 4 15 14 16 13 17 14";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) == 14)) {
-        lv_str[2] = "1 4 4 4 4 4 4 3 3 3 3 4 4 4 0";
-        lv_str[0] = "24 2 2 4 4 5 5 15 14 16 17 13 14 4 0";
+        lv_str[2] = "1 4 4 4 4 4 4 4 3 3 3 4 3 4 0";
+        lv_str[0] = "24 2 2 5 5 4 4 4 15 14 16 13 17 14 0";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) == 13)) {
-        lv_str[2] = "1 4 4 4 4 4 4 3 3 3 3 4 4 0 0";
-        lv_str[0] = "24 2 2 4 4 5 5 15 14 16 17 14 4 0 0";
+        lv_str[2] = "1 4 4 4 4 4 4 4 3 3 3 3 4 0 0";
+        lv_str[0] = "24 2 2 5 5 4 4 4 15 14 16 17 14 0 0";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) != 1) && (PlayerGroupCount(gv_currentPlayers) == 12)) {
-        lv_str[2] = "1 4 4 4 4 4 4 3 3 3 4 4 0 0 0";
-        lv_str[0] = "24 2 2 4 4 5 5 15 14 16 14 4 0 0 0";
+        lv_str[2] = "1 4 4 4 4 4 4 4 3 3 3 4 0 0 0";
+        lv_str[0] = "24 2 2 5 5 4 4 4 15 14 16 14 0 0 0";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) != 1) && (PlayerGroupCount(gv_currentPlayers) <= 11)) {
@@ -50724,23 +50724,23 @@ void gf_VE4B8ADE4B896E7BAAA3 () {
     lv_str[5] = "1 10110 100 001 11 1010 10 11 10 100 10100";
     gv_defaultRoleOptions[4][2][1] = true;
     if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
-        lv_str[2] = "1 4 4 4 4 4 4 3 3 3 3 4 4 4 3";
-        lv_str[0] = "24 2 2 4 4 5 5 15 14 16 17 13 14 4 14";
+        lv_str[2] = "1 4 4 4 4 4 4 4 3 3 3 3 4 3 4";
+        lv_str[0] = "24 2 2 5 5 4 4 4 15 14 16 14 13 17 14";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) == 14)) {
-        lv_str[2] = "1 4 4 4 4 4 4 3 3 3 3 4 4 3 0";
-        lv_str[0] = "24 2 2 4 4 5 5 15 14 16 17 13 14 14 0";
+        lv_str[2] = "1 4 4 4 4 4 4 3 3 3 3 4 3 4 0";
+        lv_str[0] = "24 2 2 5 5 4 4 15 14 16 14 13 17 14 0";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) == 13)) {
-        lv_str[2] = "1 4 4 4 4 4 4 3 3 3 3 4 3 0 0";
-        lv_str[0] = "24 2 2 4 4 5 5 15 14 16 17 14 14 0 0";
+        lv_str[2] = "1 4 4 4 4 4 4 3 3 3 3 3 4 0 0";
+        lv_str[0] = "24 2 2 5 5 4 4 15 14 16 14 17 14 0 0";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) != 1) && (PlayerGroupCount(gv_currentPlayers) == 12)) {
-        lv_str[2] = "1 4 4 4 4 4 4 3 3 3 4 4 0 0 0";
-        lv_str[0] = "24 2 2 4 4 5 5 15 14 16 14 4 0 0 0";
+        lv_str[2] = "1 4 4 4 4 4 4 4 3 3 3 4 0 0 0";
+        lv_str[0] = "24 2 2 5 5 4 4 4 15 14 16 14 0 0 0";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) != 1) && (PlayerGroupCount(gv_currentPlayers) <= 11)) {
@@ -50877,23 +50877,23 @@ void gf_VE4B8ADE4B896E7BAAA4 () {
     lv_str[5] = "1 10110 100 001 11 1010 10 11 10 100 10100";
     gv_defaultRoleOptions[4][2][1] = true;
     if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
-        lv_str[2] = "4 4 4 4 4 4 4 3 3 3 3 4 4 3 3";
-        lv_str[0] = "2 2 2 4 4 5 5 15 14 16 17 13 14 16 14";
+        lv_str[2] = "4 4 4 4 4 4 4 3 3 3 3 3 4 3 4";
+        lv_str[0] = "2 2 2 5 5 4 4 15 14 16 16 14 13 17 14";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) == 14)) {
-        lv_str[2] = "4 4 4 4 4 4 4 3 3 3 3 4 3 3 0";
-        lv_str[0] = "2 2 2 4 4 5 5 15 14 16 17 13 16 14 0";
+        lv_str[2] = "4 4 4 4 4 4 4 3 3 3 3 3 4 3 0";
+        lv_str[0] = "2 2 2 5 5 4 4 15 14 16 16 14 13 17 0";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) == 13)) {
         lv_str[2] = "4 4 4 4 4 4 4 3 3 3 3 3 3 0 0";
-        lv_str[0] = "2 2 2 4 4 5 5 15 14 16 17 16 14 0 0";
+        lv_str[0] = "2 2 2 5 5 4 4 15 14 16 16 14 17 0 0";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) != 1) && (PlayerGroupCount(gv_currentPlayers) == 12)) {
-        lv_str[2] = "4 4 4 4 4 4 4 3 3 3 4 4 0 0 0";
-        lv_str[0] = "2 2 2 4 4 5 5 15 14 16 14 4 0 0 0";
+        lv_str[2] = "4 4 4 4 4 4 4 4 3 3 3 4 0 0 0";
+        lv_str[0] = "2 2 2 5 5 4 4 4 15 14 16 14 0 0 0";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) != 1) && (PlayerGroupCount(gv_currentPlayers) <= 11)) {
@@ -51030,23 +51030,23 @@ void gf_VE4B8ADE4B896E7BAAA2 () {
     lv_str[5] = "1 10110 100 001 11 1010 10 11 10 100 10100";
     gv_defaultRoleOptions[4][2][1] = true;
     if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
-        lv_str[2] = "2 5 1 1 1 1 1 1 1 3 3 3 3 3 3";
-        lv_str[0] = "1 1 6 2 26 26 26 26 26 16 16 17 17 17 17";
+        lv_str[2] = "1 1 1 1 1 1 1 2 5 3 3 3 3 3 3";
+        lv_str[0] = "6 2 26 26 26 26 26 1 1 16 16 17 17 17 17";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) == 14)) {
-        lv_str[2] = "2 5 1 1 1 1 1 1 3 3 3 3 3 3 0";
-        lv_str[0] = "1 1 6 2 26 26 26 26 16 16 17 17 17 17 0";
+        lv_str[2] = "1 1 1 1 1 1 2 5 3 3 3 3 3 3 0";
+        lv_str[0] = "6 2 26 26 26 26 1 1 16 16 17 17 17 17 0";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) == 13)) {
-        lv_str[2] = "2 5 1 1 1 1 1 1 3 3 3 3 3 0 0";
-        lv_str[0] = "1 1 6 2 26 26 26 26 16 16 17 17 17 0 0";
+        lv_str[2] = "1 1 1 1 1 1 2 5 3 3 3 3 3 0 0";
+        lv_str[0] = "6 2 26 26 26 26 1 1 16 16 17 17 17 0 0";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) != 1) && (PlayerGroupCount(gv_currentPlayers) == 12)) {
-        lv_str[2] = "2 5 1 1 1 1 1 1 3 3 3 3 0 0 0";
-        lv_str[0] = "1 1 6 2 26 26 26 26 16 17 17 17 0 0 0";
+        lv_str[2] = "1 1 1 1 1 1 2 5 3 3 3 3 0 0 0";
+        lv_str[0] = "6 2 26 26 26 26 1 1 16 17 17 17 0 0 0";
     }
 
     if ((PlayerGroupCount(gv_currentPlayers) != 1) && (PlayerGroupCount(gv_currentPlayers) <= 11)) {
