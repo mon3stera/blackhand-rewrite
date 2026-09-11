@@ -140,7 +140,7 @@ void gf_SHBK (int lp_slot, string lp_tag, bank lp_bank, int lp_mode) {
 '''.replace("__REAL_PLAYER__", REAL_PLAYER)
 
 
-def patch(src: str, wait: bool) -> tuple[str, list[str]]:
+def patch(src: str, wait: bool, keep_saves: bool, poll: bool, waitload: bool = False, defer: bool = False) -> tuple[str, list[str]]:
     log: list[str] = []
 
     anchor = "bool[16] gv_verified;\n"
@@ -164,14 +164,25 @@ def patch(src: str, wait: bool) -> tuple[str, list[str]]:
     pat = re.compile(r"^([ \t]*)BankSave\(gv_bank\[([^\]]+)\]\);[ \t]*$", re.M)
     hits = pat.findall(src)
     assert len(hits) == 9, f"BankSave 站点 {len(hits)}"
-    src = pat.sub(lambda m: f'{m.group(1)}gf_SHBK({m.group(2)}, "S", gv_bank[{m.group(2)}], 0);', src)
-    log.append(f"BankSave intercepted: {len(hits)}")
+    if keep_saves:
+        src = pat.sub(
+            lambda m: f'{m.group(1)}gf_SHBK({m.group(2)}, "S", gv_bank[{m.group(2)}], 0);\n'
+                      f'{m.group(1)}BankSave(gv_bank[{m.group(2)}]);',
+            src,
+        )
+        log.append(f"BankSave kept + probed: {len(hits)}")
+    else:
+        src = pat.sub(lambda m: f'{m.group(1)}gf_SHBK({m.group(2)}, "S", gv_bank[{m.group(2)}], 0);', src)
+        log.append(f"BankSave intercepted: {len(hits)}")
 
-    pat_rm = re.compile(r"^([ \t]*)BankRemove\(gv_bank\[([^\]]+)\]\);[ \t]*$", re.M)
-    hits_rm = pat_rm.findall(src)
-    assert len(hits_rm) == 2, f"BankRemove 站点 {len(hits_rm)}"
-    src = pat_rm.sub(lambda m: f'{m.group(1)}gf_SHBK({m.group(2)}, "D", gv_bank[{m.group(2)}], 0);', src)
-    log.append(f"BankRemove intercepted: {len(hits_rm)}")
+    if keep_saves:
+        log.append("BankRemove: left untouched (keep-saves)")
+    else:
+        pat_rm = re.compile(r"^([ \t]*)BankRemove\(gv_bank\[([^\]]+)\]\);[ \t]*$", re.M)
+        hits_rm = pat_rm.findall(src)
+        assert len(hits_rm) == 2, f"BankRemove 站点 {len(hits_rm)}"
+        src = pat_rm.sub(lambda m: f'{m.group(1)}gf_SHBK({m.group(2)}, "D", gv_bank[{m.group(2)}], 0);', src)
+        log.append(f"BankRemove intercepted: {len(hits_rm)}")
 
     anchor = "bool gt_Init2_Func (bool testConds, bool runActions) {\n"
     assert src.count(anchor) == 1
@@ -179,8 +190,8 @@ def patch(src: str, wait: bool) -> tuple[str, list[str]]:
     log.append("probe functions inserted")
 
     anchor = "bool gt_Init2_Func (bool testConds, bool runActions) {\n"
-    src = src.replace(anchor, anchor + "    int autoSHBKa;\n", 1)
-    log.append("auto var declared")
+    src = src.replace(anchor, anchor + "    int autoSHBKa;\n    int autoSHBKi;\n", 1)
+    log.append("auto vars declared")
 
     anchor = '            BankLoad("MBank13", lv_a);\n            gv_bank[lv_a] = BankLastCreated();\n'
     assert src.count(anchor) == 1, f"BankLoad 锚点 {src.count(anchor)}"
@@ -188,8 +199,67 @@ def patch(src: str, wait: bool) -> tuple[str, list[str]]:
     if wait:
         repl += "            BankWait(gv_bank[lv_a]);\n"
     repl += '            gf_SHBK(lv_a, "L", gv_bank[lv_a], 0);\n'
+    if poll:
+        repl += (
+            '            if ((GF_SHBKIsReal(lv_a) == true) && (BankSectionExists(gv_bank[lv_a], "I") == false)) {\n'
+            '                autoSHBKi = 0;\n'
+            '                while ((BankSectionExists(gv_bank[lv_a], "I") == false) && (autoSHBKi < 16)) {\n'
+            '                    Wait(0.25, c_timeGame);\n'
+            '                    autoSHBKi += 1;\n'
+            '                    BankLoad("MBank13", lv_a);\n'
+            '                    gv_bank[lv_a] = BankLastCreated();\n'
+            '                    gf_SHBK(lv_a, "P", gv_bank[lv_a], 0);\n'
+            '                }\n\n'
+            '            }\n'
+        )
+
+    if waitload:
+        # 单次 BankLoad 后只做「纯读取」轮询（不再重复 BankLoad），验证异步载入何时落到同一对象上
+        repl += (
+            '            if ((GF_SHBKIsReal(lv_a) == true) && (BankSectionExists(gv_bank[lv_a], "I") == false)) {\n'
+            '                autoSHBKi = 0;\n'
+            '                while ((BankSectionExists(gv_bank[lv_a], "I") == false) && (autoSHBKi < 20)) {\n'
+            '                    Wait(0.25, c_timeGame);\n'
+            '                    autoSHBKi += 1;\n'
+            '                    gf_SHBK(lv_a, "W", gv_bank[lv_a], 0);\n'
+            '                }\n\n'
+            '                if ((BankSectionExists(gv_bank[lv_a], "I") == false)) {\n'
+            '                    BankLoad("MBank13", lv_a);\n'
+            '                    gv_bank[lv_a] = BankLastCreated();\n'
+            '                    gf_SHBK(lv_a, "L2", gv_bank[lv_a], 0);\n'
+            '                }\n\n'
+            '            }\n'
+        )
     src = src.replace(anchor, repl, 1)
-    log.append(f"L probe{' + BankWait' if wait else ''}: done")
+    log.append(f"L probe{' + BankWait' if wait else ''}{' + poll' if poll else ''}: done")
+
+    if defer:
+        a = "        gf_ValidateandSetup(lv_a);\n"
+        assert src.count(a) == 1, f"早期 ValidateandSetup 锚点 {src.count(a)}"
+        src = src.replace(a, '        gf_SHBK(lv_a, "V0", gv_bank[lv_a], 0);\n', 1)
+
+        a = "    TriggerExecute(gt_AccountIDHandler, true, true);\n"
+        assert src.count(a) == 1, f"AccountIDHandler 锚点 {src.count(a)}"
+        src = src.replace(
+            a,
+            '    gf_SHBK(1, "AB", gv_bank[1], 1);\n'
+            + a +
+            '    gf_SHBK(1, "AA", gv_bank[1], 1);\n'
+            '    lv_a = 1;\n'
+            '    for ( ; (lv_a <= 15) ; lv_a += 1 ) {\n'
+            '        if ((PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true)) {\n'
+            '            BankLoad("MBank13", lv_a);\n'
+            '            gv_bank[lv_a] = BankLastCreated();\n'
+            '            gf_SHBK(lv_a, "RL", gv_bank[lv_a], 1);\n'
+            '            if ((BankSectionExists(gv_bank[lv_a], "I") == true)) {\n'
+            '                gf_ValidateandSetup(lv_a);\n'
+            '            }\n\n'
+            '        }\n\n'
+            '    }\n',
+            1,
+        )
+        log.append('defer: 早期 ValidateandSetup 跳过，改到 AccountIDHandler 之后（仅当 I 存在才校验）')
+
 
     anchor = "    TriggerExecute(gt_Stats, false, false);\n"
     assert src.count(anchor) == 1, f"gt_Stats 锚点 {src.count(anchor)}"
@@ -251,13 +321,17 @@ def main() -> int:
     ap.add_argument("--base", type=Path, default=BASE_DEFAULT)
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--wait", action="store_true", help="插入 BankWait(gv_bank[lv_a])（第二版对照）")
+    ap.add_argument("--defer", action="store_true", help="把 bank 载入+校验推迟到 AccountIDHandler 之后（修复试验）")
+    ap.add_argument("--waitload", action="store_true", help="单次载入后纯读取轮询（不重复 BankLoad）")
+    ap.add_argument("--poll", action="store_true", help="载入为空时轮询重载（0.25s x8），用于验证延迟修复")
+    ap.add_argument("--keep-saves", action="store_true", help="保留 BankSave（用于端到端验证修复后能否落盘）")
     args = ap.parse_args()
 
     raw = sc2map.read(str(args.base), "CustomLogic.galaxy")
     src = raw.decode("utf-8").replace("\r\n", "\n")
     assert src.count('BankLoad("MBank13", lv_a);') == 1, "基线不是预期的 boot2 结构"
 
-    out, log = patch(src, args.wait)
+    out, log = patch(src, args.wait, args.keep_saves, args.poll, args.waitload, args.defer)
     for line in log:
         print("  -", line)
 
@@ -269,7 +343,11 @@ def main() -> int:
     assert "gf_SHBK (int lp_slot, string lp_tag, bank lp_bank, int lp_mode)" in back, "探针函数没进包"
     assert "gf_SHBK(lv_a, \"L\"" in back, "L 探针没进包"
     assert ('BankWait(gv_bank[lv_a]);' in back) == args.wait, "BankWait 状态不符"
-    assert not re.search(r"^\s*BankSave\(gv_bank\[", back, re.M), "仍有未拦截的 BankSave"
+    assert ('gf_SHBK(lv_a, "P"' in back) == args.poll, "poll 状态不符"
+    assert ('gf_SHBK(lv_a, "W"' in back) == args.waitload, "waitload 状态不符"
+    assert ('gf_SHBK(1, "AA"' in back) == args.defer, "defer 状态不符"
+    if not args.keep_saves:
+        assert not re.search(r"^\s*BankSave\(gv_bank\[", back, re.M), "仍有未拦截的 BankSave"
     assert any("Triggers" in m for m in members), "Triggers 成员丢失"
     assert "CustomLogic.galaxy" in members, "CustomLogic.galaxy 成员丢失"
     print(f"OK -> {args.out}  ({args.out.stat().st_size} bytes)")
