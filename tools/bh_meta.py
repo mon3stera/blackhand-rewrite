@@ -1,0 +1,129 @@
+#!/usr/bin/env python3
+"""黑手：升温 —— 地图详情（DocInfo）写入工具
+
+用途：不经过编辑器就能改「地图详情 / 更新日志」——编辑器保存会重写 BankList.xml
+（丢 MBank13/key 声明 → 每局清档），所以补丁说明一律用本工具直接写进地图片内成员。
+
+两个成员要同时改（编辑器也是这么做的）：
+  ① DocumentHeader                      —— 条目表，格式：
+        [int16 键长][键 UTF-8][4B locale（字节反序，zhCN→b'NChz'）][int16 值长][值 UTF-8]
+        平铺在成员尾部，直接在末尾追加即可
+  ② zhCN.SC2Data/LocalizedData/GameStrings.txt —— 运行时读的文案，行格式 `DocInfo/PatchNote172=正文`
+
+用法：
+  python3 tools/bh_meta.py list  <map>
+  python3 tools/bh_meta.py set   <map> PatchNote172 "正文" [更多 编号 正文 ...]
+"""
+import struct
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+import sc2map
+
+HEADER = 'DocumentHeader'
+STRINGS = 'zhCN.SC2Data/LocalizedData/GameStrings.txt'
+ZH = 'zhCN'[::-1].encode('ascii')  # b'NChz'
+
+
+def parse_entries(buf):
+    """→ [(off, key, locale, value)]；只认 DocInfo/ 开头的条目表。"""
+    i, out = 0, []
+    while i < len(buf) - 8:
+        klen = struct.unpack_from('<H', buf, i)[0]
+        if not (0 < klen < 120):
+            i += 1
+            continue
+        key = buf[i + 2:i + 2 + klen]
+        if not key.startswith(b'DocInfo/'):
+            i += 1
+            continue
+        try:
+            key_s = key.decode('utf-8')
+        except UnicodeDecodeError:
+            i += 1
+            continue
+        p = i + 2 + klen
+        loc, vlen = buf[p:p + 4], struct.unpack_from('<H', buf, p + 4)[0]
+        val = buf[p + 6:p + 6 + vlen]
+        try:
+            val_s = val.decode('utf-8')
+        except UnicodeDecodeError:
+            i += 1
+            continue
+        out.append((i, key_s, loc[::-1].decode('ascii', 'replace'), val_s))
+        i = p + 6 + vlen
+    return out
+
+
+def encode(key, value, locale=ZH):
+    kb, vb = key.encode('utf-8'), value.encode('utf-8')
+    assert len(kb) < 0x10000 and len(vb) < 0x10000, '键/值过长'
+    return struct.pack('<H', len(kb)) + kb + locale + struct.pack('<H', len(vb)) + vb
+
+
+def set_notes(path, items, locale='zhCN'):
+    """items: [(编号字符串或完整键, 正文)]；已存在则原地替换，不存在则追加。"""
+    dh = bytearray(sc2map.read(path, HEADER))
+    entries = {(k, loc): (off, k, loc, v) for off, k, loc, v in parse_entries(bytes(dh))}
+    gs = sc2map.read(path, STRINGS).decode('utf-8')
+    lines = gs.split('\n')
+    added, updated = [], []
+
+    for num, text in items:
+        key = num if num.startswith('DocInfo/') else f'DocInfo/{num}'
+        old = entries.get((key, locale))
+        if old:
+            off, _, _, oldv = old
+            old_bytes = encode(key, oldv)
+            assert bytes(dh[off:off + len(old_bytes)]) == old_bytes, f'{key} 原有条目编解码不一致'
+            dh[off:off + len(old_bytes)] = encode(key, text)
+            updated.append(key)
+            # 长度变化会让后续条目偏移失效，故一次只允许等长替换
+            assert len(encode(key, text)) == len(old_bytes), f'{key} 正文长度变化，请逐个改写'
+        else:
+            dh += encode(key, text)
+            added.append(key)
+
+        pat = f'{key}='
+        hit = [n for n, l in enumerate(lines) if l.startswith(pat)]
+        if hit:
+            lines[hit[0]] = pat + text
+        else:
+            j = len(lines) - 1
+            while j > 0 and lines[j].strip() == '':
+                j -= 1
+            lines.insert(j + 1, pat + text)
+
+    sc2map.write(path, HEADER, bytes(dh))
+    sc2map.write(path, STRINGS, '\n'.join(lines).encode('utf-8'))
+    return added, updated
+
+
+def main():
+    if len(sys.argv) < 3:
+        print(__doc__)
+        return 1
+    cmd, path = sys.argv[1], sys.argv[2]
+
+    if cmd == 'list':
+        for off, key, loc, val in parse_entries(sc2map.read(path, HEADER)):
+            if 'PatchNote' in key:
+                print(f'  [{loc}] {key} = {val[:60]}')
+        return 0
+
+    if cmd == 'set':
+        rest = sys.argv[3:]
+        assert len(rest) % 2 == 0 and rest, '用法：set <map> PatchNote172 "正文" ...'
+        items = list(zip(rest[0::2], rest[1::2]))
+        added, updated = set_notes(path, items)
+        print(f'✓ {path}: 新增 {added}；改写 {updated}')
+        return 0
+
+    print(__doc__)
+    return 1
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())
