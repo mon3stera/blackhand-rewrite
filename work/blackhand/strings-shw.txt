@@ -52,3 +52,6 @@ Param/Value/SHWMGIA=<s val="ModItalic">
 Param/Value/SHWMGIB=<s val="ModItalic20">
 Param/Value/SHWMGIC=<s val="ModItalic24">
 Param/Value/SHWMGID=<s val="ModItalic32">
+Param/Value/SHWFR1=<s val="ModCenterSize16">
+Param/Value/SHWFR2=<c val="44FF88"> 赢得了 </c>
+Param/Value/SHWFR3=<c val="44FF88"> 的首次胜利!</c></s>

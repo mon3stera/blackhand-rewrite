@@ -115,7 +115,9 @@ MUST_HAVE_KEYS = [
  'Param/Value/SHACH1', 'Param/Value/SHACH2', 'Param/Value/SHACH3',
  # 斜体名字跟随公屏放大：gf_CBMagnifyText 的替换源/目标标签（shw155）
  'Param/Value/SHWMGIA', 'Param/Value/SHWMGIB', 'Param/Value/SHWMGIC',
- 'Param/Value/SHWMGID',]
+ 'Param/Value/SHWMGID',
+ # 角色首胜播报（shw180）
+ 'Param/Value/SHWFR1', 'Param/Value/SHWFR2', 'Param/Value/SHWFR3',]
 
 
 def parse_strings_file(path: Path) -> dict:

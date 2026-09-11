@@ -16628,6 +16628,8 @@ bool auto_gf_EndGame_TriggerFunc (bool testConds, bool runActions) {
     int auto7A68C0DE_var;
     playergroup auto3B7E9C41_g;
     int auto3B7E9C41_var;
+    playergroup autoSHWFR_g;
+    int autoSHWFR_var;
 
     // Variable Initialization
 
@@ -16863,6 +16865,17 @@ bool auto_gf_EndGame_TriggerFunc (bool testConds, bool runActions) {
                     // 角色收集类成就也无法推进。改为按玩家真实的池/角色记账。
                     // 数组维度 [16][9][21]，角色号 >20（自加角色 31/32 等）无法记录，故加界内守卫。
                     if ((gv_roles[lv_a][1] <= 8) && (gv_roles[lv_a][0] <= 20)) {
+                        // shw180：该角色的「首次胜利」——全场播报 + 25 分（发分通道与成就一致）
+                        if ((gv_bankRoleAchievements[lv_a][gv_roles[lv_a][1]][gv_roles[lv_a][0]] == 0)) {
+                            autoSHWFR_g = gv_currentPlayers;
+                            autoSHWFR_var = -1;
+                            while (true) {
+                                autoSHWFR_var = PlayerGroupNextPlayer(autoSHWFR_g, autoSHWFR_var);
+                                if (autoSHWFR_var < 0) { break; }
+                                gf_CBSystemMessage((StringExternal("Param/Value/SHWFR1") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/SHWFR2") + StringToText(gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]]) + StringExternal("Param/Value/SHWFR3")), autoSHWFR_var, lv_a, 0, SoundLink("UI_BnetGameFound", -1), Color(0,0,0));
+                            }
+                            gf_GiveBonus(lv_a, 25);
+                        }
                         gv_bankRoleAchievements[lv_a][gv_roles[lv_a][1]][gv_roles[lv_a][0]] += 1;
                     }
                     gf_CAssembleMainBank(lv_a);
