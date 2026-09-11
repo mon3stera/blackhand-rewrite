@@ -245,7 +245,7 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 - 行动按钮函数 `gf_RA*Actions`（每个存活其他玩家行配按钮）+ `gf_RAActions` 分发 + **AS 按钮点击触发器 A/B 两个都要写分支**（只写 A：按钮可见但点击不生效）
 - `gf_SequencePrep`（记账）/ `gf_SequenceKills`（结算）/ `gf_CheckEnd`（残局计数、归零条件、数量比较）/ 阵营校验
 
-**第 8.5 步：夜间目标的效果转换（欺骗者 / 女巫 / 巴士司机）** —— 新增带夜间目标的角色必须考虑这三者：巴士司机交换与欺骗者转向**共用 `gv_switched`**（`switched[对象]=转向对象`）；女巫控制走 `gv_witched[受害者]=女巫`，结算时重写受害者 `visitation = 女巫的 action[1]`（~10936），造访目的地被交换时连锁重写访客 visitation（~10959）。
+**第 8.5 步：夜间目标的效果转换（欺骗者 / 女巫 / 巴士司机）** —— 巴士司机交换与欺骗者转向**共用 `gv_switched`**（`switched[对象]=转向对象`）；女巫控制走 `gv_witched[受害者]=女巫`，结算时重写受害者 `visitation = 女巫的 action[1]`（~10936），造访目的地被交换时连锁重写访客 visitation（~10959）。
 
 - **原图标准模式**（效果按"造访目的地"投递，杀手杀 `visitation` 所指）：巴士/欺骗者/女巫经 visitation 重写自然生效，**无需额外代码**。
 - **按目标身份直接投递的角色（如影武者）必须显式解析**：先判女巫控制（`gv_witched[自己]!=0 && gv_witchEligible && 未入狱 && 女巫有 action[1]` → 换成女巫的 action[1]），再过 `gv_switched`（盯 3、3 是欺骗者转向 7 → 实际看/杀 7）。**哪些槽位可被转换是设计决策且必须写进角色卡**（影武者：目标一可被交换，目标二结构性不可转——`action[x][1]` 全脚本只有重置与本人按钮写入）。
@@ -282,7 +282,7 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 
 ### BankList.xml —— 「进图即清档」的真正根因（shw137 定案，2026-09-11）
 
-**现象**：私有发布的改版图每局把存档重置（重新输名字、积分归零）。探针实测（`tools/bank_probe_build.py`，bank `SHBKPB`）本地与线上一致：任何时刻 `BankLoad("MBank13", 1)` **都返回空档**（`BankSectionCount=0`），但 `BankExists= true`、`BankSave` 正常写盘、文件就在硬盘上；`BankWait`、轮询重载、纯读取等待、补签名（两种 authorID 算法）**全部无效** —— 不是身份/时序/签名问题。
+**现象**：私有发布的改版图每局把存档重置（重新输名字、积分归零）。探针实测（`tools/bank_probe_build.py`，bank `SHBKPB`）本地/线上一致：`BankLoad("MBank13", 1)` **恒返回空档**（`BankSectionCount=0`），但 `BankExists=true`、`BankSave` 正常写盘；`BankWait`、轮询重载、纯读取等待、补签名（两种 authorID 算法）**全部无效** —— 不是身份/时序/签名问题。
 
 **根因**：引擎在地图加载时按包内 **`BankList.xml`** 预加载 bank，**不在表里的 bank，`BankLoad()` 永远读不出内容**（写入不受影响）。原图包 35 条（`MBank13`、`key` × 玩家 1–15），而我们的构建包只剩 5 条战役默认项（编辑器只在用 **GUI bank 动作**时登记条目，手写 Galaxy 不会）→ 读到"未预加载的空 bank" → 原图逻辑按新玩家处理 → 组装空档并保存 → 每局清档。
 
@@ -306,8 +306,8 @@ python3 tools/banklist_fix.py work/boot2-<name>.SC2Map --check    # 回读校验
 
 - wait 必须在 `BankLastCreated()` **之后**（dbg2 曾把 `BankWait(gv_bank[lv_a])` 放在赋值前，等的是空句柄 → 无效）；`gv_key[...]` 同理。
 - **实证对照（dbg10 vs dbg11，同一份脚本只差 wait）**：dbg10 无 wait → `L: sc=0`、2 秒后才 `sc=2`；dbg11 有 wait → **`L: sc=2 seI=1 vB=" dddd"`（t=0 即真档）**，用户实测**不再要求输入名字** ✓。
-- 参考表 `data/BankList.original.xml` 取自原图包；工具断言 `MBank13`/`key` 覆盖玩家 1–15、打包后 `Triggers`/`CustomLogic.galaxy` 成员仍在。
-- 结论修正：shw134「引擎 BankVerify 失败即清空」只是**表象**（未预加载的 bank 本来就空，`BankVerify` 自然 false）；`BankOptionSet(c_bankOptionSignature,true)` 与存档重签**都不是**读档的必要条件。社区佐证：GA地精研究院帖「纯galaxy代码的方式不能读取bank？[已解决]」= 拆包发现 `BankList.xml` 机制 +「读取内容之前必须先加一条同步」。
+- 参考表 `data/BankList.original.xml` 取自原图包；工具断言 `MBank13`/`key` 覆盖 1–15、`Triggers`/`CustomLogic.galaxy` 成员仍在。
+- 结论修正：shw134「引擎 BankVerify 失败即清空」只是**表象**（未预加载的 bank 本来就空，`BankVerify` 自然 false）；`BankOptionSet(c_bankOptionSignature,true)` 与重签**都不是**读档必要条件。社区佐证：GA地精研究院帖「纯galaxy代码的方式不能读取bank？[已解决]」= 拆包发现 `BankList.xml` +「读内容之前先加一条同步」。
 
 ### 打包管线（shw96 事故沉淀，shw141 固化为一键工具）
 
@@ -328,9 +328,9 @@ python3 tools/boot2_build.py --out work/boot2-<name>.SC2Map      # 四件套 + �
 
 分发链：`gf_CheckEnd` 返回码 → `gf_EndGame(lp_end)` → 每码一个 `gf_ET*Win()`（约 20193–21390 行）→ 内部 `gf_WinScreen("<图>.dds", 玩家)` **全场同一张图** + 逐玩家胜利者判定（`gv_won=true`、bank 胜/败场计数 `[6]/[7]`、胜负按钮文案）。图码对照：1城镇 WinTown / 2黑手 WinMafia / 13三合 WinTriad / 3SK WinSerialKiller / 5生存者 WinSurvivor / 6小丑 WinJester / 7女巫 WinWitch / 8纵火 WinArsonist / 9处刑者 WinExecutioner / 10失忆 WinAmnesiac / 11邪教 WinCult / 12杀人狂 WinMassMurderer / 14审计 WinAuditor / 15法官 WinJudge / 16审判者+影武 / 17瘟疫 WinplaguerReal / 18冤魂 Winpossessio / 19系命 Winlifebonder / 20赌鬼 Winpossessio / 4无人 WinNobody。
 
-- **图的位置**：原图那批（WinTown/WinMafia/…）在 `mm2.SC2Mod` 依赖里；**自加图放地图归档根目录即可覆盖/新增**（shw98 的 `WinCorruptInquisitor.dds`、`WinShadow.dds`）。
+- **图的位置**：原图那批在 `mm2.SC2Mod` 依赖里；**自加图放地图归档根目录即可**（shw98 的 `WinCorruptInquisitor.dds`、`WinShadow.dds`）。
 - **DDS 规格**（与作者自加图一致）：732×376、24bit 未压缩、无 mipmap，文件=128 字节头+RGB 字节（825824 字节整）。**头里的 mask 标注与实际字节序不符——按「bytes→PIL RGB」直读直写颜色即正确**，转制方法：`hdr = 旧图[:128]` + `Image.open(png).convert('RGB').resize((732,376)).tobytes()`。出图用 GPT 时给参考图（`~/win-ref/` 四张解包 PNG）+ 三条约束：无人物只留一件道具、涂鸦泼漆大字、混凝土墙底。
-- **新增致命系角色的胜利三件套**：①`gf_CheckEnd` 主链加/并入判胜块（**必须用 shw96 语义**：城镇0+其他致命系0+邪教0+`(黑+三)<=1`+自己≥1，不要复刻原版 `黑=0&&三=0`）②`gf_ET*Win` 的胜利者名单加自己（漏了会像影武者 shw98 前那样「赢了却被记败场+失败音效」）③专属图 dds 入包+分支接线。
+- **新增致命系角色的胜利三件套**：①`gf_CheckEnd` 主链并入判胜块（**shw96 语义**：城镇0+其他致命系0+邪教0+`(黑+三)<=1`+自己≥1，别复刻原版 `黑=0&&三=0`）②`gf_ET*Win` 胜利者名单加自己（漏了会像 shw98 前的影武者「赢了却记败场+失败音效」）③专属图 dds 入包+分支接线。
 - **return 16 是共享块**：主链/2人残局/平局区三处 return 16 都进 `gf_ETCorruptInquisitorWin`，该函数服务一群中立（生存者/小丑/赌鬼/女巫/处刑者/失忆者/审计官/杀人狂/审判者/影武者）。函数开头先扫描存活定胜者（`lv_ci`/`lv_shw`，审判者优先——其雷击无视无敌），图按胜者分支；新角色并入时同步改扫描、名单、图分支三处。
 - **已知死代码**：`gf_ETGamblerWin`（WinJester）无调用者；赌鬼实际走 `gf_ETE8B58CE9ACBC` 与冤魂共用 `Winpossessio.dds`；作者做好的 `Wingambler.dds`（骰子图，风格偏离原版）躺在包里未接线。
 - 2 人残局区（~15910）与平局区（~16115）的 return 16 独立于主链，改主链语义时不要漏了核对这三处的一致性（shw99 后主链=审判者/影武者 `(黑+三)<=1`，残局区维持原样）。
@@ -344,7 +344,7 @@ python3 tools/boot2_build.py --out work/boot2-<name>.SC2Map      # 四件套 + �
 - **验证断言别写子串包含**：`s.count('(16) || (30) || (31))) {')` 这类短串会同时命中浏览与映射白名单（互为子串），count 是 11 不是 6——断言前先确认模式唯一。
 - **白名单行的右括号层数不一致（shw84 事故）**：11 处编辑白名单 if 行并非统一 `== X)))` 结尾，部分行是 **4 层**（`== X))))`）。用统一子串替换会把 4 层行削掉一层 → `if` 解析失败、**整个脚本读取失败**。摘 OR 项必须**逐行**：定位含该项的行 → 去掉 ` || (…)` 整项 → 逐行断言 `()` 配平；且配平检查必须**先剥离字符串字面量**（61017 行含 `"("` 字面量，裸计数是已知误报）。
 - **锁定???随机系机制（枷锁/血锈/捕风捉影）**：预览列表（`gv_rolesMenusItem[2]`）是**静态文本**，??? = 直接 `DialogControlAddItem(roleNameArray[8][1])`（随机组 8/1 = ???）。槽位经 bank 填 (8,1) 会被 `gf_VLoadSaveSlot` 校验（category>5）清零——原图 sotd 系是**绕过 bank 直接写 slots**。捕风捉影方案：真阵容进 slots（开局正常发牌）→ VLoadSaveSlot 后 `RemoveAllItems` + 重填 15 个 ??? + bank 掩写 (8,1)；从 11 处白名单摘掉 variantSelection 即锁定编辑。
-- **断言过度也会误报**：①`assert 'KEY' not in s` 全文件禁键——键可能在别处有合法用途（`F0A13008` 是审查官能力文本，不能因一次误用就全文禁令）②GameStrings 行尾是 `\r\n`，比对空值键要 `l.replace('\\r','')` ③`s.find('函数名')` 命中的是**首次出现**（可能是文件前部的原型声明），定位调用点要用带 `();` 的完整调用文本或在函数行号区间内找。
+- **断言过度也会误报**：①`assert 'KEY' not in s` 全文件禁键——键别处可能有合法用途（`F0A13008` 是审查官能力文本）②GameStrings 行尾是 `\r\n`，比对空值键要 `l.replace('\\r','')` ③`s.find('函数名')` 命中的是**首次出现**（可能是前部原型声明），定位调用点要用带 `();` 的完整文本或在函数行号区间内找。
 - **斜体（shw87 已实证）**：SC2 富文本无斜体直标签（`<i>` 无效），斜体 = 字体样式 Italic 标志 + `<s val="样式名">`。地图 `NewFontStyles.SC2Style` 已加 `ModItalic`（fontflags="Italic"）/`ModItalic2`（styleflags="Italic"），**两种都渲染为斜体**。玩家输入 `-rename <i>x</i>` 经 `gf_BHItalicize` 改写为 `<s val="ModItalic">x</s>`（大小写闭合标签都处理），可与 `<c val>` 叠加；字体用 `#FontStandard` 保证 CJK。带标签的名字参与「按名字喊话」匹配时需照原样输入标签。
 - **二改红线（无原作者授权）**：**严禁修改/删除原图硬编码 handle 管理员链的任何既有分支**（~56944 起的 87 个，只能**追加**）；给 handle 加权限一律走白名单追加。日后公开发布前必须收回测试放开项：prefer 会员/积分门（65440/65481）、大厅电脑计入（56020）等 `c_bhSoloBuild` 旁路。**存档迁移**：bank 命名空间绑定发布作者，玩家原档（`key`、`MBank13`）留在原作者目录、脚本无法跨命名空间读取（引擎沙箱），迁移 = 把两个 bank 复制到改版作者目录即可（**无需重签**，见下条；重签工具 `tools/bank_resign.py` 备查）。
 - **不验签设计决定（shw139/143，取代 shw134 的临时旁路）**：目标是**原图存档直接复制即可用**（跨命名空间迁移、不重签）。两处一起关：①脚本侧三处 `BankVerify` 门槛（QQ/gift/I，3676/3680/3684 附近）加常量 `c_bhNoSigVerify = true`（条件前置，`BankVerify` 本身不执行）②`gt_Init2` 银行循环的 `BankOptionSet(gv_bank[lv_a], c_bankOptionSignature, …)` 改 **`false`**（引擎侧不签也不验；若为 `true`，引擎对**原作者签名**的档验签失败并清空内存内容 → 脚本看到空档 → 走新玩家分支 → 界面报「存档已重置」）。**原有的 `<Signature>` 行保留不动做兼容**，防篡改由地图级 Checker 承担（`Math=(points+1)×(points+3)` 等）。
