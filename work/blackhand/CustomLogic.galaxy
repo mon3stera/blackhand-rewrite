@@ -24913,7 +24913,7 @@ void gf_DAElectricChair (int lp_player) {
     ActorSend(lv_actor[17], libNtve_gf_SetScale(RandomFixed(2.0, 3.0), RandomFixed(2.0, 3.0), RandomFixed(2.0, 3.0), 0.0));
     libNtve_gf_PlayAnimation(lv_actor[17], c_animNameDefault, "Death", 0, c_animTimeDefault);
     libNtve_gf_PlayAnimation(libNtve_gf_MainActorofUnit(gv_unit[lp_player]), c_animNameDefault, "Death Fire", 0, c_animTimeDefault);
-    SoundPlay(SoundLink("SS_LightningProjectorImpact", -1), PlayerGroupAll(), 100.0, 0.0);
+    SoundPlay(SoundLink("ChainLightningImpactSound", -1), PlayerGroupAll(), 100.0, 0.0);
     SoundPlay(SoundLink("Oracle_PulsarBeamWeaponLoop", -1), PlayerGroupAll(), 50.0, 0.0);
     lv_s = SoundLastPlayed();
     SoundPlay(SoundLink("Doodad_SparkBurstLong", -1), PlayerGroupAll(), 100.0, 0.0);
@@ -33324,7 +33324,7 @@ void gf_ESLightning (int lp_player) {
             SoundPlay(SoundLink("QueenShockwaveSound", -1), PlayerGroupAll(), RandomFixed(25.0, 35.0), 0.0);
             Wait(RandomFixed(0.5, 0.75), c_timeGame);
             gf_FlashScreen(Color(100.00, 100.00, 100.00), lv_target, 0.5, 0.0);
-            SoundPlay(SoundLink("SS_LightningProjectorImpact", -1), PlayerGroupAll(), RandomFixed(50.0, 75.0), 0.0);
+            SoundPlay(SoundLink("ChainLightningImpactSound", -1), PlayerGroupAll(), RandomFixed(50.0, 75.0), 0.0);
             SoundPlay(SoundLink("Hybrid_PsionicShockwaveImpact", -1), PlayerGroupAll(), RandomFixed(75.0, 100.0), 0.0);
             Wait(RandomFixed(0.3, 0.4), c_timeGame);
             gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
@@ -33447,7 +33447,7 @@ void gf_ESCultSinisterSmite (int lp_player) {
             SoundPlay(SoundLink("QueenShockwaveSound", -1), PlayerGroupAll(), RandomFixed(25.0, 35.0), 0.0);
             Wait(RandomFixed(0.5, 0.75), c_timeGame);
             gf_FlashScreen(Color(100.00, 100.00, 100.00), lv_target, 0.5, 0.0);
-            SoundPlay(SoundLink("SS_LightningProjectorImpact", -1), PlayerGroupAll(), RandomFixed(50.0, 75.0), 0.0);
+            SoundPlay(SoundLink("ChainLightningImpactSound", -1), PlayerGroupAll(), RandomFixed(50.0, 75.0), 0.0);
             SoundPlay(SoundLink("Hybrid_PsionicShockwaveImpact", -1), PlayerGroupAll(), RandomFixed(75.0, 100.0), 0.0);
             Wait(RandomFixed(0.3, 0.4), c_timeGame);
             gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
@@ -33564,7 +33564,7 @@ void gf_ESCorruptInquisitorKill (int lp_player) {
             SoundPlay(SoundLink("QueenShockwaveSound", -1), PlayerGroupAll(), RandomFixed(25.0, 35.0), 0.0);
             Wait(RandomFixed(0.5, 0.75), c_timeGame);
             gf_FlashScreen(Color(100.00, 100.00, 100.00), lv_target, 0.5, 0.0);
-            SoundPlay(SoundLink("SS_LightningProjectorImpact", -1), PlayerGroupAll(), RandomFixed(50.0, 75.0), 0.0);
+            SoundPlay(SoundLink("ChainLightningImpactSound", -1), PlayerGroupAll(), RandomFixed(50.0, 75.0), 0.0);
             SoundPlay(SoundLink("Hybrid_PsionicShockwaveImpact", -1), PlayerGroupAll(), RandomFixed(75.0, 100.0), 0.0);
             Wait(RandomFixed(0.3, 0.4), c_timeGame);
             gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
@@ -33650,12 +33650,16 @@ void gf_ESThunderKill (int lp_target, int lp_killer) {
             // shw168 用的是固定 1.6–2.0 秒等待，语音比这长，红字就压着语音出来了。
             // SoundLengthSync 返回秒（fixed），与官方 libNtve 字幕时长 ((1000 * FixedToInt(SoundLengthSync(...))) + 400) 同源；
             // 查不到时长（返回 0，资源未就绪）时回落到 2.5 秒兜底。
+            // shw195：《HighTemplar_What》没有被地图预先加载 ⇒ 播放前 SoundLengthSync 只能拿到 0
+            //（引擎报「没有被预先加载，所以此长度不可用」）。改为先播、等一帧让它装载，再读真实时长；
+            // 读不到仍回落 2.5 秒兜底（与旧行为一致，不会卡住夜间演出）。
+            SoundPlay(SoundLink("HighTemplar_What", -1), PlayerGroupAll(), 100.0, 0.0);
+            Wait(0.05, c_timeGame);
             lv_voiceLen = SoundLengthSync(SoundLink("HighTemplar_What", -1));
             if ((lv_voiceLen < 1.0) || (lv_voiceLen > 8.0)) {
-                lv_voiceLen = 2.5; // 0/异常值兜底：既防资源未就绪，也防单位不是秒（否则会卡住整段夜间演出）
+            lv_voiceLen = 2.5; // 0/异常值兜底：既防资源未就绪，也防单位不是秒（否则会卡住整段夜间演出）
             }
-            SoundPlay(SoundLink("HighTemplar_What", -1), PlayerGroupAll(), 100.0, 0.0);
-            Wait((lv_voiceLen + 0.4), c_timeGame);
+            Wait(((lv_voiceLen - 0.05) + 0.4), c_timeGame);
             SoundPlay(SoundLink("Ambience_Thunder_OneShot", -1), PlayerGroupAll(), 100.0, 0.0);
             Wait(RandomFixed(0.5, 0.8), c_timeGame);
             autoTXHEAR_g = PlayerGroupAll();
@@ -33674,7 +33678,7 @@ void gf_ESThunderKill (int lp_target, int lp_killer) {
             }
             Wait(RandomFixed(0.3, 0.4), c_timeGame);
             gf_FlashScreen(Color(100.00, 100.00, 100.00), lv_target, 0.5, 0.0);
-            SoundPlay(SoundLink("SS_LightningProjectorImpact", -1), PlayerGroupAll(), RandomFixed(50.0, 75.0), 0.0);
+            SoundPlay(SoundLink("ChainLightningImpactSound", -1), PlayerGroupAll(), RandomFixed(50.0, 75.0), 0.0);
             SoundPlay(SoundLink("Hybrid_PsionicShockwaveImpact", -1), PlayerGroupAll(), RandomFixed(75.0, 100.0), 0.0);
             Wait(RandomFixed(0.3, 0.4), c_timeGame);
             gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
