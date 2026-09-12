@@ -56,3 +56,6 @@ Param/Value/SHWFR3=<c val="44FF88"> 的首次胜利!</c></s>
 
 Param/Value/SHWTXEX=不包括 纵火者/瘟疫散布者
 Param/Value/SHWZFRC=不包括 征募官
+Param/Value/SHWCT3NAME=<s val="ModCenterSize24Bold"><c val="0055FF">唐人街</c></s><c val="1EC400">【高阶】</c>
+Param/Value/SHWCT3DESC=<s val="ModLeftSize20Bold">相比唐人街【进阶】，这个模式放开了两处限制：城镇的随机位可以抽到保护角色，三合会的随机位可以抽到致命角色。</s><n/><c val="FF8040">双方势力都更强</c>
+Param/Value/SHWCT3BTN=<s val="ModCenterSize24Bold"><c val="0055FF">唐人街</c></s><c val="1EC400">【高阶】</c>

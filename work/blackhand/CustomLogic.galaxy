@@ -1268,6 +1268,7 @@ void gf_VE5B08FE6848FE5A4A7E588A9 ();
 void gf_VE5B08FE6848FE5A4A7E588A92 ();
 void gf_VE59490E4BABAE8A197 ();
 void gf_VE59490E4BABAE8A1972 ();
+void gf_VE59490E4BABAE8A1973 (); // shw218 唐人街[高阶]
 void gf_VE4B8ADE4B896E7BAAA ();
 void gf_VE4B8ADE4B896E7BAAA3 ();
 void gf_VE4B8ADE4B896E7BAAA4 ();
@@ -50629,6 +50630,219 @@ void gf_VE59490E4BABAE8A1972 () {
     DialogControlSetEnabled(gv_optionsPanelItem[29], PlayerGroupSingle(gv_host), true);
     DialogControlSetEnabled(gv_optionsPanelItem[31], PlayerGroupSingle(gv_host), true);
 }
+void gf_VE59490E4BABAE8A1973 () {
+    int init_i;
+
+    // Variable Declarations
+    int lv_a;
+    int lv_c;
+    string[12] lv_str;
+    string lv_category;
+    string lv_role;
+
+    // Automatic Variable Declarations
+    playergroup autoDEDAF232_g;
+    int autoDEDAF232_var;
+    const int auto1A75773C_ae = 15;
+    const int auto1A75773C_ai = 1;
+    const int autoFB8DD348_ae = 2;
+    const int autoFB8DD348_ai = 1;
+    int autoC34FD743_ae;
+    const int autoC34FD743_ai = 1;
+    const int auto8823EB89_ae = 4;
+    const int auto8823EB89_ai = 1;
+    int auto17F4D0B2_ae;
+    const int auto17F4D0B2_ai = 1;
+    const int auto06D43212_ae = 5;
+    const int auto06D43212_ai = 1;
+    int auto9D95BDA5_ae;
+    const int auto9D95BDA5_ai = 1;
+    const int auto49803B0A_ae = 2;
+    const int auto49803B0A_ai = 1;
+    int autoB61DE7DF_ae;
+    const int autoB61DE7DF_ai = 1;
+    const int auto174F21B9_ae = 3;
+    const int auto174F21B9_ai = 1;
+    int autoBEC5C3A1_ae;
+    const int autoBEC5C3A1_ai = 1;
+    const int autoCDF0D7A8_ae = 5;
+    const int autoCDF0D7A8_ai = 1;
+    int auto0B310C5F_ae;
+    const int auto0B310C5F_ai = 1;
+    const int auto0D9D022D_ae = 3;
+    const int auto0D9D022D_ai = 1;
+
+    // Variable Initialization
+    for (init_i = 0; init_i <= 11; init_i += 1) {
+        lv_str[init_i] = "";
+    }
+    lv_category = "";
+    lv_role = "";
+
+    // Implementation
+    libNtve_gf_SetDialogItemText(gv_confirmationButtonItem[1], StringExternal("Param/Value/SHWCT3BTN"), PlayerGroupAll());
+    DialogControlAddItem(gv_rolesMenusItem[0], PlayerGroupAll(), StringExternal("Param/Value/5A4F45EF"));
+    DialogControlAddItem(gv_rolesMenusItem[0], PlayerGroupAll(), StringExternal("Param/Value/617E32CB"));
+    DialogControlAddItem(gv_rolesMenusItem[0], PlayerGroupAll(), StringExternal("Param/Value/D345E6CE"));
+    DialogControlAddItem(gv_rolesMenusItem[0], PlayerGroupAll(), StringExternal("Param/Value/101FAD72"));
+    DialogControlAddItem(gv_rolesMenusItem[0], PlayerGroupAll(), StringExternal("Param/Value/AABCEED0"));
+    DialogControlAddItem(gv_optionsPanelItem[3], PlayerGroupAll(), StringExternal("Param/Value/42892E3D"));
+    DialogControlAddItem(gv_optionsPanelItem[3], PlayerGroupAll(), StringExternal("Param/Value/E3BACC06"));
+    DialogControlAddItem(gv_optionsPanelItem[3], PlayerGroupAll(), StringExternal("Param/Value/87801D13"));
+    DialogControlAddItem(gv_optionsPanelItem[6], PlayerGroupAll(), StringExternal("Param/Value/C64D9974"));
+    DialogControlAddItem(gv_optionsPanelItem[6], PlayerGroupAll(), StringExternal("Param/Value/68F6859E"));
+    DialogControlAddItem(gv_optionsPanelItem[6], PlayerGroupAll(), StringExternal("Param/Value/3E3578D0"));
+    DialogControlAddItem(gv_optionsPanelItem[6], PlayerGroupAll(), StringExternal("Param/Value/70F8FFE4"));
+    DialogControlAddItem(gv_optionsPanelItem[21], PlayerGroupAll(), StringExternal("Param/Value/F49560B7"));
+    DialogControlAddItem(gv_optionsPanelItem[21], PlayerGroupAll(), StringExternal("Param/Value/A8A12550"));
+    DialogControlAddItem(gv_optionsPanelItem[21], PlayerGroupAll(), StringExternal("Param/Value/6B892D2E"));
+    gv_rolesAssigned = 0;
+    lv_str[0] = gv_timelength;
+    lv_str[1] = "1211001111 11 11011 1111 0 00 0010 1 011 1 1111 110 0100 001 0001 1 11 0101 0 01010 1 000 0 0010 000 01 001 00";
+    lv_str[2] = gv_mafiaOptions;
+    lv_str[3] = gv_neutralOptions;
+    lv_str[4] = "00000 01000 0 11010 10000 0000 00010 1110 11100 01000 11010 01100 110000 00000 0 00111 00000 00000 100";
+    lv_str[5] = gv_triadOptions;
+    lv_str[6] = gv_townWeights;
+    lv_str[7] = gv_mafiaWeights;
+    lv_str[8] = gv_neutralWeights;
+    lv_str[9] = gv_triadWeights;
+    if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
+        lv_category = "1 4 1 1 4 4 4 4 4 5 4 4 4 3 4";
+        lv_role = "2 2 8 6 4 2 2 5 5 2 15 15 15 12 14";
+    }
+
+    if ((PlayerGroupCount(gv_currentPlayers) == 14)) {
+        lv_category = "1 1 1 1 4 4 4 4 5 4 4 4 3 4 0";
+        lv_role = "2 11 8 6 4 2 5 5 2 15 15 15 12 14 0";
+    }
+
+    if ((PlayerGroupCount(gv_currentPlayers) == 13)) {
+        lv_category = "1 1 1 1 4 4 4 4 5 4 4 3 4 0 0";
+        lv_role = "2 11 8 6 4 2 5 5 2 15 15 12 14 0 0";
+    }
+
+    if ((PlayerGroupCount(gv_currentPlayers) != 1) && (PlayerGroupCount(gv_currentPlayers) == 12)) {
+        lv_category = "1 1 1 4 4 4 4 5 4 4 3 4 0 0 0";
+        lv_role = "2 11 8 4 2 5 5 2 15 15 12 14 0 0 0";
+    }
+
+    if ((PlayerGroupCount(gv_currentPlayers) != 1) && (PlayerGroupCount(gv_currentPlayers) <= 11)) {
+        lv_category = "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0";
+        lv_role = "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0";
+        autoDEDAF232_g = PlayerGroupAll();
+        autoDEDAF232_var = -1;
+        while (true) {
+            autoDEDAF232_var = PlayerGroupNextPlayer(autoDEDAF232_g, autoDEDAF232_var);
+            if (autoDEDAF232_var < 0) { break; }
+            gf_CBSystemMessage(StringExternal("Param/Value/74D9F5D7"), autoDEDAF232_var, 0, 0, SoundLink("Spectre_Explode", -1), Color(0.00, 0.00, 0.00));
+            gf_CBSystemMessage(StringExternal("Param/Value/C3C242DA"), autoDEDAF232_var, 0, 0, SoundLink("30SecondSilence", -1), Color(0.00, 0.00, 0.00));
+        }
+    }
+
+    lv_a = 1;
+    for ( ; ( (auto1A75773C_ai >= 0 && lv_a <= auto1A75773C_ae) || (auto1A75773C_ai < 0 && lv_a >= auto1A75773C_ae) ) ; lv_a += auto1A75773C_ai ) {
+        gv_bankSaveIntegers[0][1][lv_a] = StringToInt(StringWord(lv_category, lv_a));
+        gv_bankSaveIntegers[0][0][lv_a] = StringToInt(StringWord(lv_role, lv_a));
+    }
+    gv_bankSaveStrings[0][0][0] = StringWord(lv_str[1], 1);
+    lv_a = 1;
+    for ( ; ( (autoFB8DD348_ai >= 0 && lv_a <= autoFB8DD348_ae) || (autoFB8DD348_ai < 0 && lv_a >= autoFB8DD348_ae) ) ; lv_a += autoFB8DD348_ai ) {
+        autoC34FD743_ae = gv_townMax;
+        lv_c = 1;
+        for ( ; ( (autoC34FD743_ai >= 0 && lv_c <= autoC34FD743_ae) || (autoC34FD743_ai < 0 && lv_c >= autoC34FD743_ae) ) ; lv_c += autoC34FD743_ai ) {
+            if ((lv_a == 1) && (lv_c >= 1) && (lv_c <= gv_townMax)) {
+                gv_bankSaveStrings[0][lv_c][lv_a] = StringWord(lv_str[1], (lv_c + 1));
+            }
+
+            if ((lv_a == 2) && (lv_c >= 1) && (lv_c <= gv_mafiaTriadMax)) {
+                gv_bankSaveStrings[0][lv_c][lv_a] = StringWord(lv_str[2], (lv_c + 0));
+            }
+
+        }
+    }
+    lv_a = 3;
+    for ( ; ( (auto8823EB89_ai >= 0 && lv_a <= auto8823EB89_ae) || (auto8823EB89_ai < 0 && lv_a >= auto8823EB89_ae) ) ; lv_a += auto8823EB89_ai ) {
+        auto17F4D0B2_ae = gv_randomMax;
+        lv_c = 1;
+        for ( ; ( (auto17F4D0B2_ai >= 0 && lv_c <= auto17F4D0B2_ae) || (auto17F4D0B2_ai < 0 && lv_c >= auto17F4D0B2_ae) ) ; lv_c += auto17F4D0B2_ai ) {
+            if ((lv_a == 3) && (lv_c >= 1) && (lv_c <= gv_neutralMax)) {
+                gv_bankSaveStrings[0][lv_c][lv_a] = StringWord(lv_str[3], (lv_c + 0));
+            }
+
+            if ((lv_a == 4) && (lv_c >= 1) && (lv_c <= gv_randomMax)) {
+                gv_bankSaveStrings[0][lv_c][lv_a] = StringWord(lv_str[4], (lv_c + 0));
+            }
+
+        }
+    }
+    lv_a = 5;
+    for ( ; ( (auto06D43212_ai >= 0 && lv_a <= auto06D43212_ae) || (auto06D43212_ai < 0 && lv_a >= auto06D43212_ae) ) ; lv_a += auto06D43212_ai ) {
+        auto9D95BDA5_ae = gv_mafiaTriadMax;
+        lv_c = 1;
+        for ( ; ( (auto9D95BDA5_ai >= 0 && lv_c <= auto9D95BDA5_ae) || (auto9D95BDA5_ai < 0 && lv_c >= auto9D95BDA5_ae) ) ; lv_c += auto9D95BDA5_ai ) {
+            if ((lv_a == 5) && (lv_c >= 1) && (lv_c <= gv_mafiaTriadMax)) {
+                gv_bankSaveStrings[0][lv_c][lv_a] = StringWord(lv_str[5], (lv_c + 0));
+            }
+
+        }
+    }
+    lv_a = 1;
+    for ( ; ( (auto49803B0A_ai >= 0 && lv_a <= auto49803B0A_ae) || (auto49803B0A_ai < 0 && lv_a >= auto49803B0A_ae) ) ; lv_a += auto49803B0A_ai ) {
+        autoB61DE7DF_ae = gv_townMax;
+        lv_c = 1;
+        for ( ; ( (autoB61DE7DF_ai >= 0 && lv_c <= autoB61DE7DF_ae) || (autoB61DE7DF_ai < 0 && lv_c >= autoB61DE7DF_ae) ) ; lv_c += autoB61DE7DF_ai ) {
+            if ((lv_a == 1) && (lv_c >= 1) && (lv_c <= gv_townMax)) {
+                gv_bankSaveWeights[0][lv_a][lv_c] = StringToFixed(StringWord(lv_str[6], (lv_c + 0)));
+            }
+
+            if ((lv_a == 2) && (lv_c >= 1) && (lv_c <= gv_mafiaTriadMax)) {
+                gv_bankSaveWeights[0][lv_a][lv_c] = StringToFixed(StringWord(lv_str[7], (lv_c + 0)));
+            }
+
+        }
+    }
+    lv_a = 3;
+    for ( ; ( (auto174F21B9_ai >= 0 && lv_a <= auto174F21B9_ae) || (auto174F21B9_ai < 0 && lv_a >= auto174F21B9_ae) ) ; lv_a += auto174F21B9_ai ) {
+        autoBEC5C3A1_ae = gv_neutralMax;
+        lv_c = 1;
+        for ( ; ( (autoBEC5C3A1_ai >= 0 && lv_c <= autoBEC5C3A1_ae) || (autoBEC5C3A1_ai < 0 && lv_c >= autoBEC5C3A1_ae) ) ; lv_c += autoBEC5C3A1_ai ) {
+            if ((lv_a == 3) && (lv_c >= 1) && (lv_c <= gv_neutralMax)) {
+                gv_bankSaveWeights[0][lv_a][lv_c] = StringToFixed(StringWord(lv_str[8], (lv_c + 0)));
+            }
+
+        }
+    }
+    lv_a = 5;
+    for ( ; ( (autoCDF0D7A8_ai >= 0 && lv_a <= autoCDF0D7A8_ae) || (autoCDF0D7A8_ai < 0 && lv_a >= autoCDF0D7A8_ae) ) ; lv_a += autoCDF0D7A8_ai ) {
+        auto0B310C5F_ae = gv_mafiaTriadMax;
+        lv_c = 1;
+        for ( ; ( (auto0B310C5F_ai >= 0 && lv_c <= auto0B310C5F_ae) || (auto0B310C5F_ai < 0 && lv_c >= auto0B310C5F_ae) ) ; lv_c += auto0B310C5F_ai ) {
+            if ((lv_a == 5) && (lv_c >= 1) && (lv_c <= gv_mafiaTriadMax)) {
+                gv_bankSaveWeights[0][lv_a][lv_c] = StringToFixed(StringWord(lv_str[9], (lv_c + 0)));
+            }
+
+        }
+    }
+    lv_a = 0;
+    for ( ; ( (auto0D9D022D_ai >= 0 && lv_a <= auto0D9D022D_ae) || (auto0D9D022D_ai < 0 && lv_a >= auto0D9D022D_ae) ) ; lv_a += auto0D9D022D_ai ) {
+        gv_bankSaveReals[0][lv_a] = StringToFixed(StringWord(lv_str[0], (lv_a + 1)));
+    }
+    gf_VLoadSaveSlot(0, 5);
+    DialogControlSetEnabled(gv_optionsPanelItem[1], PlayerGroupSingle(gv_host), true);
+    DialogControlSetEnabled(gv_optionsPanelItem[2], PlayerGroupSingle(gv_host), true);
+    DialogControlSetEnabled(gv_optionsPanelItem[3], PlayerGroupSingle(gv_host), true);
+    DialogControlSetEnabled(gv_optionsPanelItem[4], PlayerGroupSingle(gv_host), true);
+    DialogControlSetEnabled(gv_optionsPanelItem[5], PlayerGroupSingle(gv_host), true);
+    DialogControlSetEnabled(gv_optionsPanelItem[6], PlayerGroupSingle(gv_host), true);
+    DialogControlSetEnabled(gv_optionsPanelItem[7], PlayerGroupSingle(gv_host), true);
+    DialogControlSetEnabled(gv_optionsPanelItem[21], PlayerGroupSingle(gv_host), true);
+    DialogControlSetEnabled(gv_optionsPanelItem[23], PlayerGroupSingle(gv_host), true);
+    DialogControlSetEnabled(gv_optionsPanelItem[24], PlayerGroupSingle(gv_host), true);
+    DialogControlSetEnabled(gv_optionsPanelItem[27], PlayerGroupSingle(gv_host), true);
+    DialogControlSetEnabled(gv_optionsPanelItem[29], PlayerGroupSingle(gv_host), true);
+    DialogControlSetEnabled(gv_optionsPanelItem[31], PlayerGroupSingle(gv_host), true);
+}
 
 void gf_VE4B8ADE4B896E7BAAA () {
     int init_i;
@@ -55592,6 +55806,7 @@ void gf_OSActivateOptions () {
     }
 
 }
+    DialogControlAddItem(gv_variantsMenuItem[0], PlayerGroupAll(), StringExternal("Param/Value/SHWCT3NAME")); // shw218 第34项
 
 void gf_OSDeactivateOptions () {
     // Variable Declarations
@@ -86070,6 +86285,12 @@ bool gt_OSVariantsMenuChange_Func (bool testConds, bool runActions) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/GCZTDESC"), PlayerGroupAll());
         DialogControlSetEnabled(gv_variantsMenuItem[1], PlayerGroupSingle(gv_host), true);
     }
+    if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 34)) {
+        libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[1], StringExternal("Param/Value/SHWCT3NAME"), PlayerGroupAll());
+        libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/SHWCT3DESC"), PlayerGroupAll());
+        DialogControlSetEnabled(gv_variantsMenuItem[1], PlayerGroupSingle(gv_host), true);
+    }
+
 
 
     if ((DialogControlGetSelectedItem(gv_variantsMenuItem[0], gv_host) == 31)) {
@@ -86082,6 +86303,10 @@ bool gt_OSVariantsMenuChange_Func (bool testConds, bool runActions) {
 
     if ((DialogControlGetSelectedItem(gv_variantsMenuItem[0], gv_host) == 33)) {
         gv_variantSelection = 33;
+    }
+    if ((DialogControlGetSelectedItem(gv_variantsMenuItem[0], gv_host) == 34)) {
+        gv_variantSelection = 13;
+        gv_subvariantSelection = 3;
     }
     TriggerEnable(gt_OSVariantsMenuConfirm, true);
     return true;
@@ -86480,6 +86705,10 @@ bool gt_OSVariantsMenuConfirm_Func (bool testConds, bool runActions) {
         }
 
     }
+    if ((gv_variantSelection == 13) && (gv_subvariantSelection == 3)) {
+        gf_VE59490E4BABAE8A1973(); // shw218 唐人街[高阶]
+    }
+
     if ((((PlayerGroupCount(gv_currentPlayers) < gv_rolesAssigned) && (PlayerGroupCount(gv_players) > 1)) || ((gv_rolesAssigned > 15) && (PlayerGroupCount(gv_players) == 1)))) {
         if ((PlayerGroupCount(gv_players) == 1)) {
             if (((gv_rolesAssigned - 15) == 1)) {

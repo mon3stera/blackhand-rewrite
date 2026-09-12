@@ -117,6 +117,8 @@ MUST_HAVE_KEYS = [
     'Param/Value/GCZBNAME',
     'Param/Value/GCZJNAME',
     'Param/Value/GCZTNAME',
+    # shw218 唐人街[高阶]（自设面板第 34 项 / variant 13 sub 3）
+    'Param/Value/SHWCT3NAME', 'Param/Value/SHWCT3DESC', 'Param/Value/SHWCT3BTN',
     'Param/Value/TXNAME',
     # 天选者角色卡各栏（缺任一项 → 界面直接显示原始键名，shw192 事故）
     'Param/Value/TXBOX1', 'Param/Value/TXBOX2', 'Param/Value/TXBOX4',
