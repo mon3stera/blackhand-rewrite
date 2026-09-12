@@ -89903,22 +89903,22 @@ void gf_VBFCZOptions () {
         gv_setupInfo[1] = StringExternal("Param/Value/GCZBSUBA");
         if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
             lv_category = "1 1 4 4 4 4 4 4 4 2 2 4 3 3 4";
-            lv_role = "4 31 2 2 2 2 5 4 6 2 3 3 31 4 14";
+            lv_role = "4 31 2 2 2 2 6 5 4 2 3 3 31 4 14";
         }
 
         if ((PlayerGroupCount(gv_currentPlayers) == 14)) {
             lv_category = "1 1 4 4 4 4 4 4 2 2 4 3 3 4";
-            lv_role = "4 31 2 2 2 5 4 6 2 3 3 31 4 14";
+            lv_role = "4 31 2 2 2 6 5 4 2 3 3 31 4 14";
         }
 
         if ((PlayerGroupCount(gv_currentPlayers) == 13)) {
             lv_category = "1 1 4 4 4 4 4 2 2 4 3 3 4";
-            lv_role = "4 31 2 2 5 4 6 2 3 3 31 4 14";
+            lv_role = "4 31 2 2 6 5 4 2 3 3 31 4 14";
         }
 
         if ((PlayerGroupCount(gv_currentPlayers) == 12)) {
             lv_category = "1 1 4 4 4 4 4 2 2 4 3 3";
-            lv_role = "4 31 2 2 5 4 6 2 3 3 31 4";
+            lv_role = "4 31 2 2 6 5 4 2 3 3 31 4";
         }
     }
     else if ((lv_c == 2)) {
@@ -89977,25 +89977,25 @@ void gf_VBFCZOptions () {
         gv_setupInfo[1] = StringExternal("Param/Value/GCZBSUBD");
         if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
             lv_category = "1 1 1 4 4 4 4 4 4 2 4 4 3 4 4";
-            lv_role = "31 9 15 6 5 2 2 2 2 2 3 3 31 13 14";
+            lv_role = "15 31 9 2 2 2 2 6 5 2 3 3 31 13 14";
         }
 
 
         if ((PlayerGroupCount(gv_currentPlayers) == 14)) {
             lv_category = "1 1 1 4 4 4 4 4 2 4 4 3 4 4";
-            lv_role = "31 9 15 6 5 2 2 2 2 3 3 31 13 14";
+            lv_role = "15 31 9 2 2 2 6 5 2 3 3 31 13 14";
         }
 
 
         if ((PlayerGroupCount(gv_currentPlayers) == 13)) {
             lv_category = "1 1 1 4 4 4 4 2 4 4 3 4 4";
-            lv_role = "31 9 15 6 5 2 2 2 3 3 31 13 14";
+            lv_role = "15 31 9 2 2 6 5 2 3 3 31 13 14";
         }
 
 
         if ((PlayerGroupCount(gv_currentPlayers) == 12)) {
             lv_category = "1 1 1 4 4 4 2 4 4 3 4 4";
-            lv_role = "31 9 15 6 5 2 2 3 3 31 13 14";
+            lv_role = "15 31 9 2 6 5 2 3 3 31 13 14";
         }
     }
 
