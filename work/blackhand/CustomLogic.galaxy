@@ -55690,7 +55690,7 @@ void gf_OSInitializeOptionsScreen () {
     }
 
     // shw174：烙印（BHYIN01 / variant 30）未做完，暂时不列入变体菜单（第 31 项已摘除，
-    // 其后三项索引整体前移 1：捕风捉影=31、大审判=32、天谴=33）。
+    // 其后三项索引整体前移 1：捕风捉影=31、罪恶天平=32、天谴=33）。
     // 代码与文案（gf_VE78399E58DB0 / BHYIN01 / BHYINDESC）全部保留，做完只要把下面这行加回来。
     // DialogControlAddItem(gv_variantsMenuItem[0], PlayerGroupAll(), StringExternal("Param/Value/BHYIN01"));
     DialogControlAddItem(gv_variantsMenuItem[0], PlayerGroupAll(), StringExternal("Param/Value/GCZBNAME"));

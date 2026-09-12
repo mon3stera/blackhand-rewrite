@@ -31,13 +31,13 @@ Param/Value/GCZBSUBA=<c val="C0C0C0">捕风捉影</c> A
 Param/Value/GCZBSUBB=<c val="C0C0C0">捕风捉影</c> B
 Param/Value/GCZBSUBC=<c val="C0C0C0">捕风捉影</c> C
 Param/Value/GCZBSUBD=<c val="C0C0C0">捕风捉影</c> D
-Param/Value/GCZJNAME=<s val="ModCenterSize24Bold">随机：<c val="AAAAAA">大审判</c></s>
+Param/Value/GCZJNAME=<s val="ModCenterSize24Bold">随机：<c val="AAAAAA">罪恶天平</c></s>
 Param/Value/GCZJDESC=城镇的居民惹恼了一位堕落的审判者。<n/>这个设定固定包含一名堕落审判者。
-Param/Value/GCZJSUBA=<c val="AAAAAA">大审判</c> A
-Param/Value/GCZJSUBB=<c val="AAAAAA">大审判</c> B
-Param/Value/GCZJSUBC=<c val="AAAAAA">大审判</c> C
-Param/Value/GCZJSUBD=<c val="AAAAAA">大审判</c> D
-Param/Value/GCZJBTN=<s val="ModCenterSize24Bold"><c val="8822CC">大审判</c></s>
+Param/Value/GCZJSUBA=<c val="AAAAAA">罪恶天平</c> A
+Param/Value/GCZJSUBB=<c val="AAAAAA">罪恶天平</c> B
+Param/Value/GCZJSUBC=<c val="AAAAAA">罪恶天平</c> C
+Param/Value/GCZJSUBD=<c val="AAAAAA">罪恶天平</c> D
+Param/Value/GCZJBTN=<s val="ModCenterSize24Bold"><c val="8822CC">罪恶天平</c></s>
 Param/Value/GCZBOX1=- 你不会死在退伍军人的警戒之下。
 Param/Value/GCZBOX2=<n/>- 你可以观察你自己。
 Param/Value/GCZTNAME=<s val="ModCenterSize24Bold">随机：<c val="FFFFFF99-FFFF8800">天谴</c></s>

@@ -6,7 +6,7 @@
   "variant_tag": "djsp",
   "menu_name_key": "GCZJNAME",
   "sub_key_prefix": "GCZJSUB",
-  "name": "随机：大审判",
+  "name": "随机：罪恶天平",
   "desc": "城镇的居民惹恼了一位堕落的审判者。该设定固定有一名堕落审判者",
   "decrement": "城镇随机",
   "enable_overrides": {
