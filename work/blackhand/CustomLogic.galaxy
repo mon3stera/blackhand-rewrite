@@ -90177,7 +90177,8 @@ void gf_VTQOptions () {
 
     }
     else if ((lv_c == 3)) {
-        lv_str[4] = "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0";
+        // shw188：天谴 C 的「全体随机」禁止抽到三合会（4/1 选项位 4 = 不包括 三合会角色）
+        lv_str[4] = "00001 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0";
         gv_setupInfo[1] = StringExternal("Param/Value/GCZTSUBC");
         if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
             lv_category = "4 4 4 4 4 4 4 4 4 2 4 4 3 4 4";
