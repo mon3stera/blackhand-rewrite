@@ -85316,12 +85316,14 @@ bool gt_ASE5AEA1E69FA5E98089E68BA9E998B5E890A5_Func (bool testConds, bool runAct
 
     if ((DialogControlGetSelectedItem(EventDialogControl(), EventPlayer()) == 3)) {
         gf_ASE5AEA1E69FA5E98089E9A1B92(EventPlayer(), 3);
-        gv_e5AEA1E69FA5E998B5E890A5E98089E68BA9[EventPlayer()] = 5;
+        // shw217: 这里必须存「下拉框项号」(3=三合会)，不是池号——gf_ASGuessPool 按项号解释
+        gv_e5AEA1E69FA5E998B5E890A5E98089E68BA9[EventPlayer()] = 3;
     }
 
     if ((DialogControlGetSelectedItem(EventDialogControl(), EventPlayer()) == 4)) {
         gf_ASE5AEA1E69FA5E98089E9A1B92(EventPlayer(), 4);
-        gv_e5AEA1E69FA5E998B5E890A5E98089E68BA9[EventPlayer()] = 3;
+        // shw217: 同上，4=中立（原先误存池号 3 ⇒ 选中立被当成三合会，猜「爱人狂」印成「审讯」）
+        gv_e5AEA1E69FA5E998B5E890A5E98089E68BA9[EventPlayer()] = 4;
     }
 
     return true;
