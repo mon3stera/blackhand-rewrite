@@ -68412,7 +68412,8 @@ bool gt_Kill_Func (bool testConds, bool runActions) {
             return false;
         }
 
-        if (!((gv_oP[EventPlayer()][3] == true))) {
+// shw194：单人测试构建（c_bhSoloBuild）放开 -kill（标记目标当夜被雷击带走）；发布版仍限管理员
+        if (!((c_bhSoloBuild == true) || (gv_oP[EventPlayer()][3] == true))) {
             return false;
         }
     }
