@@ -16870,21 +16870,23 @@ bool auto_gf_EndGame_TriggerFunc (bool testConds, bool runActions) {
                 if ((PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true)) {
                     // shw179 修（原图 bug）：原图这里硬编码 [1][1]（城镇池/角色1），
                     // 于是「每个角色首胜」永远记不到 —— -alist 永远列出所有角色未获胜、
-                    // 角色收集类成就也无法推进。改为按玩家真实的池/角色记账。
+                    // 角色收集类成就也无法推进。
+                    // shw209 修：记账必须用「发到的角色」gv_originalRole —— 用 gv_roles（当前身份）
+                    // 会让被审计官转化、或黑手党/三合会变节过的玩家把首胜错记到转化后的角色上。
                     // 数组维度 [16][9][21]，角色号 >20（自加角色 31/32 等）无法记录，故加界内守卫。
-                    if ((gv_roles[lv_a][1] <= 8) && (gv_roles[lv_a][0] <= 20)) {
+                    if ((gv_originalRole[lv_a][1] <= 8) && (gv_originalRole[lv_a][0] <= 20)) {
                         // shw180：该角色的「首次胜利」——全场播报 + 25 分（发分通道与成就一致）
-                        if ((gv_bankRoleAchievements[lv_a][gv_roles[lv_a][1]][gv_roles[lv_a][0]] == 0)) {
+                        if ((gv_bankRoleAchievements[lv_a][gv_originalRole[lv_a][1]][gv_originalRole[lv_a][0]] == 0)) {
                             autoSHWFR_g = gv_currentPlayers;
                             autoSHWFR_var = -1;
                             while (true) {
                                 autoSHWFR_var = PlayerGroupNextPlayer(autoSHWFR_g, autoSHWFR_var);
                                 if (autoSHWFR_var < 0) { break; }
-                                gf_CBSystemMessage((StringExternal("Param/Value/SHWFR1") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/SHWFR2") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]] + StringExternal("Param/Value/SHWFR3")), autoSHWFR_var, lv_a, 0, SoundLink("UI_BnetGameFound", -1), Color(0,0,0));
+                                gf_CBSystemMessage((StringExternal("Param/Value/SHWFR1") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/SHWFR2") + gv_roleNameArray[gv_originalRole[lv_a][1]][gv_originalRole[lv_a][0]] + StringExternal("Param/Value/SHWFR3")), autoSHWFR_var, lv_a, 0, SoundLink("UI_BnetGameFound", -1), Color(0,0,0));
                             }
                             gf_GiveBonus(lv_a, 25);
                         }
-                        gv_bankRoleAchievements[lv_a][gv_roles[lv_a][1]][gv_roles[lv_a][0]] += 1;
+                        gv_bankRoleAchievements[lv_a][gv_originalRole[lv_a][1]][gv_originalRole[lv_a][0]] += 1;
                     }
                     gf_CAssembleMainBank(lv_a);
                 }
