@@ -117,6 +117,9 @@ MUST_HAVE_KEYS = [
     'Param/Value/GCZJNAME',
     'Param/Value/GCZTNAME',
     'Param/Value/TXNAME',
+    # 天选者角色卡各栏（缺任一项 → 界面直接显示原始键名，shw192 事故）
+    'Param/Value/TXBOX1', 'Param/Value/TXBOX2', 'Param/Value/TXBOX4',
+    'Param/Value/TXBOXINV', 'Param/Value/TXBOXVISIT',
     'Param/Value/BHYIN01',
     # 警长的「可查出X」开关与播报、影武者/天选者/堕落审判者的卡片特性行（shw149）
     'Param/Value/SHWBOXS',
