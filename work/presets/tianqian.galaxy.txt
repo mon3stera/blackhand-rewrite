@@ -125,7 +125,7 @@ void gf_VTQOptions () {
 
     }
     else if ((lv_c == 3)) {
-        lv_str[4] = "00001 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0";
+        lv_str[4] = "000011 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0";
         gv_setupInfo[1] = StringExternal("Param/Value/GCZTSUBC");
         if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
             lv_category = "4 4 4 4 4 4 4 4 4 2 4 4 3 4 4";

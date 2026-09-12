@@ -4927,6 +4927,7 @@ void gf_InitializeVariables () {
     gv_roleOptionExists[4][1][2] = true;
     gv_roleOptionExists[4][1][3] = true;
     gv_roleOptionExists[4][1][4] = true;
+    gv_roleOptionExists[4][1][5] = true; // shw189：全体随机排除纵火者/瘟疫散布者
     gv_roleOptionsImportant[4][1][0] = 1;
     gv_roleOptionsImportant[4][1][1] = 1;
     gv_roleOptionsImportant[4][1][2] = 1;
@@ -4937,6 +4938,7 @@ void gf_InitializeVariables () {
     gv_roleOptionsText[4][1][2] = StringExternal("Param/Value/A67856CF");
     gv_roleOptionsText[4][1][3] = StringExternal("Param/Value/F4E25CEE");
     gv_roleOptionsText[4][1][4] = StringExternal("Param/Value/7A74B09C");
+    gv_roleOptionsText[4][1][5] = StringExternal("Param/Value/SHWTXEX"); // shw189
     gv_roleNameArray[4][2] = StringExternal("Param/Value/93DB9312");
     gv_roleDescriptionArray[4][2] = StringExternal("Param/Value/1E077F39");
     gv_roleOptionExists[4][2][0] = true;
@@ -6041,11 +6043,13 @@ void gf_DefaultRoleOptions () {
     gv_roleOptionAllowed[4][1][2] = true;
     gv_roleOptionAllowed[4][1][3] = true;
     gv_roleOptionAllowed[4][1][4] = true;
+    gv_roleOptionAllowed[4][1][5] = true; // shw189
     gv_roleOptions[4][1][0] = false;
     gv_roleOptions[4][1][1] = false;
     gv_roleOptions[4][1][2] = false;
     gv_roleOptions[4][1][3] = false;
     gv_roleOptions[4][1][4] = false;
+    gv_roleOptions[4][1][5] = false; // shw189
     gv_roleOptionAllowed[4][2][0] = true;
     gv_roleOptionAllowed[4][2][1] = true;
     gv_roleOptionAllowed[4][2][2] = true;
@@ -51871,7 +51875,7 @@ void gf_VLoadSaveSlot (int lp_player, int lp_version) {
     const int autoFF6169A5_ai = 1;
     int auto7042B6E5_ae;
     const int auto7042B6E5_ai = 1;
-    const int autoE5A9F0D4_ae = 4;
+    const int autoE5A9F0D4_ae = 5; // shw189：选项位 0..5
     const int autoE5A9F0D4_ai = 1;
     const int autoD0CEA55B_ae = 5;
     const int autoD0CEA55B_ai = 1;
@@ -52070,7 +52074,7 @@ void gf_OSSaveSlot (int lp_player) {
     const int auto75388674_ai = 1;
     int auto42131952_ae;
     const int auto42131952_ai = 1;
-    const int auto71A8ECBE_ae = 4;
+    const int auto71A8ECBE_ae = 5; // shw189：选项位 0..5
     const int auto71A8ECBE_ai = 1;
     const int autoF6958DDE_ae = 5;
     const int autoF6958DDE_ai = 1;
@@ -54528,7 +54532,7 @@ void gf_OSRandomizeMatrix (int lp_a, int lp_x, fixed lp_y) {
         gv_roles[lv_a][0] = 4;
     }
 
-    if ((lv_y >= gv_finalWeights[3][4]) && (lv_y < gv_finalWeights[3][5]) && (((gv_rolesArray[lv_x] == 1) && (gv_roleOptions[4][1][0] == false) && (gv_roleOptions[4][1][3] == false)) || ((gv_rolesArray[lv_x] == 12) && (gv_roleOptions[4][12][1] == false)) || ((gv_rolesArray[lv_x] == 19) && (gv_roleOptions[4][19][0] == false) && (gv_roleOptions[4][19][1] == false)))) {
+    if ((lv_y >= gv_finalWeights[3][4]) && (lv_y < gv_finalWeights[3][5]) && (((gv_rolesArray[lv_x] == 1) && (gv_roleOptions[4][1][0] == false) && (gv_roleOptions[4][1][3] == false) && (gv_roleOptions[4][1][5] == false)) || ((gv_rolesArray[lv_x] == 12) && (gv_roleOptions[4][12][1] == false)) || ((gv_rolesArray[lv_x] == 19) && (gv_roleOptions[4][19][0] == false) && (gv_roleOptions[4][19][1] == false)))) {
         gv_roles[lv_a][1] = 3;
         gv_roles[lv_a][0] = 5;
     }
@@ -54573,7 +54577,7 @@ void gf_OSRandomizeMatrix (int lp_a, int lp_x, fixed lp_y) {
         gv_roles[lv_a][0] = 14;
     }
 
-    if ((lv_y >= gv_finalWeights[3][14]) && (lv_y < gv_finalWeights[3][15]) && (((gv_rolesArray[lv_x] == 1) && (gv_roleOptions[4][1][3] == false) && (gv_roleOptions[4][1][0] == false)) || ((gv_rolesArray[lv_x] == 12) && (gv_roleOptions[4][13][4] == false)) || ((gv_rolesArray[lv_x] == 19) && (gv_roleOptions[4][19][0] == false)))) {
+    if ((lv_y >= gv_finalWeights[3][14]) && (lv_y < gv_finalWeights[3][15]) && (((gv_rolesArray[lv_x] == 1) && (gv_roleOptions[4][1][3] == false) && (gv_roleOptions[4][1][0] == false) && (gv_roleOptions[4][1][5] == false)) || ((gv_rolesArray[lv_x] == 12) && (gv_roleOptions[4][13][4] == false)) || ((gv_rolesArray[lv_x] == 19) && (gv_roleOptions[4][19][0] == false)))) {
         gv_roles[lv_a][1] = 3;
         gv_roles[lv_a][0] = 15;
     }
@@ -86953,7 +86957,7 @@ bool gt_OSRoleSelect_Func (bool testConds, bool runActions) {
     // Automatic Variable Declarations
     const int autoE0C82AD9_ae = 14;
     const int autoE0C82AD9_ai = 1;
-    const int auto1EFEF7A4_ae = 4;
+    const int auto1EFEF7A4_ae = 5; // shw189：选项位 0..5
     const int auto1EFEF7A4_ai = 1;
 
     // Variable Initialization
@@ -90177,8 +90181,9 @@ void gf_VTQOptions () {
 
     }
     else if ((lv_c == 3)) {
-        // shw188：天谴 C 的「全体随机」禁止抽到三合会（4/1 选项位 4 = 不包括 三合会角色）
-        lv_str[4] = "00001 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0";
+        // shw188/189：天谴 C 的「全体随机」限制（4/1 选项位）
+        //   位4 = 不包括 三合会角色；位5 = 不包括 纵火者/瘟疫散布者（中立致命里的这两名）
+        lv_str[4] = "000011 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0";
         gv_setupInfo[1] = StringExternal("Param/Value/GCZTSUBC");
         if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
             lv_category = "4 4 4 4 4 4 4 4 4 2 4 4 3 4 4";

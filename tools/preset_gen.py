@@ -60,7 +60,7 @@ SLOT_TIER = {
 POOL_TIER = {1: 1, 2: 2, 5: 3}
 # 黑手/三合会层内顺序：固定在随机槽之前由 pool tier 前缀保证（fixed 序 0，槽序 1..）
 PLAYER_COUNTS = [15, 14, 13, 12]
-OPTION_LIMIT = 5
+OPTION_LIMIT = 6
 
 
 def load_strings():
@@ -69,6 +69,16 @@ def load_strings():
     for line in gs.splitlines():
         line = line.replace('\r', '')
         if '=' in line:
+            k, _, v = line.partition('=')
+            d[k.strip()] = v
+
+    # 自加文案（work/blackhand/strings-*.txt，格式同 GameStrings：每行 键=值，// 为注释）
+    # 需要在基线 zhCN 之上叠加，否则新选项/新角色的文案（尚未打进基线地图）解析不出来
+    for f in sorted(SRC_GALAXY.parent.glob('strings-*.txt')):
+        for line in f.read_text(encoding='utf-8').splitlines():
+            line = line.replace('\r', '').strip()
+            if not line or line.startswith('//') or '=' not in line:
+                continue
             k, _, v = line.partition('=')
             d[k.strip()] = v
     return d
@@ -121,7 +131,7 @@ def load_random_slots():
         opts = {}
         for b in range(OPTION_LIMIT):
             if re.search(r'gv_roleOptionExists\[4\]\[%d\]\[%d\] = true' % (slot, b), src):
-                m = re.search(r'gv_roleOptionsText\[4\]\[%d\]\[%d\] = StringExternal\("Param/Value/([0-9A-Fa-f]+)"\)' % (slot, b), src)
+                m = re.search(r'gv_roleOptionsText\[4\]\[%d\]\[%d\] = StringExternal\("Param/Value/([0-9A-Za-z_]+)"\)' % (slot, b), src)
                 opts[b] = strip_tags(strings.get('Param/Value/' + m.group(1), '(无文案)')) if m else '(无文案)'
         slots[slot] = {'name': name.replace(' ', ''), 'options': opts}
     return slots
