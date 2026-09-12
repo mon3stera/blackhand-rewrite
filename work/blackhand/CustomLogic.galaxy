@@ -80487,10 +80487,10 @@ bool gt_ASActionButtonANeutral_Func (bool testConds, bool runActions) {
                 if ((lv_target != lv_source) && (gv_action[lv_source][1] != lv_target)) {
                     if ((gv_action[lv_source][0] != 0)) {
                         DialogControlSetVisible(gv_actionDialogItem[gv_action[lv_source][0]][5], PlayerGroupSingle(lv_source), true);
-                        gf_CBSystemMessage((StringExternal("Param/Value/SHWSEL1") + TextWithColor(StringToText(gv_name[lv_target]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_target])) + StringExternal("Param/Value/5EB1EDBB")), lv_source, lv_source, 0, SoundLink("Silent", -1), Color(0,0,0));
+                        gf_CBSystemMessage((StringExternal("Param/Value/SHWTRK2") + TextWithColor(StringToText(gv_name[lv_target]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_target])) + StringExternal("Param/Value/5EB1EDBB")), lv_source, lv_source, 0, SoundLink("Silent", -1), Color(0,0,0));
                     }
                     else {
-                        gf_CBSystemMessage((StringExternal("Param/Value/SHWSEL2") + TextWithColor(StringToText(gv_name[lv_target]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_target])) + StringExternal("Param/Value/5EB1EDBB")), lv_source, lv_source, 0, SoundLink("Silent", -1), Color(0,0,0));
+                        gf_CBSystemMessage((StringExternal("Param/Value/SHWTRK1") + TextWithColor(StringToText(gv_name[lv_target]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_target])) + StringExternal("Param/Value/5EB1EDBB")), lv_source, lv_source, 0, SoundLink("Silent", -1), Color(0,0,0));
                     }
                     gv_action[lv_source][0] = lv_target;
                     DialogControlSetVisible(gv_actionDialogItem[lv_source][5], PlayerGroupSingle(lv_source), true);
@@ -80636,10 +80636,10 @@ bool gt_ASActionButtonBNeutral_Func (bool testConds, bool runActions) {
                 if ((lv_target != lv_source) && (gv_action[lv_source][0] != lv_target)) {
                     if ((gv_action[lv_source][1] != 0)) {
                         DialogControlSetVisible(gv_actionDialogItem[gv_action[lv_source][1]][6], PlayerGroupSingle(lv_source), true);
-                        gf_CBSystemMessage((StringExternal("Param/Value/SHWSEL1") + TextWithColor(StringToText(gv_name[lv_target]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_target])) + StringExternal("Param/Value/5EB1EDBB")), lv_source, lv_source, 0, SoundLink("Silent", -1), Color(0,0,0));
+                        gf_CBSystemMessage((StringExternal("Param/Value/SHWTRK4") + TextWithColor(StringToText(gv_name[lv_target]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_target])) + StringExternal("Param/Value/5EB1EDBB")), lv_source, lv_source, 0, SoundLink("Silent", -1), Color(0,0,0));
                     }
                     else {
-                        gf_CBSystemMessage((StringExternal("Param/Value/SHWSEL2") + TextWithColor(StringToText(gv_name[lv_target]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_target])) + StringExternal("Param/Value/5EB1EDBB")), lv_source, lv_source, 0, SoundLink("Silent", -1), Color(0,0,0));
+                        gf_CBSystemMessage((StringExternal("Param/Value/SHWTRK3") + TextWithColor(StringToText(gv_name[lv_target]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_target])) + StringExternal("Param/Value/5EB1EDBB")), lv_source, lv_source, 0, SoundLink("Silent", -1), Color(0,0,0));
                     }
                     gv_action[lv_source][1] = lv_target;
                     DialogControlSetVisible(gv_actionDialogItem[lv_source][6], PlayerGroupSingle(lv_source), true);
