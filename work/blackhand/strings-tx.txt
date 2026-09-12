@@ -47,3 +47,4 @@ Param/Value/4881041F=- 他像是个警长、副手、恐吓者/封口、审ji官
 Param/Value/TXACH1=<s val="ModCenterSize16">
 Param/Value/TXACH2=<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSize16Bold"><c val="FFB41E">见微知著</c></s><s val="ModCenterSize16"><c val="44FF88">!</c></s>
 Param/Value/TXACH3=<s val="ModCenterSize16Bold"><c val="FFB41E">见微知著</c></s>
+Param/Value/TXBOXVISIT=<n/>- 你的雷击不会被视为访问他人，而是被视为访问自己。
