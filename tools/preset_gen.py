@@ -138,7 +138,7 @@ def load_random_slots():
 
 
 def seat_sort_key(seat):
-    """(层, 层内序)。同层同序的座位由 sort_seats 用输入序稳定排序。"""
+    """(层, 层内序)。同层同序的座位由 sort_seats 先按名字字数、再按输入序稳定排序。"""
     cat, role = seat
     if cat == 4:
         tier, order = SLOT_TIER[role]
@@ -158,18 +158,24 @@ def seat_sort_key(seat):
     raise SystemExit(f'未知座席池: {seat}')
 
 
-def sort_seats(seats):
-    """层序排列；同层同序内按「该座席首次出现」的次序，使相同角色归拢在一起。
+def sort_seats(seats, name_len=None):
+    """层序排列；同层内先按名字字数（少的在前），再按「该座席首次出现」的次序。
 
     用户口径（shw177）：同一层里重复的角色必须相邻——如两个瘟疫散布者放一起、
     系命人排在瘟疫下面（而不是被另一张瘟疫散布者从中间隔开）。
-    固定位仍按用户列出顺序（`first` 取首次出现下标），例如 警长 探员 警长 → 警长 警长 探员。
+    用户口径（2026-09-13）：同是固定角色时，名字字数少的排在上面
+    （如 侦探 排在 观察者 前面）；字数相同的保持用户列出顺序（`first` = 首次出现下标）。
+    name_len 传 seat → 名字字数的函数；不传则只按层序 + 首次出现序。
     """
     first = {}
     for i, s in enumerate(seats):
         first.setdefault(s, i)
 
-    return sorted(seats, key=lambda s: (seat_sort_key(s), first[s]))
+    def key(s):
+        tier, order = seat_sort_key(s)
+        return (tier, order, name_len(s) if name_len else 0, first[s])
+
+    return sorted(seats, key=key)
 
 
 def encode_enable(info, enable_labels, slot):
@@ -219,7 +225,9 @@ def build_lineup(sub_data, name_idx, spec, n):
         seats.reverse()
     if len(seats) != n:
         raise SystemExit(f'该子变体无法配到 {n} 人（当前 {len(seats)}）')
-    return sort_seats(seats)
+
+    label_of = {seat: label for label, seat in name_idx.items()}
+    return sort_seats(seats, lambda s: len(label_of.get(s, '')))
 
 
 def emit_lines(seats):
