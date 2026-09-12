@@ -122,6 +122,96 @@ def parse(src: str, func: str) -> dict:
     return out, base
 
 
+# ── 角色选项（随机槽的「不包括 …」位）解码 ──────────────────────────────
+#
+# 语义见 gf_VLoadSaveSlot 的解码循环（L52077 附近）：该槽的位串只为
+# gv_roleOptionExists 为 true 的位推进一个字符；'1'=开启、'0'=关闭、缺字符=用默认值。
+# 默认值来自 gv_roleOptions 的初始化块（在 L6313 的快照之前），预设函数内的
+# gv_defaultRoleOptions 覆写也一并计入。
+
+SNAPSHOT = 'gv_defaultRoleOptions[lv_a][lv_b][lv_c] = gv_roleOptions[lv_a][lv_b][lv_c];'
+
+
+def function_body(src: str, func: str) -> str:
+    m = re.search(rf'^(?:void|bool) {re.escape(func)} \([^)]*\) \{{', src, re.M)
+    assert m, f'找不到 {func}'
+    j, depth = m.end(), 1
+    while depth:
+        if src[j] == '{':
+            depth += 1
+        elif src[j] == '}':
+            depth -= 1
+        j += 1
+    return src[m.start():j]
+
+
+def option_bits(src: str) -> dict:
+    """(池, 槽) → 升序的 Exists 位列表。"""
+    out = {}
+    for pool, slot, bit in re.findall(r'gv_roleOptionExists\[(\d+)\]\[(\d+)\]\[(\d+)\] = true;', src):
+        out.setdefault((int(pool), int(slot)), []).append(int(bit))
+    return {k: sorted(v) for k, v in out.items()}
+
+
+def option_labels(src: str, strings: dict) -> dict:
+    """(池, 槽, 位) → 文案（无文案的位是内部标志，显示时跳过）。"""
+    out = {}
+    for pool, slot, bit, key in re.findall(
+            r'gv_roleOptionsText\[(\d+)\]\[(\d+)\]\[(\d+)\]\s*=\s*StringExternal\("Param/Value/(\w+)"\)', src):
+        out[(int(pool), int(slot), int(bit))] = clean(strings.get(f'Param/Value/{key}', f'(缺键 {key})'))
+    return out
+
+
+def option_defaults(src: str, func: str = None) -> dict:
+    """(池, 槽, 位) → 默认值；先取初始化块，再叠加预设函数内的 gv_defaultRoleOptions 覆写。"""
+    snap = src.find(SNAPSHOT)
+    assert snap > 0, '找不到 gv_defaultRoleOptions 快照行'
+
+    out = {}
+    for pool, slot, bit, val in re.findall(
+            r'gv_roleOptions\[(\d+)\]\[(\d+)\]\[(\d+)\] = (true|false);', src[:snap]):
+        out[(int(pool), int(slot), int(bit))] = val == 'true'
+
+    if func:
+        for pool, slot, bit, val in re.findall(
+                r'gv_defaultRoleOptions\[(\d+)\]\[(\d+)\]\[(\d+)\] = (true|false);', function_body(src, func)):
+            out[(int(pool), int(slot), int(bit))] = val == 'true'
+
+    return out
+
+
+def decode_options(word: str, bits: list, defaults: dict, pool: int, slot: int) -> dict:
+    """按 gf_VLoadSaveSlot 的规则把该槽的词解成 {位: 是否开启}。"""
+    out = {}
+    for i, bit in enumerate(bits):
+        ch = word[i] if i < len(word) else ''
+        if ch == '1':
+            out[bit] = True
+        elif ch == '0':
+            out[bit] = False
+        else:
+            out[bit] = defaults.get((pool, slot, bit), False)
+    return out
+
+
+def slot_options(src: str, strings: dict, func: str, word: str, pool: int, slot: int, only_on: bool = True):
+    """→ [(文案, 是否开启)]，默认只留开启项（对齐游戏内角色列表的显示）。"""
+    bits = option_bits(src).get((pool, slot), [])
+    labels = option_labels(src, strings)
+    defaults = option_defaults(src, func)
+
+    lines = []
+    for bit, on in sorted(decode_options(word, bits, defaults, pool, slot).items()):
+        label = labels.get((pool, slot, bit))
+        if label is None:
+            continue
+        if only_on and not on:
+            continue
+        lines.append((label, on))
+
+    return lines
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument('func', help='例如 gf_VBFCZOptions')

@@ -69,15 +69,16 @@ def mix(color, bg, ratio):
 
 
 def draw_panel(draw, x, y, width, title, subtitle, seats, tally, slot_str, f_title, f_sub, f_name, f_meta,
-               show_meta=True, missing=()):
+               show_meta=True, missing=(), options=()):
     """画一个面板，返回它的高度。show_meta=False 时隐藏「池/角色号」与随机槽串（对外版）。"""
     pad = 16
     seat_h = 36
     header_h = 74
     tally_h = 30
     miss_h = (26 * len(missing) + 18) if missing else 0
+    opt_h = (34 + 26 * len(options)) if options else 0
     slot_h = 40 if (slot_str and show_meta) else 0
-    height = pad + header_h + tally_h + miss_h + len(seats) * (seat_h + 6) + slot_h + pad
+    height = pad + header_h + tally_h + miss_h + len(seats) * (seat_h + 6) + opt_h + slot_h + pad
 
     draw.rounded_rectangle([x, y, x + width, y + height], radius=14, fill=PANEL, outline=PANEL_EDGE, width=2)
 
@@ -124,6 +125,18 @@ def draw_panel(draw, x, y, width, title, subtitle, seats, tally, slot_str, f_tit
             meta = f'{pool}/{role}'
             mw = draw.textlength(meta, font=f_meta)
             draw.text((x + width - pad - 12 - mw, top + 10), meta, font=f_meta, fill=INK_DIM)
+
+    if options:
+        oy = sy + len(seats) * (seat_h + 6) + 12
+
+        draw.line([x + pad, oy - 8, x + width - pad, oy - 8], fill=PANEL_EDGE, width=2)
+        draw.text((x + pad, oy + 2), '角色选项', font=f_meta, fill=INK_DIM)
+
+        oy += 32
+
+        for line in options:
+            draw.text((x + pad + 6, oy), line, font=f_meta, fill=(200, 208, 220))
+            oy += 26
 
     if slot_str and show_meta:
         draw.text((x + pad, y + height - pad - 22), '随机槽使能串 ' + slot_str, font=f_meta, fill=INK_DIM)
@@ -226,8 +239,10 @@ def wrap_names(names, per_line=15):
     return lines
 
 
-def render_public(func: str, presets: dict, src_line: int, out: Path, strings: dict, roles: dict):
-    """对外版：只画最大人数档（15 人），一行四格，隐藏池/角色号与随机槽串，标出每档「不含什么」。"""
+def render_public(func: str, presets: dict, src_line: int, out: Path, strings: dict, roles: dict,
+                  src_cache: dict = None):
+    """对外版：只画最大人数档（15 人），一行四格，隐藏内部信息，并列出每档开启的角色选项。"""
+    src_cache = src_cache or {'src': export.GALAXY.read_text(encoding='utf-8')}
     f_title = font(52)
     f_head = font(40)
     f_sub = font(24)
@@ -260,22 +275,19 @@ def render_public(func: str, presets: dict, src_line: int, out: Path, strings: d
             tally[k] = tally.get(k, 0) + 1
         order = [k for k in ('城镇', '黑手D', '三合会', '中立', '随机') if k in tally]
 
-        missing = []
-        gone = [f for f in ('城镇', '黑手D', '三合会', '中立') if f in all_factions and f not in factions(seats)]
-        if gone:
-            missing.append('不含阵营：' + '、'.join(gone))
+        words = (presets[idx]['slot_str'] or '').split()
+        options = []
+        for slot in sorted({role for pool, role, _ in seats if pool == 4}):
+            word = words[slot - 1] if slot - 1 < len(words) else ''
+            for label, _ in export.slot_options(src_cache['src'], strings, func, word, 4, slot):
+                options.append(f'{name_of(4, slot)}：{label} -- 开启')
 
-        gone_roles = sorted(nm for key, nm in universe.items() if key not in present)
-        if gone_roles:
-            lines = wrap_names(gone_roles, 13)
-            missing.append('本档没有：' + lines[0])
-            missing += ['　　' + x for x in lines[1:]]
+        panels.append((seats, [(k, tally[k]) for k in order], options))
 
-        panels.append((seats, [(k, tally[k]) for k in order], missing))
-
-    col_w = 560
+    col_w = 640
     width = 4 * col_w + 5 * 30
-    panel_h = 100 + 34 + 26 * max(len(m) for _, _, m in panels) + max(len(s) for s, _, _ in panels) * 42 + 40
+    panel_h = (100 + 34 + 26 * max(len(m) for _, _, m in panels)
+               + max(len(s) for s, _, _ in panels) * 42 + 34 + 26 * max(len(m) for _, _, m in panels) + 40)
     height = 190 + panel_h + 120
 
     img = Image.new('RGB', (width, height), BG)
@@ -293,7 +305,7 @@ def render_public(func: str, presets: dict, src_line: int, out: Path, strings: d
     for idx, (seats, tally, missing) in zip(sorted(data), panels):
         letter = presets[idx]['letter']
         draw_panel(draw, x, 190, col_w, f'捕风捉影 {letter}', '', seats, tally, None,
-                   f_head, f_sub, f_name, f_meta, show_meta=False, missing=missing)
+                   f_head, f_sub, f_name, f_meta, show_meta=False, options=missing)
         x += col_w + 30
 
     ly = height - 88
@@ -334,7 +346,7 @@ def main() -> int:
         out = ROOT / out
 
     if args.public:
-        render_public(args.func, presets, base, out, strings, roles)
+        render_public(args.func, presets, base, out, strings, roles, {'src': src})
     else:
         render(args.func, presets, base, out, strings, roles, args.split)
 
