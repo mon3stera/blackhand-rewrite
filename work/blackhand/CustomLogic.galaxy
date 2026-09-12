@@ -90973,15 +90973,28 @@ void gf_ESShadowKill (int lp_player, int lp_killer) {
             gv_immuneChance[lv_target] = (gv_immuneChance[lv_target] - 1);
         }
 
-        if ((gv_nightSequence == true)) {
-            SoundPlay(SoundLink("Zeratul_AttackImpact", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
-            gf_BHNotify(StringExternal("Param/Value/SHWNIGHT"), lv_target, SoundLink("Silent", -1));
-            gf_FlashScreen(Color(100.00, 0.00, 100.00), lv_target, 3.0, 50.0);
-            Wait(RandomFixed(0.4, 0.8), c_timeGame);
+        // shw227: 与别的杀人角色统一 —— 打到无敌上也要计「攻击被无敌挡下」的成就计数
+        // （gv_specialCasePlayer[*][10]，成就 28：三次攻击被无敌挡下）
+        if ((PlayerGroupCount(gv_players) > 9)) {
+            gv_specialCasePlayer[lp_killer][10] += 1;
         }
 
         gf_BHNotify(StringExternal("Param/Value/SHWSURV"), lv_target, SoundLink("UI_TipSelect", -1));
         gf_CBSystemMessage(StringExternal("Param/Value/B9CD6B48"), lp_killer, lp_killer, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+        if ((gv_nightSequence == true)) {
+            SoundPlay(SoundLink("Zeratul_AttackImpact", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+            gf_BHNotify(StringExternal("Param/Value/SHWNIGHT"), lv_target, SoundLink("Silent", -1));
+            gf_FlashScreen(Color(100.00, 0.00, 100.00), lv_target, 3.0, 50.0);
+            // shw227: 全场红字「你听到…」——别的杀人角色打到无敌上都有这一行，影武者此前只有目标私信
+            auto9B99A3AA_g = PlayerGroupAll();
+            auto9B99A3AA_var = -1;
+            while (true) {
+                auto9B99A3AA_var = PlayerGroupNextPlayer(auto9B99A3AA_g, auto9B99A3AA_var);
+                if (auto9B99A3AA_var < 0) { break; }
+                gf_CBSystemMessage(StringExternal("Param/Value/SHWHEAR"), auto9B99A3AA_var, 16, 0, SoundLink("Silent", -1), Color(0,0,0));
+            }
+            Wait(RandomFixed(0.4, 0.8), c_timeGame);
+        }
     }
     else {
         gv_specialCasePlayer[lv_target][12] += 1;
