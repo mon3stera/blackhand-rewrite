@@ -231,17 +231,49 @@ LOADING_KEY = 'LoadingScreen/TextBody'
 LOADING_MARK = '<n/><n/><c val="44FF88">本版更新：</c>'
 
 
+# 编辑器「加载页面」文本的长度上限与安全余量（本地计数比编辑器口径略小，留 40 余量）
+LOADING_LIMIT = 800
+LOADING_RESERVE = 40
+
+
+def loading_units(text):
+    """复刻编辑器「文本长度」口径：UTF-8 字节数减去 <n/> 标签（标签按 0 计）。"""
+    return len(text.encode('utf-8')) - 4 * text.count('<n/>')
+
+
 def loading_body(path, lines, title='本版更新：'):
-    """把给定的说明行渲染进加载页面正文（幂等：先按标记截断再追加）。"""
+    """把给定的说明行渲染进加载页面正文（幂等：先按标记截断再追加）。
+
+    说明行按「旧 → 新」传入；若整块超过编辑器上限，则**保留最新的若干条**，
+    从最旧的开始丢（完整日志在地图详情页，加载页面只做摘要）。
+    """
     gs = sc2map.read(path, STRINGS).decode('utf-8')
     m = re.search(rf'^{re.escape(LOADING_KEY)}=(.*)$', gs, re.M)
     assert m, f'找不到 {LOADING_KEY}'
     body = m.group(1)
 
     mark = f'<n/><n/><c val="44FF88">{title}</c>'
-    body = body.split(mark)[0].rstrip() + mark + ''.join(f'<n/>· {t}' for t in lines)
+    head = body.split(mark)[0].rstrip()
+    budget = LOADING_LIMIT - LOADING_RESERVE
 
-    return body
+    kept = []
+
+    for note in reversed(lines):
+        cand = [note] + kept
+
+        if loading_units(head + mark + ''.join(f'<n/>· {t}' for t in cand)) > budget:
+            break
+
+        kept = cand
+
+    assert loading_units(head + mark) <= budget, '加载页面固定前言本身已超长，需先精简正文'
+    dropped = len(lines) - len(kept)
+    out = head + mark + ''.join(f'<n/>· {t}' for t in kept)
+
+    print(f'   加载页面 {loading_units(out)}/{LOADING_LIMIT}（保留最新 {len(kept)} 条'
+          + (f'，截去较早 {dropped} 条)' if dropped else ')'))
+
+    return out
 
 
 def pick_notes(path, spec, fresh):
