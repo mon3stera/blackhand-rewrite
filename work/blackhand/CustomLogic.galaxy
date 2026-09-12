@@ -70823,7 +70823,8 @@ bool gt_BHRevealRoles_Func (bool testConds, bool runActions) {
 
     // Conditions
     if (testConds) {
-        if (!((gv_gameStarted == true) && ((gv_oP[EventPlayer()][7] == true) || (PlayerHandle(EventPlayer()) == "5-S2-1-12307342")))) {
+        // shw193：单人测试构建（c_bhSoloBuild）放开 -reveal 便于验证成就；发布版仍限管理员
+if (!((gv_gameStarted == true) && ((c_bhSoloBuild == true) || (gv_oP[EventPlayer()][7] == true) || (PlayerHandle(EventPlayer()) == "5-S2-1-12307342")))) {
             return false;
         }
     }
