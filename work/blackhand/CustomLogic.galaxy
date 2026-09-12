@@ -12481,7 +12481,7 @@ void gf_SequenceKills () {
     }
     lv_a = 1;
     for ( ; ( (auto8638ECFE_ai >= 0 && lv_a <= auto8638ECFE_ae) || (auto8638ECFE_ai < 0 && lv_a >= auto8638ECFE_ae) ) ; lv_a += auto8638ECFE_ai ) {
-        if ((gv_visitation[lv_a] != 0) && (gv_roleblocked[lv_a] == 0) && (gv_e7989FE796ABE58589E78EAF[gv_visitation[lv_a]] == true) && (PlayerGroupHasPlayer(gv_alivePlayers, gv_visitation[lv_a]) == true)) {
+        if ((gv_visitation[lv_a] != 0) && (gv_visitation[lv_a] != lv_a) && (gv_roleblocked[lv_a] == 0) && (gv_e7989FE796ABE58589E78EAF[gv_visitation[lv_a]] == true) && (PlayerGroupHasPlayer(gv_alivePlayers, gv_visitation[lv_a]) == true)) {
             if ((((gv_roleOptions[1][9][1] == true) && (gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 9)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 3)) || ((gv_roles[lv_a][1] == 10) && (gv_roles[lv_a][0] == 3)))) {
             }
             else {
@@ -12489,7 +12489,7 @@ void gf_SequenceKills () {
             }
         }
 
-        if ((gv_visitation[lv_a] != 0) && (gv_e7989FE796ABE782B9E695B0[gv_visitation[lv_a]] > 1) && (gv_roleblocked[lv_a] == 0) && (gv_e7989FE796ABE5BBB6E8BF9F[gv_visitation[lv_a]] == gv_dayNumber) && (gv_roleOptions[3][14][1] == true) && (PlayerGroupHasPlayer(gv_alivePlayers, gv_visitation[lv_a]) == true)) {
+        if ((gv_visitation[lv_a] != 0) && (gv_visitation[lv_a] != lv_a) && (gv_e7989FE796ABE782B9E695B0[gv_visitation[lv_a]] > 1) && (gv_roleblocked[lv_a] == 0) && (gv_e7989FE796ABE5BBB6E8BF9F[gv_visitation[lv_a]] == gv_dayNumber) && (gv_roleOptions[3][14][1] == true) && (PlayerGroupHasPlayer(gv_alivePlayers, gv_visitation[lv_a]) == true)) {
             if ((((gv_roles[lv_a][1] == 10) && (gv_roles[lv_a][0] == 3)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 3)) || ((gv_roleOptions[1][9][1] == true) && (gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 9)))) {
             }
             else {
