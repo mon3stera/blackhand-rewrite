@@ -68,14 +68,16 @@ def mix(color, bg, ratio):
     return tuple(int(c * ratio + b * (1 - ratio)) for c, b in zip(color, bg))
 
 
-def draw_panel(draw, x, y, width, title, subtitle, seats, tally, slot_str, f_title, f_sub, f_name, f_meta):
-    """画一个「人数档」面板，返回它的高度。"""
+def draw_panel(draw, x, y, width, title, subtitle, seats, tally, slot_str, f_title, f_sub, f_name, f_meta,
+               show_meta=True, missing=()):
+    """画一个面板，返回它的高度。show_meta=False 时隐藏「池/角色号」与随机槽串（对外版）。"""
     pad = 16
     seat_h = 36
     header_h = 74
     tally_h = 30
-    slot_h = 40 if slot_str else 0
-    height = pad + header_h + tally_h + len(seats) * (seat_h + 6) + slot_h + pad
+    miss_h = (26 * len(missing) + 18) if missing else 0
+    slot_h = 40 if (slot_str and show_meta) else 0
+    height = pad + header_h + tally_h + miss_h + len(seats) * (seat_h + 6) + slot_h + pad
 
     draw.rounded_rectangle([x, y, x + width, y + height], radius=14, fill=PANEL, outline=PANEL_EDGE, width=2)
 
@@ -92,7 +94,18 @@ def draw_panel(draw, x, y, width, title, subtitle, seats, tally, slot_str, f_tit
         draw.text((cx, ty), label, font=f_meta, fill=color)
         cx += draw.textlength(label, font=f_meta) + 14
 
-    sy = y + pad + header_h + tally_h
+    sy = y + pad + header_h + tally_h + miss_h
+
+    if missing:
+        box_top = y + pad + header_h + tally_h - 4
+        draw.rounded_rectangle([x + pad, box_top, x + width - pad, box_top + 26 * len(missing) + 10],
+                               radius=8, fill=mix((214, 138, 130), PANEL, 0.14))
+
+    my = y + pad + header_h + tally_h + 2
+    for line in missing:
+        draw.text((x + pad + 10, my), line, font=f_meta, fill=(232, 160, 150))
+        my += 26
+
     for n, (pool, role, name) in enumerate(seats, 1):
         faction = faction_of(pool, name)
         color = FACTION.get(faction, FACTION['随机'])
@@ -107,11 +120,12 @@ def draw_panel(draw, x, y, width, title, subtitle, seats, tally, slot_str, f_tit
         star = '★ ' if (name,) in STAR_ROLES else ''
         draw.text((x + pad + 46, top + 5), star + name, font=f_name, fill=INK)
 
-        meta = f'{pool}/{role}'
-        mw = draw.textlength(meta, font=f_meta)
-        draw.text((x + width - pad - 12 - mw, top + 10), meta, font=f_meta, fill=INK_DIM)
+        if show_meta:
+            meta = f'{pool}/{role}'
+            mw = draw.textlength(meta, font=f_meta)
+            draw.text((x + width - pad - 12 - mw, top + 10), meta, font=f_meta, fill=INK_DIM)
 
-    if slot_str:
+    if slot_str and show_meta:
         draw.text((x + pad, y + height - pad - 22), '随机槽使能串 ' + slot_str, font=f_meta, fill=INK_DIM)
 
     return height
@@ -197,11 +211,113 @@ def render(func: str, presets: dict, src_line: int, out: Path, strings: dict, ro
             print(f'✓ {p.relative_to(ROOT)}  {sub.size[0]}×{sub.size[1]}')
 
 
+def wrap_names(names, per_line=15):
+    """角色名列表按长度折行，返回若干行文本。"""
+    lines, cur = [], ''
+    for nm in names:
+        piece = (nm if not cur else '、' + nm)
+        if len(cur) + len(piece) > per_line:
+            lines.append(cur)
+            cur = nm
+        else:
+            cur += piece
+    if cur:
+        lines.append(cur)
+    return lines
+
+
+def render_public(func: str, presets: dict, src_line: int, out: Path, strings: dict, roles: dict):
+    """对外版：只画最大人数档（15 人），一行四格，隐藏池/角色号与随机槽串，标出每档「不含什么」。"""
+    f_title = font(52)
+    f_head = font(40)
+    f_sub = font(24)
+    f_name = font(26)
+    f_meta = font(19)
+    f_legend = font(22)
+
+    def name_of(pool, role):
+        key = roles.get((pool, role))
+        return export.clean(strings.get(f'Param/Value/{key}', key)) if key else f'池{pool}/{role}'
+
+    sizes = {idx: max(p['sizes']) for idx, p in presets.items()}
+    data = {idx: [(pool, role, name_of(pool, role)) for pool, role in presets[idx]['sizes'][sizes[idx]]]
+            for idx in presets}
+
+    universe = {(pool, role): nm for seats in data.values() for pool, role, nm in seats}
+
+    def factions(seats):
+        return {faction_of(pool, nm) for pool, _, nm in seats}
+
+    all_factions = set().union(*(factions(seats) for seats in data.values()))
+
+    panels = []
+    for idx in sorted(data):
+        seats = data[idx]
+        present = {(pool, role) for pool, role, _ in seats}
+        tally = {}
+        for pool, _, nm in seats:
+            k = faction_of(pool, nm)
+            tally[k] = tally.get(k, 0) + 1
+        order = [k for k in ('城镇', '黑手D', '三合会', '中立', '随机') if k in tally]
+
+        missing = []
+        gone = [f for f in ('城镇', '黑手D', '三合会', '中立') if f in all_factions and f not in factions(seats)]
+        if gone:
+            missing.append('不含阵营：' + '、'.join(gone))
+
+        gone_roles = sorted(nm for key, nm in universe.items() if key not in present)
+        if gone_roles:
+            lines = wrap_names(gone_roles, 13)
+            missing.append('本档没有：' + lines[0])
+            missing += ['　　' + x for x in lines[1:]]
+
+        panels.append((seats, [(k, tally[k]) for k in order], missing))
+
+    col_w = 560
+    width = 4 * col_w + 5 * 30
+    panel_h = 100 + 34 + 26 * max(len(m) for _, _, m in panels) + max(len(s) for s, _, _ in panels) * 42 + 40
+    height = 190 + panel_h + 120
+
+    img = Image.new('RGB', (width, height), BG)
+    draw = ImageDraw.Draw(img)
+
+    subtitle = '开启「捕风捉影」后，每局会从 A / B / C / D 四种子变体里随机抽一种'
+    tw = draw.textlength(subtitle, font=f_title)
+    draw.text(((width - tw) / 2, 34), '《黑手：升温》捕风捉影 · 阵容一览', font=f_title, fill=INK)
+    tw = draw.textlength(subtitle, font=f_sub)
+    draw.text(((width - tw) / 2, 104), subtitle, font=f_sub, fill=INK_DIM)
+    tw = draw.textlength(f'15 人局 · 座席顺序 = 房间里的座次', font=f_sub)
+    draw.text(((width - tw) / 2, 138), '15 人局 · 座席顺序 = 房间里的座次', font=f_sub, fill=INK_DIM)
+
+    x = 30
+    for idx, (seats, tally, missing) in zip(sorted(data), panels):
+        letter = presets[idx]['letter']
+        draw_panel(draw, x, 190, col_w, f'捕风捉影 {letter}', '', seats, tally, None,
+                   f_head, f_sub, f_name, f_meta, show_meta=False, missing=missing)
+        x += col_w + 30
+
+    ly = height - 88
+    draw.text((30, ly), '阵营配色：', font=f_legend, fill=INK_DIM)
+    lx = 30 + draw.textlength('阵营配色：', font=f_legend)
+    for key in ('城镇', '黑手D', '三合会', '中立', '随机'):
+        color = FACTION[key]
+        draw.rounded_rectangle([lx, ly + 3, lx + 24, ly + 27], radius=7, fill=color)
+        draw.text((lx + 34, ly), key, font=f_legend, fill=INK)
+        lx += 34 + draw.textlength(key, font=f_legend) + 28
+    draw.text((30, ly + 40), '★ = 关键角色（观察者 / 影武者 / 堕落审判者 / 探员 / 女巫 / 教父 / 陪侍）',
+              font=f_legend, fill=INK_DIM)
+
+    img.save(out)
+    print(f'✓ {out.relative_to(ROOT)}  {img.size[0]}×{img.size[1]}')
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument('func', help='例如 gf_VBFCZOptions')
     ap.add_argument('--out', help='输出 PNG（默认 work/blackhand/preset-<func>.png）')
     ap.add_argument('--split', action='store_true', help='另外每个子变体各出一张')
+    ap.add_argument('--public', action='store_true',
+                    help='对外版：只画 15 人档、隐藏池/角色号与随机槽串、标出每档不含什么')
     args = ap.parse_args()
 
     src = export.GALAXY.read_text(encoding='utf-8')
@@ -217,7 +333,11 @@ def main() -> int:
     if not out.is_absolute():
         out = ROOT / out
 
-    render(args.func, presets, base, out, strings, roles, args.split)
+    if args.public:
+        render_public(args.func, presets, base, out, strings, roles)
+    else:
+        render(args.func, presets, base, out, strings, roles, args.split)
+
     return 0
 
 
