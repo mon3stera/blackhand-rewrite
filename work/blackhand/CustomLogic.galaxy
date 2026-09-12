@@ -55364,7 +55364,16 @@ void gf_OSInitializeOptionsScreen () {
     gv_shwRepickButtonItem = DialogControlLastCreated();
     libNtve_gf_SetDialogItemImage(gv_shwRepickButtonItem, "Assets\\Textures\\ui_checkboxbutton_normalpressed_terran.dds", PlayerGroupAll());
     DialogSetVisible(gv_shwRepickDialog, PlayerGroupAll(), true);
-riantDescriptionItem[1], PlayerGroupAll(), 500, 50);
+    DialogCreate(500, 290, c_anchorLeft, 350, -170, false);
+    gv_variantDescription = DialogLastCreated();
+    DialogSetImageVisible(gv_variantDescription, false);
+    DialogControlCreate(gv_variantDescription, c_triggerControlTypeLabel);
+    gv_variantDescriptionItem[0] = DialogControlLastCreated();
+    DialogControlSetSize(gv_variantDescriptionItem[0], PlayerGroupAll(), 500, 240);
+    DialogControlSetPosition(gv_variantDescriptionItem[0], PlayerGroupAll(), c_anchorBottom, 0, 0);
+    DialogControlCreate(gv_variantDescription, c_triggerControlTypeLabel);
+    gv_variantDescriptionItem[1] = DialogControlLastCreated();
+    DialogControlSetSize(gv_variantDescriptionItem[1], PlayerGroupAll(), 500, 50);
     DialogControlSetPosition(gv_variantDescriptionItem[1], PlayerGroupAll(), c_anchorTopLeft, 0, 0);
     if (false) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/3879B1D5"), PlayerGroupAll());

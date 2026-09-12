@@ -23,6 +23,13 @@ HEAD = re.compile(
     r"region|soundlink|color|timer|order)\s+\w+\s*\("
 )
 AUTO = re.compile(r"\b(auto[0-9A-F]{8}_[a-z]+)\b")
+# 半截语句：语句以一个「标识符[索引]」开头、后面紧跟逗号 —— 合法语句里它只会作为实参出现，
+# 出现在行首就说明这一行的前半截被切掉了（shw231 事故：脚本化删除删多了，留下
+# `riantDescriptionItem[1], PlayerGroupAll(), 500, 50);`，全文大括号仍配平、函数外裸语句检查也过，
+# 但游戏读脚本时报「解析函数行出错」⇒ 整个脚本读取失败）。
+TRUNCATED = re.compile(r"^\s*[A-Za-z_]\w*(?:\[[^\]]*\])+\s*,")
+# 行内 () 不配平：只有在「行尾也不是续行」时才算断行（长条件/长调用会跨行，行尾留 && || , + 等）
+CONTINUATION = re.compile(r"(&&|\|\||,|\+|\-|\*|/|\(|\{|=|:|\?)\s*(//.*)?$")
 # 全局 text/string 声明（用于检查转换函数误用）
 DECL = re.compile(r"^(text|string)((?:\[[^\]]*\])*)\s+(\w+)\s*;", re.M)
 # 转换函数：第一个参数期望的类型
@@ -104,6 +111,34 @@ def lint(path: Path) -> int:
         problems += len(stray)
     else:
         print("✓ 无函数外裸语句")
+
+    # 半截语句（shw231 事故）：语句以「标识符[索引]」开头且紧跟逗号
+    truncated: list[tuple[int, str]] = []
+    for idx, line in enumerate(lines):
+        code = line.split("//")[0]
+        if TRUNCATED.match(code):
+            truncated.append((idx + 1, code.strip()[:100]))
+    if truncated:
+        for ln, txt in truncated[:20]:
+            print(f"✗ {ln:6} 半截语句（行首是『名字[索引],』）: {txt}")
+        problems += len(truncated)
+    else:
+        print("✓ 无半截语句")
+
+    # 行内 () 不配平且行尾不是续行（判据同 AGENTS.md 铁律 2b）
+    broken: list[tuple[int, str]] = []
+    for idx, line in enumerate(lines):
+        code = line.split("//")[0].rstrip()
+        if not code.strip() or CONTINUATION.search(code):
+            continue
+        if code.count("(") != code.count(")"):
+            broken.append((idx + 1, code.strip()[:100]))
+    if broken:
+        for ln, txt in broken[:20]:
+            print(f"✗ {ln:6} 行内 () 不配平且非续行: {txt}")
+        problems += len(broken)
+    else:
+        print("✓ 行内 () 均配平")
 
     checked = 0
     for start, end in func_ranges(lines):
