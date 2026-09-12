@@ -242,6 +242,51 @@ def loading_units(text):
     return len(text.encode('utf-8')) - 4 * text.count('<n/>')
 
 
+# 国服和谐词修正（与 boot2_build 第 7b 步共用同一份词表；只替换值，键名不动）。
+# 必须在这里做：DocumentHeader 的条目带长度前缀，只有本模块知道怎么把前缀算对。
+HARMONIZE_PAIRS = [
+    ('黑手党', '黑手D'),
+    ('间谍', 'jian谍'),
+    ('政府', 'zf'),
+    ('杀', '爱'),
+    ('邪', '协'),
+]
+
+
+def harmonize_text(text: str):
+    """替换文本里的国服敏感词，返回 (新文本, 命中统计)。"""
+    stats, out = {}, []
+
+    for line in text.splitlines(keepends=True):
+        if '=' not in line:
+            out.append(line)
+            continue
+
+        key, _, val = line.partition('=')
+        new = val
+
+        for old, rep in HARMONIZE_PAIRS:
+            if old in new:
+                stats[old] = stats.get(old, 0) + new.count(old)
+                new = new.replace(old, rep)
+
+        out.append(key + '=' + new)
+
+    return ''.join(out), stats
+
+
+def harmonize(text: str) -> str:
+    """无 '=' 的纯文本也用同一词表替换（加载页正文/补丁说明正文走这条）。"""
+    stats = {}
+
+    for old, rep in HARMONIZE_PAIRS:
+        if old in text:
+            stats[old] = text.count(old)
+            text = text.replace(old, rep)
+
+    return text
+
+
 def loading_body(path, lines, title='本版更新：', keep='newest'):
     """把给定的说明行渲染进加载页面正文（幂等：先按标记截断再追加）。
 
@@ -254,7 +299,8 @@ def loading_body(path, lines, title='本版更新：', keep='newest'):
     body = m.group(1)
 
     mark = f'<n/><n/><c val="44FF88">{title}</c>'
-    head = body.split(mark)[0].rstrip()
+    head = harmonize(body.split(mark)[0].rstrip())
+    lines = [harmonize(t) for t in lines]
     budget = LOADING_LIMIT - LOADING_RESERVE
 
     kept = []
@@ -373,6 +419,9 @@ def apply_file(path, notes_path, defer_strings=False):
         print(f'  加载页面: {loading_spec} → {len(shown)} 条')
 
     if items:
+        # 写进 DocumentHeader 的正文必须在这里就和谐好 —— 前缀由 set_notes 按最终文本计算，
+        # 事后在外面按字节改写会破坏长度前缀（shw199 事故）
+        items = [(k, harmonize(v)) for k, v in items]
         added, updated, pending = set_notes(path, items, write_strings=not defer_strings)
         for version, nums, notes in out:
             print(f'  版本 {version} 说明 {nums}（正文新增 {len(added)}、改写 {len(updated)}）；加载页面已同步')

@@ -60,41 +60,6 @@ FONTS = [
 ]
 
 
-# 国服和谐词修正（AGENTS.md「国服和谐用词」节）：只替换 `=` 右侧的值，键名不动。
-# 覆盖整张 zhCN（自加文案 + 原图遗留）与 DocumentHeader 内的加载页面文本，打包时自动生效。
-# 词表按「先长词后单字」排序，避免 黑手党→黑手D 被单字规则抢走。
-HARMONIZE_PAIRS = [
-    ('黑手党', '黑手D'),
-    ('间谍', 'jian谍'),
-    ('政府', 'zf'),
-    ('杀', '爱'),      # 原图标准替身：爱死/爱手/谋爱/击爱
-    ('邪', '协'),      # 邪恶→协恶、邪教→协教
-]
-
-
-def harmonize_text(text: str):
-    """替换文本里的国服敏感词，返回 (新文本, 命中统计)。"""
-    stats, out = {}, []
-
-    for line in text.splitlines(keepends=True):
-        if '=' not in line:
-            out.append(line)
-            continue
-
-        key, _, val = line.partition('=')
-        new = val
-
-        for old, rep in HARMONIZE_PAIRS:
-            if old in new:
-                stats[old] = stats.get(old, 0) + new.count(old)
-                new = new.replace(old, rep)
-
-        out.append(key + '=' + new)
-
-    return ''.join(out), stats
-
-
-
 def put(archive, name, data):
     """写成员；与包内已有内容完全一致就跳过（MPQ 每次写都是追加、旧数据不回收）。"""
     try:
@@ -321,7 +286,7 @@ def main() -> int:
         print(f"7) 合并文案 {len(entries)} 条 ← {[p.name for p in paths]}（含补丁说明/加载页面）")
 
         cur = sc2map.read(out, ZH_STRINGS)
-        merged, hz = harmonize_text(sc2map.merge_strings(cur, entries).decode('utf-8'))
+        merged, hz = bh_meta.harmonize_text(sc2map.merge_strings(cur, entries).decode('utf-8'))
         put(out, ZH_STRINGS, merged.encode('utf-8'))
         print(f"7b) 国服和谐修正 {'、'.join(f'{k}×{v}' for k, v in hz.items()) or '无命中'}")
 
