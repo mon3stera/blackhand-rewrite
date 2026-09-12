@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import argparse
 import re
+import struct
 import subprocess
 import sys
 from pathlib import Path
@@ -324,20 +325,24 @@ def main() -> int:
         put(out, ZH_STRINGS, merged.encode('utf-8'))
         print(f"7b) 国服和谐修正 {'、'.join(f'{k}×{v}' for k, v in hz.items()) or '无命中'}")
 
-        # DocumentHeader 不是纯 UTF-8（含二进制字节）⇒ 只做字节级替换，不做编码假设
+        # 7c) 结构自检：DocumentHeader 的条目是「键 + NChz + 声明字符数 + 正文」的长度前缀结构，
+        #     **绝不能在外面按字节改写**（改了长度却不动前缀 → 读方解析错位 → 加载页/详情页空白）。
+        #     加载页正文一律只经 bh_meta 写入，这里只核对前缀与包内 zhCN 正文字节数是否一致。
         hdr = sc2map.read(out, 'DocumentHeader')
-        hdr2, hz2 = hdr, {}
+        m = re.search(rb'LoadingScreen/TextBodyNChz(..)', hdr)
 
-        for old_w, new_w in HARMONIZE_PAIRS:
-            b_old, b_new = old_w.encode('utf-8'), new_w.encode('utf-8')
+        if m:
+            declared = struct.unpack('<H', m.group(1))[0]
+            m2 = re.search(r'^LoadingScreen/TextBody=(.*)$',
+                           sc2map.read(out, ZH_STRINGS).decode('utf-8'), re.M)
+            actual = len(m2.group(1).encode('utf-8')) if m2 else -1
 
-            if b_old in hdr2:
-                hz2[old_w] = hdr2.count(b_old)
-                hdr2 = hdr2.replace(b_old, b_new)
+            # 前缀 = 该条目的字节长度（含 1–2 字节的额外标记：BOM/终止符），故容差 ±2
+            if abs(declared - actual) > 2:
+                print(f"✗ DocumentHeader 加载页前缀 {declared} 与 zhCN 正文字节数 {actual} 相差过大，结构已错位")
+                return 1
 
-        if hdr2 != hdr:
-            put(out, 'DocumentHeader', hdr2)
-            print(f"7c) 加载页面文本和谐修正 {'、'.join(f'{k}×{v}' for k, v in hz2.items())}")
+            print(f"7c) 结构自检 DocumentHeader 加载页前缀 {declared} ≈ 正文字节数 {actual} ✓")
 
     # 8) BankList 预加载表
     fix = subprocess.run([sys.executable, str(ROOT / 'tools' / 'banklist_fix.py'), str(out)],
