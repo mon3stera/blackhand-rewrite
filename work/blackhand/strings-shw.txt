@@ -21,7 +21,6 @@ Param/Value/SHWDEATH2=死者倒在门前，神情平静，仿佛至死都未察�
 Param/Value/SHWDEATH3=现场没有任何搏斗痕迹，只有一抹消散如烟的黑影。
 Param/Value/SHWDM=死者死于无声无息的行刺手法。
 Param/Value/SHWHEAR=<s val="ModLeftSize16"><c val="FF0000">你听到一声极轻的破风声掠过耳畔...</c></s>
-Param/Value/F2239D82=- 你推断出他可能是侦探、监视者、密探/先锋、纵火者、影武者。
 // -reveal 测试指令（仅主机）
 Param/Value/BHREVEAL=<c val="FF9900">—— 全体玩家身份（测试） ——</c>
 Param/Value/BHREVEAL2=<c val="CCCCCC">号 :</c> 
@@ -29,7 +28,6 @@ Param/Value/BHREVEAL2=<c val="CCCCCC">号 :</c>
 Param/Value/SHWSW=可查出影武者
 Param/Value/SHWREV=<s val="ModLeftSize16Bold"><c val="FFFF88">你的目标是一个 </c><c val="C0C0C0">影武者</c><c val="FFFF88">!</c></s>
 Param/Value/SHWBOX6=<n/>- 你的目标一可以被交换，但是目标二无法以任何形式被交换。
-Param/Value/4881041F=- 他像是个警长、副手、恐吓者/封口、审ji官、处刑者，或堕落审判者。
 Param/Value/SHWMODE1=<s val="ModLeftSize16"><c val="0080C0">当前模式：若目标一访问了目标二，则击爱目标一（无视无敌和救治）。</c></s>
 Param/Value/SHWMODE2=<s val="ModLeftSize16"><c val="0080C0">当前模式：击爱目标一今晚访问的目标；目标一没有行动，则击爱目标一。</c></s>
 Param/Value/SHWBOX7=<n/>- 输入 -on / -off 切换攻击模式：若目标一访问了目标二，则击爱目标一，这次击爱无视无敌和救治；或是攻击目标一的目标。
