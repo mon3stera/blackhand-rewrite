@@ -90520,23 +90520,23 @@ void gf_VDSPOptions () {
         lv_str[4] = "10000 01000 1 11010 10000 0000 0000 0000 00111 00000 00001 01100 110000 00000 1 00111 00000 00001 100";
         gv_setupInfo[1] = StringExternal("Param/Value/GCZJSUBB");
         if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
-            lv_category = "1 1 4 4 4 4 4 4 2 4 4 4 3 3 3";
-            lv_role = "6 19 2 2 2 2 6 5 2 3 3 3 13 3 6";
+            lv_category = "1 1 4 4 4 4 4 4 4 2 4 4 3 3 3";
+            lv_role = "6 19 2 2 2 2 6 5 5 2 3 3 13 3 6";
         }
 
         if ((PlayerGroupCount(gv_currentPlayers) == 14)) {
-            lv_category = "1 1 4 4 4 4 4 2 4 4 4 3 3 3";
-            lv_role = "6 19 2 2 2 6 5 2 3 3 3 13 3 6";
+            lv_category = "1 1 4 4 4 4 4 4 2 4 4 3 3 3";
+            lv_role = "6 19 2 2 2 6 5 5 2 3 3 13 3 6";
         }
 
         if ((PlayerGroupCount(gv_currentPlayers) == 13)) {
-            lv_category = "1 1 4 4 4 4 2 4 4 4 3 3 3";
-            lv_role = "6 19 2 2 6 5 2 3 3 3 13 3 6";
+            lv_category = "1 1 4 4 4 4 4 2 4 4 3 3 3";
+            lv_role = "6 19 2 2 6 5 5 2 3 3 13 3 6";
         }
 
         if ((PlayerGroupCount(gv_currentPlayers) == 12)) {
-            lv_category = "1 1 4 4 4 2 4 4 4 3 3 3";
-            lv_role = "6 19 2 6 5 2 3 3 3 13 3 6";
+            lv_category = "1 1 4 4 4 4 2 4 4 3 3 3";
+            lv_role = "6 19 2 6 5 5 2 3 3 13 3 6";
         }
 
     }
@@ -90569,22 +90569,22 @@ void gf_VDSPOptions () {
         gv_setupInfo[1] = StringExternal("Param/Value/GCZJSUBD");
         if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
             lv_category = "1 4 4 4 4 4 4 4 4 2 4 5 4 3 4";
-            lv_role = "12 2 2 2 2 6 5 5 4 2 3 2 15 13 14";
+            lv_role = "12 2 2 2 2 6 5 5 4 1 3 1 15 13 14";
         }
 
         if ((PlayerGroupCount(gv_currentPlayers) == 14)) {
             lv_category = "1 4 4 4 4 4 4 4 2 4 5 4 3 4";
-            lv_role = "12 2 2 2 6 5 5 4 2 3 2 15 13 14";
+            lv_role = "12 2 2 2 6 5 5 4 1 3 1 15 13 14";
         }
 
         if ((PlayerGroupCount(gv_currentPlayers) == 13)) {
             lv_category = "1 4 4 4 4 4 4 2 4 5 4 3 4";
-            lv_role = "12 2 2 6 5 5 4 2 3 2 15 13 14";
+            lv_role = "12 2 2 6 5 5 4 1 3 1 15 13 14";
         }
 
         if ((PlayerGroupCount(gv_currentPlayers) == 12)) {
             lv_category = "1 4 4 4 4 4 2 4 5 4 3 4";
-            lv_role = "12 2 6 5 5 4 2 3 2 15 13 14";
+            lv_role = "12 2 6 5 5 4 1 3 1 15 13 14";
         }
     }
     if ((PlayerGroupCount(gv_currentPlayers) != 1) && (PlayerGroupCount(gv_currentPlayers) <= 11)) {
