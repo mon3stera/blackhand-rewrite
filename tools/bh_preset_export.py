@@ -101,7 +101,8 @@ def parse(src: str, func: str) -> dict:
     out = {}
     for (idx, start), end in zip(bounds, ends):
         blk = body[start:end]
-        sub = re.search(r'GCZBSUB(\w)"', blk)
+        sub = re.search(r'GCZ\w*SUB(\w)"', blk)
+        btn = re.search(r'GCZ\w*BTN"', body)
         seq = re.search(r'lv_str\[4\] = "([^"]*)"', blk)
         per_size = {}
         for mm in re.finditer(
@@ -118,6 +119,7 @@ def parse(src: str, func: str) -> dict:
             'letter': sub.group(1) if sub else '?',
             'slot_str': seq.group(1) if seq else default_slot,
             'sizes': per_size,
+            'title_key': btn.group(0)[:-1] if btn else None,
         }
     return out, base
 

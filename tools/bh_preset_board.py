@@ -293,9 +293,13 @@ def render_public(func: str, presets: dict, src_line: int, out: Path, strings: d
     img = Image.new('RGB', (width, height), BG)
     draw = ImageDraw.Draw(img)
 
-    subtitle = '开启「捕风捉影」后，每局会从 A / B / C / D 四种子变体里随机抽一种'
-    tw = draw.textlength(subtitle, font=f_title)
-    draw.text(((width - tw) / 2, 34), '《黑手：升温》捕风捉影 · 阵容一览', font=f_title, fill=INK)
+    key = next((p['title_key'] for p in presets.values() if p.get('title_key')), None)
+    preset_name = export.clean(strings.get(f'Param/Value/{key}', key)) if key else func
+
+    title = f'《黑手：升温》{preset_name} · 阵容一览'
+    subtitle = f'开启「{preset_name}」后，每局会从 A / B / C / D 四种子变体里随机抽一种'
+    tw = draw.textlength(title, font=f_title)
+    draw.text(((width - tw) / 2, 34), title, font=f_title, fill=INK)
     tw = draw.textlength(subtitle, font=f_sub)
     draw.text(((width - tw) / 2, 104), subtitle, font=f_sub, fill=INK_DIM)
     tw = draw.textlength(f'15 人局 · 座席顺序 = 房间里的座次', font=f_sub)
@@ -304,7 +308,7 @@ def render_public(func: str, presets: dict, src_line: int, out: Path, strings: d
     x = 30
     for idx, (seats, tally, missing) in zip(sorted(data), panels):
         letter = presets[idx]['letter']
-        draw_panel(draw, x, 190, col_w, f'捕风捉影 {letter}', '', seats, tally, None,
+        draw_panel(draw, x, 190, col_w, f'{preset_name} {letter}', '', seats, tally, None,
                    f_head, f_sub, f_name, f_meta, show_meta=False, options=missing)
         x += col_w + 30
 
