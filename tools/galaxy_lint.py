@@ -29,6 +29,15 @@ DECL = re.compile(r"^(text|string)((?:\[[^\]]*\])*)\s+(\w+)\s*;", re.M)
 CONV = {"StringToText": "string", "TextToString": "text"}
 CONV_CALL = re.compile(r"\b(StringToText|TextToString)\s*\(\s*(\w+)")
 
+TYPES = (r"void|bool|int|string|text|fixed|unit|point|region|playergroup|unitgroup|"
+         r"bank|trigger|timer|order|soundlink|color|doodad|actor")
+# 函数外的合法行：全局变量声明 / 前向声明 / include
+# 声明形如 `<类型>[可带维度] <名字>[可带维度] [= 初值];`（调用语句长得不像：标识符后紧跟 `(`）
+GLOBAL_DECL = re.compile(
+    r"^(?:const\s+)?[A-Za-z_]\w*(?:\[[^\]]*\])*\s+[A-Za-z_]\w*(?:\[[^\]]*\])*\s*(?:=.*)?;\s*$")
+FORWARD = re.compile(rf"^(?:{TYPES})\s+\w+\s*\([^;]*\)\s*;\s*$")
+INCLUDE = re.compile(r'^\s*include\s+"')
+
 
 def func_ranges(lines: list[str]):
     i = 0
@@ -77,6 +86,24 @@ def lint(path: Path) -> int:
         problems += conv_bad
     else:
         print("✓ text/string 转换无类型误用")
+
+    # 函数外裸语句（语句飘到 `}` 之后 → 游戏内「脚本读取失败: 语法错误」，shw218 事故）
+    depth = 0
+    stray: list[tuple[int, str]] = []
+    for idx, line in enumerate(lines):
+        code = line.split("//")[0].rstrip()
+        stripped = code.strip()
+        if depth == 0 and stripped and stripped not in ("{", "}") \
+                and not HEAD.match(line) and not INCLUDE.match(code) \
+                and not GLOBAL_DECL.match(stripped) and not FORWARD.match(stripped):
+            stray.append((idx + 1, stripped[:100]))
+        depth += code.count("{") - code.count("}")
+    if stray:
+        for ln, txt in stray[:20]:
+            print(f"✗ {ln:6} 函数外的语句: {txt}")
+        problems += len(stray)
+    else:
+        print("✓ 无函数外裸语句")
 
     checked = 0
     for start, end in func_ranges(lines):

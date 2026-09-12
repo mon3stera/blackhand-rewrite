@@ -55696,6 +55696,7 @@ void gf_OSInitializeOptionsScreen () {
     DialogControlAddItem(gv_variantsMenuItem[0], PlayerGroupAll(), StringExternal("Param/Value/GCZBNAME"));
     DialogControlAddItem(gv_variantsMenuItem[0], PlayerGroupAll(), StringExternal("Param/Value/GCZJNAME"));
     DialogControlAddItem(gv_variantsMenuItem[0], PlayerGroupAll(), StringExternal("Param/Value/GCZTNAME"));
+    DialogControlAddItem(gv_variantsMenuItem[0], PlayerGroupAll(), StringExternal("Param/Value/SHWCT3NAME")); // shw218/shw224 第34项（唐人街[高阶]）
 }
 
 void gf_OSActivateOptions () {
@@ -55806,7 +55807,6 @@ void gf_OSActivateOptions () {
     }
 
 }
-    DialogControlAddItem(gv_variantsMenuItem[0], PlayerGroupAll(), StringExternal("Param/Value/SHWCT3NAME")); // shw218 第34项
 
 void gf_OSDeactivateOptions () {
     // Variable Declarations
