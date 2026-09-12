@@ -231,9 +231,10 @@ LOADING_KEY = 'LoadingScreen/TextBody'
 LOADING_MARK = '<n/><n/><c val="44FF88">本版更新：</c>'
 
 
-# 编辑器「加载页面」文本的长度上限与安全余量（本地计数比编辑器口径略小，留 40 余量）
+# 编辑器「加载页面」文本的长度上限与安全余量
+# （实测编辑器计数比本地模型高约 15，留 20 余量足够，且仍远低于 800 上限）
 LOADING_LIMIT = 800
-LOADING_RESERVE = 40
+LOADING_RESERVE = 20
 
 
 def loading_units(text):
@@ -241,7 +242,7 @@ def loading_units(text):
     return len(text.encode('utf-8')) - 4 * text.count('<n/>')
 
 
-def loading_body(path, lines, title='本版更新：'):
+def loading_body(path, lines, title='本版更新：', keep='newest'):
     """把给定的说明行渲染进加载页面正文（幂等：先按标记截断再追加）。
 
     说明行按「旧 → 新」传入；若整块超过编辑器上限，则**保留最新的若干条**，
@@ -257,9 +258,10 @@ def loading_body(path, lines, title='本版更新：'):
     budget = LOADING_LIMIT - LOADING_RESERVE
 
     kept = []
+    order = lines if keep == 'front' else list(reversed(lines))
 
-    for note in reversed(lines):
-        cand = [note] + kept
+    for note in order:
+        cand = kept + [note] if keep == 'front' else [note] + kept
 
         if loading_units(head + mark + ''.join(f'<n/>· {t}' for t in cand)) > budget:
             break
@@ -270,8 +272,9 @@ def loading_body(path, lines, title='本版更新：'):
     dropped = len(lines) - len(kept)
     out = head + mark + ''.join(f'<n/>· {t}' for t in kept)
 
-    print(f'   加载页面 {loading_units(out)}/{LOADING_LIMIT}（保留最新 {len(kept)} 条'
-          + (f'，截去较早 {dropped} 条)' if dropped else ')'))
+    tail = '最新' if keep == 'newest' else '靠前'
+    print(f'   加载页面 {loading_units(out)}/{LOADING_LIMIT}（{tail} {len(kept)} 条'
+          + (f'，截去 {dropped} 条)' if dropped else ')'))
 
     return out
 
@@ -328,10 +331,16 @@ def apply_file(path, notes_path, defer_strings=False):
     因为 MPQ 每次写成员都是追加、旧数据不回收，同一成员一次构建只能写一次
     （zhCN 写 3 次 ≈ 白胖 620 KB）。
     """
-    blocks, cur, loading_spec = [], None, 'none'
+    blocks, cur, loading_spec, loading_keep = [], None, 'none', 'newest'
     for raw in Path(notes_path).read_text(encoding='utf-8').splitlines():
         line = raw.rstrip()
         if not line.strip() or line.lstrip().startswith('#'):
+            continue
+        if line.startswith('@loading-keep'):
+            parts = line.split()
+            assert len(parts) == 2 and parts[1] in ('front', 'newest'), \
+                '@loading-keep 只能是 front（优先展示靠前的亮点）或 newest（默认）'
+            loading_keep = parts[1]
             continue
         if line.startswith('@loading'):
             loading_spec = line.split(None, 1)[1] if len(line.split(None, 1)) > 1 else 'none'
@@ -360,7 +369,7 @@ def apply_file(path, notes_path, defer_strings=False):
 
     if items and loading_spec.strip().lower() != 'none':
         shown = pick_notes(path, loading_spec, dict(items))
-        items.append((LOADING_KEY, loading_body(path, shown)))
+        items.append((LOADING_KEY, loading_body(path, shown, keep=loading_keep)))
         print(f'  加载页面: {loading_spec} → {len(shown)} 条')
 
     if items:
