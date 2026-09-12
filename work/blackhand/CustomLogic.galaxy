@@ -55357,7 +55357,7 @@ void gf_OSInitializeOptionsScreen () {
     // 实际游戏里不渲染（该函数的界面初始化容易被引擎判错截断）；改为独立对话挂在屏幕顶部中央、
     // 指令条「本地玩家 将会设置游戏...」(UIDisplayMessage c_messageAreaDirective) 正下方。
     // 逻辑仍走原图的重选触发器——它的事件是 DialogControl 通配注册，只认控件 id。
-    DialogCreate(200, 50, c_anchorTop, 0, 200, false);
+    DialogCreate(200, 50, c_anchorTop, 0, 280, false);
     gv_shwRepickDialog = DialogLastCreated();
     DialogSetImageVisible(gv_shwRepickDialog, false);
     libNtve_gf_CreateDialogItemButton(gv_shwRepickDialog, 200, 50, c_anchorTopLeft, 0, 0, StringExternal("Param/Value/A68101A4"), StringExternal("Param/Value/04BEBD88"), "Assets\\Textures\\ui_checkboxbutton_normalpressed_terran.dds");
