@@ -59,6 +59,41 @@ FONTS = [
 ]
 
 
+# 国服和谐词修正（AGENTS.md「国服和谐用词」节）：只替换 `=` 右侧的值，键名不动。
+# 覆盖整张 zhCN（自加文案 + 原图遗留）与 DocumentHeader 内的加载页面文本，打包时自动生效。
+# 词表按「先长词后单字」排序，避免 黑手党→黑手D 被单字规则抢走。
+HARMONIZE_PAIRS = [
+    ('黑手党', '黑手D'),
+    ('间谍', 'jian谍'),
+    ('政府', 'zf'),
+    ('杀', '爱'),      # 原图标准替身：爱死/爱手/谋爱/击爱
+    ('邪', '协'),      # 邪恶→协恶、邪教→协教
+]
+
+
+def harmonize_text(text: str):
+    """替换文本里的国服敏感词，返回 (新文本, 命中统计)。"""
+    stats, out = {}, []
+
+    for line in text.splitlines(keepends=True):
+        if '=' not in line:
+            out.append(line)
+            continue
+
+        key, _, val = line.partition('=')
+        new = val
+
+        for old, rep in HARMONIZE_PAIRS:
+            if old in new:
+                stats[old] = stats.get(old, 0) + new.count(old)
+                new = new.replace(old, rep)
+
+        out.append(key + '=' + new)
+
+    return ''.join(out), stats
+
+
+
 def put(archive, name, data):
     """写成员；与包内已有内容完全一致就跳过（MPQ 每次写都是追加、旧数据不回收）。"""
     try:
@@ -285,8 +320,24 @@ def main() -> int:
         print(f"7) 合并文案 {len(entries)} 条 ← {[p.name for p in paths]}（含补丁说明/加载页面）")
 
         cur = sc2map.read(out, ZH_STRINGS)
-        merged = sc2map.merge_strings(cur, entries)
-        put(out, ZH_STRINGS, merged)
+        merged, hz = harmonize_text(sc2map.merge_strings(cur, entries).decode('utf-8'))
+        put(out, ZH_STRINGS, merged.encode('utf-8'))
+        print(f"7b) 国服和谐修正 {'、'.join(f'{k}×{v}' for k, v in hz.items()) or '无命中'}")
+
+        # DocumentHeader 不是纯 UTF-8（含二进制字节）⇒ 只做字节级替换，不做编码假设
+        hdr = sc2map.read(out, 'DocumentHeader')
+        hdr2, hz2 = hdr, {}
+
+        for old_w, new_w in HARMONIZE_PAIRS:
+            b_old, b_new = old_w.encode('utf-8'), new_w.encode('utf-8')
+
+            if b_old in hdr2:
+                hz2[old_w] = hdr2.count(b_old)
+                hdr2 = hdr2.replace(b_old, b_new)
+
+        if hdr2 != hdr:
+            put(out, 'DocumentHeader', hdr2)
+            print(f"7c) 加载页面文本和谐修正 {'、'.join(f'{k}×{v}' for k, v in hz2.items())}")
 
     # 8) BankList 预加载表
     fix = subprocess.run([sys.executable, str(ROOT / 'tools' / 'banklist_fix.py'), str(out)],
