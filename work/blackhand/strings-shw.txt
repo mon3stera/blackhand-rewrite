@@ -3,7 +3,7 @@ Param/Value/SHWDESC=隐于市井的刺客，无声无息，专为灭口而行。
 Param/Value/SHWOPT2=追击无视无敌和救治
 Param/Value/SHWCRIME=非法闯入，谋爱
 Param/Value/SHWBOX4=你是受雇于复仇的影子，行动无声，见血封喉。
-Param/Value/SHWBOX1=- 每晚选择两名玩家：目标一（你要跟踪的人）、目标二（你猜他今晚会去谁家）。<n/>- 追击模式（默认）只需要选目标一，截击模式需要两个都选。
+Param/Value/SHWBOX1=- 每晚选择两名玩家：目标一（你要跟踪的人）、目标二（你猜他今晚会去谁家，可以选你自己）。<n/>- 追击模式（默认）只需要选目标一，截击模式需要两个都选。
 Param/Value/SHWBOX3=- 你将得知目标一的真实去向。
 Param/Value/SHWBOX5=<n/>- 你的追击无视无敌和救治。
 Param/Value/SHWTGT1=目标一
@@ -28,7 +28,7 @@ Param/Value/BHREVEAL2=<c val="CCCCCC">号 :</c>
 Param/Value/SHWSW=可查出影武者
 Param/Value/SHWREV=<s val="ModLeftSize16Bold"><c val="FFFF88">你的目标是一个 </c><c val="C0C0C0">影武者</c><c val="FFFF88">!</c></s>
 Param/Value/SHWBOX6=<n/>- 目标一可能被交换；目标二不受任何交换或操纵影响。
-Param/Value/SHWMODE1=<s val="ModLeftSize16"><c val="0080C0">当前模式 -on（截击）：若目标一访问了目标二，则击爱目标一（无视无敌和救治）；目标一没有行动或访问了你，同样击爱目标一。</c></s>
+Param/Value/SHWMODE1=<s val="ModLeftSize16"><c val="0080C0">当前模式 -on（截击）：若目标一访问了目标二，则击爱目标一（无视无敌和救治）；目标一没有行动，同样击爱目标一。</c></s>
 Param/Value/SHWMODE2=<s val="ModLeftSize16"><c val="0080C0">当前模式 -off（追击）：击爱目标一今晚访问的人；目标一没有行动或访问了你，则击爱目标一。</c></s>
 Param/Value/SHWBOX7=<n/>- 输入 -on / -off 切换攻击模式，默认为 -off（追击）。
 Param/Value/SHWBOX8=<n/>- -off（追击）：攻击目标一今晚访问的人；若目标一没有行动或访问了你，则改为攻击目标一。
@@ -36,7 +36,7 @@ Param/Value/SHWDEATH4=死者被一把刀刺穿了。
 Param/Value/SHWDEATH5=他被劈成两半了。
 Param/Value/SHWDEATH6=死者身中数刀。
 Param/Value/94249CFE=<c val="004080">点击来改变你的开关状态<n/>限定：瘟疫散布者 冤魂 小丑 影武者</c>
-Param/Value/SHWBOX9=<n/>- -on（截击）：若目标一访问了目标二，则攻击目标一，这次攻击无视无敌和救治；若目标一没有行动或访问了你，同样攻击目标一。
+Param/Value/SHWBOX9=<n/>- -on（截击）：若目标一访问了目标二，则攻击目标一，这次攻击无视无敌和救治；若目标一没有行动，同样攻击目标一。
 Param/Value/SHWCARD=<c val="C0C0C0">
 Param/Value/SHWBOXS=<n/>- 你能查出影武者。
 Param/Value/SHWBOXS0=- 你能查出影武者。
