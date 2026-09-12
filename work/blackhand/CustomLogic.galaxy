@@ -86417,6 +86417,7 @@ bool gt_OSVariantsMenuConfirm_Func (bool testConds, bool runActions) {
         gv_rolesArray[lv_a] = 0;
         gv_categoriesArray[lv_a] = 0;
     }
+    gv_rolesAssigned = 0; // shw225: 数组清空后计数必须跟着清（两者必须一致，否则 gf_OSCheckOptionsA 报「角色列表故障」）
     if ((DialogControlGetSelectedItem(gv_variantsMenuItem[0], gv_host) == 1)) {
         gv_variantSelection = 8;
     }
@@ -86557,6 +86558,15 @@ bool gt_OSVariantsMenuConfirm_Func (bool testConds, bool runActions) {
 
     if ((DialogControlGetSelectedItem(gv_variantsMenuItem[0], gv_host) == 30)) {
         gv_variantSelection = 15;
+        gv_subvariantSelection = 3;
+    }
+
+    // shw225: 自设菜单第 34 项 = 唐人街[高阶]。本函数开头会把 gv_subvariantSelection 清零，
+    // 而这张表原本只到第 30 项 ⇒ 第 34 项确认后 sub 恒为 0 ⇒ 分发分支 (variant 13 && sub 3)
+    // 不成立 ⇒ 预设函数不执行 ⇒ 角色列表被清空而 gv_rolesAssigned 残留旧值
+    // ⇒ gf_OSCheckOptionsA 报「错误 000 - 角色列表故障」，无法开始游戏。
+    if ((DialogControlGetSelectedItem(gv_variantsMenuItem[0], gv_host) == 34)) {
+        gv_variantSelection = 13;
         gv_subvariantSelection = 3;
     }
 
