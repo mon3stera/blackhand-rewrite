@@ -39683,6 +39683,8 @@ void gf_ASE5AEA1E69FA5E98089E9A1B9 (int lp_player) {
     // Implementation
     gf_DEBUG("I am showing the searcher's menu");
     DialogSetVisible(gv_e998B5E5AEB9E6A186, PlayerGroupSingle(lp_player), true);
+    // shw216: 阵营四项是「填进去」而不是「换上去」——同一夜被显示两次（夜间分发 + 选定雷击目标后）就变成 8 项，先清空
+    DialogControlRemoveAllItems(gv_e998B5E5AEB9E68EA7E4BBB6, PlayerGroupSingle(lp_player));
     DialogControlAddItem(gv_e998B5E5AEB9E68EA7E4BBB6, PlayerGroupSingle(lp_player), StringExternal("Param/Value/73526AB7"));
     DialogControlAddItem(gv_e998B5E5AEB9E68EA7E4BBB6, PlayerGroupSingle(lp_player), StringExternal("Param/Value/0BAEC2D7"));
     DialogControlAddItem(gv_e998B5E5AEB9E68EA7E4BBB6, PlayerGroupSingle(lp_player), StringExternal("Param/Value/1F0CA4E0"));
@@ -39724,17 +39726,15 @@ int gf_ASGuessRole (int lp_picked, int lp_index) {
     // Implementation
     lv_role = lp_index;
     if ((lp_picked == 1)) {
-        // 城镇：22/28/29 是空号 ⇒ 列表按有名字的角色紧凑排列
+        // 城镇：22 是空号、30(史官) 未完成不下发 ⇒ 列表按有名字的角色紧凑排列
         if (((lp_index >= 22) && (lp_index <= 26))) {
             lv_role = (lp_index + 1);
         }
         else if ((lp_index == 27)) {
-            lv_role = 30;
-        }
-        else if ((lp_index == 28)) {
+            // shw216: 史官(1/30) 从列表移除，观察者(1/31) 前移到 27
             lv_role = 31;
         }
-        else if ((lp_index >= 29)) {
+        else if ((lp_index >= 28)) {
             lv_role = 0;
         }
     }
