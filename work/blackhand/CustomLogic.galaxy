@@ -90812,6 +90812,10 @@ void gf_RAShadowActions (int lp_player) {
 
     // Implementation
     DialogControlSetEnabled(gv_switchButtonItem, PlayerGroupSingle(lp_player), true);
+    if ((gv_dayNumber == 1)) {
+        // shw206: 影武者默认模式二（追击）；此后用 -on / -off 或行动面板「开关」按钮切换
+        gv_e5BC80E585B3[lp_player] = false;
+    }
     if ((gv_e5BC80E585B3[lp_player] == true)) {
         gf_CBSystemMessage(StringExternal("Param/Value/SHWMODE1"), lp_player, 0, 0, SoundLink("EditorDefaultSound", -1), Color(0,0,0));
     }
