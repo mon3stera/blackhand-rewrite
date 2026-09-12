@@ -503,7 +503,7 @@ int[16] gv_txGuessTarget; // 天选者(3/32) 猜测所绑定的雷击目标（0=
 int[16] gv_txGuessBad; // 天选者(3/32) 本局猜错/作废次数（shw150：成就「见微知著」要求为 0）
 int[16] gv_shwMode2Used; // 影武者(3/31) 本局曾以模式二出手（shw152：成就「影缝」要求为 0）
 int[16] gv_e8B7B3E8BDA6EFBC9F;
-int[2] gv_rollE782B9E586B7E58DB4;
+int[16] gv_rollE782B9E586B7E58DB4;   // shw229: 原图声明 int[2]，但 gt_rollE79A84E586B7E58DB4_Func 按 1..15 循环递减、其余处用 [EventPlayer()]，每次越界都中断该触发器（每秒一次）⇒ 扩到 16 席
 bool[16][16] gv_e69FA5E8BF87E4BA86;
 bool[16] gv_e585ACE5918APartyEFBC9F;
 bool[16] gv_e588B7E58886;
@@ -57115,7 +57115,10 @@ bool gt_Init2_Func (bool testConds, bool runActions) {
     UISetGameMenuItemVisible(PlayerGroupAll(), c_gameMenuDialogGenericButton9, false);
     UISetGameMenuItemVisible(PlayerGroupAll(), c_gameMenuDialogGenericButton10, false);
     UISetGameMenuItemVisible(PlayerGroupAll(), c_gameMenuDialogMessageLogButton, false);
-    UISetGameMenuItemVisible(PlayerGroupAll(), c_gameMenuDialogItemAny, false);
+    // shw229: 原图这里调 UISetGameMenuItemVisible(..., c_gameMenuDialogItemAny, false)，
+    // 而该常量值就是 -1（通配符）。新版引擎按「参数超出界限(值:-1,最小:0,最大:27)」报错
+    // 并【中断整个 gt_Init2_Func】⇒ 后面的界面（含重选主机按钮）全都建不出来，故删除。
+    // 下一条起已逐个指定菜单项，这里本来就是空操作。
     UISetGameMenuItemVisible(PlayerGroupAll(), c_gameMenuDialogOptionsButton, true);
     UISetGameMenuItemVisible(PlayerGroupAll(), c_gameMenuDialogQuitButton, true);
     UISetGameMenuItemVisible(PlayerGroupAll(), c_gameMenuDialogReturnToGameplayButton, true);
@@ -57126,7 +57129,9 @@ bool gt_Init2_Func (bool testConds, bool runActions) {
     UISetBattleNetButtonOffset(PlayerGroupAll(), 0, 0);
     HelpPanelEnableTechGlossaryButton(PlayerGroupAll(), false);
     HelpPanelEnableTechTreeButton(PlayerGroupAll(), false);
-    AchievementPanelSetVisible(PlayerGroupAll(), false);
+    // shw229: 原图在此调 AchievementPanelSetVisible(..., false)。自定义图里引擎回「无权调用」
+    // 并【中断整个 gt_Init2_Func】⇒ 后面的界面（含重选主机按钮）全都建不出来，故删除；
+    // 成就面板不属于自定义图 UI，默认即不可见。
     SoundtrackStop(PlayerGroupAll(), c_soundtrackCategoryMusic, false);
     SoundtrackPlay(PlayerGroupAll(), c_soundtrackCategoryMusic, "NoMusic", c_soundtrackCueAny, c_soundtrackIndexAny, true);
     SoundChannelSetVolume(PlayerGroupAll(), c_soundCategoryMusic, 100.0, 0.0);
