@@ -5,11 +5,11 @@
 
 ## 工程定位
 
-- **改版定位**：玩家自维护二改（原作者长期停更）；**原作者 = 國仕、無雙**（简体「国士无双」，也就是原图 `gv_管理员名称` 里 `1315FC99` / `EF03967D` 两个键的作者名；更早的上游原作 = Dark.Revenant 的《Mafia》，见地图 `DocInfo/Author`）。**未取得原作者授权**，因此一切对外说明（补丁说明 / 群公告 / 地图详情）都必须写明 ① 原作者 ② 「若原作者不同意本版本，立即下架」。**永不收费**（不收赞助/打赏/任何费用，不设付费门槛）；原管理员的权限与署名一律完整保留，二改 handle 的管理员名留空、不得冒名。
+- **改版定位**：玩家自维护二改（原作者长期停更）；**原作者 = 國仕、無雙**（简体「国士无双」，也就是原图 `gv_管理员名称` 里 `1315FC99` / `EF03967D` 两个键的作者名；更早的上游原作 = Dark.Revenant 的《Mafia》，见地图 `DocInfo/Author`）。**已于 2026-09-13 获得原作者口头授权**（原作者在群内看到改版后直接把授权给了用户；用户决定**不对外宣称**，只删掉旧的「未取得授权 / 立即下架」声明句、不新增授权声明，见 `bh_meta.AUTH_NOTICE`）。对外说明仍须写明 ① 原作者 ② 致谢与企鹅群/百科链接。**永不收费**（不收赞助/打赏/任何费用，不设付费门槛）；原管理员的权限与署名一律完整保留，二改 handle 的管理员名留空、不得冒名。
 - 以**原图**（黑手：升温）为基底，通过**外挂 Galaxy 脚本**替换/扩展核心逻辑；
 - 保留原图地形、美术、UI、角色卡、行动面板与演出；
 - 主脚本：`work/blackhand/CustomLogic.galaxy`（唯一维护目标）；
-- 基线地图：`work/boot2-user.SC2Map`（含用户的变体修改、**游戏属性/隐藏属性**，以及地图信息里的原作者署名/下架承诺/游戏内更新日志，**不要覆盖**）。历次备份：`.baseline-0909`（原图作者版）、`.baseline-0912-pre-attrs`（改图第一版，隐藏属性之前）。用户每次在编辑器里改完（游戏属性只能这么改），都把另存的整图收为新基线 —— 打包器"内容相同就不写"，接管不会虚胖；用户编辑版留档 `work/remote-shw<NNN>-user-edit.SC2Map`）；
+- 基线地图：`work/boot2-user.SC2Map`（含用户的变体修改、**游戏属性/隐藏属性**，以及地图信息里的原作者署名/致谢/游戏内更新日志（旧的「下架承诺」句已在打包第 ⑥ 步按 `bh_meta.AUTH_NOTICE` 删除），**不要覆盖**）。历次备份：`.baseline-0909`（原图作者版）、`.baseline-0912-pre-attrs`（改图第一版，隐藏属性之前）。用户每次在编辑器里改完（游戏属性只能这么改），都把另存的整图收为新基线 —— 打包器"内容相同就不写"，接管不会虚胖；用户编辑版留档 `work/remote-shw<NNN>-user-edit.SC2Map`）；
 - 仓库：https://github.com/mon3stera/blackhand-rewrite（私有）。
 
 ## 知识索引（AGENTS.md 放通用知识，专题在记忆里）
@@ -165,7 +165,7 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 python3 tools/boot2_build.py --out work/boot2-<name>.SC2Map      # 八件套 + 全部回读断言
 ```
 
-八件套（BankList 那件的根因见记忆）：①复制基线 `work/boot2-user.SC2Map`（**不要覆盖**）②直写工作区脚本（打包前自动跑 `galaxy_lint.py`，不过不打包）③并入样式表 `work/blackhand/NewFontStyles.SC2Style`（斜体 `ModItalic` 的定义处；漏 = 名字里的 `<i>` 改写后无样式可查、不斜体，shw88–153 一直是这个状态）④并入包内字体 `work/blackhand/fonts/` → `Fonts\*.ttf`（斜体字面，OFL 许可文本一起分发；漏 = 斜体回落到游戏字体）⑤自加贴图 `data/*.dds` → 包内**根目录**（自加胜利图；漏 = 结算画面按图名找不到贴图，shw100–168 一直缺 shw98 那两张）⑥**补丁说明 + 加载页面**：`tools/bh_meta.py` 读 `work/blackhand/patch-notes.txt` 写进 `DocumentInfo`（版本表）+ `DocumentHeader`（条目表），并把 zhCN 行交给下一步合并 ⑦合并 `strings-*.txt` → 包内 **zhCN** 表（漏 = 界面满是 `Param/Value/XXX` 原始键；`sc2map.GAME_STRINGS` 指的是 enUS，别拿它校验）⑧`banklist_fix.py` 写回 `BankList.xml`（漏 = 每局清档）。
+八件套（BankList 那件的根因见记忆）：①复制基线 `work/boot2-user.SC2Map`（**不要覆盖**）②直写工作区脚本（打包前自动跑 `galaxy_lint.py`，不过不打包）③并入样式表 `work/blackhand/NewFontStyles.SC2Style`（斜体 `ModItalic` 的定义处；漏 = 名字里的 `<i>` 改写后无样式可查、不斜体，shw88–153 一直是这个状态）④并入包内字体 `work/blackhand/fonts/` → `Fonts\*.ttf`（斜体字面，OFL 许可文本一起分发；漏 = 斜体回落到游戏字体）⑤自加贴图 `data/*.dds` → 包内**根目录**（自加胜利图；漏 = 结算画面按图名找不到贴图，shw100–168 一直缺 shw98 那两张）⑥**补丁说明 + 加载页面**：`tools/bh_meta.py` 读 `work/blackhand/patch-notes.txt` 写进 `DocumentInfo`（版本表）+ `DocumentHeader`（条目表），并把 zhCN 行交给下一步合并；同一次写入里还会按 `AUTH_NOTICE` 删掉地图详情页（`DocInfo/DescLong`）里原作者授权后已作废的「未取得授权…会立刻下架」句（与补丁说明共用一个 `set_notes`，避免多写一次 `DocumentHeader` 白胖 8.8 KB） ⑦合并 `strings-*.txt` → 包内 **zhCN** 表（漏 = 界面满是 `Param/Value/XXX` 原始键；`sc2map.GAME_STRINGS` 指的是 enUS，别拿它校验）⑧`banklist_fix.py` 写回 `BankList.xml`（漏 = 每局清档）。
 
 - **MPQ 里每个成员一次构建只能写一次**（2026-09-12 实测）：`sc2map.write` 走 `mpqtool replace`，**旧数据不回收、只追加**——原样重写 zhCN 一次就白胖 306 KB、DocumentHeader 8.8 KB。故 ⑥ 生成 zhCN 行后**必须交给 ⑦ 的合并一起写**，不能自己再写一遍（曾因此一次构建多出 631 KB）。
 

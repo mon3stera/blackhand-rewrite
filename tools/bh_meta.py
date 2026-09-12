@@ -227,6 +227,10 @@ def ensure_version(path, version, date, numbers):
     return version, date, new_val
 
 
+# 原作者已于 2026-09-13 口头授权（群内表态）；此前「未取得授权…会立刻下架」的声明句必须删掉。
+# 该句只出现在 DocInfo/DescLong（地图详情页），加载页/地图信息其余部分不含它。
+AUTH_NOTICE = '本地图并未取得原作者的授权，因此若原作者不同意此版本的存在，会立刻下架此地图。'
+
 LOADING_KEY = 'LoadingScreen/TextBody'
 LOADING_MARK = '<n/><n/><c val="44FF88">本版更新：</c>'
 
@@ -430,6 +434,18 @@ def apply_file(path, notes_path, defer_strings=False):
         shown = pick_notes(path, loading_spec, dict(items))
         items.append((LOADING_KEY, loading_body(path, shown, keep=loading_keep)))
         print(f'  加载页面: {loading_spec} → {len(shown)} 条')
+
+    # 作者已授权 ⇒ 删掉地图详情里的旧声明句（连同它前面的换行标签一起删）。
+    # 关键：作为 items 的一员并进下面同一次 set_notes —— MPQ 每次写成员都是追加，
+    # 单独再写一次 DocumentHeader 会白胖约 8.8 KB。
+    gs_now = sc2map.read(path, STRINGS).decode('utf-8')
+    desc = [l for l in gs_now.split('\n') if l.startswith('DocInfo/DescLong=')]
+    if len(desc) == 1 and AUTH_NOTICE in desc[0]:
+        new_desc = desc[0].split('=', 1)[1].replace('<n/>' + AUTH_NOTICE, '').replace(AUTH_NOTICE, '')
+        items.append(('DocInfo/DescLong', new_desc))
+        print('  地图详情: 已删除「未取得原作者授权…会立刻下架」旧声明句')
+    elif len(desc) == 1:
+        print('  地图详情: 旧声明句已不在，跳过')
 
     if items:
         # 写进 DocumentHeader 的正文必须在这里就和谐好 —— 前缀由 set_notes 按最终文本计算，
