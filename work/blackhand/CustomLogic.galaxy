@@ -91103,22 +91103,29 @@ void gf_RAShadowActions (int lp_player) {
         }
         else {
             if ((lv_a == lp_player)) {
-                libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][6], StringExternal("Param/Value/1494BD17"), PlayerGroupSingle(lp_player));
-                libNtve_gf_SetDialogItemColor(gv_actionDialogItem[lv_a][6], Color(50.20, 50.20, 50.20), PlayerGroupSingle(lp_player));
+                // shw226: 自己的座位也必须给「目标二」按钮。shw222 放开了「目标二可选自己」的判断，
+                // 但这里(自己这一支)只显示 [5]，而且末尾把 [6] 无条件隐藏，导致那个按钮根本按不到：
+                // 选自己要么没反应、要么被当成「取消目标一」。现在与别的座位完全一致 ——
+                // [5]=目标一（点自己 = 取消目标一，沿用原图）、[6]=目标二（可选自己）。
+                libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][6], StringExternal("Param/Value/SHWTGT2"), PlayerGroupSingle(lp_player));
+                libNtve_gf_SetDialogItemColor(gv_actionDialogItem[lv_a][6], Color(100.00, 0.00, 100.00), PlayerGroupSingle(lp_player));
                 DialogControlSetSize(gv_actionDialogItem[lv_a][6], PlayerGroupSingle(lp_player), 60, 30);
                 libNtve_gf_SetDialogItemImage(gv_actionDialogItem[lv_a][6], "ActionSmallNormal.dds", PlayerGroupSingle(lp_player));
                 libNtve_gf_SetDialogItemImage2(gv_actionDialogItem[lv_a][6], "ActionSmallHighlight.dds", PlayerGroupSingle(lp_player));
+                DialogControlSetVisible(gv_actionDialogItem[lv_a][6], PlayerGroupSingle(lp_player), true);
                 libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/353A8DFC"), PlayerGroupSingle(lp_player));
                 libNtve_gf_SetDialogItemColor(gv_actionDialogItem[lv_a][5], Color(78.43, 50.20, 100.00), PlayerGroupSingle(lp_player));
                 DialogControlSetSize(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), 60, 30);
                 libNtve_gf_SetDialogItemImage(gv_actionDialogItem[lv_a][5], "ActionSmallNormal.dds", PlayerGroupSingle(lp_player));
                 libNtve_gf_SetDialogItemImage2(gv_actionDialogItem[lv_a][5], "ActionSmallHighlight.dds", PlayerGroupSingle(lp_player));
                 DialogControlSetVisible(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), true);
+                DialogControlSetPosition(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), c_anchorTopRight, 120, (15 + (30 * (gv_playerSpot[lv_a] - 1))));
+                DialogControlSetPosition(gv_actionDialogItem[lv_a][6], PlayerGroupSingle(lp_player), c_anchorTopRight, 60, (15 + (30 * (gv_playerSpot[lv_a] - 1))));
             }
             else {
                 DialogControlSetVisible(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), false);
+                DialogControlSetVisible(gv_actionDialogItem[lv_a][6], PlayerGroupSingle(lp_player), false);
             }
-            DialogControlSetVisible(gv_actionDialogItem[lv_a][6], PlayerGroupSingle(lp_player), false);
         }
     }
 }
