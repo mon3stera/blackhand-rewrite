@@ -523,7 +523,8 @@ int gv_fontButtonItem;
 bool[16] gv_e586A4E9AD82log;
 int gv_repickButton;
 int gv_repickButtonItem;
-int gv_shwRepickButtonItem;   // shw230: 自设/预设面板上的常驻「重选主机」按钮控件
+int gv_shwRepickDialog;       // shw231: 「重选主机」按钮的独立对话（顶部中央，指令条下方）
+int gv_shwRepickButtonItem;   // shw231: 该按钮的控件 id
 int gv_chatOpButton;
 int gv_chatOpButtonItem;
 int gv_switchButton;
@@ -55352,23 +55353,18 @@ void gf_OSInitializeOptionsScreen () {
     libNtve_gf_CreateDialogItemButton(gv_variantsMenu, 200, 50, c_anchorBottom, 0, 25, StringToText(""), StringExternal("Param/Value/BE1F70B9"), "Assets\\Textures\\ui_checkboxbutton_normaloverpressedover_terran.dds");
     gv_variantsMenuItem[1] = DialogControlLastCreated();
     libNtve_gf_SetDialogItemImage(gv_variantsMenuItem[1], "Assets\\Textures\\ui_checkboxbutton_normalpressed_terran.dds", PlayerGroupAll());
-    // shw230: 预设面板上的常驻「重选主机」按钮。
-    // 原图那颗浮动按钮由 gt_Init2_Func 创建，一旦该函数的界面初始化被引擎判错截断就再也建不出来；
-    // 这里在预设面板上挂一份：复用原图的重选触发器（它的事件是 DialogControl 通配注册，
-    // 只需在它的 EventDialogControl() 判断里认出本控件），文字/提示沿用原图键 04BEBD88 / A68101A4。
-    libNtve_gf_CreateDialogItemButton(gv_variantsMenu, 200, 50, c_anchorBottom, 0, 85, StringExternal("Param/Value/A68101A4"), StringExternal("Param/Value/04BEBD88"), "Assets\\Textures\\ui_checkboxbutton_normalpressed_terran.dds");
+    // shw231: 「重选主机」按钮。原来那颗由 gt_Init2_Func 创建、位置在 c_anchorCenter/0/-320，
+    // 实际游戏里不渲染（该函数的界面初始化容易被引擎判错截断）；改为独立对话挂在屏幕顶部中央、
+    // 指令条「本地玩家 将会设置游戏...」(UIDisplayMessage c_messageAreaDirective) 正下方。
+    // 逻辑仍走原图的重选触发器——它的事件是 DialogControl 通配注册，只认控件 id。
+    DialogCreate(200, 50, c_anchorTop, 0, 150, false);
+    gv_shwRepickDialog = DialogLastCreated();
+    DialogSetImageVisible(gv_shwRepickDialog, false);
+    libNtve_gf_CreateDialogItemButton(gv_shwRepickDialog, 200, 50, c_anchorTopLeft, 0, 0, StringExternal("Param/Value/A68101A4"), StringExternal("Param/Value/04BEBD88"), "Assets\\Textures\\ui_checkboxbutton_normalpressed_terran.dds");
     gv_shwRepickButtonItem = DialogControlLastCreated();
     libNtve_gf_SetDialogItemImage(gv_shwRepickButtonItem, "Assets\\Textures\\ui_checkboxbutton_normalpressed_terran.dds", PlayerGroupAll());
-    DialogCreate(500, 290, c_anchorLeft, 350, -170, false);
-    gv_variantDescription = DialogLastCreated();
-    DialogSetImageVisible(gv_variantDescription, false);
-    DialogControlCreate(gv_variantDescription, c_triggerControlTypeLabel);
-    gv_variantDescriptionItem[0] = DialogControlLastCreated();
-    DialogControlSetSize(gv_variantDescriptionItem[0], PlayerGroupAll(), 500, 240);
-    DialogControlSetPosition(gv_variantDescriptionItem[0], PlayerGroupAll(), c_anchorBottom, 0, 0);
-    DialogControlCreate(gv_variantDescription, c_triggerControlTypeLabel);
-    gv_variantDescriptionItem[1] = DialogControlLastCreated();
-    DialogControlSetSize(gv_variantDescriptionItem[1], PlayerGroupAll(), 500, 50);
+    DialogSetVisible(gv_shwRepickDialog, PlayerGroupAll(), true);
+riantDescriptionItem[1], PlayerGroupAll(), 500, 50);
     DialogControlSetPosition(gv_variantDescriptionItem[1], PlayerGroupAll(), c_anchorTopLeft, 0, 0);
     if (false) {
         libNtve_gf_SetDialogItemText(gv_variantDescriptionItem[0], StringExternal("Param/Value/3879B1D5"), PlayerGroupAll());
@@ -63375,6 +63371,7 @@ bool gt_CreatePlayers_Func (bool testConds, bool runActions) {
     }
 
     DialogSetVisible(gv_repickButton, PlayerGroupAll(), false);
+    DialogSetVisible(gv_shwRepickDialog, PlayerGroupAll(), false);   // shw231: 开局时随原图那颗一起收起
     lv_a = 1;
     for ( ; ( (auto4672C647_ai >= 0 && lv_a <= auto4672C647_ae) || (auto4672C647_ai < 0 && lv_a >= auto4672C647_ae) ) ; lv_a += auto4672C647_ai ) {
         lv_s[lv_a] = gv_colorName[lv_a];
