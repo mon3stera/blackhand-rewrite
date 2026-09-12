@@ -404,6 +404,19 @@ def apply_file(path, notes_path, defer_strings=False):
         cur['notes'].append((num.strip(), text.strip()))
 
     items, out, pending = [], [], {}
+
+    # 作者的历史说明里也会残留敏感词（DocInfo/PatchNote* 等）。一并放进 items 经写入口重写：
+    # ①前缀由 set_notes 按最终文本计算，结构安全（shw199 教训）；
+    # ②历史条目放在前面，后面的新说明若有同名键会覆盖它。
+    hist_items = []
+
+    for _, key, loc, val in parse_entries(sc2map.read(path, HEADER), 'DocInfo/'):
+        if loc == 'zhCN' and harmonize(val) != val:
+            hist_items.append((key, val))
+
+    if hist_items:
+        print(f'  历史说明清洗 {len(hist_items)} 条（DocInfo/*，经写入口重写）')
+
     for b in blocks:
         assert b['notes'], f"{b['version']} 没有任何说明"
         b_set = budget(path)
@@ -421,6 +434,8 @@ def apply_file(path, notes_path, defer_strings=False):
     if items:
         # 写进 DocumentHeader 的正文必须在这里就和谐好 —— 前缀由 set_notes 按最终文本计算，
         # 事后在外面按字节改写会破坏长度前缀（shw199 事故）
+        # 历史条目排在新说明之前：同名键由后面的新说明覆盖（set_notes 后写生效）
+        items = hist_items + items
         items = [(k, harmonize(v)) for k, v in items]
         added, updated, pending = set_notes(path, items, write_strings=not defer_strings)
         for version, nums, notes in out:
