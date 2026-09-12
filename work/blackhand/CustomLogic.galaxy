@@ -4984,6 +4984,7 @@ void gf_InitializeVariables () {
     gv_roleOptionsText[4][4][2] = StringExternal("Param/Value/7925DF0B");
     gv_roleOptionsText[4][4][3] = StringExternal("Param/Value/03B6493F");
     gv_roleOptionsText[4][4][4] = StringExternal("Param/Value/05BF07F9");
+    gv_roleOptionsText[4][4][5] = StringExternal("Param/Value/SHWZFRC"); // shw214：征募官（原本有位无文案）
     gv_roleNameArray[4][5] = StringExternal("Param/Value/A13CB237");
     gv_roleDescriptionArray[4][5] = StringExternal("Param/Value/D962C0BA");
     gv_roleOptionExists[4][5][0] = true;
@@ -6069,11 +6070,13 @@ void gf_DefaultRoleOptions () {
     gv_roleOptionAllowed[4][4][2] = true;
     gv_roleOptionAllowed[4][4][3] = true;
     gv_roleOptionAllowed[4][4][4] = true;
+    gv_roleOptionAllowed[4][4][5] = true; // shw214
     gv_roleOptions[4][4][0] = true;
     gv_roleOptions[4][4][1] = true;
     gv_roleOptions[4][4][2] = false;
     gv_roleOptions[4][4][3] = true;
     gv_roleOptions[4][4][4] = false;
+    gv_roleOptions[4][4][5] = false; // shw214：默认不排除征募官
     gv_roleOptionAllowed[4][5][0] = true;
     gv_roleOptionAllowed[4][5][1] = true;
     gv_roleOptionAllowed[4][5][2] = true;
@@ -89947,7 +89950,7 @@ void gf_VBFCZOptions () {
         }
     }
     else if ((lv_c == 3)) {
-        lv_str[4] = "10000 01000 0 11010 10000 0000 0000 0000 00111 00000 00001 01100 110000 00000 1 00111 00000 00001 100";
+        lv_str[4] = "10000 01000 0 110101 10000 0000 0000 0000 00111 00000 00001 01100 110000 00000 1 00111 00000 00001 100";
         gv_setupInfo[1] = StringExternal("Param/Value/GCZBSUBC");
         if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
             lv_category = "1 4 4 4 4 4 4 4 4 4 3 3 3 4 4";
@@ -89977,25 +89980,25 @@ void gf_VBFCZOptions () {
         gv_setupInfo[1] = StringExternal("Param/Value/GCZBSUBD");
         if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
             lv_category = "1 1 1 4 4 4 4 4 4 2 4 4 3 4 4";
-            lv_role = "15 31 9 2 2 2 2 6 5 2 3 3 31 13 14";
+            lv_role = "15 31 9 2 2 6 5 5 4 2 3 3 31 13 14";
         }
 
 
         if ((PlayerGroupCount(gv_currentPlayers) == 14)) {
             lv_category = "1 1 1 4 4 4 4 4 2 4 4 3 4 4";
-            lv_role = "15 31 9 2 2 2 6 5 2 3 3 31 13 14";
+            lv_role = "15 31 9 2 6 5 5 4 2 3 3 31 13 14";
         }
 
 
         if ((PlayerGroupCount(gv_currentPlayers) == 13)) {
             lv_category = "1 1 1 4 4 4 4 2 4 4 3 4 4";
-            lv_role = "15 31 9 2 2 6 5 2 3 3 31 13 14";
+            lv_role = "15 31 9 6 5 5 4 2 3 3 31 13 14";
         }
 
 
         if ((PlayerGroupCount(gv_currentPlayers) == 12)) {
-            lv_category = "1 1 1 4 4 4 2 4 4 3 4 4";
-            lv_role = "15 31 9 2 6 5 2 3 3 31 13 14";
+            lv_category = "1 1 1 4 4 4 4 2 4 4 3 4";
+            lv_role = "15 31 9 6 5 5 4 2 3 3 31 13";
         }
     }
 
