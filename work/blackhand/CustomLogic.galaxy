@@ -9963,7 +9963,7 @@ bool auto_gf_NightTransition_TriggerFunc (bool testConds, bool runActions) {
     gf_DEBUG("about to close menu");
     lv_a = 1;
     for ( ; ( (auto14AAFAF6_ai >= 0 && lv_a <= auto14AAFAF6_ae) || (auto14AAFAF6_ai < 0 && lv_a >= auto14AAFAF6_ae) ) ; lv_a += auto14AAFAF6_ai ) {
-        if ((gv_roles[lv_a][0] == 26) && (gv_roles[lv_a][1] == 1)) {
+        if (((gv_roles[lv_a][0] == 26) && (gv_roles[lv_a][1] == 1)) || ((gv_roles[lv_a][0] == 32) && (gv_roles[lv_a][1] == 3))) {
             gf_ASE8A792E889B2E98089E9A1B9E585B3E997AD(lv_a);
         }
 
@@ -36054,6 +36054,7 @@ void gf_RSNeutralSetup () {
                         }
                         else {
                             gf_RASerialKillerActions(lv_a);
+                            gf_ASE5AEA1E69FA5E98089E9A1B9(lv_a); // shw207: 与审查员同一个身份选择栏
                             gf_CBSystemMessage(StringExternal("Param/Value/TXTIPGUESS"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
                             gf_CBSystemMessage((StringExternal("Param/Value/TXTCOUNTA") + IntToText(gv_txStrikes[lv_a]) + StringExternal("Param/Value/TXTCOUNTB")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
                         }
@@ -39767,7 +39768,7 @@ void gf_ASE5AEA1E69FA5E98089E9A1B92 (int lp_player, int lp_picked) {
     // Implementation
     if ((lp_picked == 1)) {
         DialogControlRemoveAllItems(gv_e8A792E889B2E68EA7E4BBB6, PlayerGroupSingle(lp_player));
-        if ((gv_roleOptions[1][26][2] == true)) {
+        if ((gv_roleOptions[1][26][2] == true) && (gv_roles[lp_player][1] == 1) && (gv_roles[lp_player][0] == 26)) {
             gf_CBSystemMessage(StringExternal("Param/Value/4C1D7AE2"), EventPlayer(), EventPlayer(), 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
         }
         else {
@@ -79815,6 +79816,7 @@ bool gt_ASActionButtonANeutral_Func (bool testConds, bool runActions) {
                     gv_action[lv_source][0] = lv_target;
                     DialogControlSetVisible(gv_actionDialogItem[lv_source][5], PlayerGroupSingle(lv_source), true);
                     DialogControlSetVisible(gv_actionDialogItem[lv_target][5], PlayerGroupSingle(lv_source), false);
+                    gf_ASE5AEA1E69FA5E98089E9A1B9(lv_source); // shw207: 选定雷击目标后弹出身份选择栏
                 }
 
             }
@@ -85282,11 +85284,8 @@ bool gt_ASE5AEA1E69FA5E98089E68BA9E998B5E890A5_Func (bool testConds, bool runAct
             return false;
         }
 
-        if (!((gv_roles[EventPlayer()][0] == 26))) {
-            return false;
-        }
-
-        if (!((gv_roles[EventPlayer()][1] == 1))) {
+        // shw207: 天选者(3/32) 复用同一套身份选择栏
+        if (!(((gv_roles[EventPlayer()][1] == 1) && (gv_roles[EventPlayer()][0] == 26)) || ((gv_roles[EventPlayer()][1] == 3) && (gv_roles[EventPlayer()][0] == 32)))) {
             return false;
         }
 
@@ -85345,11 +85344,8 @@ bool gt_ASE5AEA1E69FA5E98089E68BA9E8A792E889B2_Func (bool testConds, bool runAct
             return false;
         }
 
-        if (!((gv_roles[EventPlayer()][0] == 26))) {
-            return false;
-        }
-
-        if (!((gv_roles[EventPlayer()][1] == 1))) {
+        // shw207: 天选者(3/32) 复用同一套身份选择栏
+        if (!(((gv_roles[EventPlayer()][1] == 1) && (gv_roles[EventPlayer()][0] == 26)) || ((gv_roles[EventPlayer()][1] == 3) && (gv_roles[EventPlayer()][0] == 32)))) {
             return false;
         }
 
@@ -85394,11 +85390,8 @@ bool gt_ASE5AEA1E69FA5E7A1AEE5AE9A_Func (bool testConds, bool runActions) {
             return false;
         }
 
-        if (!((gv_roles[EventPlayer()][1] == 1))) {
-            return false;
-        }
-
-        if (!((gv_roles[EventPlayer()][0] == 26))) {
+        // shw207: 天选者(3/32) 复用同一套身份选择栏
+        if (!(((gv_roles[EventPlayer()][1] == 1) && (gv_roles[EventPlayer()][0] == 26)) || ((gv_roles[EventPlayer()][1] == 3) && (gv_roles[EventPlayer()][0] == 32)))) {
             return false;
         }
     }
@@ -85408,6 +85401,28 @@ bool gt_ASE5AEA1E69FA5E7A1AEE5AE9A_Func (bool testConds, bool runActions) {
         return true;
     }
 
+    // shw207: 天选者(3/32) 用同一个身份选择栏记猜测 —— 语义与 -guess 命令一致
+    if ((gv_roles[EventPlayer()][1] == 3) && (gv_roles[EventPlayer()][0] == 32)) {
+        lv_a = gf_ASGuessPool(gv_e5AEA1E69FA5E998B5E890A5E98089E68BA9[EventPlayer()]);
+        lv_b = gf_ASGuessRole(gv_e5AEA1E69FA5E998B5E890A5E98089E68BA9[EventPlayer()], DialogControlGetSelectedItem(gv_e8A792E889B2E68EA7E4BBB6, EventPlayer()));
+        if ((gv_roleNameArray[lv_a][lv_b] != null)) {
+            if ((gv_txStrikes[EventPlayer()] <= 0)) {
+                gf_CBSystemMessage(StringExternal("Param/Value/TXNOSTRIKE"), EventPlayer(), EventPlayer(), 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+            }
+            else if ((gv_action[EventPlayer()][0] == 0)) {
+                gf_CBSystemMessage(StringExternal("Param/Value/TXNOTGT"), EventPlayer(), EventPlayer(), 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+            }
+            else {
+                gv_txGuess[EventPlayer()] = gv_roleNameInput[lv_a][lv_b];
+                gv_txGuessTarget[EventPlayer()] = gv_action[EventPlayer()][0];
+                gf_CBSystemMessage((StringExternal("Param/Value/TXGUESSA") + StringToText(gv_name[gv_action[EventPlayer()][0]]) + StringExternal("Param/Value/TXGUESSB") + gv_roleNameArray[lv_a][lv_b] + StringExternal("Param/Value/TXGUESSC")), EventPlayer(), EventPlayer(), 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+            }
+        }
+        else {
+            gf_CBSystemMessage(StringExternal("Param/Value/4D33C704"), EventPlayer(), EventPlayer(), 0, SoundLink("Silent", -1), Color(0,0,0));
+        }
+        return true;
+    }
     // shw205: 下标→角色号统一走映射函数（与列表标签同一份规则，杜绝两处偏移表脱节）
     lv_a = gf_ASGuessPool(gv_e5AEA1E69FA5E998B5E890A5E98089E68BA9[EventPlayer()]);
     lv_b = gf_ASGuessRole(gv_e5AEA1E69FA5E998B5E890A5E98089E68BA9[EventPlayer()], DialogControlGetSelectedItem(gv_e8A792E889B2E68EA7E4BBB6, EventPlayer()));

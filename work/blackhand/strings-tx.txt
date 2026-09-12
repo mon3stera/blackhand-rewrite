@@ -1,9 +1,9 @@
 // 天选者 (3/32) 文案
 Param/Value/TXNAME=<c val="FFFFFF99-FFFF8800">天选者</c>
-Param/Value/TXDESC=众神遗落人间的执行者，以天雷涤荡罪恶。<n/><n/><c val="BBDDFF">每晚选择一个人降下雷击。雷击生效前，你可以输入 -guess 猜测目标的身份；若猜对，次日当你被判处有罪时，将向全场揭示你的身份并被释放。</c><n/><n/><c val="AA9988">你在夜晚无法被爱死。</c>
+Param/Value/TXDESC=众神遗落人间的执行者，以天雷涤荡罪恶。<n/><n/><c val="BBDDFF">每晚选择一个人降下雷击。雷击生效前，你可以在身份选择栏里，或输入 -guess 猜测目标的身份；若猜对，次日当你被判处有罪时，将向全场揭示你的身份并被释放。</c><n/><n/><c val="AA9988">你在夜晚无法被爱死。</c>
 Param/Value/TXCRIME=谋爱
 Param/Value/TXBOX1=每晚选择一个人降下雷击。
-Param/Value/TXBOX2=- 雷击生效前，你可以输入 -guess 目标角色的拼音 猜测其身份；猜测与当时选中的雷击目标绑定，更换目标后需重新猜测；输入 -guess（不带参数）取消猜测。
+Param/Value/TXBOX2=- 雷击生效前，用身份选择栏（或输入 -guess 目标角色的拼音）猜测其身份；猜测与当时选中的雷击目标绑定，更换目标后需重新猜测；输入 -guess（不带参数）取消猜测。
 Param/Value/TXBOXINV=- 你拥有夜间无敌。
 Param/Value/TXBOXNOIGN=<n/>- 你的雷击无视无敌和救治。
 Param/Value/TXSTRIKE3=<n/>- 你可以雷击3次。
@@ -20,7 +20,7 @@ Param/Value/TXGUESSBAD=<s val="ModLeftSize16">雷云中传来低语——你猜�
 Param/Value/TXSTRIKE=<s val="ModLeftSize16">你降下了天雷。</s>
 Param/Value/TXNOSTRIKE=<s val="ModLeftSize16"><c val="FF0000">你无法再降下天雷了。</c></s>
 Param/Value/TXTGTDEAD=<s val="ModLeftSize16">你的目标已经死了，雷击落空。</s>
-Param/Value/TXTIPGUESS=<s val="ModLeftSize16">你可以使用-guess来猜测你将要惩罚的人的身份。</s>
+Param/Value/TXTIPGUESS=<s val="ModLeftSize16">你可以用身份选择栏（或输入 -guess）来猜测你将要惩罚的人的身份。</s>
 Param/Value/TXTCOUNTA=<s val="ModLeftSize16">你有
 Param/Value/TXTCOUNTB=次雷击次数剩余。</s>
 Param/Value/TXCANCELOK=<s val="ModLeftSize16">你收回了猜测。</s>
