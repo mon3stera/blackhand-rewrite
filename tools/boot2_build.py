@@ -37,6 +37,17 @@ import bh_meta  # noqa: E402
 import sc2map  # noqa: E402
 
 ZH_STRINGS = r'zhCN.SC2Data\LocalizedData\GameStrings.txt'
+# 其余中文语种成员：客户端只读 zhCN，但发布出去的整包会被平台审核逐成员扫描
+# （实测 zhCH 里残留原图自带的「杀」×6、「邪」×1），所以一并过和谐词表。
+OTHER_CN_STRINGS = [
+    r'zhCH.SC2Data\LocalizedData\GameStrings.txt',
+    r'zhCH.SC2Data\LocalizedData\ObjectStrings.txt',
+    r'zhCH.SC2Data\LocalizedData\TriggerStrings.txt',
+    r'zhCH.SC2Data\LocalizedData\GameHotkeys.txt',
+    r'zhCN.SC2Data\LocalizedData\ObjectStrings.txt',
+    r'zhCN.SC2Data\LocalizedData\TriggerStrings.txt',
+    r'zhCN.SC2Data\LocalizedData\GameHotkeys.txt',
+]
 DEFAULT_BASE = ROOT / 'work' / 'boot2-user.SC2Map'
 DEFAULT_GALAXY = ROOT / 'work' / 'blackhand' / 'CustomLogic.galaxy'
 STRINGS_GLOB = 'work/blackhand/strings-*.txt'
@@ -294,6 +305,19 @@ def main() -> int:
         merged, hz = bh_meta.harmonize_text(sc2map.merge_strings(cur, entries).decode('utf-8'))
         put(out, ZH_STRINGS, merged.encode('utf-8'))
         print(f"7b) 国服和谐修正 {'、'.join(f'{k}×{v}' for k, v in hz.items()) or '无命中'}")
+
+        # 7b2) 其余中文语种成员同样过一遍和谐词表：客户端只读 zhCN，但发布包会被平台审核
+        #      逐成员扫描，实测 zhCH 里还留着原图自带的「杀」×6、「邪」×1。
+        for member in OTHER_CN_STRINGS:
+            try:
+                cur2 = sc2map.read(out, member)
+            except Exception:
+                continue
+
+            merged2, hz2 = bh_meta.harmonize_text(cur2.decode('utf-8'))
+            if hz2:
+                put(out, member, merged2.encode('utf-8'))
+                print(f"7b2) {member.split(chr(92))[0]} 和谐修正 {'、'.join(f'{k}×{v}' for k, v in hz2.items())}")
 
         # 7c) 结构自检：DocumentHeader 的条目是「键 + NChz + 声明字符数 + 正文」的长度前缀结构，
         #     **绝不能在外面按字节改写**（改了长度却不动前缀 → 读方解析错位 → 加载页/详情页空白）。
