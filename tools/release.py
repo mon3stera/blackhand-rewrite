@@ -226,7 +226,6 @@ def cmd_build(data: dict, cid, deploy: bool, skip_notes: bool, force: bool) -> i
     # 回读：包内地图名（header 各语种 + zhCN）必须就是这条线的名字，
     # 否则平台条目标题会挂到另一条线的名下
     sys.path.insert(0, str(ROOT / 'tools'))
-    import bh_meta
     import sc2map
 
     ents = bh_meta.parse_entries(sc2map.read(str(out), 'DocumentHeader'))

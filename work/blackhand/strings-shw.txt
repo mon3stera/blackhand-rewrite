@@ -63,3 +63,4 @@ Param/Value/SHWTRK1=<s val="ModLeftSize16">你将跟踪 </s><s val="ModLeftSize1
 Param/Value/SHWTRK2=<s val="ModLeftSize16">你改为跟踪 </s><s val="ModLeftSize16Bold">
 Param/Value/SHWTRK3=<s val="ModLeftSize16">你认为他会访问 </s><s val="ModLeftSize16Bold">
 Param/Value/SHWTRK4=<s val="ModLeftSize16">你改为认为他会访问 </s><s val="ModLeftSize16Bold">
+Param/Value/BHADMINNAME=卡莉奥斯特罗

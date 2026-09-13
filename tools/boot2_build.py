@@ -122,6 +122,7 @@ def write_dds(archive: Path) -> list[str]:
 
 # 必须在包内 zhCN 表里能查到的自加键（缺任一 → 界面会显示原始键名）
 MUST_HAVE_KEYS = [
+    'Param/Value/BHADMINNAME',
     'Param/Value/SHWNAME',
     'Param/Value/SHWDESC',
     'Param/Value/GCZNAME',
