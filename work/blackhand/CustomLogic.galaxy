@@ -5977,9 +5977,9 @@ void gf_DefaultRoleOptions () {
     // Automatic Variable Declarations
     const int auto9C1E2330_ae = 5;
     const int auto9C1E2330_ai = 1;
-    const int auto5549649A_ae = 30;
+    const int auto5549649A_ae = 32; // shw261：角色 1..32（原 30 ⇒ 影武者31/天选者32 的默认值从不入快照）
     const int auto5549649A_ai = 1;
-    const int auto31D80E34_ae = 4;
+    const int auto31D80E34_ae = 9; // shw261：选项槽 0..9（原 4 ⇒ 槽 5..9 的 gv_defaultRoleOptions 永远是 false，警长「可查出瘟疫散布者」等被读成关闭）
     const int auto31D80E34_ai = 1;
 
     // Variable Initialization
@@ -46299,6 +46299,14 @@ void gf_VLoadSaveSlot (int lp_player, int lp_version) {
         }
 
     }
+    // shw261：警长(1,2) 的 5..9 号「可查出…」开关在自设面板里点不到（面板只有 5 行勾选框），
+    // 而存档串里这些位置会被写成 '0' ⇒ 永久关掉「可查出瘟疫散布者」等（用户实测：瘟疫散布者=关闭）。
+    // 这里一律回默认值（gf_DefaultRoleOptions 那张表）⇒ 面板改不到的槽位永远按默认生效。
+    gv_roleOptions[1][2][5] = gv_defaultRoleOptions[1][2][5];
+    gv_roleOptions[1][2][6] = gv_defaultRoleOptions[1][2][6];
+    gv_roleOptions[1][2][7] = gv_defaultRoleOptions[1][2][7];
+    gv_roleOptions[1][2][8] = gv_defaultRoleOptions[1][2][8];
+    gv_roleOptions[1][2][9] = gv_defaultRoleOptions[1][2][9];
 }
 
 void gf_OSSaveSlot (int lp_player) {
