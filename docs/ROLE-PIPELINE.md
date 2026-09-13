@@ -135,11 +135,11 @@ if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == N)) {
 |---|---|---|
 | 夜间镜头组 | 在 `gt_NPNightCamera_Func` 分发块加机位（不在表中 = 无镜头且**不报错**） | `role_gen` `[1c]` |
 | 阵营旗标 `lv_c` | 新角色不登记会与城镇同场被误报「缺少对立的阵营。」 | 人工（开局校验） |
-| 审查页 | `gf_ASGuessRole` 映射 + 上界 + 拼音 | `role_gen` `[2]` |
+| 审查页 | `gf_ASGuessRole` 映射 + 上界 + 拼音；spec 里 `guessable: true` 的角色**必须真的出现在该池列表里**（只改映射不改上界也会被拦） | `role_gen` `[2]` |
 | 死因字母码 | 追加字母要避开占用表（由工具打印，不用再背） | `role_gen` `[1d]` |
 | 首胜记账 | 必须用 `gv_originalRole`（开局发到的角色），否则被转化后记错身份 | 人工 |
 | 自设列表 | 改 `work/roles-list.json` → `python3 tools/role_list_gen.py --apply` | 门 `0c` |
-| 帮助面板 | 城镇/中立等分档上界 | `role_gen` `[1]` |
+| 帮助面板 | 城镇/中立等分档上界。**上界族会把 spec 里声明、还没登记进脚本的新角色号也算进全局上界**（写完 spec 先跑一次就知道该放宽哪几处） | `role_gen` `[1]` |
 | 成就索引 | 三处必须对得上：列表链 `gt_Stats_Func` / 命令链 `gt_Achieve_Func`（`-achieve`）/ 解锁写入 `gv_bankOtherAchievements[16][71]`；漏一处 ⇒ 列表空白或命令播报 `null`（shw151 教训） | `role_gen` `[1e]` |
 
 ---

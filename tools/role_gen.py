@@ -397,8 +397,12 @@ def main() -> int:
     maxrole = {}
     for p_, r_ in named:
         maxrole[p_] = max(maxrole.get(p_, 0), r_)
-    gmax = max(maxrole.values())
-    print(f"[1] 上界族（各池最大角色号 {dict(sorted(maxrole.items()))} ⇒ 全局 {gmax}）")
+    gmax_script = max(maxrole.values())
+    spec_roles = {(sp["pool"], sp["role"]) for sp in specs}
+    gmax = max([gmax_script] + [r for (_, r) in spec_roles])
+    extra = (f"；spec 声明到 {gmax}（脚本里最高 {gmax_script}）—— 先放宽下列上界再 --apply"
+             if gmax > gmax_script else "")
+    print(f"[1] 上界族（各池最大角色号 {dict(sorted(maxrole.items()))} ⇒ 全局 {gmax}）{extra}")
     for fn, pat, why in BOUND_EXPLICIT:
         hits = [int(m.group(1)) for l in sc.body(fn) for m in [re.search(pat, l)] if m]
         if not hits:
@@ -574,6 +578,7 @@ def main() -> int:
 
     if cap is None:
         problems.append("gf_ASGuessRole: 找不到 lv_role 上限钳制")
+    listed = {}          # 项号 → 该项列表里的角色号集合（供 spec 反向核对）
     for item in sorted(bounds):
         pool = pool_item.get(item)
         if pool is None:
@@ -582,6 +587,7 @@ def main() -> int:
         got = [guess(item, i) for i in range(1, (bounds[item] or 0) + 1)]
         got = [r for r in got if r and (pool, r) in named]
         expect = sorted(r for (p, r) in named if p == pool and (p, r) not in REVIEW_EXCLUDE)
+        listed[item] = set(got)
         flag = "✓" if got == expect else "✗"
         print(f"    {flag} 项{item}→{POOL_CN.get(pool, pool)}池 上界 {bounds[item]}：得到 {len(got)} 个角色"
               f"{'' if got == expect else f'，应为 {len(expect)} 个'}")
@@ -590,6 +596,16 @@ def main() -> int:
             extra = [r for r in got if r not in expect]
             problems.append(f"审查页项{item}（{POOL_CN.get(pool)}）角色序列不符：缺 {miss} / 多 {extra}"
                             f"；实际 {got}")
+
+    # spec 里声明「可被猜出」的角色，必须真的出现在审查页列表里（否则审查员永远猜不到）
+    for sp in specs:
+        if not sp.get("guessable"):
+            continue
+        key = (sp["pool"], sp["role"])
+        item = next((it for it, pl in sorted(pool_item.items()) if pl == key[0]), None)
+        if item is None or key[1] not in listed.get(item, set()):
+            problems.append(f"spec 声明 {key[0]}/{key[1]} 可被审查员猜出，"
+                            f"但它不在审查页项{item}的列表里（gf_ASGuessRole 映射/上界没改）")
 
     # ---------- 3) spec：定义块 / 拼音 / 交互矩阵 ----------
     print(f"\n[3] spec 登记（{len(specs)} 份）")
