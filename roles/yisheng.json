@@ -1,0 +1,120 @@
+{
+ "pool": 1,
+ "role": 3,
+ "pinyin": "yisheng",
+ "cn": "医生",
+ "name_key": "2A308E45",
+ "desc_key": "380EE88C",
+ "investigator": [
+  "E9948BE588A9E5B7A5E585B71",
+  "E9948BE588A9E5B7A5E585B72"
+ ],
+ "crime_key": null,
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "8C08AE03"
+  },
+  {
+   "i": 1,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "B0BBC6A5"
+  },
+  {
+   "i": 2,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "3C49935F"
+  },
+  {
+   "i": 3,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "356DF019"
+  },
+  {
+   "i": 4,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "2BBC9DA0"
+  },
+  {
+   "i": 5,
+   "exists": true,
+   "important": 2,
+   "default": false,
+   "key": "355360EE"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA_1_yisheng",
+   "gf_SKG_1_yisheng",
+   "gf_SKR_1_yisheng"
+  ],
+  "resolve_functions": [
+   "gf_SKG_1_yisheng"
+  ],
+  "inline_blocks": [
+   "10963-10965",
+   "14059-14061",
+   "14066-14069",
+   "32417-32419",
+   "32476-32478",
+   "32793-32795",
+   "32973-32975",
+   "32993-32995",
+   "33116-33118",
+   "33136-33138",
+   "33272-33274",
+   "38778-38837",
+   "39651-39706",
+   "40130-40149",
+   "40977-41032",
+   "69330-69337",
+   "73444-73446"
+  ],
+  "visit_calls": [],
+  "crime_calls": [],
+  "roleblocked_guard": false,
+  "mentions": [
+   "gf_SKG_1_yisheng: gv_visitation",
+   "内联块 10963: gv_action",
+   "内联块 14059: gv_visitation",
+   "内联块 69330: gv_visitation",
+   "内联块 73444: gv_action"
+  ]
+ }
+}

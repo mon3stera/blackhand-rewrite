@@ -1,0 +1,98 @@
+{
+ "pool": 2,
+ "role": 10,
+ "pinyin": "mitan",
+ "cn": "密探",
+ "name_key": "D4E203F5",
+ "desc_key": "711E9FB1",
+ "investigator": [
+  "E9A38EE8A1A31",
+  "E9A38EE8A1A32"
+ ],
+ "crime_key": "BC8DB529",
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 3,
+   "default": true,
+   "key": "B2DE2CEB"
+  },
+  {
+   "i": 1,
+   "exists": true,
+   "important": 1,
+   "default": false,
+   "key": "62364E6B"
+  },
+  {
+   "i": 2,
+   "exists": true,
+   "important": 1,
+   "default": false,
+   "key": "766C40FD"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA2_2_mitan",
+   "gf_SKF_2_mitan",
+   "gf_SKM_2_mitan",
+   "gf_SKP_2_mitan",
+   "gf_SKV_2_mitan"
+  ],
+  "resolve_functions": [
+   "gf_SKF_2_mitan",
+   "gf_SKP_2_mitan"
+  ],
+  "inline_blocks": [
+   "11075-11077",
+   "13648-13650",
+   "32445-32447",
+   "32508-32510",
+   "32833-32835",
+   "33017-33019",
+   "33160-33162",
+   "33312-33314",
+   "39032-39076",
+   "39936-39970",
+   "40461-40505",
+   "41266-41300"
+  ],
+  "visit_calls": [
+   "gf_SKP_2_mitan: gf_BHVisitAction"
+  ],
+  "crime_calls": [],
+  "roleblocked_guard": true,
+  "mentions": [
+   "gf_SKF_2_mitan: gv_action",
+   "gf_SKF_2_mitan: gv_visitation",
+   "内联块 11075: gv_action",
+   "内联块 13648: gv_visitation"
+  ]
+ }
+}

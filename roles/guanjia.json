@@ -1,0 +1,97 @@
+{
+ "pool": 5,
+ "role": 4,
+ "pinyin": "guanjia",
+ "cn": "管家",
+ "name_key": "48146CC6",
+ "desc_key": "35B6D5EB",
+ "investigator": [
+  "E59684E4BA8EE8A7A3E8AFBB1",
+  "E59684E4BA8EE8A7A3E8AFBB2"
+ ],
+ "crime_key": "5EA039A1",
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 2,
+   "default": false,
+   "key": "DB4367E6"
+  },
+  {
+   "i": 1,
+   "exists": true,
+   "important": 1,
+   "default": false,
+   "key": "2636E7EB"
+  },
+  {
+   "i": 2,
+   "exists": true,
+   "important": 3,
+   "default": true,
+   "key": "39B97452"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA2_5_guanjia",
+   "gf_SKP_5_guanjia",
+   "gf_SKT_5_guanjia",
+   "gf_SKV_5_guanjia",
+   "gf_SKV_5_guanjia_2"
+  ],
+  "resolve_functions": [
+   "gf_SKP_5_guanjia"
+  ],
+  "inline_blocks": [
+   "11103-11105",
+   "32402-32404",
+   "32421-32423",
+   "32484-32486",
+   "32801-32803",
+   "32997-32999",
+   "33140-33142",
+   "33276-33278",
+   "38839-38854",
+   "39726-39768",
+   "40171-40200",
+   "41034-41076",
+   "88449-88456",
+   "88475-88477"
+  ],
+  "visit_calls": [
+   "gf_SKP_5_guanjia: gf_BHVisitAction"
+  ],
+  "crime_calls": [],
+  "roleblocked_guard": false,
+  "mentions": [
+   "内联块 11103: gv_action",
+   "内联块 88449: gv_visitation"
+  ]
+ }
+}

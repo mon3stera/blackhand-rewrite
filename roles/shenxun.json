@@ -1,0 +1,105 @@
+{
+ "pool": 5,
+ "role": 9,
+ "pinyin": "shenxun",
+ "cn": "审讯",
+ "name_key": "5E4705FF",
+ "desc_key": "A7080B1D",
+ "investigator": [
+  "E79B91E7A6811",
+  "E79B91E7A6812"
+ ],
+ "crime_key": "5B4B89FA",
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 3,
+   "default": true,
+   "key": "CBDAB988"
+  },
+  {
+   "i": 1,
+   "exists": true,
+   "important": 2,
+   "default": false,
+   "key": "322A2D54"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA2_5_shenxun",
+   "gf_SKC_5_shenxun",
+   "gf_SKO_5_shenxun",
+   "gf_SKP_5_shenxun",
+   "gf_SKP_5_shenxun_2",
+   "gf_SKR_5_shenxun",
+   "gf_SKV_5_shenxun"
+  ],
+  "resolve_functions": [
+   "gf_SKP_5_shenxun",
+   "gf_SKP_5_shenxun_2"
+  ],
+  "inline_blocks": [
+   "10892-10894",
+   "11123-11125",
+   "12879-12898",
+   "32441-32443",
+   "32504-32506",
+   "32737-32739",
+   "32829-32831",
+   "33300-33302",
+   "39014-39030",
+   "39912-39934",
+   "40425-40459",
+   "41242-41264",
+   "50752-50754",
+   "62263-62265",
+   "62284-62287",
+   "62299-62301",
+   "64840-64842",
+   "74212-74214",
+   "75888-75934",
+   "76324-76326",
+   "77412-77439",
+   "77553-77571"
+  ],
+  "visit_calls": [
+   "gf_SKP_5_shenxun_2: gf_BHVisitAction"
+  ],
+  "crime_calls": [],
+  "roleblocked_guard": false,
+  "mentions": [
+   "内联块 11123: gv_action",
+   "内联块 12879: gv_visitation",
+   "内联块 74212: gv_action",
+   "内联块 75888: gv_action",
+   "内联块 77412: gv_action",
+   "内联块 77553: gv_action"
+  ]
+ }
+}

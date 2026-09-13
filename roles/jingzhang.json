@@ -1,0 +1,147 @@
+{
+ "pool": 1,
+ "role": 2,
+ "pinyin": "jingzhang",
+ "cn": "警长",
+ "name_key": "7B74E647",
+ "desc_key": "6858D4CE",
+ "investigator": [
+  "E588A4E696ADE58A9B1",
+  "E588A4E696ADE58A9B2"
+ ],
+ "crime_key": null,
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "928478E5"
+  },
+  {
+   "i": 1,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "2B4E61D7"
+  },
+  {
+   "i": 2,
+   "exists": true,
+   "important": 2,
+   "default": false,
+   "key": "C9330A91"
+  },
+  {
+   "i": 3,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "4D7265A4"
+  },
+  {
+   "i": 4,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "4B41BBA2"
+  },
+  {
+   "i": 5,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "C893A330"
+  },
+  {
+   "i": 6,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "4FECDDAB"
+  },
+  {
+   "i": 7,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "SHWSW"
+  },
+  {
+   "i": 8,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "TXSW"
+  },
+  {
+   "i": 9,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "DLSW"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA_1_jingzhang",
+   "gf_SKF_1_jingzhang",
+   "gf_SKP_1_jingzhang",
+   "gf_SKR_1_jingzhang"
+  ],
+  "resolve_functions": [
+   "gf_SKF_1_jingzhang",
+   "gf_SKP_1_jingzhang"
+  ],
+  "inline_blocks": [
+   "10951-10953",
+   "32413-32415",
+   "32472-32474",
+   "32789-32791",
+   "32969-32971",
+   "32989-32991",
+   "33112-33114",
+   "33132-33134",
+   "33268-33270",
+   "38630-38776",
+   "39570-39649",
+   "40115-40128",
+   "40896-40975",
+   "73436-73438"
+  ],
+  "visit_calls": [
+   "gf_SKP_1_jingzhang: gf_BHVisitAction"
+  ],
+  "crime_calls": [],
+  "roleblocked_guard": false,
+  "mentions": [
+   "gf_SKF_1_jingzhang: gv_visitation",
+   "内联块 10951: gv_action",
+   "内联块 73436: gv_action"
+  ]
+ }
+}

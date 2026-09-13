@@ -1,0 +1,107 @@
+{
+ "pool": 2,
+ "role": 3,
+ "pinyin": "peishi",
+ "cn": "陪侍",
+ "name_key": "D701E050",
+ "desc_key": "BC70555B",
+ "investigator": [
+  "E6B0B4E7AEA1E5B7A51",
+  "E6B0B4E7AEA1E5B7A52"
+ ],
+ "crime_key": "8E10B148",
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 3,
+   "default": true,
+   "key": "534CB731"
+  },
+  {
+   "i": 1,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "9D913365"
+  },
+  {
+   "i": 2,
+   "exists": true,
+   "important": 2,
+   "default": false,
+   "key": "A5C91636"
+  },
+  {
+   "i": 3,
+   "exists": null,
+   "important": null,
+   "default": true,
+   "key": null
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA_2_peishi",
+   "gf_SKM_2_peishi",
+   "gf_SKP_2_peishi",
+   "gf_SKV_2_peishi"
+  ],
+  "resolve_functions": [
+   "gf_SKP_2_peishi"
+  ],
+  "inline_blocks": [
+   "11047-11049",
+   "11758-11765",
+   "12438-12445",
+   "32417-32419",
+   "32476-32478",
+   "32793-32795",
+   "32973-32975",
+   "32993-32995",
+   "33116-33118",
+   "33136-33138",
+   "33272-33274",
+   "38778-38837",
+   "39651-39706",
+   "40130-40149",
+   "40977-41032"
+  ],
+  "visit_calls": [
+   "gf_SKP_2_peishi: gf_BHVisitAction"
+  ],
+  "crime_calls": [],
+  "roleblocked_guard": true,
+  "mentions": [
+   "内联块 11047: gv_action",
+   "内联块 11758: gv_action",
+   "内联块 11758: gv_visitation",
+   "内联块 12438: gv_action",
+   "内联块 12438: gv_visitation"
+  ]
+ }
+}

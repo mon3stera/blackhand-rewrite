@@ -1,0 +1,118 @@
+{
+ "pool": 1,
+ "role": 14,
+ "pinyin": "gongjihuizhanglao",
+ "cn": "共济会长老",
+ "name_key": "D1A59E97",
+ "desc_key": "BBA0C974",
+ "investigator": [
+  "E7A798E5AF86E4BC9AE99DA21",
+  "E7A798E5AF86E4BC9AE99DA22"
+ ],
+ "crime_key": "F6DF140D",
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 1,
+   "default": false,
+   "key": "B4862F5C"
+  },
+  {
+   "i": 1,
+   "exists": true,
+   "important": 1,
+   "default": false,
+   "key": "9106380F"
+  },
+  {
+   "i": 2,
+   "exists": true,
+   "important": 1,
+   "default": false,
+   "key": "250D909E"
+  },
+  {
+   "i": 3,
+   "exists": true,
+   "important": 1,
+   "default": true,
+   "key": "FB8B3165"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA2_1_gongjihuizhanglao",
+   "gf_SKC_1_gongjihuizhanglao",
+   "gf_SKG_1_gongjihuizhanglao",
+   "gf_SKK_1_gongjihuizhanglao",
+   "gf_SKO_1_gongjihuizhanglao",
+   "gf_SKP_1_gongjihuizhanglao",
+   "gf_SKR_1_gongjihuizhanglao",
+   "gf_SKR_1_gongjihuizhanglao_2",
+   "gf_SKV_1_gongjihuizhanglao"
+  ],
+  "resolve_functions": [
+   "gf_SKG_1_gongjihuizhanglao",
+   "gf_SKK_1_gongjihuizhanglao",
+   "gf_SKP_1_gongjihuizhanglao"
+  ],
+  "inline_blocks": [
+   "11007-11009",
+   "13821-13823",
+   "16217-16219",
+   "32350-32352",
+   "32461-32463",
+   "32528-32530",
+   "32752-32754",
+   "32845-32847",
+   "33033-33035",
+   "33176-33178",
+   "33304-33306",
+   "39176-39210",
+   "40012-40032",
+   "40646-40683",
+   "41342-41362",
+   "50720-50722",
+   "64812-64814",
+   "69442-69444",
+   "79011-79068"
+  ],
+  "visit_calls": [
+   "gf_SKP_1_gongjihuizhanglao: gf_BHVisitAction"
+  ],
+  "crime_calls": [],
+  "roleblocked_guard": false,
+  "mentions": [
+   "gf_SKG_1_gongjihuizhanglao: gv_visitation",
+   "gf_SKK_1_gongjihuizhanglao: gv_visitation",
+   "内联块 11007: gv_action",
+   "内联块 13821: gv_visitation",
+   "内联块 69442: gv_visitation"
+  ]
+ }
+}

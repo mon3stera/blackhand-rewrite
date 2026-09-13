@@ -1,0 +1,104 @@
+{
+ "pool": 3,
+ "role": 8,
+ "pinyin": "xiejiaotu",
+ "cn": "协教徒",
+ "name_key": "AB2A7C2C",
+ "desc_key": "40A30976",
+ "investigator": [
+  "E7A798E5AF86E4BC9AE99DA21",
+  "E7A798E5AF86E4BC9AE99DA22"
+ ],
+ "crime_key": "CE90A045",
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 1,
+   "default": true,
+   "key": "DFD02C55"
+  },
+  {
+   "i": 1,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "073AEE11"
+  },
+  {
+   "i": 2,
+   "exists": true,
+   "important": 1,
+   "default": true,
+   "key": "A4498F14"
+  },
+  {
+   "i": 3,
+   "exists": true,
+   "important": null,
+   "default": false,
+   "key": "0A22A095"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA_3_xiejiaotu",
+   "gf_SKN_3_xiejiaotu",
+   "gf_SKP_3_xiejiaotu",
+   "gf_SKP_3_xiejiaotu_2"
+  ],
+  "resolve_functions": [
+   "gf_SKP_3_xiejiaotu",
+   "gf_SKP_3_xiejiaotu_2"
+  ],
+  "inline_blocks": [
+   "10813-10815",
+   "10824-10826",
+   "16534-16536",
+   "16571-16573",
+   "32437-32439",
+   "32500-32502",
+   "32825-32827",
+   "33013-33015",
+   "33156-33158",
+   "33296-33298",
+   "38990-39012",
+   "39888-39910",
+   "40396-40423",
+   "41218-41240",
+   "74346-74348",
+   "90093-90101"
+  ],
+  "visit_calls": [],
+  "crime_calls": [],
+  "roleblocked_guard": false,
+  "mentions": [
+   "内联块 10813: gv_action",
+   "内联块 74346: gv_action"
+  ]
+ }
+}

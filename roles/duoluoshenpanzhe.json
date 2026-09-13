@@ -38,5 +38,6 @@
    "in_guess_list": true
   }
  },
- "note": "机械字段由 tools/role_gen.py --dump 导出；四项交互必须人工逐条回答（记忆 792）"
+ "note": "机械字段由 tools/role_gen.py --dump 导出；四项交互必须人工逐条回答（记忆 792）",
+ "review_status": "reviewed"
 }

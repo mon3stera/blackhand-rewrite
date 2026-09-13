@@ -1,0 +1,51 @@
+{
+ "pool": 1,
+ "role": 18,
+ "pinyin": "shuzhuang",
+ "cn": "树桩",
+ "name_key": "D3D414CE",
+ "desc_key": "813ED9AD",
+ "investigator": [],
+ "crime_key": null,
+ "options": [],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKR_1_shuzhuang"
+  ],
+  "resolve_functions": [],
+  "inline_blocks": [
+   "16244-16246",
+   "16368-16370",
+   "32861-32863",
+   "39288-39293",
+   "90167-90169"
+  ],
+  "visit_calls": [],
+  "crime_calls": [],
+  "roleblocked_guard": false
+ }
+}

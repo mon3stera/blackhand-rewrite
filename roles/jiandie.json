@@ -1,0 +1,115 @@
+{
+ "pool": 1,
+ "role": 8,
+ "pinyin": "jiandie",
+ "cn": "jian谍",
+ "name_key": "62ADFFCC",
+ "desc_key": "D2BB9757",
+ "investigator": [
+  "E5B882E6B091E7B1BB1",
+  "E5B882E6B091E7B1BB2"
+ ],
+ "crime_key": null,
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 1,
+   "default": false,
+   "key": "F5B80696"
+  },
+  {
+   "i": 1,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "9CC83729"
+  },
+  {
+   "i": 2,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "C00DFEA5"
+  },
+  {
+   "i": 3,
+   "exists": true,
+   "important": 1,
+   "default": false,
+   "key": "27F1B18A"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKF_1_jiandie",
+   "gf_SKP_1_jiandie",
+   "gf_SKP_1_jiandie_2",
+   "gf_SKR_1_jiandie"
+  ],
+  "resolve_functions": [
+   "gf_SKF_1_jiandie",
+   "gf_SKP_1_jiandie",
+   "gf_SKP_1_jiandie_2"
+  ],
+  "inline_blocks": [
+   "3610-3776",
+   "3621-3628",
+   "3640-3647",
+   "3663-3665",
+   "3705-3712",
+   "3724-3731",
+   "3747-3749",
+   "11237-11239",
+   "11267-11269",
+   "13599-13601",
+   "32437-32439",
+   "32500-32502",
+   "32825-32827",
+   "33013-33015",
+   "33156-33158",
+   "33296-33298",
+   "38990-39012",
+   "39888-39910",
+   "40396-40423",
+   "41218-41240",
+   "52998-53164",
+   "53009-53016",
+   "53028-53035",
+   "53051-53053",
+   "53093-53100",
+   "53112-53119",
+   "53135-53137"
+  ],
+  "visit_calls": [],
+  "crime_calls": [],
+  "roleblocked_guard": false,
+  "mentions": [
+   "gf_SKF_1_jiandie: gv_visitation"
+  ]
+ }
+}

@@ -1,0 +1,107 @@
+{
+ "pool": 1,
+ "role": 23,
+ "pinyin": "zhengmuguan",
+ "cn": "征募官",
+ "name_key": "6CC2D4BC",
+ "desc_key": "89770E72",
+ "investigator": [
+  "E9AD85E58A9B1",
+  "E9AD85E58A9B2"
+ ],
+ "crime_key": "A055501E",
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 1,
+   "default": false,
+   "key": "8AAC7F26"
+  },
+  {
+   "i": 1,
+   "exists": true,
+   "important": 1,
+   "default": false,
+   "key": "337EA81E"
+  },
+  {
+   "i": 2,
+   "exists": true,
+   "important": 1,
+   "default": false,
+   "key": "58F4E02C"
+  },
+  {
+   "i": 3,
+   "exists": true,
+   "important": 1,
+   "default": true,
+   "key": "D992E9E1"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA2_1_zhengmuguan",
+   "gf_SKG_1_zhengmuguan",
+   "gf_SKP_1_zhengmuguan",
+   "gf_SKR_1_zhengmuguan",
+   "gf_SKY_1_zhengmuguan"
+  ],
+  "resolve_functions": [
+   "gf_SKG_1_zhengmuguan",
+   "gf_SKP_1_zhengmuguan"
+  ],
+  "inline_blocks": [
+   "10987-10989",
+   "12636-12638",
+   "13828-13830",
+   "32785-32787",
+   "38947-38971",
+   "50732-50734",
+   "73597-73599",
+   "75451-75459",
+   "75880-75882"
+  ],
+  "visit_calls": [
+   "gf_SKP_1_zhengmuguan: gf_BHVisitAction"
+  ],
+  "crime_calls": [
+   "gf_SKG_1_zhengmuguan: gf_BHCrime",
+   "gf_SKG_1_zhengmuguan: gf_BHCrime",
+   "gf_SKG_1_zhengmuguan: gf_BHCrime"
+  ],
+  "roleblocked_guard": true,
+  "mentions": [
+   "gf_SKG_1_zhengmuguan: gv_visitation",
+   "内联块 10987: gv_action",
+   "内联块 12636: gv_action",
+   "内联块 13828: gv_visitation",
+   "内联块 73597: gv_action"
+  ]
+ }
+}

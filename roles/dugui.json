@@ -1,0 +1,79 @@
+{
+ "pool": 3,
+ "role": 17,
+ "pinyin": "dugui",
+ "cn": "赌鬼",
+ "name_key": "6C806875",
+ "desc_key": "BE397D79",
+ "investigator": [
+  "E585ACE585B1E59CBAE689801",
+  "E585ACE585B1E59CBAE689802"
+ ],
+ "crime_key": null,
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "B5241796"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA_3_dugui",
+   "gf_SKN_3_dugui",
+   "gf_SKP_3_dugui",
+   "gf_SKP_3_dugui_2"
+  ],
+  "resolve_functions": [
+   "gf_SKP_3_dugui",
+   "gf_SKP_3_dugui_2"
+  ],
+  "inline_blocks": [
+   "10880-10882",
+   "10979-10981",
+   "14386-14388",
+   "14448-14450",
+   "32775-32777",
+   "32857-32859",
+   "33264-33266",
+   "39263-39286",
+   "40151-40169",
+   "69984-69991",
+   "74370-74372"
+  ],
+  "visit_calls": [],
+  "crime_calls": [],
+  "roleblocked_guard": false,
+  "mentions": [
+   "gf_SKP_3_dugui_2: gv_action",
+   "内联块 10979: gv_action",
+   "内联块 74370: gv_action"
+  ]
+ }
+}

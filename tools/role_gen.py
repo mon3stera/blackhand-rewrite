@@ -100,9 +100,22 @@ class Script:
         return out
 
     def def_block(self, pool, role):
-        pat = re.compile(rf"\[{pool}\]\[{role}\]")
-        return "\n".join(l for l in self.body("gf_InitializeVariables")
-                         if pat.search(l) and l.strip())
+        """该角色的定义行（名称/描述/图鉴/开关四件套…）。
+
+        两处坑（都实测踩过）：
+        ① **不能子串匹配** `[1][1]` —— 它会命中 `[8][1][1]`（别池同号角色的行），
+           首版因此把别角色的探员线索算进来了；必须要求 `]` 后面是 `[` / 空格 / `=`。
+        ② **开关默认值不在定义区** —— `gv_roleOptions[…] = true/false` 常常写在
+           `gf_DefaultRoleOptions`（6012 起，晚于 gf_InitializeVariables 执行 ⇒ 后写生效），
+           只扫定义区会读到错误默认值（市民 [0] 实际 true、首版导出成 false）。
+        """
+        # 锚在「变量名 + 池作第一个下标」：`\[1\]\[1\]` 这种写法会命中 `[8][1][1]`
+        # 的尾部（别池同号角色），首版就是这么把别角色的探员线索算进来的
+        pat = re.compile(rf"gv_\w+\[{pool}\]\[{role}\](?=\[|\s|=)")
+        out = []
+        for fn in ("gf_InitializeVariables", "gf_DefaultRoleOptions"):
+            out += [l for l in self.body(fn) if pat.search(l) and l.strip()]
+        return "\n".join(out)
 
     def guess_pool(self):
         """gf_ASGuessPool：项号 → 池号。写法是 `lv_pool = 1;` 打底 + if/else if 覆写。"""
@@ -217,13 +230,20 @@ def dump_spec(sc, pool, role, pinyins):
             spec["crime_key"] = m.group(1)
         elif (m := re.search(r'gv_roleOptions\[\d+\]\[\d+\]\[(\d+)\] = true;', l)) and m.group(1) == "10":
             spec["flag10"] = True
+    # 开关：原图每个开关未必四行齐全（有的没有 Exists、有的无 Important）⇒
+    # 字段「有就记、没有就 null」，校验器只对非 null 的字段要求对应行存在（首版一律
+    # 默认 important=2 / default=false，导出后自己报出一堆并不存在的缺项）
     opts = {}
     for l in block.split("\n"):
-        m = re.search(r'gv_roleOptions(?:Important|Text)?\[\d+\]\[\d+\]\[(\d+)\]', l)
+        m = re.search(r'gv_roleOptions(?:Important|Exists|Text)?\[\d+\]\[\d+\]\[(\d+)\]', l)
         if m and m.group(1) != "10":
-            opts.setdefault(int(m.group(1)), {"i": int(m.group(1)), "important": 2, "default": False, "key": ""})
+            opts.setdefault(int(m.group(1)),
+                            {"i": int(m.group(1)), "exists": None, "important": None,
+                             "default": None, "key": None})
     for l in block.split("\n"):
-        if (m := re.search(r'gv_roleOptionsImportant\[\d+\]\[\d+\]\[(\d+)\] = (\d+);', l)):
+        if (m := re.search(r'gv_roleOptionExists\[\d+\]\[\d+\]\[(\d+)\] = (true|false);', l)):
+            opts[int(m.group(1))]["exists"] = m.group(2) == "true"
+        elif (m := re.search(r'gv_roleOptionsImportant\[\d+\]\[\d+\]\[(\d+)\] = (\d+);', l)):
             opts[int(m.group(1))]["important"] = int(m.group(2))
         elif (m := re.search(r'gv_roleOptions\[\d+\]\[\d+\]\[(\d+)\] = (true|false);', l)) and m.group(1) != "10":
             opts[int(m.group(1))]["default"] = m.group(2) == "true"
@@ -248,13 +268,15 @@ def required_lines(spec, pinyins):
     for i, k in enumerate(spec.get("investigator", [])):
         out.append(f"gv_roleInvestigatorArray[{pool}][{role}][{i}] = gv_investigator{k};")
     for opt in spec.get("options", []):
-        i, d = opt["i"], ("true" if opt.get("default") else "false")
-        out += [
-            f"gv_roleOptionExists[{pool}][{role}][{i}] = true;",
-            f"gv_roleOptionsImportant[{pool}][{role}][{i}] = {opt.get('important', 2)};",
-            f"gv_roleOptions[{pool}][{role}][{i}] = {d};",
-            f'gv_roleOptionsText[{pool}][{role}][{i}] = StringExternal("Param/Value/{opt["key"]}");',
-        ]
+        i = opt["i"]
+        if opt.get("exists"):
+            out.append(f"gv_roleOptionExists[{pool}][{role}][{i}] = true;")
+        if opt.get("important") is not None:
+            out.append(f"gv_roleOptionsImportant[{pool}][{role}][{i}] = {opt['important']};")
+        if opt.get("default") is not None:
+            out.append(f"gv_roleOptions[{pool}][{role}][{i}] = {'true' if opt['default'] else 'false'};")
+        if opt.get("key"):
+            out.append(f'gv_roleOptionsText[{pool}][{role}][{i}] = StringExternal("Param/Value/{opt["key"]}");')
     if spec.get("flag10"):
         out.append(f"gv_roleOptions[{pool}][{role}][10] = true;")
     if spec.get("crime_key"):
@@ -328,7 +350,7 @@ def main() -> int:
     if args.apply:
         return apply_specs(sc, specs=_load_specs())
     specs = _load_specs()
-    problems = []
+    problems, warnings, pending = [], [], []
 
     print(f"脚本 {len(sc.lines)} 行；有名字的角色 {len(named)} 个；拼音 {len(pinyins)} 条；"
           f"spec {len(specs)} 份\n")
@@ -405,13 +427,20 @@ def main() -> int:
                 f'gv_e78AAFE7BDAAE58FAFE883BD[{pool}][{role}] = StringExternal("Param/Value/{spec["crime_key"]}")' not in block:
             miss.append("图鉴犯罪可能")
         for opt in spec.get("options", []):
-            i, d = opt["i"], ("true" if opt.get("default") else "false")
-            for what, line in [
-                (f"开关[{i}].Exists", f"gv_roleOptionExists[{pool}][{role}][{i}] = true;"),
-                (f"开关[{i}].Important", f"gv_roleOptionsImportant[{pool}][{role}][{i}] = {opt.get('important', 2)};"),
-                (f"开关[{i}].默认值", f"gv_roleOptions[{pool}][{role}][{i}] = {d};"),
-                (f"开关[{i}].文案", f'gv_roleOptionsText[{pool}][{role}][{i}] = StringExternal("Param/Value/{opt["key"]}")'),
-            ]:
+            i = opt["i"]
+            checks = []
+            if opt.get("exists"):
+                checks.append((f"开关[{i}].Exists", f"gv_roleOptionExists[{pool}][{role}][{i}] = true;"))
+            if opt.get("important") is not None:
+                checks.append((f"开关[{i}].Important",
+                               f"gv_roleOptionsImportant[{pool}][{role}][{i}] = {opt['important']};"))
+            if opt.get("default") is not None:
+                d = "true" if opt["default"] else "false"
+                checks.append((f"开关[{i}].默认值", f"gv_roleOptions[{pool}][{role}][{i}] = {d};"))
+            if opt.get("key"):
+                checks.append((f"开关[{i}].文案",
+                               f'gv_roleOptionsText[{pool}][{role}][{i}] = StringExternal("Param/Value/{opt["key"]}")'))
+            for what, line in checks:
                 if line not in block:
                     miss.append(what)
         if spec.get("flag10") and f"gv_roleOptions[{pool}][{role}][10] = true;" not in block:
@@ -425,14 +454,28 @@ def main() -> int:
         inter = spec.get("interactions", {})
         for k, cn in (("swap", "交换干扰类"), ("investigate", "调查类"),
                       ("restrict", "限制类"), ("guessage", "审查员可猜")):
-            if not inter.get(k):
+            if not (inter.get(k) or {}).get("text"):
                 miss.append(f"交互声明「{cn}」未回答（记忆 792 的四项硬约束）")
         if inter.get("guessage", {}).get("in_guess_list") and not spec.get("guessable"):
             miss.append('写了对审查页可猜但没设 "guessable": true')
 
-        print(f"    {'✓' if not miss else '✗'} {tag:16s} {'' if not miss else '缺 ' + str(miss)}")
-        if miss:
-            problems.append(f"{tag} 登记不全：{miss}")
+        status = spec.get("review_status", "reviewed")
+        todo = [x for x in miss if "交互声明" in x]
+        hard = [x for x in miss if "交互声明" not in x]
+        if status == "reviewed":
+            flag = "✗" if miss else "✓"
+            if miss:
+                problems.append(f"{tag}[已复核] 登记不全：{miss}")
+        else:
+            # 自动导出的 spec：登记缺项可能是「导出器还不认识的写法」，算待办不算错；
+            # 但交互未回答是必然的（导出器不替人回答）
+            flag = "·" if hard else "…"
+            if hard:
+                warnings.append(f"{tag}[待复核] 登记缺 {len(hard)} 项：{hard[:3]}")
+            if todo:
+                pending.append(tag)
+        print(f"    {flag} {tag:16s} [{status}] {'已登记' if not miss else '缺 ' + str(len(miss)) + ' 项'}"
+              f"{'（含交互未答）' if todo else ''}")
 
     # ---------- 4) inventory ----------
     if args.inventory:
@@ -443,13 +486,20 @@ def main() -> int:
                   f"；拼音 {pinyins.get((pool, role), '—')}；审查页 "
                   f"{'在' if (pool, role) in named else '不在'}")
 
+    reviewed = [x for x in specs if x.get("review_status", "reviewed") == "reviewed"]
+    print(f"\n复核进度：已复核 {len(reviewed)} / 共 {len(specs)} 个角色"
+          f"（待复核的 {len(pending)} 个：四项交互还没人回答）")
+    if warnings:
+        print(f"· {len(warnings)} 个待复核 spec 有登记缺项（导出器未覆盖的写法，翻 reviewed 后即算错）：")
+        for x in warnings[:5]:
+            print("    " + x)
     print()
     if problems:
         print(f"✗ 共 {len(problems)} 处问题：")
         for x in problems:
             print("    " + x)
         return 1
-    print(f"✓ 全部检查通过（spec {len(specs)} 个角色）")
+    print(f"✓ 全部检查通过（spec {len(specs)} 个角色：已复核 {len(reviewed)}）")
     return 0
 
 

@@ -1,0 +1,124 @@
+{
+ "pool": 3,
+ "role": 9,
+ "pinyin": "sharenkuang",
+ "cn": "爱人狂",
+ "name_key": "98CBCFC5",
+ "desc_key": "6F3D10EF",
+ "investigator": [
+  "E7B2BEE7A59E1",
+  "E7B2BEE7A59E2"
+ ],
+ "crime_key": "80338099",
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "0B221C13"
+  },
+  {
+   "i": 1,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "1E72F6A7"
+  },
+  {
+   "i": 2,
+   "exists": true,
+   "important": 1,
+   "default": true,
+   "key": "C74CE65C"
+  },
+  {
+   "i": 3,
+   "exists": true,
+   "important": 1,
+   "default": false,
+   "key": "20DC0F93"
+  },
+  {
+   "i": 4,
+   "exists": true,
+   "important": 2,
+   "default": false,
+   "key": "5BCC3C24"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA_3_sharenkuang",
+   "gf_SKK_3_sharenkuang",
+   "gf_SKN_3_sharenkuang",
+   "gf_SKP_3_sharenkuang",
+   "gf_SKP_3_sharenkuang_2"
+  ],
+  "resolve_functions": [
+   "gf_SKK_3_sharenkuang",
+   "gf_SKP_3_sharenkuang",
+   "gf_SKP_3_sharenkuang_2"
+  ],
+  "inline_blocks": [
+   "10908-10910",
+   "11167-11169",
+   "11941-11943",
+   "12644-12646",
+   "13070-13072",
+   "13999-14050",
+   "14414-14416",
+   "15934-15936",
+   "16020-16022",
+   "32441-32443",
+   "32504-32506",
+   "32829-32831",
+   "33300-33302",
+   "39014-39030",
+   "39912-39934",
+   "40425-40459",
+   "41242-41264",
+   "76324-76326"
+  ],
+  "visit_calls": [
+   "gf_SKP_3_sharenkuang_2: gf_BHVisitAction"
+  ],
+  "crime_calls": [
+   "内联块 11941: gf_BHCrime"
+  ],
+  "roleblocked_guard": true,
+  "mentions": [
+   "gf_SKK_3_sharenkuang: gv_action",
+   "gf_SKK_3_sharenkuang: gv_visitation",
+   "内联块 11167: gv_action",
+   "内联块 11941: gv_action",
+   "内联块 12644: gv_action",
+   "内联块 13070: gv_visitation",
+   "内联块 13999: gv_visitation"
+  ]
+ }
+}

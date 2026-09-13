@@ -1,0 +1,94 @@
+{
+ "pool": 1,
+ "role": 1,
+ "pinyin": "shimin",
+ "cn": "市民",
+ "name_key": "57914609",
+ "desc_key": "EB7E2BE5",
+ "investigator": [
+  "E5B882E6B091E7B1BB1",
+  "E5B882E6B091E7B1BB2"
+ ],
+ "crime_key": null,
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "DAF5AAE1"
+  },
+  {
+   "i": 1,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "2C51E71E"
+  },
+  {
+   "i": 2,
+   "exists": null,
+   "important": 2,
+   "default": true,
+   "key": "700A3BF8"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA_1_shimin",
+   "gf_SKC_1_shimin",
+   "gf_SKO_1_shimin",
+   "gf_SKP_1_shimin",
+   "gf_SKR_1_shimin"
+  ],
+  "resolve_functions": [
+   "gf_SKP_1_shimin"
+  ],
+  "inline_blocks": [
+   "10947-10949",
+   "14352-14354",
+   "18846-18856",
+   "32781-32783",
+   "32985-32987",
+   "33128-33130",
+   "33252-33254",
+   "38602-38628",
+   "39527-39568",
+   "40072-40113",
+   "40853-40894",
+   "50708-50710",
+   "64800-64802",
+   "73432-73434"
+  ],
+  "visit_calls": [],
+  "crime_calls": [],
+  "roleblocked_guard": false,
+  "mentions": [
+   "内联块 10947: gv_action"
+  ]
+ }
+}

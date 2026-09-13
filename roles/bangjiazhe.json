@@ -1,0 +1,105 @@
+{
+ "pool": 2,
+ "role": 9,
+ "pinyin": "bangjiazhe",
+ "cn": "绑架者",
+ "name_key": "532C7DA9",
+ "desc_key": "84A7571C",
+ "investigator": [
+  "E79B91E7A6811",
+  "E79B91E7A6812"
+ ],
+ "crime_key": "EBAE22A6",
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 3,
+   "default": true,
+   "key": "4F5ECB72"
+  },
+  {
+   "i": 1,
+   "exists": true,
+   "important": 2,
+   "default": false,
+   "key": "014907FA"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA2_2_bangjiazhe",
+   "gf_SKC_2_bangjiazhe",
+   "gf_SKO_2_bangjiazhe",
+   "gf_SKP_2_bangjiazhe",
+   "gf_SKP_2_bangjiazhe_2",
+   "gf_SKR_2_bangjiazhe",
+   "gf_SKV_2_bangjiazhe"
+  ],
+  "resolve_functions": [
+   "gf_SKP_2_bangjiazhe",
+   "gf_SKP_2_bangjiazhe_2"
+  ],
+  "inline_blocks": [
+   "10884-10886",
+   "11071-11073",
+   "12879-12898",
+   "32441-32443",
+   "32504-32506",
+   "32706-32708",
+   "32829-32831",
+   "33300-33302",
+   "39014-39030",
+   "39912-39934",
+   "40425-40459",
+   "41242-41264",
+   "50748-50750",
+   "62263-62265",
+   "62279-62282",
+   "62295-62297",
+   "64828-64830",
+   "73937-73939",
+   "75888-75934",
+   "76324-76326",
+   "77412-77439",
+   "77553-77571"
+  ],
+  "visit_calls": [
+   "gf_SKP_2_bangjiazhe_2: gf_BHVisitAction"
+  ],
+  "crime_calls": [],
+  "roleblocked_guard": false,
+  "mentions": [
+   "内联块 11071: gv_action",
+   "内联块 12879: gv_visitation",
+   "内联块 73937: gv_action",
+   "内联块 75888: gv_action",
+   "内联块 77412: gv_action",
+   "内联块 77553: gv_action"
+  ]
+ }
+}

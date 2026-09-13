@@ -1,0 +1,92 @@
+{
+ "pool": 3,
+ "role": 16,
+ "pinyin": "ximingren",
+ "cn": "系命人",
+ "name_key": "12C12A65",
+ "desc_key": "EB083FCE",
+ "investigator": [
+  "E585ACE585B1E59CBAE689801",
+  "E585ACE585B1E59CBAE689802"
+ ],
+ "crime_key": null,
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "F4E31657"
+  },
+  {
+   "i": 1,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "43FCE6F1"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA_3_ximingren",
+   "gf_SKB_3_ximingren",
+   "gf_SKN_3_ximingren",
+   "gf_SKP_3_ximingren",
+   "gf_SKU_3_ximingren"
+  ],
+  "resolve_functions": [
+   "gf_SKB_3_ximingren",
+   "gf_SKP_3_ximingren",
+   "gf_SKU_3_ximingren"
+  ],
+  "inline_blocks": [
+   "7145-7147",
+   "10916-10918",
+   "11902-11904",
+   "12597-12603",
+   "14362-14364",
+   "32853-32855",
+   "33280-33282",
+   "39228-39252",
+   "40575-40604",
+   "69975-69982",
+   "74334-74336",
+   "74457-74459",
+   "77165-77167"
+  ],
+  "visit_calls": [],
+  "crime_calls": [],
+  "roleblocked_guard": false,
+  "mentions": [
+   "gf_SKB_3_ximingren: gv_action",
+   "gf_SKU_3_ximingren: gv_action",
+   "内联块 11902: gv_action",
+   "内联块 12597: gv_action",
+   "内联块 74457: gv_action"
+  ]
+ }
+}

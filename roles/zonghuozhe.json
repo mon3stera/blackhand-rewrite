@@ -1,0 +1,141 @@
+{
+ "pool": 3,
+ "role": 5,
+ "pinyin": "zonghuozhe",
+ "cn": "纵火者",
+ "name_key": "6FF06246",
+ "desc_key": "1E138533",
+ "investigator": [
+  "E9A38EE8A1A31",
+  "E9A38EE8A1A32"
+ ],
+ "crime_key": "21F492B4",
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "4ABB095F"
+  },
+  {
+   "i": 1,
+   "exists": true,
+   "important": 2,
+   "default": false,
+   "key": "56E730E0"
+  },
+  {
+   "i": 2,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "E6703107"
+  },
+  {
+   "i": 3,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "2F405E08"
+  },
+  {
+   "i": 4,
+   "exists": true,
+   "important": 2,
+   "default": false,
+   "key": "CD8525CF"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA_3_zonghuozhe",
+   "gf_SKB_3_zonghuozhe",
+   "gf_SKF_3_zonghuozhe",
+   "gf_SKK_3_zonghuozhe",
+   "gf_SKN_3_zonghuozhe",
+   "gf_SKP_3_zonghuozhe",
+   "gf_SKP_3_zonghuozhe_2"
+  ],
+  "resolve_functions": [
+   "gf_SKB_3_zonghuozhe",
+   "gf_SKF_3_zonghuozhe",
+   "gf_SKK_3_zonghuozhe",
+   "gf_SKP_3_zonghuozhe",
+   "gf_SKP_3_zonghuozhe_2"
+  ],
+  "inline_blocks": [
+   "11163-11165",
+   "13056-13058",
+   "13634-13636",
+   "14394-14396",
+   "15918-15920",
+   "16008-16010",
+   "32425-32427",
+   "32488-32490",
+   "32771-32773",
+   "32813-32815",
+   "32977-32979",
+   "33001-33003",
+   "33120-33122",
+   "33144-33146",
+   "33284-33286",
+   "38879-38914",
+   "39770-39808",
+   "40202-40267",
+   "41100-41138",
+   "69322-69328",
+   "69399-69414",
+   "74338-74340"
+  ],
+  "visit_calls": [
+   "gf_SKP_3_zonghuozhe_2: gf_BHVisitAction",
+   "gf_SKP_3_zonghuozhe_2: gf_BHVisitSelf",
+   "gf_SKP_3_zonghuozhe_2: gf_BHVisitSelf",
+   "内联块 69322: gf_BHVisit"
+  ],
+  "crime_calls": [
+   "gf_SKK_3_zonghuozhe: gf_BHCrime"
+  ],
+  "roleblocked_guard": true,
+  "mentions": [
+   "gf_SKB_3_zonghuozhe: gv_action",
+   "gf_SKF_3_zonghuozhe: gv_action",
+   "gf_SKF_3_zonghuozhe: gv_visitation",
+   "gf_SKP_3_zonghuozhe_2: gv_action",
+   "内联块 13056: gv_action",
+   "内联块 13056: gv_visitation",
+   "内联块 13634: gv_action",
+   "内联块 13634: gv_visitation",
+   "内联块 69322: gv_action",
+   "内联块 69322: gv_visitation",
+   "内联块 69399: gv_action",
+   "内联块 69399: gv_visitation",
+   "内联块 74338: gv_action"
+  ]
+ }
+}

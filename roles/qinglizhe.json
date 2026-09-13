@@ -1,0 +1,107 @@
+{
+ "pool": 2,
+ "role": 6,
+ "pinyin": "qinglizhe",
+ "cn": "清理者",
+ "name_key": "99A80905",
+ "desc_key": "39F3C16D",
+ "investigator": [
+  "E6B0B4E7AEA1E5B7A51",
+  "E6B0B4E7AEA1E5B7A52"
+ ],
+ "crime_key": "C5B960CA",
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 3,
+   "default": true,
+   "key": "1ACA1D8B"
+  },
+  {
+   "i": 1,
+   "exists": true,
+   "important": 1,
+   "default": false,
+   "key": "431265D3"
+  },
+  {
+   "i": 2,
+   "exists": true,
+   "important": 1,
+   "default": false,
+   "key": "FF218D76"
+  },
+  {
+   "i": 3,
+   "exists": true,
+   "important": 1,
+   "default": true,
+   "key": "A56B096B"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA2_2_qinglizhe",
+   "gf_SKC_2_qinglizhe",
+   "gf_SKM_2_qinglizhe",
+   "gf_SKO_2_qinglizhe",
+   "gf_SKP_2_qinglizhe",
+   "gf_SKV_2_qinglizhe"
+  ],
+  "resolve_functions": [
+   "gf_SKP_2_qinglizhe"
+  ],
+  "inline_blocks": [
+   "11059-11061",
+   "32429-32431",
+   "32492-32494",
+   "32817-32819",
+   "33005-33007",
+   "33148-33150",
+   "33288-33290",
+   "38916-38945",
+   "39810-39860",
+   "40269-40340",
+   "41140-41190",
+   "50740-50742",
+   "64824-64826",
+   "69360-69362",
+   "69437-69439"
+  ],
+  "visit_calls": [
+   "gf_SKP_2_qinglizhe: gf_BHVisitAction"
+  ],
+  "crime_calls": [],
+  "roleblocked_guard": false,
+  "mentions": [
+   "内联块 11059: gv_action",
+   "内联块 69360: gv_visitation",
+   "内联块 69437: gv_visitation"
+  ]
+ }
+}

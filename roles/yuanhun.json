@@ -1,0 +1,142 @@
+{
+ "pool": 3,
+ "role": 15,
+ "pinyin": "yuanhun",
+ "cn": "冤魂",
+ "name_key": "7485DF50",
+ "desc_key": "1433711F",
+ "investigator": [
+  "E4B88DE696ADE7A7BBE58AA81",
+  "E4B88DE696ADE7A7BBE58AA82"
+ ],
+ "crime_key": "50C735C9",
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "666E4392"
+  },
+  {
+   "i": 1,
+   "exists": true,
+   "important": 2,
+   "default": false,
+   "key": "4DF6B98C"
+  },
+  {
+   "i": 2,
+   "exists": true,
+   "important": 2,
+   "default": false,
+   "key": "BFFF40C4"
+  },
+  {
+   "i": 3,
+   "exists": true,
+   "important": 2,
+   "default": false,
+   "key": "2109F4DB"
+  },
+  {
+   "i": 4,
+   "exists": true,
+   "important": 2,
+   "default": false,
+   "key": "21780C61"
+  },
+  {
+   "i": 5,
+   "exists": null,
+   "important": null,
+   "default": true,
+   "key": null
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA_3_yuanhun",
+   "gf_SKF_3_yuanhun",
+   "gf_SKN_3_yuanhun",
+   "gf_SKN_3_yuanhun_2",
+   "gf_SKP_3_yuanhun",
+   "gf_SKP_3_yuanhun_2",
+   "gf_SKW1_3_yuanhun",
+   "gf_SKW2_3_yuanhun",
+   "gf_SKW_3_yuanhun"
+  ],
+  "resolve_functions": [
+   "gf_SKF_3_yuanhun",
+   "gf_SKP_3_yuanhun",
+   "gf_SKP_3_yuanhun_2"
+  ],
+  "inline_blocks": [
+   "10920-10922",
+   "11031-11033",
+   "13218-13297",
+   "13670-13672",
+   "14110-14118",
+   "14126-14134",
+   "14143-14151",
+   "14159-14167",
+   "14358-14360",
+   "32465-32467",
+   "32480-32482",
+   "32520-32522",
+   "32849-32851",
+   "33040-33042",
+   "33182-33184",
+   "33238-33240",
+   "33308-33310",
+   "39212-39226",
+   "39708-39724",
+   "40685-40713",
+   "41078-41098",
+   "69971-69973",
+   "72962-72964",
+   "74374-74376",
+   "75498-75500",
+   "75550-75552",
+   "75994-75996"
+  ],
+  "visit_calls": [
+   "gf_SKP_3_yuanhun_2: gf_BHVisitAction"
+  ],
+  "crime_calls": [
+   "gf_SKF_3_yuanhun: gf_BHCrime"
+  ],
+  "roleblocked_guard": true,
+  "mentions": [
+   "gf_SKF_3_yuanhun: gv_visitation",
+   "内联块 11031: gv_action",
+   "内联块 13218: gv_visitation",
+   "内联块 13670: gv_visitation",
+   "内联块 74374: gv_action"
+  ]
+ }
+}

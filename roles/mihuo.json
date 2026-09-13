@@ -1,0 +1,126 @@
+{
+ "pool": 5,
+ "role": 11,
+ "pinyin": "mihuo",
+ "cn": "迷惑",
+ "name_key": "4C54DCE5",
+ "desc_key": "B8F9F9C1",
+ "investigator": [
+  "E4B88DE696ADE7A7BBE58AA81",
+  "E4B88DE696ADE7A7BBE58AA82"
+ ],
+ "crime_key": "63140E87",
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 3,
+   "default": true,
+   "key": "D860327B"
+  },
+  {
+   "i": 1,
+   "exists": true,
+   "important": 1,
+   "default": false,
+   "key": "B0F486D9"
+  },
+  {
+   "i": 2,
+   "exists": true,
+   "important": 1,
+   "default": true,
+   "key": "416E8612"
+  },
+  {
+   "i": 3,
+   "exists": true,
+   "important": 2,
+   "default": false,
+   "key": "C72514DE"
+  },
+  {
+   "i": 4,
+   "exists": true,
+   "important": 2,
+   "default": false,
+   "key": "EC23E518"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA2_5_mihuo",
+   "gf_SKC_5_mihuo",
+   "gf_SKO_5_mihuo",
+   "gf_SKP_5_mihuo",
+   "gf_SKP_5_mihuo_2",
+   "gf_SKT_5_mihuo",
+   "gf_SKV_5_mihuo"
+  ],
+  "resolve_functions": [
+   "gf_SKP_5_mihuo",
+   "gf_SKP_5_mihuo_2"
+  ],
+  "inline_blocks": [
+   "10896-10898",
+   "11131-11133",
+   "11580-11613",
+   "11848-11852",
+   "12247-12280",
+   "12543-12547",
+   "32449-32451",
+   "32512-32514",
+   "32837-32839",
+   "33021-33023",
+   "33164-33166",
+   "33316-33318",
+   "39078-39100",
+   "39972-40010",
+   "40507-40573",
+   "41302-41340",
+   "50760-50762",
+   "64844-64846",
+   "69546-69561",
+   "77275-77277"
+  ],
+  "visit_calls": [
+   "gf_SKP_5_mihuo_2: gf_BHVisitAction"
+  ],
+  "crime_calls": [],
+  "roleblocked_guard": false,
+  "mentions": [
+   "内联块 11131: gv_action",
+   "内联块 11580: gv_action",
+   "内联块 11580: gv_visitation",
+   "内联块 11848: gv_visitation",
+   "内联块 12247: gv_action",
+   "内联块 12247: gv_visitation",
+   "内联块 12543: gv_visitation",
+   "内联块 69546: gv_visitation"
+  ]
+ }
+}

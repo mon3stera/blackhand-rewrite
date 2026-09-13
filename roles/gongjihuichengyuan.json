@@ -1,0 +1,75 @@
+{
+ "pool": 1,
+ "role": 7,
+ "pinyin": "gongjihuichengyuan",
+ "cn": "共济会成员",
+ "name_key": "6F7F9166",
+ "desc_key": "2A8F1253",
+ "investigator": [
+  "E7A798E5AF86E4BC9AE99DA21",
+  "E7A798E5AF86E4BC9AE99DA22"
+ ],
+ "crime_key": "98C61F76",
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "680B4E9F"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKR_1_gongjihuichengyuan",
+   "gf_SKR_1_gongjihuichengyuan_2",
+   "gf_SKV_1_gongjihuichengyuan"
+  ],
+  "resolve_functions": [],
+  "inline_blocks": [
+   "32433-32435",
+   "32496-32498",
+   "32534-32536",
+   "32748-32750",
+   "32821-32823",
+   "33009-33011",
+   "33152-33154",
+   "33292-33294",
+   "38973-38988",
+   "39862-39886",
+   "40342-40394",
+   "41192-41216",
+   "89612-89614"
+  ],
+  "visit_calls": [],
+  "crime_calls": [],
+  "roleblocked_guard": false,
+  "mentions": [
+   "内联块 89612: gv_visitation"
+  ]
+ }
+}

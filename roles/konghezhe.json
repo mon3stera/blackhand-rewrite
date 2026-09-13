@@ -1,0 +1,87 @@
+{
+ "pool": 2,
+ "role": 7,
+ "pinyin": "konghezhe",
+ "cn": "恐吓者",
+ "name_key": "93F3C2CD",
+ "desc_key": "38107BEC",
+ "investigator": [
+  "E588A4E696ADE58A9B1",
+  "E588A4E696ADE58A9B2"
+ ],
+ "crime_key": null,
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 3,
+   "default": true,
+   "key": "AF3EE1B3"
+  },
+  {
+   "i": 1,
+   "exists": true,
+   "important": 2,
+   "default": false,
+   "key": "15DFA5B3"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA2_2_konghezhe",
+   "gf_SKM_2_konghezhe",
+   "gf_SKP_2_konghezhe",
+   "gf_SKV_2_konghezhe"
+  ],
+  "resolve_functions": [
+   "gf_SKP_2_konghezhe"
+  ],
+  "inline_blocks": [
+   "11063-11065",
+   "32433-32435",
+   "32496-32498",
+   "32821-32823",
+   "33009-33011",
+   "33152-33154",
+   "33292-33294",
+   "38973-38988",
+   "39862-39886",
+   "40342-40394",
+   "41192-41216",
+   "69364-69372"
+  ],
+  "visit_calls": [
+   "gf_SKP_2_konghezhe: gf_BHVisitAction"
+  ],
+  "crime_calls": [],
+  "roleblocked_guard": false,
+  "mentions": [
+   "内联块 11063: gv_action",
+   "内联块 69364: gv_visitation"
+  ]
+ }
+}

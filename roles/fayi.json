@@ -1,0 +1,110 @@
+{
+ "pool": 1,
+ "role": 10,
+ "pinyin": "fayi",
+ "cn": "法医",
+ "name_key": "6A9B0543",
+ "desc_key": "9757D90D",
+ "investigator": [
+  "E58DB1E999A9E789A9E593811",
+  "E58DB1E999A9E789A9E593812"
+ ],
+ "crime_key": null,
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "7628405E"
+  },
+  {
+   "i": 1,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "BB874870"
+  },
+  {
+   "i": 2,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "6B1079DC"
+  },
+  {
+   "i": 3,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "282C0608"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA_1_fayi",
+   "gf_SKF_1_fayi",
+   "gf_SKP_1_fayi",
+   "gf_SKP_1_fayi_2",
+   "gf_SKR_1_fayi",
+   "gf_SKU_1_fayi"
+  ],
+  "resolve_functions": [
+   "gf_SKF_1_fayi",
+   "gf_SKP_1_fayi",
+   "gf_SKP_1_fayi_2",
+   "gf_SKU_1_fayi"
+  ],
+  "inline_blocks": [
+   "10856-10858",
+   "10995-10997",
+   "13606-13608",
+   "32445-32447",
+   "32508-32510",
+   "32833-32835",
+   "33017-33019",
+   "33160-33162",
+   "33312-33314",
+   "39032-39076",
+   "39936-39970",
+   "40461-40505",
+   "41266-41300",
+   "73484-73486"
+  ],
+  "visit_calls": [
+   "gf_SKP_1_fayi_2: gf_BHVisitAction"
+  ],
+  "crime_calls": [],
+  "roleblocked_guard": false,
+  "mentions": [
+   "gf_SKF_1_fayi: gv_visitation",
+   "内联块 10995: gv_action",
+   "内联块 13606: gv_visitation",
+   "内联块 73484: gv_action"
+  ]
+ }
+}

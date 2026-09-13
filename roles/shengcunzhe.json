@@ -1,0 +1,95 @@
+{
+ "pool": 3,
+ "role": 2,
+ "pinyin": "shengcunzhe",
+ "cn": "生存者",
+ "name_key": "BC20E531",
+ "desc_key": "C836DDCD",
+ "investigator": [
+  "E5B882E6B091E7B1BB1",
+  "E5B882E6B091E7B1BB2"
+ ],
+ "crime_key": "7499C6EE",
+ "options": [],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA_3_shengcunzhe",
+   "gf_SKK_3_shengcunzhe",
+   "gf_SKK_3_shengcunzhe_2",
+   "gf_SKN_3_shengcunzhe",
+   "gf_SKO_3_shengcunzhe",
+   "gf_SKP_3_shengcunzhe",
+   "gf_SKP_3_shengcunzhe_2"
+  ],
+  "resolve_functions": [
+   "gf_SKK_3_shengcunzhe",
+   "gf_SKK_3_shengcunzhe_2",
+   "gf_SKP_3_shengcunzhe",
+   "gf_SKP_3_shengcunzhe_2"
+  ],
+  "inline_blocks": [
+   "10848-10850",
+   "11151-11153",
+   "13354-13356",
+   "13361-13363",
+   "14378-14380",
+   "15906-15908",
+   "15953-15955",
+   "15996-15998",
+   "32413-32415",
+   "32472-32474",
+   "32789-32791",
+   "32969-32971",
+   "32989-32991",
+   "33112-33114",
+   "33132-33134",
+   "33268-33270",
+   "38630-38776",
+   "39570-39649",
+   "40115-40128",
+   "40896-40975",
+   "50764-50766",
+   "69939-69941",
+   "74322-74324",
+   "90051-90053"
+  ],
+  "visit_calls": [
+   "gf_SKP_3_shengcunzhe_2: gf_BHVisitAction",
+   "gf_SKP_3_shengcunzhe_2: gf_BHVisitNone"
+  ],
+  "crime_calls": [
+   "gf_SKK_3_shengcunzhe: gf_BHCrimeTrespass"
+  ],
+  "roleblocked_guard": true,
+  "mentions": [
+   "gf_SKK_3_shengcunzhe: gv_visitation",
+   "gf_SKP_3_shengcunzhe_2: gv_action",
+   "内联块 13354: gv_visitation",
+   "内联块 74322: gv_action"
+  ]
+ }
+}

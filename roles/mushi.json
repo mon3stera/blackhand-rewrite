@@ -1,0 +1,80 @@
+{
+ "pool": 1,
+ "role": 25,
+ "pinyin": "mushi",
+ "cn": "牧师",
+ "name_key": "F3EA2BCB",
+ "desc_key": "38543487",
+ "investigator": [
+  "E585ACE585B1E59CBAE689801",
+  "E585ACE585B1E59CBAE689802"
+ ],
+ "crime_key": null,
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 1,
+   "default": false,
+   "key": "7589EB06"
+  },
+  {
+   "i": 1,
+   "exists": true,
+   "important": 1,
+   "default": false,
+   "key": "5CE2A552"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA2_1_mushi",
+   "gf_SKP_1_mushi",
+   "gf_SKR_1_mushi"
+  ],
+  "resolve_functions": [
+   "gf_SKP_1_mushi"
+  ],
+  "inline_blocks": [
+   "10983-10985",
+   "32809-32811",
+   "39359-39375",
+   "69339-69358",
+   "73581-73583"
+  ],
+  "visit_calls": [
+   "gf_SKP_1_mushi: gf_BHVisitAction"
+  ],
+  "crime_calls": [],
+  "roleblocked_guard": true,
+  "mentions": [
+   "内联块 10983: gv_action",
+   "内联块 69339: gv_action",
+   "内联块 69339: gv_visitation"
+  ]
+ }
+}

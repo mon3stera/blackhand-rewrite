@@ -1,0 +1,105 @@
+{
+ "pool": 5,
+ "role": 6,
+ "pinyin": "xiangzhu",
+ "cn": "香主",
+ "name_key": "A316FF68",
+ "desc_key": "CECBA400",
+ "investigator": [
+  "E6B0B4E7AEA1E5B7A51",
+  "E6B0B4E7AEA1E5B7A52"
+ ],
+ "crime_key": "1434B894",
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 3,
+   "default": true,
+   "key": "D2098E46"
+  },
+  {
+   "i": 1,
+   "exists": true,
+   "important": 1,
+   "default": false,
+   "key": "FD0C778B"
+  },
+  {
+   "i": 2,
+   "exists": true,
+   "important": 1,
+   "default": true,
+   "key": "9608A765"
+  },
+  {
+   "i": 3,
+   "exists": true,
+   "important": 1,
+   "default": false,
+   "key": "8A58B7B8"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA2_5_xiangzhu",
+   "gf_SKC_5_xiangzhu",
+   "gf_SKO_5_xiangzhu",
+   "gf_SKP_5_xiangzhu",
+   "gf_SKT_5_xiangzhu",
+   "gf_SKV_5_xiangzhu"
+  ],
+  "resolve_functions": [
+   "gf_SKP_5_xiangzhu"
+  ],
+  "inline_blocks": [
+   "11111-11113",
+   "32429-32431",
+   "32492-32494",
+   "32817-32819",
+   "33005-33007",
+   "33148-33150",
+   "33288-33290",
+   "38916-38945",
+   "39810-39860",
+   "40269-40340",
+   "41140-41190",
+   "50744-50746",
+   "64836-64838",
+   "69385-69387"
+  ],
+  "visit_calls": [
+   "gf_SKP_5_xiangzhu: gf_BHVisitAction"
+  ],
+  "crime_calls": [],
+  "roleblocked_guard": false,
+  "mentions": [
+   "内联块 11111: gv_action",
+   "内联块 69385: gv_visitation"
+  ]
+ }
+}

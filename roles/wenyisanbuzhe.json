@@ -1,0 +1,126 @@
+{
+ "pool": 3,
+ "role": 14,
+ "pinyin": "wenyisanbuzhe",
+ "cn": "瘟疫散布者",
+ "name_key": "FA4FD652",
+ "desc_key": "8DC3D23D",
+ "investigator": [
+  "E9948BE588A9E5B7A5E585B71",
+  "E9948BE588A9E5B7A5E585B72"
+ ],
+ "crime_key": "6496BD51",
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "AF0803D6"
+  },
+  {
+   "i": 1,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "36CA26CA"
+  },
+  {
+   "i": 2,
+   "exists": true,
+   "important": 2,
+   "default": false,
+   "key": "566C8D99"
+  },
+  {
+   "i": 3,
+   "exists": true,
+   "important": 2,
+   "default": false,
+   "key": "5691B5B8"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA_3_wenyisanbuzhe",
+   "gf_SKF_3_wenyisanbuzhe",
+   "gf_SKN_3_wenyisanbuzhe",
+   "gf_SKP_3_wenyisanbuzhe",
+   "gf_SKU_3_wenyisanbuzhe",
+   "gf_SKW1_3_wenyisanbuzhe",
+   "gf_SKW2_3_wenyisanbuzhe",
+   "gf_SKW_3_wenyisanbuzhe"
+  ],
+  "resolve_functions": [
+   "gf_SKF_3_wenyisanbuzhe",
+   "gf_SKP_3_wenyisanbuzhe",
+   "gf_SKU_3_wenyisanbuzhe"
+  ],
+  "inline_blocks": [
+   "11147-11149",
+   "11959-11961",
+   "12662-12664",
+   "13548-13550",
+   "14071-14074",
+   "14113-14115",
+   "14129-14131",
+   "14146-14148",
+   "14162-14164",
+   "14406-14408",
+   "32461-32463",
+   "32528-32530",
+   "32845-32847",
+   "33033-33035",
+   "33176-33178",
+   "33304-33306",
+   "39176-39210",
+   "40012-40032",
+   "40646-40683",
+   "41342-41362",
+   "69967-69969",
+   "74318-74320",
+   "75502-75504",
+   "75554-75556",
+   "75998-76000",
+   "79011-79068",
+   "88253-88255"
+  ],
+  "visit_calls": [
+   "gf_SKP_3_wenyisanbuzhe: gf_BHVisitAction"
+  ],
+  "crime_calls": [
+   "gf_SKU_3_wenyisanbuzhe: gf_BHCrime"
+  ],
+  "roleblocked_guard": true,
+  "mentions": [
+   "gf_SKF_3_wenyisanbuzhe: gv_visitation",
+   "内联块 11147: gv_action",
+   "内联块 74318: gv_action",
+   "内联块 88253: gv_visitation"
+  ]
+ }
+}

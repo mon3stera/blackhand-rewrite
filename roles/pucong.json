@@ -1,0 +1,82 @@
+{
+ "pool": 5,
+ "role": 14,
+ "pinyin": "pucong",
+ "cn": "仆从",
+ "name_key": "C6850AC0",
+ "desc_key": "D393F7DD",
+ "investigator": [
+  "E5B882E6B091E7B1BB1",
+  "E5B882E6B091E7B1BB2"
+ ],
+ "crime_key": null,
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 2,
+   "default": false,
+   "key": "55395B6D"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA2_5_pucong",
+   "gf_SKP_5_pucong",
+   "gf_SKP_5_pucong_2",
+   "gf_SKT_5_pucong",
+   "gf_SKV_5_pucong"
+  ],
+  "resolve_functions": [
+   "gf_SKP_5_pucong",
+   "gf_SKP_5_pucong_2"
+  ],
+  "inline_blocks": [
+   "10928-10930",
+   "11135-11137",
+   "32461-32463",
+   "32528-32530",
+   "32845-32847",
+   "33033-33035",
+   "33176-33178",
+   "33304-33306",
+   "39176-39210",
+   "40012-40032",
+   "40646-40683",
+   "41342-41362",
+   "79011-79068"
+  ],
+  "visit_calls": [
+   "gf_SKP_5_pucong_2: gf_BHVisitAction"
+  ],
+  "crime_calls": [],
+  "roleblocked_guard": false,
+  "mentions": [
+   "内联块 11135: gv_action"
+  ]
+ }
+}

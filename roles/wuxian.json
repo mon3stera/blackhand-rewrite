@@ -1,0 +1,89 @@
+{
+ "pool": 5,
+ "role": 15,
+ "pinyin": "wuxian",
+ "cn": "诬陷",
+ "name_key": "6A989BEF",
+ "desc_key": "C1E593CB",
+ "investigator": [
+  "E59684E4BA8EE8A7A3E8AFBB1",
+  "E59684E4BA8EE8A7A3E8AFBB2"
+ ],
+ "crime_key": "ACE38309",
+ "options": [
+  {
+   "i": 0,
+   "exists": true,
+   "important": 2,
+   "default": true,
+   "key": "DFCC8BE6"
+  }
+ ],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "",
+   "source": "todo"
+  },
+  "investigate": {
+   "text": "",
+   "source": "todo"
+  },
+  "restrict": {
+   "text": "",
+   "source": "todo"
+  },
+  "guessage": {
+   "text": "在审查页列表内",
+   "source": "auto",
+   "in_guess_list": true
+  }
+ },
+ "note": "结构字段由 tools/role_bootstrap.py 机械导出；interactions 里除 guessage 外**留空待人回答**（记忆 792 的四项硬约束），evidence 给出该角色的证据指针",
+ "review_status": "auto",
+ "evidence": {
+  "functions": [
+   "gf_SKA2_5_wuxian",
+   "gf_SKA2_5_wuxian_2",
+   "gf_SKP_5_wuxian",
+   "gf_SKP_5_wuxian_2",
+   "gf_SKT_5_wuxian",
+   "gf_SKV_5_wuxian",
+   "gf_SKV_5_wuxian_2"
+  ],
+  "resolve_functions": [
+   "gf_SKP_5_wuxian",
+   "gf_SKP_5_wuxian_2"
+  ],
+  "inline_blocks": [
+   "11091-11093",
+   "11139-11141",
+   "12903-12953",
+   "32465-32467",
+   "32480-32482",
+   "32520-32522",
+   "32849-32851",
+   "33040-33042",
+   "33182-33184",
+   "33238-33240",
+   "33308-33310",
+   "39212-39226",
+   "39708-39724",
+   "40685-40713",
+   "41078-41098"
+  ],
+  "visit_calls": [
+   "gf_SKP_5_wuxian: gf_BHVisitAction",
+   "gf_SKP_5_wuxian_2: gf_BHVisitAction"
+  ],
+  "crime_calls": [],
+  "roleblocked_guard": false,
+  "mentions": [
+   "内联块 11091: gv_action",
+   "内联块 11139: gv_action",
+   "内联块 12903: gv_visitation"
+  ]
+ }
+}
