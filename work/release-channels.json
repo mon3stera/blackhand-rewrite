@@ -20,14 +20,14 @@
       "role": "stable",
       "title": "黑手：升温 Revision",
       "name": null,
-      "note": "稳定主线：沿用基线自带的地图名；只收大更新，且必须先在 preview 验证过",
-      "live": null,
-      "live_note": "未确认 —— 平台当前可通过的版本",
+      "note": "稳定主线：沿用基线自带的地图名；只收大更新，且必须先在 preview 验证过。⚠ 待办（用户 2026-09-13）：**下次推主线时给 main 加 desc_append**，把改版反馈群 795173021 写进地图详情（这次先不加；preview 线上已有）。",
+      "live": "1.108",
       "pending": "1.108",
-      "status": "审核中",
+      "status": "已通过",
       "built": "work/boot2-1.108.SC2Map",
       "md5": "9f8189739ddd60d47f225a5c1428d617",
-      "size": 16704499
+      "size": 16704499,
+      "desc_todo": "下次推主线时加 desc_append：改版反馈群 795173021"
     },
     {
       "id": "preview",
