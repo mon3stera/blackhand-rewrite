@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
 """CustomLogic.galaxy 静态体检（shw139 事故后加入）。
 
-目前检查两类「编译期才会炸」的问题：
+目前检查五类「编译期才会炸」的问题：
 
 1. **变量未声明**（auto* / lv_* 两类：自动变量与局部变量）：SC2 生成代码里的 `for ( ; ( (autoXXXX_ai >= 0 && lv_a <= autoXXXX_ae) ...)`
    依赖函数声明区的 `const int autoXXXX_ae/_ai;`。preset_gen 生成的函数曾漏掉这一段声明块
    → 整个脚本读取失败（游戏内报「解析for时出错，可能缺少分号」）。
 2. **大括号配平**：全文 `{`/`}` 必须相等。
+3. **text/string 转换误用**；4. **函数外裸语句**；5. **未声明标识符**。
+5. **未声明标识符（与名字族无关的硬校验）**：函数体里出现在**变量位置**的标识符
+   （后面不接 `(` 的，即非函数调用）减去「本函数声明 + 参数 + 文件作用域名字 +
+   关键字/类型 + `c_*`/`libNtve_*` 库常量」，剩下的就是编译器会拒收的名字。
+   前四项都建立在名字族正则上，而正则一旦写窄就与代码同源同错（shw239/240 连续
+   两次漏掉 auto 声明），故加这一项做兜底：它对未知名字族天然免疫。
 
 用法：
     python3 tools/galaxy_lint.py [galaxy路径]         # 默认 work/blackhand/CustomLogic.galaxy
@@ -27,6 +33,20 @@ AUTO = re.compile(r"\b(auto(?!_g[ft]_)\w+_\w+)\b")
 LOCAL = re.compile(r"(?<![A-Za-z0-9_])(lv_[A-Za-z0-9_]+)")
 # 声明行（用于确定声明区边界，与 role_block_extract.DECL_RE 同口径）
 DECL_ANY = re.compile(r"(?:const\s+)?[A-Za-z][\w\[\]]*\s+\w+\s*(?:=|;)")
+
+# ── 第 5 项（未声明标识符）用到的判据 ─────────────────────────────────────
+STR_LIT = re.compile(r'"(?:\\.|[^"\\])*"')
+IDENT = re.compile(r"(?<![A-Za-z0-9_])([A-Za-z_]\w*)")
+FUNC_DEF = re.compile(r"^\s*(?:const\s+)?[A-Za-z][\w\[\]]*\s+(\w+)\s*\(")
+GLOBAL_NAME = re.compile(r"\s(\w+)\s*(?:\[[^\]]*\])*\s*(?:=|;)")
+# 一行声明里的名字：`<类型>[维度] <名字>[维度] [= 初值];`（Galaxy 一行只声明一个）
+DECL_NAME = re.compile(r"^\s*(?:const\s+)?[A-Za-z][\w\[\]]*\s+(\w+)\s*(?:\[[^\]]*\])*\s*(?:=|;)")
+# 库提供的常量/枚举（不在本文件声明）：c_* 引擎常量、libNtve_* 库枚举
+LIB_PREFIXES = ("c_", "libNtve_")
+# 关键字与类型 —— 出现在变量位置的它们不是「标识符」
+KEYWORDS = set("""if else for while do return break continue true false null const static native
+include struct enum void bool int string text fixed byte short unit point region playergroup unitgroup
+bank trigger timer order soundlink color doodad actor""".split())
 # 半截语句：语句以一个「标识符[索引]」开头、后面紧跟逗号 —— 合法语句里它只会作为实参出现，
 # 出现在行首就说明这一行的前半截被切掉了（shw231 事故：脚本化删除删多了，留下
 # `riantDescriptionItem[1], PlayerGroupAll(), 500, 50);`，全文大括号仍配平、函数外裸语句检查也过，
@@ -171,7 +191,26 @@ def lint(path: Path) -> int:
     else:
         print("✓ 行内 () 均配平")
 
+    # 文件作用域的名字表（第 5 项用）：函数名 + 全局变量/常量/触发器声明。
+    # 注意必须先剥注释 —— 本工程的全局声明普遍带行尾注释
+    # （`int[16] gv_txStrikes; // 天选者(3/32) 剩余雷击次数`），不剥就会漏掉整批。
+    known_funcs: set[str] = set()
+    known_globals: set[str] = set()
+    depth = 0
+    for line in lines:
+        code = strip_comment(line)
+        if depth == 0:
+            m = FUNC_DEF.match(code)
+            if m:
+                known_funcs.add(m.group(1))
+            if GLOBAL_DECL.match(code):
+                g = GLOBAL_NAME.search(code)
+                if g:
+                    known_globals.add(g.group(1))
+        depth += code.count("{") - code.count("}")
+
     checked = 0
+    missing_glob: list[tuple[int, str, list[str]]] = []
     for start, end in func_ranges(lines):
         body_lines = lines[start:end + 1]
         body = "\n".join(body_lines)
@@ -183,13 +222,17 @@ def lint(path: Path) -> int:
         params = set(re.findall(r"\b(\w+)\s*(?=,|\))", sig[sig.find("(") + 1:]))
         decl_lines, k = [], 1
         while k < len(body_lines):
-            t = body_lines[k].strip()
+            t = strip_comment(body_lines[k]).strip()
             if not t or t.startswith("//") or DECL_ANY.match(t):
                 decl_lines.append(body_lines[k])
                 k += 1
                 continue
             break
         decl = "\n".join(decl_lines)
+
+        # 声明区里的**所有**声明名（不限 lv_/auto 两个族）——第 5 项要用
+        decl_names = {m.group(1) for m in
+                      (DECL_NAME.match(STR_LIT.sub('""', strip_comment(x))) for x in decl_lines) if m}
 
         used = set(AUTO.findall(body)) | set(LOCAL.findall(body))
         declared = set(AUTO.findall(decl)) | set(LOCAL.findall(decl))
@@ -200,6 +243,36 @@ def lint(path: Path) -> int:
         if miss:
             print(f"✗ {start + 1:6} {name}: 缺变量声明 {miss}")
             problems += 1
+
+        # ── 第 5 项：未声明标识符（与名字族无关的硬校验）────────────────────
+        # 前四项都建立在「名字族正则」上，而正则一旦写窄就与代码同源同错（shw239/240
+        # 连续两次漏掉 auto 声明的教训）。这里不依赖任何族：把函数体里**出现在变量位置**
+        # 的标识符（后面不接 `(` 的，即不是函数调用）减去「本函数声明 + 参数 + 文件作用域
+        # 名字 + 关键字/类型 + 库常量前缀」，剩下的就是编译器会拒收的名字。
+        clean_body = [STR_LIT.sub('""', strip_comment(x)) for x in body_lines[k:]]
+        unknown = []
+        for ln, text in zip(range(start + k + 1, end + 2), clean_body):
+            for m in IDENT.finditer(text):
+                n = m.group(1)
+                if text[m.end():].lstrip()[:1] == "(":
+                    continue                                   # 函数调用
+                if n in KEYWORDS or n in params or n in declared or n in decl_names:
+                    continue
+                if n in known_globals or n in known_funcs:
+                    continue
+                if n.startswith(LIB_PREFIXES):
+                    continue                                   # c_* / libNtve_* 库常量枚举
+                if n not in unknown:
+                    unknown.append(n)
+        if unknown:
+            missing_glob.append((start + 1, name, unknown))
+
+    if missing_glob:
+        for line_no, name, names in missing_glob:
+            print(f"✗ {line_no:6} {name}: 未声明标识符 {names[:6]}")
+        problems += len(missing_glob)
+    else:
+        print("✓ 无未声明标识符")
 
     print(f"{'✓' if not problems else '✗'} 扫描函数 {checked} 个，问题 {problems} 处")
     return 1 if problems else 0
