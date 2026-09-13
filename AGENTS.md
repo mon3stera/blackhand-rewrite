@@ -23,6 +23,7 @@
 | 单人测试、虚拟占位补位、-prefer 优选 | 「单人测试 -solo 占位玩家 prefer」 |
 | 新增/改造角色（11 步流程、清单、死亡三件套） | 「新增角色端到端流程」「一个角色要改的地方」 |
 | 角色上界/审查页自洽的机器检查（**不需要 spec**）与按需的登记 spec | 「角色登记表 role_gen 上界族 审查页映射」 |
+| 加的六道打包门挡什么（Wait 调用图 / 死因字母码 / 镜头覆盖 / 卡片栏位） | 「打包门 wait_graph 死因字母码 镜头覆盖 角色卡栏位」 |
 | 夜晚镜头组、行动面板/开关按钮、访问措辞 | 「夜晚镜头体系 行动面板 开关按钮 措辞 访问」 |
 | 「进图即清档」根因、bank 预加载与 BankWait | 「bank 清档 BankList BankWait」 |
 | 探员线索 / 案底 / 警长「可查出X」开关 | 「探员 警长 案底 可查出 gv_roleInvestigatorArray」 |
@@ -199,9 +200,9 @@ python3 tools/boot2_build.py --out work/boot2-<name>.SC2Map      # 八件套 + �
 | 文件 | 内容 |
 |---|---|
 | `AGENTS.md` | 本文件：工程约定、铁律、标准循环 |
-| `docs/ROLE-PIPELINE.md` | 添加/修改角色的完整操作手册（含位置速查） |
+| `docs/ROLE-PIPELINE.md` | **加/改角色的完整手册**（收口后的真实流程：spec → 生成器 → 抽取 → 六道打包门 → 实测；附事故对照表） |
 | `docs/BLACKHAND-REWRITE.md` | 重写设计与实施进度 |
 | `docs/BLACKHAND-ORIGINAL.md` | 原图逆向笔记（流程、计时、数据模型） |
 | `docs/GALAXY-PIPELINE.md` | Galaxy 直写、打包、启动链路技术细节 |
-| `docs/SHADOW-ROLE.md` | 影武者实现规格（作为"新角色"样板） |
-| `docs/HANDOFF-SHADOW.md` / `docs/HANDOFF-NEXT.md` | **历史交接文档（已过期，停在 shw85 前后）**：影武者接入、槽位误判、自设面板双硬编码、目标转换规则等背景资料，只作追溯 |
+| `docs/role-catalog.md` / `docs/PATCH-NOTES.md` / `docs/QUESTIONS.md` | 角色总览 / 各版补丁说明底稿 / 待决问题 |
+| `docs/HANDOFF.md` / `docs/HANDOFF-SHADOW.md` / `docs/HANDOFF-NEXT.md` | **历史交接文档（已过期）**：早期影武者接入、槽位误判、自设面板双硬编码、目标转换规则等背景资料，只作追溯（`docs/SHADOW-ROLE.md` 已不存在，内容并入角色手册与记忆） |
