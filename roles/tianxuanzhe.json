@@ -1,0 +1,54 @@
+{
+ "pool": 3,
+ "role": 32,
+ "pinyin": "tianxuanzhe",
+ "cn": "天选者",
+ "name_key": "TXNAME",
+ "desc_key": "TXDESC",
+ "investigator": [
+  "E588A4E696ADE58A9B1",
+  "E588A4E696ADE58A9B2"
+ ],
+ "crime_key": "TXCRIME",
+ "options": [
+  {
+   "i": 0,
+   "important": 2,
+   "default": true,
+   "key": "04B49A5F"
+  },
+  {
+   "i": 2,
+   "important": 2,
+   "default": false,
+   "key": "TXOPT4"
+  },
+  {
+   "i": 3,
+   "important": 2,
+   "default": false,
+   "key": "TXOPT5"
+  }
+ ],
+ "flag10": true,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "不受交换影响：雷击/猜测目标取自 gv_action[玩家][0]（gf_SKK_3_tianxuanzhe 90620 起），而女巫/巴士司机的交换只改写 gv_visitation（11458 / 11632）"
+  },
+  "investigate": {
+   "text": "有：雷击命中时由击杀函数记谋杀案底（gf_ESThunderKill）；探员线索为「判断力」类别两条（E588A4E696ADE58A9B1/2）；图鉴犯罪 = TXCRIME",
+   "investigator": true
+  },
+  "restrict": {
+   "text": "可被限制：结算调用点 13122 带 (gv_roleblocked[lv_a] == 0) 守卫 ⇒ 被舞娘限制当夜不出手",
+   "guard_at": "gf_SequenceKills 调用点 13122"
+  },
+  "guessage": {
+   "text": "可猜：审查页中立项（gf_ASGuessPool 项4）下标 19 → 32；身份选择栏与 -guess 同源（gv_roleNameInput 拼音）",
+   "in_guess_list": true
+  }
+ },
+ "note": "机械字段由 tools/role_gen.py --dump 导出；四项交互必须人工逐条回答（记忆 792）"
+}

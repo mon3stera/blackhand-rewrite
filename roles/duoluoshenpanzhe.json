@@ -1,0 +1,42 @@
+{
+ "pool": 3,
+ "role": 13,
+ "pinyin": "duoluoshenpanzhe",
+ "cn": "堕落审判者",
+ "name_key": "1963A32D",
+ "desc_key": "9510AB12",
+ "investigator": [
+  "E588A4E696ADE58A9B1",
+  "E588A4E696ADE58A9B2"
+ ],
+ "crime_key": null,
+ "options": [
+  {
+   "i": 1,
+   "important": 2,
+   "default": true,
+   "key": "04B49A5F"
+  }
+ ],
+ "flag10": true,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "不受交换影响：惩罚票按 gv_action 在 Prep 直接累加（gf_SKP_3_duoluoshenpanzhe 11180 调用点），访问走 gf_BHVisitSelf ⇒ 交换改不到它的惩罚对象"
+  },
+  "investigate": {
+   "text": "无案底：全脚本唯一「击杀但不记谋杀案底」的角色（gf_SKP_3_duoluoshenpanzhe_2 只做 gf_BHVisitSelf）；图鉴犯罪可能 = 无",
+   "investigator": true
+  },
+  "restrict": {
+   "text": "已知漏洞（记忆 788）：惩罚票在 Prep 累加、结算块无 (gv_roleblocked[lv_a] == 0) 守卫 ⇒ 被舞娘限制后当夜仍然出票",
+   "guard_at": null
+  },
+  "guessage": {
+   "text": "可猜：审查页中立项下标 13 → 13",
+   "in_guess_list": true
+  }
+ },
+ "note": "机械字段由 tools/role_gen.py --dump 导出；四项交互必须人工逐条回答（记忆 792）"
+}

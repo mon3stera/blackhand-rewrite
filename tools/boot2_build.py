@@ -287,6 +287,19 @@ def main() -> int:
         print('✗ sk_verify 未通过，停止打包')
         return 1
 
+    # 0e) 角色登记表（shw248）：spec 里的角色必须逐项登记（定义块 / 拼音 / 开关四件套 /
+    #     图鉴犯罪 / 四项交互声明），且各路「上界」必须 ≥ 脚本里实际存在的最大角色号。
+    #     加角色忘了放宽上界 = 角色静默发不到（shw115/149 的事故类型）。
+    rg = subprocess.run([sys.executable, str(ROOT / 'tools' / 'role_gen.py')],
+                        capture_output=True, text=True)
+    rg_tail = [x for x in rg.stdout.strip().splitlines() if x.startswith(('✓', '✗'))]
+
+    print(rg_tail[-1] if rg_tail else '(role_gen 无输出)')
+
+    if rg.returncode != 0:
+        print('✗ role_gen 未通过（角色登记与 spec 不一致，看 roles/*.json），停止打包')
+        return 1
+
     if out.exists():
         print(f"  ! 覆盖已存在的 {out}")
 

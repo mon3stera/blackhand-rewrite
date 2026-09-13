@@ -1,0 +1,48 @@
+{
+ "pool": 3,
+ "role": 31,
+ "pinyin": "yingwuzhe",
+ "cn": "影武者",
+ "name_key": "SHWNAME",
+ "desc_key": "SHWDESC",
+ "investigator": [
+  "E9A38EE8A1A31",
+  "E9A38EE8A1A32"
+ ],
+ "crime_key": "SHWCRIME",
+ "options": [
+  {
+   "i": 0,
+   "important": 2,
+   "default": true,
+   "key": "04B49A5F"
+  },
+  {
+   "i": 1,
+   "important": 2,
+   "default": false,
+   "key": "SHWOPT2"
+  }
+ ],
+ "flag10": true,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "受影响：两个模式都用 gf_BHVisitAction 把目标写进 gv_visitation（gf_SKP_3_yingwuzhe / _2）⇒ 女巫/巴士司机的 visitation 交换会改变他实际打的人"
+  },
+  "investigate": {
+   "text": "有：追击模式记非法闯入案底（gf_SKP_3_yingwuzhe_2 里的 gf_BHCrimeTrespass）；探员线索按原图设定；图鉴犯罪 = SHWCRIME",
+   "investigator": true
+  },
+  "restrict": {
+   "text": "可被限制：结算块留在 gf_SequenceKills 内联（因跨块共享 lv_tShadow 未抽取），shw219 已补 (gv_roleblocked[lv_a] == 0) 守卫",
+   "guard_at": "gf_SequenceKills 内联块（shw219）"
+  },
+  "guessage": {
+   "text": "可猜：审查页中立项下标 18 → 31（shw205 起）",
+   "in_guess_list": true
+  }
+ },
+ "note": "机械字段由 tools/role_gen.py --dump 导出；四项交互必须人工逐条回答（记忆 792）"
+}
