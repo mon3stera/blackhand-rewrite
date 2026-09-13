@@ -280,14 +280,13 @@ string[16] gv_save64;
 // ===== shw254：保存格位（多槽位 + 命名）shw254b 改版 =====
 // 复用作者既有机制：生成代码 gf_OSSaveSlotBASE64 / 载入 gf_OSLoadBase64 / 落盘 gf_CAssembleSaveSlotBank
 // 存储：银行 I 段 Slot<N>Code / Slot<N>Name / ActiveSlot（原有 Trial 单槽键保持不动，老档迁移到槽位 1）
-const int c_bhSaveSlotCount = 6;
+const int c_bhSaveSlotCount = 10; // shw258：6 → 10（用户要求）；数组第二维必须 ≥ 上限 + 1
 int gv_saveSlotFrame;
 int[10] gv_saveSlotItem;
-string[16][7] gv_saveSlotCode;
-string[16][7] gv_saveSlotName;
+string[16][11] gv_saveSlotCode;
+string[16][11] gv_saveSlotName;
 int[16] gv_saveSlotSel;
 bool gv_saveSlotBusy;
-int gv_saveSlotRefreshes; // shw256：重建次数（只在 c_bhSoloBuild 下显示在状态行，用于确认没有事件循环）
 trigger gt_BHSaveSlotSel;
 int gv_chatBox;
 int[21][3] gv_chatBoxItem;
@@ -91904,7 +91903,6 @@ void gf_BHSaveSlotRefresh (int lp_player) {
     }
 
     gv_saveSlotBusy = false;
-    gv_saveSlotRefreshes += 1;
 
     // 名字输入框：显示选中槽位的名字
     lv_name = gv_saveSlotName[lp_player][lv_slot];
@@ -91934,12 +91932,6 @@ void gf_BHSaveSlotRefresh (int lp_player) {
         if ((lv_name != "")) {
             lv_text = (lv_text + StringExternal("Param/Value/SHWSLOTS4") + StringToText(lv_name));
         }
-    }
-
-    // shw256：测试构建下把重建次数显示出来。正常使用永远是个位数；如果出现每帧重建的事件循环，
-    // 这个数字会以肉眼可见的速度飙升（用户实测的「巨卡 + 内存暴涨」就是这个循环）。
-    if ((c_bhSoloBuild == true)) {
-        lv_text = (lv_text + StringToText("  [重建 " + IntToString(gv_saveSlotRefreshes) + "]"));
     }
 
     libNtve_gf_SetDialogItemText(gv_saveSlotItem[7], lv_text, PlayerGroupSingle(lp_player));
@@ -92076,11 +92068,10 @@ void gf_BHSaveSlotBuild () {
         gv_saveSlotSel[lv_a] = 1;
     }
 
-    // shw257 布局改版（用户要求）：①去掉「新建槽位」按钮 —— 列表里 6 个槽位一眼看全，
-    // 选中空槽位直接「保存槽位」就是新建 ②列表加高到能完整显示 6 行（原来 120 高只看得到 3 行半）
-    // ③名字输入框加高到 40（28 太扁，文字被裁得看不清）④三个动作按钮并排一行
-    // ⑤整块上移（y 130 → 30）
-    DialogCreate(500, 380, c_anchorLeft, 350, 30, false);
+    // shw258 布局：槽位 6 → 10（列表按实测行高约 36 单位加高到 372，十行全见）；三个动作按钮加高到 40；
+    // 高度 380 → 540 时 y 同步 +80（c_anchorLeft 的纵向偏移是相对屏幕中线，加高一半才保持**顶边不动** ——
+    // 用户说「现在这个位置很好」，顶边上面紧挨着原图的变体说明文字，不能被顶掉）。
+    DialogCreate(500, 540, c_anchorLeft, 350, 110, false);
     gv_saveSlotFrame = DialogLastCreated();
     DialogSetImageVisible(gv_saveSlotFrame, false);
 
@@ -92092,35 +92083,35 @@ void gf_BHSaveSlotBuild () {
     libNtve_gf_SetDialogItemText(gv_saveSlotItem[0], StringExternal("Param/Value/SHWSLOT1"), PlayerGroupAll());
     DialogControlSetEnabled(gv_saveSlotItem[0], PlayerGroupAll(), false);
 
-    // 槽位列表（高度 = 六行整，不用滚动条）
+    // 槽位列表（高度 = 十行整，不用滚动条）
     DialogControlCreate(gv_saveSlotFrame, c_triggerControlTypeListBox);
     gv_saveSlotItem[1] = DialogControlLastCreated();
-    DialogControlSetSize(gv_saveSlotItem[1], PlayerGroupAll(), 500, 212);
+    DialogControlSetSize(gv_saveSlotItem[1], PlayerGroupAll(), 500, 372);
     DialogControlSetPosition(gv_saveSlotItem[1], PlayerGroupAll(), c_anchorTopLeft, 0, 28);
 
     // 名字输入框（+ 左侧标签）
     DialogControlCreate(gv_saveSlotFrame, c_triggerControlTypeLabel);
     gv_saveSlotItem[2] = DialogControlLastCreated();
     DialogControlSetSize(gv_saveSlotItem[2], PlayerGroupAll(), 110, 40);
-    DialogControlSetPosition(gv_saveSlotItem[2], PlayerGroupAll(), c_anchorTopLeft, 0, 248);
+    DialogControlSetPosition(gv_saveSlotItem[2], PlayerGroupAll(), c_anchorTopLeft, 0, 408);
     libNtve_gf_SetDialogItemText(gv_saveSlotItem[2], StringExternal("Param/Value/SHWSLOTH"), PlayerGroupAll());
     DialogControlSetEnabled(gv_saveSlotItem[2], PlayerGroupAll(), false);
 
     DialogControlCreate(gv_saveSlotFrame, c_triggerControlTypeEditBox);
     gv_saveSlotItem[3] = DialogControlLastCreated();
     DialogControlSetSize(gv_saveSlotItem[3], PlayerGroupAll(), 380, 40);
-    DialogControlSetPosition(gv_saveSlotItem[3], PlayerGroupAll(), c_anchorTopLeft, 120, 248);
+    DialogControlSetPosition(gv_saveSlotItem[3], PlayerGroupAll(), c_anchorTopLeft, 120, 408);
 
-    // 动作按钮（shw257：三个并排一行；编号 [4] 保存 / [5] 载入 / [6] 删除）
-    libNtve_gf_CreateDialogItemButton(gv_saveSlotFrame, 162, 28, c_anchorTopLeft, 0, 296, StringExternal("Param/Value/SHWSLOTT2"), StringExternal("Param/Value/SHWSLOT6"), "Assets\\Textures\\ui_checkboxbutton_normaloverpressedover_terran.dds");
+    // 动作按钮（三个并排一行，shw258 加高到 40；编号 [4] 保存 / [5] 载入 / [6] 删除）
+    libNtve_gf_CreateDialogItemButton(gv_saveSlotFrame, 162, 40, c_anchorTopLeft, 0, 456, StringExternal("Param/Value/SHWSLOTT2"), StringExternal("Param/Value/SHWSLOT6"), "Assets\\Textures\\ui_checkboxbutton_normaloverpressedover_terran.dds");
     gv_saveSlotItem[4] = DialogControlLastCreated();
     libNtve_gf_SetDialogItemImage(gv_saveSlotItem[4], "Assets\\Textures\\ui_checkboxbutton_normalpressed_terran.dds", PlayerGroupAll());
 
-    libNtve_gf_CreateDialogItemButton(gv_saveSlotFrame, 162, 28, c_anchorTopLeft, 169, 296, StringExternal("Param/Value/SHWSLOTT3"), StringExternal("Param/Value/SHWSLOT7"), "Assets\\Textures\\ui_checkboxbutton_normaloverpressedover_terran.dds");
+    libNtve_gf_CreateDialogItemButton(gv_saveSlotFrame, 162, 40, c_anchorTopLeft, 169, 456, StringExternal("Param/Value/SHWSLOTT3"), StringExternal("Param/Value/SHWSLOT7"), "Assets\\Textures\\ui_checkboxbutton_normaloverpressedover_terran.dds");
     gv_saveSlotItem[5] = DialogControlLastCreated();
     libNtve_gf_SetDialogItemImage(gv_saveSlotItem[5], "Assets\\Textures\\ui_checkboxbutton_normalpressed_terran.dds", PlayerGroupAll());
 
-    libNtve_gf_CreateDialogItemButton(gv_saveSlotFrame, 162, 28, c_anchorTopLeft, 338, 296, StringExternal("Param/Value/SHWSLOTT4"), StringExternal("Param/Value/SHWSLOTA"), "Assets\\Textures\\ui_checkboxbutton_normaloverpressedover_terran.dds");
+    libNtve_gf_CreateDialogItemButton(gv_saveSlotFrame, 162, 40, c_anchorTopLeft, 338, 456, StringExternal("Param/Value/SHWSLOTT4"), StringExternal("Param/Value/SHWSLOTA"), "Assets\\Textures\\ui_checkboxbutton_normaloverpressedover_terran.dds");
     gv_saveSlotItem[6] = DialogControlLastCreated();
     libNtve_gf_SetDialogItemImage(gv_saveSlotItem[6], "Assets\\Textures\\ui_checkboxbutton_normalpressed_terran.dds", PlayerGroupAll());
 
@@ -92128,7 +92119,7 @@ void gf_BHSaveSlotBuild () {
     DialogControlCreate(gv_saveSlotFrame, c_triggerControlTypeLabel);
     gv_saveSlotItem[7] = DialogControlLastCreated();
     DialogControlSetSize(gv_saveSlotItem[7], PlayerGroupAll(), 500, 26);
-    DialogControlSetPosition(gv_saveSlotItem[7], PlayerGroupAll(), c_anchorTopLeft, 0, 336);
+    DialogControlSetPosition(gv_saveSlotItem[7], PlayerGroupAll(), c_anchorTopLeft, 0, 506);
     DialogControlSetEnabled(gv_saveSlotItem[7], PlayerGroupAll(), false);
 
     DialogSetVisible(gv_saveSlotFrame, PlayerGroupAll(), false);
