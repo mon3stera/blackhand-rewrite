@@ -59,6 +59,44 @@ REVIEW_EXCLUDE = {
 }
 
 
+# 角色相关的「文案键」变量：登记行 + 角色卡（缺键的症状 = 界面直接显示 Param/Value/KEY；
+# 天选者 TXBOX4 就漏过一版）。拼音表不在此列（它是拼音、不是文本键）。
+ROLE_STR_VARS = {
+    "gv_roleNameArray": "角色名",
+    "gv_roleDescriptionArray": "角色描述",
+    "gv_roleInvestigatorArray": "探员线索",
+    "gv_e78AAFE7BDAAE58FAFE883BD": "图鉴犯罪",
+    "gv_roleOptionsText": "开关文案",
+    "gv_roleBoxText": "角色卡",
+}
+GAME_STRINGS = "zhCN.SC2Data/LocalizedData/GameStrings.txt"
+
+
+def load_gamestrings():
+    """打包第 ⑦ 件的同序合并：自加 strings-*.txt 优先，基线 zhCN 兜底。"""
+    import glob
+
+    import sc2map
+
+    gs = {}
+    base = ROOT / "work" / "boot2-user.SC2Map"
+    if base.exists():
+        try:
+            raw = sc2map.read(base, GAME_STRINGS).decode("utf-8", errors="replace")
+            for line in raw.split("\n"):
+                if "=" in line and not line.startswith("//"):
+                    k, v = line.split("=", 1)
+                    gs.setdefault(k.strip(), v.strip())
+        except Exception as exc:
+            print(f"    ! 基线 zhCN 读取失败（{exc}），只查自加文案")
+    for f in sorted(glob.glob(str(ROOT / "work" / "blackhand" / "strings-*.txt"))):
+        for line in Path(f).read_text(encoding="utf-8").split("\n"):
+            if "=" in line and not line.startswith("//"):
+                k, v = line.split("=", 1)
+                gs[k.strip()] = v.strip()
+    return gs
+
+
 def func_span(lines, name):
     for i, l in enumerate(lines):
         if re.match(rf"^\w+ {name} \(", l) and l.rstrip().endswith("{"):
@@ -373,6 +411,44 @@ def main() -> int:
         print(f"    {'✗' if bad else '✓'} {fn:26s} {len(hits)} 处 = {sorted(set(hits))} —— {why}")
         if bad:
             problems.append(f"{fn} 有 {len(bad)} 处上界 < {gmax}（{bad}）")
+
+    # ---------- 1b) 文案键存在性（不需要 spec，覆盖全部角色）----------
+    print("\n[1b] 文案键存在性（登记行 + 角色卡引用的 Param/Value/键 必须真的存在）")
+    gs = load_gamestrings()
+    sites, checked = {}, 0
+    for i, l in enumerate(sc.lines, 1):
+        vm = re.match(r"\s*(gv_\w+)\s*\[", l)
+        if not vm or vm.group(1) not in ROLE_STR_VARS:
+            continue
+        km = re.search(r'StringExternal\("Param/Value/(\w+)"\)', l)
+        if not km:
+            continue
+        checked += 1
+        sites.setdefault(km.group(1), []).append((vm.group(1), i, l))
+
+    def role_of(line, var):
+        """字面下标的登记行 → (池, 角色)；角色卡是 lv_a ⇒ 靠上方最近的角色条件定位。"""
+        idx = re.match(rf"\s*{var}\[(\d+)\]\[(\d+)\]", line)
+        if idx:
+            return (int(idx.group(1)), int(idx.group(2)))
+        return None
+
+    fatal, stale = [], []
+    for key, where in sorted(sites.items()):
+        if f"Param/Value/{key}" in gs or key in gs:
+            continue
+        living = any(r in named for r in (role_of(l, v) for v, _, l in where) if r)
+        tag = f"{ROLE_STR_VARS[where[0][0]]}键 {key} 缺文案（{len(where)} 处，首见行 {where[0][1]}）"
+        (fatal if living else stale).append(tag)
+    print(f"    检查 {checked} 处引用 / {len(sites)} 个不同键 ⇒ "
+          f"缺文案 {len(fatal) + len(stale)} 个（活角色 {len(fatal)} / 遗留 {len(stale)}）")
+    for x in fatal:
+        print(f"    ✗ {x}")
+    for x in stale[:6]:
+        print(f"    · {x}")
+    if len(stale) > 6:
+        print(f"    · …另有 {len(stale) - 6} 个遗留角色键缺文案（原图未启用角色，不拦打包）")
+    problems += fatal
 
     # ---------- 2) 审查页：列表必须 == 该池有名字的角色 ----------
     print("\n[2] 审查页（gf_ASGuessRole 与列表构建的一致性）")

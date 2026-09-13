@@ -123,7 +123,10 @@ def norm(s):
 
 
 def find_dead_span(text):
-    """gf_SequenceBullshitBackup 的字符区间（幽灵副本，不改）。"""
+    """gf_SequenceBullshitBackup 的字符区间（幽灵副本，不改）。
+
+    该函数已在 shw249（tools/dead_code_prune.py）整段删除 ⇒ 正常返回 None，
+    调用方按「没有死代码区间」处理即可（不要把它当错误）。"""
     m = re.search(r"^void gf_SequenceBullshitBackup \(\) \{", text, re.M)
     if not m:
         return None
