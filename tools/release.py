@@ -245,18 +245,25 @@ def cmd_build(data: dict, cid, deploy: bool, skip_notes: bool, force: bool) -> i
 
     descs = [v for _, k, _, v in ents if k == 'DocInfo/DescLong']
     desc = max(descs, key=len) if descs else ''
-    head = ''.join(c for c in (ch.get('desc_prepend') or '')[:24] if c not in '<>')
+    # 比对前两边都要剥掉富文本标记（<n/> 等），否则「我们给的文本」与「包内文本」永远对不上
+    plain = re.sub(r'<[^>]*>', '', desc)
+    text_of = lambda t: re.sub(r'<[^>]*>', '', t or '')
+    head, tail = text_of(ch.get('desc_prepend'))[:24], text_of(ch.get('desc_append'))[:24]
+    i_tail, i_orig = (plain.find(tail) if tail else -1), plain.find('原作者')
     checks = [
-        (not head or head in desc, f'该线的前置说明「{head}…」没写进地图详情'),
-        ('國仕' in desc and '256373733' in desc, '原作者署名 / 原企鹅群号丢了（红线：署名与致谢必须保留）'),
-        (bh_meta.AUTH_NOTICE not in desc, '作废的「未取得原作者授权…会立刻下架」声明句又回来了'),
+        (not head or head in plain, f'该线的前置说明「{head}…」没写进地图详情'),
+        (not tail or i_tail >= 0, f'该线的追加说明「{tail}…」没写进地图详情'),
+        (not tail or (i_tail >= 0 and i_orig >= 0 and i_tail > i_orig),
+         '追加说明跑到基线原文**前面**去了（口径：原文在上、我们的新增在下）'),
+        ('國仕' in plain and '256373733' in plain, '原作者署名 / 原企鹅群号丢了（红线：署名与致谢必须保留）'),
+        (bh_meta.AUTH_NOTICE not in plain, '作废的「未取得原作者授权…会立刻下架」声明句又回来了'),
     ]
     bad = [msg for ok, msg in checks if not ok]
 
     if bad:
         sys.exit('✗ 地图详情回读不合预期：' + '；'.join(bad))
 
-    print(f'   回读地图详情 {len(desc)} 字：前置说明 ✓ 原作署名/原群号 ✓ 无作废声明句 ✓')
+    print(f'   回读地图详情 {len(desc)} 字：按线说明 ✓ 位置正确 ✓ 原作署名/原群号 ✓ 无作废声明句 ✓')
 
     size, digest = out.stat().st_size, md5(out)
     ch.update({'pending': want, 'status': '待投',
