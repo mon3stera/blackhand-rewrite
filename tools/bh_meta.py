@@ -84,10 +84,13 @@ def encode(key, value, locale=ZH):
     return struct.pack('<H', len(kb)) + kb + locale + struct.pack('<H', len(vb)) + vb
 
 
-def set_notes(path, items, locale='zhCN', write_strings=True):
+def set_notes(path, items, locale='zhCN', write_strings=True, keys_all_locales=()):
     """items: [(编号或完整键, 正文)]；已存在则原字节替换，不存在则追加。
 
     只动目标条目的字节，其余条目（含 MapInfo/* 等）原样保留 —— 整表重编码会丢数据。
+
+    keys_all_locales: 这些键要**写进所有语种**的副本（同一次 DocumentHeader 写入内完成）。
+    地图名这类字段在 header 里有 enUS/zhCN 两份，只改 zhCN 会让另一份留着旧名。
     """
     raw = sc2map.read(path, HEADER)
     all_ents = parse_entries(raw)
@@ -100,14 +103,17 @@ def set_notes(path, items, locale='zhCN', write_strings=True):
 
     for num, text in items:
         key = num if '/' in num else f'DocInfo/PatchNote{int(num):03d}'
-        hit = [e for e in all_ents if e[1] == key and e[2] == locale]
+        every = key in keys_all_locales
+        hit = [e for e in all_ents if e[1] == key and (every or e[2] == locale)]
 
         if hit:
-            off, _, _, old = hit[0]
-            old_bytes = encode(key, old, locale.encode('ascii')[::-1])
-            assert raw[off:off + len(old_bytes)] == old_bytes, f'{key} 原条目编解码不一致'
-            rel = off - table_start
-            table = table[:rel] + encode(key, text, locale.encode('ascii')[::-1]) + table[rel + len(old_bytes):]
+            # 多语种命中时按偏移**从后往前**改，否则前一处长度变化会让后一处偏移失效
+            for off, _, loc, old in sorted(hit, key=lambda e: -e[0]):
+                tag = loc.encode('ascii')[::-1]
+                old_bytes = encode(key, old, tag)
+                assert raw[off:off + len(old_bytes)] == old_bytes, f'{key} 原条目编解码不一致'
+                rel = off - table_start
+                table = table[:rel] + encode(key, text, tag) + table[rel + len(old_bytes):]
             updated.append(key)
         else:
             table = table + encode(key, text, locale.encode('ascii')[::-1])
@@ -374,12 +380,16 @@ def pick_notes(path, spec, fresh):
     return out
 
 
-def apply_file(path, notes_path, defer_strings=False):
+def apply_file(path, notes_path, defer_strings=False, overrides=None):
     """按源文件写入补丁说明 + 加载页面（打包管线第 ⑧ 步，可重复执行）。
 
     defer_strings=True 时不写 zhCN，而是把 zhCN 该有的行**返回**给调用方并进文案合并 ——
     因为 MPQ 每次写成员都是追加、旧数据不回收，同一成员一次构建只能写一次
     （zhCN 写 3 次 ≈ 白胖 620 KB）。
+
+    overrides: {完整键: 正文}，与补丁说明在同一趟里写入（**排在最后** ⇒ 同名键由它说了算）。
+    多发布线（主图 / 备线）只差一个地图名时用这个口子改 `DocInfo/Name`，避免为了改名
+    单独调一次 `set` —— 那会第二次写 zhCN，白胖约 300 KB。
     """
     blocks, cur, loading_spec, loading_keep = [], None, 'none', 'newest'
     for raw in Path(notes_path).read_text(encoding='utf-8').splitlines():
@@ -452,8 +462,14 @@ def apply_file(path, notes_path, defer_strings=False):
         # 事后在外面按字节改写会破坏长度前缀（shw199 事故）
         # 历史条目排在新说明之前：同名键由后面的新说明覆盖（set_notes 后写生效）
         items = hist_items + items
+
+        if overrides:
+            items = items + list(overrides.items())
+            print(f'  覆盖条目 {sorted(overrides)}（多发布线：地图名等）')
+
         items = [(k, harmonize(v)) for k, v in items]
-        added, updated, pending = set_notes(path, items, write_strings=not defer_strings)
+        added, updated, pending = set_notes(path, items, write_strings=not defer_strings,
+                                            keys_all_locales=tuple(overrides or ()))
         for version, nums, notes in out:
             print(f'  版本 {version} 说明 {nums}（正文新增 {len(added)}、改写 {len(updated)}）；加载页面已同步')
 

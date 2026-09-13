@@ -238,6 +238,8 @@ def main() -> int:
     ap.add_argument('--strings', nargs='*', default=None, help='自加文案文件（默认 work/blackhand/strings-*.txt）')
     ap.add_argument('--skip-strings', action='store_true', help='不合并文案（仅当基线已含全部累积键时）')
     ap.add_argument('--skip-notes', action='store_true', help='不写补丁说明/加载页面（仅供验证包）')
+    ap.add_argument('--name', default=None,
+                    help='覆盖包内地图名（DocInfo/Name）—— 多发布线用，例如备线「黑手：避难 Revision」')
     args = ap.parse_args()
 
     out = Path(args.out)
@@ -341,8 +343,11 @@ def main() -> int:
     #    因为 MPQ 每次写成员都是追加、旧数据不回收，同一成员一次构建只能写一次）
     notes_missing = []
     if NOTES_SRC.exists() and not args.skip_notes:
-        res, extra = bh_meta.apply_file(out, NOTES_SRC, defer_strings=True)
+        overrides = {'DocInfo/Name': args.name} if args.name else None
+        res, extra = bh_meta.apply_file(out, NOTES_SRC, defer_strings=True, overrides=overrides)
         print(f"6a) 补丁说明 {[v for v, _, _ in res]}；加载页面已同步 ← {NOTES_SRC.name}")
+        if args.name:
+            print(f"6b) 地图名 → {args.name!r}（DocInfo/Name，随文案合并一次写入 zhCN）")
     else:
         extra = {}
         print('6a) 补丁说明 跳过')

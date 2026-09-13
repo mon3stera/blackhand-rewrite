@@ -185,6 +185,23 @@ python3 tools/boot2_build.py --out work/boot2-<name>.SC2Map      # 八件套 + �
 - **boot2 包内结构**：`Triggers` + 2.7KB `MapScript.galaxy`（只含 `include "TriggerLibs/NativeLib"` 与 `include "CustomLogic"`）+ 完整 `CustomLogic.galaxy`；**触发器链引用 CustomLogic 里的函数**，故回读校验看包内 `CustomLogic.galaxy`（不是 MapScript）。
 - **`sc2pack.py`**（rogue 等独立图用）把 galaxy 塞进 MapScript 并剥触发器 → boot2 缺触发器函数必炸，两条管线不能混。
 
+### 发版（两条线轮流投，2026-09-13 起）
+
+平台审核要排队（周末尤其慢），一版在审时玩家只能玩上一版 ⇒ 同时挂**两条线**：
+主线「黑手：升温 Revision」+ 备线「黑手：避难 Revision」，每次把新版投给**版本更旧**的那条。
+**两条线必须用同一个账号发布** —— bank 命名空间取作者 toon（不是地图名），所以玩家存档/成就/积分互通。
+
+```bash
+python3 tools/release.py status                     # 版本、各线状态、已发 tag、下一条该投谁
+python3 tools/release.py build --channel shelter    # 出这条线的包（自动套该线的地图名）并投放桌面 + Test 目录
+python3 tools/release.py tag                        # 发版后打 git tag（= 这一版已出厂的不可变标记）
+python3 tools/release.py mark --channel main --status 已通过
+```
+
+- 台账 `work/release-channels.json`（各线图名/版本/状态/包 md5）；**版本号唯一真源仍是 `patch-notes.txt` 的 `@release`**。
+- 备线的地图名走打包器 `--name`：它在**第 ⑥ 步**与补丁说明同一趟写进 `DocumentHeader`（含 enUS/zhCN 两份副本）+ zhCN；**别事后单独调 `bh_meta set`** —— 那会第二次写 zhCN，白胖约 300 KB。
+- 守卫：`build` 拒绝把比线上更旧的版本投回去、拒绝重复投同一版（修包重投用 `--force`）；`tag` 要求工作区干净且 tag 名与 `@release` 一致。
+
 ## 环境
 
 | 项 | 值 |
