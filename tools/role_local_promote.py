@@ -1,0 +1,167 @@
+#!/usr/bin/env python3
+r"""阶段三前置：把「函数局部数组」提升为函数专属全局 + 入口清零。
+
+为什么需要：夜间结算族的角色块靠函数内局部数组做跨块状态（如 `lv_z[1] = true`
+表示"某组已行动"、`lv_list` 是投票候选表）。Galaxy **不能把数组当参数传**，
+所以这些块抽不出函数。提升为全局后，块只读全局，就能整块搬运。
+
+为什么等价：GUI 生成的函数局部**每次调用都是全新的**（数组元素为 0/false）。
+改成"函数专属全局 + 函数入口清零"后，函数内每次执行的初始状态完全相同
+（前提：函数不被重入 —— 夜间结算链是单线程顺序调用，已核对）。全局名带函数
+前缀，避免与别处的同名局部（如 `gf_SequenceAfter2` 里也有自己的 `lv_wait`）混淆。
+
+证明（--check 也跑）：
+  ① 被提升的局部确实在该函数里以该类型声明；
+  ② 重命名只发生在该函数体内，且逐行满足 `新行 == 旧行.replace(旧名, 新名)`；
+  ③ 该函数体内不再遗留原名（声明行已删除）；
+  ④ 入口清零插在声明区之后、第一条语句之前。
+
+用法：
+    python3 tools/role_local_promote.py --check
+    python3 tools/role_local_promote.py
+"""
+
+import argparse
+import re
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+SCRIPT = ROOT / "work/blackhand/CustomLogic.galaxy"
+
+MARK = "// ===== BH:SK 局部数组提升（阶段三前置）====="
+
+# 函数 → [(原局部名, 新全局名, 声明类型)]；类型照抄原声明
+SPEC = {
+    "gf_SequenceAfter": [
+        ("lv_d", "gv_seqAfterD", "int[16]"),
+        ("lv_e7989FE796ABE68EA2E59198E4BAA4E4BA92", "gv_seqAfterPlagueInteract", "bool[16]"),
+        ("lv_wait", "gv_seqAfterWait", "bool[5]"),
+    ],
+}
+
+DECL_RE = re.compile(r"^\s*(?:const\s+)?([A-Za-z][\w\[\]]*)\s+(\w+)\s*(?:=|;)")
+
+
+def func_span(lines, name):
+    for i, l in enumerate(lines):
+        if re.match(rf"^\w+ {name} \(", l) and l.rstrip().endswith("{"):
+            depth = 0
+            for j in range(i, len(lines)):
+                depth += lines[j].count("{") - lines[j].count("}")
+                if depth == 0:
+                    return i, j
+    return None
+
+
+def zero_of(typ):
+    return "false" if typ.split("[")[0] == "bool" else "0"
+
+
+def resets(name, typ):
+    d = [int(x) for x in re.findall(r"\[(\d+)\]", typ)]
+    if len(d) == 2:
+        idx = [(i, j) for i in range(d[0]) for j in range(d[1])]
+        return [f"    {name}[{i}][{j}] = {zero_of(typ)};" for i, j in idx]
+    if len(d) == 1:
+        return [f"    {name}[{i}] = {zero_of(typ)};" for i in range(d[0])]
+    raise SystemExit(f"✗ 暂不支持 {len(d)} 维数组：{typ}")
+
+
+def decl_end(lines, s, e):
+    k = s + 1
+    while k <= e:
+        t = lines[k].strip()
+        if t == "" or t.startswith("//") or DECL_RE.match(lines[k]):
+            k += 1
+            continue
+        break
+    return k
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--check", action="store_true")
+    args = ap.parse_args()
+
+    text = SCRIPT.read_text(encoding="utf-8")
+    if MARK in text:
+        sys.exit("✗ 已提升过（文件里有标记），拒绝重复执行")
+
+    lines = text.split("\n")
+    plans = {}
+
+    for fn, items in SPEC.items():
+        span = func_span(lines, fn)
+        if not span:
+            sys.exit(f"✗ 找不到 {fn}")
+        s, e = span
+        rename, delete = {}, set()
+        globs = []
+        for local, glob, typ in items:
+            decl = f"{typ} {local};"
+            if not any(lines[k].strip() == decl for k in range(s, min(e, s + 300))):
+                sys.exit(f"✗ {fn} 里找不到声明「{decl}」")
+            hits = [k for k in range(s, e + 1)
+                    if re.search(rf"(?<![A-Za-z0-9_]){local}(?![A-Za-z0-9_])", lines[k])]
+            for k in hits:
+                if lines[k].strip() == decl:
+                    delete.add(k)
+                    continue
+                new = re.sub(rf"(?<![A-Za-z0-9_]){local}(?![A-Za-z0-9_])", glob, lines[k])
+                assert new == lines[k].replace(local, glob), f"✗ {fn} 行{k+1} 替换不可逆"
+                rename[k] = new
+            globs.append(f"{typ} {glob};")
+            print(f"  {fn}: {local} → {glob}（{typ}；函数内 {len(hits)} 处，其中声明 1 行删除）")
+        plans[fn] = {"span": (s, e), "rename": rename, "delete": delete,
+                     "insert": decl_end(lines, s, e), "globs": globs}
+
+    # 证明①：函数体内不留原名
+    for fn, p in plans.items():
+        s, e = p["span"]
+        left = []
+        for k in range(s, e + 1):
+            if k in p["delete"]:
+                continue
+            body = p["rename"].get(k, lines[k])
+            if any(re.search(rf"(?<![A-Za-z0-9_]){loc}(?![A-Za-z0-9_])", body)
+                   for loc, _, _ in SPEC[fn]):
+                left.append(k + 1)
+        if left:
+            sys.exit(f"✗ {fn} 内仍有遗留原名：{left[:3]}")
+    print("✓ 证明①：函数体内原名全部替换、声明行已删除，无遗留")
+
+    # 证明②：清零语句数与维度一致
+    for fn, p in plans.items():
+        n = sum(len(resets(glob, typ)) for _, glob, typ in SPEC[fn])
+        print(f"✓ 证明②：{fn} 入口清零共 {n} 条（= 各数组元素数之和）")
+
+    if args.check:
+        print("（--check：未落盘）")
+        return 0
+
+    out = []
+    for k, line in enumerate(lines):
+        for fn, p in plans.items():
+            s, e = p["span"]
+            if k == s:
+                out.append(MARK)
+                out += p["globs"] + [""]
+            if k == p["insert"]:
+                out.append("    // 阶段三前置（shw239）：局部数组已提升为全局，入口清零"
+                           "还原「每次调用都是全新」")
+                for _, glob, typ in SPEC[fn]:
+                    out += resets(glob, typ)
+                out.append("")
+        if k in {kk for p in plans.values() for kk in p["delete"]}:
+            continue
+        repl = next((p["rename"][k] for p in plans.values() if k in p["rename"]), None)
+        out.append(repl if repl is not None else line)
+
+    SCRIPT.write_text("\n".join(out), encoding="utf-8")
+    print("✓ 已落盘")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -29,6 +29,7 @@ ROOT = Path(__file__).resolve().parent.parent
 SCRIPT = ROOT / "work/blackhand/CustomLogic.galaxy"
 
 MARK = "// ===== BH:SK 角色块抽取（阶段三）====="
+MARK_TMPL = "// ===== BH:SK 角色块抽取（阶段三 · {fam}）====="
 PROTO_ANCHOR = "void gf_RTRoleCard (int lp_player);"
 
 # 不自动搬运的块（需人工决定接口）：
@@ -56,14 +57,44 @@ FAMILIES = {
                 "ATriad": "A", "ATriad2": "A2", "ANeutral": "A", "BNeutral": "B"},
         "params": ["lv_source", "lv_target"],
     },
+    # 夜间结算族（阶段三第二族）：主语是遍历玩家的循环变量 lv_a（不是 EventPlayer()）
+    # ⇒ 参数按块自动推导（主语 + 块内「先读后写」的局部变量），签名随之而定。
+    "night": {
+        "funcs": [
+            "gf_SequencePrep",
+            "gf_SequenceBullshit",
+            "gf_SequenceKills",
+            "gf_SequenceAfter",
+            "gf_SequenceAfter2",
+        ],
+        "tag": {"gf_SequencePrep": "P", "gf_SequenceBullshit": "B", "gf_SequenceKills": "K",
+                "gf_SequenceAfter": "F", "gf_SequenceAfter2": "G"},
+        "params": None,
+    },
+    # 单函数试点（阶段三 3b-1）：gf_SequenceAfter 已把局部数组提升为全局
+    "after": {
+        "funcs": ["gf_SequenceAfter"],
+        "tag": {"gf_SequenceAfter": "F"},
+        "params": None,
+    },
 }
 
 POOL_CN = {1: "城镇", 2: "黑手D", 3: "中立", 5: "三合会"}
 
 LOCAL_RE = re.compile(r"(?<![A-Za-z0-9_])(lv_[A-Za-z0-9_]+|auto[A-F0-9]+_(?:ae|ai))")
 WRITE_RE = re.compile(r"(?<![A-Za-z0-9_])(lv_[A-Za-z0-9_]+|auto[A-F0-9]+_(?:ae|ai))\s*=(?!=)")
-DECL_RE = re.compile(r"^\s*(?:const\s+)?(?:int|bool|text|string|fixed|point|unit|playergroup|timer|dialog|color)\s+"
+DECL_RE = re.compile(r"^\s*(?:const\s+)?([A-Za-z][\w\[\]]*)\s+"
                      r"(auto[A-F0-9]+_(?:ae|ai)|lv_[A-Za-z0-9_]+)\s*(?:=|;)")
+
+
+def decl_types(lines, s, e):
+    """函数声明区：变量名 → 类型（含 [N] 维度），用于参数签名与局部声明。"""
+    out = {}
+    for i in range(s, e + 1):
+        m = DECL_RE.match(lines[i])
+        if m:
+            out.setdefault(m.group(2), m.group(1))
+    return out
 
 
 class Block:
@@ -74,7 +105,7 @@ class Block:
 
 def func_span(lines, name):
     for i, l in enumerate(lines):
-        if re.match(rf"^\w+ {name} \(bool testConds, bool runActions\) \{{", l):
+        if re.match(rf"^\w+ {name} \(", l) and l.rstrip().endswith("{"):
             depth = 0
             for j in range(i, len(lines)):
                 depth += lines[j].count("{") - lines[j].count("}")
@@ -98,7 +129,8 @@ def find_blocks(lines, name, params):
             while not lines[j].rstrip().endswith("{") and j < e:
                 j += 1
                 buf += " " + lines[j].strip()
-            m = re.search(r"gv_roles\[([^\]]+)\]\[1\]\s*==\s*(\d+)\)\s*&&\s*\(gv_roles\[\1\]\[0\]\s*==\s*(\d+)", buf)
+            m = re.search(r"gv_roles\[([^\]]+)\]\[1\]\s*==\s*(\d+)\)\s*&&\s*\(gv_roles\[\1\]\[0\]\s*==\s*(\d+)", buf) \
+                or re.search(r"gv_roles\[([^\]]+)\]\[1\]\s*==\s*(\d+)\)\s*&&\s*\(gv_roles\[\1\]\[0\]\s*==\s*(\d+)", buf)
             if m:
                 depth, k = 0, j
                 while k <= e:
@@ -106,7 +138,7 @@ def find_blocks(lines, name, params):
                     if depth == 0:
                         break
                     k += 1
-                out.append(Block(func=name, tag=None, start=i, hdr_end=j, end=k, cond=buf,
+                out.append(Block(func=name, tag=None, start=i, hdr_end=j, end=k, cond=buf, bv=None,
                                  body="\n".join(lines[j + 1:k]), pool=int(m.group(2)), role=int(m.group(3)),
                                  src=m.group(1)))
                 i = k + 1
@@ -115,9 +147,21 @@ def find_blocks(lines, name, params):
     return out
 
 
-def analyze(lines, blocks, params, func_decls):
+def derive_params(b, params):
+    """参数 = 家族指定的固定参数（若有）+ 主语变量 + 块内「先读后写」的局部变量。"""
+    if params is None:
+        return sorted(set(b.bv) | set(b.needs_param)) if b.bv else list(b.needs_param)
+    return list(params)
+
+
+def analyze(lines, blocks, params, func_decls, types=None):
     for b in blocks:
         body = b.body
+        # 主语 = 条件里 gv_roles[...] 的变量（点击族是 lv_source，夜间族是遍历玩家的 lv_a）。
+        # 它**本就是**参数，不算「外部依赖」。
+        b.bv = re.search(r"gv_roles\[([^\]]+)\]", b.cond).group(1)
+        b.types = types or {}
+        pm = set(params) if params else {b.bv}
         read = {m.group(1) for m in LOCAL_RE.finditer(body)}
         write = {m.group(1) for m in WRITE_RE.finditer(body)}
         # 块内先读后写（或只读）的局部变量 = 需要从外面拿
@@ -132,9 +176,12 @@ def analyze(lines, blocks, params, func_decls):
         autos = sorted(n for n in read | write if n.startswith("auto"))
         cloneable = {n for n in autos if n in func_decls}
         unresolved_autos = sorted(n for n in autos if n not in func_decls)
-        needs_param = sorted(n for n, p in first_read.items()
-                             if n not in params and n not in autos
-                             and (n not in first_write or p < first_write[n]))
+        raw_deps = sorted(n for n, p in first_read.items()
+                          if n not in pm and n not in autos
+                          and (n not in first_write or p < first_write[n]))
+        # Galaxy 不能传数组 ⇒ 依赖数组的块只能留在原地
+        blocked = sorted(n for n in raw_deps if "[" in (b.types.get(n) or ""))
+        needs_param = [n for n in raw_deps if n not in blocked]
         # 真泄漏：块外**先读后写**该名字（块外自己先赋值的不算）
         outer_tail = "\n".join(lines[b.end + 1:func_span(lines, b.func)[1] + 1])
         leak = []
@@ -144,10 +191,11 @@ def analyze(lines, blocks, params, func_decls):
                 leak.append(n)
         if unresolved_autos:
             needs_param = sorted(set(needs_param) | set(unresolved_autos))
-        b.needs_param, b.autos, b.leak = needs_param, autos, leak
+        b.needs_param, b.blocked, b.autos, b.leak = needs_param, blocked, autos, leak
         b.reads, b.writes = sorted(read), sorted(write)
+        b.params = sorted(set([b.bv]) | set(needs_param)) if params is None else list(params)
         b.locals = sorted(n for n in read | write
-                          if n in func_decls and n not in params and n not in autos
+                          if n in func_decls and n not in b.params and n not in autos
                           and n not in needs_param)
     return blocks
 
@@ -167,20 +215,21 @@ def main():
         span = func_span(lines, fn)
         if not span:
             sys.exit(f"✗ 找不到 {fn}")
-        decls = {m.group(1) for i in range(span[0], span[1] + 1)
-                 for m in [DECL_RE.match(lines[i])] if m}
-        blocks = analyze(lines, find_blocks(lines, fn, fam["params"]), fam["params"], decls)
+        types = decl_types(lines, span[0], span[1])
+        blocks = analyze(lines, find_blocks(lines, fn, fam["params"]), fam["params"], set(types), types)
         for b in blocks:
-            b.tag = fam["tag"][fn.replace("gt_ASActionButton", "").replace("_Func", "")]
-            b.decls = decls
+            b.tag = fam["tag"].get(fn, fn)
+            b.decls = set(types)
         all_blocks += blocks
-        bad = [b for b in blocks if b.needs_param or b.leak]
+        bad = [b for b in blocks if b.blocked or b.leak]
         skipped += bad
         print(f"  {fn:38s} 角色块 {len(blocks):3d}  需人工 {len(bad)}")
 
     print(f"\n合计 {len(all_blocks)} 块；机械可搬 {len(all_blocks) - len(skipped)}；需人工 {len(skipped)}")
     for b in skipped:
         why = []
+        if b.blocked:
+            why.append(f"依赖数组局部 {b.blocked}")
         if b.needs_param:
             why.append(f"块内读外部局部 {b.needs_param}")
         if b.leak:
@@ -199,6 +248,7 @@ def main():
         return 0
 
     # ---------- 落盘 ----------
+    MARK = MARK_TMPL.format(fam=args.family)
     if MARK in text:
         sys.exit("✗ 已经抽取过（文件里有标记），拒绝重复执行")
 
@@ -219,7 +269,7 @@ def main():
         name = base + (f"_{seen[base]}" if seen[base] > 1 else "")
 
         # 声明区：块内用到的局部变量 + 从原函数声明区克隆的循环界（保持原顺序）
-        decls = [f"    int {n};" for n in b.locals]
+        decls = [f"    {b.types.get(n, 'int')} {n};" for n in b.locals]
         span0 = func_span(lines, b.func)[0]
         for k in range(span0, span0 + 500):
             mm = DECL_RE.match(lines[k])
@@ -237,17 +287,18 @@ def main():
         def dedent(x):
             return x[len(prefix):] if x.startswith(prefix) else x
         b.prefix, b.gen_body = prefix, [dedent(x) for x in body]
-        f = [f"// 阶段三抽取（shw237）：{POOL_CN.get(b.pool, b.pool)} {b.pool}/{b.role}"
+        sig = ", ".join(f"{b.types.get(x, 'int')} {x}" for x in b.params)
+        f = [f"// 阶段三抽取（shw238）：{POOL_CN.get(b.pool, b.pool)} {b.pool}/{b.role}"
              f" ← 原 {b.func} 行{b.start + 1}",
-             f"void {name} (int lv_source, int lv_target) {{"]
+             f"void {name} ({sig}) {{"]
         if decls:
             f += ["    // Variable Declarations"] + decls
         f += b.gen_body + ["}", ""]
         funcs.append((b, name, "\n".join(f)))
-        protos.append(f"void {name} (int lv_source, int lv_target);")
+        protos.append(f"void {name} ({sig});")
 
         indent = next((re.match(r"\s*", x).group(0) for x in body if x.strip()), "    ")
-        repl.append((b.hdr_end + 1, b.end, f"{indent}{name}(lv_source, lv_target);"))
+        repl.append((b.hdr_end + 1, b.end, f"{indent}{name}({', '.join(b.params)});"))
 
     # 等价性证明：以**原文为唯一真值**逐行验证 ——
     #   ①行数一致 ②每行 = 去掉的行首空白前缀 + 生成行（或原样）③生成行确实在函数文本里
