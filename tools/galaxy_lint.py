@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """CustomLogic.galaxy 静态体检（shw139 事故后加入）。
 
-目前检查五类「编译期才会炸」的问题：
+目前检查六类「编译期才会炸」的问题：
 
 1. **变量未声明**（auto* / lv_* 两类：自动变量与局部变量）：SC2 生成代码里的 `for ( ; ( (autoXXXX_ai >= 0 && lv_a <= autoXXXX_ae) ...)`
    依赖函数声明区的 `const int autoXXXX_ae/_ai;`。preset_gen 生成的函数曾漏掉这一段声明块
@@ -273,6 +273,23 @@ def lint(path: Path) -> int:
         problems += len(missing_glob)
     else:
         print("✓ 无未声明标识符")
+
+    # ── 第 6 项：重复函数定义（shw243 事故）────────────────────────────────
+    # 抽取器按「家族标签 + 池 + 角色」生成函数名，标签撞车就会生成同名不同签名的两个
+    # 函数（点击族的 B = gt_ASActionButtonBTown_Func，夜间 Bullshit 族也曾用 B）——
+    # 游戏内是「重复定义」编译错误，而前五项全都查不出来（每处单独看都合法）。
+    seen_defs: dict[str, list[int]] = {}
+    for start, end in func_ranges(lines):
+        nm = re.search(r"\b(\w+)\s*\(", lines[start])
+        if nm:
+            seen_defs.setdefault(nm.group(1), []).append(start + 1)
+    dup = {k: v for k, v in seen_defs.items() if len(v) > 1}
+    if dup:
+        for k, v in sorted(dup.items()):
+            print(f"✗ 函数 {k} 被定义了 {len(v)} 次，行 {v}")
+        problems += len(dup)
+    else:
+        print("✓ 无重复函数定义")
 
     print(f"{'✓' if not problems else '✗'} 扫描函数 {checked} 个，问题 {problems} 处")
     return 1 if problems else 0

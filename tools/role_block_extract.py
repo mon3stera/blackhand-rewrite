@@ -67,7 +67,9 @@ FAMILIES = {
             "gf_SequenceAfter",
             "gf_SequenceAfter2",
         ],
-        "tag": {"gf_SequencePrep": "P", "gf_SequenceBullshit": "B", "gf_SequenceKills": "K",
+        # 标签必须与点击族去重：点击族已用 A / A2 / B（BTown、BNeutral）⇒ Bullshit 改用 U
+        # （shw243 事故：两边都用 B ⇒ gf_SKB_1_bashisiji 等同名不同签名，游戏内「重复定义」）
+        "tag": {"gf_SequencePrep": "P", "gf_SequenceBullshit": "U", "gf_SequenceKills": "K",
                 "gf_SequenceAfter": "F", "gf_SequenceAfter2": "G"},
         "params": None,
     },
@@ -79,7 +81,7 @@ FAMILIES = {
     },
     # 夜间族按函数拆开跑：便于逐函数提交与回退（标记按家族名区分，天然幂等）
     "prep": {"funcs": ["gf_SequencePrep"], "tag": {"gf_SequencePrep": "P"}, "params": None},
-    "bullshit": {"funcs": ["gf_SequenceBullshit"], "tag": {"gf_SequenceBullshit": "B"}, "params": None},
+    "bullshit": {"funcs": ["gf_SequenceBullshit"], "tag": {"gf_SequenceBullshit": "U"}, "params": None},
     "kills": {"funcs": ["gf_SequenceKills"], "tag": {"gf_SequenceKills": "K"}, "params": None},
     "after": {
         "funcs": ["gf_SequenceAfter"],
