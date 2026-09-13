@@ -46,12 +46,14 @@
    - 自设界面（玩家可见）：`gv_rolesMenusItem[1]`，`gf_OSE...` 内按 `gv_roleCategory` 分支，约 86150–86300 行，**逐角色硬编码**；
    - 审查页：`gv_e8A792E889B2E68EA7E4BBB6`，`gf_ASE5AEA1E69FA5E98089E9A1B92`，约 38802 行。
    - 选中项 → 角色号 的映射在 `gt_OSRoleSelect_Func`（约 85413 行），同样是**按列表索引**逐条硬编码。
-3.1 **自设列表是「行序 = 索引」的双硬编码，顺序敏感**（曾因此把狱警显示成树妖）：
-   - **位置 A**（列表构建，`gt_OSMenus_Func`）：按 `gv_roleCategory` 分段，段内再按 `gv_variantSelection` 分档，逐行 `DialogControlAddItem(gv_rolesMenusItem[1], ...)`。**这些行的行序就是列表索引（1-based）**。
-   - **位置 B**（选中映射，`gt_OSRoleSelect_Func`）：同样分段分档，逐行 `if (SelectedItem == N) gv_roleSelection = 角色号;`。
-   - 当前段边界：A → 城镇 86309 / 黑手D 86348 / 86391 段 / 中立 86425 / 随机 86448；B → 城镇 85592 / 黑手D 85722 / 85849 段 / 中立 85958 / 随机 86036。
-   - **铁律**：① 两处一一对应；② **只能追加到末尾**，插到中间会让该段之后所有角色的映射整体后移；③ **必须按 category 段定位**，不能用全局 grep 的第一个匹配（曾把映射插进城镇段，与原有的 `== 18` 冲突）；④ 改完用脚本校验「该段 AddItem 条数 == 该段映射条数」，不要目测。
-   - 追加条目的文本前缀用 `StringExternal("Param/Value/...")`，常见值 `<s val="ModLeftSize20">`，尾部键形如 `258B2E40`（内容是 `</s>`）。
+3.1 **自设列表：两处硬编码已改为「数据源 + 生成器」，不要再手改那两段**（shw247）
+   - 结构（了解即可，定位请用工具）：**位置 A** 列表构建在 `gt_OSMenus_Func`，按 `gv_roleCategory` 分段、段内按 `gv_variantSelection` 分档，逐行 `DialogControlAddItem(gv_rolesMenusItem[1], ...)`；**行序就是列表索引（1-based）**。**位置 B** 选中映射在 `gt_OSRoleSelect_Func`，同样分段分档，逐行 `if (SelectedItem == N) gv_roleSelection = 角色号;`。历史上这段结构出过事故（把狱警显示成树妖、删条目后索引整体前移、往中间插导致后续映射全错）。
+   - **现在加/改角色的做法**：改 `work/roles-list.json`（一条 = `category` / `variants` / `role` / `prefix` / `suffix`）→ `python3 tools/role_list_gen.py --apply`。
+     · 索引 N 由生成器按段内次序算 ⇒ **中间插入、重排、删除都安全**（旧的「只能追加到末尾」铁律作废）；
+     · 两处永远同源 ⇒ 不会再出现「A 有 B 没有」；
+     · 前缀/后缀文本键沿用同段邻居（前缀常见 `<s val="ModLeftSize20">` 一类，后缀常见 `258B2E40` = `</s>`）。
+   - **漂移检测已进打包门（第 0c 步）**：手改那两段、或改了 JSON 忘了 `--apply`，打包直接停下。手动核对用 `python3 tools/role_list_gen.py --check`（口径 = 生成结果与脚本现状**逐字节相同**）。
+   - 工具自带两项审计：① 两处段数/段头/角色序列必须一致 ② 每段映射索引必须从 1 连续到 N。
 3.2 **不要靠「换槽位」规避遗留代码**：旧角色散落在十几个硬编码分支里，换槽位只会多破坏一个角色。正确做法是**逐处加池判断** `(gv_roles[lv_a][1] == 池)`。
 3.3 **判定槽位空闲必须查原图 `work/bh-src/MapScript.galaxy`**，不能凭「没有名称数组」下结论：
    - 池 3 / 18 = **小金执行者**（`gv_roleNameInput[3][18] = "xiaojinzhixingzhe"` + options + 权重），**已被误覆盖过一次**，不要再用；

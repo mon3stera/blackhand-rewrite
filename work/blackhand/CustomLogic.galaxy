@@ -80987,9 +80987,11 @@ bool gt_OSRoleSelect_Func (bool testConds, bool runActions) {
             if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 17)) {
                 gv_roleSelection = 31;
             }
+
             if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 18)) {
                 gv_roleSelection = 13;
             }
+
             if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 19)) {
                 gv_roleSelection = 32;
             }

@@ -265,6 +265,28 @@ def main() -> int:
         print('✗ role_card_check 未通过，停止打包')
         return 1
 
+    # 0c) 自设列表漂移检测（shw247）：gt_OSMenus_Func 的列表构建 + gt_OSRoleSelect_Func 的
+    #     选中映射必须仍是 work/roles-list.json 的生成物（逐字节等价）。
+    #     手改那两段、或改完 JSON 忘了跑 --apply，都会在这里被拦下。
+    rlist = subprocess.run([sys.executable, str(ROOT / 'tools' / 'role_list_gen.py'), '--check'],
+                           capture_output=True, text=True)
+    print(rlist.stdout.strip().splitlines()[-1] if rlist.stdout.strip() else '(role_list_gen 无输出)')
+
+    if rlist.returncode != 0:
+        print('✗ role_list_gen 未通过（自设列表与数据源不一致，先跑 --apply），停止打包')
+        return 1
+
+    # 0d) 抽出函数结构不变式（shw247）：void / 不给参数赋值 / 体内标识符可解析。
+    #     不带 --rev ⇒ 只跑与历史无关的结构判据，1 秒内完成。
+    skv = subprocess.run([sys.executable, str(ROOT / 'tools' / 'sk_verify.py')],
+                         capture_output=True, text=True)
+    tail = [x for x in skv.stdout.strip().splitlines() if x.startswith(('✓', '✗'))]
+    print(tail[-1] if tail else '(sk_verify 无输出)')
+
+    if skv.returncode != 0:
+        print('✗ sk_verify 未通过，停止打包')
+        return 1
+
     if out.exists():
         print(f"  ! 覆盖已存在的 {out}")
 
