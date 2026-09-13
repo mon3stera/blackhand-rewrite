@@ -1,20 +1,23 @@
 #!/usr/bin/env python3
-"""发布线台账 + 发版守卫：两条线轮流投版，绕开平台审核排队。
+"""发布线台账 + 发版状态机：新版本先在试验线实测，通过后才推稳定主线。
 
-背景（2026-09-13 用户定）：平台审核要排队，周末尤其慢，一版在审时玩家只能玩上一版。
-做法是同时挂两条线（主线「黑手：升温 Revision」+ 备线「黑手：避难 Revision」），
-每次把新版投给版本更旧的那条 —— 于是「最新已通过的那版」永远在线可玩。
+角色分工（2026-09-13 用户定）：
+  shelter = 试验线（「黑手：避难 Revision」）—— 今天的重构这类大改动**先投这里**，用真实对局验证；
+  main    = 稳定主线（「黑手：升温 Revision」）—— 只在试验线验证通过后才更新，玩家默认在这里玩。
+
 **两条线必须用同一个账号发布**：bank 命名空间取作者 toon（不是地图名），
-所以玩家存档、成就、积分在两条线之间互通；换成另一个账号就是两套存档。
+所以玩家存档、成就、积分在两条线之间互通 —— 试验线上测的就是真实线上档。
 
 版本号唯一真源 = `work/blackhand/patch-notes.txt` 的 `@release` 行；
-每个已发布版本都打一个 git tag（`v1.109`），tag 就是「这一版已出厂」的不可变标记。
+每个已发布版本打一个 git tag（`v1.109`）= 「这一版已出厂」的不可变标记。
 
 用法：
-  python3 tools/release.py status                     # 版本 / 各线状态 / tag / 下一条该投谁
-  python3 tools/release.py build --channel shelter    # 出这条线的包（自动套用它的地图名）并投放
-  python3 tools/release.py tag --version 1.109        # 发版后打标记（HEAD 必须已提交）
-  python3 tools/release.py mark --channel main --status 已通过
+  python3 tools/release.py status                  # 版本 / 各线状态 / tag / **下一步该做什么**
+  python3 tools/release.py build                   # 按状态机出该出的那条线的包并投放
+  python3 tools/release.py build --channel shelter  # 指定线（一般不用）
+  python3 tools/release.py mark --channel shelter --status 实测通过
+  python3 tools/release.py mark --channel main --live 1.108 --status 已通过
+  python3 tools/release.py tag                     # 发版后打 git tag
 """
 
 import argparse
@@ -30,6 +33,7 @@ LEDGER = ROOT / 'work/release-channels.json'
 NOTES = ROOT / 'work/blackhand/patch-notes.txt'
 REMOTE = 'administrator@100.94.140.84'
 FAR_DIRS = ('/mnt/c/Users/Administrator/Desktop', '/mnt/d/StarCraft II/Maps/Test')
+VALIDATED = ('实测通过', '已通过', '已发布')
 
 
 def load() -> dict:
@@ -42,7 +46,12 @@ def save(data: dict) -> None:
 
 def sh(*cmd) -> str:
     r = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
+
     return r.stdout.strip() if r.returncode == 0 else ''
+
+
+def ver_key(v) -> tuple:
+    return tuple(int(x) for x in re.findall(r'\d+', v)) if v else (0,)
 
 
 def channel_of(data: dict, cid: str) -> dict:
@@ -52,6 +61,22 @@ def channel_of(data: dict, cid: str) -> dict:
         sys.exit(f'✗ 台账里没有发布线 {cid}（现有 {[c["id"] for c in data["channels"]]}）')
 
     return hits[0]
+
+
+def by_role(data: dict, role: str) -> dict:
+    hits = [c for c in data['channels'] if c.get('role') == role]
+
+    if not hits:
+        sys.exit(f'✗ 台账里没有 role={role} 的发布线')
+
+    return hits[0]
+
+
+def online_version(ch: dict) -> str:
+    """这条线上「玩家能看到的最高版本」= max(已通过, 在审/待投)。"""
+    top = max([ch.get('live'), ch.get('pending')], key=ver_key)
+
+    return top or ''
 
 
 def target_version() -> str:
@@ -64,15 +89,10 @@ def target_version() -> str:
 
 
 def git_tags() -> list:
-    """已打过 tag 的版本（v1.109 → 1.109），按版本号排序。"""
     raw = sh('git', 'tag', '--list', 'v*')
     out = [t[1:] for t in raw.split() if re.fullmatch(r'v[\d.]+', t)]
 
     return sorted(out, key=ver_key)
-
-
-def ver_key(v) -> tuple:
-    return tuple(int(x) for x in re.findall(r'\d+', v)) if v else (0,)
 
 
 def md5(path: Path) -> str:
@@ -85,46 +105,56 @@ def md5(path: Path) -> str:
     return h.hexdigest()
 
 
-def next_channel(data: dict, want: str):
-    """下次该投哪条线 = 还没到待发版本的那条（两条都到了就没有待投的新版）。"""
-    behind = [c for c in data['channels'] if ver_key(c.get('version')) != ver_key(want)]
+def next_action(data: dict, want: str):
+    """状态机 → (该出包的线 or None, 一句话说明)。"""
+    stg, sta = by_role(data, 'staging'), by_role(data, 'stable')
 
-    if not behind:
-        return None
+    if ver_key(stg.get('pending')) != ver_key(want):
+        return stg, f'新版本 {want} 先在试验线（{stg["title"]}）投出'
 
-    return sorted(behind, key=lambda c: (ver_key(c.get('version')), c['id'] != 'main'))[0]
+    if stg.get('status') not in VALIDATED:
+        return None, (f'{want} 已在试验线（{stg["id"]}，{stg.get("status")}）—— '
+                      f'等平台过审并在那边实测；通过后跑 '
+                      f'`release.py mark --channel {stg["id"]} --status 实测通过`')
+
+    if ver_key(sta.get('pending')) != ver_key(want):
+        return sta, f'试验线已验证 {want} ⇒ 推稳定主线（{sta["title"]}）'
+
+    return None, f'两条线都已经是 {want} —— 要发下一版先改 patch-notes.txt 的 @release'
 
 
 def cmd_status(data: dict) -> int:
     want, tags = target_version(), git_tags()
     print(f'待发版本（patch-notes.txt @release）= {want}')
-    print(f'已发版 tag = {tags[-1] if tags else "（还没有）"}'
-          f'   全部 {len(tags)} 个：{", ".join(tags[-5:]) or "—"}\n')
+    print(f'已发 tag = {tags[-1] if tags else "（还没有）"}   共 {len(tags)} 个：{", ".join(tags[-6:]) or "—"}\n')
 
-    print(f'{"线":<9}{"地图名":<22}{"线上版本":<10}{"状态":<10}{"包":<32}')
-    print('-' * 84)
+    print(f'{"线":<9}{"角色":<9}{"地图名":<22}{"已通过":<9}{"在审/待投":<11}{"状态":<11}{"包":<32}')
+    print('-' * 104)
 
     for c in data['channels']:
-        print(f'{c["id"]:<9}{c["title"]:<22}{c.get("version") or "—":<10}'
-              f'{c.get("status") or "—":<10}{c.get("built") or "—":<32}')
+        print(f'{c["id"]:<9}{c.get("role", "—"):<9}{c["title"]:<22}'
+              f'{c.get("live") or "—":<9}{c.get("pending") or "—":<11}'
+              f'{c.get("status") or "—":<11}{c.get("built") or "—":<32}')
 
-    if want in tags:
-        print(f'\n⚠ {want} 已经打过 tag —— 发新版先改 patch-notes.txt 的 @release')
+    still_pending = any(ver_key(c.get('pending')) == ver_key(want) for c in data['channels'])
 
-    nxt = next_channel(data, want)
+    if want in tags and not still_pending:
+        print(f'\n⚠ {want} 已经打过 tag（= 已出厂）—— 要发新版先改 patch-notes.txt 的 @release')
 
-    if nxt is None:
-        print(f'\n两条线都已是 {want} —— 没有待投的新版。要发下一版先改 patch-notes.txt 的 @release')
+    ch, why = next_action(data, want)
+
+    if ch is None:
+        print(f'\n下一步：{why}')
     else:
-        print(f'\n下次投给：{nxt["id"]}（{nxt["title"]}）   —— 该线当前 {nxt.get("version") or "无版本"}')
-        print(f'出包：python3 tools/release.py build --channel {nxt["id"]}')
+        print(f'\n下一步：{why}')
+        print(f'  出包 → python3 tools/release.py build --channel {ch["id"]}')
 
     return 0
 
 
 def guard_version(data: dict, ch: dict, version: str, force: bool) -> None:
-    """发版守卫：不许把比线上更旧的版本投出去，也不许重复投同一版。"""
-    online, tags = ch.get('version'), git_tags()
+    """发版守卫：不许把比线上更旧的版本投出去，也不许悄悄重复投同一版。"""
+    online, tags = online_version(ch), git_tags()
 
     if version in tags and not force:
         sys.exit(f'✗ {version} 已经打过 tag（= 这一版早就出厂了）。'
@@ -138,14 +168,29 @@ def guard_version(data: dict, ch: dict, version: str, force: bool) -> None:
         sys.exit(f'✗ 「{ch["id"]}」线上已经是 {online}（{ch.get("status")}）。'
                  f'重出同一版加 --force（例如修包重投）')
 
+    if ch.get('status') == '审核中' and ver_key(version) != ver_key(ch.get('pending')):
+        print(f'⚠ 「{ch["id"]}」还有 {ch.get("pending")} 在审 —— 往同一条目再投 {version} '
+              f'可能顶掉它（平台行为未验证），先想清楚要不要等它通过')
 
-def cmd_build(data: dict, cid: str, deploy: bool, skip_notes: bool, force: bool) -> int:
-    ch = channel_of(data, cid)
-    version = target_version()
-    guard_version(data, ch, version, force)
 
-    suffix = '' if cid == 'main' else f'-{cid}'
-    out = ROOT / f'work/boot2-{version}{suffix}.SC2Map'
+def cmd_build(data: dict, cid, deploy: bool, skip_notes: bool, force: bool) -> int:
+    want = target_version()
+
+    if cid:
+        ch = channel_of(data, cid)
+    else:
+        ch, why = next_action(data, want)
+
+        if ch is None:
+            print(f'（无需出包）{why}')
+            return 0
+
+        print(f'按状态机选线：{ch["id"]} —— {why}')
+
+    guard_version(data, ch, want, force)
+
+    suffix = '' if ch['id'] == 'main' else f'-{ch["id"]}'
+    out = ROOT / f'work/boot2-{want}{suffix}.SC2Map'
     cmd = [sys.executable, 'tools/boot2_build.py', '--out', str(out)]
 
     if ch.get('name'):
@@ -160,23 +205,24 @@ def cmd_build(data: dict, cid: str, deploy: bool, skip_notes: bool, force: bool)
     if rc != 0:
         sys.exit(f'✗ 打包失败（退出码 {rc}），台账未改动')
 
-    # 回读：包内地图名（含 enUS 副本）必须就是这条线的名字，否则平台条目标题会挂到主线名下
+    # 回读：包内地图名（header 各语种 + zhCN）必须就是这条线的名字，
+    # 否则平台条目标题会挂到另一条线的名下
     sys.path.insert(0, str(ROOT / 'tools'))
     import bh_meta
     import sc2map
 
     ents = bh_meta.parse_entries(sc2map.read(str(out), 'DocumentHeader'))
-    names = sorted({v for _, k, _, v in ents if k == 'DocInfo/Name'})
+    names = {v for _, k, _, v in ents if k == 'DocInfo/Name'}
     gs = sc2map.read(str(out), 'zhCN.SC2Data/LocalizedData/GameStrings.txt').decode('utf-8')
-    names += [l.split('=', 1)[1].strip() for l in gs.split('\n') if l.startswith('DocInfo/Name=')]
-    print(f'   回读地图名 = {names}（台账登记 {ch["title"]!r}）')
+    names |= {l.split('=', 1)[1].strip() for l in gs.split('\n') if l.startswith('DocInfo/Name=')}
+    print(f'   回读地图名 = {sorted(names)}（台账登记 {ch["title"]!r}）')
 
-    if {n for n in names} != {ch['title']}:
+    if names != {ch['title']}:
         sys.exit('✗ 包内地图名与台账不一致（header 各语种 / zhCN 都要是该线的名字）')
 
     size, digest = out.stat().st_size, md5(out)
-    ch.update({'version': version, 'status': '待投', 'built': str(out.relative_to(ROOT)),
-               'md5': digest, 'size': size})
+    ch.update({'pending': want, 'status': '待投',
+               'built': str(out.relative_to(ROOT)), 'md5': digest, 'size': size})
     save(data)
     print(f'✓ {out.relative_to(ROOT)}  {size} B  md5 {digest}')
 
@@ -191,15 +237,12 @@ def cmd_build(data: dict, cid: str, deploy: bool, skip_notes: bool, force: bool)
         print(f'  投放后请核对远端 md5 也是 {digest}')
 
     print(f'\n下一步：把 {out.name} 上传到平台的「{ch["title"]}」条目 → '
-          f'python3 tools/release.py mark --channel {cid} --status 审核中')
+          f'python3 tools/release.py mark --channel {ch["id"]} --status 审核中')
 
     return 0
 
 
 def cmd_tag(version: str, dry: bool) -> int:
-    if not version:
-        sys.exit('✗ 用法：release.py tag --version 1.109')
-
     want, tags = target_version(), git_tags()
 
     if version != want:
@@ -211,8 +254,7 @@ def cmd_tag(version: str, dry: bool) -> int:
     if sh('git', 'status', '--porcelain'):
         sys.exit('✗ 工作区还有未提交的改动 —— 发版标记必须打在干净的提交上')
 
-    head = sh('git', 'log', '-1', '--oneline')
-    print(f'HEAD = {head}')
+    print(f'HEAD = {sh("git", "log", "-1", "--oneline")}')
 
     if dry:
         print(f'（干跑）将执行：git tag -a v{version} -m "发布 {version}"')
@@ -223,22 +265,27 @@ def cmd_tag(version: str, dry: bool) -> int:
     if rc != 0:
         sys.exit(f'✗ 打 tag 失败（退出码 {rc}）')
 
-    print(f'✓ 已标记 v{version} —— 以后 `release.py status` 一眼就能看出线上是哪版')
+    print(f'✓ 已标记 v{version}')
 
     return 0
 
 
-def cmd_mark(data: dict, cid: str, version, status) -> int:
+def cmd_mark(data: dict, cid: str, version, live, status) -> int:
     ch = channel_of(data, cid)
 
     if version:
-        ch['version'] = version
+        ch['pending'] = version
+
+    if live:
+        ch['live'] = live
+        ch.pop('live_note', None)
 
     if status:
         ch['status'] = status
 
     save(data)
-    print(f'✓ {cid}: 版本 {ch.get("version") or "—"} / 状态 {ch.get("status") or "—"}')
+    print(f'✓ {cid}: 已通过 {ch.get("live") or "—"} / 在审待投 {ch.get("pending") or "—"} / '
+          f'状态 {ch.get("status") or "—"}')
 
     return 0
 
@@ -247,18 +294,19 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest='cmd', required=True)
-    sub.add_parser('status', help='版本 / 各线状态 / tag / 下一条该投谁')
-    b = sub.add_parser('build', help='出这条线的包（套用它的地图名）并投放')
-    b.add_argument('--channel', required=True, help='发布线 id（main / shelter）')
+    sub.add_parser('status', help='版本 / 各线状态 / tag / 下一步该做什么')
+    b = sub.add_parser('build', help='出包并投放（不指定 --channel 时按状态机自动选线）')
+    b.add_argument('--channel', help='发布线 id（main / shelter）；省略 = 按状态机选')
     b.add_argument('--no-deploy', action='store_true', help='只出包，不 scp')
     b.add_argument('--skip-notes', action='store_true', help='不写补丁说明（仅供验证包）')
     b.add_argument('--force', action='store_true', help='重出同一版（修包重投用）')
     t = sub.add_parser('tag', help='发版后打 git tag（不可变标记）')
     t.add_argument('--version', help='默认取 patch-notes.txt 的 @release')
     t.add_argument('--dry', action='store_true')
-    m = sub.add_parser('mark', help='手工登记版本/状态（上传或通过审核后）')
+    m = sub.add_parser('mark', help='登记平台状态（上传 / 过审 / 实测通过）')
     m.add_argument('--channel', required=True)
-    m.add_argument('--version')
+    m.add_argument('--version', help='设置该线在审/待投的版本')
+    m.add_argument('--live', help='设置该线已通过（玩家能玩到）的版本')
     m.add_argument('--status')
     args = ap.parse_args()
     data = load()
@@ -270,7 +318,7 @@ def main() -> int:
     if args.cmd == 'tag':
         return cmd_tag(args.version or target_version(), args.dry)
     if args.cmd == 'mark':
-        return cmd_mark(data, args.channel, args.version, args.status)
+        return cmd_mark(data, args.channel, args.version, args.live, args.status)
 
     return 1
 

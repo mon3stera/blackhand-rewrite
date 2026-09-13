@@ -185,22 +185,27 @@ python3 tools/boot2_build.py --out work/boot2-<name>.SC2Map      # 八件套 + �
 - **boot2 包内结构**：`Triggers` + 2.7KB `MapScript.galaxy`（只含 `include "TriggerLibs/NativeLib"` 与 `include "CustomLogic"`）+ 完整 `CustomLogic.galaxy`；**触发器链引用 CustomLogic 里的函数**，故回读校验看包内 `CustomLogic.galaxy`（不是 MapScript）。
 - **`sc2pack.py`**（rogue 等独立图用）把 galaxy 塞进 MapScript 并剥触发器 → boot2 缺触发器函数必炸，两条管线不能混。
 
-### 发版（两条线轮流投，2026-09-13 起）
+### 发版（试验线先投，验证后推主线，2026-09-13 起）
 
-平台审核要排队（周末尤其慢），一版在审时玩家只能玩上一版 ⇒ 同时挂**两条线**：
-主线「黑手：升温 Revision」+ 备线「黑手：避难 Revision」，每次把新版投给**版本更旧**的那条。
-**两条线必须用同一个账号发布** —— bank 命名空间取作者 toon（不是地图名），所以玩家存档/成就/积分互通。
+平台审核要排队（周末尤其慢），大改动不能直接推给玩家 ⇒ 两条线分工：
+**shelter = 试验线「黑手：避难 Revision」**（新版本先投这里，用真实对局验证）、
+**main = 稳定主线「黑手：升温 Revision」**（验证通过后才更新，玩家默认在这里玩）。
+**两条线必须用同一个账号发布** —— bank 命名空间取作者 toon（不是地图名），所以玩家存档/成就/积分互通，试验线上测的就是真实线上档。
 
 ```bash
-python3 tools/release.py status                     # 版本、各线状态、已发 tag、下一条该投谁
-python3 tools/release.py build --channel shelter    # 出这条线的包（自动套该线的地图名）并投放桌面 + Test 目录
-python3 tools/release.py tag                        # 发版后打 git tag（= 这一版已出厂的不可变标记）
-python3 tools/release.py mark --channel main --status 已通过
+python3 tools/release.py status                      # 版本、各线状态、已发 tag、**下一步该做什么**（状态机算）
+python3 tools/release.py build                       # 按状态机出该出的那条线并投放桌面 + Test 目录
+python3 tools/release.py mark --channel shelter --status 实测通过
+python3 tools/release.py mark --channel main --live 1.108 --status 已通过
+python3 tools/release.py tag                         # 发版后打 git tag（= 这一版已出厂的不可变标记）
 ```
 
-- 台账 `work/release-channels.json`（各线图名/版本/状态/包 md5）；**版本号唯一真源仍是 `patch-notes.txt` 的 `@release`**。
+- **状态机**：新版先在 staging 投出 → 等平台过审 + 在避难实测 → `mark 实测通过` → 这时才轮到 stable 线。
+  没验证过就推主线不会被自动放行（`status` 会明说「等试验线实测」）。
+- 台账 `work/release-channels.json`：每线的 `role` / `live`（平台已通过）/ `pending`（在审或待投）/ `status` / 包 md5。
+  **版本号唯一真源仍是 `patch-notes.txt` 的 `@release`**。
 - 备线的地图名走打包器 `--name`：它在**第 ⑥ 步**与补丁说明同一趟写进 `DocumentHeader`（含 enUS/zhCN 两份副本）+ zhCN；**别事后单独调 `bh_meta set`** —— 那会第二次写 zhCN，白胖约 300 KB。
-- 守卫：`build` 拒绝把比线上更旧的版本投回去、拒绝重复投同一版（修包重投用 `--force`）；`tag` 要求工作区干净且 tag 名与 `@release` 一致。
+- 守卫：`build` 拒绝把比线上更旧的版本投回去、拒绝重复投同一版（修包重投用 `--force`）；往还有版本在审的同一条目再投会先警告（平台会怎么处理未验证）；`tag` 要求工作区干净且 tag 名与 `@release` 一致。
 
 ## 环境
 

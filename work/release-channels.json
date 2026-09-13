@@ -1,29 +1,41 @@
 {
-  "note": "两条发布线轮流投版：平台审核要排队，一条在审时另一条还能玩。前提是两条线都用同一个账号发布 —— bank 命名空间取作者 toon（不是地图名），所以玩家存档、成就、积分在两条线之间互通。",
+  "note": "两条发布线 + 状态机：新版**先在试验线（避难）投出并用真实对局验证**，通过后才推给稳定主线（升温）。两条线必须同一个账号发布 —— bank 命名空间取作者 toon（不是地图名），所以玩家存档/成就/积分互通，试验线上测的就是真实线上档。",
+  "fields": {
+    "role": "stable（稳定主线，玩家默认在这里玩）/ staging（试验线，新版本先投这里）",
+    "live": "平台已通过、玩家能玩到的版本（null = 未确认）",
+    "pending": "已上传或在审 / 待投的版本（null = 这条线还没投过）",
+    "status": "空线 / 待投 / 审核中 / 已通过 / 实测通过"
+  },
   "rules": [
-    "每次只把新版投给「版本更旧」的那条线（tools/release.py status 会给建议）",
-    "两条线的包内容完全相同，只差包内地图名（DocInfo/Name）",
-    "两条线版本差不要超过 1 个版本，否则掉队那条的玩家会看到旧内容",
-    "地图名改动只走打包第 ⑥ 步（bh_meta overrides），不要事后单独 set —— 那会第二次写 zhCN，白胖约 300 KB"
+    "新版本一律先 build/投给 staging 线（tools/release.py status 会算出下一步该做什么）",
+    "staging 上实测通过后（mark --channel shelter --status 实测通过）才推 stable 线",
+    "两条线版本差不要长期超过 1 个版本，否则主线玩家会落后太多",
+    "地图名改动只走打包第 ⑥ 步（boot2_build --name），不要事后单独 set —— 那会第二次写 zhCN，白胖约 300 KB"
   ],
   "channels": [
     {
       "id": "main",
+      "role": "stable",
       "title": "黑手：升温 Revision",
       "name": null,
-      "note": "主线：沿用基线自带的地图名，不加 --name",
-      "version": "1.109",
+      "note": "稳定主线：沿用基线自带的地图名；只在避难实测通过后才更新",
+      "live": null,
+      "live_note": "未确认 —— 平台当前可通过的版本",
+      "pending": "1.108",
       "status": "审核中",
-      "built": "work/boot2-1.109.SC2Map",
-      "md5": "3667eba8cd63a07598b2c72b50003229",
-      "size": 16703731
+      "built": "work/boot2-1.108.SC2Map",
+      "md5": "9f8189739ddd60d47f225a5c1428d617",
+      "size": 16704499
     },
     {
       "id": "shelter",
+      "role": "staging",
       "title": "黑手：避难 Revision",
       "name": "黑手：避难 Revision",
-      "note": "备线：主图在审时的落脚点；名字沿用原作者的「黑手：避难」加 Revision 后缀",
-      "version": "1.109",
+      "note": "试验线：今天的大重构先投这里，用真实对局验证后再推主线",
+      "live": null,
+      "live_note": "还没投过（首投也要过审）",
+      "pending": "1.109",
       "status": "待投",
       "built": "work/boot2-1.109-shelter.SC2Map",
       "md5": "3760e60e992ea8a95fcf660212a2a5f3",
