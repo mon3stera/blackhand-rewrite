@@ -1255,6 +1255,122 @@ void gf_RTMafiaRoleText (int lp_player);
 void gf_RTNeutralRoleText (int lp_player);
 void gf_RTTriadRoleText (int lp_player);
 void gf_RTRoleCard (int lp_player);
+void gf_SKB_3_nvwu (int lv_a);
+void gf_SKB_1_wuniang (int lv_a);
+void gf_SKB_1_wuniang_2 (int lv_a);
+void gf_SKB_1_fayi (int lv_a);
+void gf_SKB_1_baobiao (int lv_a);
+void gf_SKB_1_bashisiji (int lv_a);
+void gf_SKB_1_bashisiji_2 (int lv_a);
+void gf_SKB_3_lianhuanshashou (int lv_a);
+void gf_SKB_3_ximingren (int lv_a);
+void gf_SKB_3_wenyisanbuzhe (int lv_a);
+void gf_SKP_2_jiaofu (int lv_a);
+void gf_SKP_2_dangtu (int lv_a, int lv_maxone);
+void gf_SKP_2_dangtu_2 (int lv_a, int lv_maxone);
+void gf_SKP_5_longtou (int lv_a);
+void gf_SKP_5_baotu (int lv_a, int lv_maxone);
+void gf_SKP_5_baotu_2 (int lv_a, int lv_maxone);
+void gf_SKP_3_xiejiaotu (int lv_a, int lv_maxone);
+void gf_SKP_3_xiejiaotu_2 (int lv_a, int lv_maxone);
+void gf_SKP_3_shengcunzhe (int lv_a);
+void gf_SKP_1_bashisiji (int lv_a);
+void gf_SKP_1_fayi (int lv_a);
+void gf_SKP_1_yujing (int lv_a);
+void gf_SKP_1_jianshizhe (int lv_a);
+void gf_SKP_1_guanchazhe (int lv_a);
+void gf_SKP_1_tuiwujunren (int lv_a);
+void gf_SKP_1_bihuzhe (int lv_a);
+void gf_SKP_3_dugui (int lv_a);
+void gf_SKP_2_bangjiazhe (int lv_a);
+void gf_SKP_2_qipianzhe (int lv_a);
+void gf_SKP_5_shenxun (int lv_a);
+void gf_SKP_5_mihuo (int lv_a);
+void gf_SKP_3_zonghuozhe (int lv_a);
+void gf_SKP_3_shiyizhe (int lv_a);
+void gf_SKP_3_sharenkuang (int lv_a);
+void gf_SKP_3_duoluoshenpanzhe (int lv_a);
+void gf_SKP_3_ximingren (int lv_a);
+void gf_SKP_3_yuanhun (int lv_a);
+void gf_SKP_2_mentu (int lv_a);
+void gf_SKP_5_pucong (int lv_a);
+void gf_SKP_1_bihuzhe_2 (int lv_a);
+void gf_SKP_1_shimin (int lv_a);
+void gf_SKP_1_jingzhang (int lv_a);
+void gf_SKP_1_guanchazhe_2 (int lv_a);
+void gf_SKP_3_yingwuzhe (int lv_a);
+void gf_SKP_1_tanyuan (int lv_a);
+void gf_SKP_1_wuniang (int lv_a);
+void gf_SKP_1_yijing (int lv_a);
+void gf_SKP_3_dugui_2 (int lv_a);
+void gf_SKP_1_mushi (int lv_a);
+void gf_SKP_1_zhengmuguan (int lv_a);
+void gf_SKP_1_bashisiji_2 (int lv_a);
+void gf_SKP_1_fayi_2 (int lv_a);
+void gf_SKP_1_baobiao (int lv_a);
+void gf_SKP_1_yujing_2 (int lv_a);
+void gf_SKP_1_gongjihuizhanglao (int lv_a);
+void gf_SKP_1_zhentan (int lv_a);
+void gf_SKP_1_jianshizhe_2 (int lv_a);
+void gf_SKP_1_tuiwujunren_2 (int lv_a);
+void gf_SKP_1_fushou (int lv_a);
+void gf_SKP_1_shenchayuan (int lv_a);
+void gf_SKP_3_yuanhun_2 (int lv_a);
+void gf_SKP_1_hulinren (int lv_a);
+void gf_SKP_1_lianbangtanyuan (int lv_a);
+void gf_SKP_1_shiguan (int lv_a);
+void gf_SKP_2_peishi (int lv_a);
+void gf_SKP_2_canmou (int lv_a);
+void gf_SKP_2_xianhaizhe (int lv_a);
+void gf_SKP_2_qinglizhe (int lv_a);
+void gf_SKP_2_konghezhe (int lv_a);
+void gf_SKP_2_weizhuangzhe (int lv_a);
+void gf_SKP_2_bangjiazhe_2 (int lv_a);
+void gf_SKP_2_mitan (int lv_a);
+void gf_SKP_2_qipianzhe_2 (int lv_a);
+void gf_SKP_2_mentu_2 (int lv_a);
+void gf_SKP_2_zaizangzhe (int lv_a);
+void gf_SKP_5_wuxian (int lv_a);
+void gf_SKP_1_xuetu (int lv_a);
+void gf_SKP_5_jiaojihua (int lv_a);
+void gf_SKP_5_guanjia (int lv_a);
+void gf_SKP_5_zaojia (int lv_a);
+void gf_SKP_5_xiangzhu (int lv_a);
+void gf_SKP_5_fengkou (int lv_a);
+void gf_SKP_5_shentou (int lv_a);
+void gf_SKP_5_shenxun_2 (int lv_a);
+void gf_SKP_5_xianfeng (int lv_a);
+void gf_SKP_5_mihuo_2 (int lv_a);
+void gf_SKP_5_pucong_2 (int lv_a);
+void gf_SKP_5_wuxian_2 (int lv_a);
+void gf_SKP_3_lianhuanshashou (int lv_a);
+void gf_SKP_3_wenyisanbuzhe (int lv_a);
+void gf_SKP_3_shengcunzhe_2 (int lv_a);
+void gf_SKP_3_xiaochou (int lv_a);
+void gf_SKP_3_nvwu (int lv_a);
+void gf_SKP_3_zonghuozhe_2 (int lv_a);
+void gf_SKP_3_sharenkuang_2 (int lv_a);
+void gf_SKP_3_wuyi (int lv_a);
+void gf_SKP_3_shenjiguan (int lv_a);
+void gf_SKP_3_duoluoshenpanzhe_2 (int lv_a);
+void gf_SKP_3_yingwuzhe_2 (int lv_a);
+void gf_SKP_3_tianxuanzhe (int lv_a);
+void gf_SKP_3_duoluoshenpanzhe_3 ();
+void gf_SKP_1_jiandie (int lv_a);
+void gf_SKP_1_jiandie_2 (int lv_a);
+void gf_SKK_1_bashisiji (int lv_a);
+void gf_SKK_1_bashisiji_2 (int lv_a, int lv_x, int lv_y);
+void gf_SKK_1_yujing (int lv_a);
+void gf_SKK_1_yijing (int lv_a);
+void gf_SKK_3_lianhuanshashou (int lv_a);
+void gf_SKK_3_zonghuozhe (int lv_a);
+void gf_SKK_1_gongjihuizhanglao (int lv_a);
+void gf_SKK_3_sharenkuang (int lv_b);
+void gf_SKK_3_duoluoshenpanzhe (int lv_a);
+void gf_SKK_3_tianxuanzhe (int lv_a);
+void gf_SKK_1_shenchayuan (int lv_a);
+void gf_SKK_3_shengcunzhe (int lv_a);
+void gf_SKK_3_shengcunzhe_2 (int lv_a);
 void gf_SKG_3_shenjiguan (int lv_a);
 void gf_SKG_1_gongjihuizhanglao (int lv_a);
 void gf_SKG_1_zhengmuguan (int lv_a);
@@ -10117,13 +10233,15 @@ bool gf_BHRestrictAllowed (int lp_target) {
     return !((gv_roles[lp_target][1] == 1) && (gv_roles[lp_target][0] == 17));
 }
 
+// ===== BH:SK 局部数组提升（阶段三前置）=====
+int[16] gv_seqPrepList;
+
 void gf_SequencePrep () {
     // Variable Declarations
     int lv_a;
     int lv_b;
     int lv_maxone;
     int lv_tie;
-    int[16] lv_list;
     int lv_punishmaxone;
     int lv_punishtie;
     int[16] lv_punishlist;
@@ -10201,6 +10319,24 @@ void gf_SequencePrep () {
     // Variable Initialization
 
     // Implementation
+    // 阶段三前置（shw239）：局部数组已提升为全局，入口清零还原「每次调用都是全新」
+    gv_seqPrepList[0] = 0;
+    gv_seqPrepList[1] = 0;
+    gv_seqPrepList[2] = 0;
+    gv_seqPrepList[3] = 0;
+    gv_seqPrepList[4] = 0;
+    gv_seqPrepList[5] = 0;
+    gv_seqPrepList[6] = 0;
+    gv_seqPrepList[7] = 0;
+    gv_seqPrepList[8] = 0;
+    gv_seqPrepList[9] = 0;
+    gv_seqPrepList[10] = 0;
+    gv_seqPrepList[11] = 0;
+    gv_seqPrepList[12] = 0;
+    gv_seqPrepList[13] = 0;
+    gv_seqPrepList[14] = 0;
+    gv_seqPrepList[15] = 0;
+
     if ((gv_cultSmiteCount >= gv_cultEvilDescend)) {
         gf_WorldDestroyer();
     }
@@ -10228,9 +10364,9 @@ void gf_SequencePrep () {
     lv_a = 1;
     for ( ; ( (auto5A4AC6D0_ai >= 0 && lv_a <= auto5A4AC6D0_ae) || (auto5A4AC6D0_ai < 0 && lv_a >= auto5A4AC6D0_ae) ) ; lv_a += auto5A4AC6D0_ai ) {
         if ((gv_mafiaKillVotes[lv_a] == gv_mafiaKillVotes[lv_maxone]) && (gv_mafiaKillVotes[lv_a] > 0)) {
-            lv_list[lv_tie] = lv_maxone;
+            gv_seqPrepList[lv_tie] = lv_maxone;
             lv_tie += 1;
-            lv_list[lv_tie] = lv_a;
+            gv_seqPrepList[lv_tie] = lv_a;
         }
         else {
             if ((gv_mafiaKillVotes[lv_a] > gv_mafiaKillVotes[lv_maxone]) && (gv_mafiaKillVotes[lv_a] > 0)) {
@@ -10238,7 +10374,7 @@ void gf_SequencePrep () {
                 lv_tie = 0;
                 lv_b = 1;
                 for ( ; ( (auto4EA279C9_ai >= 0 && lv_b <= auto4EA279C9_ae) || (auto4EA279C9_ai < 0 && lv_b >= auto4EA279C9_ae) ) ; lv_b += auto4EA279C9_ai ) {
-                    lv_list[lv_b] = 0;
+                    gv_seqPrepList[lv_b] = 0;
                 }
             }
 
@@ -10246,7 +10382,7 @@ void gf_SequencePrep () {
     }
     if ((lv_maxone != 0)) {
         if ((lv_tie > 0)) {
-            gv_mafiaTarget = lv_list[RandomInt(0, lv_tie)];
+            gv_mafiaTarget = gv_seqPrepList[RandomInt(0, lv_tie)];
         }
         else {
             gv_mafiaTarget = lv_maxone;
@@ -10255,13 +10391,13 @@ void gf_SequencePrep () {
 
     lv_a = 0;
     for ( ; ( (auto1D5B6D52_ai >= 0 && lv_a <= auto1D5B6D52_ae) || (auto1D5B6D52_ai < 0 && lv_a >= auto1D5B6D52_ae) ) ; lv_a += auto1D5B6D52_ai ) {
-        lv_list[lv_a] = 0;
+        gv_seqPrepList[lv_a] = 0;
     }
     lv_a = 1;
     for ( ; ( (auto7A2BBA0C_ai >= 0 && lv_a <= auto7A2BBA0C_ae) || (auto7A2BBA0C_ai < 0 && lv_a >= auto7A2BBA0C_ae) ) ; lv_a += auto7A2BBA0C_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 2) && (gv_action[lv_a][0] > 0)) {
-                gv_mafiaTarget = gv_action[lv_a][0];
+                gf_SKP_2_jiaofu(lv_a);
             }
 
         }
@@ -10273,8 +10409,7 @@ void gf_SequencePrep () {
     for ( ; ( (auto88DA7A38_ai >= 0 && lv_a <= auto88DA7A38_ae) || (auto88DA7A38_ai < 0 && lv_a >= auto88DA7A38_ae) ) ; lv_a += auto88DA7A38_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_jailed[lv_a] == 0)) {
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 1) && (gv_action[lv_a][0] == gv_mafiaTarget)) {
-                lv_list[lv_maxone] = lv_a;
-                lv_maxone += 1;
+                gf_SKP_2_dangtu(lv_a, lv_maxone);
             }
 
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 2) && (gv_roleOptions[2][2][3] == true)) {
@@ -10289,8 +10424,7 @@ void gf_SequencePrep () {
         for ( ; ( (auto41F7C077_ai >= 0 && lv_a <= auto41F7C077_ae) || (auto41F7C077_ai < 0 && lv_a >= auto41F7C077_ae) ) ; lv_a += auto41F7C077_ai ) {
             if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_jailed[lv_a] == 0)) {
                 if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 1)) {
-                    lv_list[lv_maxone] = lv_a;
-                    lv_maxone += 1;
+                    gf_SKP_2_dangtu_2(lv_a, lv_maxone);
                 }
 
                 if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 2) && (gv_roleOptions[2][2][3] == true)) {
@@ -10304,7 +10438,7 @@ void gf_SequencePrep () {
 
     if ((gv_mafiaTarget != 0) && ((lv_maxone != 0) || (lv_tie != 0))) {
         if ((lv_maxone != 0)) {
-            gv_mafiaHitman = lv_list[RandomInt(0, (lv_maxone - 1))];
+            gv_mafiaHitman = gv_seqPrepList[RandomInt(0, (lv_maxone - 1))];
         }
         else {
             gv_mafiaHitman = lv_tie;
@@ -10316,14 +10450,14 @@ void gf_SequencePrep () {
     lv_tie = 0;
     lv_a = 0;
     for ( ; ( (autoD25E197F_ai >= 0 && lv_a <= autoD25E197F_ae) || (autoD25E197F_ai < 0 && lv_a >= autoD25E197F_ae) ) ; lv_a += autoD25E197F_ai ) {
-        lv_list[lv_a] = 0;
+        gv_seqPrepList[lv_a] = 0;
     }
     lv_a = 1;
     for ( ; ( (autoBC5F3B39_ai >= 0 && lv_a <= autoBC5F3B39_ae) || (autoBC5F3B39_ai < 0 && lv_a >= autoBC5F3B39_ae) ) ; lv_a += autoBC5F3B39_ai ) {
         if ((gv_triadKillVotes[lv_a] == gv_triadKillVotes[lv_maxone]) && (gv_triadKillVotes[lv_a] > 0)) {
-            lv_list[lv_tie] = lv_maxone;
+            gv_seqPrepList[lv_tie] = lv_maxone;
             lv_tie += 1;
-            lv_list[lv_tie] = lv_a;
+            gv_seqPrepList[lv_tie] = lv_a;
         }
         else {
             if ((gv_triadKillVotes[lv_a] > gv_triadKillVotes[lv_maxone]) && (gv_triadKillVotes[lv_a] > 0)) {
@@ -10331,7 +10465,7 @@ void gf_SequencePrep () {
                 lv_tie = 0;
                 lv_b = 1;
                 for ( ; ( (autoC46E8593_ai >= 0 && lv_b <= autoC46E8593_ae) || (autoC46E8593_ai < 0 && lv_b >= autoC46E8593_ae) ) ; lv_b += autoC46E8593_ai ) {
-                    lv_list[lv_b] = 0;
+                    gv_seqPrepList[lv_b] = 0;
                 }
             }
 
@@ -10339,7 +10473,7 @@ void gf_SequencePrep () {
     }
     if ((lv_maxone != 0)) {
         if ((lv_tie > 0)) {
-            gv_triadTarget = lv_list[RandomInt(0, lv_tie)];
+            gv_triadTarget = gv_seqPrepList[RandomInt(0, lv_tie)];
         }
         else {
             gv_triadTarget = lv_maxone;
@@ -10348,13 +10482,13 @@ void gf_SequencePrep () {
 
     lv_a = 0;
     for ( ; ( (auto3E8F5F54_ai >= 0 && lv_a <= auto3E8F5F54_ae) || (auto3E8F5F54_ai < 0 && lv_a >= auto3E8F5F54_ae) ) ; lv_a += auto3E8F5F54_ai ) {
-        lv_list[lv_a] = 0;
+        gv_seqPrepList[lv_a] = 0;
     }
     lv_a = 1;
     for ( ; ( (autoE16C07AF_ai >= 0 && lv_a <= autoE16C07AF_ae) || (autoE16C07AF_ai < 0 && lv_a >= autoE16C07AF_ae) ) ; lv_a += autoE16C07AF_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 2) && (gv_action[lv_a][0] > 0)) {
-                gv_triadTarget = gv_action[lv_a][0];
+                gf_SKP_5_longtou(lv_a);
             }
 
         }
@@ -10366,8 +10500,7 @@ void gf_SequencePrep () {
     for ( ; ( (auto888A5EDF_ai >= 0 && lv_a <= auto888A5EDF_ae) || (auto888A5EDF_ai < 0 && lv_a >= auto888A5EDF_ae) ) ; lv_a += auto888A5EDF_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_jailed[lv_a] == 0)) {
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 1) && (gv_action[lv_a][0] == gv_triadTarget)) {
-                lv_list[lv_maxone] = lv_a;
-                lv_maxone += 1;
+                gf_SKP_5_baotu(lv_a, lv_maxone);
             }
 
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 2) && (gv_roleOptions[5][2][3] == true)) {
@@ -10382,8 +10515,7 @@ void gf_SequencePrep () {
         for ( ; ( (autoBE3BBC26_ai >= 0 && lv_a <= autoBE3BBC26_ae) || (autoBE3BBC26_ai < 0 && lv_a >= autoBE3BBC26_ae) ) ; lv_a += autoBE3BBC26_ai ) {
             if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_jailed[lv_a] == 0)) {
                 if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 1)) {
-                    lv_list[lv_maxone] = lv_a;
-                    lv_maxone += 1;
+                    gf_SKP_5_baotu_2(lv_a, lv_maxone);
                 }
 
                 if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 2) && (gv_roleOptions[5][2][3] == true)) {
@@ -10397,7 +10529,7 @@ void gf_SequencePrep () {
 
     if ((gv_triadTarget != 0) && ((lv_maxone != 0) || (lv_tie != 0))) {
         if ((lv_maxone != 0)) {
-            gv_triadHitman = lv_list[RandomInt(0, (lv_maxone - 1))];
+            gv_triadHitman = gv_seqPrepList[RandomInt(0, (lv_maxone - 1))];
         }
         else {
             gv_triadHitman = lv_tie;
@@ -10409,14 +10541,14 @@ void gf_SequencePrep () {
     lv_tie = 0;
     lv_a = 0;
     for ( ; ( (autoCF638CBD_ai >= 0 && lv_a <= autoCF638CBD_ae) || (autoCF638CBD_ai < 0 && lv_a >= autoCF638CBD_ae) ) ; lv_a += autoCF638CBD_ai ) {
-        lv_list[lv_a] = 0;
+        gv_seqPrepList[lv_a] = 0;
     }
     lv_a = 1;
     for ( ; ( (auto17686076_ai >= 0 && lv_a <= auto17686076_ae) || (auto17686076_ai < 0 && lv_a >= auto17686076_ae) ) ; lv_a += auto17686076_ai ) {
         if ((gv_cultConvertVotes[lv_a] == gv_cultConvertVotes[lv_maxone]) && (gv_cultConvertVotes[lv_a] > 0)) {
-            lv_list[lv_tie] = lv_maxone;
+            gv_seqPrepList[lv_tie] = lv_maxone;
             lv_tie += 1;
-            lv_list[lv_tie] = lv_a;
+            gv_seqPrepList[lv_tie] = lv_a;
         }
         else {
             if ((gv_cultConvertVotes[lv_a] > gv_cultConvertVotes[lv_maxone]) && (gv_cultConvertVotes[lv_a] > 0)) {
@@ -10424,7 +10556,7 @@ void gf_SequencePrep () {
                 lv_tie = 0;
                 lv_b = 1;
                 for ( ; ( (autoCB948484_ai >= 0 && lv_b <= autoCB948484_ae) || (autoCB948484_ai < 0 && lv_b >= autoCB948484_ae) ) ; lv_b += autoCB948484_ai ) {
-                    lv_list[lv_b] = 0;
+                    gv_seqPrepList[lv_b] = 0;
                 }
             }
 
@@ -10432,7 +10564,7 @@ void gf_SequencePrep () {
     }
     if ((lv_maxone != 0)) {
         if ((lv_tie > 0)) {
-            gv_cultTarget = lv_list[RandomInt(0, lv_tie)];
+            gv_cultTarget = gv_seqPrepList[RandomInt(0, lv_tie)];
         }
         else {
             gv_cultTarget = lv_maxone;
@@ -10443,7 +10575,7 @@ void gf_SequencePrep () {
     lv_tie = 0;
     lv_a = 0;
     for ( ; ( (auto391FFCD1_ai >= 0 && lv_a <= auto391FFCD1_ae) || (auto391FFCD1_ai < 0 && lv_a >= auto391FFCD1_ae) ) ; lv_a += auto391FFCD1_ai ) {
-        lv_list[lv_a] = 0;
+        gv_seqPrepList[lv_a] = 0;
     }
     lv_a = 1;
     for ( ; ( (autoD903FD9F_ai >= 0 && lv_a <= autoD903FD9F_ae) || (autoD903FD9F_ai < 0 && lv_a >= autoD903FD9F_ae) ) ; lv_a += autoD903FD9F_ai ) {
@@ -10455,9 +10587,9 @@ void gf_SequencePrep () {
         }
         else {
             if ((gv_cultSmiteVotes[lv_a] == gv_cultSmiteVotes[lv_maxone]) && (gv_cultSmiteVotes[lv_a] > 0)) {
-                lv_list[lv_tie] = lv_maxone;
+                gv_seqPrepList[lv_tie] = lv_maxone;
                 lv_tie += 1;
-                lv_list[lv_tie] = lv_a;
+                gv_seqPrepList[lv_tie] = lv_a;
             }
             else {
                 if ((gv_cultSmiteVotes[lv_a] > gv_cultSmiteVotes[lv_maxone]) && (gv_cultSmiteVotes[lv_a] > 0)) {
@@ -10465,7 +10597,7 @@ void gf_SequencePrep () {
                     lv_tie = 0;
                     lv_b = 1;
                     for ( ; ( (auto5F8BCF7C_ai >= 0 && lv_b <= auto5F8BCF7C_ae) || (auto5F8BCF7C_ai < 0 && lv_b >= auto5F8BCF7C_ae) ) ; lv_b += auto5F8BCF7C_ai ) {
-                        lv_list[lv_b] = 0;
+                        gv_seqPrepList[lv_b] = 0;
                     }
                 }
 
@@ -10474,7 +10606,7 @@ void gf_SequencePrep () {
     }
     if ((lv_maxone != 0)) {
         if ((lv_tie > 0)) {
-            gv_cultSmiteTarget = lv_list[RandomInt(0, lv_tie)];
+            gv_cultSmiteTarget = gv_seqPrepList[RandomInt(0, lv_tie)];
         }
         else {
             gv_cultSmiteTarget = lv_maxone;
@@ -10483,15 +10615,14 @@ void gf_SequencePrep () {
 
     lv_a = 0;
     for ( ; ( (autoA48B5F67_ai >= 0 && lv_a <= autoA48B5F67_ae) || (autoA48B5F67_ai < 0 && lv_a >= autoA48B5F67_ae) ) ; lv_a += autoA48B5F67_ai ) {
-        lv_list[lv_a] = 0;
+        gv_seqPrepList[lv_a] = 0;
     }
     lv_maxone = 0;
     lv_a = 1;
     for ( ; ( (auto283F770B_ai >= 0 && lv_a <= auto283F770B_ae) || (auto283F770B_ai < 0 && lv_a >= auto283F770B_ae) ) ; lv_a += auto283F770B_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true) && (gv_suiciding[lv_a][2] == false) && (gv_jailed[lv_a] == 0)) {
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 8) && (gv_action[lv_a][0] == gv_cultTarget)) {
-                lv_list[lv_maxone] = lv_a;
-                lv_maxone += 1;
+                gf_SKP_3_xiejiaotu(lv_a, lv_maxone);
             }
 
         }
@@ -10502,8 +10633,7 @@ void gf_SequencePrep () {
         for ( ; ( (auto69BB8C0E_ai >= 0 && lv_a <= auto69BB8C0E_ae) || (auto69BB8C0E_ai < 0 && lv_a >= auto69BB8C0E_ae) ) ; lv_a += auto69BB8C0E_ai ) {
             if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true) && (gv_suiciding[lv_a][2] == false) && (gv_jailed[lv_a] == 0)) {
                 if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 8)) {
-                    lv_list[lv_maxone] = lv_a;
-                    lv_maxone += 1;
+                    gf_SKP_3_xiejiaotu_2(lv_a, lv_maxone);
                 }
 
             }
@@ -10512,7 +10642,7 @@ void gf_SequencePrep () {
     }
 
     if ((gv_cultTarget != 0) && (lv_maxone != 0)) {
-        gv_cultConverter = lv_list[RandomInt(0, (lv_maxone - 1))];
+        gv_cultConverter = gv_seqPrepList[RandomInt(0, (lv_maxone - 1))];
         gf_BHVisit(gv_cultConverter, gv_cultTarget);
     }
 
@@ -10527,112 +10657,87 @@ void gf_SequencePrep () {
     for ( ; ( (auto09CCCF2B_ai >= 0 && lv_a <= auto09CCCF2B_ae) || (auto09CCCF2B_ai < 0 && lv_a >= auto09CCCF2B_ae) ) ; lv_a += auto09CCCF2B_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 2)) {
-                gv_busEligible[lv_a] = false;
+                gf_SKP_3_shengcunzhe(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 9)) {
-                gv_busEligible[lv_a] = false;
+                gf_SKP_1_bashisiji(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 10)) {
-                gv_busEligible[lv_a] = false;
-                gv_veteranEligible[lv_a] = false;
+                gf_SKP_1_fayi(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 13)) {
-                gv_busEligible[lv_a] = false;
-                gv_witchEligible[lv_a] = false;
+                gf_SKP_1_yujing(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 16)) {
-                gv_veteranEligible[lv_a] = false;
+                gf_SKP_1_jianshizhe(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 31)) {
-                gv_veteranEligible[lv_a] = false;
+                gf_SKP_1_guanchazhe(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 17)) {
-                gv_busEligible[lv_a] = false;
-                gv_witchEligible[lv_a] = false;
-                gv_veteranEligible[lv_a] = false;
+                gf_SKP_1_tuiwujunren(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 29)) {
-                gv_busEligible[lv_a] = false;
-                gv_witchEligible[lv_a] = false;
-                gv_veteranEligible[lv_a] = false;
+                gf_SKP_1_bihuzhe(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 17)) {
-                gv_busEligible[lv_a] = false;
-                gv_witchEligible[lv_a] = false;
-                gv_veteranEligible[lv_a] = false;
+                gf_SKP_3_dugui(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 9)) {
-                gv_busEligible[lv_a] = false;
-                gv_witchEligible[lv_a] = false;
+                gf_SKP_2_bangjiazhe(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 11)) {
-                gv_busEligible[lv_a] = false;
+                gf_SKP_2_qipianzhe(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 9)) {
-                gv_busEligible[lv_a] = false;
-                gv_witchEligible[lv_a] = false;
+                gf_SKP_5_shenxun(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 11)) {
-                gv_busEligible[lv_a] = false;
+                gf_SKP_5_mihuo(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 5) && (gv_action[lv_a][0] == 0)) {
-                gv_busEligible[lv_a] = false;
+                gf_SKP_3_zonghuozhe(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 7)) {
-                gv_busEligible[lv_a] = false;
-                gv_witchEligible[lv_a] = false;
-                gv_veteranEligible[lv_a] = false;
+                gf_SKP_3_shiyizhe(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 9)) {
-                gv_busEligible[lv_a] = false;
+                gf_SKP_3_sharenkuang(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 13)) {
-                gv_busEligible[lv_a] = false;
-                gv_witchEligible[lv_a] = false;
-                gv_veteranEligible[lv_a] = false;
+                gf_SKP_3_duoluoshenpanzhe(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 16)) {
-                gv_busEligible[lv_a] = false;
-                gv_witchEligible[lv_a] = false;
-                gv_veteranEligible[lv_a] = false;
+                gf_SKP_3_ximingren(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 15) && (gv_roleOptions[3][15][2] == true)) {
-                if ((gv_e5BC80E585B3[lv_a] == true)) {
-                    gv_veteranEligible[lv_a] = false;
-                }
-                else {
-                    gv_veteranEligible[lv_a] = true;
-                }
+                gf_SKP_3_yuanhun(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 14)) {
-                gv_busEligible[lv_a] = false;
-                gv_witchEligible[lv_a] = false;
-                gv_veteranEligible[lv_a] = false;
+                gf_SKP_2_mentu(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 14)) {
-                gv_busEligible[lv_a] = false;
-                gv_witchEligible[lv_a] = false;
-                gv_veteranEligible[lv_a] = false;
+                gf_SKP_5_pucong(lv_a);
             }
 
         }
@@ -10643,9 +10748,7 @@ void gf_SequencePrep () {
     for ( ; ( (autoD0B74048_ai >= 0 && lv_a <= autoD0B74048_ae) || (autoD0B74048_ai < 0 && lv_a >= autoD0B74048_ae) ) ; lv_a += autoD0B74048_ai ) {
         gv_e5BA87E68AA4E5BC80E5A78B[lv_a] = false;
         if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 29) && (gv_action[lv_a][0] > 0)) {
-            gv_e5BA87E68AA4E5BC80E5A78B[lv_a] = true;
-            gv_e5BA87E68AA4E58585E883BD[lv_a] = 0;
-            gv_cooldown[lv_a] += 2;
+            gf_SKP_1_bihuzhe_2(lv_a);
         }
 
     }
@@ -10653,20 +10756,15 @@ void gf_SequencePrep () {
     for ( ; ( (autoC4579554_ai >= 0 && lv_a <= autoC4579554_ae) || (autoC4579554_ai < 0 && lv_a >= autoC4579554_ae) ) ; lv_a += autoC4579554_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 1) && (gv_action[lv_a][0] > 0)) {
-                gv_immune[lv_a][0] = true;
-                gv_shots[lv_a] -= 1;
-                if ((gv_shots[lv_a] == 0)) {
-                    gf_CBSystemMessage(StringExternal("Param/Value/C5D3B015"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                }
-
+                gf_SKP_1_shimin(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 2) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_1_jingzhang(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 31) && (gv_action[lv_a][0] > 0) && (gv_action[lv_a][0] != lv_a)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_1_guanchazhe_2(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 31) && (gv_action[lv_a][0] > 0) && ((gv_action[lv_a][1] > 0) || (gv_e5BC80E585B3[lv_a] == false))) { // shw221 追击模式只需目标一
@@ -10674,286 +10772,231 @@ void gf_SequencePrep () {
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 3) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_3_yingwuzhe(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 4) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_1_tanyuan(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 5) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_1_wuniang(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 6) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_1_yijing(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 17) && (gv_action[lv_a][0] > 0)) {
-                gv_e4B88BE6B3A8[lv_a] = gv_action[lv_a][0];
+                gf_SKP_3_dugui_2(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 25) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_1_mushi(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 23) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_1_zhengmuguan(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 9) && (gv_action[lv_a][0] > 0) && (gv_action[lv_a][1] > 0)) {
-                gf_BHVisit(lv_a, gv_action[lv_a][RandomInt(0, 1)]);
+                gf_SKP_1_bashisiji_2(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 10) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_1_fayi_2(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 11) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_1_baobiao(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 13) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_1_yujing_2(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 14) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_1_gongjihuizhanglao(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 15) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_1_zhentan(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 16) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_1_jianshizhe_2(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 17) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitSelf(lv_a);
-                gv_immune[lv_a][0] = true;
-                gv_shots[lv_a] -= 1;
-                if ((gv_shots[lv_a] == 0)) {
-                    gf_CBSystemMessage(StringExternal("Param/Value/4D00E73A"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                }
-                else {
-                    if ((gv_shots[lv_a] == 1)) {
-                        gf_CBSystemMessage((StringExternal("Param/Value/B3B29259") + IntToText(gv_shots[lv_a]) + StringExternal("Param/Value/1CB45341")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
-                    }
-                    else {
-                        if ((gv_shots[lv_a] > 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/12F39168") + IntToText(gv_shots[lv_a]) + StringExternal("Param/Value/C5C7AB40")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
-                        }
-
-                    }
-                }
+                gf_SKP_1_tuiwujunren_2(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 21) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_1_fushou(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 26) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_1_shenchayuan(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 15) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_3_yuanhun_2(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 22) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_1_hulinren(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 27) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_1_lianbangtanyuan(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 30) && (gv_action[lv_a][0] > 0) && (gv_shots[lv_a] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_1_shiguan(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 3) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_2_peishi(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 4) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_2_canmou(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 5) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_2_xianhaizhe(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 6) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_2_qinglizhe(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 7) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_2_konghezhe(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 8) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_2_weizhuangzhe(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 9) && (gv_action[lv_a][0] > 0)) {
-                if ((gv_shots[lv_a] >= 1)) {
-                    gf_BHVisitAction(lv_a);
-                }
-                else {
-                    gf_CBSystemMessage(StringExternal("Param/Value/3EE629BB"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                }
+                gf_SKP_2_bangjiazhe_2(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 10) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_2_mitan(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 11) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_2_qipianzhe_2(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 14) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_2_mentu_2(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 15) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_2_zaizangzhe(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 15) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_5_wuxian(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 24) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_1_xuetu(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 3) && (gv_action[lv_a][0] > 0) && ((gv_roleOptions[5][3][1] == true) || (gv_roleblocked[lv_a] == 0))) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_5_jiaojihua(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 4) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_5_guanjia(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 5) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_5_zaojia(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 6) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_5_xiangzhu(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 7) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_5_fengkou(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 8) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_5_shentou(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 9) && (gv_action[lv_a][0] > 0)) {
-                if ((gv_shots[lv_a] >= 1)) {
-                    gf_BHVisitAction(lv_a);
-                }
-                else {
-                    gf_CBSystemMessage(StringExternal("Param/Value/F7560A89"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                }
+                gf_SKP_5_shenxun_2(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 10) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_5_xianfeng(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 11) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_5_mihuo_2(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 14) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_5_pucong_2(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 15) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_5_wuxian_2(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 1) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_3_lianhuanshashou(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 14) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_3_wenyisanbuzhe(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 2) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
-                if ((gv_e59CA8E5BC80party == true)) {
-                    gf_CBSystemMessage(StringExternal("Param/Value/1EB65E0C"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                    gv_e68CA8E9A5BF[lv_a] = false;
-                }
-                else {
-                    if ((gv_action[lv_a][0] > 0)) {
-                        gf_CBSystemMessage(StringExternal("Param/Value/13D8D964"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                        gf_BHVisitAction(lv_a);
-                        gv_e68CA8E9A5BF[lv_a] = false;
-                    }
-                    else {
-                        gf_CBSystemMessage(StringExternal("Param/Value/1B97AF2A"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                        gf_BHVisitNone(lv_a);
-                        gv_e68CA8E9A5BF[lv_a] = true;
-                    }
-                }
+                gf_SKP_3_shengcunzhe_2(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 3) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_3_xiaochou(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 4) && (gv_action[lv_a][0] > 0) && (gv_action[lv_a][1] > 0)) {
-                gv_witched[gv_action[lv_a][0]] = lv_a;
-                gf_BHVisitAction(lv_a);
+                gf_SKP_3_nvwu(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 5)) {
-                if ((gv_action[lv_a][0] > 0)) {
-                    gf_BHVisitAction(lv_a);
-                }
-
-                if ((gv_action[lv_a][1] == 1)) {
-                    gf_BHVisitSelf(lv_a);
-                }
-
-                if ((gv_action[lv_a][0] == 0) && (gv_action[lv_a][1] == 0)) {
-                    gf_BHVisitSelf(lv_a);
-                }
-
+                gf_SKP_3_zonghuozhe_2(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 9) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_3_sharenkuang_2(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 10) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_3_wuyi(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 11) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitAction(lv_a);
+                gf_SKP_3_shenjiguan(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 13) && (gv_action[lv_a][0] > 0)) {
-                gv_punishVotes[gv_action[lv_a][0]] += 1.5;
-                gf_BHVisitSelf(lv_a);
+                gf_SKP_3_duoluoshenpanzhe_2(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 31) && (gv_action[lv_a][0] > 0)) {
-                gf_BHCrimeTrespass(lv_a);
-                gf_BHVisitAction(lv_a);
+                gf_SKP_3_yingwuzhe_2(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 32) && (gv_action[lv_a][0] > 0)) {
-                gf_BHVisitSelf(lv_a);
+                gf_SKP_3_tianxuanzhe(lv_a);
             }
 
         }
@@ -10985,7 +11028,7 @@ void gf_SequencePrep () {
     }
 
     if ((gv_roles[gv_punishTarget][1] == 3) && (gv_roles[gv_punishTarget][0] == 13)) {
-        gv_punishTarget = 0;
+        gf_SKP_3_duoluoshenpanzhe_3();
     }
 
     gf_DEBUG("Finished action controller stage 2");
@@ -11003,7 +11046,7 @@ void gf_SequencePrep () {
                 }
 
                 if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 8) && (gv_roleOptions[1][8][2] == true)) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/578D7DBA") + TextWithColor(StringToText(gv_name[gv_mafiaTarget]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_mafiaTarget])) + StringExternal("Param/Value/E4D258B9")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                    gf_SKP_1_jiandie(lv_a);
                 }
 
             }
@@ -11033,7 +11076,7 @@ void gf_SequencePrep () {
                 }
 
                 if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 8) && (gv_roleOptions[1][8][2] == true)) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/B0AF1532") + TextWithColor(StringToText(gv_name[gv_triadTarget]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_triadTarget])) + StringExternal("Param/Value/971409E7")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                    gf_SKP_1_jiandie_2(lv_a);
                 }
 
             }
@@ -11198,7 +11241,7 @@ void gf_SequenceBullshit () {
                 lv_b[0] += 1;
                 if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
                     if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 4) && (gv_visitation[lv_a] > 0)) {
-                        gv_witched[gv_visitation[lv_a]] = lv_a;
+                        gf_SKB_3_nvwu(lv_a);
                     }
 
                 }
@@ -11462,10 +11505,7 @@ void gf_SequenceBullshit () {
     lv_a = 1;
     for ( ; ( (auto25CE18D3_ai >= 0 && lv_a <= auto25CE18D3_ae) || (auto25CE18D3_ai < 0 && lv_a >= auto25CE18D3_ae) ) ; lv_a += auto25CE18D3_ai ) {
         if ((((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 5) && (gv_roleOptions[1][5][0] == true)) || ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 3) && (gv_roleOptions[2][3][1] == true)) || ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 3) && (gv_roleOptions[5][3][1] == true))) && (gv_visitation[lv_a] > 0)) {
-            gf_BHCrime(lv_a, 4);
-            if ((gf_BHRestrictAllowed(gv_visitation[lv_a]) == true)) {
-                gf_BHBlock(gv_visitation[lv_a], lv_a);
-            }
+            gf_SKB_1_wuniang(lv_a);
         }
 
     }
@@ -11520,13 +11560,7 @@ void gf_SequenceBullshit () {
     lv_a = 1;
     for ( ; ( (autoC5928706_ai >= 0 && lv_a <= autoC5928706_ae) || (autoC5928706_ai < 0 && lv_a >= autoC5928706_ae) ) ; lv_a += autoC5928706_ai ) {
         if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 5) && (gv_roleOptions[1][5][2] == true) && (gv_roleblocked[lv_a] == 0) && (gv_visitation[lv_a] > 0)) {
-            if ((gv_skillCount[lv_a] == 1)) {
-                gv_cooldown[lv_a] = 2;
-                gv_skillCount[lv_a] = 0;
-            }
-            else {
-                gv_skillCount[lv_a] = (gv_skillCount[lv_a] + 1);
-            }
+            gf_SKB_1_wuniang_2(lv_a);
         }
 
     }
@@ -11552,17 +11586,7 @@ void gf_SequenceBullshit () {
     lv_a = 1;
     for ( ; ( (autoE0DDEEB7_ai >= 0 && lv_a <= autoE0DDEEB7_ae) || (autoE0DDEEB7_ai < 0 && lv_a >= autoE0DDEEB7_ae) ) ; lv_a += autoE0DDEEB7_ai ) {
         if (((gv_visitation[lv_a] < 1) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 10)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 13)) || (((gv_roles[lv_a][1] == 2) || (gv_roles[lv_a][1] == 5)) && (gv_roles[lv_a][0] == 9)) || ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 7)))) {
-            if ((gv_switched[lv_a] != 0)) {
-                gv_location[lv_a] = gv_switched[lv_a];
-            }
-            else {
-                if ((gv_jailed[lv_a] != 0)) {
-                    gv_location[lv_a] = gv_jailed[lv_a];
-                }
-                else {
-                    gv_location[lv_a] = lv_a;
-                }
-            }
+            gf_SKB_1_fayi(lv_a);
         }
         else {
             gv_location[lv_a] = gv_visitation[lv_a];
@@ -11571,7 +11595,7 @@ void gf_SequenceBullshit () {
     lv_a = 1;
     for ( ; ( (autoEF4652DF_ai >= 0 && lv_a <= autoEF4652DF_ae) || (autoEF4652DF_ai < 0 && lv_a >= autoEF4652DF_ae) ) ; lv_a += autoEF4652DF_ai ) {
         if ((gv_visitation[lv_a] >= 1) && (gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 11)) {
-            gv_location[lv_a] = gv_location[gv_visitation[lv_a]];
+            gf_SKB_1_baobiao(lv_a);
         }
 
     }
@@ -11594,11 +11618,7 @@ void gf_SequenceBullshit () {
 
         if ((gv_witched[lv_a] != 0) && (gv_witchEligible[lv_a] == true)) {
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 9)) {
-                if ((gv_roleOptions[3][4][1] == true)) {
-                    gf_CBSystemMessage(StringExternal("Param/Value/DB0866D1"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                    gf_FlashScreen(Color(66.67, 53.33, 100.00), lv_a, 3.0, 30.0);
-                }
-
+                gf_SKB_1_bashisiji(lv_a);
             }
             else {
                 if ((gv_roleOptions[3][4][1] == true)) {
@@ -11619,7 +11639,7 @@ void gf_SequenceBullshit () {
     for ( ; ( (autoBDF0635A_ai >= 0 && lv_a <= autoBDF0635A_ae) || (autoBDF0635A_ai < 0 && lv_a >= autoBDF0635A_ae) ) ; lv_a += autoBDF0635A_ai ) {
         if ((gv_switched[lv_a] != 0) && (gv_bussed[lv_a] != 0) && (gv_jailed[lv_a] == 0)) {
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 9) && (gv_visitation[lv_a] == lv_a)) {
-                gf_CBSystemMessage(StringExternal("Param/Value/212644C3"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                gf_SKB_1_bashisiji_2(lv_a);
             }
             else {
                 gf_CBSystemMessage(StringExternal("Param/Value/8A9C0954"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
@@ -11666,7 +11686,7 @@ void gf_SequenceBullshit () {
     for ( ; ( (auto71A055C6_ai >= 0 && lv_a <= auto71A055C6_ae) || (auto71A055C6_ai < 0 && lv_a >= auto71A055C6_ae) ) ; lv_a += auto71A055C6_ai ) {
         if ((gv_roleblocked[lv_a] != 0) && (gv_jailed[lv_a] == 0)) {
             if ((gv_visitation[lv_a] != 0) && (((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 1) && (gv_roleOptions[3][1][1] == true)) || ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 5) && (gv_roleOptions[3][5][4] == true)))) {
-                gf_CBSystemMessage(StringExternal("Param/Value/A1231D8B"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                gf_SKB_3_lianhuanshashou(lv_a);
             }
             else {
                 if ((gv_immune[lv_a][1] == false)) {
@@ -11691,11 +11711,7 @@ void gf_SequenceBullshit () {
     lv_a = 1;
     for ( ; ( (autoFB314C16_ai >= 0 && lv_a <= autoFB314C16_ae) || (autoFB314C16_ai < 0 && lv_a >= autoFB314C16_ae) ) ; lv_a += autoFB314C16_ai ) {
         if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 16) && (gv_action[lv_a][0] > 0)) {
-            gv_bondedwith[gv_action[lv_a][0]] = gv_action[lv_a][1];
-            gv_bondedwith[gv_action[lv_a][1]] = gv_action[lv_a][0];
-            gv_bondedby[gv_action[lv_a][1]] = lv_a;
-            gv_bondedby[gv_action[lv_a][0]] = lv_a;
-            gf_CBSystemMessage((StringExternal("Param/Value/65939BCF") + TextWithColor(null, libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_action[lv_a][0]])) + StringToText(gv_name[gv_action[lv_a][0]]) + StringExternal("Param/Value/9B1FDEF6") + TextWithColor(null, libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_action[lv_a][1]])) + StringToText(gv_name[gv_action[lv_a][1]]) + StringExternal("Param/Value/A26E04B7")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+            gf_SKB_3_ximingren(lv_a);
         }
 
     }
@@ -11752,7 +11768,7 @@ void gf_SequenceBullshit () {
         }
 
         if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 14) && (gv_e7989FE796ABE58589E78EAF[lv_a] == true)) {
-            gf_BHCrime(lv_a, 4);
+            gf_SKB_3_wenyisanbuzhe(lv_a);
         }
 
     }
@@ -12468,6 +12484,10 @@ void gf_SequenceBullshitBackup () {
 
 }
 
+// ===== BH:SK 局部数组提升（阶段三前置）=====
+bool[16] gv_seqKillsVetHit;
+bool[3] gv_seqKillsZ;
+
 void gf_SequenceKills () {
     // Variable Declarations
     const int auto6593898B_ae = 15;
@@ -12476,11 +12496,10 @@ void gf_SequenceKills () {
     int lv_x;
     int lv_y;
     int lv_b;
-    bool[3] lv_z;
     playergroup lv_g;
     playergroup lv_g1;
     int[16] lv_g2;
-    bool[16] lv_e68CA8E8BF87E98080E4BC8DE68993E4BA86;
+    bool[16] gv_seqKillsVetHit;
     bool[16][16] lv_mtraping;
     bool[16][16] lv_ttraping;
     bool[16][16] lv_ntraping;
@@ -12559,6 +12578,27 @@ void gf_SequenceKills () {
     const int auto78285367_ai = 1;
 
     // Variable Initialization
+    // 阶段三前置（shw239）：局部数组已提升为全局，入口清零还原「每次调用都是全新」
+    gv_seqKillsVetHit[0] = false;
+    gv_seqKillsVetHit[1] = false;
+    gv_seqKillsVetHit[2] = false;
+    gv_seqKillsVetHit[3] = false;
+    gv_seqKillsVetHit[4] = false;
+    gv_seqKillsVetHit[5] = false;
+    gv_seqKillsVetHit[6] = false;
+    gv_seqKillsVetHit[7] = false;
+    gv_seqKillsVetHit[8] = false;
+    gv_seqKillsVetHit[9] = false;
+    gv_seqKillsVetHit[10] = false;
+    gv_seqKillsVetHit[11] = false;
+    gv_seqKillsVetHit[12] = false;
+    gv_seqKillsVetHit[13] = false;
+    gv_seqKillsVetHit[14] = false;
+    gv_seqKillsVetHit[15] = false;
+    gv_seqKillsZ[0] = false;
+    gv_seqKillsZ[1] = false;
+    gv_seqKillsZ[2] = false;
+
     lv_g = PlayerGroupEmpty();
     lv_g1 = PlayerGroupEmpty();
     lv_hTrapAlign = 2;
@@ -12628,44 +12668,12 @@ void gf_SequenceKills () {
                 }
             }
 
-            if ((gv_visitation[lv_a] != 0) && (gv_visitation[gv_visitation[lv_a]] != 0) && (gv_veteranEligible[lv_a] == true) && (gv_roles[gv_visitation[lv_a]][1] == 1) && (gv_roles[gv_visitation[lv_a]][0] == 17) && (gv_jailed[gv_visitation[lv_a]] == 0) && (PlayerGroupHasPlayer(gv_alivePlayers, gv_visitation[lv_a]) == true) && (lv_e68CA8E8BF87E98080E4BC8DE68993E4BA86[lv_a] == false) && (((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 9)) || (lv_x == 1))) {
-                if ((lv_z[1] == true)) {
-                    Wait(1.0, c_timeGame);
-                }
-
-                gv_damage[lv_a] += 1;
-                lv_z[1] = true;
-                if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 3)) {
-                    gf_CBSystemMessage(StringExternal("Param/Value/C6D80131"), gv_visitation[lv_a], gv_visitation[lv_a], 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                }
-                else {
-                    gf_CBSystemMessage(StringExternal("Param/Value/7F8313C7"), gv_visitation[lv_a], gv_visitation[lv_a], 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                }
-                gv_veteraned[lv_a] = true;
-                if ((gv_guarded[lv_a] != 0)) {
-                    gv_damage[lv_a] -= 1;
-                    gv_damage[gv_guarded[lv_a]] += 1;
-                    gv_damage[gv_visitation[lv_a]] += 1;
-                    gv_veteraned[gv_guarded[lv_a]] = true;
-                    gf_CBSystemMessage(StringExternal("Param/Value/DC6053AF"), gv_visitation[lv_a], gv_visitation[lv_a], 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                    gf_FlashScreen(Color(70.59, 0.00, 0.00), gv_visitation[lv_a], 3.0, 30.0);
-                    gf_FlashScreen(Color(0.00, 100.00, 0.00), lv_a, 3.0, 0.0);
-                    gf_CBSystemMessage(StringExternal("Param/Value/05FE9AB7"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                    gf_ESBodyguardKill(gv_visitation[lv_a], gv_guarded[lv_a]);
-                    gv_guarded[lv_a] = 0;
-                }
-                else {
-                    lv_e68CA8E8BF87E98080E4BC8DE68993E4BA86[lv_a] = true;
-                    gf_ESVeteranKill(lv_a, gv_visitation[lv_a]);
-                }
+            if ((gv_visitation[lv_a] != 0) && (gv_visitation[gv_visitation[lv_a]] != 0) && (gv_veteranEligible[lv_a] == true) && (gv_roles[gv_visitation[lv_a]][1] == 1) && (gv_roles[gv_visitation[lv_a]][0] == 17) && (gv_jailed[gv_visitation[lv_a]] == 0) && (PlayerGroupHasPlayer(gv_alivePlayers, gv_visitation[lv_a]) == true) && (gv_seqKillsVetHit[lv_a] == false) && (((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 9)) || (lv_x == 1))) {
+                gf_SKK_1_bashisiji(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 9)) {
-                if ((lv_x == 1)) {
-                }
-                else {
-                    gf_BHVisit(lv_a, lv_y);
-                }
+                gf_SKK_1_bashisiji_2(lv_a, lv_x, lv_y);
             }
 
         }
@@ -12673,41 +12681,21 @@ void gf_SequenceKills () {
     lv_a = 1;
     for ( ; ( (autoE1C400D5_ai >= 0 && lv_a <= autoE1C400D5_ae) || (autoE1C400D5_ai < 0 && lv_a >= autoE1C400D5_ae) ) ; lv_a += autoE1C400D5_ai ) {
         if ((gv_visitation[lv_a] != 0) && (gv_jailing[lv_a] != 0) && (gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 13) && (gv_shots[lv_a] != 0)) {
-            if ((lv_z[1] == true)) {
-                Wait(1.0, c_timeGame);
-            }
-
-            gf_DEBUG("Running Jailor handler");
-            gv_damage[gv_visitation[lv_a]] += 1;
-            gv_shots[lv_a] -= 1;
-            lv_z[1] = true;
-            if ((gv_shots[lv_a] == 0)) {
-                gf_CBSystemMessage(StringExternal("Param/Value/CF15132B"), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
-            }
-
-            if ((gv_shots[lv_a] == 1)) {
-                gf_CBSystemMessage((StringExternal("Param/Value/8BC0F5CD") + IntToText(gv_shots[lv_a]) + StringExternal("Param/Value/CDBCBFA8")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
-            }
-
-            if ((gv_shots[lv_a] > 1)) {
-                gf_CBSystemMessage((StringExternal("Param/Value/3A9ABB3B") + IntToText(gv_shots[lv_a]) + StringExternal("Param/Value/FD6A6D7B")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
-            }
-
-            gf_ESJailorKill(gv_visitation[lv_a], lv_a);
+            gf_SKK_1_yujing(lv_a);
         }
 
     }
     lv_a = 1;
     for ( ; ( (autoDC7C381A_ai >= 0 && lv_a <= autoDC7C381A_ae) || (autoDC7C381A_ai < 0 && lv_a >= autoDC7C381A_ae) ) ; lv_a += autoDC7C381A_ai ) {
         if ((gv_visitation[lv_a] != 0) && (gv_jailing[lv_a] != 0) && ((gv_roles[lv_a][1] == 2) || (gv_roles[lv_a][1] == 5)) && (gv_roles[lv_a][0] == 9) && (gv_shots[lv_a] != 0)) {
-            if ((lv_z[1] == true)) {
+            if ((gv_seqKillsZ[1] == true)) {
                 Wait(1.0, c_timeGame);
             }
 
             gf_DEBUG("Running Kidnapper/Interrogator handler");
             gv_damage[gv_visitation[lv_a]] += 1;
             gv_shots[lv_a] -= 1;
-            lv_z[1] = true;
+            gv_seqKillsZ[1] = true;
             if ((gv_shots[lv_a] == 0)) {
                 gf_CBSystemMessage(StringExternal("Param/Value/86653071"), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
             }
@@ -12724,14 +12712,14 @@ void gf_SequenceKills () {
     lv_a = 1;
     for ( ; ( (autoFACDEFE3_ai >= 0 && lv_a <= autoFACDEFE3_ae) || (autoFACDEFE3_ai < 0 && lv_a >= autoFACDEFE3_ae) ) ; lv_a += autoFACDEFE3_ai ) {
         if ((gv_visitation[lv_a] != 0) && ((gv_roles[lv_a][1] == 2) || (gv_roles[lv_a][1] == 5)) && (gv_roles[lv_a][0] == 15) && (gv_pretended[lv_a] != true) && (gv_veteraned[lv_a] == false)) {
-            if ((lv_z[1] == true)) {
+            if ((gv_seqKillsZ[1] == true)) {
                 Wait(1.0, c_timeGame);
             }
 
             gf_DEBUG("Running Vigilante handler");
             gv_damage[gv_visitation[lv_a]] += 1;
             gv_shots[lv_a] -= 1;
-            lv_z[1] = true;
+            gv_seqKillsZ[1] = true;
             if ((gv_shots[lv_a] > 1)) {
                 gf_CBSystemMessage(StringExternal("Param/Value/85152BBE"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
             }
@@ -12779,55 +12767,7 @@ void gf_SequenceKills () {
     lv_a = 1;
     for ( ; ( (auto26661C53_ai >= 0 && lv_a <= auto26661C53_ae) || (auto26661C53_ai < 0 && lv_a >= auto26661C53_ae) ) ; lv_a += auto26661C53_ai ) {
         if ((gv_visitation[lv_a] != 0) && (gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 6) && (gv_shots[lv_a] != 0) && (gv_veteraned[lv_a] == false)) {
-            if ((lv_z[1] == true)) {
-                Wait(1.0, c_timeGame);
-            }
-
-            gf_DEBUG("Running Vigilante handler");
-            gv_damage[gv_visitation[lv_a]] += 1;
-            gv_shots[lv_a] -= 1;
-            lv_z[1] = true;
-            if ((gv_shots[lv_a] > 1)) {
-                gf_CBSystemMessage((StringExternal("Param/Value/BF759227") + IntToText(gv_shots[lv_a]) + StringExternal("Param/Value/79637826")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-            }
-
-            if ((gv_shots[lv_a] == 1)) {
-                gf_CBSystemMessage((StringExternal("Param/Value/01EDA427") + StringExternal("Param/Value/680BDF7C") + StringExternal("Param/Value/D8EEB7D2")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-            }
-
-            if ((gv_shots[lv_a] == 0)) {
-                gf_CBSystemMessage(StringExternal("Param/Value/632C2FB3"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-            }
-
-            if ((gv_guarded[gv_visitation[lv_a]] != 0) && (gv_visitation[lv_a] != lv_a)) {
-                gv_damage[gv_visitation[lv_a]] -= 1;
-                gv_damage[gv_guarded[gv_visitation[lv_a]]] += 1;
-                gv_damage[lv_a] += 1;
-                gf_CBSystemMessage(StringExternal("Param/Value/AE153B56"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                gf_FlashScreen(Color(70.59, 0.00, 0.00), lv_a, 3.0, 30.0);
-                gf_FlashScreen(Color(0.00, 100.00, 0.00), gv_visitation[lv_a], 3.0, 0.0);
-                gf_CBSystemMessage(StringExternal("Param/Value/7CBF118B"), gv_visitation[lv_a], gv_visitation[lv_a], 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                gf_ESBodyguardKill(lv_a, gv_guarded[gv_visitation[lv_a]]);
-                gv_guarded[gv_visitation[lv_a]] = 0;
-            }
-            else {
-                if ((gv_visitation[lv_a] == lv_a)) {
-                    if ((gv_witched[lv_a] != 0)) {
-                        gf_ESWitchSuicide(lv_a, gv_witched[lv_a]);
-                    }
-                    else {
-                        if ((gv_hided[lv_a] != 0)) {
-                            gf_ESBeguilerSuicide(lv_a, gv_hided[lv_a]);
-                        }
-                        else {
-                            gf_ESBusDriverSuicide(lv_a, gv_bussed[lv_a]);
-                        }
-                    }
-                }
-                else {
-                    gf_ESVigilanteKill(gv_visitation[lv_a], lv_a);
-                }
-            }
+            gf_SKK_1_yijing(lv_a);
         }
 
     }
@@ -12835,13 +12775,13 @@ void gf_SequenceKills () {
     gf_DEBUG(("Mafia Target: " + IntToString(gv_mafiaTarget)));
     gf_DEBUG(("Mafia Visit Target: " + IntToString(gv_visitation[gv_mafiaHitman])));
     if ((gv_mafiaTarget != 0) && (gv_visitation[gv_mafiaHitman] != 0) && (gv_veteraned[gv_mafiaHitman] == false)) {
-        if ((lv_z[1] == true)) {
+        if ((gv_seqKillsZ[1] == true)) {
             Wait(1.0, c_timeGame);
         }
 
         gf_DEBUG("Running Mafia handler");
         gv_damage[gv_visitation[gv_mafiaHitman]] += 1;
-        lv_z[1] = true;
+        gv_seqKillsZ[1] = true;
         if ((gv_guarded[gv_visitation[gv_mafiaHitman]] != 0) && (gv_mafiaHitman != gv_visitation[gv_mafiaHitman])) {
             gv_damage[gv_visitation[gv_mafiaHitman]] -= 1;
             gv_damage[gv_guarded[gv_visitation[gv_mafiaHitman]]] += 1;
@@ -12877,13 +12817,13 @@ void gf_SequenceKills () {
     gf_DEBUG(("Triad Target: " + IntToString(gv_triadTarget)));
     gf_DEBUG(("Triad Visit Target: " + IntToString(gv_visitation[gv_triadHitman])));
     if ((gv_triadTarget != 0) && (gv_visitation[gv_triadHitman] != 0) && (gv_veteraned[gv_triadHitman] == false)) {
-        if ((lv_z[1] == true)) {
+        if ((gv_seqKillsZ[1] == true)) {
             Wait(1.0, c_timeGame);
         }
 
         gf_DEBUG("Running Triad handler");
         gv_damage[gv_visitation[gv_triadHitman]] += 1;
-        lv_z[1] = true;
+        gv_seqKillsZ[1] = true;
         if ((gv_guarded[gv_visitation[gv_triadHitman]] != 0) && (gv_triadHitman != gv_visitation[gv_triadHitman])) {
             gv_damage[gv_visitation[gv_triadHitman]] -= 1;
             gv_damage[gv_guarded[gv_visitation[gv_triadHitman]]] += 1;
@@ -12918,179 +12858,35 @@ void gf_SequenceKills () {
     lv_a = 1;
     for ( ; ( (auto888AB1A8_ai >= 0 && lv_a <= auto888AB1A8_ae) || (auto888AB1A8_ai < 0 && lv_a >= auto888AB1A8_ae) ) ; lv_a += auto888AB1A8_ai ) {
         if ((gv_visitation[lv_a] != 0) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 1) && (gv_veteraned[lv_a] == false)) {
-            if ((lv_z[1] == true)) {
-                Wait(1.0, c_timeGame);
-            }
-
-            gf_DEBUG("Running Serial Killer handler");
-            gv_damage[gv_visitation[lv_a]] += 1;
-            lv_z[1] = true;
-            if ((gv_guarded[gv_visitation[lv_a]] != 0) && (gv_visitation[lv_a] != lv_a)) {
-                gv_damage[gv_visitation[lv_a]] -= 1;
-                gv_damage[gv_guarded[gv_visitation[lv_a]]] += 1;
-                gv_damage[lv_a] += 1;
-                gf_CBSystemMessage(StringExternal("Param/Value/309996E1"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                gf_FlashScreen(Color(70.59, 0.00, 0.00), lv_a, 3.0, 30.0);
-                gf_FlashScreen(Color(0.00, 100.00, 0.00), gv_visitation[lv_a], 3.0, 0.0);
-                gf_CBSystemMessage(StringExternal("Param/Value/A326298C"), gv_visitation[lv_a], gv_visitation[lv_a], 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                gf_ESBodyguardKill(lv_a, gv_guarded[gv_visitation[lv_a]]);
-                gv_guarded[gv_visitation[lv_a]] = 0;
-            }
-            else {
-                if ((gv_visitation[lv_a] == lv_a)) {
-                    if ((gv_witched[lv_a] != 0)) {
-                        gf_ESWitchSuicide(lv_a, gv_witched[lv_a]);
-                    }
-                    else {
-                        if ((gv_hided[lv_a] != 0)) {
-                            gf_ESBeguilerSuicide(lv_a, gv_hided[lv_a]);
-                        }
-                        else {
-                            gf_ESBusDriverSuicide(lv_a, gv_bussed[lv_a]);
-                        }
-                    }
-                }
-                else {
-                    gf_ESSerialKillerKill(gv_visitation[lv_a], lv_a);
-                }
-            }
+            gf_SKK_3_lianhuanshashou(lv_a);
         }
 
     }
     lv_a = 1;
     for ( ; ( (autoA0F79B9F_ai >= 0 && lv_a <= autoA0F79B9F_ae) || (autoA0F79B9F_ai < 0 && lv_a >= autoA0F79B9F_ae) ) ; lv_a += autoA0F79B9F_ai ) {
-        if ((gv_action[lv_a][1] == 1) && (gv_visitation[lv_a] != 0) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 5) && (lv_z[2] == false)) {
-            if ((lv_z[1] == true)) {
-                Wait(1.0, c_timeGame);
-            }
-
-            gf_DEBUG("Running Arsonist handler");
-            lv_b = 1;
-            for ( ; ( (autoC6CAB55A_ai >= 0 && lv_b <= autoC6CAB55A_ae) || (autoC6CAB55A_ai < 0 && lv_b >= autoC6CAB55A_ae) ) ; lv_b += autoC6CAB55A_ai ) {
-                if ((gv_doused[lv_b] == true)) {
-                    gv_damage[lv_b] += 1;
-                }
-
-            }
-            lv_z[2] = true;
-            lv_z[1] = true;
-            gf_BHCrime(lv_a, 5);
-            gf_ESArsonistBurn(lv_a);
+        if ((gv_action[lv_a][1] == 1) && (gv_visitation[lv_a] != 0) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 5) && (gv_seqKillsZ[2] == false)) {
+            gf_SKK_3_zonghuozhe(lv_a);
         }
 
     }
     lv_a = 1;
     for ( ; ( (autoDD7BC026_ai >= 0 && lv_a <= autoDD7BC026_ae) || (autoDD7BC026_ai < 0 && lv_a >= autoDD7BC026_ae) ) ; lv_a += autoDD7BC026_ai ) {
         if ((gv_visitation[lv_a] != 0) && (gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 14) && (gv_roles[gv_visitation[lv_a]][1] == 3) && ((gv_roles[gv_visitation[lv_a]][0] == 8) || (gv_roles[gv_visitation[lv_a]][0] == 10)) && (gv_shots[lv_a] != 0) && (gv_veteraned[lv_a] == false) && (gv_diedAtNight[gv_visitation[lv_a]] == false)) {
-            if ((lv_z[1] == true)) {
-                Wait(1.0, c_timeGame);
-            }
-
-            gf_DEBUG("Running Mason Leader handler");
-            gv_damage[gv_visitation[lv_a]] += 1;
-            gv_shots[lv_a] -= 1;
-            lv_z[1] = true;
-            if ((gv_shots[lv_a] > 1)) {
-                gf_CBSystemMessage((StringExternal("Param/Value/99A3D34B") + IntToText(gv_shots[lv_a]) + StringExternal("Param/Value/956A69C3")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-            }
-
-            if ((gv_shots[lv_a] == 1)) {
-                gf_CBSystemMessage((StringExternal("Param/Value/C4448270") + StringExternal("Param/Value/4E1AD8BF") + StringExternal("Param/Value/AF4ABB7D")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-            }
-
-            if ((gv_shots[lv_a] == 0)) {
-                gf_CBSystemMessage(StringExternal("Param/Value/A0130F0D"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-            }
-
-            gf_CBSystemMessage(StringExternal("Param/Value/D5014426"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-            Wait(1.0, c_timeGame);
-            if ((gv_guarded[gv_visitation[lv_a]] != 0) && (gv_visitation[lv_a] != lv_a)) {
-                gv_damage[gv_visitation[lv_a]] -= 1;
-                gv_damage[gv_guarded[gv_visitation[lv_a]]] += 1;
-                gv_damage[lv_a] += 1;
-                gf_CBSystemMessage(StringExternal("Param/Value/869D130E"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                gf_FlashScreen(Color(70.59, 0.00, 0.00), lv_a, 3.0, 30.0);
-                gf_FlashScreen(Color(0.00, 100.00, 0.00), gv_visitation[lv_a], 3.0, 0.0);
-                gf_CBSystemMessage(StringExternal("Param/Value/AEA3D186"), gv_visitation[lv_a], gv_visitation[lv_a], 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                gf_ESBodyguardKill(lv_a, gv_guarded[gv_visitation[lv_a]]);
-                gv_guarded[gv_visitation[lv_a]] = 0;
-            }
-            else {
-                gf_ESMasonKill(gv_visitation[lv_a], lv_a);
-            }
+            gf_SKK_1_gongjihuizhanglao(lv_a);
         }
 
     }
     lv_b = 1;
     for ( ; ( (auto34A216A7_ai >= 0 && lv_b <= auto34A216A7_ae) || (auto34A216A7_ai < 0 && lv_b >= auto34A216A7_ae) ) ; lv_b += auto34A216A7_ai ) {
         if ((gv_roles[lv_b][1] == 3) && (gv_roles[lv_b][0] == 9) && (gv_veteraned[lv_b] == false) && (gv_visitation[lv_b] != 0) && (gv_spreed[lv_b] == 0) && (gv_cooldown[lv_b] == 0)) {
-            gf_DEBUG("Running Mass Murderer handler");
-            lv_y = 0;
-            lv_a = 1;
-            for ( ; ( (auto7A0E66F0_ai >= 0 && lv_a <= auto7A0E66F0_ae) || (auto7A0E66F0_ai < 0 && lv_a >= auto7A0E66F0_ae) ) ; lv_a += auto7A0E66F0_ai ) {
-                lv_x = 1;
-                for ( ; ( (autoCF9A9D21_ai >= 0 && lv_x <= autoCF9A9D21_ae) || (autoCF9A9D21_ai < 0 && lv_x >= autoCF9A9D21_ae) ) ; lv_x += autoCF9A9D21_ai ) {
-                    if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 9) && (gv_visitation[lv_a] != 0)) {
-                        if ((lv_x == 1)) {
-                            gv_location[lv_a] = gv_action[lv_a][0];
-                        }
-                        else {
-                            gv_location[lv_a] = gv_action[lv_a][1];
-                        }
-                    }
-
-                    if ((gv_location[lv_a] == gv_visitation[lv_b]) && (((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 9)) || (lv_x == 1)) && (gv_spreed[lv_a] == 0) && (lv_y == 0) && (lv_a != lv_b)) {
-                        gv_damage[lv_a] += 1;
-                        if ((gv_guarded[lv_a] != 0)) {
-                            lv_y = 1;
-                            gv_damage[lv_a] -= 1;
-                            gv_damage[gv_guarded[lv_a]] += 1;
-                            gv_damage[lv_b] += 1;
-                            gf_CBSystemMessage(StringExternal("Param/Value/B5C0BE54"), lv_b, lv_b, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                            gf_FlashScreen(Color(70.59, 0.00, 0.00), lv_b, 3.0, 30.0);
-                            gf_FlashScreen(Color(0.00, 100.00, 0.00), lv_a, 3.0, 0.0);
-                            gf_CBSystemMessage(StringExternal("Param/Value/49E766C7"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                            gf_ESBodyguardKill(lv_b, gv_guarded[lv_a]);
-                            gv_guarded[lv_a] = 0;
-                        }
-                        else {
-                            gv_spreed[lv_a] = lv_b;
-                        }
-                    }
-
-                }
-            }
-            if ((lv_y == 0)) {
-                if ((lv_z[1] == true)) {
-                    Wait(1.0, c_timeGame);
-                }
-
-                lv_z[1] = true;
-                gf_ESMassMurdererSpree(lv_b, gv_visitation[lv_b]);
-            }
-            else {
-                lv_a = 1;
-                for ( ; ( (auto6EA8C0A2_ai >= 0 && lv_a <= auto6EA8C0A2_ae) || (auto6EA8C0A2_ai < 0 && lv_a >= auto6EA8C0A2_ae) ) ; lv_a += auto6EA8C0A2_ai ) {
-                    if ((gv_spreed[lv_a] == lv_b)) {
-                        gv_damage[lv_a] -= 1;
-                        gv_spreed[lv_a] = 0;
-                    }
-
-                }
-            }
+            gf_SKK_3_sharenkuang(lv_b);
         }
 
     }
     lv_a = 1;
     for ( ; ( (auto2F062A7C_ai >= 0 && lv_a <= auto2F062A7C_ae) || (auto2F062A7C_ai < 0 && lv_a >= auto2F062A7C_ae) ) ; lv_a += auto2F062A7C_ai ) {
         if ((gv_punishTarget != 0) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 13)) {
-            if ((lv_z[1] == true)) {
-                Wait(1.0, c_timeGame);
-            }
-
-            gv_damage[gv_punishTarget] += 1;
-            lv_z[1] = true;
-            gf_ESCorruptInquisitorKill(gv_punishTarget);
+            gf_SKK_3_duoluoshenpanzhe(lv_a);
         }
 
         if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 31) && (gv_action[lv_a][0] > 0) && ((gv_action[lv_a][1] > 0) || (gv_e5BC80E585B3[lv_a] == false)) && (gv_roleblocked[lv_a] == 0)) { // shw219 可被舞娘限制；shw221 追击模式只需目标一
@@ -13134,85 +12930,14 @@ void gf_SequenceKills () {
 
         // 天选者(3/32)：雷击按所选目标直接命中（无视无敌和救治；不受女巫/交换影响，见角色卡）
         if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 32) && (gv_action[lv_a][0] > 0) && (gv_roleblocked[lv_a] == 0)) {
-            if ((gv_txStrikes[lv_a] <= 0)) {
-                gf_CBSystemMessage(StringExternal("Param/Value/TXNOSTRIKE"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-            }
-            else {
-                if ((gv_diedAtNight[gv_action[lv_a][0]] == true)) {
-                    gf_CBSystemMessage(StringExternal("Param/Value/TXTGTDEAD"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                }
-                else {
-                    if ((gv_txGuess[lv_a] != "") && (gv_txGuessTarget[lv_a] == gv_action[lv_a][0])) {
-                        if ((gv_roleNameInput[gv_roles[gv_action[lv_a][0]][1]][gv_roles[gv_action[lv_a][0]][0]] == gv_txGuess[lv_a])) {
-                            gv_txBlessDay[lv_a] = (gv_dayNumber + 1);
-                            gf_CBSystemMessage(StringExternal("Param/Value/TXGUESSOK"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                            // shw144 洞察机制：每猜对一次给认可提示；累计猜对两次 +1 次雷击（整局最多一次，故只判 ==2）
-                            gv_txGuesses[lv_a] += 1;
-                            if ((gv_txGuesses[lv_a] == 1)) {
-                                gf_CBSystemMessage(StringExternal("Param/Value/TXGOD1"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                            }
-                            else {
-                                if ((gv_txGuesses[lv_a] == 2)) {
-                                    gv_txStrikes[lv_a] += 1;
-                                    gf_CBSystemMessage(StringExternal("Param/Value/TXGOD2"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                                }
-
-                            }
-                        }
-                        else {
-                            gv_txGuessBad[lv_a] += 1; // shw150：猜错（成就「见微知著」要求从未猜错）
-                            gf_CBSystemMessage(StringExternal("Param/Value/TXGUESSBAD"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                        }
-
-                    }
-                    else {
-                        if ((gv_txGuess[lv_a] != "")) {
-                            gv_txGuessBad[lv_a] += 1; // shw150：猜测作废 = 没有猜对
-                            gf_CBSystemMessage(StringExternal("Param/Value/TXGUESSVOID"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                        }
-
-                    }
-                    gv_txStrikes[lv_a] -= 1;
-                    gv_txGuess[lv_a] = "";
-                    gv_txGuessTarget[lv_a] = 0;
-                    gf_CBSystemMessage(StringExternal("Param/Value/TXSTRIKE"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                    gf_ESThunderKill(gv_action[lv_a][0], lv_a);
-                }
-
-            }
-
+            gf_SKK_3_tianxuanzhe(lv_a);
         }
 
     }
     lv_a = 1;
     for ( ; ( (auto69682899_ai >= 0 && lv_a <= auto69682899_ae) || (auto69682899_ai < 0 && lv_a >= auto69682899_ae) ) ; lv_a += auto69682899_ai ) {
         if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 26) && (gv_visitation[lv_a] != 0) && (gv_e8A880E781B5E78C9CE6B58B[lv_a][0] != 0) && (gv_e8A880E781B5E78C9CE6B58B[lv_a][1] != 0)) {
-            if ((gv_roles[gv_visitation[lv_a]][0] == gv_e8A880E781B5E78C9CE6B58B[lv_a][0]) && (gv_roles[gv_visitation[lv_a]][1] == gv_e8A880E781B5E78C9CE6B58B[lv_a][1])) {
-                if ((gv_roles[gv_visitation[lv_a]][1] == 1) && (gv_roleOptions[1][26][0] == true)) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/0F85F45E") + gv_roleNameArray[gv_e8A880E781B5E78C9CE6B58B[lv_a][1]][gv_e8A880E781B5E78C9CE6B58B[lv_a][0]] + StringExternal("Param/Value/00F6A91D")), lv_a, 0, 0, SoundLink("EditorDefaultSound", -1), Color(0,0,0));
-                }
-                else {
-                    gf_CBSystemMessage((StringExternal("Param/Value/A4C61FD7") + gv_roleNameArray[gv_e8A880E781B5E78C9CE6B58B[lv_a][1]][gv_e8A880E781B5E78C9CE6B58B[lv_a][0]] + StringExternal("Param/Value/B75F2E41")), lv_a, 0, 0, SoundLink("EditorDefaultSound", -1), Color(0,0,0));
-                    if ((gv_guarded[gv_visitation[lv_a]] != 0) && (gv_visitation[lv_a] != lv_a)) {
-                        gv_damage[gv_visitation[lv_a]] -= 1;
-                        gv_damage[gv_guarded[gv_visitation[lv_a]]] += 1;
-                        gv_damage[lv_a] += 1;
-                        gf_CBSystemMessage(StringExternal("Param/Value/8708CEB2"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                        gf_FlashScreen(Color(70.59, 0.00, 0.00), lv_a, 3.0, 30.0);
-                        gf_FlashScreen(Color(0.00, 100.00, 0.00), gv_visitation[lv_a], 3.0, 0.0);
-                        gf_CBSystemMessage(StringExternal("Param/Value/B863B80E"), gv_visitation[lv_a], gv_visitation[lv_a], 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                        gf_ESBodyguardKill(lv_a, gv_guarded[gv_visitation[lv_a]]);
-                        gv_guarded[gv_visitation[lv_a]] = 0;
-                    }
-                    else {
-                        lv_z[1] = true;
-                        gf_ESSearcherKill(gv_visitation[lv_a], lv_a);
-                    }
-                }
-            }
-            else {
-                gf_CBSystemMessage((StringExternal("Param/Value/0CFCAFEA") + gv_roleNameArray[gv_e8A880E781B5E78C9CE6B58B[lv_a][1]][gv_e8A880E781B5E78C9CE6B58B[lv_a][0]]), lv_a, 0, 0, SoundLink("EditorDefaultSound", -1), Color(0,0,0));
-            }
+            gf_SKK_1_shenchayuan(lv_a);
         }
 
     }
@@ -13230,12 +12955,12 @@ void gf_SequenceKills () {
             }
             if ((PlayerGroupCount(lv_g) >= 1)) {
                 lv_b = PlayerGroupPlayer(lv_g, RandomInt(1, PlayerGroupCount(lv_g)));
-                if ((lv_z[1] == true)) {
+                if ((gv_seqKillsZ[1] == true)) {
                     Wait(1.0, c_timeGame);
                 }
 
                 gv_damage[lv_b] += 1;
-                lv_z[1] = true;
+                gv_seqKillsZ[1] = true;
                 gf_ESJesterSuicide(lv_b);
             }
 
@@ -13247,12 +12972,12 @@ void gf_SequenceKills () {
         if ((gv_visitation[lv_a] != 0) && (gv_disguised[lv_a] == 0) && ((gv_roles[lv_a][1] == 2) || (gv_roles[lv_a][1] == 5)) && (gv_roles[lv_a][0] == 8) && (gv_veteraned[lv_a] == false) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true)) {
             gf_DEBUG("Running Disguiser/Informant handler");
             if ((gv_diedAtNight[gv_visitation[lv_a]] == false)) {
-                if ((lv_z[1] == true)) {
+                if ((gv_seqKillsZ[1] == true)) {
                     Wait(1.0, c_timeGame);
                 }
 
                 gv_damage[gv_visitation[lv_a]] += 1;
-                lv_z[1] = true;
+                gv_seqKillsZ[1] = true;
                 if ((gv_guarded[gv_visitation[lv_a]] != 0) && (gv_visitation[lv_a] != lv_a)) {
                     gv_damage[gv_visitation[lv_a]] -= 1;
                     gv_damage[gv_guarded[gv_visitation[lv_a]]] += 1;
@@ -13304,12 +13029,12 @@ void gf_SequenceKills () {
         if ((gv_visitation[lv_a] != 0) && (gv_roles[lv_a][0] == 15) && (gv_roles[lv_a][1] == 3) && (gv_veteraned[lv_a] == false) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true)) {
             gf_DEBUG("Possessio handler");
             if ((gv_diedAtNight[gv_visitation[lv_a]] == false)) {
-                if ((lv_z[1] == true)) {
+                if ((gv_seqKillsZ[1] == true)) {
                     Wait(1.0, c_timeGame);
                 }
 
                 gv_damage[gv_visitation[lv_a]] += 1;
-                lv_z[1] = true;
+                gv_seqKillsZ[1] = true;
                 if ((gv_guarded[gv_visitation[lv_a]] != 0) && (gv_visitation[lv_a] != lv_a) && (gv_roleOptions[3][15][2] != true)) {
                     gv_damage[gv_visitation[lv_a]] -= 1;
                     gv_damage[gv_guarded[gv_visitation[lv_a]]] += 1;
@@ -13394,13 +13119,13 @@ void gf_SequenceKills () {
     lv_a = 1;
     for ( ; ( (autoFE0F5C0A_ai >= 0 && lv_a <= autoFE0F5C0A_ae) || (autoFE0F5C0A_ai < 0 && lv_a >= autoFE0F5C0A_ae) ) ; lv_a += autoFE0F5C0A_ai ) {
         if ((gv_suiciding[lv_a][1] == true) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_diedAtNight[lv_a] == false)) {
-            if ((lv_z[1] == true)) {
+            if ((gv_seqKillsZ[1] == true)) {
                 Wait(1.0, c_timeGame);
             }
 
             gf_DEBUG("Running Suicide handler");
             gv_damage[lv_a] += 1;
-            lv_z[1] = true;
+            gv_seqKillsZ[1] = true;
             gv_suiciding[lv_a][0] = true;
             gf_ESSuicide(lv_a);
         }
@@ -13409,13 +13134,13 @@ void gf_SequenceKills () {
     lv_a = 1;
     for ( ; ( (auto7654012E_ai >= 0 && lv_a <= auto7654012E_ae) || (auto7654012E_ai < 0 && lv_a >= auto7654012E_ae) ) ; lv_a += auto7654012E_ai ) {
         if ((gv_suiciding[lv_a][2] == true) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_diedAtNight[lv_a] == false)) {
-            if ((lv_z[1] == true)) {
+            if ((gv_seqKillsZ[1] == true)) {
                 Wait(1.0, c_timeGame);
             }
 
             gf_DEBUG("Running AFK handler");
             gv_damage[lv_a] += 1;
-            lv_z[1] = true;
+            gv_seqKillsZ[1] = true;
             gv_suiciding[lv_a][0] = true;
             gf_ESAFK(lv_a);
         }
@@ -13424,13 +13149,13 @@ void gf_SequenceKills () {
     lv_a = 1;
     for ( ; ( (autoE01788FE_ai >= 0 && lv_a <= autoE01788FE_ae) || (autoE01788FE_ai < 0 && lv_a >= autoE01788FE_ae) ) ; lv_a += autoE01788FE_ai ) {
         if ((gv_gettingRaped[lv_a] == true)) {
-            if ((lv_z[1] == true)) {
+            if ((gv_seqKillsZ[1] == true)) {
                 Wait(1.0, c_timeGame);
             }
 
             gf_DEBUG("Running Lightning handler");
             gv_damage[lv_a] += 1;
-            lv_z[1] = true;
+            gv_seqKillsZ[1] = true;
             gf_ESLightning(lv_a);
         }
 
@@ -13438,57 +13163,21 @@ void gf_SequenceKills () {
     lv_a = 1;
     for ( ; ( (autoD3630DB0_ai >= 0 && lv_a <= autoD3630DB0_ae) || (autoD3630DB0_ai < 0 && lv_a >= autoD3630DB0_ae) ) ; lv_a += autoD3630DB0_ai ) {
         if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 2) && (gv_visitation[lv_a] != 0) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
-            if ((gv_jailed[lv_a] != 0)) {
-                gf_CBSystemMessage(StringExternal("Param/Value/A7D405C7"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                gv_e68CA8E9A5BF[lv_a] = false;
-            }
-            else {
-                if ((gv_roleblocked[lv_a] != 0)) {
-                    gf_CBSystemMessage(StringExternal("Param/Value/8B3AFF96"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                    gv_e68CA8E9A5BF[lv_a] = false;
-                }
-                else {
-                    if ((gv_visitation[gv_visitation[lv_a]] == gv_visitation[lv_a])) {
-                        gf_CBSystemMessage(StringExternal("Param/Value/0EB71774"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                        gv_e68CA8E9A5BF[lv_a] = true;
-                    }
-                    else {
-                        if ((gv_visitation[gv_visitation[lv_a]] == 0)) {
-                            gf_CBSystemMessage(StringExternal("Param/Value/8FB07C8A"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                            gv_e68CA8E9A5BF[lv_a] = true;
-                        }
-                        else {
-                            gf_CBSystemMessage(StringExternal("Param/Value/20EDBA30"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                            gf_BHCrimeTrespass(lv_a);
-                            gv_e68CA8E9A5BF[lv_a] = false;
-                            gv_e7949FE5AD98E68F90E7A4BAE99990E5AE9A[lv_a] = true;
-                            gv_e7949FE5AD98E58EBBE8BF87E4BA86[lv_a][gv_visitation[lv_a]] = true;
-                        }
-                    }
-                }
-            }
+            gf_SKK_3_shengcunzhe(lv_a);
         }
 
     }
     lv_a = 1;
     for ( ; ( (auto1DBD1B40_ai >= 0 && lv_a <= auto1DBD1B40_ae) || (auto1DBD1B40_ai < 0 && lv_a >= auto1DBD1B40_ae) ) ; lv_a += auto1DBD1B40_ai ) {
         if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 2) && (gv_e68CA8E9A5BF[lv_a] == true) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
-            if ((gv_immuneChance[lv_a] > 0)) {
-                gf_CBSystemMessage(StringExternal("Param/Value/8E68669B"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                gv_immuneChance[lv_a] -= 1;
-            }
-            else {
-                gf_CBSystemMessage(StringExternal("Param/Value/94C51537"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                gv_damage[lv_a] += 1;
-                gf_ESStarve(lv_a);
-            }
+            gf_SKK_3_shengcunzhe_2(lv_a);
         }
 
     }
     lv_a = 1;
     for ( ; ( (auto78285367_ai >= 0 && lv_a <= auto78285367_ae) || (auto78285367_ai < 0 && lv_a >= auto78285367_ae) ) ; lv_a += auto78285367_ai ) {
         if ((gv_bondedwith[lv_a] != 0) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_diedAtNight[gv_bondedwith[lv_a]] == true)) {
-            if ((lv_z[1] == true)) {
+            if ((gv_seqKillsZ[1] == true)) {
                 Wait(1.0, c_timeGame);
             }
 
@@ -13496,7 +13185,7 @@ void gf_SequenceKills () {
             gf_CBSystemMessage(StringExternal("Param/Value/F701AD4C"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
             gf_DEBUG("Running bonder handler");
             gv_damage[lv_a] += 1;
-            lv_z[1] = true;
+            gv_seqKillsZ[1] = true;
             gf_ESLBSuicide2(lv_a, gv_bondedby[lv_a]);
         }
 
@@ -13504,19 +13193,19 @@ void gf_SequenceKills () {
     lv_a = 1;
     while ((lv_a <= 15)) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == false) && (gv_diedAtNight[lv_a] == false)) {
-            if ((lv_z[1] == true)) {
+            if ((gv_seqKillsZ[1] == true)) {
                 Wait(1.0, c_timeGame);
             }
 
             gf_DEBUG("Running Leaver handler");
-            lv_z[1] = true;
+            gv_seqKillsZ[1] = true;
             gf_ESLeaverSuicide(lv_a);
         }
 
         lv_a += 1;
     }
     gf_DEBUG("Finished night kills");
-    if ((lv_z[1] == false)) {
+    if ((gv_seqKillsZ[1] == false)) {
         Wait(2.0, c_timeGame);
     }
     else {
@@ -92398,4 +92087,1191 @@ else {
     gf_ESExecutionerSuicide(lv_a);
 }
 gv_seqAfter2Wait[2] = true;
+}
+
+
+// ===== BH:SK 角色块抽取（阶段三 · kills）=====
+// 阶段三抽取（shw238）：城镇 1/9 ← 原 gf_SequenceKills 行12675
+void gf_SKK_1_bashisiji (int lv_a) {
+    // Implementation
+if ((gv_seqKillsZ[1] == true)) {
+    Wait(1.0, c_timeGame);
+}
+
+gv_damage[lv_a] += 1;
+gv_seqKillsZ[1] = true;
+if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 3)) {
+    gf_CBSystemMessage(StringExternal("Param/Value/C6D80131"), gv_visitation[lv_a], gv_visitation[lv_a], 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+}
+else {
+    gf_CBSystemMessage(StringExternal("Param/Value/7F8313C7"), gv_visitation[lv_a], gv_visitation[lv_a], 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+}
+gv_veteraned[lv_a] = true;
+if ((gv_guarded[lv_a] != 0)) {
+    gv_damage[lv_a] -= 1;
+    gv_damage[gv_guarded[lv_a]] += 1;
+    gv_damage[gv_visitation[lv_a]] += 1;
+    gv_veteraned[gv_guarded[lv_a]] = true;
+    gf_CBSystemMessage(StringExternal("Param/Value/DC6053AF"), gv_visitation[lv_a], gv_visitation[lv_a], 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    gf_FlashScreen(Color(70.59, 0.00, 0.00), gv_visitation[lv_a], 3.0, 30.0);
+    gf_FlashScreen(Color(0.00, 100.00, 0.00), lv_a, 3.0, 0.0);
+    gf_CBSystemMessage(StringExternal("Param/Value/05FE9AB7"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    gf_ESBodyguardKill(gv_visitation[lv_a], gv_guarded[lv_a]);
+    gv_guarded[lv_a] = 0;
+}
+else {
+    gv_seqKillsVetHit[lv_a] = true;
+    gf_ESVeteranKill(lv_a, gv_visitation[lv_a]);
+}
+}
+
+// 阶段三抽取（shw238）：城镇 1/9 ← 原 gf_SequenceKills 行12707
+void gf_SKK_1_bashisiji_2 (int lv_a, int lv_x, int lv_y) {
+    // Implementation
+if ((lv_x == 1)) {
+}
+else {
+    gf_BHVisit(lv_a, lv_y);
+}
+}
+
+// 阶段三抽取（shw238）：城镇 1/13 ← 原 gf_SequenceKills 行12719
+void gf_SKK_1_yujing (int lv_a) {
+    // Implementation
+if ((gv_seqKillsZ[1] == true)) {
+    Wait(1.0, c_timeGame);
+}
+
+gf_DEBUG("Running Jailor handler");
+gv_damage[gv_visitation[lv_a]] += 1;
+gv_shots[lv_a] -= 1;
+gv_seqKillsZ[1] = true;
+if ((gv_shots[lv_a] == 0)) {
+    gf_CBSystemMessage(StringExternal("Param/Value/CF15132B"), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+}
+
+if ((gv_shots[lv_a] == 1)) {
+    gf_CBSystemMessage((StringExternal("Param/Value/8BC0F5CD") + IntToText(gv_shots[lv_a]) + StringExternal("Param/Value/CDBCBFA8")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+}
+
+if ((gv_shots[lv_a] > 1)) {
+    gf_CBSystemMessage((StringExternal("Param/Value/3A9ABB3B") + IntToText(gv_shots[lv_a]) + StringExternal("Param/Value/FD6A6D7B")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+}
+
+gf_ESJailorKill(gv_visitation[lv_a], lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/6 ← 原 gf_SequenceKills 行12825
+void gf_SKK_1_yijing (int lv_a) {
+    // Implementation
+if ((gv_seqKillsZ[1] == true)) {
+    Wait(1.0, c_timeGame);
+}
+
+gf_DEBUG("Running Vigilante handler");
+gv_damage[gv_visitation[lv_a]] += 1;
+gv_shots[lv_a] -= 1;
+gv_seqKillsZ[1] = true;
+if ((gv_shots[lv_a] > 1)) {
+    gf_CBSystemMessage((StringExternal("Param/Value/BF759227") + IntToText(gv_shots[lv_a]) + StringExternal("Param/Value/79637826")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+}
+
+if ((gv_shots[lv_a] == 1)) {
+    gf_CBSystemMessage((StringExternal("Param/Value/01EDA427") + StringExternal("Param/Value/680BDF7C") + StringExternal("Param/Value/D8EEB7D2")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+}
+
+if ((gv_shots[lv_a] == 0)) {
+    gf_CBSystemMessage(StringExternal("Param/Value/632C2FB3"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+}
+
+if ((gv_guarded[gv_visitation[lv_a]] != 0) && (gv_visitation[lv_a] != lv_a)) {
+    gv_damage[gv_visitation[lv_a]] -= 1;
+    gv_damage[gv_guarded[gv_visitation[lv_a]]] += 1;
+    gv_damage[lv_a] += 1;
+    gf_CBSystemMessage(StringExternal("Param/Value/AE153B56"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    gf_FlashScreen(Color(70.59, 0.00, 0.00), lv_a, 3.0, 30.0);
+    gf_FlashScreen(Color(0.00, 100.00, 0.00), gv_visitation[lv_a], 3.0, 0.0);
+    gf_CBSystemMessage(StringExternal("Param/Value/7CBF118B"), gv_visitation[lv_a], gv_visitation[lv_a], 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    gf_ESBodyguardKill(lv_a, gv_guarded[gv_visitation[lv_a]]);
+    gv_guarded[gv_visitation[lv_a]] = 0;
+}
+else {
+    if ((gv_visitation[lv_a] == lv_a)) {
+        if ((gv_witched[lv_a] != 0)) {
+            gf_ESWitchSuicide(lv_a, gv_witched[lv_a]);
+        }
+        else {
+            if ((gv_hided[lv_a] != 0)) {
+                gf_ESBeguilerSuicide(lv_a, gv_hided[lv_a]);
+            }
+            else {
+                gf_ESBusDriverSuicide(lv_a, gv_bussed[lv_a]);
+            }
+        }
+    }
+    else {
+        gf_ESVigilanteKill(gv_visitation[lv_a], lv_a);
+    }
+}
+}
+
+// 阶段三抽取（shw238）：中立 3/1 ← 原 gf_SequenceKills 行12964
+void gf_SKK_3_lianhuanshashou (int lv_a) {
+    // Implementation
+if ((gv_seqKillsZ[1] == true)) {
+    Wait(1.0, c_timeGame);
+}
+
+gf_DEBUG("Running Serial Killer handler");
+gv_damage[gv_visitation[lv_a]] += 1;
+gv_seqKillsZ[1] = true;
+if ((gv_guarded[gv_visitation[lv_a]] != 0) && (gv_visitation[lv_a] != lv_a)) {
+    gv_damage[gv_visitation[lv_a]] -= 1;
+    gv_damage[gv_guarded[gv_visitation[lv_a]]] += 1;
+    gv_damage[lv_a] += 1;
+    gf_CBSystemMessage(StringExternal("Param/Value/309996E1"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    gf_FlashScreen(Color(70.59, 0.00, 0.00), lv_a, 3.0, 30.0);
+    gf_FlashScreen(Color(0.00, 100.00, 0.00), gv_visitation[lv_a], 3.0, 0.0);
+    gf_CBSystemMessage(StringExternal("Param/Value/A326298C"), gv_visitation[lv_a], gv_visitation[lv_a], 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    gf_ESBodyguardKill(lv_a, gv_guarded[gv_visitation[lv_a]]);
+    gv_guarded[gv_visitation[lv_a]] = 0;
+}
+else {
+    if ((gv_visitation[lv_a] == lv_a)) {
+        if ((gv_witched[lv_a] != 0)) {
+            gf_ESWitchSuicide(lv_a, gv_witched[lv_a]);
+        }
+        else {
+            if ((gv_hided[lv_a] != 0)) {
+                gf_ESBeguilerSuicide(lv_a, gv_hided[lv_a]);
+            }
+            else {
+                gf_ESBusDriverSuicide(lv_a, gv_bussed[lv_a]);
+            }
+        }
+    }
+    else {
+        gf_ESSerialKillerKill(gv_visitation[lv_a], lv_a);
+    }
+}
+}
+
+// 阶段三抽取（shw238）：中立 3/5 ← 原 gf_SequenceKills 行13006
+void gf_SKK_3_zonghuozhe (int lv_a) {
+    // Variable Declarations
+    int lv_b;
+    const int autoC6CAB55A_ae = 15;
+    const int autoC6CAB55A_ai = 1;
+    // Implementation
+if ((gv_seqKillsZ[1] == true)) {
+    Wait(1.0, c_timeGame);
+}
+
+gf_DEBUG("Running Arsonist handler");
+lv_b = 1;
+for ( ; ( (autoC6CAB55A_ai >= 0 && lv_b <= autoC6CAB55A_ae) || (autoC6CAB55A_ai < 0 && lv_b >= autoC6CAB55A_ae) ) ; lv_b += autoC6CAB55A_ai ) {
+    if ((gv_doused[lv_b] == true)) {
+        gv_damage[lv_b] += 1;
+    }
+
+}
+gv_seqKillsZ[2] = true;
+gv_seqKillsZ[1] = true;
+gf_BHCrime(lv_a, 5);
+gf_ESArsonistBurn(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/14 ← 原 gf_SequenceKills 行13028
+void gf_SKK_1_gongjihuizhanglao (int lv_a) {
+    // Implementation
+if ((gv_seqKillsZ[1] == true)) {
+    Wait(1.0, c_timeGame);
+}
+
+gf_DEBUG("Running Mason Leader handler");
+gv_damage[gv_visitation[lv_a]] += 1;
+gv_shots[lv_a] -= 1;
+gv_seqKillsZ[1] = true;
+if ((gv_shots[lv_a] > 1)) {
+    gf_CBSystemMessage((StringExternal("Param/Value/99A3D34B") + IntToText(gv_shots[lv_a]) + StringExternal("Param/Value/956A69C3")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+}
+
+if ((gv_shots[lv_a] == 1)) {
+    gf_CBSystemMessage((StringExternal("Param/Value/C4448270") + StringExternal("Param/Value/4E1AD8BF") + StringExternal("Param/Value/AF4ABB7D")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+}
+
+if ((gv_shots[lv_a] == 0)) {
+    gf_CBSystemMessage(StringExternal("Param/Value/A0130F0D"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+}
+
+gf_CBSystemMessage(StringExternal("Param/Value/D5014426"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+Wait(1.0, c_timeGame);
+if ((gv_guarded[gv_visitation[lv_a]] != 0) && (gv_visitation[lv_a] != lv_a)) {
+    gv_damage[gv_visitation[lv_a]] -= 1;
+    gv_damage[gv_guarded[gv_visitation[lv_a]]] += 1;
+    gv_damage[lv_a] += 1;
+    gf_CBSystemMessage(StringExternal("Param/Value/869D130E"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    gf_FlashScreen(Color(70.59, 0.00, 0.00), lv_a, 3.0, 30.0);
+    gf_FlashScreen(Color(0.00, 100.00, 0.00), gv_visitation[lv_a], 3.0, 0.0);
+    gf_CBSystemMessage(StringExternal("Param/Value/AEA3D186"), gv_visitation[lv_a], gv_visitation[lv_a], 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    gf_ESBodyguardKill(lv_a, gv_guarded[gv_visitation[lv_a]]);
+    gv_guarded[gv_visitation[lv_a]] = 0;
+}
+else {
+    gf_ESMasonKill(gv_visitation[lv_a], lv_a);
+}
+}
+
+// 阶段三抽取（shw238）：中立 3/9 ← 原 gf_SequenceKills 行13070
+void gf_SKK_3_sharenkuang (int lv_b) {
+    // Variable Declarations
+    int lv_a;
+    int lv_x;
+    int lv_y;
+    const int auto7A0E66F0_ae = 15;
+    const int auto7A0E66F0_ai = 1;
+    const int autoCF9A9D21_ae = 2;
+    const int autoCF9A9D21_ai = 1;
+    const int auto6EA8C0A2_ae = 15;
+    const int auto6EA8C0A2_ai = 1;
+    // Implementation
+gf_DEBUG("Running Mass Murderer handler");
+lv_y = 0;
+lv_a = 1;
+for ( ; ( (auto7A0E66F0_ai >= 0 && lv_a <= auto7A0E66F0_ae) || (auto7A0E66F0_ai < 0 && lv_a >= auto7A0E66F0_ae) ) ; lv_a += auto7A0E66F0_ai ) {
+    lv_x = 1;
+    for ( ; ( (autoCF9A9D21_ai >= 0 && lv_x <= autoCF9A9D21_ae) || (autoCF9A9D21_ai < 0 && lv_x >= autoCF9A9D21_ae) ) ; lv_x += autoCF9A9D21_ai ) {
+        if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 9) && (gv_visitation[lv_a] != 0)) {
+            if ((lv_x == 1)) {
+                gv_location[lv_a] = gv_action[lv_a][0];
+            }
+            else {
+                gv_location[lv_a] = gv_action[lv_a][1];
+            }
+        }
+
+        if ((gv_location[lv_a] == gv_visitation[lv_b]) && (((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 9)) || (lv_x == 1)) && (gv_spreed[lv_a] == 0) && (lv_y == 0) && (lv_a != lv_b)) {
+            gv_damage[lv_a] += 1;
+            if ((gv_guarded[lv_a] != 0)) {
+                lv_y = 1;
+                gv_damage[lv_a] -= 1;
+                gv_damage[gv_guarded[lv_a]] += 1;
+                gv_damage[lv_b] += 1;
+                gf_CBSystemMessage(StringExternal("Param/Value/B5C0BE54"), lv_b, lv_b, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                gf_FlashScreen(Color(70.59, 0.00, 0.00), lv_b, 3.0, 30.0);
+                gf_FlashScreen(Color(0.00, 100.00, 0.00), lv_a, 3.0, 0.0);
+                gf_CBSystemMessage(StringExternal("Param/Value/49E766C7"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                gf_ESBodyguardKill(lv_b, gv_guarded[lv_a]);
+                gv_guarded[lv_a] = 0;
+            }
+            else {
+                gv_spreed[lv_a] = lv_b;
+            }
+        }
+
+    }
+}
+if ((lv_y == 0)) {
+    if ((gv_seqKillsZ[1] == true)) {
+        Wait(1.0, c_timeGame);
+    }
+
+    gv_seqKillsZ[1] = true;
+    gf_ESMassMurdererSpree(lv_b, gv_visitation[lv_b]);
+}
+else {
+    lv_a = 1;
+    for ( ; ( (auto6EA8C0A2_ai >= 0 && lv_a <= auto6EA8C0A2_ae) || (auto6EA8C0A2_ai < 0 && lv_a >= auto6EA8C0A2_ae) ) ; lv_a += auto6EA8C0A2_ai ) {
+        if ((gv_spreed[lv_a] == lv_b)) {
+            gv_damage[lv_a] -= 1;
+            gv_spreed[lv_a] = 0;
+        }
+
+    }
+}
+}
+
+// 阶段三抽取（shw238）：中立 3/13 ← 原 gf_SequenceKills 行13130
+void gf_SKK_3_duoluoshenpanzhe (int lv_a) {
+    // Implementation
+if ((gv_seqKillsZ[1] == true)) {
+    Wait(1.0, c_timeGame);
+}
+
+gv_damage[gv_punishTarget] += 1;
+gv_seqKillsZ[1] = true;
+gf_ESCorruptInquisitorKill(gv_punishTarget);
+}
+
+// 阶段三抽取（shw238）：中立 3/32 ← 原 gf_SequenceKills 行13180
+void gf_SKK_3_tianxuanzhe (int lv_a) {
+    // Implementation
+if ((gv_txStrikes[lv_a] <= 0)) {
+    gf_CBSystemMessage(StringExternal("Param/Value/TXNOSTRIKE"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+}
+else {
+    if ((gv_diedAtNight[gv_action[lv_a][0]] == true)) {
+        gf_CBSystemMessage(StringExternal("Param/Value/TXTGTDEAD"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    }
+    else {
+        if ((gv_txGuess[lv_a] != "") && (gv_txGuessTarget[lv_a] == gv_action[lv_a][0])) {
+            if ((gv_roleNameInput[gv_roles[gv_action[lv_a][0]][1]][gv_roles[gv_action[lv_a][0]][0]] == gv_txGuess[lv_a])) {
+                gv_txBlessDay[lv_a] = (gv_dayNumber + 1);
+                gf_CBSystemMessage(StringExternal("Param/Value/TXGUESSOK"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                // shw144 洞察机制：每猜对一次给认可提示；累计猜对两次 +1 次雷击（整局最多一次，故只判 ==2）
+                gv_txGuesses[lv_a] += 1;
+                if ((gv_txGuesses[lv_a] == 1)) {
+                    gf_CBSystemMessage(StringExternal("Param/Value/TXGOD1"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                }
+                else {
+                    if ((gv_txGuesses[lv_a] == 2)) {
+                        gv_txStrikes[lv_a] += 1;
+                        gf_CBSystemMessage(StringExternal("Param/Value/TXGOD2"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                    }
+
+                }
+            }
+            else {
+                gv_txGuessBad[lv_a] += 1; // shw150：猜错（成就「见微知著」要求从未猜错）
+                gf_CBSystemMessage(StringExternal("Param/Value/TXGUESSBAD"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+            }
+
+        }
+        else {
+            if ((gv_txGuess[lv_a] != "")) {
+                gv_txGuessBad[lv_a] += 1; // shw150：猜测作废 = 没有猜对
+                gf_CBSystemMessage(StringExternal("Param/Value/TXGUESSVOID"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+            }
+
+        }
+        gv_txStrikes[lv_a] -= 1;
+        gv_txGuess[lv_a] = "";
+        gv_txGuessTarget[lv_a] = 0;
+        gf_CBSystemMessage(StringExternal("Param/Value/TXSTRIKE"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+        gf_ESThunderKill(gv_action[lv_a][0], lv_a);
+    }
+
+}
+
+}
+
+// 阶段三抽取（shw238）：城镇 1/26 ← 原 gf_SequenceKills 行13233
+void gf_SKK_1_shenchayuan (int lv_a) {
+    // Implementation
+if ((gv_roles[gv_visitation[lv_a]][0] == gv_e8A880E781B5E78C9CE6B58B[lv_a][0]) && (gv_roles[gv_visitation[lv_a]][1] == gv_e8A880E781B5E78C9CE6B58B[lv_a][1])) {
+    if ((gv_roles[gv_visitation[lv_a]][1] == 1) && (gv_roleOptions[1][26][0] == true)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/0F85F45E") + gv_roleNameArray[gv_e8A880E781B5E78C9CE6B58B[lv_a][1]][gv_e8A880E781B5E78C9CE6B58B[lv_a][0]] + StringExternal("Param/Value/00F6A91D")), lv_a, 0, 0, SoundLink("EditorDefaultSound", -1), Color(0,0,0));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/A4C61FD7") + gv_roleNameArray[gv_e8A880E781B5E78C9CE6B58B[lv_a][1]][gv_e8A880E781B5E78C9CE6B58B[lv_a][0]] + StringExternal("Param/Value/B75F2E41")), lv_a, 0, 0, SoundLink("EditorDefaultSound", -1), Color(0,0,0));
+        if ((gv_guarded[gv_visitation[lv_a]] != 0) && (gv_visitation[lv_a] != lv_a)) {
+            gv_damage[gv_visitation[lv_a]] -= 1;
+            gv_damage[gv_guarded[gv_visitation[lv_a]]] += 1;
+            gv_damage[lv_a] += 1;
+            gf_CBSystemMessage(StringExternal("Param/Value/8708CEB2"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+            gf_FlashScreen(Color(70.59, 0.00, 0.00), lv_a, 3.0, 30.0);
+            gf_FlashScreen(Color(0.00, 100.00, 0.00), gv_visitation[lv_a], 3.0, 0.0);
+            gf_CBSystemMessage(StringExternal("Param/Value/B863B80E"), gv_visitation[lv_a], gv_visitation[lv_a], 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+            gf_ESBodyguardKill(lv_a, gv_guarded[gv_visitation[lv_a]]);
+            gv_guarded[gv_visitation[lv_a]] = 0;
+        }
+        else {
+            gv_seqKillsZ[1] = true;
+            gf_ESSearcherKill(gv_visitation[lv_a], lv_a);
+        }
+    }
+}
+else {
+    gf_CBSystemMessage((StringExternal("Param/Value/0CFCAFEA") + gv_roleNameArray[gv_e8A880E781B5E78C9CE6B58B[lv_a][1]][gv_e8A880E781B5E78C9CE6B58B[lv_a][0]]), lv_a, 0, 0, SoundLink("EditorDefaultSound", -1), Color(0,0,0));
+}
+}
+
+// 阶段三抽取（shw238）：中立 3/2 ← 原 gf_SequenceKills 行13484
+void gf_SKK_3_shengcunzhe (int lv_a) {
+    // Implementation
+if ((gv_jailed[lv_a] != 0)) {
+    gf_CBSystemMessage(StringExternal("Param/Value/A7D405C7"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    gv_e68CA8E9A5BF[lv_a] = false;
+}
+else {
+    if ((gv_roleblocked[lv_a] != 0)) {
+        gf_CBSystemMessage(StringExternal("Param/Value/8B3AFF96"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+        gv_e68CA8E9A5BF[lv_a] = false;
+    }
+    else {
+        if ((gv_visitation[gv_visitation[lv_a]] == gv_visitation[lv_a])) {
+            gf_CBSystemMessage(StringExternal("Param/Value/0EB71774"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+            gv_e68CA8E9A5BF[lv_a] = true;
+        }
+        else {
+            if ((gv_visitation[gv_visitation[lv_a]] == 0)) {
+                gf_CBSystemMessage(StringExternal("Param/Value/8FB07C8A"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                gv_e68CA8E9A5BF[lv_a] = true;
+            }
+            else {
+                gf_CBSystemMessage(StringExternal("Param/Value/20EDBA30"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                gf_BHCrimeTrespass(lv_a);
+                gv_e68CA8E9A5BF[lv_a] = false;
+                gv_e7949FE5AD98E68F90E7A4BAE99990E5AE9A[lv_a] = true;
+                gv_e7949FE5AD98E58EBBE8BF87E4BA86[lv_a][gv_visitation[lv_a]] = true;
+            }
+        }
+    }
+}
+}
+
+// 阶段三抽取（shw238）：中立 3/2 ← 原 gf_SequenceKills 行13519
+void gf_SKK_3_shengcunzhe_2 (int lv_a) {
+    // Implementation
+if ((gv_immuneChance[lv_a] > 0)) {
+    gf_CBSystemMessage(StringExternal("Param/Value/8E68669B"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    gv_immuneChance[lv_a] -= 1;
+}
+else {
+    gf_CBSystemMessage(StringExternal("Param/Value/94C51537"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    gv_damage[lv_a] += 1;
+    gf_ESStarve(lv_a);
+}
+}
+
+
+// ===== BH:SK 角色块抽取（阶段三 · prep）=====
+// 阶段三抽取（shw238）：黑手D 2/2 ← 原 gf_SequencePrep 行10296
+void gf_SKP_2_jiaofu (int lv_a) {
+    // Implementation
+gv_mafiaTarget = gv_action[lv_a][0];
+}
+
+// 阶段三抽取（shw238）：黑手D 2/1 ← 原 gf_SequencePrep 行10308
+void gf_SKP_2_dangtu (int lv_a, int lv_maxone) {
+    // Implementation
+gv_seqPrepList[lv_maxone] = lv_a;
+lv_maxone += 1;
+}
+
+// 阶段三抽取（shw238）：黑手D 2/1 ← 原 gf_SequencePrep 行10324
+void gf_SKP_2_dangtu_2 (int lv_a, int lv_maxone) {
+    // Implementation
+gv_seqPrepList[lv_maxone] = lv_a;
+lv_maxone += 1;
+}
+
+// 阶段三抽取（shw238）：三合会 5/2 ← 原 gf_SequencePrep 行10389
+void gf_SKP_5_longtou (int lv_a) {
+    // Implementation
+gv_triadTarget = gv_action[lv_a][0];
+}
+
+// 阶段三抽取（shw238）：三合会 5/1 ← 原 gf_SequencePrep 行10401
+void gf_SKP_5_baotu (int lv_a, int lv_maxone) {
+    // Implementation
+gv_seqPrepList[lv_maxone] = lv_a;
+lv_maxone += 1;
+}
+
+// 阶段三抽取（shw238）：三合会 5/1 ← 原 gf_SequencePrep 行10417
+void gf_SKP_5_baotu_2 (int lv_a, int lv_maxone) {
+    // Implementation
+gv_seqPrepList[lv_maxone] = lv_a;
+lv_maxone += 1;
+}
+
+// 阶段三抽取（shw238）：中立 3/8 ← 原 gf_SequencePrep 行10525
+void gf_SKP_3_xiejiaotu (int lv_a, int lv_maxone) {
+    // Implementation
+gv_seqPrepList[lv_maxone] = lv_a;
+lv_maxone += 1;
+}
+
+// 阶段三抽取（shw238）：中立 3/8 ← 原 gf_SequencePrep 行10537
+void gf_SKP_3_xiejiaotu_2 (int lv_a, int lv_maxone) {
+    // Implementation
+gv_seqPrepList[lv_maxone] = lv_a;
+lv_maxone += 1;
+}
+
+// 阶段三抽取（shw238）：中立 3/2 ← 原 gf_SequencePrep 行10562
+void gf_SKP_3_shengcunzhe (int lv_a) {
+    // Implementation
+gv_busEligible[lv_a] = false;
+}
+
+// 阶段三抽取（shw238）：城镇 1/9 ← 原 gf_SequencePrep 行10566
+void gf_SKP_1_bashisiji (int lv_a) {
+    // Implementation
+gv_busEligible[lv_a] = false;
+}
+
+// 阶段三抽取（shw238）：城镇 1/10 ← 原 gf_SequencePrep 行10570
+void gf_SKP_1_fayi (int lv_a) {
+    // Implementation
+gv_busEligible[lv_a] = false;
+gv_veteranEligible[lv_a] = false;
+}
+
+// 阶段三抽取（shw238）：城镇 1/13 ← 原 gf_SequencePrep 行10575
+void gf_SKP_1_yujing (int lv_a) {
+    // Implementation
+gv_busEligible[lv_a] = false;
+gv_witchEligible[lv_a] = false;
+}
+
+// 阶段三抽取（shw238）：城镇 1/16 ← 原 gf_SequencePrep 行10580
+void gf_SKP_1_jianshizhe (int lv_a) {
+    // Implementation
+gv_veteranEligible[lv_a] = false;
+}
+
+// 阶段三抽取（shw238）：城镇 1/31 ← 原 gf_SequencePrep 行10584
+void gf_SKP_1_guanchazhe (int lv_a) {
+    // Implementation
+gv_veteranEligible[lv_a] = false;
+}
+
+// 阶段三抽取（shw238）：城镇 1/17 ← 原 gf_SequencePrep 行10588
+void gf_SKP_1_tuiwujunren (int lv_a) {
+    // Implementation
+gv_busEligible[lv_a] = false;
+gv_witchEligible[lv_a] = false;
+gv_veteranEligible[lv_a] = false;
+}
+
+// 阶段三抽取（shw238）：城镇 1/29 ← 原 gf_SequencePrep 行10594
+void gf_SKP_1_bihuzhe (int lv_a) {
+    // Implementation
+gv_busEligible[lv_a] = false;
+gv_witchEligible[lv_a] = false;
+gv_veteranEligible[lv_a] = false;
+}
+
+// 阶段三抽取（shw238）：中立 3/17 ← 原 gf_SequencePrep 行10600
+void gf_SKP_3_dugui (int lv_a) {
+    // Implementation
+gv_busEligible[lv_a] = false;
+gv_witchEligible[lv_a] = false;
+gv_veteranEligible[lv_a] = false;
+}
+
+// 阶段三抽取（shw238）：黑手D 2/9 ← 原 gf_SequencePrep 行10606
+void gf_SKP_2_bangjiazhe (int lv_a) {
+    // Implementation
+gv_busEligible[lv_a] = false;
+gv_witchEligible[lv_a] = false;
+}
+
+// 阶段三抽取（shw238）：黑手D 2/11 ← 原 gf_SequencePrep 行10611
+void gf_SKP_2_qipianzhe (int lv_a) {
+    // Implementation
+gv_busEligible[lv_a] = false;
+}
+
+// 阶段三抽取（shw238）：三合会 5/9 ← 原 gf_SequencePrep 行10615
+void gf_SKP_5_shenxun (int lv_a) {
+    // Implementation
+gv_busEligible[lv_a] = false;
+gv_witchEligible[lv_a] = false;
+}
+
+// 阶段三抽取（shw238）：三合会 5/11 ← 原 gf_SequencePrep 行10620
+void gf_SKP_5_mihuo (int lv_a) {
+    // Implementation
+gv_busEligible[lv_a] = false;
+}
+
+// 阶段三抽取（shw238）：中立 3/5 ← 原 gf_SequencePrep 行10624
+void gf_SKP_3_zonghuozhe (int lv_a) {
+    // Implementation
+gv_busEligible[lv_a] = false;
+}
+
+// 阶段三抽取（shw238）：中立 3/7 ← 原 gf_SequencePrep 行10628
+void gf_SKP_3_shiyizhe (int lv_a) {
+    // Implementation
+gv_busEligible[lv_a] = false;
+gv_witchEligible[lv_a] = false;
+gv_veteranEligible[lv_a] = false;
+}
+
+// 阶段三抽取（shw238）：中立 3/9 ← 原 gf_SequencePrep 行10634
+void gf_SKP_3_sharenkuang (int lv_a) {
+    // Implementation
+gv_busEligible[lv_a] = false;
+}
+
+// 阶段三抽取（shw238）：中立 3/13 ← 原 gf_SequencePrep 行10638
+void gf_SKP_3_duoluoshenpanzhe (int lv_a) {
+    // Implementation
+gv_busEligible[lv_a] = false;
+gv_witchEligible[lv_a] = false;
+gv_veteranEligible[lv_a] = false;
+}
+
+// 阶段三抽取（shw238）：中立 3/16 ← 原 gf_SequencePrep 行10644
+void gf_SKP_3_ximingren (int lv_a) {
+    // Implementation
+gv_busEligible[lv_a] = false;
+gv_witchEligible[lv_a] = false;
+gv_veteranEligible[lv_a] = false;
+}
+
+// 阶段三抽取（shw238）：中立 3/15 ← 原 gf_SequencePrep 行10650
+void gf_SKP_3_yuanhun (int lv_a) {
+    // Implementation
+if ((gv_e5BC80E585B3[lv_a] == true)) {
+    gv_veteranEligible[lv_a] = false;
+}
+else {
+    gv_veteranEligible[lv_a] = true;
+}
+}
+
+// 阶段三抽取（shw238）：黑手D 2/14 ← 原 gf_SequencePrep 行10659
+void gf_SKP_2_mentu (int lv_a) {
+    // Implementation
+gv_busEligible[lv_a] = false;
+gv_witchEligible[lv_a] = false;
+gv_veteranEligible[lv_a] = false;
+}
+
+// 阶段三抽取（shw238）：三合会 5/14 ← 原 gf_SequencePrep 行10665
+void gf_SKP_5_pucong (int lv_a) {
+    // Implementation
+gv_busEligible[lv_a] = false;
+gv_witchEligible[lv_a] = false;
+gv_veteranEligible[lv_a] = false;
+}
+
+// 阶段三抽取（shw238）：城镇 1/29 ← 原 gf_SequencePrep 行10678
+void gf_SKP_1_bihuzhe_2 (int lv_a) {
+    // Implementation
+gv_e5BA87E68AA4E5BC80E5A78B[lv_a] = true;
+gv_e5BA87E68AA4E58585E883BD[lv_a] = 0;
+gv_cooldown[lv_a] += 2;
+}
+
+// 阶段三抽取（shw238）：城镇 1/1 ← 原 gf_SequencePrep 行10688
+void gf_SKP_1_shimin (int lv_a) {
+    // Implementation
+gv_immune[lv_a][0] = true;
+gv_shots[lv_a] -= 1;
+if ((gv_shots[lv_a] == 0)) {
+    gf_CBSystemMessage(StringExternal("Param/Value/C5D3B015"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+}
+
+}
+
+// 阶段三抽取（shw238）：城镇 1/2 ← 原 gf_SequencePrep 行10697
+void gf_SKP_1_jingzhang (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/31 ← 原 gf_SequencePrep 行10701
+void gf_SKP_1_guanchazhe_2 (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/31 ← 原 gf_SequencePrep 行10705
+void gf_SKP_3_yingwuzhe (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/4 ← 原 gf_SequencePrep 行10713
+void gf_SKP_1_tanyuan (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/5 ← 原 gf_SequencePrep 行10717
+void gf_SKP_1_wuniang (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/6 ← 原 gf_SequencePrep 行10721
+void gf_SKP_1_yijing (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/17 ← 原 gf_SequencePrep 行10725
+void gf_SKP_3_dugui_2 (int lv_a) {
+    // Implementation
+gv_e4B88BE6B3A8[lv_a] = gv_action[lv_a][0];
+}
+
+// 阶段三抽取（shw238）：城镇 1/25 ← 原 gf_SequencePrep 行10729
+void gf_SKP_1_mushi (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/23 ← 原 gf_SequencePrep 行10733
+void gf_SKP_1_zhengmuguan (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/9 ← 原 gf_SequencePrep 行10737
+void gf_SKP_1_bashisiji_2 (int lv_a) {
+    // Implementation
+gf_BHVisit(lv_a, gv_action[lv_a][RandomInt(0, 1)]);
+}
+
+// 阶段三抽取（shw238）：城镇 1/10 ← 原 gf_SequencePrep 行10741
+void gf_SKP_1_fayi_2 (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/11 ← 原 gf_SequencePrep 行10745
+void gf_SKP_1_baobiao (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/13 ← 原 gf_SequencePrep 行10749
+void gf_SKP_1_yujing_2 (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/14 ← 原 gf_SequencePrep 行10753
+void gf_SKP_1_gongjihuizhanglao (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/15 ← 原 gf_SequencePrep 行10757
+void gf_SKP_1_zhentan (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/16 ← 原 gf_SequencePrep 行10761
+void gf_SKP_1_jianshizhe_2 (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/17 ← 原 gf_SequencePrep 行10765
+void gf_SKP_1_tuiwujunren_2 (int lv_a) {
+    // Implementation
+gf_BHVisitSelf(lv_a);
+gv_immune[lv_a][0] = true;
+gv_shots[lv_a] -= 1;
+if ((gv_shots[lv_a] == 0)) {
+    gf_CBSystemMessage(StringExternal("Param/Value/4D00E73A"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+}
+else {
+    if ((gv_shots[lv_a] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/B3B29259") + IntToText(gv_shots[lv_a]) + StringExternal("Param/Value/1CB45341")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+    }
+    else {
+        if ((gv_shots[lv_a] > 1)) {
+            gf_CBSystemMessage((StringExternal("Param/Value/12F39168") + IntToText(gv_shots[lv_a]) + StringExternal("Param/Value/C5C7AB40")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+        }
+
+    }
+}
+}
+
+// 阶段三抽取（shw238）：城镇 1/21 ← 原 gf_SequencePrep 行10785
+void gf_SKP_1_fushou (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/26 ← 原 gf_SequencePrep 行10789
+void gf_SKP_1_shenchayuan (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/15 ← 原 gf_SequencePrep 行10793
+void gf_SKP_3_yuanhun_2 (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/22 ← 原 gf_SequencePrep 行10797
+void gf_SKP_1_hulinren (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/27 ← 原 gf_SequencePrep 行10801
+void gf_SKP_1_lianbangtanyuan (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/30 ← 原 gf_SequencePrep 行10805
+void gf_SKP_1_shiguan (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：黑手D 2/3 ← 原 gf_SequencePrep 行10809
+void gf_SKP_2_peishi (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：黑手D 2/4 ← 原 gf_SequencePrep 行10813
+void gf_SKP_2_canmou (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：黑手D 2/5 ← 原 gf_SequencePrep 行10817
+void gf_SKP_2_xianhaizhe (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：黑手D 2/6 ← 原 gf_SequencePrep 行10821
+void gf_SKP_2_qinglizhe (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：黑手D 2/7 ← 原 gf_SequencePrep 行10825
+void gf_SKP_2_konghezhe (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：黑手D 2/8 ← 原 gf_SequencePrep 行10829
+void gf_SKP_2_weizhuangzhe (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：黑手D 2/9 ← 原 gf_SequencePrep 行10833
+void gf_SKP_2_bangjiazhe_2 (int lv_a) {
+    // Implementation
+if ((gv_shots[lv_a] >= 1)) {
+    gf_BHVisitAction(lv_a);
+}
+else {
+    gf_CBSystemMessage(StringExternal("Param/Value/3EE629BB"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+}
+}
+
+// 阶段三抽取（shw238）：黑手D 2/10 ← 原 gf_SequencePrep 行10842
+void gf_SKP_2_mitan (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：黑手D 2/11 ← 原 gf_SequencePrep 行10846
+void gf_SKP_2_qipianzhe_2 (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：黑手D 2/14 ← 原 gf_SequencePrep 行10850
+void gf_SKP_2_mentu_2 (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：黑手D 2/15 ← 原 gf_SequencePrep 行10854
+void gf_SKP_2_zaizangzhe (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：三合会 5/15 ← 原 gf_SequencePrep 行10858
+void gf_SKP_5_wuxian (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/24 ← 原 gf_SequencePrep 行10862
+void gf_SKP_1_xuetu (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：三合会 5/3 ← 原 gf_SequencePrep 行10866
+void gf_SKP_5_jiaojihua (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：三合会 5/4 ← 原 gf_SequencePrep 行10870
+void gf_SKP_5_guanjia (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：三合会 5/5 ← 原 gf_SequencePrep 行10874
+void gf_SKP_5_zaojia (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：三合会 5/6 ← 原 gf_SequencePrep 行10878
+void gf_SKP_5_xiangzhu (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：三合会 5/7 ← 原 gf_SequencePrep 行10882
+void gf_SKP_5_fengkou (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：三合会 5/8 ← 原 gf_SequencePrep 行10886
+void gf_SKP_5_shentou (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：三合会 5/9 ← 原 gf_SequencePrep 行10890
+void gf_SKP_5_shenxun_2 (int lv_a) {
+    // Implementation
+if ((gv_shots[lv_a] >= 1)) {
+    gf_BHVisitAction(lv_a);
+}
+else {
+    gf_CBSystemMessage(StringExternal("Param/Value/F7560A89"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+}
+}
+
+// 阶段三抽取（shw238）：三合会 5/10 ← 原 gf_SequencePrep 行10899
+void gf_SKP_5_xianfeng (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：三合会 5/11 ← 原 gf_SequencePrep 行10903
+void gf_SKP_5_mihuo_2 (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：三合会 5/14 ← 原 gf_SequencePrep 行10907
+void gf_SKP_5_pucong_2 (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：三合会 5/15 ← 原 gf_SequencePrep 行10911
+void gf_SKP_5_wuxian_2 (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/1 ← 原 gf_SequencePrep 行10915
+void gf_SKP_3_lianhuanshashou (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/14 ← 原 gf_SequencePrep 行10919
+void gf_SKP_3_wenyisanbuzhe (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/2 ← 原 gf_SequencePrep 行10923
+void gf_SKP_3_shengcunzhe_2 (int lv_a) {
+    // Implementation
+if ((gv_e59CA8E5BC80party == true)) {
+    gf_CBSystemMessage(StringExternal("Param/Value/1EB65E0C"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    gv_e68CA8E9A5BF[lv_a] = false;
+}
+else {
+    if ((gv_action[lv_a][0] > 0)) {
+        gf_CBSystemMessage(StringExternal("Param/Value/13D8D964"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+        gf_BHVisitAction(lv_a);
+        gv_e68CA8E9A5BF[lv_a] = false;
+    }
+    else {
+        gf_CBSystemMessage(StringExternal("Param/Value/1B97AF2A"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+        gf_BHVisitNone(lv_a);
+        gv_e68CA8E9A5BF[lv_a] = true;
+    }
+}
+}
+
+// 阶段三抽取（shw238）：中立 3/3 ← 原 gf_SequencePrep 行10942
+void gf_SKP_3_xiaochou (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/4 ← 原 gf_SequencePrep 行10946
+void gf_SKP_3_nvwu (int lv_a) {
+    // Implementation
+gv_witched[gv_action[lv_a][0]] = lv_a;
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/5 ← 原 gf_SequencePrep 行10951
+void gf_SKP_3_zonghuozhe_2 (int lv_a) {
+    // Implementation
+if ((gv_action[lv_a][0] > 0)) {
+    gf_BHVisitAction(lv_a);
+}
+
+if ((gv_action[lv_a][1] == 1)) {
+    gf_BHVisitSelf(lv_a);
+}
+
+if ((gv_action[lv_a][0] == 0) && (gv_action[lv_a][1] == 0)) {
+    gf_BHVisitSelf(lv_a);
+}
+
+}
+
+// 阶段三抽取（shw238）：中立 3/9 ← 原 gf_SequencePrep 行10966
+void gf_SKP_3_sharenkuang_2 (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/10 ← 原 gf_SequencePrep 行10970
+void gf_SKP_3_wuyi (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/11 ← 原 gf_SequencePrep 行10974
+void gf_SKP_3_shenjiguan (int lv_a) {
+    // Implementation
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/13 ← 原 gf_SequencePrep 行10978
+void gf_SKP_3_duoluoshenpanzhe_2 (int lv_a) {
+    // Implementation
+gv_punishVotes[gv_action[lv_a][0]] += 1.5;
+gf_BHVisitSelf(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/31 ← 原 gf_SequencePrep 行10983
+void gf_SKP_3_yingwuzhe_2 (int lv_a) {
+    // Implementation
+gf_BHCrimeTrespass(lv_a);
+gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/32 ← 原 gf_SequencePrep 行10988
+void gf_SKP_3_tianxuanzhe (int lv_a) {
+    // Implementation
+gf_BHVisitSelf(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/13 ← 原 gf_SequencePrep 行11020
+void gf_SKP_3_duoluoshenpanzhe_3 () {
+    // Implementation
+gv_punishTarget = 0;
+}
+
+// 阶段三抽取（shw238）：城镇 1/8 ← 原 gf_SequencePrep 行11038
+void gf_SKP_1_jiandie (int lv_a) {
+    // Implementation
+gf_CBSystemMessage((StringExternal("Param/Value/578D7DBA") + TextWithColor(StringToText(gv_name[gv_mafiaTarget]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_mafiaTarget])) + StringExternal("Param/Value/E4D258B9")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+}
+
+// 阶段三抽取（shw238）：城镇 1/8 ← 原 gf_SequencePrep 行11068
+void gf_SKP_1_jiandie_2 (int lv_a) {
+    // Implementation
+gf_CBSystemMessage((StringExternal("Param/Value/B0AF1532") + TextWithColor(StringToText(gv_name[gv_triadTarget]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_triadTarget])) + StringExternal("Param/Value/971409E7")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+}
+
+
+// ===== BH:SK 角色块抽取（阶段三 · bullshit）=====
+// 阶段三抽取（shw238）：中立 3/4 ← 原 gf_SequenceBullshit 行11233
+void gf_SKB_3_nvwu (int lv_a) {
+    // Implementation
+gv_witched[gv_visitation[lv_a]] = lv_a;
+}
+
+// 阶段三抽取（shw238）：城镇 1/5 ← 原 gf_SequenceBullshit 行11497
+void gf_SKB_1_wuniang (int lv_a) {
+    // Implementation
+gf_BHCrime(lv_a, 4);
+if ((gf_BHRestrictAllowed(gv_visitation[lv_a]) == true)) {
+    gf_BHBlock(gv_visitation[lv_a], lv_a);
+}
+}
+
+// 阶段三抽取（shw238）：城镇 1/5 ← 原 gf_SequenceBullshit 行11555
+void gf_SKB_1_wuniang_2 (int lv_a) {
+    // Implementation
+if ((gv_skillCount[lv_a] == 1)) {
+    gv_cooldown[lv_a] = 2;
+    gv_skillCount[lv_a] = 0;
+}
+else {
+    gv_skillCount[lv_a] = (gv_skillCount[lv_a] + 1);
+}
+}
+
+// 阶段三抽取（shw238）：城镇 1/10 ← 原 gf_SequenceBullshit 行11587
+void gf_SKB_1_fayi (int lv_a) {
+    // Implementation
+if ((gv_switched[lv_a] != 0)) {
+    gv_location[lv_a] = gv_switched[lv_a];
+}
+else {
+    if ((gv_jailed[lv_a] != 0)) {
+        gv_location[lv_a] = gv_jailed[lv_a];
+    }
+    else {
+        gv_location[lv_a] = lv_a;
+    }
+}
+}
+
+// 阶段三抽取（shw238）：城镇 1/11 ← 原 gf_SequenceBullshit 行11606
+void gf_SKB_1_baobiao (int lv_a) {
+    // Implementation
+gv_location[lv_a] = gv_location[gv_visitation[lv_a]];
+}
+
+// 阶段三抽取（shw238）：城镇 1/9 ← 原 gf_SequenceBullshit 行11629
+void gf_SKB_1_bashisiji (int lv_a) {
+    // Implementation
+if ((gv_roleOptions[3][4][1] == true)) {
+    gf_CBSystemMessage(StringExternal("Param/Value/DB0866D1"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    gf_FlashScreen(Color(66.67, 53.33, 100.00), lv_a, 3.0, 30.0);
+}
+
+}
+
+// 阶段三抽取（shw238）：城镇 1/9 ← 原 gf_SequenceBullshit 行11654
+void gf_SKB_1_bashisiji_2 (int lv_a) {
+    // Implementation
+gf_CBSystemMessage(StringExternal("Param/Value/212644C3"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+}
+
+// 阶段三抽取（shw238）：中立 3/1 ← 原 gf_SequenceBullshit 行11701
+void gf_SKB_3_lianhuanshashou (int lv_a) {
+    // Implementation
+gf_CBSystemMessage(StringExternal("Param/Value/A1231D8B"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+}
+
+// 阶段三抽取（shw238）：中立 3/16 ← 原 gf_SequenceBullshit 行11726
+void gf_SKB_3_ximingren (int lv_a) {
+    // Implementation
+gv_bondedwith[gv_action[lv_a][0]] = gv_action[lv_a][1];
+gv_bondedwith[gv_action[lv_a][1]] = gv_action[lv_a][0];
+gv_bondedby[gv_action[lv_a][1]] = lv_a;
+gv_bondedby[gv_action[lv_a][0]] = lv_a;
+gf_CBSystemMessage((StringExternal("Param/Value/65939BCF") + TextWithColor(null, libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_action[lv_a][0]])) + StringToText(gv_name[gv_action[lv_a][0]]) + StringExternal("Param/Value/9B1FDEF6") + TextWithColor(null, libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_action[lv_a][1]])) + StringToText(gv_name[gv_action[lv_a][1]]) + StringExternal("Param/Value/A26E04B7")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+}
+
+// 阶段三抽取（shw238）：中立 3/14 ← 原 gf_SequenceBullshit 行11787
+void gf_SKB_3_wenyisanbuzhe (int lv_a) {
+    // Implementation
+gf_BHCrime(lv_a, 4);
 }

@@ -33,6 +33,14 @@ MARK = "// ===== BH:SK 局部数组提升（阶段三前置）====="
 
 # 函数 → [(原局部名, 新全局名, 声明类型)]；类型照抄原声明
 SPEC = {
+    "gf_SequenceKills": [
+        # 中文名局部（十六进制转义）= 「挨过退伍打了」
+        ("lv_e68CA8E8BF87E98080E4BC8DE68993E4BA86", "gv_seqKillsVetHit", "bool[16]"),
+        ("lv_z", "gv_seqKillsZ", "bool[3]"),
+    ],
+    "gf_SequencePrep": [
+        ("lv_list", "gv_seqPrepList", "int[16]"),
+    ],
     "gf_SequenceAfter2": [
         # After2 自己的 lv_wait / lv_z（与 gf_SequenceAfter 的同名局部**不是同一个变量**）
         ("lv_wait", "gv_seqAfter2Wait", "bool[5]"),

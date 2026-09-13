@@ -77,6 +77,10 @@ FAMILIES = {
         "tag": {"gf_SequenceAfter2": "G"},
         "params": None,
     },
+    # 夜间族按函数拆开跑：便于逐函数提交与回退（标记按家族名区分，天然幂等）
+    "prep": {"funcs": ["gf_SequencePrep"], "tag": {"gf_SequencePrep": "P"}, "params": None},
+    "bullshit": {"funcs": ["gf_SequenceBullshit"], "tag": {"gf_SequenceBullshit": "B"}, "params": None},
+    "kills": {"funcs": ["gf_SequenceKills"], "tag": {"gf_SequenceKills": "K"}, "params": None},
     "after": {
         "funcs": ["gf_SequenceAfter"],
         "tag": {"gf_SequenceAfter": "F"},
@@ -162,7 +166,7 @@ def find_blocks(lines, name, params):
 def derive_params(b, params):
     """参数 = 家族指定的固定参数（若有）+ 主语变量 + 块内「先读后写」的局部变量。"""
     if params is None:
-        return sorted(set(b.bv) | set(b.needs_param)) if b.bv else list(b.needs_param)
+        return sorted({x for x in ({b.bv} | set(b.needs_param)) if x})
     return list(params)
 
 
@@ -172,6 +176,10 @@ def analyze(lines, blocks, params, func_decls, types=None):
         # 主语 = 条件里 gv_roles[...] 的变量（点击族是 lv_source，夜间族是遍历玩家的 lv_a）。
         # 它**本就是**参数，不算「外部依赖」。
         b.bv = re.search(r"gv_roles\[([^\]]+)\]", b.cond).group(1)
+        # 主语也可能是全局（`gv_roles[gv_punishTarget][…]`，堕落审判者的惩罚链）——
+        # 全局不当参数：传值后函数里给它的赋值不会回传（shw243 硬断言抓到）。
+        if b.bv not in func_decls:
+            b.bv_global, b.bv = b.bv, None
         b.types = types or {}
         pm = set(params) if params else {b.bv}
         read = {m.group(1) for m in LOCAL_RE.finditer(body)}
@@ -191,6 +199,11 @@ def analyze(lines, blocks, params, func_decls, types=None):
         raw_deps = sorted(n for n, p in first_read.items()
                           if n not in pm and n not in autos
                           and (n not in first_write or p < first_write[n]))
+        # 只有**本函数的局部**才需要当参数传进来：全局（gv_*）在函数里随处可用，
+        # 当参数会导致生成体给参数赋值 ⇒ 写不回传（shw243 的硬断言就是这么抓住
+        # gf_SKP_3_duoluoshenpanzhe_3 把 gv_punishTarget 当参数的）。
+        raw_deps = [n for n in raw_deps if n in func_decls]
+
         # Galaxy 不能传数组 ⇒ 依赖数组的块只能留在原地
         blocked = sorted(n for n in raw_deps if "[" in (b.types.get(n) or ""))
         needs_param = [n for n in raw_deps if n not in blocked]
@@ -201,11 +214,13 @@ def analyze(lines, blocks, params, func_decls, types=None):
             m = re.search(rf"(?<![A-Za-z0-9_]){n}(?![A-Za-z0-9_])", outer_tail)
             if m and not re.match(r"\s*=(?!=)", outer_tail[m.end():m.end() + 24]):
                 leak.append(n)
+        unresolved_autos = [n for n in unresolved_autos if n in func_decls]
         if unresolved_autos:
             needs_param = sorted(set(needs_param) | set(unresolved_autos))
         b.needs_param, b.blocked, b.autos, b.leak = needs_param, blocked, autos, leak
         b.reads, b.writes = sorted(read), sorted(write)
-        b.params = sorted(set([b.bv]) | set(needs_param)) if params is None else list(params)
+        b.params = (sorted({x for x in ({b.bv} | set(needs_param)) if x})
+                    if params is None else list(params))
         b.locals = sorted(n for n in read | write
                           if n in func_decls and n not in b.params and n not in autos
                           and n not in needs_param)
@@ -273,7 +288,33 @@ def main():
         """块体 = 条件行之后、闭合大括号之前，逐行原样。"""
         return lines[b.hdr_end + 1:b.end]
 
-    todo = [b for b in all_blocks if (b.func, b.start + 1) not in SKIP]
+    # ⚠ 落盘过滤必须与报告的判据一致（shw243 事故：这里原来只按硬编码 SKIP 过滤，
+    #   把 analyze() 自动判定的 blocked/leak 全丢了 —— 报告打印「需人工 11」，
+    #   实际却把 11 块全抽了。其中一块「块内写 lv_y、块外读」被抽走后，
+    #   写落进被调函数的**局部**、读走**参数**（Galaxy 传值）⇒ 巴士司机的访问目标丢失。）
+    def _has_body(b):
+        return any(x.strip() for x in lines[b.hdr_end + 1:b.end])
+
+    todo, skipped_auto = [], []
+    for b in all_blocks:
+        why = []
+        if (b.func, b.start + 1) in SKIP:
+            why.append("SKIP 名单")
+        if b.blocked:
+            why.append(f"依赖数组局部 {b.blocked}")
+        if b.leak:
+            why.append(f"块内写、块外读 {b.leak}")
+        if not _has_body(b):
+            why.append("空块（无意义）")
+        if why:
+            skipped_auto.append((b, why))
+        else:
+            todo.append(b)
+
+    if skipped_auto:
+        print(f"\n跳过 {len(skipped_auto)} 块（留在原地）：")
+        for b, why in skipped_auto:
+            print(f"    · {b.func} 池{b.pool}/{b.role} 行{b.start + 1}: {'; '.join(why)}")
     seen, funcs, protos, repl = collections.Counter(), [], [], []
     for b in todo:
         base = f"gf_SK{b.tag}_{b.pool}_{pinyin.get((b.pool, b.role), 'x')}"
@@ -311,6 +352,16 @@ def main():
 
         indent = next((re.match(r"\s*", x).group(0) for x in body if x.strip()), "    ")
         repl.append((b.hdr_end + 1, b.end, f"{indent}{name}({', '.join(b.params)});"))
+
+    # 生成后硬校验（shw243 事故沉淀）：Galaxy 参数是**传值**，被调函数里给参数赋值
+    # 不会回传调用者 ⇒ 只要出现这种形状，抽取必然改语义，直接拒绝落盘。
+    for b, name, f in funcs:
+        if not any(x.strip() for x in b.gen_body):
+            sys.exit(f"✗ {name} 是空壳函数（块体为空）")
+        for p in b.params:
+            if re.search(r"(?:^|[^\w])" + re.escape(p) + r"\s*(\[[^\]]*\]\s*)?=(?!=)",
+                         "\n".join(b.gen_body), re.M):
+                sys.exit(f"✗ {name} 给参数 {p} 赋值 ⇒ 写不会回传调用者，语义改变")
 
     # 等价性证明：以**原文为唯一真值**逐行验证 ——
     #   ①行数一致 ②每行 = 去掉的行首空白前缀 + 生成行（或原样）③生成行确实在函数文本里
