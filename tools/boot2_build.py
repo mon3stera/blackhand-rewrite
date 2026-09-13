@@ -256,6 +256,15 @@ def main() -> int:
         print('✗ galaxy_lint 未通过，停止打包')
         return 1
 
+    # 0b) 角色卡体检：覆盖（有显示名的角色必须有卡片块）+ 池专属不变式
+    card = subprocess.run([sys.executable, str(ROOT / 'tools' / 'role_card_check.py'), '--strict'],
+                          capture_output=True, text=True)
+    print(card.stdout.strip())
+
+    if card.returncode != 0:
+        print('✗ role_card_check 未通过，停止打包')
+        return 1
+
     if out.exists():
         print(f"  ! 覆盖已存在的 {out}")
 
