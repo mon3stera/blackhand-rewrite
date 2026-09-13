@@ -240,7 +240,7 @@ def main() -> int:
     ap.add_argument('--skip-strings', action='store_true', help='不合并文案（仅当基线已含全部累积键时）')
     ap.add_argument('--skip-notes', action='store_true', help='不写补丁说明/加载页面（仅供验证包）')
     ap.add_argument('--name', default=None,
-                    help='覆盖包内地图名（DocInfo/Name）—— 多发布线用，例如备线「黑手：避难 Revision」')
+                    help='覆盖包内地图名（DocInfo/Name）—— 多发布线用，例如试验线「黑手：Revision Preview」')
     args = ap.parse_args()
 
     out = Path(args.out)

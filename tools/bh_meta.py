@@ -383,7 +383,7 @@ def pick_notes(path, spec, fresh):
 def parse_promote(notes_path) -> str:
     """这一版要不要推稳定主线（patch-notes.txt 的 @promote，默认 hold）。
 
-    major = 大更新，试验线（黑手：避难 Revision）验证通过后推主线；
+    major = 大更新，试验线（黑手：Revision Preview）验证通过后推主线；
     hold  = 常规更新，只留在试验线。
     """
     for line in Path(notes_path).read_text(encoding='utf-8').splitlines():

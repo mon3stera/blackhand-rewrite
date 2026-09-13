@@ -2,7 +2,7 @@
 """发布线台账 + 发版状态机：新版本先在试验线实测，通过后才推稳定主线。
 
 角色分工（2026-09-13 用户定）：
-  shelter = 试验线（「黑手：避难 Revision」）—— 今天的重构这类大改动**先投这里**，用真实对局验证；
+  preview = 试验线（「黑手：Revision Preview」）—— 今天的重构这类大改动**先投这里**，用真实对局验证；
   main    = 稳定主线（「黑手：升温 Revision」）—— 只在试验线验证通过后才更新，玩家默认在这里玩。
 
 **两条线必须用同一个账号发布**：bank 命名空间取作者 toon（不是地图名），
@@ -14,8 +14,8 @@
 用法：
   python3 tools/release.py status                  # 版本 / 各线状态 / tag / **下一步该做什么**
   python3 tools/release.py build                   # 按状态机出该出的那条线的包并投放
-  python3 tools/release.py build --channel shelter  # 指定线（一般不用）
-  python3 tools/release.py mark --channel shelter --status 实测通过
+  python3 tools/release.py build --channel preview  # 指定线（一般不用）
+  python3 tools/release.py mark --channel preview --status 实测通过
   python3 tools/release.py mark --channel main --live 1.108 --status 已通过
   python3 tools/release.py tag                     # 发版后打 git tag
 """
@@ -110,7 +110,7 @@ def md5(path: Path) -> str:
 def next_action(data: dict, want: str, promote: str):
     """状态机 → (该出包的线 or None, 一句话说明)。
 
-    试验线（避难）持续更新；稳定主线（升温）只收 @promote major 的大更新。
+    试验线（preview）持续更新；稳定主线（main/升温）只收 @promote major 的大更新。
     """
     stg, sta = by_role(data, 'staging'), by_role(data, 'stable')
 
@@ -313,7 +313,7 @@ def main() -> int:
     sub = ap.add_subparsers(dest='cmd', required=True)
     sub.add_parser('status', help='版本 / 各线状态 / tag / 下一步该做什么')
     b = sub.add_parser('build', help='出包并投放（不指定 --channel 时按状态机自动选线）')
-    b.add_argument('--channel', help='发布线 id（main / shelter）；省略 = 按状态机选')
+    b.add_argument('--channel', help='发布线 id（main / preview）；省略 = 按状态机选')
     b.add_argument('--no-deploy', action='store_true', help='只出包，不 scp')
     b.add_argument('--skip-notes', action='store_true', help='不写补丁说明（仅供验证包）')
     b.add_argument('--force', action='store_true', help='重出同一版（修包重投用）')

@@ -1,5 +1,5 @@
 {
-  "note": "两条发布线 + 状态机：新版**先在试验线（避难）投出并用真实对局验证**，通过后才推给稳定主线（升温）。两条线必须同一个账号发布 —— bank 命名空间取作者 toon（不是地图名），所以玩家存档/成就/积分互通，试验线上测的就是真实线上档。",
+  "note": "两条发布线 + 状态机：**preview（黑手：Revision Preview）= 试验线，持续更新**，新版本先投这里、用真实对局验证；**main（黑手：升温 Revision）= 稳定主线**，只收大更新（patch-notes.txt 的 @promote major），验证通过后才推。两条线必须同一个账号发布 —— bank 命名空间取作者 toon（不是地图名），所以玩家存档/成就/积分互通，试验线上测的就是真实线上档。",
   "fields": {
     "role": "stable（稳定主线，玩家默认在这里玩）/ staging（试验线，新版本先投这里）",
     "live": "平台已通过、玩家能玩到的版本（null = 未确认）",
@@ -8,8 +8,9 @@
   },
   "rules": [
     "新版本一律先 build/投给 staging 线（tools/release.py status 会算出下一步该做什么）",
-    "staging 上实测通过后（mark --channel shelter --status 实测通过）才推 stable 线",
-    "两条线版本差不要长期超过 1 个版本，否则主线玩家会落后太多",
+    "staging 持续更新（每版都投）；stable 只在 @promote major 时跟（大更新）",
+    "staging 上实测通过后（mark --channel preview --status 实测通过）才允许推 stable",
+    "推 stable 时补丁说明要覆盖自「主线 live 版本」以来的全部改动（主线玩家跳过中间几版）",
     "地图名改动只走打包第 ⑥ 步（boot2_build --name），不要事后单独 set —— 那会第二次写 zhCN，白胖约 300 KB"
   ],
   "channels": [
@@ -18,7 +19,7 @@
       "role": "stable",
       "title": "黑手：升温 Revision",
       "name": null,
-      "note": "稳定主线：沿用基线自带的地图名；只在避难实测通过后才更新",
+      "note": "稳定主线：沿用基线自带的地图名；只收大更新，且必须先在 preview 验证过",
       "live": null,
       "live_note": "未确认 —— 平台当前可通过的版本",
       "pending": "1.108",
@@ -28,18 +29,18 @@
       "size": 16704499
     },
     {
-      "id": "shelter",
+      "id": "preview",
       "role": "staging",
-      "title": "黑手：避难 Revision",
-      "name": "黑手：避难 Revision",
-      "note": "试验线：今天的大重构先投这里，用真实对局验证后再推主线",
+      "title": "黑手：Revision Preview",
+      "name": "黑手：Revision Preview",
+      "note": "试验线：每版都投这里（玩家想玩最新内容来这条线）；大更新在验证通过后才推主线",
       "live": null,
       "live_note": "还没投过（首投也要过审）",
       "pending": "1.109",
       "status": "待投",
-      "built": "work/boot2-1.109-shelter.SC2Map",
-      "md5": "6e0f9868a42c5623754d035faea686e4",
-      "size": 16703926
+      "built": "work/boot2-1.109-preview.SC2Map",
+      "md5": "ef48512b9e54ff8068cf9d7fb9a2ee8e",
+      "size": 16703924
     }
   ]
 }
