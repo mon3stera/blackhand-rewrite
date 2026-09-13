@@ -3,7 +3,7 @@
 
 目前检查两类「编译期才会炸」的问题：
 
-1. **自动变量未声明**：SC2 生成代码里的 `for ( ; ( (autoXXXX_ai >= 0 && lv_a <= autoXXXX_ae) ...)`
+1. **变量未声明**（auto* / lv_* 两类：自动变量与局部变量）：SC2 生成代码里的 `for ( ; ( (autoXXXX_ai >= 0 && lv_a <= autoXXXX_ae) ...)`
    依赖函数声明区的 `const int autoXXXX_ae/_ai;`。preset_gen 生成的函数曾漏掉这一段声明块
    → 整个脚本读取失败（游戏内报「解析for时出错，可能缺少分号」）。
 2. **大括号配平**：全文 `{`/`}` 必须相等。
@@ -22,7 +22,10 @@ HEAD = re.compile(
     r"^(void|bool|int|string|text|fixed|unit|point|playergroup|bank|trigger|unitgroup|"
     r"region|soundlink|color|timer|order)\s+\w+\s*\("
 )
-AUTO = re.compile(r"\b(auto[0-9A-F]{8}_[a-z]+)\b")
+AUTO = re.compile(r"\b(auto[0-9A-F]+_\w+)\b")
+LOCAL = re.compile(r"(?<![A-Za-z0-9_])(lv_[A-Za-z0-9_]+)")
+# 声明行（用于确定声明区边界，与 role_block_extract.DECL_RE 同口径）
+DECL_ANY = re.compile(r"(?:const\s+)?[A-Za-z][\w\[\]]*\s+\w+\s*(?:=|;)")
 # 半截语句：语句以一个「标识符[索引]」开头、后面紧跟逗号 —— 合法语句里它只会作为实参出现，
 # 出现在行首就说明这一行的前半截被切掉了（shw231 事故：脚本化删除删多了，留下
 # `riantDescriptionItem[1], PlayerGroupAll(), 500, 50);`，全文大括号仍配平、函数外裸语句检查也过，
@@ -46,20 +49,47 @@ FORWARD = re.compile(rf"^(?:{TYPES})\s+\w+\s*\([^;]*\)\s*;\s*$")
 INCLUDE = re.compile(r'^\s*include\s+"')
 
 
+def strip_comment(s: str) -> str:
+    """去掉行尾 // 注释（引号内的 `//` 不算注释 —— 脚本里有内联字符串）。"""
+    i = s.find("//")
+    while i != -1:
+        if s[:i].count('"') % 2 == 0:
+            return s[:i]
+        i = s.find("//", i + 2)
+    return s
+
+
 def func_ranges(lines: list[str]):
+    """产出每个函数定义的 (签名行, 闭合大括号行)。
+
+    原型行（以 `;` 结尾、无花括号）必须跳过 —— 否则深度永远不归零，范围会一直
+    吞到下一个真函数的结尾：既让该函数漏检，又在错的范围里报假问题（shw239：
+    `void gf_SKF_5_shentou (...);` 原型把旁边原型签名里的 lv_source/lv_target
+    当成了未声明变量）。
+    """
     i = 0
     while i < len(lines):
-        if HEAD.match(lines[i]) and not lines[i].startswith(" "):
-            depth, j = 0, i
-            while j < len(lines):
-                depth += lines[j].count("{") - lines[j].count("}")
-                if depth == 0 and j > i:
-                    break
-                j += 1
-            yield i, j
-            i = j + 1
-        else:
+        line = lines[i]
+        code = strip_comment(line).rstrip()
+        if not (HEAD.match(line) and not line.startswith(" ")) or code.endswith(";"):
             i += 1
+            continue
+
+        j = i
+        while j < len(lines) and "{" not in strip_comment(lines[j]):
+            j += 1
+        if j >= len(lines):
+            break
+
+        depth, k = 0, j
+        while k < len(lines):
+            depth += lines[k].count("{") - lines[k].count("}")
+            if depth == 0:
+                break
+            k += 1
+
+        yield i, k
+        i = k + 1
 
 
 def lint(path: Path) -> int:
@@ -128,7 +158,7 @@ def lint(path: Path) -> int:
     # 行内 () 不配平且行尾不是续行（判据同 AGENTS.md 铁律 2b）
     broken: list[tuple[int, str]] = []
     for idx, line in enumerate(lines):
-        code = line.split("//")[0].rstrip()
+        code = strip_comment(line).rstrip()
         if not code.strip() or CONTINUATION.search(code):
             continue
         if code.count("(") != code.count(")"):
@@ -142,17 +172,32 @@ def lint(path: Path) -> int:
 
     checked = 0
     for start, end in func_ranges(lines):
-        body = "\n".join(lines[start:end + 1])
-        cut = body.find("// Implementation")
+        body_lines = lines[start:end + 1]
+        body = "\n".join(body_lines)
 
-        decl = body[:cut] if cut > 0 else body
-        used, declared = set(AUTO.findall(body)), set(AUTO.findall(decl))
-        miss = sorted(used - declared)
+        # 声明区 = 函数体开头连续的「空行/注释/声明」；第一条真语句之前的一切。
+        # （旧判据靠 "// Implementation" 标记切分 —— 自加函数没有该标记时会把整个函数体
+        #   当成声明区 ⇒ 检查恒过。shw239 事故：抽出的函数用了未声明的 autoXXXX_n 没被拦住。）
+        sig = body_lines[0]
+        params = set(re.findall(r"\b(\w+)\s*(?=,|\))", sig[sig.find("(") + 1:]))
+        decl_lines, k = [], 1
+        while k < len(body_lines):
+            t = body_lines[k].strip()
+            if not t or t.startswith("//") or DECL_ANY.match(t):
+                decl_lines.append(body_lines[k])
+                k += 1
+                continue
+            break
+        decl = "\n".join(decl_lines)
+
+        used = set(AUTO.findall(body)) | set(LOCAL.findall(body))
+        declared = set(AUTO.findall(decl)) | set(LOCAL.findall(decl))
+        miss = sorted(used - declared - params)
 
         name = re.search(r"\b(\w+)\s*\(", lines[start]).group(1)
         checked += 1
         if miss:
-            print(f"✗ {start + 1:6} {name}: 缺自动变量声明 {miss}")
+            print(f"✗ {start + 1:6} {name}: 缺变量声明 {miss}")
             problems += 1
 
     print(f"{'✓' if not problems else '✗'} 扫描函数 {checked} 个，问题 {problems} 处")

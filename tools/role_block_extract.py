@@ -81,10 +81,13 @@ FAMILIES = {
 
 POOL_CN = {1: "城镇", 2: "黑手D", 3: "中立", 5: "三合会"}
 
-LOCAL_RE = re.compile(r"(?<![A-Za-z0-9_])(lv_[A-Za-z0-9_]+|auto[A-F0-9]+_(?:ae|ai))")
-WRITE_RE = re.compile(r"(?<![A-Za-z0-9_])(lv_[A-Za-z0-9_]+|auto[A-F0-9]+_(?:ae|ai))\s*=(?!=)")
+# 注意：auto* 家族不止 _ae/_ai —— 还有 _n/_i/_g/_u/_var 等（全文 1,243 种、1,444 处声明）。
+# shw239 事故：只认 _ae/_ai ⇒ 抽出的函数用了 autoXXXX_n 却没带声明 ⇒ 整脚本读取失败。
+AUTO_RE = r"auto[0-9A-F]+_\w+"
+LOCAL_RE = re.compile(rf"(?<![A-Za-z0-9_])(lv_[A-Za-z0-9_]+|{AUTO_RE})")
+WRITE_RE = re.compile(rf"(?<![A-Za-z0-9_])(lv_[A-Za-z0-9_]+|{AUTO_RE})\s*=(?!=)")
 DECL_RE = re.compile(r"^\s*(?:const\s+)?([A-Za-z][\w\[\]]*)\s+"
-                     r"(auto[A-F0-9]+_(?:ae|ai)|lv_[A-Za-z0-9_]+)\s*(?:=|;)")
+                     rf"({AUTO_RE}|lv_[A-Za-z0-9_]+)\s*(?:=|;)")
 
 
 def decl_types(lines, s, e):
@@ -273,7 +276,7 @@ def main():
         span0 = func_span(lines, b.func)[0]
         for k in range(span0, span0 + 500):
             mm = DECL_RE.match(lines[k])
-            if mm and mm.group(1) in b.autos and mm.group(1) not in b.locals:
+            if mm and mm.group(2) in b.autos and mm.group(2) not in b.locals:
                 decls.append(lines[k].rstrip())
 
         body = body_of(b)
@@ -293,7 +296,7 @@ def main():
              f"void {name} ({sig}) {{"]
         if decls:
             f += ["    // Variable Declarations"] + decls
-        f += b.gen_body + ["}", ""]
+        f += ["    // Implementation"] + b.gen_body + ["}", ""]
         funcs.append((b, name, "\n".join(f)))
         protos.append(f"void {name} ({sig});")
 
