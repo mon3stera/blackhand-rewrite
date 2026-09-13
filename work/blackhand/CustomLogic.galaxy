@@ -237,14 +237,17 @@ void gf_BHCrime (int lp_player, int lp_index);
 void gf_BHCrimeTrespass (int lp_player);
 void gf_BHCrimeMurder (int lp_player);
 void gf_BHSaveSlotBuild ();
+void gf_BHSaveSlotInit ();
 void gf_BHSaveSlotShow (bool lp_show);
 void gf_BHSaveSlotRefresh (int lp_player);
-void gf_BHSaveSlotSelect (int lp_player, int lp_slot);
+void gf_BHSaveSlotNew (int lp_player);
 void gf_BHSaveSlotSave (int lp_player);
 void gf_BHSaveSlotLoad (int lp_player);
 void gf_BHSaveSlotDelete (int lp_player);
 void gf_BHSaveSlotBankWrite (int lp_player);
 void gf_BHSaveSlotBankRead (int lp_player);
+text gf_BHSaveSlotItemText (int lp_player, int lp_slot);
+bool gt_BHSaveSlotSel_Func (bool testConds, bool runActions);
 trigger gt_BHSolo;
 trigger gt_BHItalicTest;
 int[16] gv_rolesArray;
@@ -275,15 +278,17 @@ string gv_triadWeights;
 string gv_timelength;
 string[16] gv_save64;
 
-// ===== shw254：保存格位（多槽位 + 命名）=====
+// ===== shw254：保存格位（多槽位 + 命名）shw254b 改版 =====
 // 复用作者既有机制：生成代码 gf_OSSaveSlotBASE64 / 载入 gf_OSLoadBase64 / 落盘 gf_CAssembleSaveSlotBank
-// 存储：银行 I 段新增 Slot<N>Code / Slot<N>Name / ActiveSlot（原有 Trial 单槽键保持不动，老档迁移到槽位 1）
-const int c_bhSaveSlotCount = 4;
+// 存储：银行 I 段 Slot<N>Code / Slot<N>Name / ActiveSlot（原有 Trial 单槽键保持不动，老档迁移到槽位 1）
+const int c_bhSaveSlotCount = 6;
 int gv_saveSlotFrame;
 int[10] gv_saveSlotItem;
-string[16][6] gv_saveSlotCode;
-string[16][6] gv_saveSlotName;
+string[16][7] gv_saveSlotCode;
+string[16][7] gv_saveSlotName;
 int[16] gv_saveSlotSel;
+bool gv_saveSlotBusy;
+trigger gt_BHSaveSlotSel;
 int gv_chatBox;
 int[21][3] gv_chatBoxItem;
 int[16] gv_channel;
@@ -58129,31 +58134,19 @@ bool gt_UIButtons_Func (bool testConds, bool runActions) {
     }
 
     if ((gv_gameSetup == true) && (EventPlayer() == gv_host) && (gv_saveSlotFrame != c_invalidDialogId)) {
-        if ((EventDialogControl() == gv_saveSlotItem[1])) {
-            gf_BHSaveSlotSelect(EventPlayer(), 1);
-        }
-
-        if ((EventDialogControl() == gv_saveSlotItem[2])) {
-            gf_BHSaveSlotSelect(EventPlayer(), 2);
-        }
-
-        if ((EventDialogControl() == gv_saveSlotItem[3])) {
-            gf_BHSaveSlotSelect(EventPlayer(), 3);
-        }
-
         if ((EventDialogControl() == gv_saveSlotItem[4])) {
-            gf_BHSaveSlotSelect(EventPlayer(), 4);
+            gf_BHSaveSlotNew(EventPlayer());
         }
 
-        if ((EventDialogControl() == gv_saveSlotItem[6])) {
+        if ((EventDialogControl() == gv_saveSlotItem[5])) {
             gf_BHSaveSlotSave(EventPlayer());
         }
 
-        if ((EventDialogControl() == gv_saveSlotItem[7])) {
+        if ((EventDialogControl() == gv_saveSlotItem[6])) {
             gf_BHSaveSlotLoad(EventPlayer());
         }
 
-        if ((EventDialogControl() == gv_saveSlotItem[8])) {
+        if ((EventDialogControl() == gv_saveSlotItem[7])) {
             gf_BHSaveSlotDelete(EventPlayer());
         }
     }
@@ -91770,10 +91763,39 @@ if ((gv_roleOptions[1][7][0] == true) && (gv_rsConvX[4] == 0)) {
 }
 
 // ==================================================================================================
-// shw254：保存格位（多槽位 + 命名）—— 实现
-// 设计：4 个槽位（c_bhSaveSlotCount），每槽 = 一条保存代码 + 一个名字；名字走 EditBox
-// 入口：变体选「保存格」（列表第 10 项）时，在说明面板下方空白处显示本框
 // ==================================================================================================
+// shw254b：保存格位（多槽位 + 命名）—— 实现
+// 面板结构：标题 / 槽位列表（ListBox，做法照搬作者的变体列表）/ 名字输入框 / 四个竖排动作按钮 / 状态行
+// 名字为什么还要输入框：ListBox 的条目文字在引擎里不可编辑（没有可编辑列表控件），
+// 所以选中槽位时把它的名字填进输入框，改完点「保存槽位」写回。
+// ==================================================================================================
+text gf_BHSaveSlotItemText (int lp_player, int lp_slot) {
+    // Variable Declarations
+    text lv_text;
+    string lv_name;
+
+    // Implementation
+    lv_name = gv_saveSlotName[lp_player][lp_slot];
+    if ((lv_name == null)) {
+        lv_name = "";
+    }
+
+    lv_text = (StringExternal("Param/Value/SHWSLOTS5") + StringToText(IntToString(lp_slot)) + StringExternal("Param/Value/SHWSLOTS6"));
+    if ((gv_saveSlotCode[lp_player][lp_slot] == "") || (gv_saveSlotCode[lp_player][lp_slot] == null)) {
+        lv_text = (lv_text + StringExternal("Param/Value/SHWSLOTS2"));
+    }
+    else {
+        if ((lv_name == "")) {
+            lv_text = (lv_text + StringExternal("Param/Value/SHWSLOTS0"));
+        }
+        else {
+            lv_text = (lv_text + StringExternal("Param/Value/SHWSLOTS7") + StringToText(lv_name) + StringExternal("Param/Value/SHWSLOTS8"));
+        }
+    }
+
+    return lv_text;
+}
+
 void gf_BHSaveSlotShow (bool lp_show) {
     // Implementation
     if ((gv_saveSlotFrame == c_invalidDialogId)) {
@@ -91823,7 +91845,7 @@ void gf_BHSaveSlotBankRead (int lp_player) {
         gv_saveSlotSel[lp_player] = 1;
     }
 
-    // 老档迁移：原有单槽（Trial 第 1 个词）内容当作槽位 1
+    // 老档迁移：原有单槽（Trial 第 1 个词）的内容当作槽位 1
     if ((gv_saveSlotCode[lp_player][1] == "") && (gv_bankSaveStrings[lp_player][0][0] != "")) {
         gv_saveSlotCode[lp_player][1] = gv_bankSaveStrings[lp_player][0][0];
     }
@@ -91831,6 +91853,7 @@ void gf_BHSaveSlotBankRead (int lp_player) {
 
 void gf_BHSaveSlotRefresh (int lp_player) {
     // Variable Declarations
+    int lv_a;
     int lv_slot;
     string lv_name;
     text lv_text;
@@ -91842,37 +91865,71 @@ void gf_BHSaveSlotRefresh (int lp_player) {
         gv_saveSlotSel[lp_player] = 1;
     }
 
+    // 列表（重建期间挂起选中事件，避免「重建 -> 事件 -> 重建」递归）
+    gv_saveSlotBusy = true;
+    DialogControlRemoveAllItems(gv_saveSlotItem[1], PlayerGroupSingle(lp_player));
+    lv_a = 1;
+    for ( ; (lv_a <= c_bhSaveSlotCount) ; lv_a += 1 ) {
+        DialogControlAddItem(gv_saveSlotItem[1], PlayerGroupSingle(lp_player), gf_BHSaveSlotItemText(lp_player, lv_a));
+    }
+    DialogControlSelectItem(gv_saveSlotItem[1], PlayerGroupSingle(lp_player), lv_slot);
+    gv_saveSlotBusy = false;
+
+    // 名字输入框：显示选中槽位的名字
     lv_name = gv_saveSlotName[lp_player][lv_slot];
     if ((lv_name == null)) {
         lv_name = "";
     }
 
-    libNtve_gf_SetDialogItemEditorValue(gv_saveSlotItem[5], lv_name, PlayerGroupSingle(lp_player));
+    libNtve_gf_SetDialogItemEditorValue(gv_saveSlotItem[3], lv_name, PlayerGroupSingle(lp_player));
 
+    // 空槽位不能载入 / 删除
+    if ((gv_saveSlotCode[lp_player][lv_slot] == "") || (gv_saveSlotCode[lp_player][lv_slot] == null)) {
+        DialogControlSetEnabled(gv_saveSlotItem[6], PlayerGroupSingle(lp_player), false);
+        DialogControlSetEnabled(gv_saveSlotItem[7], PlayerGroupSingle(lp_player), false);
+    }
+    else {
+        DialogControlSetEnabled(gv_saveSlotItem[6], PlayerGroupSingle(lp_player), true);
+        DialogControlSetEnabled(gv_saveSlotItem[7], PlayerGroupSingle(lp_player), true);
+    }
+
+    // 状态行
     lv_text = (StringExternal("Param/Value/SHWSLOT8") + StringToText(IntToString(lv_slot)) + StringExternal("Param/Value/SHWSLOTS1"));
-    if ((gv_saveSlotCode[lp_player][lv_slot] == "")) {
-        lv_text = (lv_text + StringExternal("Param/Value/SHWSLOTS2"));
+    if ((gv_saveSlotCode[lp_player][lv_slot] == "") || (gv_saveSlotCode[lp_player][lv_slot] == null)) {
+        lv_text = (lv_text + StringExternal("Param/Value/SHWSLOTS9"));
     }
     else {
         lv_text = (lv_text + StringExternal("Param/Value/SHWSLOTS3"));
+        if ((lv_name != "")) {
+            lv_text = (lv_text + StringExternal("Param/Value/SHWSLOTS4") + StringToText(lv_name));
+        }
     }
 
-    if ((lv_name != "")) {
-        lv_text = (lv_text + StringExternal("Param/Value/SHWSLOTS4") + StringToText(lv_name));
-    }
-
-    libNtve_gf_SetDialogItemText(gv_saveSlotItem[9], lv_text, PlayerGroupSingle(lp_player));
+    libNtve_gf_SetDialogItemText(gv_saveSlotItem[8], lv_text, PlayerGroupSingle(lp_player));
 }
 
-void gf_BHSaveSlotSelect (int lp_player, int lp_slot) {
+void gf_BHSaveSlotNew (int lp_player) {
+    // Variable Declarations
+    int lv_a;
+    int lv_free;
+
     // Implementation
-    if ((lp_slot < 1) || (lp_slot > c_bhSaveSlotCount)) {
+    lv_free = 0;
+    lv_a = 1;
+    for ( ; (lv_a <= c_bhSaveSlotCount) ; lv_a += 1 ) {
+        if ((lv_free == 0) && ((gv_saveSlotCode[lp_player][lv_a] == "") || (gv_saveSlotCode[lp_player][lv_a] == null))) {
+            lv_free = lv_a;
+        }
+    }
+
+    if ((lv_free == 0)) {
+        gf_CBSystemMessage(StringExternal("Param/Value/SHWSLOTG"), lp_player, 0, 0, SoundLink("UI_GenericError", -1), Color(100.00, 58.04, 32.55));
         return;
     }
 
-    gv_saveSlotSel[lp_player] = lp_slot;
-    gf_CAssembleSaveSlotBank(lp_player);
+    gv_saveSlotSel[lp_player] = lv_free;
     gf_BHSaveSlotRefresh(lp_player);
+    gf_CBSystemMessage(StringExternal("Param/Value/SHWSLOTH2"), lp_player, 0, 0, SoundLink("UI_PTTStart", -1), Color(0.00, 50.20, 0.00));
 }
 
 void gf_BHSaveSlotSave (int lp_player) {
@@ -91891,9 +91948,9 @@ void gf_BHSaveSlotSave (int lp_player) {
     gf_OSSaveSlot(lp_player);
     gv_saveSlotCode[lp_player][lv_slot] = gv_save64[lp_player];
 
-    lv_name = libNtve_gf_DialogItemEditValue(gv_saveSlotItem[5], lp_player);
-    if ((lv_name == null)) {
-        lv_name = "";
+    lv_name = libNtve_gf_DialogItemEditValue(gv_saveSlotItem[3], lp_player);
+    if ((lv_name == null) || (lv_name == "")) {
+        lv_name = (StringExternal("Param/Value/SHWSLOTSX") + IntToString(lv_slot));
     }
 
     gv_saveSlotName[lp_player][lv_slot] = lv_name;
@@ -91913,7 +91970,7 @@ void gf_BHSaveSlotLoad (int lp_player) {
         gv_saveSlotSel[lp_player] = 1;
     }
 
-    if ((gv_saveSlotCode[lp_player][lv_slot] == "")) {
+    if ((gv_saveSlotCode[lp_player][lv_slot] == "") || (gv_saveSlotCode[lp_player][lv_slot] == null)) {
         gf_CBSystemMessage(StringExternal("Param/Value/SHWSLOTF"), lp_player, 0, 0, SoundLink("UI_GenericError", -1), Color(100.00, 0.00, 0.00));
         return;
     }
@@ -91943,6 +92000,37 @@ void gf_BHSaveSlotDelete (int lp_player) {
     gf_CBSystemMessage(StringExternal("Param/Value/SHWSLOTE"), lp_player, 0, 0, SoundLink("UI_GenericError", -1), Color(100.00, 58.04, 32.55));
 }
 
+void gf_BHSaveSlotInit () {
+    // Implementation
+    if ((gt_BHSaveSlotSel == null)) {
+        gt_BHSaveSlotSel = TriggerCreate("gt_BHSaveSlotSel_Func");
+        TriggerAddEventDialogControl(gt_BHSaveSlotSel, c_playerAny, c_invalidDialogControlId, c_triggerControlEventTypeSelectionChanged);
+    }
+}
+
+bool gt_BHSaveSlotSel_Func (bool testConds, bool runActions) {
+    // Implementation
+    if (!runActions) {
+        return true;
+    }
+
+    if ((gv_saveSlotFrame == c_invalidDialogId) || (gv_saveSlotBusy == true)) {
+        return true;
+    }
+
+    if ((EventDialogControl() != gv_saveSlotItem[1])) {
+        return true;
+    }
+
+    if ((EventPlayer() != gv_host)) {
+        return true;
+    }
+
+    gv_saveSlotSel[EventPlayer()] = DialogControlGetSelectedItem(gv_saveSlotItem[1], EventPlayer());
+    gf_BHSaveSlotRefresh(EventPlayer());
+    return true;
+}
+
 void gf_BHSaveSlotBuild () {
     // Variable Declarations
     int lv_a;
@@ -91954,55 +92042,61 @@ void gf_BHSaveSlotBuild () {
         gv_saveSlotSel[lv_a] = 1;
     }
 
-    DialogCreate(500, 250, c_anchorLeft, 350, 130, false);
+    DialogCreate(500, 350, c_anchorLeft, 350, 130, false);
     gv_saveSlotFrame = DialogLastCreated();
     DialogSetImageVisible(gv_saveSlotFrame, false);
 
+    // 标题
     DialogControlCreate(gv_saveSlotFrame, c_triggerControlTypeLabel);
     gv_saveSlotItem[0] = DialogControlLastCreated();
-    DialogControlSetSize(gv_saveSlotItem[0], PlayerGroupAll(), 500, 28);
+    DialogControlSetSize(gv_saveSlotItem[0], PlayerGroupAll(), 500, 26);
     DialogControlSetPosition(gv_saveSlotItem[0], PlayerGroupAll(), c_anchorTopLeft, 0, 0);
     libNtve_gf_SetDialogItemText(gv_saveSlotItem[0], StringExternal("Param/Value/SHWSLOT1"), PlayerGroupAll());
     DialogControlSetEnabled(gv_saveSlotItem[0], PlayerGroupAll(), false);
 
-    libNtve_gf_CreateDialogItemButton(gv_saveSlotFrame, 118, 32, c_anchorTopLeft, 0, 30, StringExternal("Param/Value/SHWSLOT2"), StringToText(""), "Assets\\Textures\\ui_checkboxbutton_normaloverpressedover_terran.dds");
+    // 槽位列表
+    DialogControlCreate(gv_saveSlotFrame, c_triggerControlTypeListBox);
     gv_saveSlotItem[1] = DialogControlLastCreated();
-    libNtve_gf_SetDialogItemImage(gv_saveSlotItem[1], "Assets\\Textures\\ui_checkboxbutton_normalpressed_terran.dds", PlayerGroupAll());
+    DialogControlSetSize(gv_saveSlotItem[1], PlayerGroupAll(), 500, 120);
+    DialogControlSetPosition(gv_saveSlotItem[1], PlayerGroupAll(), c_anchorTopLeft, 0, 28);
 
-    libNtve_gf_CreateDialogItemButton(gv_saveSlotFrame, 118, 32, c_anchorTopLeft, 122, 30, StringExternal("Param/Value/SHWSLOT3"), StringToText(""), "Assets\\Textures\\ui_checkboxbutton_normaloverpressedover_terran.dds");
+    // 名字输入框（+ 左侧标签）
+    DialogControlCreate(gv_saveSlotFrame, c_triggerControlTypeLabel);
     gv_saveSlotItem[2] = DialogControlLastCreated();
-    libNtve_gf_SetDialogItemImage(gv_saveSlotItem[2], "Assets\\Textures\\ui_checkboxbutton_normalpressed_terran.dds", PlayerGroupAll());
+    DialogControlSetSize(gv_saveSlotItem[2], PlayerGroupAll(), 110, 28);
+    DialogControlSetPosition(gv_saveSlotItem[2], PlayerGroupAll(), c_anchorTopLeft, 0, 154);
+    libNtve_gf_SetDialogItemText(gv_saveSlotItem[2], StringExternal("Param/Value/SHWSLOTH"), PlayerGroupAll());
+    DialogControlSetEnabled(gv_saveSlotItem[2], PlayerGroupAll(), false);
 
-    libNtve_gf_CreateDialogItemButton(gv_saveSlotFrame, 118, 32, c_anchorTopLeft, 244, 30, StringExternal("Param/Value/SHWSLOT4"), StringToText(""), "Assets\\Textures\\ui_checkboxbutton_normaloverpressedover_terran.dds");
+    DialogControlCreate(gv_saveSlotFrame, c_triggerControlTypeEditBox);
     gv_saveSlotItem[3] = DialogControlLastCreated();
-    libNtve_gf_SetDialogItemImage(gv_saveSlotItem[3], "Assets\\Textures\\ui_checkboxbutton_normalpressed_terran.dds", PlayerGroupAll());
+    DialogControlSetSize(gv_saveSlotItem[3], PlayerGroupAll(), 380, 28);
+    DialogControlSetPosition(gv_saveSlotItem[3], PlayerGroupAll(), c_anchorTopLeft, 120, 154);
 
-    libNtve_gf_CreateDialogItemButton(gv_saveSlotFrame, 118, 32, c_anchorTopLeft, 366, 30, StringExternal("Param/Value/SHWSLOT5"), StringToText(""), "Assets\\Textures\\ui_checkboxbutton_normaloverpressedover_terran.dds");
+    // 动作按钮（竖排）
+    libNtve_gf_CreateDialogItemButton(gv_saveSlotFrame, 500, 28, c_anchorTopLeft, 0, 188, StringExternal("Param/Value/SHWSLOTT1"), StringExternal("Param/Value/SHWSLOTB"), "Assets\\Textures\\ui_checkboxbutton_normaloverpressedover_terran.dds");
     gv_saveSlotItem[4] = DialogControlLastCreated();
     libNtve_gf_SetDialogItemImage(gv_saveSlotItem[4], "Assets\\Textures\\ui_checkboxbutton_normalpressed_terran.dds", PlayerGroupAll());
 
-    DialogControlCreate(gv_saveSlotFrame, c_triggerControlTypeEditBox);
+    libNtve_gf_CreateDialogItemButton(gv_saveSlotFrame, 500, 28, c_anchorTopLeft, 0, 220, StringExternal("Param/Value/SHWSLOTT2"), StringExternal("Param/Value/SHWSLOT6"), "Assets\\Textures\\ui_checkboxbutton_normaloverpressedover_terran.dds");
     gv_saveSlotItem[5] = DialogControlLastCreated();
-    DialogControlSetSize(gv_saveSlotItem[5], PlayerGroupAll(), 500, 32);
-    DialogControlSetPosition(gv_saveSlotItem[5], PlayerGroupAll(), c_anchorTopLeft, 0, 68);
+    libNtve_gf_SetDialogItemImage(gv_saveSlotItem[5], "Assets\\Textures\\ui_checkboxbutton_normalpressed_terran.dds", PlayerGroupAll());
 
-    libNtve_gf_CreateDialogItemButton(gv_saveSlotFrame, 160, 38, c_anchorTopLeft, 0, 106, StringExternal("Param/Value/SHWSLOT6"), StringExternal("Param/Value/SHWSLOTH"), "Assets\\Textures\\ui_generic_button_green_normaloverpressedover.dds");
+    libNtve_gf_CreateDialogItemButton(gv_saveSlotFrame, 500, 28, c_anchorTopLeft, 0, 252, StringExternal("Param/Value/SHWSLOTT3"), StringExternal("Param/Value/SHWSLOT7"), "Assets\\Textures\\ui_checkboxbutton_normaloverpressedover_terran.dds");
     gv_saveSlotItem[6] = DialogControlLastCreated();
-    libNtve_gf_SetDialogItemImage(gv_saveSlotItem[6], "Assets\\Textures\\ui_generic_button_green_normalpressed.dds", PlayerGroupAll());
+    libNtve_gf_SetDialogItemImage(gv_saveSlotItem[6], "Assets\\Textures\\ui_checkboxbutton_normalpressed_terran.dds", PlayerGroupAll());
 
-    libNtve_gf_CreateDialogItemButton(gv_saveSlotFrame, 160, 38, c_anchorTopLeft, 170, 106, StringExternal("Param/Value/SHWSLOT7"), StringToText(""), "Assets\\Textures\\ui_generic_button_green_normaloverpressedover.dds");
+    libNtve_gf_CreateDialogItemButton(gv_saveSlotFrame, 500, 28, c_anchorTopLeft, 0, 284, StringExternal("Param/Value/SHWSLOTT4"), StringExternal("Param/Value/SHWSLOTA"), "Assets\\Textures\\ui_checkboxbutton_normaloverpressedover_terran.dds");
     gv_saveSlotItem[7] = DialogControlLastCreated();
-    libNtve_gf_SetDialogItemImage(gv_saveSlotItem[7], "Assets\\Textures\\ui_generic_button_green_normalpressed.dds", PlayerGroupAll());
+    libNtve_gf_SetDialogItemImage(gv_saveSlotItem[7], "Assets\\Textures\\ui_checkboxbutton_normalpressed_terran.dds", PlayerGroupAll());
 
-    libNtve_gf_CreateDialogItemButton(gv_saveSlotFrame, 160, 38, c_anchorTopLeft, 340, 106, StringExternal("Param/Value/SHWSLOTA"), StringToText(""), "Assets\\Textures\\ui_checkboxbutton_normaloverpressedover_terran.dds");
-    gv_saveSlotItem[8] = DialogControlLastCreated();
-    libNtve_gf_SetDialogItemImage(gv_saveSlotItem[8], "Assets\\Textures\\ui_checkboxbutton_normalpressed_terran.dds", PlayerGroupAll());
-
+    // 状态行
     DialogControlCreate(gv_saveSlotFrame, c_triggerControlTypeLabel);
-    gv_saveSlotItem[9] = DialogControlLastCreated();
-    DialogControlSetSize(gv_saveSlotItem[9], PlayerGroupAll(), 500, 90);
-    DialogControlSetPosition(gv_saveSlotItem[9], PlayerGroupAll(), c_anchorTopLeft, 0, 150);
-    DialogControlSetEnabled(gv_saveSlotItem[9], PlayerGroupAll(), false);
+    gv_saveSlotItem[8] = DialogControlLastCreated();
+    DialogControlSetSize(gv_saveSlotItem[8], PlayerGroupAll(), 500, 24);
+    DialogControlSetPosition(gv_saveSlotItem[8], PlayerGroupAll(), c_anchorTopLeft, 0, 318);
+    DialogControlSetEnabled(gv_saveSlotItem[8], PlayerGroupAll(), false);
 
     DialogSetVisible(gv_saveSlotFrame, PlayerGroupAll(), false);
+    gf_BHSaveSlotInit();
 }
