@@ -247,12 +247,22 @@ def main() -> int:
                     continue
                 # 只比**语句部分**：生成体前面的「// Variable Declarations + 克隆声明 + // Implementation」
                 # 是抽取器加的壳，原始块里没有（decl_region 返回第一条语句的行号）
-                want = [norm(x) for x in lines[k_stmt:f["end"]]]
+                # ⚠ decl_region 把「函数体开头的注释」也算进声明区（第 2 项检查需要那个口径），
+                #   于是块体若**以注释开头**，want 会比原始块体少那几行 ⇒ 永远溯源不上
+                #   （shw246：gf_SKN_3_tianxuanzhe 的 `// shw147：…` 就这么被漏掉）。
+                #   两边都去掉开头的「空行/纯注释行」再比 —— 逐行等价由抽取器的证明负责，
+                #   这里要的是独立确认「同一段语句 + 同一守卫」。
+                def _trim(xs):
+                    i = 0
+                    while i < len(xs) and (not xs[i].strip() or xs[i].strip().startswith("//")):
+                        i += 1
+                    return xs[i:]
+                want = _trim([norm(x) for x in lines[k_stmt:f["end"]]])
                 cond_gen = norm(lines[i - 1].strip())
 
                 def body_of_block(b):
-                    return [norm(x[len(b["prefix"]):] if x.startswith(b["prefix"]) else x)
-                            for x in hlines[b["start"]:b["end"]]]
+                    return _trim([norm(x[len(b["prefix"]):] if x.startswith(b["prefix"]) else x)
+                                  for x in hlines[b["start"]:b["end"]]])
 
                 # 同一段块体可能被多个角色共用 ⇒ 必须「条件行 + 块体」一起匹配，
                 # 否则会把别的角色的块认成这一块（虚报守卫不一致）。
@@ -292,7 +302,9 @@ def main() -> int:
                 unverified.append(f["name"])
 
     # ④ 提升出来的全局：文件作用域只声明一次，且不与原作者脚本撞名
-    promoted = sorted({n for n in known_globals if n.startswith("gv_seq")})
+    # 提升出来的专属全局名从 promote SPEC 里取（别写死前缀：shw246 起还有 gv_rs*）
+    spec_globs = {g for items in PROMOTE_SPEC.values() for _, g, _ in items}
+    promoted = sorted(n for n in known_globals if n in spec_globs)
     for g in promoted:
         decls = len(re.findall(
             rf"^(?:const\s+)?(?:{TYPES})(?:\[[^\]]*\])* {re.escape(g)}\s*(?:\[[^\]]*\])*\s*;",

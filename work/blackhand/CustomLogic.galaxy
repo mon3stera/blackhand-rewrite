@@ -1255,6 +1255,140 @@ void gf_RTMafiaRoleText (int lp_player);
 void gf_RTNeutralRoleText (int lp_player);
 void gf_RTTriadRoleText (int lp_player);
 void gf_RTRoleCard (int lp_player);
+void gf_SKR_1_yujing (int lv_a);
+void gf_SKR_1_yujing_2 (int lv_a);
+void gf_SKR_2_dangtu (int lv_a);
+void gf_SKR_2_jiaofu (int lv_a);
+void gf_SKR_2_bangjiazhe (int lv_a);
+void gf_SKR_5_baotu (int lv_a);
+void gf_SKR_5_longtou (int lv_a);
+void gf_SKR_5_shenxun (int lv_a);
+void gf_SKR_1_gongjihuichengyuan (int lv_a);
+void gf_SKR_1_gongjihuizhanglao (int lv_a);
+void gf_SKR_1_tuiwujunren (int lv_a);
+void gf_SKR_1_shimin (int lv_a);
+void gf_SKR_1_zhengmuguan (int lv_a);
+void gf_SKR_1_jingzhang (int lv_a);
+void gf_SKR_1_yisheng (int lv_a);
+void gf_SKR_1_guanchazhe (int lv_a);
+void gf_SKR_1_tanyuan (int lv_a);
+void gf_SKR_1_xuetu (int lv_a);
+void gf_SKR_1_mushi (int lv_a);
+void gf_SKR_1_wuniang (int lv_a);
+void gf_SKR_1_yijing (int lv_a);
+void gf_SKR_1_gongjihuichengyuan_2 (int lv_a);
+void gf_SKR_1_jiandie (int lv_a);
+void gf_SKR_1_bashisiji (int lv_a);
+void gf_SKR_1_fayi (int lv_a);
+void gf_SKR_1_baobiao (int lv_a);
+void gf_SKR_1_shizhang (int lv_a);
+void gf_SKR_1_gongjihuizhanglao_2 (int lv_a);
+void gf_SKR_1_zhentan (int lv_a);
+void gf_SKR_1_jianshizhe (int lv_a);
+void gf_SKR_1_tuiwujunren_2 (int lv_a);
+void gf_SKR_1_shuzhuang (int lv_a);
+void gf_SKR_1_zhifazhang (int lv_a);
+void gf_SKR_1_gonggaoyuan (int lv_a);
+void gf_SKR_1_fushou (int lv_a);
+void gf_SKR_1_hulinren (int lv_a);
+void gf_SKR_1_shenchayuan (int lv_a);
+void gf_SKR_1_lianbangtanyuan (int lv_a);
+void gf_SKR_1_shouhuzhe (int lv_a);
+void gf_SKR_1_bihuzhe (int lv_a);
+void gf_SKR_1_shiguan (int lv_a);
+void gf_SKN_3_yuanhun (int lv_a);
+void gf_SKN_3_lianhuanshashou (int lv_a);
+void gf_SKN_3_yingwuzhe (int lv_a);
+void gf_SKN_3_tianxuanzhe (int lv_a);
+void gf_SKN_3_dugui (int lv_a);
+void gf_SKN_3_shengcunzhe (int lv_a);
+void gf_SKN_3_xiaochou (int lv_a);
+void gf_SKN_3_nvwu (int lv_a);
+void gf_SKN_3_ximingren (int lv_a);
+void gf_SKN_3_zonghuozhe (int lv_a, bool lv_douse);
+void gf_SKN_3_chuxingzhe (int lv_a);
+void gf_SKN_3_shiyizhe (int lv_a);
+void gf_SKN_3_xiejiaotu (int lv_a);
+void gf_SKN_3_sharenkuang (int lv_a);
+void gf_SKN_3_wenyisanbuzhe (int lv_a);
+void gf_SKN_3_yuanhun_2 (int lv_a);
+void gf_SKN_3_wuyi (int lv_a);
+void gf_SKN_3_shenjiguan (int lv_a);
+void gf_SKN_3_faguan (int lv_a);
+void gf_SKN_3_duoluoshenpanzhe (int lv_a);
+void gf_SKM_2_dangtu (int lv_a);
+void gf_SKM_2_jiaofu (int lv_a);
+void gf_SKM_2_jiaofu_2 (int lv_a);
+void gf_SKM_2_dangtu_2 (int lv_a);
+void gf_SKM_2_jiaofu_3 (int lv_a);
+void gf_SKM_2_peishi (int lv_a);
+void gf_SKM_2_canmou (int lv_a);
+void gf_SKM_2_xianhaizhe (int lv_a);
+void gf_SKM_2_qinglizhe (int lv_a);
+void gf_SKM_2_konghezhe (int lv_a);
+void gf_SKM_2_weizhuangzhe (int lv_a);
+void gf_SKM_2_mitan (int lv_a);
+void gf_SKM_2_qipianzhe (int lv_a);
+void gf_SKM_2_weixiezhe (int lv_a);
+void gf_SKM_2_shandongzhe (int lv_a);
+void gf_SKM_2_mentu (int lv_a);
+void gf_SKM_2_zaizangzhe (int lv_a);
+void gf_SKT_5_baotu (int lv_a);
+void gf_SKT_5_longtou (int lv_a);
+void gf_SKT_5_longtou_2 (int lv_a);
+void gf_SKT_5_baotu_2 (int lv_a);
+void gf_SKT_5_longtou_3 (int lv_a);
+void gf_SKT_5_jiaojihua (int lv_a);
+void gf_SKT_5_guanjia (int lv_a);
+void gf_SKT_5_zaojia (int lv_a);
+void gf_SKT_5_xiangzhu (int lv_a);
+void gf_SKT_5_fengkou (int lv_a);
+void gf_SKT_5_shentou (int lv_a);
+void gf_SKT_5_xianfeng (int lv_a);
+void gf_SKT_5_mihuo (int lv_a);
+void gf_SKT_5_zhishizhe (int lv_a);
+void gf_SKT_5_raoluanzhe (int lv_a);
+void gf_SKT_5_pucong (int lv_a);
+void gf_SKT_5_wuxian (int lv_a);
+void gf_SKV_1_gongjihuizhanglao (int lv_a);
+void gf_SKV_2_dangtu (int lv_a);
+void gf_SKV_2_jiaofu (int lv_a);
+void gf_SKV_5_baotu (int lv_a);
+void gf_SKV_5_longtou (int lv_a);
+void gf_SKV_2_weizhuangzhe (int lv_a);
+void gf_SKV_5_shentou (int lv_a);
+void gf_SKV_2_canmou (int lv_a);
+void gf_SKV_5_guanjia (int lv_a);
+void gf_SKV_2_jiaofu_2 (int lv_a);
+void gf_SKV_2_peishi (int lv_a);
+void gf_SKV_2_canmou_2 (int lv_a);
+void gf_SKV_2_xianhaizhe (int lv_a);
+void gf_SKV_2_qinglizhe (int lv_a);
+void gf_SKV_2_konghezhe (int lv_a);
+void gf_SKV_2_weizhuangzhe_2 (int lv_a);
+void gf_SKV_2_bangjiazhe (int lv_a);
+void gf_SKV_2_mitan (int lv_a);
+void gf_SKV_2_qipianzhe (int lv_a);
+void gf_SKV_2_weixiezhe (int lv_a);
+void gf_SKV_2_shandongzhe (int lv_a);
+void gf_SKV_2_mentu (int lv_a);
+void gf_SKV_2_zaizangzhe (int lv_a);
+void gf_SKV_5_longtou_2 (int lv_a);
+void gf_SKV_5_jiaojihua (int lv_a);
+void gf_SKV_5_wuxian (int lv_a);
+void gf_SKV_5_guanjia_2 (int lv_a);
+void gf_SKV_5_zaojia (int lv_a);
+void gf_SKV_5_xiangzhu (int lv_a);
+void gf_SKV_5_fengkou (int lv_a);
+void gf_SKV_5_shentou_2 (int lv_a);
+void gf_SKV_5_shenxun (int lv_a);
+void gf_SKV_5_xianfeng (int lv_a);
+void gf_SKV_5_mihuo (int lv_a);
+void gf_SKV_5_zhishizhe (int lv_a);
+void gf_SKV_5_wuxian_2 (int lv_a);
+void gf_SKV_5_raoluanzhe (int lv_a);
+void gf_SKV_5_pucong (int lv_a);
+void gf_SKV_1_gongjihuichengyuan (int lv_a);
 void gf_SKO_1_shimin (int lv_a);
 void gf_SKO_1_yijing (int lv_a);
 void gf_SKO_1_yujing (int lv_a);
@@ -32160,10 +32294,12 @@ void gf_ESTraperKill (int lp_player) {
     Wait(RandomFixed(1.0, 2.0), c_timeGame);
 }
 
+// ===== BH:SK 局部数组提升（阶段三前置）=====
+int[21] gv_rsConvX;
+
 void gf_RSConversions () {
     // Variable Declarations
     int lv_a;
-    int[21] lv_x;
     int lv_b;
     bool lv_c;
 
@@ -32180,6 +32316,29 @@ void gf_RSConversions () {
     // Variable Initialization
 
     // Implementation
+    // 阶段三前置（shw239）：局部数组已提升为全局，入口清零还原「每次调用都是全新」
+    gv_rsConvX[0] = 0;
+    gv_rsConvX[1] = 0;
+    gv_rsConvX[2] = 0;
+    gv_rsConvX[3] = 0;
+    gv_rsConvX[4] = 0;
+    gv_rsConvX[5] = 0;
+    gv_rsConvX[6] = 0;
+    gv_rsConvX[7] = 0;
+    gv_rsConvX[8] = 0;
+    gv_rsConvX[9] = 0;
+    gv_rsConvX[10] = 0;
+    gv_rsConvX[11] = 0;
+    gv_rsConvX[12] = 0;
+    gv_rsConvX[13] = 0;
+    gv_rsConvX[14] = 0;
+    gv_rsConvX[15] = 0;
+    gv_rsConvX[16] = 0;
+    gv_rsConvX[17] = 0;
+    gv_rsConvX[18] = 0;
+    gv_rsConvX[19] = 0;
+    gv_rsConvX[20] = 0;
+
     lv_a = 1;
     for ( ; ( (auto17939A9F_ai >= 0 && lv_a <= auto17939A9F_ae) || (auto17939A9F_ai < 0 && lv_a >= auto17939A9F_ae) ) ; lv_a += auto17939A9F_ai ) {
         if (((gv_e8A880E781B5E78C9CE6B58B[lv_a][1] != 0) || (gv_e8A880E781B5E78C9CE6B58B[lv_a][0] != 0))) {
@@ -32189,39 +32348,31 @@ void gf_RSConversions () {
 
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 14)) {
-                lv_x[4] = lv_a;
+                gf_SKV_1_gongjihuizhanglao(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 2)) {
-                lv_x[2] += 1;
+                gv_rsConvX[2] += 1;
             }
 
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 1)) {
-                lv_x[0] += 1;
+                gf_SKV_2_dangtu(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 2)) {
-                lv_x[1] = lv_a;
-                if ((gv_roleOptions[2][2][3] == true)) {
-                    lv_x[0] += 1;
-                }
-
+                gf_SKV_2_jiaofu(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 5)) {
-                lv_x[12] += 1;
+                gv_rsConvX[12] += 1;
             }
 
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 1)) {
-                lv_x[10] += 1;
+                gf_SKV_5_baotu(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 2)) {
-                lv_x[11] = lv_a;
-                if ((gv_roleOptions[5][2][3] == true)) {
-                    lv_x[10] += 1;
-                }
-
+                gf_SKV_5_longtou(lv_a);
             }
 
         }
@@ -32230,12 +32381,12 @@ void gf_RSConversions () {
     lv_a = 1;
     for ( ; ( (autoDA5014E0_ai >= 0 && lv_a <= autoDA5014E0_ae) || (autoDA5014E0_ai < 0 && lv_a >= autoDA5014E0_ae) ) ; lv_a += autoDA5014E0_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
-            if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 8) && (gv_disguised[lv_a] == 0) && (lv_x[2] == 1)) {
-                lv_x[0] += 1;
+            if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 8) && (gv_disguised[lv_a] == 0) && (gv_rsConvX[2] == 1)) {
+                gf_SKV_2_weizhuangzhe(lv_a);
             }
 
-            if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 8) && (gv_disguised[lv_a] == 0) && (lv_x[12] == 1)) {
-                lv_x[1] += 1;
+            if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 8) && (gv_disguised[lv_a] == 0) && (gv_rsConvX[12] == 1)) {
+                gf_SKV_5_shentou(lv_a);
             }
 
         }
@@ -32244,12 +32395,12 @@ void gf_RSConversions () {
     lv_a = 1;
     for ( ; ( (auto5E7FAE99_ai >= 0 && lv_a <= auto5E7FAE99_ae) || (auto5E7FAE99_ai < 0 && lv_a >= auto5E7FAE99_ae) ) ; lv_a += auto5E7FAE99_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
-            if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 4) && (gv_roleOptions[2][4][0] == true) && (gv_roleOptions[2][2][10] == true) && (lv_x[1] == 0)) {
-                lv_x[6] = 1;
+            if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 4) && (gv_roleOptions[2][4][0] == true) && (gv_roleOptions[2][2][10] == true) && (gv_rsConvX[1] == 0)) {
+                gf_SKV_2_canmou(lv_a);
             }
 
-            if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 4) && (gv_roleOptions[5][4][0] == true) && (gv_roleOptions[5][2][10] == true) && (lv_x[11] == 0)) {
-                lv_x[16] = 1;
+            if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 4) && (gv_roleOptions[5][4][0] == true) && (gv_roleOptions[5][2][10] == true) && (gv_rsConvX[11] == 0)) {
+                gf_SKV_5_guanjia(lv_a);
             }
 
         }
@@ -32260,691 +32411,151 @@ void gf_RSConversions () {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
             if ((gv_roles[lv_a][1] == 2)) {
                 if ((gv_roles[lv_a][0] == 2)) {
-                    if ((gv_roleOptions[2][2][4] == true) && ((lv_x[0] == 0) || ((lv_x[0] == 1) && (gv_roleOptions[2][2][3] == true))) && ((lv_x[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
-                        lv_x[3] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[2] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/33A99790") + gv_roleNameArray[2][1] + StringExternal("Param/Value/40316C93")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/82AE9798") + gv_roleNameArray[2][1] + StringExternal("Param/Value/CADF2701")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[0] += 1;
-                    }
-
+                    gf_SKV_2_jiaofu_2(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 3)) {
-                    if ((gv_roleOptions[2][3][0] == true) && (lv_x[0] == 0) && ((lv_x[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
-                        lv_x[3] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[2] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/2E52C7C4") + gv_roleNameArray[2][1] + StringExternal("Param/Value/38F4D320")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/1DAED953") + gv_roleNameArray[2][1] + StringExternal("Param/Value/6B729A4E")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[0] += 1;
-                    }
-
+                    gf_SKV_2_peishi(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 4)) {
-                    if ((gv_roleOptions[2][4][0] == true) && (gv_roleOptions[2][2][10] == true) && (lv_x[1] == 0)) {
-                        if ((PlayerGroupCount(gv_players) > 9)) {
-                            gv_specialCasePlayer[lv_a][7] = 1;
-                        }
-
-                        lv_x[3] = 1;
-                        gv_roles[lv_a][0] = 2;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        gf_CBSystemMessage((StringExternal("Param/Value/4DC14E89") + gv_roleNameArray[2][2] + StringExternal("Param/Value/9F99F50E")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        lv_x[1] = lv_a;
-                    }
-                    else {
-                        if ((gv_roleOptions[2][4][2] == true) && (lv_x[0] == 0) && ((lv_x[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
-                            lv_x[3] = 1;
-                            gv_roles[lv_a][0] = 1;
-                            lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                            gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                            gf_RTRoleCard(lv_a);
-                            gv_specialCasePlayer[lv_a][17] += 1;
-                            gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                            if ((lv_x[2] == 1)) {
-                                gf_CBSystemMessage((StringExternal("Param/Value/6664FE1B") + gv_roleNameArray[2][1] + StringExternal("Param/Value/C2986F4E")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                            }
-                            else {
-                                gf_CBSystemMessage((StringExternal("Param/Value/C7E0A16E") + gv_roleNameArray[2][1] + StringExternal("Param/Value/3F45CD61")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                            }
-                            lv_x[0] += 1;
-                        }
-
-                    }
+                    gf_SKV_2_canmou_2(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 5)) {
-                    if ((gv_roleOptions[2][5][0] == true) && (lv_x[0] == 0) && ((lv_x[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
-                        lv_x[3] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[2] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/BD5BA6AC") + gv_roleNameArray[2][1] + StringExternal("Param/Value/D12323D5")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/472AEDC0") + gv_roleNameArray[2][1] + StringExternal("Param/Value/34DA2817")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[0] += 1;
-                    }
-
+                    gf_SKV_2_xianhaizhe(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 6)) {
-                    if ((gv_roleOptions[2][6][0] == true) && (lv_x[0] == 0) && ((lv_x[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
-                        lv_x[3] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[2] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/7C0CDEE2") + gv_roleNameArray[2][1] + StringExternal("Param/Value/DFDCD1F6")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/543A4203") + gv_roleNameArray[2][1] + StringExternal("Param/Value/CD67F890")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[0] += 1;
-                    }
-
+                    gf_SKV_2_qinglizhe(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 7)) {
-                    if ((gv_roleOptions[2][7][0] == true) && (lv_x[0] == 0) && ((lv_x[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
-                        lv_x[3] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[2] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/1A683083") + gv_roleNameArray[2][1] + StringExternal("Param/Value/69BCDF65")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/36A41D18") + gv_roleNameArray[2][1] + StringExternal("Param/Value/F3968990")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[0] += 1;
-                    }
-
+                    gf_SKV_2_konghezhe(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 8) && (gv_disguised[lv_a] != 0)) {
-                    if ((gv_roleOptions[2][8][1] == true) && (lv_x[0] == 0) && ((lv_x[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
-                        lv_x[3] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[2] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/FC0E0BB1") + gv_roleNameArray[2][1] + StringExternal("Param/Value/570F8CBE")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/EF474E21") + gv_roleNameArray[2][1] + StringExternal("Param/Value/EC017673")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[0] += 1;
-                    }
-
+                    gf_SKV_2_weizhuangzhe_2(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 9)) {
-                    if ((gv_roleOptions[2][9][0] == true) && (lv_x[0] == 0) && ((lv_x[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
-                        gv_action[lv_a][0] = 0;
-                        lv_x[3] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[2] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/088312D3") + gv_roleNameArray[2][1] + StringExternal("Param/Value/4896F267")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/450E5B32") + gv_roleNameArray[2][1] + StringExternal("Param/Value/6151E8EA")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[0] += 1;
-                    }
-
+                    gf_SKV_2_bangjiazhe(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 10)) {
-                    if ((gv_roleOptions[2][10][0] == true) && (lv_x[0] == 0) && ((lv_x[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
-                        lv_x[3] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[2] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/76E502B4") + gv_roleNameArray[2][1] + StringExternal("Param/Value/4F8E9059")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/DBA7D63F") + gv_roleNameArray[2][1] + StringExternal("Param/Value/F0A652CC")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[0] += 1;
-                    }
-
+                    gf_SKV_2_mitan(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 11)) {
-                    if ((gv_roleOptions[2][11][0] == true) && (lv_x[0] == 0) && ((lv_x[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
-                        lv_x[3] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[2] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/18899125") + gv_roleNameArray[2][1] + StringExternal("Param/Value/438CDB5A")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/9BF5D439") + gv_roleNameArray[2][1] + StringExternal("Param/Value/3A2A5E82")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[0] += 1;
-                    }
-
+                    gf_SKV_2_qipianzhe(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 12)) {
-                    if ((gv_roleOptions[2][12][0] == true) && (lv_x[0] == 0) && ((lv_x[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
-                        lv_x[3] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[2] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/B7F74DB9") + gv_roleNameArray[2][1] + StringExternal("Param/Value/5AEB95D5")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/5F505A7D") + gv_roleNameArray[2][1] + StringExternal("Param/Value/C1ED84ED")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[0] += 1;
-                    }
-
+                    gf_SKV_2_weixiezhe(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 13)) {
-                    if ((gv_roleOptions[2][13][0] == true) && (lv_x[0] == 0) && ((lv_x[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
-                        lv_x[3] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[2] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/00035B4D") + gv_roleNameArray[2][1] + StringExternal("Param/Value/D24DED78")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/E4D61FA9") + gv_roleNameArray[2][1] + StringExternal("Param/Value/B3D33811")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[0] += 1;
-                    }
-
+                    gf_SKV_2_shandongzhe(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 14)) {
-                    if ((gv_roleOptions[2][14][0] == true) && (lv_x[0] == 0) && ((lv_x[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
-                        lv_x[3] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[2] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/A910AEAC") + gv_roleNameArray[2][1] + StringExternal("Param/Value/01795023")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/39DB438F") + gv_roleNameArray[2][1] + StringExternal("Param/Value/763B808D")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[0] += 1;
-                    }
-
+                    gf_SKV_2_mentu(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 15)) {
-                    if ((gv_roleOptions[2][15][0] == true) && (lv_x[0] == 0) && ((lv_x[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
-                        if ((gv_pretended[lv_a] == false)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/CB571831") + gv_roleNameArray[2][1] + StringExternal("Param/Value/B97716C7")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            lv_x[3] = 1;
-                            gv_roles[lv_a][0] = 1;
-                            lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                            gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                            gf_RTRoleCard(lv_a);
-                            gv_specialCasePlayer[lv_a][17] += 1;
-                            gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                            if ((lv_x[2] == 1)) {
-                                gf_CBSystemMessage((StringExternal("Param/Value/1E65BBEE") + gv_roleNameArray[2][1] + StringExternal("Param/Value/202B65D8")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                            }
-                            else {
-                                gf_CBSystemMessage((StringExternal("Param/Value/DC16CC19") + gv_roleNameArray[2][1] + StringExternal("Param/Value/2AD1E31D")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                            }
-                            lv_x[0] += 1;
-                        }
-                    }
-
+                    gf_SKV_2_zaizangzhe(lv_a);
                 }
 
             }
 
             if ((gv_roles[lv_a][1] == 5)) {
                 if ((gv_roles[lv_a][0] == 2)) {
-                    if ((gv_roleOptions[5][2][4] == true) && ((lv_x[10] == 0) || ((lv_x[10] == 1) && (gv_roleOptions[5][2][3] == true))) && ((lv_x[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
-                        lv_x[13] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[12] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/24983DB7") + gv_roleNameArray[5][1] + StringExternal("Param/Value/6A1B453E")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/AEC55663") + gv_roleNameArray[5][1] + StringExternal("Param/Value/15E16A50")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[10] += 1;
-                    }
-
+                    gf_SKV_5_longtou_2(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 3)) {
-                    if ((gv_roleOptions[5][3][0] == true) && (lv_x[10] == 0) && ((lv_x[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
-                        lv_x[13] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[12] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/F86B8B8A") + gv_roleNameArray[5][1] + StringExternal("Param/Value/A2CF56BC")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/7527C8D2") + gv_roleNameArray[5][1] + StringExternal("Param/Value/8D0B00D4")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[10] += 1;
-                    }
-
+                    gf_SKV_5_jiaojihua(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 15)) {
-                    if ((gv_roleOptions[5][15][0] == true) && (lv_x[0] == 0) && ((lv_x[6] == 0) || (gv_roleOptions[5][2][3] == false))) {
-                        if ((gv_pretended[lv_a] == false)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/B86DACD6") + gv_roleNameArray[2][1] + StringExternal("Param/Value/A3C307AD")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            lv_x[3] = 1;
-                            gv_roles[lv_a][0] = 1;
-                            lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                            gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                            gf_RTRoleCard(lv_a);
-                            gv_specialCasePlayer[lv_a][17] += 1;
-                            gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                            if ((lv_x[2] == 1)) {
-                                gf_CBSystemMessage((StringExternal("Param/Value/A2594BD3") + gv_roleNameArray[5][1] + StringExternal("Param/Value/C0BDA105")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                            }
-                            else {
-                                gf_CBSystemMessage((StringExternal("Param/Value/6BD1EE0E") + gv_roleNameArray[5][1] + StringExternal("Param/Value/602EEB91")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                            }
-                            lv_x[0] += 1;
-                        }
-                    }
-
+                    gf_SKV_5_wuxian(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 4)) {
-                    if ((gv_roleOptions[5][4][0] == true) && (gv_roleOptions[5][2][10] == true) && (lv_x[11] == 0)) {
-                        if ((PlayerGroupCount(gv_players) > 9)) {
-                            gv_specialCasePlayer[lv_a][7] = 1;
-                        }
-
-                        lv_x[13] = 1;
-                        gv_roles[lv_a][0] = 2;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        gf_CBSystemMessage((StringExternal("Param/Value/551C2446") + gv_roleNameArray[5][2] + StringExternal("Param/Value/41484F15")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        lv_x[11] = lv_a;
-                    }
-                    else {
-                        if ((gv_roleOptions[5][4][2] == true) && (lv_x[10] == 0) && ((lv_x[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
-                            lv_x[13] = 1;
-                            gv_roles[lv_a][0] = 1;
-                            lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                            gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                            gf_RTRoleCard(lv_a);
-                            gv_specialCasePlayer[lv_a][17] += 1;
-                            gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                            if ((lv_x[12] == 1)) {
-                                gf_CBSystemMessage((StringExternal("Param/Value/850C8D35") + gv_roleNameArray[5][1] + StringExternal("Param/Value/F4913F63")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                            }
-                            else {
-                                gf_CBSystemMessage((StringExternal("Param/Value/3009D7DB") + gv_roleNameArray[5][1] + StringExternal("Param/Value/B5DF8ED2")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                            }
-                            lv_x[10] += 1;
-                        }
-
-                    }
+                    gf_SKV_5_guanjia_2(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 5)) {
-                    if ((gv_roleOptions[5][5][0] == true) && (lv_x[10] == 0) && ((lv_x[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
-                        lv_x[13] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[12] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/0A1D73E8") + gv_roleNameArray[5][1] + StringExternal("Param/Value/6ABC7220")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/8CAF86A5") + gv_roleNameArray[5][1] + StringExternal("Param/Value/3235CF38")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[10] += 1;
-                    }
-
+                    gf_SKV_5_zaojia(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 6)) {
-                    if ((gv_roleOptions[5][6][0] == true) && (lv_x[10] == 0) && ((lv_x[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
-                        lv_x[13] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[12] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/C728F37B") + gv_roleNameArray[5][1] + StringExternal("Param/Value/E035ED9B")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/3F5F888F") + gv_roleNameArray[5][1] + StringExternal("Param/Value/B0C58304")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[10] += 1;
-                    }
-
+                    gf_SKV_5_xiangzhu(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 7)) {
-                    if ((gv_roleOptions[5][7][0] == true) && (lv_x[10] == 0) && ((lv_x[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
-                        lv_x[13] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[12] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/D4E0EB2C") + gv_roleNameArray[5][1] + StringExternal("Param/Value/64979DA5")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/6D2E8C7E") + gv_roleNameArray[5][1] + StringExternal("Param/Value/B10FF9E4")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[10] += 1;
-                    }
-
+                    gf_SKV_5_fengkou(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 8) && (gv_disguised[lv_a] != 0)) {
-                    if ((gv_roleOptions[5][8][1] == true) && (lv_x[10] == 0) && ((lv_x[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
-                        lv_x[13] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[12] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/37165482") + gv_roleNameArray[5][1] + StringExternal("Param/Value/FD03106A")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/21CAFCC2") + gv_roleNameArray[5][1] + StringExternal("Param/Value/76CFCD30")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[10] += 1;
-                    }
-
+                    gf_SKV_5_shentou_2(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 9)) {
-                    if ((gv_roleOptions[5][9][0] == true) && (lv_x[10] == 0) && ((lv_x[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
-                        gv_action[lv_a][0] = 0;
-                        lv_x[13] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[12] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/65EC2714") + gv_roleNameArray[5][1] + StringExternal("Param/Value/0E019D1F")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/6EE2F10A") + gv_roleNameArray[5][1] + StringExternal("Param/Value/E4922782")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[10] += 1;
-                    }
-
+                    gf_SKV_5_shenxun(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 10)) {
-                    if ((gv_roleOptions[5][10][0] == true) && (lv_x[10] == 0) && ((lv_x[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
-                        lv_x[13] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[12] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/E5F758E4") + gv_roleNameArray[5][1] + StringExternal("Param/Value/1504F93A")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/BFB193DC") + gv_roleNameArray[5][1] + StringExternal("Param/Value/95231178")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[10] += 1;
-                    }
-
+                    gf_SKV_5_xianfeng(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 11)) {
-                    if ((gv_roleOptions[5][11][0] == true) && (lv_x[10] == 0) && ((lv_x[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
-                        lv_x[13] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[12] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/60612075") + gv_roleNameArray[5][1] + StringExternal("Param/Value/B1D572A3")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/F8E7F29B") + gv_roleNameArray[5][1] + StringExternal("Param/Value/9B74AC7F")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[10] += 1;
-                    }
-
+                    gf_SKV_5_mihuo(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 12)) {
-                    if ((gv_roleOptions[5][12][0] == true) && (lv_x[10] == 0) && ((lv_x[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
-                        lv_x[13] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[12] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/496021D0") + gv_roleNameArray[5][1] + StringExternal("Param/Value/C4B6409D")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/C01325C2") + gv_roleNameArray[5][1] + StringExternal("Param/Value/E2BA9766")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[10] += 1;
-                    }
-
+                    gf_SKV_5_zhishizhe(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 15)) {
-                    if ((gv_roleOptions[5][15][0] == true) && (lv_x[0] == 0) && ((lv_x[6] == 0) || (gv_roleOptions[5][2][3] == false))) {
-                        if ((gv_pretended[lv_a] == false)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/182B69E9") + gv_roleNameArray[5][1] + StringExternal("Param/Value/A9BC66A4")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            lv_x[3] = 1;
-                            gv_roles[lv_a][0] = 1;
-                            lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                            gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                            gf_RTRoleCard(lv_a);
-                            gv_specialCasePlayer[lv_a][17] += 1;
-                            gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                            if ((lv_x[2] == 1)) {
-                                gf_CBSystemMessage((StringExternal("Param/Value/EBE2DAE7") + gv_roleNameArray[5][1] + StringExternal("Param/Value/5B15396E")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                            }
-                            else {
-                                gf_CBSystemMessage((StringExternal("Param/Value/0EEC607C") + gv_roleNameArray[5][1] + StringExternal("Param/Value/F40A8722")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                            }
-                            lv_x[0] += 1;
-                        }
-                    }
-
+                    gf_SKV_5_wuxian_2(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 13)) {
-                    if ((gv_roleOptions[5][13][0] == true) && (lv_x[10] == 0) && ((lv_x[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
-                        lv_x[13] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[12] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/9F642037") + gv_roleNameArray[5][1] + StringExternal("Param/Value/42B0061C")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/EE4AD3D3") + gv_roleNameArray[5][1] + StringExternal("Param/Value/AE4F6D69")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[10] += 1;
-                    }
-
+                    gf_SKV_5_raoluanzhe(lv_a);
                 }
 
                 if ((gv_roles[lv_a][0] == 14)) {
-                    if ((gv_roleOptions[5][14][0] == true) && (lv_x[10] == 0) && ((lv_x[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
-                        lv_x[13] = 1;
-                        gv_roles[lv_a][0] = 1;
-                        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTRoleCard(lv_a);
-                        gv_specialCasePlayer[lv_a][17] += 1;
-                        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                        if ((lv_x[12] == 1)) {
-                            gf_CBSystemMessage((StringExternal("Param/Value/1D314629") + gv_roleNameArray[5][1] + StringExternal("Param/Value/38046E8F")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/BDFCD76E") + gv_roleNameArray[5][1] + StringExternal("Param/Value/DDCD6D80")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                        }
-                        lv_x[10] += 1;
-                    }
-
+                    gf_SKV_5_pucong(lv_a);
                 }
 
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 7)) {
-                if ((gv_roleOptions[1][7][0] == true) && (lv_x[4] == 0)) {
-                    lv_x[3] = 1;
-                    if ((gv_previousShots == -1)) {
-                        gv_shots[lv_a] = -1;
-                        if ((gv_roleOptions[1][14][1] == true)) {
-                            gv_shots[lv_a] = 2;
-                        }
-
-                        if ((gv_roleOptions[1][14][2] == true)) {
-                            gv_shots[lv_a] = 3;
-                        }
-
-                        if ((gv_roleOptions[1][14][3] == true)) {
-                            gv_shots[lv_a] = 4;
-                        }
-
-                    }
-                    else {
-                        gv_shots[lv_a] = gv_previousShots;
-                    }
-                    gv_roles[lv_a][0] = 14;
-                    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
-                    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                    gf_RTRoleCard(lv_a);
-                    gv_specialCasePlayer[lv_a][17] += 1;
-                    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
-                    gf_CBSystemMessage((StringExternal("Param/Value/6BA4E45D") + gv_roleNameArray[1][14] + StringExternal("Param/Value/A5465845")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
-                    lv_x[4] = lv_a;
-                }
-
+                gf_SKV_1_gongjihuichengyuan(lv_a);
             }
 
         }
 
     }
-    if (((lv_x[3] == 1) || (lv_x[13] == 1))) {
+    if (((gv_rsConvX[3] == 1) || (gv_rsConvX[13] == 1))) {
         gf_RefreshRoleBox();
     }
 
 }
+
+// ===== BH:SK 局部数组提升（阶段三前置）=====
+int[11] gv_rsTownX;
+int[16] gv_rsTownPrejailed;
+int[16] gv_rsTownPrejailing;
 
 void gf_RSTownSetup () {
     // Variable Declarations
     int lv_a;
     int lv_a2;
     int lv_rand;
-    int[11] lv_x;
-    int[16] lv_prejailing;
-    int[16] lv_prejailed;
+    int[11] gv_rsTownX;
+    int[16] gv_rsTownPrejailed;
 
     // Automatic Variable Declarations
     const int autoAB00AC8F_ae = 15;
@@ -32976,21 +32587,61 @@ void gf_RSTownSetup () {
     // Variable Initialization
 
     // Implementation
+    // 阶段三前置（shw239）：局部数组已提升为全局，入口清零还原「每次调用都是全新」
+    gv_rsTownX[0] = 0;
+    gv_rsTownX[1] = 0;
+    gv_rsTownX[2] = 0;
+    gv_rsTownX[3] = 0;
+    gv_rsTownX[4] = 0;
+    gv_rsTownX[5] = 0;
+    gv_rsTownX[6] = 0;
+    gv_rsTownX[7] = 0;
+    gv_rsTownX[8] = 0;
+    gv_rsTownX[9] = 0;
+    gv_rsTownX[10] = 0;
+    gv_rsTownPrejailed[0] = 0;
+    gv_rsTownPrejailed[1] = 0;
+    gv_rsTownPrejailed[2] = 0;
+    gv_rsTownPrejailed[3] = 0;
+    gv_rsTownPrejailed[4] = 0;
+    gv_rsTownPrejailed[5] = 0;
+    gv_rsTownPrejailed[6] = 0;
+    gv_rsTownPrejailed[7] = 0;
+    gv_rsTownPrejailed[8] = 0;
+    gv_rsTownPrejailed[9] = 0;
+    gv_rsTownPrejailed[10] = 0;
+    gv_rsTownPrejailed[11] = 0;
+    gv_rsTownPrejailed[12] = 0;
+    gv_rsTownPrejailed[13] = 0;
+    gv_rsTownPrejailed[14] = 0;
+    gv_rsTownPrejailed[15] = 0;
+    gv_rsTownPrejailing[0] = 0;
+    gv_rsTownPrejailing[1] = 0;
+    gv_rsTownPrejailing[2] = 0;
+    gv_rsTownPrejailing[3] = 0;
+    gv_rsTownPrejailing[4] = 0;
+    gv_rsTownPrejailing[5] = 0;
+    gv_rsTownPrejailing[6] = 0;
+    gv_rsTownPrejailing[7] = 0;
+    gv_rsTownPrejailing[8] = 0;
+    gv_rsTownPrejailing[9] = 0;
+    gv_rsTownPrejailing[10] = 0;
+    gv_rsTownPrejailing[11] = 0;
+    gv_rsTownPrejailing[12] = 0;
+    gv_rsTownPrejailing[13] = 0;
+    gv_rsTownPrejailing[14] = 0;
+    gv_rsTownPrejailing[15] = 0;
+
     lv_a = 1;
     for ( ; ( (autoAB00AC8F_ai >= 0 && lv_a <= autoAB00AC8F_ae) || (autoAB00AC8F_ai < 0 && lv_a >= autoAB00AC8F_ae) ) ; lv_a += autoAB00AC8F_ai ) {
-        lv_prejailing[lv_a] = 0;
-        lv_prejailed[lv_a] = 0;
+        gv_rsTownPrejailing[lv_a] = 0;
+        gv_rsTownPrejailed[lv_a] = 0;
     }
     lv_a = 1;
     for ( ; ( (autoACD2F604_ai >= 0 && lv_a <= autoACD2F604_ae) || (autoACD2F604_ai < 0 && lv_a >= autoACD2F604_ae) ) ; lv_a += autoACD2F604_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
             if ((((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 13)) || (((gv_roles[lv_a][1] == 2) || (gv_roles[lv_a][1] == 5)) && (gv_roles[lv_a][0] == 9)))) {
-                if ((gv_wasExecution == false) && (gv_action[lv_a][0] != 0)) {
-                    lv_prejailing[lv_a] = gv_action[lv_a][0];
-                    lv_prejailed[lv_prejailing[lv_a]] = lv_a;
-                    gv_action[lv_a][0] = 0;
-                }
-
+                gf_SKR_1_yujing(lv_a);
             }
 
         }
@@ -32998,8 +32649,8 @@ void gf_RSTownSetup () {
     }
     lv_a = 1;
     for ( ; ( (auto2714917F_ai >= 0 && lv_a <= auto2714917F_ae) || (auto2714917F_ai < 0 && lv_a >= auto2714917F_ae) ) ; lv_a += auto2714917F_ai ) {
-        if ((lv_prejailed[lv_a] != 0)) {
-            if ((lv_prejailing[lv_a] != 0)) {
+        if ((gv_rsTownPrejailed[lv_a] != 0)) {
+            if ((gv_rsTownPrejailing[lv_a] != 0)) {
                 gf_CBSystemMessage(StringExternal("Param/Value/C5A52201"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
             }
             else {
@@ -33007,16 +32658,16 @@ void gf_RSTownSetup () {
             }
         }
         else {
-            if ((lv_prejailing[lv_a] != 0)) {
+            if ((gv_rsTownPrejailing[lv_a] != 0)) {
                 gf_BHCrime(lv_a, 8);
-                gv_jailing[lv_a] = lv_prejailing[lv_a];
+                gv_jailing[lv_a] = gv_rsTownPrejailing[lv_a];
             }
 
         }
     }
     lv_a = 1;
     for ( ; ( (auto2488BAB4_ai >= 0 && lv_a <= auto2488BAB4_ae) || (auto2488BAB4_ai < 0 && lv_a >= auto2488BAB4_ae) ) ; lv_a += auto2488BAB4_ai ) {
-        if ((lv_prejailing[lv_a] != 0) && (lv_prejailed[lv_a] != 0) && (gv_jailing[lv_prejailed[lv_a]] != lv_a)) {
+        if ((gv_rsTownPrejailing[lv_a] != 0) && (gv_rsTownPrejailed[lv_a] != 0) && (gv_jailing[gv_rsTownPrejailed[lv_a]] != lv_a)) {
             gf_CBSystemMessage(StringExternal("Param/Value/93369B4D"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
         }
 
@@ -33025,19 +32676,7 @@ void gf_RSTownSetup () {
     for ( ; ( (auto65D3426C_ai >= 0 && lv_a <= auto65D3426C_ae) || (auto65D3426C_ai < 0 && lv_a >= auto65D3426C_ae) ) ; lv_a += auto65D3426C_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 13)) {
-                if ((gv_jailed[lv_a] == 0) && (gv_jailing[lv_a] > 0)) {
-                    if ((gv_shots[lv_a] == 0)) {
-                        gv_variableOptions[lv_a][0] = 0;
-                    }
-                    else {
-                        gv_variableOptions[lv_a][0] = 1;
-                    }
-                    gf_RAJailorActions(lv_a);
-                    gv_jailed[gv_jailing[lv_a]] = lv_a;
-                }
-                else {
-                    gv_variableOptions[lv_a][0] = 0;
-                }
+                gf_SKR_1_yujing_2(lv_a);
             }
 
         }
@@ -33047,15 +32686,15 @@ void gf_RSTownSetup () {
     for ( ; ( (auto56E0DE91_ai >= 0 && lv_a <= auto56E0DE91_ae) || (auto56E0DE91_ai < 0 && lv_a >= auto56E0DE91_ae) ) ; lv_a += auto56E0DE91_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_jailed[lv_a] == 0)) {
             if ((gv_roles[lv_a][1] == 2)) {
-                lv_x[10] += 1;
+                gv_rsTownX[10] += 1;
             }
 
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 1)) {
-                lv_x[0] += 1;
+                gf_SKR_2_dangtu(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 2)) {
-                lv_x[1] = lv_a;
+                gf_SKR_2_jiaofu(lv_a);
             }
 
         }
@@ -33065,45 +32704,28 @@ void gf_RSTownSetup () {
     for ( ; ( (auto01D1AA7E_ai >= 0 && lv_a <= auto01D1AA7E_ae) || (auto01D1AA7E_ai < 0 && lv_a >= auto01D1AA7E_ae) ) ; lv_a += auto01D1AA7E_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 9)) {
-                gv_variableOptions[lv_a][0] = 0;
-                if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                    gv_variableOptions[lv_a][1] = 1;
-                }
-                else {
-                    gv_variableOptions[lv_a][1] = 0;
-                }
-                if ((lv_x[10] > 1)) {
-                    gv_variableOptions[lv_a][2] = 1;
-                }
-                else {
-                    gv_variableOptions[lv_a][2] = 0;
-                }
-                if ((gv_jailed[lv_a] == 0) && (gv_jailing[lv_a] > 0)) {
-                    gf_RAKidnapperActions(lv_a);
-                    gv_jailed[gv_jailing[lv_a]] = lv_a;
-                }
-
+                gf_SKR_2_bangjiazhe(lv_a);
             }
 
         }
 
     }
-    lv_x[10] = 0;
-    lv_x[0] = 0;
-    lv_x[1] = 0;
+    gv_rsTownX[10] = 0;
+    gv_rsTownX[0] = 0;
+    gv_rsTownX[1] = 0;
     lv_a = 1;
     for ( ; ( (autoCAB30FE6_ai >= 0 && lv_a <= autoCAB30FE6_ae) || (autoCAB30FE6_ai < 0 && lv_a >= autoCAB30FE6_ae) ) ; lv_a += autoCAB30FE6_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_jailed[lv_a] == 0)) {
             if ((gv_roles[lv_a][1] == 5)) {
-                lv_x[10] += 1;
+                gv_rsTownX[10] += 1;
             }
 
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 1)) {
-                lv_x[0] += 1;
+                gf_SKR_5_baotu(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 2)) {
-                lv_x[1] = lv_a;
+                gf_SKR_5_longtou(lv_a);
             }
 
         }
@@ -33113,39 +32735,22 @@ void gf_RSTownSetup () {
     for ( ; ( (auto1E397EB5_ai >= 0 && lv_a <= auto1E397EB5_ae) || (auto1E397EB5_ai < 0 && lv_a >= auto1E397EB5_ae) ) ; lv_a += auto1E397EB5_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 9)) {
-                gv_variableOptions[lv_a][0] = 0;
-                if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                    gv_variableOptions[lv_a][1] = 1;
-                }
-                else {
-                    gv_variableOptions[lv_a][1] = 0;
-                }
-                if ((lv_x[10] > 1)) {
-                    gv_variableOptions[lv_a][2] = 1;
-                }
-                else {
-                    gv_variableOptions[lv_a][2] = 0;
-                }
-                if ((gv_jailed[lv_a] == 0) && (gv_jailing[lv_a] > 0)) {
-                    gf_RAInterrogatorActions(lv_a);
-                    gv_jailed[gv_jailing[lv_a]] = lv_a;
-                }
-
+                gf_SKR_5_shenxun(lv_a);
             }
 
         }
 
     }
-    lv_x[10] = 0;
+    gv_rsTownX[10] = 0;
     lv_a = 1;
     for ( ; ( (autoC30BA5D6_ai >= 0 && lv_a <= autoC30BA5D6_ae) || (autoC30BA5D6_ai < 0 && lv_a >= autoC30BA5D6_ae) ) ; lv_a += autoC30BA5D6_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 7)) {
-                lv_x[10] += 1;
+                gf_SKR_1_gongjihuichengyuan(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 14)) {
-                lv_x[10] += 1;
+                gf_SKR_1_gongjihuizhanglao(lv_a);
             }
 
         }
@@ -33168,241 +32773,129 @@ void gf_RSTownSetup () {
                     }
 
                     if ((gv_roles[lv_a][0] == 17)) {
-                        gv_immune[lv_a][1] = true;
+                        gf_SKR_1_tuiwujunren(lv_a);
                     }
 
                 }
                 else {
                     if ((gv_roles[lv_a][0] == 1)) {
-                        if ((gv_roleOptions[1][1][0] == true)) {
-                            if ((gv_shots[lv_a] > 0)) {
-                                gv_variableOptions[lv_a][0] = 1;
-                            }
-                            else {
-                                gv_variableOptions[lv_a][0] = 0;
-                            }
-                            gf_RACitizenActions(lv_a);
-                        }
-                        else {
-                            gv_variableOptions[lv_a][0] = 0;
-                            gf_RANoActions(lv_a);
-                        }
+                        gf_SKR_1_shimin(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 23)) {
-                        gv_variableOptions[lv_a][0] = 1;
-                        gf_RAREcAction(lv_a);
+                        gf_SKR_1_zhengmuguan(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 2)) {
-                        gf_RASheriffActions(lv_a);
+                        gf_SKR_1_jingzhang(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 3)) {
-                        gf_RADoctorActions(lv_a);
+                        gf_SKR_1_yisheng(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 31)) {
-                        gf_RAObserverActions(lv_a);
+                        gf_SKR_1_guanchazhe(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 4)) {
-                        gf_RAInvestigatorActions(lv_a);
+                        gf_SKR_1_tanyuan(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 24)) {
-                        gf_RAE5ADA6E5BE92Actions(lv_a);
+                        gf_SKR_1_xuetu(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 25)) {
-                        gf_RAPriest(lv_a);
+                        gf_SKR_1_mushi(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 5)) {
-                        if ((gv_cooldown[lv_a] == 0)) {
-                            gv_variableOptions[lv_a][0] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][0] = 0;
-                        }
-                        gf_RAEscortActions(lv_a);
-                        if ((gv_roleOptions[1][5][0] == true)) {
-                            gv_immune[lv_a][1] = true;
-                        }
-
+                        gf_SKR_1_wuniang(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 6)) {
-                        if ((gv_shots[lv_a] > 0) && (gv_cooldown[lv_a] == 0)) {
-                            gv_variableOptions[lv_a][0] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][0] = 0;
-                        }
-                        gf_RAVigilanteActions(lv_a);
+                        gf_SKR_1_yijing(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 7)) {
-                        gf_CBAssignUnassignChatChannel(lv_a, 2, ge_Clear_DoNotClear);
-                        gf_CBAllowDisallowChatting(lv_a, ge_Allow_Allow);
-                        gf_RANoActions(lv_a);
+                        gf_SKR_1_gongjihuichengyuan_2(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 8)) {
-                        gf_RANoActions(lv_a);
+                        gf_SKR_1_jiandie(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 9)) {
-                        if ((gv_roleOptions[1][9][0] == true)) {
-                            gv_variableOptions[lv_a][0] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][0] = 0;
-                        }
-                        gf_RABusDriverActions(lv_a);
+                        gf_SKR_1_bashisiji(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 10)) {
-                        gf_RACoronerActions(lv_a);
+                        gf_SKR_1_fayi(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 11)) {
-                        gf_RABodyguardActions(lv_a);
+                        gf_SKR_1_baobiao(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 12)) {
-                        gf_RANoActions(lv_a);
+                        gf_SKR_1_shizhang(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 14)) {
-                        gf_CBAssignUnassignChatChannel(lv_a, 2, ge_Clear_DoNotClear);
-                        gf_CBAllowDisallowChatting(lv_a, ge_Allow_Allow);
-                        gf_CBHighlightText(lv_a, ge_Highlight_Highlighted);
-                        if ((gv_shots[lv_a] == 0)) {
-                            gv_variableOptions[lv_a][0] = 0;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][0] = 1;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        gf_RAMasonLeaderActions(lv_a);
+                        gf_SKR_1_gongjihuizhanglao_2(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 15)) {
-                        gf_RATrackerActions(lv_a);
+                        gf_SKR_1_zhentan(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 16)) {
-                        if ((gv_roleOptions[1][16][1] == true)) {
-                            gv_variableOptions[lv_a][0] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][0] = 0;
-                        }
-                        gf_RAWatcherActions(lv_a);
+                        gf_SKR_1_jianshizhe(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 17)) {
-                        if ((gv_shots[lv_a] != 0)) {
-                            gv_variableOptions[lv_a][0] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][0] = 0;
-                        }
-                        gf_RAVeteranActions(lv_a);
-                        gv_immune[lv_a][1] = true;
+                        gf_SKR_1_tuiwujunren_2(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 18)) {
-                        gf_RANoActions(lv_a);
+                        gf_SKR_1_shuzhuang(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 19)) {
-                        gf_RANoActions(lv_a);
+                        gf_SKR_1_zhifazhang(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 20)) {
-                        gv_crying[lv_a] = true;
-                        gf_RACryerparty(lv_a);
+                        gf_SKR_1_gonggaoyuan(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 21)) {
-                        if ((gv_roleOptions[1][21][2] == true) && (gv_dayNumber == 1)) {
-                            lv_rand = RandomInt(0, 3);
-                            lv_a2 = 1;
-                            for ( ; ( (autoA91AD9CA_ai >= 0 && lv_a2 <= autoA91AD9CA_ae) || (autoA91AD9CA_ai < 0 && lv_a2 >= autoA91AD9CA_ae) ) ; lv_a2 += autoA91AD9CA_ai ) {
-                                if ((gv_e6B395E5B888E68A80E883BD[lv_a][lv_rand] == false)) {
-                                    gv_e6B395E5B888E68A80E883BD[lv_a][lv_rand] = true;
-                                    autoBCB8E066_val = lv_rand;
-                                    if (autoBCB8E066_val == 0) {
-                                        gf_CBSystemMessage(StringExternal("Param/Value/D73980C3"), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
-                                    }
-                                    else if (autoBCB8E066_val == 1) {
-                                        gf_CBSystemMessage(StringExternal("Param/Value/D1E6D86B"), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
-                                    }
-                                    else if (autoBCB8E066_val == 2) {
-                                        gf_CBSystemMessage(StringExternal("Param/Value/11BB7B3C"), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
-                                    }
-                                    else if (autoBCB8E066_val == 3) {
-                                        gf_CBSystemMessage(StringExternal("Param/Value/71040626"), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
-                                    }
-                                    else {
-                                        gf_CBSystemMessage(StringExternal("Param/Value/B48F549B"), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
-                                    }
-                                    break;
-                                }
-
-                                if ((lv_rand >= 3)) {
-                                    lv_rand = 0;
-                                }
-                                else {
-                                    lv_rand += 1;
-                                }
-                            }
-                        }
-
-                        gf_RADeputyActions(lv_a);
+                        gf_SKR_1_fushou(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 22)) {
-                        gf_RAForesterActions(lv_a);
+                        gf_SKR_1_hulinren(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 26)) {
-                        gf_RASearcherActions2(lv_a);
+                        gf_SKR_1_shenchayuan(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 27)) {
-                        gf_RAInvestigatorActions(lv_a);
+                        gf_SKR_1_lianbangtanyuan(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 28)) {
-                        if ((gv_cooldown[lv_a] < 2)) {
-                            gf_RABodyguardActions(lv_a);
-                        }
-                        else {
-                            gf_ELAddMessage(StringExternal("Param/Value/0F1A82D8"), lv_a, Color(0,0,0), lv_a, 0);
-                            gv_cooldown[lv_a] = 0;
-                        }
+                        gf_SKR_1_shouhuzhe(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 29)) {
-                        gv_e5BA87E68AA4E58585E883BD[lv_a] += 1;
-                        gf_RAShelterActions(lv_a);
+                        gf_SKR_1_bihuzhe(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 30)) {
-                        if ((gv_shots[lv_a] > 0)) {
-                            gf_RAChroniclerActions(lv_a);
-                        }
-                        else {
-                            gf_RANoActions(lv_a);
-                        }
+                        gf_SKR_1_shiguan(lv_a);
                     }
 
                 }
@@ -33413,10 +32906,12 @@ void gf_RSTownSetup () {
     }
 }
 
+// ===== BH:SK 局部数组提升（阶段三前置）=====
+int[11] gv_rsMafiaX;
+
 void gf_RSMafiaSetup2 () {
     // Variable Declarations
     int lv_a;
-    int[11] lv_x;
 
     // Automatic Variable Declarations
     const int auto21B6A576_ae = 15;
@@ -33427,19 +32922,32 @@ void gf_RSMafiaSetup2 () {
     // Variable Initialization
 
     // Implementation
+    // 阶段三前置（shw239）：局部数组已提升为全局，入口清零还原「每次调用都是全新」
+    gv_rsMafiaX[0] = 0;
+    gv_rsMafiaX[1] = 0;
+    gv_rsMafiaX[2] = 0;
+    gv_rsMafiaX[3] = 0;
+    gv_rsMafiaX[4] = 0;
+    gv_rsMafiaX[5] = 0;
+    gv_rsMafiaX[6] = 0;
+    gv_rsMafiaX[7] = 0;
+    gv_rsMafiaX[8] = 0;
+    gv_rsMafiaX[9] = 0;
+    gv_rsMafiaX[10] = 0;
+
     lv_a = 1;
     for ( ; ( (auto21B6A576_ai >= 0 && lv_a <= auto21B6A576_ae) || (auto21B6A576_ai < 0 && lv_a >= auto21B6A576_ae) ) ; lv_a += auto21B6A576_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_jailed[lv_a] == 0)) {
             if ((gv_roles[lv_a][1] == 2)) {
-                lv_x[10] += 1;
+                gv_rsMafiaX[10] += 1;
             }
 
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 1)) {
-                lv_x[0] += 1;
+                gf_SKM_2_dangtu(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 2)) {
-                lv_x[1] = lv_a;
+                gf_SKM_2_jiaofu(lv_a);
             }
 
         }
@@ -33459,14 +32967,7 @@ void gf_RSMafiaSetup2 () {
                     DialogControlSetVisible(gv_chatBoxItem[0][0], PlayerGroupSingle(lv_a), true);
                     gv_immune[lv_a][0] = true;
                     if ((gv_roles[lv_a][0] == 2)) {
-                        if ((gv_roleOptions[2][2][1] == true)) {
-                            gv_immune[lv_a][1] = true;
-                        }
-
-                        if ((gv_roleOptions[2][2][2] == true)) {
-                            gv_immune[lv_a][2] = true;
-                        }
-
+                        gf_SKM_2_jiaofu_2(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 3) && (gv_roleOptions[2][3][1] == true)) {
@@ -33482,293 +32983,62 @@ void gf_RSMafiaSetup2 () {
                     gf_CBAssignUnassignChatChannel(lv_a, 1, ge_Clear_DoNotClear);
                     gf_CBAllowDisallowChatting(lv_a, ge_Allow_Allow);
                     if ((gv_roles[lv_a][0] == 1)) {
-                        if (((lv_x[0] > 1) || (lv_x[1] != 0))) {
-                            gv_variableOptions[lv_a][0] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][0] = 0;
-                        }
-                        if ((lv_x[1] != 0)) {
-                            gv_variableOptions[lv_a][1] = lv_x[1];
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        gf_RAMafiosoActions(lv_a);
+                        gf_SKM_2_dangtu_2(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 2)) {
-                        gf_CBHighlightText(lv_a, ge_Highlight_Highlighted);
-                        if ((gv_roleOptions[2][2][3] == false) && (lv_x[0] == 0)) {
-                            gv_variableOptions[lv_a][0] = 0;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][0] = 1;
-                        }
-                        if ((lv_x[0] > 0)) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        gf_RAGodfatherActions(lv_a);
-                        if ((gv_roleOptions[2][2][0] == true)) {
-                            gv_immune[lv_a][0] = true;
-                        }
-
-                        if ((gv_roleOptions[2][2][1] == true)) {
-                            gv_immune[lv_a][1] = true;
-                        }
-
-                        if ((gv_roleOptions[2][2][2] == true)) {
-                            gv_immune[lv_a][2] = true;
-                        }
-
+                        gf_SKM_2_jiaofu_3(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 3)) {
-                        gv_variableOptions[lv_a][0] = 0;
-                        if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        gf_RAConsortActions(lv_a);
-                        if ((gv_roleOptions[2][3][1] == true)) {
-                            gv_immune[lv_a][1] = true;
-                        }
-
+                        gf_SKM_2_peishi(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 4)) {
-                        gv_variableOptions[lv_a][0] = 0;
-                        if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        gf_RAConsigliereActions(lv_a);
+                        gf_SKM_2_canmou(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 5)) {
-                        gv_variableOptions[lv_a][0] = 0;
-                        if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        gf_RAFramerActions(lv_a);
-                        if ((gv_roleOptions[2][5][1] == true)) {
-                            gv_immune[lv_a][2] = true;
-                        }
-
+                        gf_SKM_2_xianhaizhe(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 6)) {
-                        gv_variableOptions[lv_a][0] = 0;
-                        if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        if ((gv_shots[lv_a] == 0)) {
-                            gv_variableOptions[lv_a][3] = 0;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][3] = 1;
-                        }
-                        gf_RAJanitorActions(lv_a);
+                        gf_SKM_2_qinglizhe(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 7)) {
-                        gv_variableOptions[lv_a][0] = 0;
-                        if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        gf_RABlackmailerActions(lv_a);
+                        gf_SKM_2_konghezhe(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 8)) {
-                        if ((gv_disguised[lv_a] == 0)) {
-                            gv_variableOptions[lv_a][0] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][0] = 0;
-                        }
-                        if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        gf_RADisguiserActions(lv_a);
+                        gf_SKM_2_weizhuangzhe(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 10)) {
-                        gv_variableOptions[lv_a][0] = 0;
-                        if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        if ((gv_cooldown[lv_a] == 0)) {
-                            gv_variableOptions[lv_a][3] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][3] = 0;
-                        }
-                        gf_RAAgentActions(lv_a);
+                        gf_SKM_2_mitan(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 11)) {
-                        gv_variableOptions[lv_a][0] = 0;
-                        if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        if ((gv_shots[lv_a] == 0)) {
-                            gv_variableOptions[lv_a][3] = 0;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][3] = 1;
-                        }
-                        gf_RABeguilerActions(lv_a);
+                        gf_SKM_2_qipianzhe(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 12)) {
-                        gv_variableOptions[lv_a][0] = 0;
-                        if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        gf_RANoActions(lv_a);
+                        gf_SKM_2_weixiezhe(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 13)) {
-                        gv_variableOptions[lv_a][0] = 0;
-                        if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        gf_RANoActions(lv_a);
+                        gf_SKM_2_shandongzhe(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 14)) {
-                        gv_variableOptions[lv_a][0] = 0;
-                        if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        gf_RAE997A8E5BE92action(lv_a);
+                        gf_SKM_2_mentu(lv_a);
                     }
 
                     // shw179 修：原图此处把 [0] 设为 0，但 gt_ASActionButtonAMafia2 的栽赃者分支要求
                     // gv_variableOptions[source][0] == 1，导致夜间选目标永远无效（按钮点不动）。
                     // 三合会版(诬陷)设为 1 所以正常；这里对齐，并补上「用掉后不再挂面板」的守卫。
                     if ((gv_roles[lv_a][0] == 15) && (gv_pretended[lv_a] == false)) {
-                        gv_variableOptions[lv_a][0] = 1;
-                        gv_variableOptions[lv_a][1] = 1;
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        gf_RAPretenderActions(lv_a);
+                        gf_SKM_2_zaizangzhe(lv_a);
                     }
 
                 }
@@ -33779,10 +33049,12 @@ void gf_RSMafiaSetup2 () {
     }
 }
 
+// ===== BH:SK 局部数组提升（阶段三前置）=====
+int[11] gv_rsTriadX;
+
 void gf_RSTriadSetup () {
     // Variable Declarations
     int lv_a;
-    int[11] lv_x;
 
     // Automatic Variable Declarations
     const int auto76887115_ae = 15;
@@ -33793,19 +33065,32 @@ void gf_RSTriadSetup () {
     // Variable Initialization
 
     // Implementation
+    // 阶段三前置（shw239）：局部数组已提升为全局，入口清零还原「每次调用都是全新」
+    gv_rsTriadX[0] = 0;
+    gv_rsTriadX[1] = 0;
+    gv_rsTriadX[2] = 0;
+    gv_rsTriadX[3] = 0;
+    gv_rsTriadX[4] = 0;
+    gv_rsTriadX[5] = 0;
+    gv_rsTriadX[6] = 0;
+    gv_rsTriadX[7] = 0;
+    gv_rsTriadX[8] = 0;
+    gv_rsTriadX[9] = 0;
+    gv_rsTriadX[10] = 0;
+
     lv_a = 1;
     for ( ; ( (auto76887115_ai >= 0 && lv_a <= auto76887115_ae) || (auto76887115_ai < 0 && lv_a >= auto76887115_ae) ) ; lv_a += auto76887115_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_jailed[lv_a] == 0)) {
             if ((gv_roles[lv_a][1] == 5)) {
-                lv_x[10] += 1;
+                gv_rsTriadX[10] += 1;
             }
 
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 1)) {
-                lv_x[0] += 1;
+                gf_SKT_5_baotu(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 2)) {
-                lv_x[1] = lv_a;
+                gf_SKT_5_longtou(lv_a);
             }
 
         }
@@ -33825,14 +33110,7 @@ void gf_RSTriadSetup () {
                     DialogControlSetVisible(gv_chatBoxItem[0][0], PlayerGroupSingle(lv_a), true);
                     gv_immune[lv_a][0] = true;
                     if ((gv_roles[lv_a][0] == 2)) {
-                        if ((gv_roleOptions[5][2][1] == true)) {
-                            gv_immune[lv_a][1] = true;
-                        }
-
-                        if ((gv_roleOptions[5][2][2] == true)) {
-                            gv_immune[lv_a][2] = true;
-                        }
-
+                        gf_SKT_5_longtou_2(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 3) && (gv_roleOptions[5][3][1] == true)) {
@@ -33848,292 +33126,61 @@ void gf_RSTriadSetup () {
                     gf_CBAssignUnassignChatChannel(lv_a, 4, ge_Clear_DoNotClear);
                     gf_CBAllowDisallowChatting(lv_a, ge_Allow_Allow);
                     if ((gv_roles[lv_a][0] == 1)) {
-                        if (((lv_x[0] > 1) || (lv_x[1] != 0))) {
-                            gv_variableOptions[lv_a][0] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][0] = 0;
-                        }
-                        if ((lv_x[1] != 0)) {
-                            gv_variableOptions[lv_a][1] = lv_x[1];
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        gf_RAEnforcerActions(lv_a);
+                        gf_SKT_5_baotu_2(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 2)) {
-                        gf_CBHighlightText(lv_a, ge_Highlight_Highlighted);
-                        if ((gv_roleOptions[5][2][3] == false) && (lv_x[0] == 0)) {
-                            gv_variableOptions[lv_a][0] = 0;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][0] = 1;
-                        }
-                        if ((lv_x[0] > 0)) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        gf_RADragonHeadActions(lv_a);
-                        if ((gv_roleOptions[5][2][0] == true)) {
-                            gv_immune[lv_a][0] = true;
-                        }
-
-                        if ((gv_roleOptions[5][2][1] == true)) {
-                            gv_immune[lv_a][1] = true;
-                        }
-
-                        if ((gv_roleOptions[5][2][2] == true)) {
-                            gv_immune[lv_a][2] = true;
-                        }
-
+                        gf_SKT_5_longtou_3(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 3)) {
-                        gv_variableOptions[lv_a][0] = 0;
-                        if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        gf_RALiaisonActions(lv_a);
-                        if ((gv_roleOptions[5][3][1] == true)) {
-                            gv_immune[lv_a][1] = true;
-                        }
-
+                        gf_SKT_5_jiaojihua(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 4)) {
-                        gv_variableOptions[lv_a][0] = 0;
-                        if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        gf_RAAdministratorActions(lv_a);
+                        gf_SKT_5_guanjia(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 5)) {
-                        gv_variableOptions[lv_a][0] = 0;
-                        if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        gf_RAForgerActions(lv_a);
-                        if ((gv_roleOptions[5][5][1] == true)) {
-                            gv_immune[lv_a][2] = true;
-                        }
-
+                        gf_SKT_5_zaojia(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 6)) {
-                        gv_variableOptions[lv_a][0] = 0;
-                        if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        if ((gv_shots[lv_a] == 0)) {
-                            gv_variableOptions[lv_a][3] = 0;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][3] = 1;
-                        }
-                        gf_RAIncenseMasterActions(lv_a);
+                        gf_SKT_5_xiangzhu(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 7)) {
-                        gv_variableOptions[lv_a][0] = 0;
-                        if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        gf_RASilencerActions(lv_a);
+                        gf_SKT_5_fengkou(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 8)) {
-                        if ((gv_disguised[lv_a] == 0)) {
-                            gv_variableOptions[lv_a][0] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][0] = 0;
-                        }
-                        if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        gf_RAInformantActions(lv_a);
+                        gf_SKT_5_shentou(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 10)) {
-                        gv_variableOptions[lv_a][0] = 0;
-                        if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        if ((gv_cooldown[lv_a] == 0)) {
-                            gv_variableOptions[lv_a][3] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][3] = 0;
-                        }
-                        gf_RAVanguardActions(lv_a);
+                        gf_SKT_5_xianfeng(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 11)) {
-                        gv_variableOptions[lv_a][0] = 0;
-                        if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        if ((gv_shots[lv_a] == 0)) {
-                            gv_variableOptions[lv_a][3] = 0;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][3] = 1;
-                        }
-                        gf_RADeceiverActions(lv_a);
+                        gf_SKT_5_mihuo(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 12)) {
-                        gv_variableOptions[lv_a][0] = 0;
-                        if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        gf_RANoActions(lv_a);
+                        gf_SKT_5_zhishizhe(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 13)) {
-                        gv_variableOptions[lv_a][0] = 0;
-                        if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        gf_RANoActions(lv_a);
+                        gf_SKT_5_raoluanzhe(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 14)) {
-                        gv_variableOptions[lv_a][0] = 0;
-                        if (((lv_x[0] > 0) || (lv_x[1] > 0))) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        gf_RAE997A8E5BE92action(lv_a);
+                        gf_SKT_5_pucong(lv_a);
                     }
 
                     // shw179 补：与黑手党版对齐，补上 [1]（可用）与 [2]（存活同伙>1 才通知），
                     // 否则点击分支里的同伙通知步骤永远进不去。
                     if ((gv_roles[lv_a][0] == 15) && (gv_pretended[lv_a] == false)) {
-                        gv_variableOptions[lv_a][0] = 1;
-                        gv_variableOptions[lv_a][1] = 1;
-                        if ((lv_x[10] > 1)) {
-                            gv_variableOptions[lv_a][2] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][2] = 0;
-                        }
-                        gf_RAPretenderActions2(lv_a);
+                        gf_SKT_5_wuxian(lv_a);
                     }
 
                 }
@@ -34144,11 +33191,13 @@ void gf_RSTriadSetup () {
     }
 }
 
+// ===== BH:SK 局部数组提升（阶段三前置）=====
+int[2] gv_rsNeutralX;
+
 void gf_RSNeutralSetup () {
     // Variable Declarations
     int lv_a;
     bool lv_douse;
-    int[2] lv_x;
 
     // Automatic Variable Declarations
     const int auto3CB4E9AA_ae = 15;
@@ -34161,11 +33210,15 @@ void gf_RSNeutralSetup () {
     // Variable Initialization
 
     // Implementation
+    // 阶段三前置（shw239）：局部数组已提升为全局，入口清零还原「每次调用都是全新」
+    gv_rsNeutralX[0] = 0;
+    gv_rsNeutralX[1] = 0;
+
     lv_a = 1;
     for ( ; ( (auto3CB4E9AA_ai >= 0 && lv_a <= auto3CB4E9AA_ae) || (auto3CB4E9AA_ai < 0 && lv_a >= auto3CB4E9AA_ae) ) ; lv_a += auto3CB4E9AA_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_jailed[lv_a] == 0)) {
             if ((gv_roles[lv_a][1] == 3) && ((gv_roles[lv_a][0] == 8) || (gv_roles[lv_a][0] == 10))) {
-                lv_x[0] += 1;
+                gv_rsNeutralX[0] += 1;
             }
 
         }
@@ -34183,27 +33236,7 @@ void gf_RSNeutralSetup () {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
             if ((gv_roles[lv_a][1] == 3)) {
                 if ((gv_roles[lv_a][0] == 15)) {
-                    if ((gv_dayNumber == 1)) {
-                        if ((gv_roleOptions[3][15][0] == true)) {
-                            gv_e586A4E9AD82E58585E883BD[lv_a] += 2;
-                        }
-                        else {
-                            if ((gv_roleOptions[3][15][1] == true)) {
-                                gv_e586A4E9AD82E58585E883BD[lv_a] += 3;
-                            }
-                            else {
-                                gv_e586A4E9AD82E58585E883BD[lv_a] += 1;
-                            }
-                        }
-                    }
-                    else {
-                        if ((gv_e586A4E9AD82E58585E883BD[lv_a] < 7)) {
-                            gv_e586A4E9AD82E58585E883BD[lv_a] += 1;
-                        }
-                        else {
-                            gf_CBSystemMessage((StringExternal("Param/Value/FAF0A917")), lv_a, 0, 0, SoundLink("Whale_VxFx_Exert_Free", -1), Color(0,0,0));
-                        }
-                    }
+                    gf_SKN_3_yuanhun(lv_a);
                 }
 
                 if ((gv_jailed[lv_a] != 0)) {
@@ -34217,229 +33250,79 @@ void gf_RSNeutralSetup () {
                 }
                 else {
                     if ((gv_roles[lv_a][0] == 1)) {
-                        gf_RASerialKillerActions(lv_a);
-                        if ((gv_roleOptions[3][1][0] == true)) {
-                            gv_immune[lv_a][0] = true;
-                        }
-
-                        if ((gv_roleOptions[3][1][3] == true)) {
-                            gv_immune[lv_a][2] = true;
-                        }
-
+                        gf_SKN_3_lianhuanshashou(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 31)) {
-                        gf_RAShadowActions(lv_a);
-                        if ((gv_roleOptions[3][31][0] == true)) {
-                            gv_immune[lv_a][0] = true;
-                        }
-
+                        gf_SKN_3_yingwuzhe(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 32)) {
-                        // shw147：没有雷击余额时不给目标按钮（只有提示），也不提示 -guess
-                        if ((gv_txStrikes[lv_a] <= 0)) {
-                            gf_RANoActions(lv_a);
-                            gf_CBSystemMessage(StringExternal("Param/Value/TXNOSTRIKE"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                        }
-                        else {
-                            gf_RASerialKillerActions(lv_a);
-                            gf_ASE5AEA1E69FA5E98089E9A1B9(lv_a); // shw207: 与审查员同一个身份选择栏
-                            gf_CBSystemMessage(StringExternal("Param/Value/TXTIPGUESS"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                            gf_CBSystemMessage((StringExternal("Param/Value/TXTCOUNTA") + IntToText(gv_txStrikes[lv_a]) + StringExternal("Param/Value/TXTCOUNTB")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                        }
-
-                        if ((gv_roleOptions[3][32][0] == true)) {
-                            gv_immune[lv_a][0] = true;
-                        }
-
+                        gf_SKN_3_tianxuanzhe(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 17)) {
-                        gf_RAGambler(lv_a);
-                        if ((gv_roleOptions[3][17][0] == true) && (gv_e7BB99E4BA86E697A0E6958CE4BA86[lv_a] == false)) {
-                            gv_immuneChance[lv_a] = 1;
-                            gv_e7BB99E4BA86E697A0E6958CE4BA86[lv_a] = true;
-                        }
-
+                        gf_SKN_3_dugui(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 2)) {
-                        if ((gv_e9BB98E8AEA4E9A39FE789A9[lv_a] == false)) {
-                            gv_immuneChance[lv_a] = 3;
-                            gv_e9BB98E8AEA4E9A39FE789A9[lv_a] = true;
-                        }
-
-                        gf_RANewSurvivor(lv_a);
+                        gf_SKN_3_shengcunzhe(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 3)) {
-                        gf_RAJesterActions(lv_a);
+                        gf_SKN_3_xiaochou(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 4)) {
-                        if ((gv_roleOptions[3][4][0] == true)) {
-                            gv_variableOptions[lv_a][0] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][0] = 0;
-                        }
-                        gf_RAWitchActions(lv_a);
+                        gf_SKN_3_nvwu(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 16)) {
-                        if ((gv_cooldown[lv_a] != 0)) {
-                            gf_CBSystemMessage(StringExternal("Param/Value/EDDB5419"), lv_a, 0, 0, SoundLink("EditorDefaultSound", -1), Color(0,0,0));
-                        }
-                        else {
-                            gv_variableOptions[lv_a][0] = 1;
-                            gf_RAWitchActions2(lv_a);
-                        }
+                        gf_SKN_3_ximingren(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 5)) {
-                        if ((lv_douse == true)) {
-                            gv_variableOptions[lv_a][0] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][0] = 0;
-                        }
-                        gf_RAArsonistActions(lv_a);
-                        if ((gv_roleOptions[3][5][2] == true)) {
-                            gv_immune[lv_a][0] = true;
-                        }
-
+                        gf_SKN_3_zonghuozhe(lv_a, lv_douse);
                     }
 
                     if ((gv_roles[lv_a][0] == 6)) {
-                        gf_RANoActions(lv_a);
-                        if ((gv_roleOptions[3][6][3] == true)) {
-                            gv_immune[lv_a][0] = true;
-                        }
-
+                        gf_SKN_3_chuxingzhe(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 7)) {
-                        gf_RAAmnesiacActions(lv_a);
+                        gf_SKN_3_shiyizhe(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 8)) {
-                        gf_CBAssignUnassignChatChannel(lv_a, 3, ge_Clear_DoNotClear);
-                        gf_CBAllowDisallowChatting(lv_a, ge_Allow_Allow);
-                        if ((lv_x[0] > 1)) {
-                            gv_variableOptions[lv_a][0] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][0] = 0;
-                        }
-                        if ((gv_cultCooldown == 0) && (gv_cultConversionsLeft != 0)) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        gf_RACultistActions(lv_a);
+                        gf_SKN_3_xiejiaotu(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 9)) {
-                        if ((gv_roleOptions[3][9][0] == true)) {
-                            gv_immune[lv_a][0] = true;
-                        }
-
-                        if ((gv_roleOptions[3][9][4] == true)) {
-                            gv_immune[lv_a][2] = true;
-                        }
-
-                        if ((gv_roleOptions[3][9][1] == true)) {
-                            gv_variableOptions[lv_a][0] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][0] = 0;
-                        }
-                        if ((gv_cooldown[lv_a] == 0)) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        gf_RAMassMurdererActions(lv_a);
+                        gf_SKN_3_sharenkuang(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 14)) {
-                        if ((gv_roleOptions[3][14][4] == true)) {
-                            gv_immune[lv_a][2] = true;
-                        }
-
-                        gv_immune[lv_a][0] = true;
-                        gv_variableOptions[lv_a][0] = 1;
-                        if ((gv_cooldown[lv_a] == 0)) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        gf_RAE7989FE796AB(lv_a);
+                        gf_SKN_3_wenyisanbuzhe(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 15)) {
-                        if ((gv_roleOptions[3][15][4] == true)) {
-                            gv_immune[lv_a][2] = true;
-                        }
-
-                        gv_immune[lv_a][0] = true;
-                        gv_variableOptions[lv_a][0] = 1;
-                        if ((gv_cooldown[lv_a] == 0)) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        gf_RAE586A4E9AD82(lv_a);
+                        gf_SKN_3_yuanhun_2(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 10)) {
-                        gf_CBAssignUnassignChatChannel(lv_a, 3, ge_Clear_DoNotClear);
-                        gf_CBAllowDisallowChatting(lv_a, ge_Allow_Allow);
-                        if ((lv_x[0] > 1)) {
-                            gv_variableOptions[lv_a][0] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][0] = 0;
-                        }
-                        if ((gv_cooldown[lv_a] == 0) && (gv_shots[lv_a] != 0)) {
-                            gv_variableOptions[lv_a][1] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][1] = 0;
-                        }
-                        if ((gv_roleOptions[3][10][4] == true)) {
-                            gv_immune[lv_a][2] = true;
-                        }
-
-                        gf_RAWitchDoctorActions(lv_a);
+                        gf_SKN_3_wuyi(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 11)) {
-                        if ((gv_shots[lv_a] > 0)) {
-                            gv_variableOptions[lv_a][0] = 1;
-                        }
-                        else {
-                            gv_variableOptions[lv_a][0] = 0;
-                        }
-                        gf_RAAuditorActions(lv_a);
+                        gf_SKN_3_shenjiguan(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 12)) {
-                        gv_crying[lv_a] = true;
-                        gf_RANoActions(lv_a);
+                        gf_SKN_3_faguan(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 13)) {
-                        if ((gv_roleOptions[3][13][1] == true)) {
-                            gv_immune[lv_a][0] = true;
-                        }
-
-                        gf_RACorruptInquisitorActions(lv_a);
+                        gf_SKN_3_duoluoshenpanzhe(lv_a);
                     }
 
                 }
@@ -93720,4 +92603,2237 @@ for ( ; ( (auto4AFC1DEF_ai >= 0 && lv_e <= auto4AFC1DEF_ae) || (auto4AFC1DEF_ai 
 
 }
 gv_goalTarget[lv_a] = PlayerGroupPlayer(lv_p, RandomInt(1, PlayerGroupCount(lv_p)));
+}
+
+
+// ===== BH:SK 角色块抽取（阶段三 · rssetup）=====
+// 阶段三抽取（shw238）：城镇 1/13 ← 原 gf_RSTownSetup 行33061
+void gf_SKR_1_yujing (int lv_a) {
+    // Implementation
+if ((gv_wasExecution == false) && (gv_action[lv_a][0] != 0)) {
+    gv_rsTownPrejailing[lv_a] = gv_action[lv_a][0];
+    gv_rsTownPrejailed[gv_rsTownPrejailing[lv_a]] = lv_a;
+    gv_action[lv_a][0] = 0;
+}
+
+}
+
+// 阶段三抽取（shw238）：城镇 1/13 ← 原 gf_RSTownSetup 行33101
+void gf_SKR_1_yujing_2 (int lv_a) {
+    // Implementation
+if ((gv_jailed[lv_a] == 0) && (gv_jailing[lv_a] > 0)) {
+    if ((gv_shots[lv_a] == 0)) {
+        gv_variableOptions[lv_a][0] = 0;
+    }
+    else {
+        gv_variableOptions[lv_a][0] = 1;
+    }
+    gf_RAJailorActions(lv_a);
+    gv_jailed[gv_jailing[lv_a]] = lv_a;
+}
+else {
+    gv_variableOptions[lv_a][0] = 0;
+}
+}
+
+// 阶段三抽取（shw238）：黑手D 2/1 ← 原 gf_RSTownSetup 行33127
+void gf_SKR_2_dangtu (int lv_a) {
+    // Implementation
+gv_rsTownX[0] += 1;
+}
+
+// 阶段三抽取（shw238）：黑手D 2/2 ← 原 gf_RSTownSetup 行33131
+void gf_SKR_2_jiaofu (int lv_a) {
+    // Implementation
+gv_rsTownX[1] = lv_a;
+}
+
+// 阶段三抽取（shw238）：黑手D 2/9 ← 原 gf_RSTownSetup 行33141
+void gf_SKR_2_bangjiazhe (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 0;
+if (((gv_rsTownX[0] > 0) || (gv_rsTownX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsTownX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+if ((gv_jailed[lv_a] == 0) && (gv_jailing[lv_a] > 0)) {
+    gf_RAKidnapperActions(lv_a);
+    gv_jailed[gv_jailing[lv_a]] = lv_a;
+}
+
+}
+
+// 阶段三抽取（shw238）：三合会 5/1 ← 原 gf_RSTownSetup 行33175
+void gf_SKR_5_baotu (int lv_a) {
+    // Implementation
+gv_rsTownX[0] += 1;
+}
+
+// 阶段三抽取（shw238）：三合会 5/2 ← 原 gf_RSTownSetup 行33179
+void gf_SKR_5_longtou (int lv_a) {
+    // Implementation
+gv_rsTownX[1] = lv_a;
+}
+
+// 阶段三抽取（shw238）：三合会 5/9 ← 原 gf_RSTownSetup 行33189
+void gf_SKR_5_shenxun (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 0;
+if (((gv_rsTownX[0] > 0) || (gv_rsTownX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsTownX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+if ((gv_jailed[lv_a] == 0) && (gv_jailing[lv_a] > 0)) {
+    gf_RAInterrogatorActions(lv_a);
+    gv_jailed[gv_jailing[lv_a]] = lv_a;
+}
+
+}
+
+// 阶段三抽取（shw238）：城镇 1/7 ← 原 gf_RSTownSetup 行33217
+void gf_SKR_1_gongjihuichengyuan (int lv_a) {
+    // Implementation
+gv_rsTownX[10] += 1;
+}
+
+// 阶段三抽取（shw238）：城镇 1/14 ← 原 gf_RSTownSetup 行33221
+void gf_SKR_1_gongjihuizhanglao (int lv_a) {
+    // Implementation
+gv_rsTownX[10] += 1;
+}
+
+// 阶段三抽取（shw238）：城镇 1/17 ← 原 gf_RSTownSetup 行33244
+void gf_SKR_1_tuiwujunren (int lv_a) {
+    // Implementation
+gv_immune[lv_a][1] = true;
+}
+
+// 阶段三抽取（shw238）：城镇 1/1 ← 原 gf_RSTownSetup 行33250
+void gf_SKR_1_shimin (int lv_a) {
+    // Implementation
+if ((gv_roleOptions[1][1][0] == true)) {
+    if ((gv_shots[lv_a] > 0)) {
+        gv_variableOptions[lv_a][0] = 1;
+    }
+    else {
+        gv_variableOptions[lv_a][0] = 0;
+    }
+    gf_RACitizenActions(lv_a);
+}
+else {
+    gv_variableOptions[lv_a][0] = 0;
+    gf_RANoActions(lv_a);
+}
+}
+
+// 阶段三抽取（shw238）：城镇 1/23 ← 原 gf_RSTownSetup 行33266
+void gf_SKR_1_zhengmuguan (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 1;
+gf_RAREcAction(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/2 ← 原 gf_RSTownSetup 行33271
+void gf_SKR_1_jingzhang (int lv_a) {
+    // Implementation
+gf_RASheriffActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/3 ← 原 gf_RSTownSetup 行33275
+void gf_SKR_1_yisheng (int lv_a) {
+    // Implementation
+gf_RADoctorActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/31 ← 原 gf_RSTownSetup 行33279
+void gf_SKR_1_guanchazhe (int lv_a) {
+    // Implementation
+gf_RAObserverActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/4 ← 原 gf_RSTownSetup 行33283
+void gf_SKR_1_tanyuan (int lv_a) {
+    // Implementation
+gf_RAInvestigatorActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/24 ← 原 gf_RSTownSetup 行33287
+void gf_SKR_1_xuetu (int lv_a) {
+    // Implementation
+gf_RAE5ADA6E5BE92Actions(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/25 ← 原 gf_RSTownSetup 行33291
+void gf_SKR_1_mushi (int lv_a) {
+    // Implementation
+gf_RAPriest(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/5 ← 原 gf_RSTownSetup 行33295
+void gf_SKR_1_wuniang (int lv_a) {
+    // Implementation
+if ((gv_cooldown[lv_a] == 0)) {
+    gv_variableOptions[lv_a][0] = 1;
+}
+else {
+    gv_variableOptions[lv_a][0] = 0;
+}
+gf_RAEscortActions(lv_a);
+if ((gv_roleOptions[1][5][0] == true)) {
+    gv_immune[lv_a][1] = true;
+}
+
+}
+
+// 阶段三抽取（shw238）：城镇 1/6 ← 原 gf_RSTownSetup 行33309
+void gf_SKR_1_yijing (int lv_a) {
+    // Implementation
+if ((gv_shots[lv_a] > 0) && (gv_cooldown[lv_a] == 0)) {
+    gv_variableOptions[lv_a][0] = 1;
+}
+else {
+    gv_variableOptions[lv_a][0] = 0;
+}
+gf_RAVigilanteActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/7 ← 原 gf_RSTownSetup 行33319
+void gf_SKR_1_gongjihuichengyuan_2 (int lv_a) {
+    // Implementation
+gf_CBAssignUnassignChatChannel(lv_a, 2, ge_Clear_DoNotClear);
+gf_CBAllowDisallowChatting(lv_a, ge_Allow_Allow);
+gf_RANoActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/8 ← 原 gf_RSTownSetup 行33325
+void gf_SKR_1_jiandie (int lv_a) {
+    // Implementation
+gf_RANoActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/9 ← 原 gf_RSTownSetup 行33329
+void gf_SKR_1_bashisiji (int lv_a) {
+    // Implementation
+if ((gv_roleOptions[1][9][0] == true)) {
+    gv_variableOptions[lv_a][0] = 1;
+}
+else {
+    gv_variableOptions[lv_a][0] = 0;
+}
+gf_RABusDriverActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/10 ← 原 gf_RSTownSetup 行33339
+void gf_SKR_1_fayi (int lv_a) {
+    // Implementation
+gf_RACoronerActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/11 ← 原 gf_RSTownSetup 行33343
+void gf_SKR_1_baobiao (int lv_a) {
+    // Implementation
+gf_RABodyguardActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/12 ← 原 gf_RSTownSetup 行33347
+void gf_SKR_1_shizhang (int lv_a) {
+    // Implementation
+gf_RANoActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/14 ← 原 gf_RSTownSetup 行33351
+void gf_SKR_1_gongjihuizhanglao_2 (int lv_a) {
+    // Implementation
+gf_CBAssignUnassignChatChannel(lv_a, 2, ge_Clear_DoNotClear);
+gf_CBAllowDisallowChatting(lv_a, ge_Allow_Allow);
+gf_CBHighlightText(lv_a, ge_Highlight_Highlighted);
+if ((gv_shots[lv_a] == 0)) {
+    gv_variableOptions[lv_a][0] = 0;
+}
+else {
+    gv_variableOptions[lv_a][0] = 1;
+}
+if ((gv_rsTownX[10] > 1)) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+gf_RAMasonLeaderActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/15 ← 原 gf_RSTownSetup 行33370
+void gf_SKR_1_zhentan (int lv_a) {
+    // Implementation
+gf_RATrackerActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/16 ← 原 gf_RSTownSetup 行33374
+void gf_SKR_1_jianshizhe (int lv_a) {
+    // Implementation
+if ((gv_roleOptions[1][16][1] == true)) {
+    gv_variableOptions[lv_a][0] = 1;
+}
+else {
+    gv_variableOptions[lv_a][0] = 0;
+}
+gf_RAWatcherActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/17 ← 原 gf_RSTownSetup 行33384
+void gf_SKR_1_tuiwujunren_2 (int lv_a) {
+    // Implementation
+if ((gv_shots[lv_a] != 0)) {
+    gv_variableOptions[lv_a][0] = 1;
+}
+else {
+    gv_variableOptions[lv_a][0] = 0;
+}
+gf_RAVeteranActions(lv_a);
+gv_immune[lv_a][1] = true;
+}
+
+// 阶段三抽取（shw238）：城镇 1/18 ← 原 gf_RSTownSetup 行33395
+void gf_SKR_1_shuzhuang (int lv_a) {
+    // Implementation
+gf_RANoActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/19 ← 原 gf_RSTownSetup 行33399
+void gf_SKR_1_zhifazhang (int lv_a) {
+    // Implementation
+gf_RANoActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/20 ← 原 gf_RSTownSetup 行33403
+void gf_SKR_1_gonggaoyuan (int lv_a) {
+    // Implementation
+gv_crying[lv_a] = true;
+gf_RACryerparty(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/21 ← 原 gf_RSTownSetup 行33408
+void gf_SKR_1_fushou (int lv_a) {
+    // Variable Declarations
+    int lv_a2;
+    int lv_rand;
+    const int autoA91AD9CA_ae = 10;
+    const int autoA91AD9CA_ai = 1;
+    int autoBCB8E066_val;
+    // Implementation
+if ((gv_roleOptions[1][21][2] == true) && (gv_dayNumber == 1)) {
+    lv_rand = RandomInt(0, 3);
+    lv_a2 = 1;
+    for ( ; ( (autoA91AD9CA_ai >= 0 && lv_a2 <= autoA91AD9CA_ae) || (autoA91AD9CA_ai < 0 && lv_a2 >= autoA91AD9CA_ae) ) ; lv_a2 += autoA91AD9CA_ai ) {
+        if ((gv_e6B395E5B888E68A80E883BD[lv_a][lv_rand] == false)) {
+            gv_e6B395E5B888E68A80E883BD[lv_a][lv_rand] = true;
+            autoBCB8E066_val = lv_rand;
+            if (autoBCB8E066_val == 0) {
+                gf_CBSystemMessage(StringExternal("Param/Value/D73980C3"), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+            }
+            else if (autoBCB8E066_val == 1) {
+                gf_CBSystemMessage(StringExternal("Param/Value/D1E6D86B"), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+            }
+            else if (autoBCB8E066_val == 2) {
+                gf_CBSystemMessage(StringExternal("Param/Value/11BB7B3C"), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+            }
+            else if (autoBCB8E066_val == 3) {
+                gf_CBSystemMessage(StringExternal("Param/Value/71040626"), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+            }
+            else {
+                gf_CBSystemMessage(StringExternal("Param/Value/B48F549B"), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+            }
+            break;
+        }
+
+        if ((lv_rand >= 3)) {
+            lv_rand = 0;
+        }
+        else {
+            lv_rand += 1;
+        }
+    }
+}
+
+gf_RADeputyActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/22 ← 原 gf_RSTownSetup 行33446
+void gf_SKR_1_hulinren (int lv_a) {
+    // Implementation
+gf_RAForesterActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/26 ← 原 gf_RSTownSetup 行33450
+void gf_SKR_1_shenchayuan (int lv_a) {
+    // Implementation
+gf_RASearcherActions2(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/27 ← 原 gf_RSTownSetup 行33454
+void gf_SKR_1_lianbangtanyuan (int lv_a) {
+    // Implementation
+gf_RAInvestigatorActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/28 ← 原 gf_RSTownSetup 行33458
+void gf_SKR_1_shouhuzhe (int lv_a) {
+    // Implementation
+if ((gv_cooldown[lv_a] < 2)) {
+    gf_RABodyguardActions(lv_a);
+}
+else {
+    gf_ELAddMessage(StringExternal("Param/Value/0F1A82D8"), lv_a, Color(0,0,0), lv_a, 0);
+    gv_cooldown[lv_a] = 0;
+}
+}
+
+// 阶段三抽取（shw238）：城镇 1/29 ← 原 gf_RSTownSetup 行33468
+void gf_SKR_1_bihuzhe (int lv_a) {
+    // Implementation
+gv_e5BA87E68AA4E58585E883BD[lv_a] += 1;
+gf_RAShelterActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/30 ← 原 gf_RSTownSetup 行33473
+void gf_SKR_1_shiguan (int lv_a) {
+    // Implementation
+if ((gv_shots[lv_a] > 0)) {
+    gf_RAChroniclerActions(lv_a);
+}
+else {
+    gf_RANoActions(lv_a);
+}
+}
+
+// 阶段三抽取（shw238）：中立 3/15 ← 原 gf_RSNeutralSetup 行34295
+void gf_SKN_3_yuanhun (int lv_a) {
+    // Implementation
+if ((gv_dayNumber == 1)) {
+    if ((gv_roleOptions[3][15][0] == true)) {
+        gv_e586A4E9AD82E58585E883BD[lv_a] += 2;
+    }
+    else {
+        if ((gv_roleOptions[3][15][1] == true)) {
+            gv_e586A4E9AD82E58585E883BD[lv_a] += 3;
+        }
+        else {
+            gv_e586A4E9AD82E58585E883BD[lv_a] += 1;
+        }
+    }
+}
+else {
+    if ((gv_e586A4E9AD82E58585E883BD[lv_a] < 7)) {
+        gv_e586A4E9AD82E58585E883BD[lv_a] += 1;
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/FAF0A917")), lv_a, 0, 0, SoundLink("Whale_VxFx_Exert_Free", -1), Color(0,0,0));
+    }
+}
+}
+
+// 阶段三抽取（shw238）：中立 3/1 ← 原 gf_RSNeutralSetup 行34329
+void gf_SKN_3_lianhuanshashou (int lv_a) {
+    // Implementation
+gf_RASerialKillerActions(lv_a);
+if ((gv_roleOptions[3][1][0] == true)) {
+    gv_immune[lv_a][0] = true;
+}
+
+if ((gv_roleOptions[3][1][3] == true)) {
+    gv_immune[lv_a][2] = true;
+}
+
+}
+
+// 阶段三抽取（shw238）：中立 3/31 ← 原 gf_RSNeutralSetup 行34341
+void gf_SKN_3_yingwuzhe (int lv_a) {
+    // Implementation
+gf_RAShadowActions(lv_a);
+if ((gv_roleOptions[3][31][0] == true)) {
+    gv_immune[lv_a][0] = true;
+}
+
+}
+
+// 阶段三抽取（shw238）：中立 3/32 ← 原 gf_RSNeutralSetup 行34349
+void gf_SKN_3_tianxuanzhe (int lv_a) {
+    // Implementation
+// shw147：没有雷击余额时不给目标按钮（只有提示），也不提示 -guess
+if ((gv_txStrikes[lv_a] <= 0)) {
+    gf_RANoActions(lv_a);
+    gf_CBSystemMessage(StringExternal("Param/Value/TXNOSTRIKE"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+}
+else {
+    gf_RASerialKillerActions(lv_a);
+    gf_ASE5AEA1E69FA5E98089E9A1B9(lv_a); // shw207: 与审查员同一个身份选择栏
+    gf_CBSystemMessage(StringExternal("Param/Value/TXTIPGUESS"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    gf_CBSystemMessage((StringExternal("Param/Value/TXTCOUNTA") + IntToText(gv_txStrikes[lv_a]) + StringExternal("Param/Value/TXTCOUNTB")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+}
+
+if ((gv_roleOptions[3][32][0] == true)) {
+    gv_immune[lv_a][0] = true;
+}
+
+}
+
+// 阶段三抽取（shw238）：中立 3/17 ← 原 gf_RSNeutralSetup 行34368
+void gf_SKN_3_dugui (int lv_a) {
+    // Implementation
+gf_RAGambler(lv_a);
+if ((gv_roleOptions[3][17][0] == true) && (gv_e7BB99E4BA86E697A0E6958CE4BA86[lv_a] == false)) {
+    gv_immuneChance[lv_a] = 1;
+    gv_e7BB99E4BA86E697A0E6958CE4BA86[lv_a] = true;
+}
+
+}
+
+// 阶段三抽取（shw238）：中立 3/2 ← 原 gf_RSNeutralSetup 行34377
+void gf_SKN_3_shengcunzhe (int lv_a) {
+    // Implementation
+if ((gv_e9BB98E8AEA4E9A39FE789A9[lv_a] == false)) {
+    gv_immuneChance[lv_a] = 3;
+    gv_e9BB98E8AEA4E9A39FE789A9[lv_a] = true;
+}
+
+gf_RANewSurvivor(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/3 ← 原 gf_RSNeutralSetup 行34386
+void gf_SKN_3_xiaochou (int lv_a) {
+    // Implementation
+gf_RAJesterActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/4 ← 原 gf_RSNeutralSetup 行34390
+void gf_SKN_3_nvwu (int lv_a) {
+    // Implementation
+if ((gv_roleOptions[3][4][0] == true)) {
+    gv_variableOptions[lv_a][0] = 1;
+}
+else {
+    gv_variableOptions[lv_a][0] = 0;
+}
+gf_RAWitchActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/16 ← 原 gf_RSNeutralSetup 行34400
+void gf_SKN_3_ximingren (int lv_a) {
+    // Implementation
+if ((gv_cooldown[lv_a] != 0)) {
+    gf_CBSystemMessage(StringExternal("Param/Value/EDDB5419"), lv_a, 0, 0, SoundLink("EditorDefaultSound", -1), Color(0,0,0));
+}
+else {
+    gv_variableOptions[lv_a][0] = 1;
+    gf_RAWitchActions2(lv_a);
+}
+}
+
+// 阶段三抽取（shw238）：中立 3/5 ← 原 gf_RSNeutralSetup 行34410
+void gf_SKN_3_zonghuozhe (int lv_a, bool lv_douse) {
+    // Implementation
+if ((lv_douse == true)) {
+    gv_variableOptions[lv_a][0] = 1;
+}
+else {
+    gv_variableOptions[lv_a][0] = 0;
+}
+gf_RAArsonistActions(lv_a);
+if ((gv_roleOptions[3][5][2] == true)) {
+    gv_immune[lv_a][0] = true;
+}
+
+}
+
+// 阶段三抽取（shw238）：中立 3/6 ← 原 gf_RSNeutralSetup 行34424
+void gf_SKN_3_chuxingzhe (int lv_a) {
+    // Implementation
+gf_RANoActions(lv_a);
+if ((gv_roleOptions[3][6][3] == true)) {
+    gv_immune[lv_a][0] = true;
+}
+
+}
+
+// 阶段三抽取（shw238）：中立 3/7 ← 原 gf_RSNeutralSetup 行34432
+void gf_SKN_3_shiyizhe (int lv_a) {
+    // Implementation
+gf_RAAmnesiacActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/8 ← 原 gf_RSNeutralSetup 行34436
+void gf_SKN_3_xiejiaotu (int lv_a) {
+    // Implementation
+gf_CBAssignUnassignChatChannel(lv_a, 3, ge_Clear_DoNotClear);
+gf_CBAllowDisallowChatting(lv_a, ge_Allow_Allow);
+if ((gv_rsNeutralX[0] > 1)) {
+    gv_variableOptions[lv_a][0] = 1;
+}
+else {
+    gv_variableOptions[lv_a][0] = 0;
+}
+if ((gv_cultCooldown == 0) && (gv_cultConversionsLeft != 0)) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+gf_RACultistActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/9 ← 原 gf_RSNeutralSetup 行34454
+void gf_SKN_3_sharenkuang (int lv_a) {
+    // Implementation
+if ((gv_roleOptions[3][9][0] == true)) {
+    gv_immune[lv_a][0] = true;
+}
+
+if ((gv_roleOptions[3][9][4] == true)) {
+    gv_immune[lv_a][2] = true;
+}
+
+if ((gv_roleOptions[3][9][1] == true)) {
+    gv_variableOptions[lv_a][0] = 1;
+}
+else {
+    gv_variableOptions[lv_a][0] = 0;
+}
+if ((gv_cooldown[lv_a] == 0)) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+gf_RAMassMurdererActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/14 ← 原 gf_RSNeutralSetup 行34478
+void gf_SKN_3_wenyisanbuzhe (int lv_a) {
+    // Implementation
+if ((gv_roleOptions[3][14][4] == true)) {
+    gv_immune[lv_a][2] = true;
+}
+
+gv_immune[lv_a][0] = true;
+gv_variableOptions[lv_a][0] = 1;
+if ((gv_cooldown[lv_a] == 0)) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+gf_RAE7989FE796AB(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/15 ← 原 gf_RSNeutralSetup 行34494
+void gf_SKN_3_yuanhun_2 (int lv_a) {
+    // Implementation
+if ((gv_roleOptions[3][15][4] == true)) {
+    gv_immune[lv_a][2] = true;
+}
+
+gv_immune[lv_a][0] = true;
+gv_variableOptions[lv_a][0] = 1;
+if ((gv_cooldown[lv_a] == 0)) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+gf_RAE586A4E9AD82(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/10 ← 原 gf_RSNeutralSetup 行34510
+void gf_SKN_3_wuyi (int lv_a) {
+    // Implementation
+gf_CBAssignUnassignChatChannel(lv_a, 3, ge_Clear_DoNotClear);
+gf_CBAllowDisallowChatting(lv_a, ge_Allow_Allow);
+if ((gv_rsNeutralX[0] > 1)) {
+    gv_variableOptions[lv_a][0] = 1;
+}
+else {
+    gv_variableOptions[lv_a][0] = 0;
+}
+if ((gv_cooldown[lv_a] == 0) && (gv_shots[lv_a] != 0)) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_roleOptions[3][10][4] == true)) {
+    gv_immune[lv_a][2] = true;
+}
+
+gf_RAWitchDoctorActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/11 ← 原 gf_RSNeutralSetup 行34532
+void gf_SKN_3_shenjiguan (int lv_a) {
+    // Implementation
+if ((gv_shots[lv_a] > 0)) {
+    gv_variableOptions[lv_a][0] = 1;
+}
+else {
+    gv_variableOptions[lv_a][0] = 0;
+}
+gf_RAAuditorActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/12 ← 原 gf_RSNeutralSetup 行34542
+void gf_SKN_3_faguan (int lv_a) {
+    // Implementation
+gv_crying[lv_a] = true;
+gf_RANoActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：中立 3/13 ← 原 gf_RSNeutralSetup 行34547
+void gf_SKN_3_duoluoshenpanzhe (int lv_a) {
+    // Implementation
+if ((gv_roleOptions[3][13][1] == true)) {
+    gv_immune[lv_a][0] = true;
+}
+
+gf_RACorruptInquisitorActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：黑手D 2/1 ← 原 gf_RSMafiaSetup2 行33526
+void gf_SKM_2_dangtu (int lv_a) {
+    // Implementation
+gv_rsMafiaX[0] += 1;
+}
+
+// 阶段三抽取（shw238）：黑手D 2/2 ← 原 gf_RSMafiaSetup2 行33530
+void gf_SKM_2_jiaofu (int lv_a) {
+    // Implementation
+gv_rsMafiaX[1] = lv_a;
+}
+
+// 阶段三抽取（shw238）：黑手D 2/2 ← 原 gf_RSMafiaSetup2 行33550
+void gf_SKM_2_jiaofu_2 (int lv_a) {
+    // Implementation
+if ((gv_roleOptions[2][2][1] == true)) {
+    gv_immune[lv_a][1] = true;
+}
+
+if ((gv_roleOptions[2][2][2] == true)) {
+    gv_immune[lv_a][2] = true;
+}
+
+}
+
+// 阶段三抽取（shw238）：黑手D 2/1 ← 原 gf_RSMafiaSetup2 行33573
+void gf_SKM_2_dangtu_2 (int lv_a) {
+    // Implementation
+if (((gv_rsMafiaX[0] > 1) || (gv_rsMafiaX[1] != 0))) {
+    gv_variableOptions[lv_a][0] = 1;
+}
+else {
+    gv_variableOptions[lv_a][0] = 0;
+}
+if ((gv_rsMafiaX[1] != 0)) {
+    gv_variableOptions[lv_a][1] = gv_rsMafiaX[1];
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsMafiaX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+gf_RAMafiosoActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：黑手D 2/2 ← 原 gf_RSMafiaSetup2 行33595
+void gf_SKM_2_jiaofu_3 (int lv_a) {
+    // Implementation
+gf_CBHighlightText(lv_a, ge_Highlight_Highlighted);
+if ((gv_roleOptions[2][2][3] == false) && (gv_rsMafiaX[0] == 0)) {
+    gv_variableOptions[lv_a][0] = 0;
+}
+else {
+    gv_variableOptions[lv_a][0] = 1;
+}
+if ((gv_rsMafiaX[0] > 0)) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsMafiaX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+gf_RAGodfatherActions(lv_a);
+if ((gv_roleOptions[2][2][0] == true)) {
+    gv_immune[lv_a][0] = true;
+}
+
+if ((gv_roleOptions[2][2][1] == true)) {
+    gv_immune[lv_a][1] = true;
+}
+
+if ((gv_roleOptions[2][2][2] == true)) {
+    gv_immune[lv_a][2] = true;
+}
+
+}
+
+// 阶段三抽取（shw238）：黑手D 2/3 ← 原 gf_RSMafiaSetup2 行33630
+void gf_SKM_2_peishi (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 0;
+if (((gv_rsMafiaX[0] > 0) || (gv_rsMafiaX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsMafiaX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+gf_RAConsortActions(lv_a);
+if ((gv_roleOptions[2][3][1] == true)) {
+    gv_immune[lv_a][1] = true;
+}
+
+}
+
+// 阶段三抽取（shw238）：黑手D 2/4 ← 原 gf_RSMafiaSetup2 行33651
+void gf_SKM_2_canmou (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 0;
+if (((gv_rsMafiaX[0] > 0) || (gv_rsMafiaX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsMafiaX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+gf_RAConsigliereActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：黑手D 2/5 ← 原 gf_RSMafiaSetup2 行33668
+void gf_SKM_2_xianhaizhe (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 0;
+if (((gv_rsMafiaX[0] > 0) || (gv_rsMafiaX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsMafiaX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+gf_RAFramerActions(lv_a);
+if ((gv_roleOptions[2][5][1] == true)) {
+    gv_immune[lv_a][2] = true;
+}
+
+}
+
+// 阶段三抽取（shw238）：黑手D 2/6 ← 原 gf_RSMafiaSetup2 行33689
+void gf_SKM_2_qinglizhe (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 0;
+if (((gv_rsMafiaX[0] > 0) || (gv_rsMafiaX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsMafiaX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+if ((gv_shots[lv_a] == 0)) {
+    gv_variableOptions[lv_a][3] = 0;
+}
+else {
+    gv_variableOptions[lv_a][3] = 1;
+}
+gf_RAJanitorActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：黑手D 2/7 ← 原 gf_RSMafiaSetup2 行33712
+void gf_SKM_2_konghezhe (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 0;
+if (((gv_rsMafiaX[0] > 0) || (gv_rsMafiaX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsMafiaX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+gf_RABlackmailerActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：黑手D 2/8 ← 原 gf_RSMafiaSetup2 行33729
+void gf_SKM_2_weizhuangzhe (int lv_a) {
+    // Implementation
+if ((gv_disguised[lv_a] == 0)) {
+    gv_variableOptions[lv_a][0] = 1;
+}
+else {
+    gv_variableOptions[lv_a][0] = 0;
+}
+if (((gv_rsMafiaX[0] > 0) || (gv_rsMafiaX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsMafiaX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+gf_RADisguiserActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：黑手D 2/10 ← 原 gf_RSMafiaSetup2 行33751
+void gf_SKM_2_mitan (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 0;
+if (((gv_rsMafiaX[0] > 0) || (gv_rsMafiaX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsMafiaX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+if ((gv_cooldown[lv_a] == 0)) {
+    gv_variableOptions[lv_a][3] = 1;
+}
+else {
+    gv_variableOptions[lv_a][3] = 0;
+}
+gf_RAAgentActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：黑手D 2/11 ← 原 gf_RSMafiaSetup2 行33774
+void gf_SKM_2_qipianzhe (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 0;
+if (((gv_rsMafiaX[0] > 0) || (gv_rsMafiaX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsMafiaX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+if ((gv_shots[lv_a] == 0)) {
+    gv_variableOptions[lv_a][3] = 0;
+}
+else {
+    gv_variableOptions[lv_a][3] = 1;
+}
+gf_RABeguilerActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：黑手D 2/12 ← 原 gf_RSMafiaSetup2 行33797
+void gf_SKM_2_weixiezhe (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 0;
+if (((gv_rsMafiaX[0] > 0) || (gv_rsMafiaX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsMafiaX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+gf_RANoActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：黑手D 2/13 ← 原 gf_RSMafiaSetup2 行33814
+void gf_SKM_2_shandongzhe (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 0;
+if (((gv_rsMafiaX[0] > 0) || (gv_rsMafiaX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsMafiaX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+gf_RANoActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：黑手D 2/14 ← 原 gf_RSMafiaSetup2 行33831
+void gf_SKM_2_mentu (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 0;
+if (((gv_rsMafiaX[0] > 0) || (gv_rsMafiaX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsMafiaX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+gf_RAE997A8E5BE92action(lv_a);
+}
+
+// 阶段三抽取（shw238）：黑手D 2/15 ← 原 gf_RSMafiaSetup2 行33851
+void gf_SKM_2_zaizangzhe (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 1;
+gv_variableOptions[lv_a][1] = 1;
+if ((gv_rsMafiaX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+gf_RAPretenderActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：三合会 5/1 ← 原 gf_RSTriadSetup 行33907
+void gf_SKT_5_baotu (int lv_a) {
+    // Implementation
+gv_rsTriadX[0] += 1;
+}
+
+// 阶段三抽取（shw238）：三合会 5/2 ← 原 gf_RSTriadSetup 行33911
+void gf_SKT_5_longtou (int lv_a) {
+    // Implementation
+gv_rsTriadX[1] = lv_a;
+}
+
+// 阶段三抽取（shw238）：三合会 5/2 ← 原 gf_RSTriadSetup 行33931
+void gf_SKT_5_longtou_2 (int lv_a) {
+    // Implementation
+if ((gv_roleOptions[5][2][1] == true)) {
+    gv_immune[lv_a][1] = true;
+}
+
+if ((gv_roleOptions[5][2][2] == true)) {
+    gv_immune[lv_a][2] = true;
+}
+
+}
+
+// 阶段三抽取（shw238）：三合会 5/1 ← 原 gf_RSTriadSetup 行33954
+void gf_SKT_5_baotu_2 (int lv_a) {
+    // Implementation
+if (((gv_rsTriadX[0] > 1) || (gv_rsTriadX[1] != 0))) {
+    gv_variableOptions[lv_a][0] = 1;
+}
+else {
+    gv_variableOptions[lv_a][0] = 0;
+}
+if ((gv_rsTriadX[1] != 0)) {
+    gv_variableOptions[lv_a][1] = gv_rsTriadX[1];
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsTriadX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+gf_RAEnforcerActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：三合会 5/2 ← 原 gf_RSTriadSetup 行33976
+void gf_SKT_5_longtou_3 (int lv_a) {
+    // Implementation
+gf_CBHighlightText(lv_a, ge_Highlight_Highlighted);
+if ((gv_roleOptions[5][2][3] == false) && (gv_rsTriadX[0] == 0)) {
+    gv_variableOptions[lv_a][0] = 0;
+}
+else {
+    gv_variableOptions[lv_a][0] = 1;
+}
+if ((gv_rsTriadX[0] > 0)) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsTriadX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+gf_RADragonHeadActions(lv_a);
+if ((gv_roleOptions[5][2][0] == true)) {
+    gv_immune[lv_a][0] = true;
+}
+
+if ((gv_roleOptions[5][2][1] == true)) {
+    gv_immune[lv_a][1] = true;
+}
+
+if ((gv_roleOptions[5][2][2] == true)) {
+    gv_immune[lv_a][2] = true;
+}
+
+}
+
+// 阶段三抽取（shw238）：三合会 5/3 ← 原 gf_RSTriadSetup 行34011
+void gf_SKT_5_jiaojihua (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 0;
+if (((gv_rsTriadX[0] > 0) || (gv_rsTriadX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsTriadX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+gf_RALiaisonActions(lv_a);
+if ((gv_roleOptions[5][3][1] == true)) {
+    gv_immune[lv_a][1] = true;
+}
+
+}
+
+// 阶段三抽取（shw238）：三合会 5/4 ← 原 gf_RSTriadSetup 行34032
+void gf_SKT_5_guanjia (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 0;
+if (((gv_rsTriadX[0] > 0) || (gv_rsTriadX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsTriadX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+gf_RAAdministratorActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：三合会 5/5 ← 原 gf_RSTriadSetup 行34049
+void gf_SKT_5_zaojia (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 0;
+if (((gv_rsTriadX[0] > 0) || (gv_rsTriadX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsTriadX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+gf_RAForgerActions(lv_a);
+if ((gv_roleOptions[5][5][1] == true)) {
+    gv_immune[lv_a][2] = true;
+}
+
+}
+
+// 阶段三抽取（shw238）：三合会 5/6 ← 原 gf_RSTriadSetup 行34070
+void gf_SKT_5_xiangzhu (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 0;
+if (((gv_rsTriadX[0] > 0) || (gv_rsTriadX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsTriadX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+if ((gv_shots[lv_a] == 0)) {
+    gv_variableOptions[lv_a][3] = 0;
+}
+else {
+    gv_variableOptions[lv_a][3] = 1;
+}
+gf_RAIncenseMasterActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：三合会 5/7 ← 原 gf_RSTriadSetup 行34093
+void gf_SKT_5_fengkou (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 0;
+if (((gv_rsTriadX[0] > 0) || (gv_rsTriadX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsTriadX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+gf_RASilencerActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：三合会 5/8 ← 原 gf_RSTriadSetup 行34110
+void gf_SKT_5_shentou (int lv_a) {
+    // Implementation
+if ((gv_disguised[lv_a] == 0)) {
+    gv_variableOptions[lv_a][0] = 1;
+}
+else {
+    gv_variableOptions[lv_a][0] = 0;
+}
+if (((gv_rsTriadX[0] > 0) || (gv_rsTriadX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsTriadX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+gf_RAInformantActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：三合会 5/10 ← 原 gf_RSTriadSetup 行34132
+void gf_SKT_5_xianfeng (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 0;
+if (((gv_rsTriadX[0] > 0) || (gv_rsTriadX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsTriadX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+if ((gv_cooldown[lv_a] == 0)) {
+    gv_variableOptions[lv_a][3] = 1;
+}
+else {
+    gv_variableOptions[lv_a][3] = 0;
+}
+gf_RAVanguardActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：三合会 5/11 ← 原 gf_RSTriadSetup 行34155
+void gf_SKT_5_mihuo (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 0;
+if (((gv_rsTriadX[0] > 0) || (gv_rsTriadX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsTriadX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+if ((gv_shots[lv_a] == 0)) {
+    gv_variableOptions[lv_a][3] = 0;
+}
+else {
+    gv_variableOptions[lv_a][3] = 1;
+}
+gf_RADeceiverActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：三合会 5/12 ← 原 gf_RSTriadSetup 行34178
+void gf_SKT_5_zhishizhe (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 0;
+if (((gv_rsTriadX[0] > 0) || (gv_rsTriadX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsTriadX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+gf_RANoActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：三合会 5/13 ← 原 gf_RSTriadSetup 行34195
+void gf_SKT_5_raoluanzhe (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 0;
+if (((gv_rsTriadX[0] > 0) || (gv_rsTriadX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsTriadX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+gf_RANoActions(lv_a);
+}
+
+// 阶段三抽取（shw238）：三合会 5/14 ← 原 gf_RSTriadSetup 行34212
+void gf_SKT_5_pucong (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 0;
+if (((gv_rsTriadX[0] > 0) || (gv_rsTriadX[1] > 0))) {
+    gv_variableOptions[lv_a][1] = 1;
+}
+else {
+    gv_variableOptions[lv_a][1] = 0;
+}
+if ((gv_rsTriadX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+gf_RAE997A8E5BE92action(lv_a);
+}
+
+// 阶段三抽取（shw238）：三合会 5/15 ← 原 gf_RSTriadSetup 行34231
+void gf_SKT_5_wuxian (int lv_a) {
+    // Implementation
+gv_variableOptions[lv_a][0] = 1;
+gv_variableOptions[lv_a][1] = 1;
+if ((gv_rsTriadX[10] > 1)) {
+    gv_variableOptions[lv_a][2] = 1;
+}
+else {
+    gv_variableOptions[lv_a][2] = 0;
+}
+gf_RAPretenderActions2(lv_a);
+}
+
+// 阶段三抽取（shw238）：城镇 1/14 ← 原 gf_RSConversions 行32216
+void gf_SKV_1_gongjihuizhanglao (int lv_a) {
+    // Implementation
+gv_rsConvX[4] = lv_a;
+}
+
+// 阶段三抽取（shw238）：黑手D 2/1 ← 原 gf_RSConversions 行32224
+void gf_SKV_2_dangtu (int lv_a) {
+    // Implementation
+gv_rsConvX[0] += 1;
+}
+
+// 阶段三抽取（shw238）：黑手D 2/2 ← 原 gf_RSConversions 行32228
+void gf_SKV_2_jiaofu (int lv_a) {
+    // Implementation
+gv_rsConvX[1] = lv_a;
+if ((gv_roleOptions[2][2][3] == true)) {
+    gv_rsConvX[0] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：三合会 5/1 ← 原 gf_RSConversions 行32240
+void gf_SKV_5_baotu (int lv_a) {
+    // Implementation
+gv_rsConvX[10] += 1;
+}
+
+// 阶段三抽取（shw238）：三合会 5/2 ← 原 gf_RSConversions 行32244
+void gf_SKV_5_longtou (int lv_a) {
+    // Implementation
+gv_rsConvX[11] = lv_a;
+if ((gv_roleOptions[5][2][3] == true)) {
+    gv_rsConvX[10] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：黑手D 2/8 ← 原 gf_RSConversions 行32258
+void gf_SKV_2_weizhuangzhe (int lv_a) {
+    // Implementation
+gv_rsConvX[0] += 1;
+}
+
+// 阶段三抽取（shw238）：三合会 5/8 ← 原 gf_RSConversions 行32262
+void gf_SKV_5_shentou (int lv_a) {
+    // Implementation
+gv_rsConvX[1] += 1;
+}
+
+// 阶段三抽取（shw238）：黑手D 2/4 ← 原 gf_RSConversions 行32272
+void gf_SKV_2_canmou (int lv_a) {
+    // Implementation
+gv_rsConvX[6] = 1;
+}
+
+// 阶段三抽取（shw238）：三合会 5/4 ← 原 gf_RSConversions 行32276
+void gf_SKV_5_guanjia (int lv_a) {
+    // Implementation
+gv_rsConvX[16] = 1;
+}
+
+// 阶段三抽取（shw238）：黑手D 2/2 ← 原 gf_RSConversions 行32287
+void gf_SKV_2_jiaofu_2 (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[2][2][4] == true) && ((gv_rsConvX[0] == 0) || ((gv_rsConvX[0] == 1) && (gv_roleOptions[2][2][3] == true))) && ((gv_rsConvX[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
+    gv_rsConvX[3] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[2] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/33A99790") + gv_roleNameArray[2][1] + StringExternal("Param/Value/40316C93")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/82AE9798") + gv_roleNameArray[2][1] + StringExternal("Param/Value/CADF2701")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[0] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：黑手D 2/3 ← 原 gf_RSConversions 行32307
+void gf_SKV_2_peishi (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[2][3][0] == true) && (gv_rsConvX[0] == 0) && ((gv_rsConvX[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
+    gv_rsConvX[3] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[2] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/2E52C7C4") + gv_roleNameArray[2][1] + StringExternal("Param/Value/38F4D320")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/1DAED953") + gv_roleNameArray[2][1] + StringExternal("Param/Value/6B729A4E")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[0] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：黑手D 2/4 ← 原 gf_RSConversions 行32327
+void gf_SKV_2_canmou_2 (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[2][4][0] == true) && (gv_roleOptions[2][2][10] == true) && (gv_rsConvX[1] == 0)) {
+    if ((PlayerGroupCount(gv_players) > 9)) {
+        gv_specialCasePlayer[lv_a][7] = 1;
+    }
+
+    gv_rsConvX[3] = 1;
+    gv_roles[lv_a][0] = 2;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    gf_CBSystemMessage((StringExternal("Param/Value/4DC14E89") + gv_roleNameArray[2][2] + StringExternal("Param/Value/9F99F50E")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    gv_rsConvX[1] = lv_a;
+}
+else {
+    if ((gv_roleOptions[2][4][2] == true) && (gv_rsConvX[0] == 0) && ((gv_rsConvX[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
+        gv_rsConvX[3] = 1;
+        gv_roles[lv_a][0] = 1;
+        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+        gf_RTRoleCard(lv_a);
+        gv_specialCasePlayer[lv_a][17] += 1;
+        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+        if ((gv_rsConvX[2] == 1)) {
+            gf_CBSystemMessage((StringExternal("Param/Value/6664FE1B") + gv_roleNameArray[2][1] + StringExternal("Param/Value/C2986F4E")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+        }
+        else {
+            gf_CBSystemMessage((StringExternal("Param/Value/C7E0A16E") + gv_roleNameArray[2][1] + StringExternal("Param/Value/3F45CD61")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+        }
+        gv_rsConvX[0] += 1;
+    }
+
+}
+}
+
+// 阶段三抽取（shw238）：黑手D 2/5 ← 原 gf_RSConversions 行32364
+void gf_SKV_2_xianhaizhe (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[2][5][0] == true) && (gv_rsConvX[0] == 0) && ((gv_rsConvX[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
+    gv_rsConvX[3] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[2] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/BD5BA6AC") + gv_roleNameArray[2][1] + StringExternal("Param/Value/D12323D5")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/472AEDC0") + gv_roleNameArray[2][1] + StringExternal("Param/Value/34DA2817")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[0] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：黑手D 2/6 ← 原 gf_RSConversions 行32384
+void gf_SKV_2_qinglizhe (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[2][6][0] == true) && (gv_rsConvX[0] == 0) && ((gv_rsConvX[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
+    gv_rsConvX[3] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[2] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/7C0CDEE2") + gv_roleNameArray[2][1] + StringExternal("Param/Value/DFDCD1F6")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/543A4203") + gv_roleNameArray[2][1] + StringExternal("Param/Value/CD67F890")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[0] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：黑手D 2/7 ← 原 gf_RSConversions 行32404
+void gf_SKV_2_konghezhe (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[2][7][0] == true) && (gv_rsConvX[0] == 0) && ((gv_rsConvX[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
+    gv_rsConvX[3] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[2] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/1A683083") + gv_roleNameArray[2][1] + StringExternal("Param/Value/69BCDF65")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/36A41D18") + gv_roleNameArray[2][1] + StringExternal("Param/Value/F3968990")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[0] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：黑手D 2/8 ← 原 gf_RSConversions 行32424
+void gf_SKV_2_weizhuangzhe_2 (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[2][8][1] == true) && (gv_rsConvX[0] == 0) && ((gv_rsConvX[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
+    gv_rsConvX[3] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[2] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/FC0E0BB1") + gv_roleNameArray[2][1] + StringExternal("Param/Value/570F8CBE")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/EF474E21") + gv_roleNameArray[2][1] + StringExternal("Param/Value/EC017673")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[0] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：黑手D 2/9 ← 原 gf_RSConversions 行32444
+void gf_SKV_2_bangjiazhe (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[2][9][0] == true) && (gv_rsConvX[0] == 0) && ((gv_rsConvX[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
+    gv_action[lv_a][0] = 0;
+    gv_rsConvX[3] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[2] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/088312D3") + gv_roleNameArray[2][1] + StringExternal("Param/Value/4896F267")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/450E5B32") + gv_roleNameArray[2][1] + StringExternal("Param/Value/6151E8EA")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[0] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：黑手D 2/10 ← 原 gf_RSConversions 行32465
+void gf_SKV_2_mitan (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[2][10][0] == true) && (gv_rsConvX[0] == 0) && ((gv_rsConvX[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
+    gv_rsConvX[3] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[2] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/76E502B4") + gv_roleNameArray[2][1] + StringExternal("Param/Value/4F8E9059")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/DBA7D63F") + gv_roleNameArray[2][1] + StringExternal("Param/Value/F0A652CC")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[0] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：黑手D 2/11 ← 原 gf_RSConversions 行32485
+void gf_SKV_2_qipianzhe (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[2][11][0] == true) && (gv_rsConvX[0] == 0) && ((gv_rsConvX[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
+    gv_rsConvX[3] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[2] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/18899125") + gv_roleNameArray[2][1] + StringExternal("Param/Value/438CDB5A")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/9BF5D439") + gv_roleNameArray[2][1] + StringExternal("Param/Value/3A2A5E82")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[0] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：黑手D 2/12 ← 原 gf_RSConversions 行32505
+void gf_SKV_2_weixiezhe (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[2][12][0] == true) && (gv_rsConvX[0] == 0) && ((gv_rsConvX[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
+    gv_rsConvX[3] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[2] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/B7F74DB9") + gv_roleNameArray[2][1] + StringExternal("Param/Value/5AEB95D5")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/5F505A7D") + gv_roleNameArray[2][1] + StringExternal("Param/Value/C1ED84ED")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[0] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：黑手D 2/13 ← 原 gf_RSConversions 行32525
+void gf_SKV_2_shandongzhe (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[2][13][0] == true) && (gv_rsConvX[0] == 0) && ((gv_rsConvX[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
+    gv_rsConvX[3] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[2] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/00035B4D") + gv_roleNameArray[2][1] + StringExternal("Param/Value/D24DED78")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/E4D61FA9") + gv_roleNameArray[2][1] + StringExternal("Param/Value/B3D33811")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[0] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：黑手D 2/14 ← 原 gf_RSConversions 行32545
+void gf_SKV_2_mentu (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[2][14][0] == true) && (gv_rsConvX[0] == 0) && ((gv_rsConvX[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
+    gv_rsConvX[3] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[2] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/A910AEAC") + gv_roleNameArray[2][1] + StringExternal("Param/Value/01795023")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/39DB438F") + gv_roleNameArray[2][1] + StringExternal("Param/Value/763B808D")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[0] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：黑手D 2/15 ← 原 gf_RSConversions 行32565
+void gf_SKV_2_zaizangzhe (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[2][15][0] == true) && (gv_rsConvX[0] == 0) && ((gv_rsConvX[6] == 0) || (gv_roleOptions[2][2][3] == false))) {
+    if ((gv_pretended[lv_a] == false)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/CB571831") + gv_roleNameArray[2][1] + StringExternal("Param/Value/B97716C7")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gv_rsConvX[3] = 1;
+        gv_roles[lv_a][0] = 1;
+        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+        gf_RTRoleCard(lv_a);
+        gv_specialCasePlayer[lv_a][17] += 1;
+        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+        if ((gv_rsConvX[2] == 1)) {
+            gf_CBSystemMessage((StringExternal("Param/Value/1E65BBEE") + gv_roleNameArray[2][1] + StringExternal("Param/Value/202B65D8")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+        }
+        else {
+            gf_CBSystemMessage((StringExternal("Param/Value/DC16CC19") + gv_roleNameArray[2][1] + StringExternal("Param/Value/2AD1E31D")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+        }
+        gv_rsConvX[0] += 1;
+    }
+}
+
+}
+
+// 阶段三抽取（shw238）：三合会 5/2 ← 原 gf_RSConversions 行32593
+void gf_SKV_5_longtou_2 (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[5][2][4] == true) && ((gv_rsConvX[10] == 0) || ((gv_rsConvX[10] == 1) && (gv_roleOptions[5][2][3] == true))) && ((gv_rsConvX[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
+    gv_rsConvX[13] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[12] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/24983DB7") + gv_roleNameArray[5][1] + StringExternal("Param/Value/6A1B453E")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/AEC55663") + gv_roleNameArray[5][1] + StringExternal("Param/Value/15E16A50")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[10] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：三合会 5/3 ← 原 gf_RSConversions 行32613
+void gf_SKV_5_jiaojihua (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[5][3][0] == true) && (gv_rsConvX[10] == 0) && ((gv_rsConvX[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
+    gv_rsConvX[13] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[12] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/F86B8B8A") + gv_roleNameArray[5][1] + StringExternal("Param/Value/A2CF56BC")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/7527C8D2") + gv_roleNameArray[5][1] + StringExternal("Param/Value/8D0B00D4")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[10] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：三合会 5/15 ← 原 gf_RSConversions 行32633
+void gf_SKV_5_wuxian (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[5][15][0] == true) && (gv_rsConvX[0] == 0) && ((gv_rsConvX[6] == 0) || (gv_roleOptions[5][2][3] == false))) {
+    if ((gv_pretended[lv_a] == false)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/B86DACD6") + gv_roleNameArray[2][1] + StringExternal("Param/Value/A3C307AD")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gv_rsConvX[3] = 1;
+        gv_roles[lv_a][0] = 1;
+        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+        gf_RTRoleCard(lv_a);
+        gv_specialCasePlayer[lv_a][17] += 1;
+        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+        if ((gv_rsConvX[2] == 1)) {
+            gf_CBSystemMessage((StringExternal("Param/Value/A2594BD3") + gv_roleNameArray[5][1] + StringExternal("Param/Value/C0BDA105")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+        }
+        else {
+            gf_CBSystemMessage((StringExternal("Param/Value/6BD1EE0E") + gv_roleNameArray[5][1] + StringExternal("Param/Value/602EEB91")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+        }
+        gv_rsConvX[0] += 1;
+    }
+}
+
+}
+
+// 阶段三抽取（shw238）：三合会 5/4 ← 原 gf_RSConversions 行32658
+void gf_SKV_5_guanjia_2 (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[5][4][0] == true) && (gv_roleOptions[5][2][10] == true) && (gv_rsConvX[11] == 0)) {
+    if ((PlayerGroupCount(gv_players) > 9)) {
+        gv_specialCasePlayer[lv_a][7] = 1;
+    }
+
+    gv_rsConvX[13] = 1;
+    gv_roles[lv_a][0] = 2;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    gf_CBSystemMessage((StringExternal("Param/Value/551C2446") + gv_roleNameArray[5][2] + StringExternal("Param/Value/41484F15")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    gv_rsConvX[11] = lv_a;
+}
+else {
+    if ((gv_roleOptions[5][4][2] == true) && (gv_rsConvX[10] == 0) && ((gv_rsConvX[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
+        gv_rsConvX[13] = 1;
+        gv_roles[lv_a][0] = 1;
+        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+        gf_RTRoleCard(lv_a);
+        gv_specialCasePlayer[lv_a][17] += 1;
+        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+        if ((gv_rsConvX[12] == 1)) {
+            gf_CBSystemMessage((StringExternal("Param/Value/850C8D35") + gv_roleNameArray[5][1] + StringExternal("Param/Value/F4913F63")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+        }
+        else {
+            gf_CBSystemMessage((StringExternal("Param/Value/3009D7DB") + gv_roleNameArray[5][1] + StringExternal("Param/Value/B5DF8ED2")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+        }
+        gv_rsConvX[10] += 1;
+    }
+
+}
+}
+
+// 阶段三抽取（shw238）：三合会 5/5 ← 原 gf_RSConversions 行32695
+void gf_SKV_5_zaojia (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[5][5][0] == true) && (gv_rsConvX[10] == 0) && ((gv_rsConvX[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
+    gv_rsConvX[13] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[12] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/0A1D73E8") + gv_roleNameArray[5][1] + StringExternal("Param/Value/6ABC7220")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/8CAF86A5") + gv_roleNameArray[5][1] + StringExternal("Param/Value/3235CF38")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[10] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：三合会 5/6 ← 原 gf_RSConversions 行32715
+void gf_SKV_5_xiangzhu (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[5][6][0] == true) && (gv_rsConvX[10] == 0) && ((gv_rsConvX[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
+    gv_rsConvX[13] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[12] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/C728F37B") + gv_roleNameArray[5][1] + StringExternal("Param/Value/E035ED9B")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/3F5F888F") + gv_roleNameArray[5][1] + StringExternal("Param/Value/B0C58304")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[10] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：三合会 5/7 ← 原 gf_RSConversions 行32735
+void gf_SKV_5_fengkou (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[5][7][0] == true) && (gv_rsConvX[10] == 0) && ((gv_rsConvX[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
+    gv_rsConvX[13] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[12] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/D4E0EB2C") + gv_roleNameArray[5][1] + StringExternal("Param/Value/64979DA5")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/6D2E8C7E") + gv_roleNameArray[5][1] + StringExternal("Param/Value/B10FF9E4")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[10] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：三合会 5/8 ← 原 gf_RSConversions 行32755
+void gf_SKV_5_shentou_2 (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[5][8][1] == true) && (gv_rsConvX[10] == 0) && ((gv_rsConvX[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
+    gv_rsConvX[13] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[12] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/37165482") + gv_roleNameArray[5][1] + StringExternal("Param/Value/FD03106A")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/21CAFCC2") + gv_roleNameArray[5][1] + StringExternal("Param/Value/76CFCD30")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[10] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：三合会 5/9 ← 原 gf_RSConversions 行32775
+void gf_SKV_5_shenxun (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[5][9][0] == true) && (gv_rsConvX[10] == 0) && ((gv_rsConvX[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
+    gv_action[lv_a][0] = 0;
+    gv_rsConvX[13] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[12] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/65EC2714") + gv_roleNameArray[5][1] + StringExternal("Param/Value/0E019D1F")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/6EE2F10A") + gv_roleNameArray[5][1] + StringExternal("Param/Value/E4922782")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[10] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：三合会 5/10 ← 原 gf_RSConversions 行32796
+void gf_SKV_5_xianfeng (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[5][10][0] == true) && (gv_rsConvX[10] == 0) && ((gv_rsConvX[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
+    gv_rsConvX[13] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[12] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/E5F758E4") + gv_roleNameArray[5][1] + StringExternal("Param/Value/1504F93A")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/BFB193DC") + gv_roleNameArray[5][1] + StringExternal("Param/Value/95231178")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[10] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：三合会 5/11 ← 原 gf_RSConversions 行32816
+void gf_SKV_5_mihuo (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[5][11][0] == true) && (gv_rsConvX[10] == 0) && ((gv_rsConvX[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
+    gv_rsConvX[13] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[12] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/60612075") + gv_roleNameArray[5][1] + StringExternal("Param/Value/B1D572A3")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/F8E7F29B") + gv_roleNameArray[5][1] + StringExternal("Param/Value/9B74AC7F")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[10] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：三合会 5/12 ← 原 gf_RSConversions 行32836
+void gf_SKV_5_zhishizhe (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[5][12][0] == true) && (gv_rsConvX[10] == 0) && ((gv_rsConvX[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
+    gv_rsConvX[13] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[12] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/496021D0") + gv_roleNameArray[5][1] + StringExternal("Param/Value/C4B6409D")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/C01325C2") + gv_roleNameArray[5][1] + StringExternal("Param/Value/E2BA9766")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[10] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：三合会 5/15 ← 原 gf_RSConversions 行32856
+void gf_SKV_5_wuxian_2 (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[5][15][0] == true) && (gv_rsConvX[0] == 0) && ((gv_rsConvX[6] == 0) || (gv_roleOptions[5][2][3] == false))) {
+    if ((gv_pretended[lv_a] == false)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/182B69E9") + gv_roleNameArray[5][1] + StringExternal("Param/Value/A9BC66A4")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gv_rsConvX[3] = 1;
+        gv_roles[lv_a][0] = 1;
+        lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+        gf_RTRoleCard(lv_a);
+        gv_specialCasePlayer[lv_a][17] += 1;
+        gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+        if ((gv_rsConvX[2] == 1)) {
+            gf_CBSystemMessage((StringExternal("Param/Value/EBE2DAE7") + gv_roleNameArray[5][1] + StringExternal("Param/Value/5B15396E")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+        }
+        else {
+            gf_CBSystemMessage((StringExternal("Param/Value/0EEC607C") + gv_roleNameArray[5][1] + StringExternal("Param/Value/F40A8722")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+        }
+        gv_rsConvX[0] += 1;
+    }
+}
+
+}
+
+// 阶段三抽取（shw238）：三合会 5/13 ← 原 gf_RSConversions 行32881
+void gf_SKV_5_raoluanzhe (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[5][13][0] == true) && (gv_rsConvX[10] == 0) && ((gv_rsConvX[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
+    gv_rsConvX[13] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[12] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/9F642037") + gv_roleNameArray[5][1] + StringExternal("Param/Value/42B0061C")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/EE4AD3D3") + gv_roleNameArray[5][1] + StringExternal("Param/Value/AE4F6D69")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[10] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：三合会 5/14 ← 原 gf_RSConversions 行32901
+void gf_SKV_5_pucong (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[5][14][0] == true) && (gv_rsConvX[10] == 0) && ((gv_rsConvX[16] == 0) || (gv_roleOptions[5][2][3] == false))) {
+    gv_rsConvX[13] = 1;
+    gv_roles[lv_a][0] = 1;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    if ((gv_rsConvX[12] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/1D314629") + gv_roleNameArray[5][1] + StringExternal("Param/Value/38046E8F")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/BDFCD76E") + gv_roleNameArray[5][1] + StringExternal("Param/Value/DDCD6D80")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    }
+    gv_rsConvX[10] += 1;
+}
+
+}
+
+// 阶段三抽取（shw238）：城镇 1/7 ← 原 gf_RSConversions 行32923
+void gf_SKV_1_gongjihuichengyuan (int lv_a) {
+    // Variable Declarations
+    bool lv_c;
+    // Implementation
+if ((gv_roleOptions[1][7][0] == true) && (gv_rsConvX[4] == 0)) {
+    gv_rsConvX[3] = 1;
+    if ((gv_previousShots == -1)) {
+        gv_shots[lv_a] = -1;
+        if ((gv_roleOptions[1][14][1] == true)) {
+            gv_shots[lv_a] = 2;
+        }
+
+        if ((gv_roleOptions[1][14][2] == true)) {
+            gv_shots[lv_a] = 3;
+        }
+
+        if ((gv_roleOptions[1][14][3] == true)) {
+            gv_shots[lv_a] = 4;
+        }
+
+    }
+    else {
+        gv_shots[lv_a] = gv_previousShots;
+    }
+    gv_roles[lv_a][0] = 14;
+    lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
+    gf_RTRoleCard(lv_a);
+    gv_specialCasePlayer[lv_a][17] += 1;
+    gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
+    gf_CBSystemMessage((StringExternal("Param/Value/6BA4E45D") + gv_roleNameArray[1][14] + StringExternal("Param/Value/A5465845")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
+    gv_rsConvX[4] = lv_a;
+}
+
 }

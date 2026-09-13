@@ -80,6 +80,19 @@ FAMILIES = {
         "params": None,
     },
     # 夜间族按函数拆开跑：便于逐函数提交与回退（标记按家族名区分，天然幂等）
+    # 角色设置族（shw246）：玩家初始化时按角色分配初始状态。五个宿主各自遍历玩家、
+    # 先按池分支（gv_roles[X][1] == P），再在池内用**单条件块**（gv_roles[X][0] == N）
+    # ⇒ 池归属由 infer_pool() 从外层池分支推断（不是从宿主名猜）。
+    # 依赖的函数局部数组（lv_x / lv_prejailed / lv_prejailing）必须先由
+    # tools/role_local_promote.py 提升为函数专属全局，否则块内"先读后写"无法当参数传。
+    "rssetup": {
+        "funcs": ["gf_RSTownSetup", "gf_RSNeutralSetup", "gf_RSMafiaSetup2", "gf_RSTriadSetup",
+                  "gf_RSConversions"],
+        "tag": {"gf_RSTownSetup": "R", "gf_RSNeutralSetup": "N", "gf_RSMafiaSetup2": "M",
+                "gf_RSTriadSetup": "T", "gf_RSConversions": "V"},
+        "params": None,
+        "single": True,
+    },
     # 白天技能按钮族（shw245）：主语是**表达式** `EventPlayer()`（不是循环变量）⇒ 不带参数，
     # 函数体原样引用同一表达式，语义不变（不传值 ⇒ 不存在"写不回传"的问题）。
     "ability": {
@@ -157,8 +170,31 @@ def func_span(lines, name):
     return None
 
 
-def find_blocks(lines, name, params):
-    """找顶层角色块：条件行含 池/角色 判断，块体由大括号配平界定。"""
+POOL_RE = re.compile(r"gv_roles\[([^\]]+)\]\[1\]\s*==\s*(\d+)")
+
+
+def infer_pool(lines, s, i, subject):
+    """池归属推断（shw246）：单条件块 `if ((gv_roles[X][0] == N))` 本身不带池，
+    但它的**外层**必然有一层 `if ((gv_roles[X][1] == P))` 池分支（角色设置族的结构：
+    for 遍历玩家 → 存活判断 → 池分支 → 单条件角色块）。
+    取**最内层**、且主语相同的那一层；找不到返回 None（该块不抽，报告出来）。"""
+    stack = []
+    for k in range(s + 1, i):
+        t = lines[k].strip()
+        if t.endswith("{"):
+            m = POOL_RE.search(t)
+            stack.append((k, int(m.group(2)), m.group(1)) if m else (k, None, None))
+        if t.startswith("}"):
+            if t == "}" and stack:
+                stack.pop()
+    for _, pool, subj in reversed(stack):
+        if pool is not None and subj == subject:
+            return pool
+    return None
+
+
+def find_blocks(lines, name, params, single=False):
+    """找角色块：条件行含 池/角色 判断（或 single=True 时的池专属单条件），块体由大括号配平界定。"""
     span = func_span(lines, name)
     if not span:
         return []
@@ -174,6 +210,13 @@ def find_blocks(lines, name, params):
                 buf += " " + lines[j].strip()
             m = re.search(r"gv_roles\[([^\]]+)\]\[1\]\s*==\s*(\d+)\)\s*&&\s*\(gv_roles\[\1\]\[0\]\s*==\s*(\d+)", buf) \
                 or re.search(r"gv_roles\[([^\]]+)\]\[1\]\s*==\s*(\d+)\)\s*&&\s*\(gv_roles\[\1\]\[0\]\s*==\s*(\d+)", buf)
+            if not m and single:
+                ms = re.search(r"gv_roles\[([^\]]+)\]\[0\]\s*==\s*(\d+)", buf)
+                if ms and "[1]" not in buf:
+                    pool = infer_pool(lines, s, i, ms.group(1))
+                    if pool is not None:
+                        m = Block  # 占位，走下面同一段落盘
+                        m_pool, m_role, m_subj = pool, int(ms.group(2)), ms.group(1)
             if m:
                 depth, k = 0, j
                 while k <= e:
@@ -181,9 +224,13 @@ def find_blocks(lines, name, params):
                     if depth == 0:
                         break
                     k += 1
+                if m is Block:
+                    pool, role, subj = m_pool, m_role, m_subj
+                else:
+                    pool, role, subj = int(m.group(2)), int(m.group(3)), m.group(1)
                 out.append(Block(func=name, tag=None, start=i, hdr_end=j, end=k, cond=buf, bv=None,
-                                 body="\n".join(lines[j + 1:k]), pool=int(m.group(2)), role=int(m.group(3)),
-                                 src=m.group(1)))
+                                 body="\n".join(lines[j + 1:k]), pool=pool, role=role,
+                                 src=subj))
                 i = k + 1
                 continue
         i += 1
@@ -270,7 +317,8 @@ def main():
         if not span:
             sys.exit(f"✗ 找不到 {fn}")
         types = decl_types(lines, span[0], span[1])
-        blocks = analyze(lines, find_blocks(lines, fn, fam["params"]), fam["params"], set(types), types)
+        blocks = analyze(lines, find_blocks(lines, fn, fam["params"], fam.get("single", False)),
+                         fam["params"], set(types), types)
         for b in blocks:
             b.tag = fam["tag"].get(fn, fn)
             b.decls = set(types)

@@ -46,6 +46,17 @@ SPEC = {
         ("lv_wait", "gv_seqAfter2Wait", "bool[5]"),
         ("lv_z", "gv_seqAfter2Z", "bool[5]"),
     ],
+    # 角色设置族（shw246）：五个宿主的 lv_x 都是**各自函数**的局部（同名不同变量）⇒ 各自独立全局。
+    # 提升后块内的 `lv_x[k]` 读的是同一个全局 ⇒ 「先读后写」的数组依赖消失，块才搬得动。
+    "gf_RSTownSetup": [
+        ("lv_x", "gv_rsTownX", "int[11]"),
+        ("lv_prejailed", "gv_rsTownPrejailed", "int[16]"),
+        ("lv_prejailing", "gv_rsTownPrejailing", "int[16]"),
+    ],
+    "gf_RSNeutralSetup": [("lv_x", "gv_rsNeutralX", "int[2]")],
+    "gf_RSMafiaSetup2": [("lv_x", "gv_rsMafiaX", "int[11]")],
+    "gf_RSTriadSetup": [("lv_x", "gv_rsTriadX", "int[11]")],
+    "gf_RSConversions": [("lv_x", "gv_rsConvX", "int[21]")],
     "gf_SequenceAfter": [
         ("lv_d", "gv_seqAfterD", "int[16]"),
         ("lv_e7989FE796ABE68EA2E59198E4BAA4E4BA92", "gv_seqAfterPlagueInteract", "bool[16]"),
@@ -125,8 +136,13 @@ def main():
                 if lines[k].strip() == decl:
                     delete.add(k)
                     continue
-                new = re.sub(rf"(?<![A-Za-z0-9_]){local}(?![A-Za-z0-9_])", glob, lines[k])
-                assert new == lines[k].replace(local, glob), f"✗ {fn} 行{k+1} 替换不可逆"
+                # ⚠ 累积式改名（shw246 事故）：原来直接 `rename[k] = new` —— 同一行若含**两个**
+                #   待提升名（如 `if ((lv_prejailing[lv_a] != 0) && (lv_prejailed[lv_a] != 0))`），
+                #   后一个的改名结果会覆盖前一个 ⇒ 前一个名字留在原地、声明却被删 ⇒
+                #   游戏内「未声明标识符」。改为在前一次结果上继续替换。
+                src = rename.get(k, lines[k])
+                new = re.sub(rf"(?<![A-Za-z0-9_]){local}(?![A-Za-z0-9_])", glob, src)
+                assert new == src.replace(local, glob), f"✗ {fn} 行{k+1} 替换不可逆"
                 rename[k] = new
             globs.append(f"{typ} {glob};")
             print(f"  {fn}: {local} → {glob}（{typ}；函数内 {len(hits)} 处，其中声明 1 行删除）")
@@ -138,16 +154,23 @@ def main():
     # 证明①：函数体内不留原名
     for fn, p in plans.items():
         s, e = p["span"]
+        # ⚠ 这里原来写 `if glob in p["globs"]` —— p["globs"] 是**声明字符串列表**，
+        #   成员判断永远为假 ⇒ 生成器为空 ⇒ any([])=False ⇒ **证明空转、恒过**（shw246）。
+        #   漏改就是被这个空转证明放过去的。现在按「本函数真正提升过的名字集合」判定。
+        promoted_locals = {loc for loc, glob, _ in SPEC[fn]
+                           if any(glob in g for g in p["globs"])}
         left = []
         for k in range(s, e + 1):
             if k in p["delete"]:
                 continue
             body = p["rename"].get(k, lines[k])
             if any(re.search(rf"(?<![A-Za-z0-9_]){loc}(?![A-Za-z0-9_])", body)
-                   for loc, glob, _ in SPEC[fn] if glob in p["globs"]):
+                   for loc in promoted_locals):
                 left.append(k + 1)
         if left:
             sys.exit(f"✗ {fn} 内仍有遗留原名：{left[:3]}")
+        if not promoted_locals:
+            sys.exit(f"✗ {fn} 的证明没有生效（提升名单为空）——拒绝落盘")
     print("✓ 证明①：函数体内原名全部替换、声明行已删除，无遗留")
 
     # 证明②：清零语句数与维度一致
