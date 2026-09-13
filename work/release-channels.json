@@ -4,7 +4,8 @@
     "role": "stable（稳定主线，玩家默认在这里玩）/ staging（试验线，新版本先投这里）",
     "live": "平台已通过、玩家能玩到的版本（null = 未确认）",
     "pending": "已上传或在审 / 待投的版本（null = 这条线还没投过）",
-    "status": "空线 / 待投 / 审核中 / 已通过 / 实测通过"
+    "status": "空线 / 待投 / 审核中 / 已通过 / 实测通过",
+    "desc_prepend": "（按线附加）打包第 ⑥ 步插在地图详情 DocInfo/DescLong 开头；基线那段正文原样保留（原作者署名/致谢/不收费用等）"
   },
   "rules": [
     "新版本一律先 build/投给 staging 线（tools/release.py status 会算出下一步该做什么）",
@@ -39,8 +40,9 @@
       "pending": "1.109",
       "status": "待投",
       "built": "work/boot2-1.109-preview.SC2Map",
-      "md5": "ef48512b9e54ff8068cf9d7fb9a2ee8e",
-      "size": 16703924
+      "md5": "e6ddc48dd2eec880223a1bc2d0a89659",
+      "size": 16704549,
+      "desc_prepend": "【预览版 Preview】本图与「黑手：升温 Revision」是同一个游戏：存档、成就、积分互通，区别是本图更新更快，用来先行测试新内容与修复。<n/>内容可能不稳定，遇到问题欢迎来群里反馈；想玩稳定版请选「黑手：升温 Revision」。<n/><n/>改版反馈群：795173021<n/><n/>"
     }
   ]
 }

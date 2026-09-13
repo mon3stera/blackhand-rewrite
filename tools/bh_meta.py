@@ -237,6 +237,25 @@ def ensure_version(path, version, date, numbers):
 # 该句只出现在 DocInfo/DescLong（地图详情页），加载页/地图信息其余部分不含它。
 AUTH_NOTICE = '本地图并未取得原作者的授权，因此若原作者不同意此版本的存在，会立刻下架此地图。'
 
+
+def clean_desc(text: str) -> str:
+    """去掉原作者已授权、因而作废的「未取得授权…会立刻下架」声明句。
+
+    打包第 ⑥ 步与「多发布线按线改写地图详情」共用同一份处理 —— 后者是整段覆盖，
+    若不先清洗就会把这一句又带回来。
+    """
+    return text.replace('<n/>' + AUTH_NOTICE, '').replace(AUTH_NOTICE, '')
+
+
+def desc_long(path) -> str:
+    """读包内 zhCN 当前的地图详情正文（已清洗），供按线追加预览版说明等。"""
+    for _, _, loc, val in parse_entries(sc2map.read(path, HEADER), 'DocInfo/DescLong'):
+        if loc == 'zhCN':
+
+            return clean_desc(val)
+
+    return ''
+
 LOADING_KEY = 'LoadingScreen/TextBody'
 LOADING_MARK = '<n/><n/><c val="44FF88">本版更新：</c>'
 
@@ -472,7 +491,7 @@ def apply_file(path, notes_path, defer_strings=False, overrides=None):
     gs_now = sc2map.read(path, STRINGS).decode('utf-8')
     desc = [l for l in gs_now.split('\n') if l.startswith('DocInfo/DescLong=')]
     if len(desc) == 1 and AUTH_NOTICE in desc[0]:
-        new_desc = desc[0].split('=', 1)[1].replace('<n/>' + AUTH_NOTICE, '').replace(AUTH_NOTICE, '')
+        new_desc = clean_desc(desc[0].split('=', 1)[1])
         items.append(('DocInfo/DescLong', new_desc))
         print('  地图详情: 已删除「未取得原作者授权…会立刻下架」旧声明句')
     elif len(desc) == 1:

@@ -214,6 +214,12 @@ def cmd_build(data: dict, cid, deploy: bool, skip_notes: bool, force: bool) -> i
     if ch.get('name'):
         cmd += ['--name', ch['name']]
 
+    if ch.get('desc_prepend'):
+        cmd += ['--desc-prepend', ch['desc_prepend']]
+
+    if ch.get('desc_append'):
+        cmd += ['--desc-append', ch['desc_append']]
+
     if skip_notes:
         cmd += ['--skip-notes']
 
@@ -236,6 +242,21 @@ def cmd_build(data: dict, cid, deploy: bool, skip_notes: bool, force: bool) -> i
 
     if names != {ch['title']}:
         sys.exit('✗ 包内地图名与台账不一致（header 各语种 / zhCN 都要是该线的名字）')
+
+    descs = [v for _, k, _, v in ents if k == 'DocInfo/DescLong']
+    desc = max(descs, key=len) if descs else ''
+    head = ''.join(c for c in (ch.get('desc_prepend') or '')[:24] if c not in '<>')
+    checks = [
+        (not head or head in desc, f'该线的前置说明「{head}…」没写进地图详情'),
+        ('國仕' in desc and '256373733' in desc, '原作者署名 / 原企鹅群号丢了（红线：署名与致谢必须保留）'),
+        (bh_meta.AUTH_NOTICE not in desc, '作废的「未取得原作者授权…会立刻下架」声明句又回来了'),
+    ]
+    bad = [msg for ok, msg in checks if not ok]
+
+    if bad:
+        sys.exit('✗ 地图详情回读不合预期：' + '；'.join(bad))
+
+    print(f'   回读地图详情 {len(desc)} 字：前置说明 ✓ 原作署名/原群号 ✓ 无作废声明句 ✓')
 
     size, digest = out.stat().st_size, md5(out)
     ch.update({'pending': want, 'status': '待投',

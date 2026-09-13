@@ -241,6 +241,8 @@ def main() -> int:
     ap.add_argument('--skip-notes', action='store_true', help='不写补丁说明/加载页面（仅供验证包）')
     ap.add_argument('--name', default=None,
                     help='覆盖包内地图名（DocInfo/Name）—— 多发布线用，例如试验线「黑手：Revision Preview」')
+    ap.add_argument('--desc-prepend', help='在地图详情（DocInfo/DescLong）开头插入一段（多发布线用，如预览版说明）')
+    ap.add_argument('--desc-append', help='在地图详情（DocInfo/DescLong）结尾追加一段')
     args = ap.parse_args()
 
     out = Path(args.out)
@@ -344,11 +346,17 @@ def main() -> int:
     #    因为 MPQ 每次写成员都是追加、旧数据不回收，同一成员一次构建只能写一次）
     notes_missing = []
     if NOTES_SRC.exists() and not args.skip_notes:
-        overrides = {'DocInfo/Name': args.name} if args.name else None
-        res, extra = bh_meta.apply_file(out, NOTES_SRC, defer_strings=True, overrides=overrides)
+        overrides = {'DocInfo/Name': args.name} if args.name else {}
+        if args.desc_prepend or args.desc_append:
+            base = bh_meta.desc_long(out)          # 已清洗掉作废的「未取得授权…下架」句
+            assert base, '读不到 DocInfo/DescLong，无法按线改写地图详情'
+            overrides['DocInfo/DescLong'] = (args.desc_prepend or '') + base + (args.desc_append or '')
+        res, extra = bh_meta.apply_file(out, NOTES_SRC, defer_strings=True, overrides=overrides or None)
         print(f"6a) 补丁说明 {[v for v, _, _ in res]}；加载页面已同步 ← {NOTES_SRC.name}")
         if args.name:
             print(f"6b) 地图名 → {args.name!r}（DocInfo/Name，随文案合并一次写入 zhCN）")
+        if args.desc_prepend or args.desc_append:
+            print(f"6c) 地图详情：前置 {len(args.desc_prepend or '')} 字 / 追加 {len(args.desc_append or '')} 字")
     else:
         extra = {}
         print('6a) 补丁说明 跳过')
