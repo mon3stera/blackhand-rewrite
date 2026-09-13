@@ -26,6 +26,7 @@ import json
 import re
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 import bh_meta
@@ -33,8 +34,9 @@ import bh_meta
 ROOT = Path(__file__).resolve().parent.parent
 LEDGER = ROOT / 'work/release-channels.json'
 NOTES = ROOT / 'work/blackhand/patch-notes.txt'
-REMOTE = 'administrator@100.94.140.84'
-FAR_DIRS = ('/mnt/c/Users/Administrator/Desktop', '/mnt/d/StarCraft II/Maps/Test')
+REMOTE = 'administrator@100.94.140.84'            # WSL 那条（2222 端口），近日常掉线
+WIN_REMOTE = 'Administrator@100.94.140.84'        # Windows 直连（22 端口、cmd 外壳），部署走这条
+DEPLOY_DIR = 'D:/StarCraft II/Maps/Test'          # 投放只去 Test，**不放桌面**（用户 2026-09-14 要求）
 VALIDATED = ('实测通过', '已通过', '已发布')
 
 
@@ -186,7 +188,25 @@ def guard_version(data: dict, ch: dict, version: str, force: bool) -> None:
               f'可能顶掉它（平台行为未验证），先想清楚要不要等它通过')
 
 
-def cmd_build(data: dict, cid, deploy: bool, skip_notes: bool, force: bool) -> int:
+def deploy_package(out: Path, suffix: str, digest: str) -> None:
+    r"""投放：**改名**后 scp 到 D:\StarCraft II\Maps\Test\。
+
+    改名是硬要求：Test 里常有编辑器锁住的同名文件（覆盖会 `dest open … Failure`），
+    而且同名新旧包混在一起正是 2026-09-14 误传旧包的根源。桌面不再投放。
+    """
+    name = f'{out.stem}-{suffix}{out.suffix}'
+    dst = f'{WIN_REMOTE}:{DEPLOY_DIR}/{name}'
+    rc = subprocess.run(['scp', '-o', 'ConnectTimeout=15', '-o', 'BatchMode=yes', str(out), dst]).returncode
+
+    if rc != 0:
+        sys.exit(f'✗ scp 到 {dst} 失败（退出码 {rc}）—— 目标被占用或 22 端口不通')
+
+    winpath = DEPLOY_DIR.replace('/', '\\') + '\\' + name
+    print(f'✓ 已投放 {winpath}')
+    print(f'  上传/核实：certutil -hashfile "{winpath}" MD5 应为 {digest}')
+
+
+def cmd_build(data: dict, cid, deploy, skip_notes: bool, force: bool) -> int:
     want, promote = target_version(), bh_meta.parse_promote(NOTES)
 
     if cid:
@@ -272,14 +292,7 @@ def cmd_build(data: dict, cid, deploy: bool, skip_notes: bool, force: bool) -> i
     print(f'✓ {out.relative_to(ROOT)}  {size} B  md5 {digest}')
 
     if deploy:
-        for d in FAR_DIRS:
-            rc = subprocess.run(['scp', '-P', '2222', '-q', str(out), f'{REMOTE}:{d}/']).returncode
-
-            if rc != 0:
-                sys.exit(f'✗ scp 到 {d} 失败（退出码 {rc}）—— 包可能被编辑器/游戏占用')
-
-        print(f'✓ 已投放 {len(FAR_DIRS)} 处：桌面 + D:\\StarCraft II\\Maps\\Test\\')
-        print(f'  投放后请核对远端 md5 也是 {digest}')
+        deploy_package(out, deploy, digest)
 
     print(f'\n下一步：把 {out.name} 上传到平台的「{ch["title"]}」条目 → '
           f'python3 tools/release.py mark --channel {ch["id"]} --status 审核中')
@@ -343,6 +356,8 @@ def main() -> int:
     b = sub.add_parser('build', help='出包并投放（不指定 --channel 时按状态机自动选线）')
     b.add_argument('--channel', help='发布线 id（main / preview）；省略 = 按状态机选')
     b.add_argument('--no-deploy', action='store_true', help='只出包，不 scp')
+    b.add_argument('--deploy-suffix', help='投放文件名后缀（默认 月日-时分）；'
+                                        '部署名字必须与 Test 里已有文件不同')
     b.add_argument('--skip-notes', action='store_true', help='不写补丁说明（仅供验证包）')
     b.add_argument('--force', action='store_true', help='重出同一版（修包重投用）')
     t = sub.add_parser('tag', help='发版后打 git tag（不可变标记）')
@@ -359,7 +374,9 @@ def main() -> int:
     if args.cmd == 'status':
         return cmd_status(data)
     if args.cmd == 'build':
-        return cmd_build(data, args.channel, not args.no_deploy, args.skip_notes, args.force)
+        suffix = args.deploy_suffix or time.strftime('%m%d-%H%M')
+        return cmd_build(data, args.channel, False if args.no_deploy else suffix,
+                         args.skip_notes, args.force)
     if args.cmd == 'tag':
         return cmd_tag(args.version or target_version(), args.dry)
     if args.cmd == 'mark':

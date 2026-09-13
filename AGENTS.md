@@ -83,8 +83,9 @@ EOF
 # ⚠ 打包命令不要写成 `python3 tools/boot2_build.py … | tail -3 && scp …`
 #   管道退出码取的是 tail 的 0 ⇒ 打包失败也会照常部署（2026-09-12 踩过）。用 `set -o pipefail` 或 ${PIPESTATUS[0]}
 
-# 2) 部署到新文件名
-scp -P 2222 work/boot2-<name>.SC2Map "administrator@100.94.140.84:/mnt/d/StarCraft II/Maps/Test/boot2-<name>.SC2Map"
+# 2) 部署到 Test 里的**新文件名**（不放桌面；同名文件常被编辑器锁住）
+scp -o BatchMode=yes work/boot2-<name>.SC2Map "Administrator@100.94.140.84:D:/StarCraft II/Maps/Test/boot2-<name>-<后缀>.SC2Map"
+# 发版包直接走 python3 tools/release.py build（它自己改名 + 只投 Test + 打印 md5 核对命令）
 
 # 3) 提交
 git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.noreply.github.com" commit -q -m "<说明>"
@@ -195,7 +196,7 @@ python3 tools/boot2_build.py --out work/boot2-<name>.SC2Map      # 八件套 + �
 
 ```bash
 python3 tools/release.py status                      # 版本、@promote、各线状态、已发 tag、**下一步该做什么**
-python3 tools/release.py build                       # 按状态机出该出的那条线并投放桌面 + Test 目录
+python3 tools/release.py build                       # 按状态机出该出的那条线的包，**改名后只投放 D:\StarCraft II\Maps\Test\**
 python3 tools/release.py mark --channel preview --status 实测通过
 python3 tools/release.py mark --channel main --live 1.108 --status 已通过
 python3 tools/release.py tag                         # 发版后打 git tag（= 这一版已出厂的不可变标记）
@@ -205,6 +206,7 @@ python3 tools/release.py tag                         # 发版后打 git tag（= 
   若本版 `@promote major` 才轮到 stable（main）；`@promote hold`（默认）就只留在 preview。
   没验证过的版本不会被放行推主线（`status` 会明说原因）。
 - **`@promote` 写在 `patch-notes.txt`**（`major` / `hold`）：删掉它就是 `hold`。
+- **投放只去 `D:\StarCraft II\Maps\Test\`，而且必须改名**（用户 2026-09-14 定）：`release.py build` 走 **Windows 直连** `scp`，落地名 = `<包名>-<后缀>.SC2Map`（`--deploy-suffix`，默认「月日-时分」）。**不放桌面**；Test 里同名文件常被编辑器锁住（覆盖报 `dest open … Failure`），而新旧同名包混放正是 2026-09-14 误传旧包的根源。平台只看**包内地图名**（`DocInfo/Name`），文件名随便取。
 - 台账 `work/release-channels.json`：每线的 `role` / `live`（平台已通过）/ `pending`（在审或待投）/ `status` / 包 md5。
   **版本号唯一真源仍是 `patch-notes.txt` 的 `@release`**。
 - 备线的地图名走打包器 `--name`：它在**第 ⑥ 步**与补丁说明同一趟写进 `DocumentHeader`（含 enUS/zhCN 两份副本）+ zhCN；**别事后单独调 `bh_meta set`** —— 那会第二次写 zhCN，白胖约 300 KB。
