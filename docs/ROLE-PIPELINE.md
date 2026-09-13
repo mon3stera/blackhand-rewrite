@@ -140,6 +140,7 @@ if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == N)) {
 | 首胜记账 | 必须用 `gv_originalRole`（开局发到的角色），否则被转化后记错身份 | 人工 |
 | 自设列表 | 改 `work/roles-list.json` → `python3 tools/role_list_gen.py --apply` | 门 `0c` |
 | 帮助面板 | 城镇/中立等分档上界 | `role_gen` `[1]` |
+| 成就索引 | 三处必须对得上：列表链 `gt_Stats_Func` / 命令链 `gt_Achieve_Func`（`-achieve`）/ 解锁写入 `gv_bankOtherAchievements[16][71]`；漏一处 ⇒ 列表空白或命令播报 `null`（shw151 教训） | `role_gen` `[1e]` |
 
 ---
 
@@ -181,6 +182,7 @@ python3 tools/boot2_build.py --out work/boot2-shw<NNN>.SC2Map
 | 新角色漏阵营旗标 ⇒ 误报「缺少对立的阵营。」（shw118） | 人工（开局校验） |
 | 审查页猜不出 / 上界漏（shw205/216/217） | 门 `0e` `[2]` |
 | 自设列表索引漂移（「只能末尾追加」时代） | 门 `0c` + 生成器 |
+| 成就名漏补一处链条目 ⇒ 列表空白 / `-achieve` 播报 `null`（shw151） | 门 `0e` `[1e]` 三处索引一致性 |
 | 抽出函数重名不同签名 ⇒ 编译错误（shw243） | `galaxy_lint` 第 6 项 |
 | 抽出块漏拷 `auto*` 声明 ⇒ 脚本读取失败（shw239） | `galaxy_lint` 第 2 项 + `sk_verify` |
 | 跨块共享局部被抽走 ⇒ 目标丢失 | `sk_verify` 无干扰判据 |

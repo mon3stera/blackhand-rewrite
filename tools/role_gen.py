@@ -496,6 +496,69 @@ def main() -> int:
         print(f"    ✗ 赋值了但验尸官没有分支（该死因验尸官查不出）：{orphan}")
         problems += [f"死因码 {x} 无验尸官分支" for x in orphan]
 
+    # ---------- 1e) 成就索引一致性（不需要 spec）----------
+    # shw151 的教训：成就名有两处独立的名称链，漏一处就是「列表空白 / -achieve 播报 null」。
+    #   列表链 = gt_Stats_Func（玩家查看成就列表）
+    #   命令链 = gt_Achieve_Func（管理员 -achieve <玩家> <索引>）
+    #   第三处 = 解锁写入点 gv_bankOtherAchievements[玩家][索引] = 1/2/3
+    print("\n[1e] 成就索引一致性（列表链 / 命令链 / 解锁写入）")
+    ACH_TOTAL = 71          # gv_bankOtherAchievements[16][71]
+
+    def chain_indices(fn_name):
+        """名称链所在的自动变量 = 该函数里出现次数最多的 `X == 数字`，再取它的索引集合。"""
+        try:
+            s_, e_ = func_span(sc.lines, fn_name)
+        except Exception:
+            return None, set()
+        seg = "\n".join(sc.lines[s_:e_ + 1])
+        cnt = {}
+        for name, _ in re.findall(r"(auto\w+|lv_\w+)\s*==\s*(\d+)", seg):
+            cnt[name] = cnt.get(name, 0) + 1
+        if not cnt:
+            return None, set()
+        var = max(cnt, key=lambda k: cnt[k])
+        return var, {int(x) for x in re.findall(rf"{var}\s*==\s*(\d+)", seg)}
+
+    list_var, list_idx = chain_indices("gt_Stats_Func")
+    cmd_var, cmd_idx = chain_indices("gt_Achieve_Func")
+    unlock = {int(m.group(1)) for m in re.finditer(
+        r"gv_bankOtherAchievements\[\w+\]\[(\d+)\]\s*=\s*[123]", "\n".join(sc.lines))}
+
+    # 已知差异（附原因，出现新的差异才会报警）
+    ACH_WHITELIST = {
+        "cmd_missing": {57, 58, 59, 60, 61, 62, 63, 64, 65},
+        "no_name": {24},        # 列表显式排除（记忆 761：24/42 永不显示），42 在列表链里有名字
+    }
+
+    print(f"    列表链 gt_Stats_Func（{list_var}）：{len(list_idx)} 个索引")
+    print(f"    命令链 gt_Achieve_Func（{cmd_var}）：{len(cmd_idx)} 个索引")
+    print(f"    解锁写入点：{len(unlock)} 个索引")
+
+    over = sorted(i for i in unlock if i >= ACH_TOTAL)
+    if over:
+        print(f"    ✗ 解锁写入的索引越界（数组只有 {ACH_TOTAL} 位）：{over}")
+        problems += [f"成就索引 {i} 越界（≥{ACH_TOTAL}）" for i in over]
+
+    extra_cmd = sorted(cmd_idx - list_idx)
+    if extra_cmd:
+        print(f"    ✗ 命令链有、列表链没有（列表里会空白）：{extra_cmd}")
+        problems += [f"成就索引 {i} 命令链有名称、列表链没有" for i in extra_cmd]
+
+    miss_cmd = sorted(set(list_idx) - set(cmd_idx) - ACH_WHITELIST["cmd_missing"])
+    if miss_cmd:
+        print(f"    ✗ 列表链有、命令链没有（-achieve 播报会是 null）：{miss_cmd}")
+        problems += [f"成就索引 {i} 缺 -achieve 名称链条目" for i in miss_cmd]
+
+    noname = sorted(unlock - list_idx - cmd_idx - ACH_WHITELIST["no_name"])
+    if noname:
+        print(f"    ✗ 能被解锁、但两条链里都没有名字的索引：{noname}")
+        problems += [f"成就索引 {i} 可解锁却无名称（列表空白 / 命令 null）" for i in noname]
+
+    if not (over or extra_cmd or miss_cmd or noname):
+        print(f"    ✓ 三处一致（白名单：命令链不支持 {sorted(ACH_WHITELIST['cmd_missing'])}、"
+              f"设计上不显示的 {sorted(ACH_WHITELIST['no_name'])}）")
+        print(f"    · 名称键本体由打包回读 MUST_HAVE_KEYS 兜底；索引上限 {ACH_TOTAL}")
+
     # ---------- 2) 审查页：列表必须 == 该池有名字的角色 ----------
     print("\n[2] 审查页（gf_ASGuessRole 与列表构建的一致性）")
     pool_item, rules, fb, cap = sc.guess_pool(), *sc.guess_role()
