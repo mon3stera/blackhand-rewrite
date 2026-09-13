@@ -65,12 +65,10 @@ Param/Value/SHWTRK3=<s val="ModLeftSize16">你认为他会访问 </s><s val="Mod
 Param/Value/SHWTRK4=<s val="ModLeftSize16">你改为认为他会访问 </s><s val="ModLeftSize16Bold">
 Param/Value/BHADMINNAME=卡莉奥斯特罗
 Param/Value/SHWSLOT1=<s val="ModCenterSize20Bold"><c val="FFFFFF">保存格位</c></s>
-Param/Value/SHWSLOTB=<s val="ModCenterSize20Bold">新建槽位</s>
 Param/Value/SHWSLOT6=<s val="ModCenterSize20Bold">保存槽位</s>
 Param/Value/SHWSLOT7=<s val="ModCenterSize20Bold">载入槽位</s>
 Param/Value/SHWSLOTA=<s val="ModCenterSize20Bold">删除槽位</s>
 Param/Value/SHWSLOTH=<s val="ModLeftSize16Bold">名字</s>
-Param/Value/SHWSLOTT1=在第一个空槽位里新建一个保存格
 Param/Value/SHWSLOTT2=把当前的全部设置保存到选中的槽位
 Param/Value/SHWSLOTT3=载入选中槽位里保存的设置
 Param/Value/SHWSLOTT4=清空选中槽位（不可恢复）
@@ -89,5 +87,3 @@ Param/Value/SHWSLOTC=<s val="ModLeftSize16Bold"><c val="00FF00">已保存到槽�
 Param/Value/SHWSLOTD=<s val="ModLeftSize16Bold"><c val="00FF00">已载入槽位的设置。</c></s>
 Param/Value/SHWSLOTE=<s val="ModLeftSize16Bold"><c val="FF8800">已清空该槽位。</c></s>
 Param/Value/SHWSLOTF=<s val="ModLeftSize16Bold"><c val="FF0000">这个槽位还没有保存内容。</c></s>
-Param/Value/SHWSLOTG=<s val="ModLeftSize16Bold"><c val="FF0000">没有空槽位了，请先删除一个。</c></s>
-Param/Value/SHWSLOTH2=<s val="ModLeftSize16Bold"><c val="00FF00">已选中空槽位，输入名字后点「保存槽位」。</c></s>
