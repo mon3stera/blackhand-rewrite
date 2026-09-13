@@ -91730,6 +91730,8 @@ void gf_SKF_1_shiguan (int lv_a) {
     // Variable Declarations
     int lv_b;
     bool lv_c;
+    int autoCHRON30B_ae;
+    const int autoCHRON30B_ai = 1;
     // Implementation
 gv_shots[lv_a] -= 1;
 autoCHRON30B_ae = (gv_dayNumber - 1);

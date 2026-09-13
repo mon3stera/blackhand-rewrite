@@ -22,7 +22,8 @@ HEAD = re.compile(
     r"^(void|bool|int|string|text|fixed|unit|point|playergroup|bank|trigger|unitgroup|"
     r"region|soundlink|color|timer|order)\s+\w+\s*\("
 )
-AUTO = re.compile(r"\b(auto[0-9A-F]+_\w+)\b")
+# 中段不一定是十六进制（autoCHRON30B_ae 等 178 种语义化中段）；排除 auto_gf_*/auto_gt_* 包装函数
+AUTO = re.compile(r"\b(auto(?!_g[ft]_)\w+_\w+)\b")
 LOCAL = re.compile(r"(?<![A-Za-z0-9_])(lv_[A-Za-z0-9_]+)")
 # 声明行（用于确定声明区边界，与 role_block_extract.DECL_RE 同口径）
 DECL_ANY = re.compile(r"(?:const\s+)?[A-Za-z][\w\[\]]*\s+\w+\s*(?:=|;)")

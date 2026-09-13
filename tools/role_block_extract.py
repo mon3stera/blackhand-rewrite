@@ -83,7 +83,11 @@ POOL_CN = {1: "城镇", 2: "黑手D", 3: "中立", 5: "三合会"}
 
 # 注意：auto* 家族不止 _ae/_ai —— 还有 _n/_i/_g/_u/_var 等（全文 1,243 种、1,444 处声明）。
 # shw239 事故：只认 _ae/_ai ⇒ 抽出的函数用了 autoXXXX_n 却没带声明 ⇒ 整脚本读取失败。
-AUTO_RE = r"auto[0-9A-F]+_\w+"
+# auto 变量名的真实形状：`auto<中段>_<后缀>`，中段**不一定是十六进制**
+# （作者的 autoCHRON30B_ae / autoCHRONUI_ai，我们自己的 autoSHWFR_g / autoTXBAN_var…）。
+# shw240 事故：写成 auto[0-9A-F]+_\w+ ⇒ 漏掉 178 种语义化中段（含 autoCHRON30B_ae）⇒ 声明没被克隆。
+# 后缀全集实测 = ae/ai/g/var/u/val/i/n；`auto_gf_*`/`auto_gt_*` 是编辑器包装函数，必须排除。
+AUTO_RE = r"auto(?!_g[ft]_)\w+_\w+"
 LOCAL_RE = re.compile(rf"(?<![A-Za-z0-9_])(lv_[A-Za-z0-9_]+|{AUTO_RE})")
 WRITE_RE = re.compile(rf"(?<![A-Za-z0-9_])(lv_[A-Za-z0-9_]+|{AUTO_RE})\s*=(?!=)")
 DECL_RE = re.compile(r"^\s*(?:const\s+)?([A-Za-z][\w\[\]]*)\s+"
