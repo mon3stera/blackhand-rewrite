@@ -214,7 +214,7 @@ python3 tools/release.py tag                         # 发版后打 git tag（= 
 
 | 项 | 值 |
 |---|---|
-| 远程 | `ssh -p 2222 administrator@100.94.140.84`（WSL，`/mnt/d` 即 `D:`） |
+| 远程 | `ssh -p 2222 administrator@100.94.140.84`（WSL，`/mnt/d` 即 `D:`）；**WSL 不通时直连 Windows**：`ssh Administrator@100.94.140.84`（22 端口、cmd 外壳），部署 `scp 文件 "Administrator@100.94.140.84:D:/StarCraft II/Maps/Test/"`，校验 `certutil -hashfile "<路径>" MD5` —— 2026-09-13 WSL 那台掉线时这条路仍然可用（快得多） |
 | 游戏 | `D:\StarCraft II`，版本 5.0.15.97579 |
 | 编辑器 | 必须由用户在交互式桌面手动启动（SSH 启动会 D3D 报错） |
 | 打包工具 | `tools/sc2map.py`（读/写 MPQ）、`tools/mpq.py`、`tools/mpqc/mpqtool` |
