@@ -288,6 +288,7 @@ string[16][7] gv_saveSlotCode;
 string[16][7] gv_saveSlotName;
 int[16] gv_saveSlotSel;
 bool gv_saveSlotBusy;
+int gv_saveSlotRefreshes; // shw256：重建次数（只在 c_bhSoloBuild 下显示在状态行，用于确认没有事件循环）
 trigger gt_BHSaveSlotSel;
 int gv_chatBox;
 int[21][3] gv_chatBoxItem;
@@ -91885,15 +91886,29 @@ void gf_BHSaveSlotRefresh (int lp_player) {
         gv_saveSlotSel[lp_player] = 1;
     }
 
-    // 列表（重建期间挂起选中事件，避免「重建 -> 事件 -> 重建」递归）
+    // 列表
+    // shw256（性能事故）：**光靠 gv_saveSlotBusy 挡不住事件循环**。控件事件是**延后派发**的，
+    // 函数返回时 busy 早已复位；而重建里的 RemoveAllItems + SelectItem 本身会再发一次 SelectionChanged
+    // ⇒「事件 → 重建 → 事件 → …」每帧重建 6 个条目 = 游戏巨卡 + 内存一路涨（用户实测）。
+    // 两道保险：①这里照作者 gt_OSMenus_Func 的做法，改列表前 TriggerEnable(自己的触发器, false)、
+    // 改完 true（78150-78152 / 78389）②gt_BHSaveSlotSel_Func 里选中项没变就直接返回。
     gv_saveSlotBusy = true;
+    if ((gt_BHSaveSlotSel != null)) {
+        TriggerEnable(gt_BHSaveSlotSel, false);
+    }
+
     DialogControlRemoveAllItems(gv_saveSlotItem[1], PlayerGroupSingle(lp_player));
     lv_a = 1;
     for ( ; (lv_a <= c_bhSaveSlotCount) ; lv_a += 1 ) {
         DialogControlAddItem(gv_saveSlotItem[1], PlayerGroupSingle(lp_player), gf_BHSaveSlotItemText(lp_player, lv_a));
     }
     DialogControlSelectItem(gv_saveSlotItem[1], PlayerGroupSingle(lp_player), lv_slot);
+    if ((gt_BHSaveSlotSel != null)) {
+        TriggerEnable(gt_BHSaveSlotSel, true);
+    }
+
     gv_saveSlotBusy = false;
+    gv_saveSlotRefreshes += 1;
 
     // 名字输入框：显示选中槽位的名字
     lv_name = gv_saveSlotName[lp_player][lv_slot];
@@ -91923,6 +91938,12 @@ void gf_BHSaveSlotRefresh (int lp_player) {
         if ((lv_name != "")) {
             lv_text = (lv_text + StringExternal("Param/Value/SHWSLOTS4") + StringToText(lv_name));
         }
+    }
+
+    // shw256：测试构建下把重建次数显示出来。正常使用永远是个位数；如果出现每帧重建的事件循环，
+    // 这个数字会以肉眼可见的速度飙升（用户实测的「巨卡 + 内存暴涨」就是这个循环）。
+    if ((c_bhSoloBuild == true)) {
+        lv_text = (lv_text + StringToText("  [重建 " + IntToString(gv_saveSlotRefreshes) + "]"));
     }
 
     libNtve_gf_SetDialogItemText(gv_saveSlotItem[8], lv_text, PlayerGroupSingle(lp_player));
@@ -92033,6 +92054,9 @@ void gf_BHSaveSlotInit () {
 }
 
 bool gt_BHSaveSlotSel_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_sel;
+
     // Implementation
     if (!runActions) {
         return true;
@@ -92050,7 +92074,21 @@ bool gt_BHSaveSlotSel_Func (bool testConds, bool runActions) {
         return true;
     }
 
-    gv_saveSlotSel[EventPlayer()] = DialogControlGetSelectedItem(gv_saveSlotItem[1], EventPlayer());
+    lv_sel = DialogControlGetSelectedItem(gv_saveSlotItem[1], EventPlayer());
+    if ((lv_sel < 1) || (lv_sel > c_bhSaveSlotCount)) {
+        return true;
+    }
+
+    // shw256（性能事故 · 关键）：**选中项没变就直接返回**。
+    // 重建（RemoveAllItems + SelectItem）自己会再发一次 SelectionChanged，而事件是延后派发的
+    // ⇒ 旧写法「事件 → 重建 → 事件 → …」每帧重建 6 个条目 = 游戏巨卡 + 内存一路涨（用户实测）。
+    // 有了这道判断，漏过来的事件也不会再触发重建，循环必然终止（gf_BHSaveSlotRefresh 里另有
+    // TriggerEnable 关触发器那一道保险）。
+    if (lv_sel == gv_saveSlotSel[EventPlayer()]) {
+        return true;
+    }
+
+    gv_saveSlotSel[EventPlayer()] = lv_sel;
     gf_BHSaveSlotRefresh(EventPlayer());
     return true;
 }
