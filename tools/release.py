@@ -28,6 +28,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import bh_meta
+
 ROOT = Path(__file__).resolve().parent.parent
 LEDGER = ROOT / 'work/release-channels.json'
 NOTES = ROOT / 'work/blackhand/patch-notes.txt'
@@ -105,8 +107,11 @@ def md5(path: Path) -> str:
     return h.hexdigest()
 
 
-def next_action(data: dict, want: str):
-    """状态机 → (该出包的线 or None, 一句话说明)。"""
+def next_action(data: dict, want: str, promote: str):
+    """状态机 → (该出包的线 or None, 一句话说明)。
+
+    试验线（避难）持续更新；稳定主线（升温）只收 @promote major 的大更新。
+    """
     stg, sta = by_role(data, 'staging'), by_role(data, 'stable')
 
     if ver_key(stg.get('pending')) != ver_key(want):
@@ -117,15 +122,23 @@ def next_action(data: dict, want: str):
                       f'等平台过审并在那边实测；通过后跑 '
                       f'`release.py mark --channel {stg["id"]} --status 实测通过`')
 
+    if promote != 'major':
+        if ver_key(sta.get('pending')) == ver_key(want):
+            return None, f'{want} 两条线都已就绪（本版 @promote hold，主线也已经在 {want}）'
+
+        return None, (f'{want} 已在试验线实测通过；本版是常规更新（@promote hold）⇒ 不推稳定主线。\n'
+                      f'  想推主线就在 patch-notes.txt 里写 @promote major 再跑 status')
+
     if ver_key(sta.get('pending')) != ver_key(want):
-        return sta, f'试验线已验证 {want} ⇒ 推稳定主线（{sta["title"]}）'
+        return sta, f'试验线已验证 {want}，且本版 @promote major ⇒ 推稳定主线（{sta["title"]}）'
 
     return None, f'两条线都已经是 {want} —— 要发下一版先改 patch-notes.txt 的 @release'
 
 
 def cmd_status(data: dict) -> int:
-    want, tags = target_version(), git_tags()
-    print(f'待发版本（patch-notes.txt @release）= {want}')
+    want, tags, promote = target_version(), git_tags(), bh_meta.parse_promote(NOTES)
+    print(f'待发版本（patch-notes.txt @release）= {want}     @promote = {promote}'
+          f'{"（大更新：试验线验证通过后推稳定主线）" if promote == "major" else "（常规更新：只留试验线）"}')
     print(f'已发 tag = {tags[-1] if tags else "（还没有）"}   共 {len(tags)} 个：{", ".join(tags[-6:]) or "—"}\n')
 
     print(f'{"线":<9}{"角色":<9}{"地图名":<22}{"已通过":<9}{"在审/待投":<11}{"状态":<11}{"包":<32}')
@@ -141,7 +154,7 @@ def cmd_status(data: dict) -> int:
     if want in tags and not still_pending:
         print(f'\n⚠ {want} 已经打过 tag（= 已出厂）—— 要发新版先改 patch-notes.txt 的 @release')
 
-    ch, why = next_action(data, want)
+    ch, why = next_action(data, want, promote)
 
     if ch is None:
         print(f'\n下一步：{why}')
@@ -174,12 +187,12 @@ def guard_version(data: dict, ch: dict, version: str, force: bool) -> None:
 
 
 def cmd_build(data: dict, cid, deploy: bool, skip_notes: bool, force: bool) -> int:
-    want = target_version()
+    want, promote = target_version(), bh_meta.parse_promote(NOTES)
 
     if cid:
         ch = channel_of(data, cid)
     else:
-        ch, why = next_action(data, want)
+        ch, why = next_action(data, want, promote)
 
         if ch is None:
             print(f'（无需出包）{why}')
@@ -188,6 +201,11 @@ def cmd_build(data: dict, cid, deploy: bool, skip_notes: bool, force: bool) -> i
         print(f'按状态机选线：{ch["id"]} —— {why}')
 
     guard_version(data, ch, want, force)
+
+    if ch.get('role') == 'stable':
+        live = ch.get('live') or '（未确认）'
+        print(f'   提示：推稳定主线时补丁说明要覆盖自「主线 live = {live}」以来的**全部**改动 —— '
+              f'主线玩家跳过了中间几版，看不到那几版的说明')
 
     suffix = '' if ch['id'] == 'main' else f'-{ch["id"]}'
     out = ROOT / f'work/boot2-{want}{suffix}.SC2Map'

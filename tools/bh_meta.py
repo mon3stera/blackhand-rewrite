@@ -380,6 +380,22 @@ def pick_notes(path, spec, fresh):
     return out
 
 
+def parse_promote(notes_path) -> str:
+    """这一版要不要推稳定主线（patch-notes.txt 的 @promote，默认 hold）。
+
+    major = 大更新，试验线（黑手：避难 Revision）验证通过后推主线；
+    hold  = 常规更新，只留在试验线。
+    """
+    for line in Path(notes_path).read_text(encoding='utf-8').splitlines():
+        if line.startswith('@promote'):
+            val = line.split()[1]
+            assert val in ('major', 'hold'), f'@promote 只能是 major/hold，实际 {val!r}'
+
+            return val
+
+    return 'hold'
+
+
 def apply_file(path, notes_path, defer_strings=False, overrides=None):
     """按源文件写入补丁说明 + 加载页面（打包管线第 ⑧ 步，可重复执行）。
 
@@ -404,6 +420,11 @@ def apply_file(path, notes_path, defer_strings=False, overrides=None):
             continue
         if line.startswith('@loading'):
             loading_spec = line.split(None, 1)[1] if len(line.split(None, 1)) > 1 else 'none'
+            continue
+        if line.startswith('@promote'):
+            parts = line.split()
+            assert len(parts) == 2 and parts[1] in ('major', 'hold'), \
+                '@promote 只能是 major（试验线验证通过后推稳定主线）或 hold（只留试验线，默认）'
             continue
         if line.startswith('@release'):
             _, version, date = line.split()
