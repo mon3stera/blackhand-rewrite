@@ -16062,7 +16062,13 @@ bool auto_gf_CAssembleMainBank_TriggerFunc (bool testConds, bool runActions) {
             lv_str[6] = (lv_str[6] + (" " + IntToString(gv_bankOtherAchievements[lp_player][lv_b])));
         }
         lv_str[7] = "";
-        if (((gv_oP[lp_player][4] == true) || (gv_points[lp_player] >= 10000) || (gv_donor[lp_player] > 0))) {
+        // shw260：原图这里只在 (oP[4] || 积分≥10000 || 赞助者) 时才把内存里的黑名单拼进串，但下面那句
+        // BankValueSetFromString(..., "Blacklist", lv_str[7]) 是**无条件**执行的 —— 不在门内的玩家
+        // （只有 oP[7] 的管理员、积分掉到一万以下的老玩家……）每次组装都会把银行里存的黑名单覆盖成空串，
+        // 玩家的症状就是「设置过的 blacklist 下一局又没了」。读侧（gt_Init2）用的判定是
+        // (oP[4] || donor >= 0 || 无限制)，而 gv_donor 默认 0 ⇒ 实际是**所有人都读**；
+        // 因此这里改成与读侧同款判定：读进来什么就原样写回，不再出现「读了却不写回」的静默清空。
+        if (((gv_oP[lp_player][4] == true) || (gv_donor[lp_player] >= 0) || (gv_e697A0E58F8C[lp_player] == true))) {
             lv_b = 0;
             for ( ; ( (auto6C58849E_ai >= 0 && lv_b <= auto6C58849E_ae) || (auto6C58849E_ai < 0 && lv_b >= auto6C58849E_ae) ) ; lv_b += auto6C58849E_ai ) {
                 lv_str[7] = (lv_str[7] + (" " + gv_blacklist[lp_player][lv_b]));
@@ -16114,7 +16120,10 @@ bool auto_gf_CAssembleMainBank_TriggerFunc (bool testConds, bool runActions) {
         BankValueSetFromString(gv_bank[lp_player], "I", "B", lv_str[4]);
         BankValueSetFromString(gv_bank[lp_player], "I", "A2", lv_str[5]);
         BankValueSetFromString(gv_bank[lp_player], "I", "A3", lv_str[6]);
-        BankValueSetFromString(gv_bank[lp_player], "I", "Blacklist", lv_str[7]);
+        // shw260 护栏：键本来就不存在（这局没能读到档）且手里也是空串时，不要凭空写一个空键进去
+        if ((lv_str[7] != "") || (BankKeyExists(gv_bank[lp_player], "I", "Blacklist") == true)) {
+            BankValueSetFromString(gv_bank[lp_player], "I", "Blacklist", lv_str[7]);
+        }
         BankValueSetFromString(gv_bank[lp_player], "I", "Reports", lv_str[9]);
         BankValueSetFromString(gv_bank[lp_player], "Checker", "Points", lv_str[0]);
         BankValueSetFromString(gv_bank[lp_player], "Checker", "Math", IntToString(gv_checka[lp_player]));
@@ -60186,6 +60195,7 @@ bool gt_Blacklist_Func (bool testConds, bool runActions) {
     }
     if ((EventChatMessage(false) == "-blacklist")) {
         gf_CBSystemMessage(StringExternal("Param/Value/A2E20C71"), EventPlayer(), 0, 0, SoundLink("UI_BnetError", -1), Color(0,0,0));
+        gf_CAssembleMainBank(EventPlayer()); // shw260：清空也是一次改动，立刻落盘（原图全靠别处顺手组装，改完不落盘就白改）
         return true;
     }
 
@@ -60247,6 +60257,12 @@ bool gt_Blacklist_Func (bool testConds, bool runActions) {
         }
 
     }
+    // shw260：原图这里只改内存，落盘全靠「别的地方顺手组装主银行」（对局正常结束、或该玩家用了别的
+    // 会写银行的命令）。玩家设置完黑名单后中途退房 / 对局没走到结算，这一局就白设了。
+    if ((lv_n > 0)) {
+        gf_CAssembleMainBank(EventPlayer());
+    }
+
     return true;
 }
 
@@ -60386,6 +60402,9 @@ bool gt_E7A681E794A8E998B5E890A5_Func (bool testConds, bool runActions) {
         gf_CBSystemMessage(StringExternal("Param/Value/02C4DEA1"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
         gv_e98089E68BA9E7A681E794A8[EventPlayer()] = false;
     }
+
+    // shw260：同上 —— 禁用阵容改的也是同一份 gv_blacklist，改完立刻落盘
+    gf_CAssembleMainBank(EventPlayer());
 
     return true;
 }
