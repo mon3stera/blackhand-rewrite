@@ -77,6 +77,46 @@ def card_roles(lines, name):
     return roles
 
 
+
+def card_columns(lines, name):
+    """同一套栈逻辑，但收集每块写过哪些栏 → {角色: (首见行, [栏号])}。
+
+    栏位含义（gv_roleBoxText[16][11]）：[0] 卡头 / [1] 能力 / [2] 特性 / [4] 身份白 /
+    [6] 胜利。[0] 允许不写（函数开头按名字数组统一写）；[4] 最容易漏（shw192 事故：
+    漏了 [4] 界面直接显示原始键名）。
+    """
+    s, e = func_span(lines, name)
+    out, header, hbuf, stack = {}, None, "", []
+
+    for i in range(s, e + 1):
+        l = lines[i]
+        if header is None and re.match(r"^\s*if \(", l):
+            header, hbuf = i, l
+        elif header is not None:
+            hbuf += " " + l.strip()
+
+        if header is not None and l.rstrip().endswith("{"):
+            m = re.search(r"gv_roles\[lv_a\]\[0\] == (\d+)", hbuf)
+            stack.append(int(m.group(1)) if m else None)
+            header, hbuf = None, ""
+        elif l.rstrip().endswith("{") and header is None:
+            stack.append(None)
+
+        if "gv_roleBoxText[lv_a][" in l:
+            role = next((x for x in reversed(stack) if x is not None), None)
+            if role is not None:
+                cols = {int(x) for x in re.findall(r"gv_roleBoxText\[lv_a\]\[(\d+)\]", l)}
+                if role in out:
+                    out[role][1] |= cols
+                else:
+                    out[role] = [i + 1, set(cols)]
+
+        for _ in range(max(0, l.count("}") - l.count("{"))):
+            if stack:
+                stack.pop()
+
+    return {r: (v[0], sorted(v[1])) for r, v in out.items()}
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--strict", action="store_true")
@@ -125,6 +165,26 @@ def main():
         print(f"  {'✓' if ok else '✗'} {fn}：引用 {len(hits)} 处（调用 {len(calls)} 处" +
               (f"，越界调用 {bad}" if bad else "") + ")")
         if not ok:
+            problems += 1
+
+    print("\n=== 三、角色卡栏位（[1] 能力 / [2] 特性 / [4] 身份白 / [6] 胜利）===")
+    # 实测：城镇/黑手D/三合会的 [6] 胜利栏写在角色块**之外**（函数级共用尾部），
+    # 只有中立池写在每块里 ⇒ 每块强制 [1] 能力 / [2] 特性 / [4] 身份白；
+    # [6] 只要求「整个函数里至少出现一次」。
+    NEED = (1, 2, 4)
+    for pool in sorted(POOL_FUNC):
+        fn = POOL_FUNC[pool]
+        cols = card_columns(lines, fn)
+        miss = {r: [c for c in NEED if c not in have] for r, (_, have) in cols.items()
+                if [c for c in NEED if c not in have]}
+        has6 = "[6]" in "".join(l for l in lines if "gv_roleBoxText[lv_a][6]" in l)
+        if miss:
+            problems += len(miss)
+            print(f"  ✗ 池 {pool} {POOL_NAME[pool]}：{len(miss)} 个角色缺栏位 —— {miss}")
+        else:
+            print(f"  ✓ 池 {pool} {POOL_NAME[pool]}：{len(cols)} 个块 [1][2][4] 齐全"
+                  f"，[6] 胜利栏{'有' if has6 else '缺失（✗）'}")
+        if not has6:
             problems += 1
 
     print(f"\n问题合计 {problems} 处")

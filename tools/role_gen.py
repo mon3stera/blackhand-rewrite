@@ -450,6 +450,52 @@ def main() -> int:
         print(f"    · …另有 {len(stale) - 6} 个遗留角色键缺文案（原图未启用角色，不拦打包）")
     problems += fatal
 
+    # ---------- 1c) 夜间镜头组覆盖（不需要 spec）----------
+    print("\n[1c] 夜间镜头组覆盖（gt_NPNightCamera_Func 的分发块）")
+    cam_fn = None
+    for l in sc.lines:
+        if re.match(r"^\w+ gt_NPNightCamera_Func \(", l):
+            cam_fn = "gt_NPNightCamera_Func"
+    if not cam_fn:
+        print("    · 找不到 gt_NPNightCamera_Func（机制改名了？）")
+    else:
+        cs, ce = func_span(sc.lines, cam_fn)
+        body = "\n".join(sc.lines[cs:ce + 1])
+        covered = {int(x) for x in re.findall(r"gv_roles\[lv_a\]\[0\] == (\d+)", body)}
+        groups = sorted(set(re.findall(r"(gf_NP\w+Camera)\(", body)))
+        missing = sorted(r for (p_, r) in named if p_ == 1 and r not in covered) + \
+                  sorted(r for (p_, r) in named if p_ == 3 and r not in covered)
+        spec_roles = {(sp["pool"], sp["role"]) for sp in specs}
+        fatal_missing = [f"{p_}/{r}" for (p_, r) in sorted(spec_roles) if r not in covered]
+        print(f"    分发块 行 {cs + 1}-{ce + 1}：覆盖 {len(covered)} 个角色号、{len(groups)} 个机位")
+        print(f"    有显示名但没镜头的角色（池1/池3）：{len(missing)} 个 {missing}")
+        if fatal_missing:
+            print(f"    ✗ spec 里登记的角色却没镜头组：{fatal_missing}"
+                  f"（不在表中 = 该角色夜间没有专属循环镜头，且不会报错）")
+            problems += [f"{x} 缺夜间镜头组（记忆 765）" for x in fatal_missing]
+
+    # ---------- 1d) 死因字母码（不需要 spec）----------
+    print("\n[1d] 死因字母码（赋值点 vs 验尸官扫描分支）")
+    # 原图自用的「类别码」：这些码表示一整类死法，验尸官故意不为它们写分支
+    CODE_WHITELIST = {"h": "黑手D/三合会一类通用夜间死法（7 处击杀路径共用），验尸官无分支属原图设计"}
+    assigned = {m.group(1) for l in sc.lines
+                for m in [re.search(r'gv_deathMethod\[\w+\] = \(gv_deathMethod\[\w+\] \+ "([^"]+)"\)', l)] if m}
+    scanned = {m.group(1) for l in sc.lines
+               for m in [re.search(r'StringSub\(gv_deathMethod\[.+?\], lv_b, lv_b\) == "([^"]+)"', l)] if m}
+    occupied = sorted(assigned | scanned)
+    print(f"    已占用（赋值 ∪ 扫描）{len(occupied)} 个：{occupied}")
+    print(f"    ⚠ 新角色选码必须避开上面这组（记忆 771 的占用表由此机器维护）")
+    orphan = sorted(assigned - scanned - set(CODE_WHITELIST))
+    unused = sorted(scanned - assigned)
+    for k, why in sorted(CODE_WHITELIST.items()):
+        if k in assigned - scanned:
+            print(f"    · 白名单码 {k}：{why}")
+    if unused:
+        print(f"    · 有扫描分支但当前无人赋值（原图遗留）：{unused}")
+    if orphan:
+        print(f"    ✗ 赋值了但验尸官没有分支（该死因验尸官查不出）：{orphan}")
+        problems += [f"死因码 {x} 无验尸官分支" for x in orphan]
+
     # ---------- 2) 审查页：列表必须 == 该池有名字的角色 ----------
     print("\n[2] 审查页（gf_ASGuessRole 与列表构建的一致性）")
     pool_item, rules, fb, cap = sc.guess_pool(), *sc.guess_role()

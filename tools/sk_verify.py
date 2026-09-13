@@ -253,8 +253,11 @@ def main() -> int:
                 #   两边都去掉开头的「空行/纯注释行」再比 —— 逐行等价由抽取器的证明负责，
                 #   这里要的是独立确认「同一段语句 + 同一守卫」。
                 def _trim(xs):
+                    # 注释行不参与等价性证明（语句才是语义）：块体中间夹注释曾让
+                    # gf_SKN_3_tianxuanzhe 报「无法溯源」假告警（2026-09-13 修）
+                    xs = [x for x in xs if x.strip() and not x.strip().startswith("//")]
                     i = 0
-                    while i < len(xs) and (not xs[i].strip() or xs[i].strip().startswith("//")):
+                    while i < len(xs) and not xs[i].strip():
                         i += 1
                     return xs[i:]
                 want = _trim([norm(x) for x in lines[k_stmt:f["end"]]])

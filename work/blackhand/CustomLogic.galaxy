@@ -13501,16 +13501,6 @@ void gf_SequenceAfter2 () {
 trigger auto_gf_StopMusic_Trigger = null;
 fixed auto_gf_StopMusic_lp_delay;
 
-bool auto_gf_StopMusic_TriggerFunc (bool testConds, bool runActions) {
-    fixed lp_delay = auto_gf_StopMusic_lp_delay;
-
-    // Automatic Variable Declarations
-    // Implementation
-    Wait((lp_delay - 5.0), c_timeGame);
-    SoundStop(gv_music[0], true);
-    return true;
-}
-
 trigger auto_gf_StopMusic2_Trigger = null;
 fixed auto_gf_StopMusic2_lp_delay;
 
@@ -35215,19 +35205,6 @@ bool auto_gf_ASReEnableButtons_TriggerFunc (bool testConds, bool runActions) {
 trigger auto_gf_ASReEnableButtonForAll_Trigger = null;
 int auto_gf_ASReEnableButtonForAll_lp_index;
 fixed auto_gf_ASReEnableButtonForAll_lp_delay;
-
-bool auto_gf_ASReEnableButtonForAll_TriggerFunc (bool testConds, bool runActions) {
-    int lp_index = auto_gf_ASReEnableButtonForAll_lp_index;
-    fixed lp_delay = auto_gf_ASReEnableButtonForAll_lp_delay;
-
-    // Automatic Variable Declarations
-    // Implementation
-    Wait(lp_delay, c_timeGame);
-    DialogControlSetEnabled(gv_actionDialogItem[lp_index][2], PlayerGroupAll(), true);
-    DialogControlSetEnabled(gv_actionDialogItem[lp_index][3], PlayerGroupAll(), true);
-    DialogControlSetEnabled(gv_actionDialogItem[lp_index][4], PlayerGroupAll(), true);
-    return true;
-}
 
 void gf_ASInitializeActionDialogs () {
     // Variable Declarations

@@ -300,6 +300,17 @@ def main() -> int:
         print('✗ role_gen 未通过（角色登记与 spec 不一致，看 roles/*.json），停止打包')
         return 1
 
+    # 0f) Wait 调用图（shw250）：含 Wait 的函数，调用链必须全部源自触发器。
+    wg = subprocess.run([sys.executable, str(ROOT / 'tools' / 'wait_graph_check.py')],
+                        capture_output=True, text=True)
+    wg_tail = [l for l in (wg.stdout or '').strip().split('\n') if l.strip()][-2:]
+
+    print(wg_tail[-1] if wg_tail else '(wait_graph_check 无输出)')
+
+    if wg.returncode != 0:
+        print('✗ wait_graph_check 未通过（含 Wait 的函数被非触发器上下文调用），停止打包')
+        return 1
+
     if out.exists():
         print(f"  ! 覆盖已存在的 {out}")
 
