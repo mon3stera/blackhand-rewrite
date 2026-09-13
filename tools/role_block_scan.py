@@ -31,6 +31,8 @@ R = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(R)
 
 # 死代码不必抽（记忆 802）：16 个零引用函数
+# 原图的零引用函数，已于 shw249 删除（tools/dead_code_prune.py）；名单留着是
+# 防止将来从旧版脚本里带回来。
 DEAD = {"gf_ewfdasasda", "gf_SequenceBullshitBackup", "gf_ESMafiaHelperHelper", "gf_ESTriadHelperHelper",
         "gf_RankedPoints", "gf_ESTraperKill", "gf_ETGamblerWin", "gf_RAEnforcerActions2",
         "gf_RAThreatenerActions", "gf_RAInstigaterActions", "gf_RAOppressorActions",
