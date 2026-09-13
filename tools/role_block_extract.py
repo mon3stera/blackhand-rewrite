@@ -72,6 +72,11 @@ FAMILIES = {
         "params": None,
     },
     # 单函数试点（阶段三 3b-1）：gf_SequenceAfter 已把局部数组提升为全局
+    "after2": {
+        "funcs": ["gf_SequenceAfter2"],
+        "tag": {"gf_SequenceAfter2": "G"},
+        "params": None,
+    },
     "after": {
         "funcs": ["gf_SequenceAfter"],
         "tag": {"gf_SequenceAfter": "F"},

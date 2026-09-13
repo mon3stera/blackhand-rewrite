@@ -33,6 +33,11 @@ MARK = "// ===== BH:SK 局部数组提升（阶段三前置）====="
 
 # 函数 → [(原局部名, 新全局名, 声明类型)]；类型照抄原声明
 SPEC = {
+    "gf_SequenceAfter2": [
+        # After2 自己的 lv_wait / lv_z（与 gf_SequenceAfter 的同名局部**不是同一个变量**）
+        ("lv_wait", "gv_seqAfter2Wait", "bool[5]"),
+        ("lv_z", "gv_seqAfter2Z", "bool[5]"),
+    ],
     "gf_SequenceAfter": [
         ("lv_d", "gv_seqAfterD", "int[16]"),
         ("lv_e7989FE796ABE68EA2E59198E4BAA4E4BA92", "gv_seqAfterPlagueInteract", "bool[16]"),
@@ -85,23 +90,27 @@ def main():
     args = ap.parse_args()
 
     text = SCRIPT.read_text(encoding="utf-8")
-    if MARK in text:
-        sys.exit("✗ 已提升过（文件里有标记），拒绝重复执行")
-
     lines = text.split("\n")
     plans = {}
 
+    # 按函数幂等：SPEC 可以增量添加（After 已提升过之后再加 After2）。
+    # 判据 = 该局部还以原类型声明着 ⇒ 待提升；已声明消失且函数体内出现新全局名 ⇒ 已提升，跳过。
     for fn, items in SPEC.items():
         span = func_span(lines, fn)
         if not span:
             sys.exit(f"✗ 找不到 {fn}")
         s, e = span
         rename, delete = {}, set()
-        globs = []
+        globs, todo = [], []
         for local, glob, typ in items:
             decl = f"{typ} {local};"
-            if not any(lines[k].strip() == decl for k in range(s, min(e, s + 300))):
-                sys.exit(f"✗ {fn} 里找不到声明「{decl}」")
+            if any(lines[k].strip() == decl for k in range(s, min(e, s + 300))):
+                todo.append((local, glob, typ))
+            elif any(glob in lines[k] for k in range(s, e + 1)):
+                print(f"  {fn}: {local} → {glob} 已提升过，跳过")
+            else:
+                sys.exit(f"✗ {fn} 里既没有声明「{decl}」也没有 {glob}")
+        for local, glob, typ in todo:
             hits = [k for k in range(s, e + 1)
                     if re.search(rf"(?<![A-Za-z0-9_]){local}(?![A-Za-z0-9_])", lines[k])]
             for k in hits:
@@ -113,6 +122,8 @@ def main():
                 rename[k] = new
             globs.append(f"{typ} {glob};")
             print(f"  {fn}: {local} → {glob}（{typ}；函数内 {len(hits)} 处，其中声明 1 行删除）")
+        if not todo:
+            continue
         plans[fn] = {"span": (s, e), "rename": rename, "delete": delete,
                      "insert": decl_end(lines, s, e), "globs": globs}
 
@@ -125,7 +136,7 @@ def main():
                 continue
             body = p["rename"].get(k, lines[k])
             if any(re.search(rf"(?<![A-Za-z0-9_]){loc}(?![A-Za-z0-9_])", body)
-                   for loc, _, _ in SPEC[fn]):
+                   for loc, glob, _ in SPEC[fn] if glob in p["globs"]):
                 left.append(k + 1)
         if left:
             sys.exit(f"✗ {fn} 内仍有遗留原名：{left[:3]}")
