@@ -35,11 +35,9 @@ PROTO_ANCHOR = "void gf_RTRoleCard (int lp_player);"
 #   ATown2 池1/14：块内写 lv_a、块外继续读它（真泄漏，没有出参可用）
 #   ATown2 池1/26 / ANeutral 池3/5：块内读一个从没赋值的陈旧循环变量 lv_a
 #   （后两处疑似原图 bug —— 用陈旧值当数组下标，见提交说明；先原样留着不动）
-SKIP = {
-    ("gt_ASActionButtonATown2_Func", 77070),
-    ("gt_ASActionButtonATown2_Func", 77333),
-    ("gt_ASActionButtonANeutral_Func", 80204),
-}
+SKIP = set()
+# shw237 时这里跳过 3 个块；shw238 修掉那两处「陈旧循环变量 lv_a 当下标」的越界 bug
+# （见记忆 806）后，3 块都变成可机械搬运，故跳过清单清空。
 
 FAMILIES = {
     "click": {
