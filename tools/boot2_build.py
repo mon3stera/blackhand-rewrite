@@ -145,7 +145,6 @@ MUST_HAVE_KEYS = [
     'Param/Value/SHWSLOTS7',
     'Param/Value/SHWSLOTS8',
     'Param/Value/SHWSLOTS9',
-    'Param/Value/SHWSLOTSX',
     'Param/Value/SHWSLOTC',
     'Param/Value/SHWSLOTD',
     'Param/Value/SHWSLOTE',

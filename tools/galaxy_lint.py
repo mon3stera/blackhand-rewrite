@@ -7,7 +7,9 @@
    依赖函数声明区的 `const int autoXXXX_ae/_ai;`。preset_gen 生成的函数曾漏掉这一段声明块
    → 整个脚本读取失败（游戏内报「解析for时出错，可能缺少分号」）。
 2. **大括号配平**：全文 `{`/`}` 必须相等。
-3. **text/string 转换误用**；4. **函数外裸语句**；5. **未声明标识符**。
+3. **text/string 转换误用**；3b. **string 左值 ← 文本表达式**（两者都是实测会编译失败的类型错误，
+   后者见 shw254b 事故：`string 变量 = StringExternal(...) + IntToString(...)`）；
+4. **函数外裸语句**；5. **未声明标识符**。
 5. **未声明标识符（与名字族无关的硬校验）**：函数体里出现在**变量位置**的标识符
    （后面不接 `(` 的，即非函数调用）减去「本函数声明 + 参数 + 文件作用域名字 +
    关键字/类型 + `c_*`/`libNtve_*` 库常量」，剩下的就是编译器会拒收的名字。
@@ -59,6 +61,13 @@ DECL = re.compile(r"^(text|string)((?:\[[^\]]*\])*)\s+(\w+)\s*;", re.M)
 # 转换函数：第一个参数期望的类型
 CONV = {"StringToText": "string", "TextToString": "text"}
 CONV_CALL = re.compile(r"\b(StringToText|TextToString)\s*\(\s*(\w+)")
+# 第 3b 项（string 左值 ← 文本表达式）用到的判据。返回 text 的引擎/库函数：
+# StringExternal/IntToText/FixedToText/TextWithColor/PlayerName 是原生，StringToText 是 string→text 的转换。
+# PlayerHandle 返回的是 string（不在表里）。
+TEXT_FUNCS = ("StringExternal", "StringToText", "IntToText", "FixedToText", "TextWithColor", "PlayerName")
+TEXT_CALL = re.compile(r"\b(" + "|".join(TEXT_FUNCS) + r")\s*\(")
+DECL_STR = re.compile(r"^\s*(?:const\s+)?(string|text)(?:\[[^\]]*\])*\s+(\w+)\s*(?:\[[^\]]*\])*\s*(?:=|;)")
+ASSIGN_ONE = re.compile(r"^\s*([A-Za-z_]\w*)(?:\[[^\]]*\])*\s*=\s*(.+?);\s*$")
 
 TYPES = (r"void|bool|int|string|text|fixed|unit|point|region|playergroup|unitgroup|"
          r"bank|trigger|timer|order|soundlink|color|doodad|actor")
@@ -144,6 +153,48 @@ def lint(path: Path) -> int:
         problems += conv_bad
     else:
         print("✓ text/string 转换无类型误用")
+
+    # string 左值 ← 文本表达式（shw254b 事故，**实测会编译失败**）：
+    # `lv_name = StringExternal("Param/Value/KEY") + IntToString(n);` ⇒
+    # 「不正确的类型（不允许进行隐式强制转换）」→「脚本读取失败」，整张图界面全废。
+    # 原因：Galaxy 只允许 string → text 的**隐式**转换（StringToText 是把它写成显式时的函数），
+    # 反方向 **没有任何函数可转**（引擎 2944 个原生/库函数里「ret=string 且收 text 参数」的 = 0 个；
+    # 社区常写的 TextToString 在本版本并不存在）⇒ 拼出来的 text 永远进不了 string 变量。
+    # 修法只有两条：① 目标变量改用 text ② 别拿文本函数拼（要数字就 IntToString 拼纯 string）。
+    ranges = list(func_ranges(lines))
+    global_types: dict[str, str] = {}
+    for m in DECL_STR.finditer(text):
+        ln = text[:m.start()].count("\n")
+        if not any(s <= ln <= e for s, e in ranges):
+            global_types[m.group(2)] = m.group(1)
+
+    ts_bad = 0
+    for start, end in ranges:
+        local: dict[str, str] = {}
+        for idx in range(start, end + 1):
+            m = DECL_STR.match(strip_comment(lines[idx]))
+            if m:
+                local.setdefault(m.group(2), m.group(1))
+
+        for idx in range(start, end + 1):
+            m = ASSIGN_ONE.match(strip_comment(lines[idx]))
+            if not m:
+                continue
+
+            name, rhs = m.group(1), m.group(2)
+            if (local.get(name) or global_types.get(name)) != "string":
+                continue
+
+            hit = TEXT_CALL.search(rhs)
+            if hit:
+                print(f"✗ {idx + 1:6} {name} 声明为 string，右边却是 {hit.group(1)}(…) 的文本表达式"
+                      f"（Galaxy 无 text → string 转换）: {rhs[:80]}")
+                ts_bad += 1
+
+    if ts_bad:
+        problems += ts_bad
+    else:
+        print("✓ 无「string 变量 ← 文本表达式」的编译错误")
 
     # 函数外裸语句（语句飘到 `}` 之后 → 游戏内「脚本读取失败: 语法错误」，shw218 事故）
     depth = 0

@@ -28,7 +28,8 @@
 | 「进图即清档」根因、bank 预加载与 BankWait | 「bank 清档 BankList BankWait」 |
 | 探员线索 / 案底 / 警长「可查出X」开关 | 「探员 警长 案底 可查出 gv_roleInvestigatorArray」 |
 | 胜利图、结算画面、dds 出图规格 | 「胜利图 WinScreen dds 图码」 |
-| Galaxy 语言陷阱、补丁与断言踩坑 | 「Galaxy 陷阱 soundlink 断言 白名单 斜体」 |
+| Galaxy 语言陷阱、补丁与断言踩坑（含 **text/string 类型**：text→string 引擎里无函数可转） | 「Galaxy 陷阱 soundlink 断言 白名单 斜体 text string 隐式强制转换」 |
+| 保存格多槽位（银行 I/Slot&lt;N&gt;Code|Name、面板第 10 项、shw255 修的四个 bug） | 「保存格 槽位 saveSlot gv_saveSlotCode ActiveSlot SHWSLOT」 |
 | 天选者(3/32) 规格、洞察/雷击/免死、新角色 UI 坑 | 「天选者 雷击 guess 洞察 卡片底色 换行」 |
 | 审判台免死、处决点、跳过审判恢复白天 | 「审判台 免死 处决 gf_EExecution gf_TXResumeDay」 |
 | 角色号 >30 要放宽的上界、死因字母码、命令注册 | 「上界 放宽 数组身份 shw115 验尸官 字母码 命令注册」 |

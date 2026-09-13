@@ -85,7 +85,6 @@ Param/Value/SHWSLOTS6=<s val="ModLeftSize16Bold">：</s>
 Param/Value/SHWSLOTS7=<s val="ModLeftSize16Bold"><c val="FFFFFF">
 Param/Value/SHWSLOTS8=</s>
 Param/Value/SHWSLOTS9=<s val="ModLeftSize16Bold"><c val="FF8800">空</c></s>
-Param/Value/SHWSLOTSX=槽位 
 Param/Value/SHWSLOTC=<s val="ModLeftSize16Bold"><c val="00FF00">已保存到槽位。</c></s>
 Param/Value/SHWSLOTD=<s val="ModLeftSize16Bold"><c val="00FF00">已载入槽位的设置。</c></s>
 Param/Value/SHWSLOTE=<s val="ModLeftSize16Bold"><c val="FF8800">已清空该槽位。</c></s>

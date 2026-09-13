@@ -16518,9 +16518,11 @@ bool auto_gf_CDisassembleSaveSlotBank_TriggerFunc (bool testConds, bool runActio
         lv_a = 1;
         for ( ; ( (auto47CFFA47_ai >= 0 && lv_a <= auto47CFFA47_ae) || (auto47CFFA47_ai < 0 && lv_a >= auto47CFFA47_ae) ) ; lv_a += auto47CFFA47_ai ) {
             gv_bankSaveIntegers[lp_player][0][lv_a] = StringToInt(StringWord(lv_str[11], lv_a));
-        gf_BHSaveSlotBankRead(lp_player);
             gv_bankSaveIntegers[lp_player][1][lv_a] = StringToInt(StringWord(lv_str[12], lv_a));
         }
+
+        // shw255：原先这一行插在上面那个循环体中间 ⇒ 每轮都重读一遍 6 个槽位（跑 15 次）
+        gf_BHSaveSlotBankRead(lp_player);
     }
     return true;
 }
@@ -91812,6 +91814,16 @@ void gf_BHSaveSlotBankWrite (int lp_player) {
     // Implementation
     lv_a = 1;
     for ( ; (lv_a <= c_bhSaveSlotCount) ; lv_a += 1 ) {
+        // shw255：没动过的槽位在 Galaxy 里是 null 串，直接喂给 BankValueSetFromString 会在运行期
+        // 报「无法从 '' 的参数中获取 'str'」并中断整个落盘触发器（gf_CAssembleSaveSlotBank 每局都跑）
+        if ((gv_saveSlotCode[lp_player][lv_a] == null)) {
+            gv_saveSlotCode[lp_player][lv_a] = "";
+        }
+
+        if ((gv_saveSlotName[lp_player][lv_a] == null)) {
+            gv_saveSlotName[lp_player][lv_a] = "";
+        }
+
         BankValueSetFromString(gv_bank[lp_player], "I", ("Slot" + IntToString(lv_a) + "Code"), gv_saveSlotCode[lp_player][lv_a]);
         BankValueSetFromString(gv_bank[lp_player], "I", ("Slot" + IntToString(lv_a) + "Name"), gv_saveSlotName[lp_player][lv_a]);
     }
@@ -91840,7 +91852,15 @@ void gf_BHSaveSlotBankRead (int lp_player) {
         }
     }
 
-    gv_saveSlotSel[lp_player] = StringToInt(BankValueGetAsString(gv_bank[lp_player], "I", "ActiveSlot"));
+    // shw255：老档没有 ActiveSlot 这个键，BankValueGetAsString 返回 null，StringToInt(null) 会
+    // 报「无法从 '' 的参数中获取 'int'」并打断整个读档触发器 ⇒ 先判键存在
+    if ((BankKeyExists(gv_bank[lp_player], "I", "ActiveSlot")) == true) {
+        gv_saveSlotSel[lp_player] = StringToInt(BankValueGetAsString(gv_bank[lp_player], "I", "ActiveSlot"));
+    }
+    else {
+        gv_saveSlotSel[lp_player] = 1;
+    }
+
     if ((gv_saveSlotSel[lp_player] < 1) || (gv_saveSlotSel[lp_player] > c_bhSaveSlotCount)) {
         gv_saveSlotSel[lp_player] = 1;
     }
@@ -91949,9 +91969,13 @@ void gf_BHSaveSlotSave (int lp_player) {
     gv_saveSlotCode[lp_player][lv_slot] = gv_save64[lp_player];
 
     lv_name = libNtve_gf_DialogItemEditValue(gv_saveSlotItem[3], lp_player);
-    if ((lv_name == null) || (lv_name == "")) {
-        lv_name = (StringExternal("Param/Value/SHWSLOTSX") + IntToString(lv_slot));
+    if ((lv_name == null)) {
+        lv_name = "";
     }
+    // shw255：名字框留空就保持空名（列表显示「未命名」），**不要**拿 StringExternal 拼默认名——
+    // 它返回 text，而 Galaxy **没有任何 text → string 的函数**（StringToText 是 string → text 的反向），
+    // 与 IntToString 混拼的结果仍是 text，赋给 string 变量即编译报「不正确的类型（不允许进行隐式强制转换）」
+    // ⇒ 整个脚本读取失败、界面全废（shw254b 实测）。
 
     gv_saveSlotName[lp_player][lv_slot] = lv_name;
     gf_CAssembleSaveSlotBank(lp_player);
