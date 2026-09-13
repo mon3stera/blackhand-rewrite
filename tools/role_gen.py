@@ -451,31 +451,21 @@ def main() -> int:
         if pinyins.get((pool, role)) != spec["pinyin"]:
             miss.append(f'拼音（应为 gv_roleNameInput[{pool}][{role}] = "{spec["pinyin"]}"）')
 
+        # 交互**不进 spec**（2026-09-13 用户定稿）：角色间交互是开放集合，新角色会带来
+        # 新机制，写进声明只会过期 —— 交互一律以代码实现为准（清单见记忆 792）。
+        # spec 只声明「封闭登记位置」，这里的 interactions 仅作设计笔记、不参与判定。
+        # 仅剩一条「笔记与结构字段别自相矛盾」的检查（笔记说能猜、结构字段填不能猜）
         inter = spec.get("interactions", {})
-        for k, cn in (("swap", "交换干扰类"), ("investigate", "调查类"),
-                      ("restrict", "限制类"), ("guessage", "审查员可猜")):
-            if not (inter.get(k) or {}).get("text"):
-                miss.append(f"交互声明「{cn}」未回答（记忆 792 的四项硬约束）")
         if inter.get("guessage", {}).get("in_guess_list") and not spec.get("guessable"):
             miss.append('写了对审查页可猜但没设 "guessable": true')
 
-        status = spec.get("review_status", "reviewed")
-        todo = [x for x in miss if "交互声明" in x]
-        hard = [x for x in miss if "交互声明" not in x]
-        if status == "reviewed":
-            flag = "✗" if miss else "✓"
-            if miss:
-                problems.append(f"{tag}[已复核] 登记不全：{miss}")
-        else:
-            # 自动导出的 spec：登记缺项可能是「导出器还不认识的写法」，算待办不算错；
-            # 但交互未回答是必然的（导出器不替人回答）
-            flag = "·" if hard else "…"
-            if hard:
-                warnings.append(f"{tag}[待复核] 登记缺 {len(hard)} 项：{hard[:3]}")
-            if todo:
-                pending.append(tag)
-        print(f"    {flag} {tag:16s} [{status}] {'已登记' if not miss else '缺 ' + str(len(miss)) + ' 项'}"
-              f"{'（含交互未答）' if todo else ''}")
+        note = []
+        if spec.get("interactions"):
+            note.append("含交互笔记（不参与判定）")
+        print(f"    {'✓' if not miss else '✗'} {tag:16s} {'已登记' if not miss else '缺 ' + str(miss)}"
+              f"{'　' + '，'.join(note) if note else ''}")
+        if miss:
+            problems.append(f"{tag} 登记不全：{miss}")
 
     # ---------- 4) inventory ----------
     if args.inventory:
@@ -486,20 +476,15 @@ def main() -> int:
                   f"；拼音 {pinyins.get((pool, role), '—')}；审查页 "
                   f"{'在' if (pool, role) in named else '不在'}")
 
-    reviewed = [x for x in specs if x.get("review_status", "reviewed") == "reviewed"]
-    print(f"\n复核进度：已复核 {len(reviewed)} / 共 {len(specs)} 个角色"
-          f"（待复核的 {len(pending)} 个：四项交互还没人回答）")
-    if warnings:
-        print(f"· {len(warnings)} 个待复核 spec 有登记缺项（导出器未覆盖的写法，翻 reviewed 后即算错）：")
-        for x in warnings[:5]:
-            print("    " + x)
+    print(f"\n· 上两项（上界族 / 审查页自洽）**不需要 spec**，覆盖脚本里全部角色；"
+          f"下面这 {len(specs)} 份 spec 只声明「封闭登记位置」，按需维护（加/改角色时写一份）")
     print()
     if problems:
         print(f"✗ 共 {len(problems)} 处问题：")
         for x in problems:
             print("    " + x)
         return 1
-    print(f"✓ 全部检查通过（spec {len(specs)} 个角色：已复核 {len(reviewed)}）")
+    print(f"✓ 全部检查通过（上界族+审查页自洽；spec {len(specs)} 份）")
     return 0
 
 
