@@ -1254,6 +1254,7 @@ void gf_RTTownRoleText (int lp_player);
 void gf_RTMafiaRoleText (int lp_player);
 void gf_RTNeutralRoleText (int lp_player);
 void gf_RTTriadRoleText (int lp_player);
+void gf_RTRoleCard (int lp_player);
 void gf_TBInitializeTimer ();
 void gf_TBStartTimer2 (fixed lp_duration, text lp_display);
 void gf_TBEndTimer ();
@@ -6456,19 +6457,19 @@ void gf_MakeHelpMenu () {
                 gv_roles[0][1] = lv_category;
                 gv_roles[0][0] = lv_role;
                 if ((lv_category == 1)) {
-                    gf_RTTownRoleText(0);
+                    gf_RTRoleCard(0);
                 }
 
                 if ((lv_category == 2)) {
-                    gf_RTMafiaRoleText(0);
+                    gf_RTRoleCard(0);
                 }
 
                 if ((lv_category == 5)) {
-                    gf_RTTriadRoleText(0);
+                    gf_RTRoleCard(0);
                 }
 
                 if ((lv_category == 3)) {
-                    gf_RTNeutralRoleText(0);
+                    gf_RTRoleCard(0);
                 }
 
                 if ((lv_category == 4)) {
@@ -6727,15 +6728,15 @@ void gf_DisplayRoles () {
     for ( ; ( (auto74C8A26A_ai >= 0 && lv_a <= auto74C8A26A_ae) || (auto74C8A26A_ai < 0 && lv_a >= auto74C8A26A_ae) ) ; lv_a += auto74C8A26A_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
             if ((gv_roles[lv_a][1] == 1)) {
-                gf_RTTownRoleText(lv_a);
+                gf_RTRoleCard(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 2)) {
-                gf_RTMafiaRoleText(lv_a);
+                gf_RTRoleCard(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3)) {
-                gf_RTNeutralRoleText(lv_a);
+                gf_RTRoleCard(lv_a);
                 if ((gv_roles[lv_a][0] == 16)) {
                     gv_immuneChance[lv_a] = 1;
                 }
@@ -6743,7 +6744,7 @@ void gf_DisplayRoles () {
             }
 
             if ((gv_roles[lv_a][1] == 5)) {
-                gf_RTTriadRoleText(lv_a);
+                gf_RTRoleCard(lv_a);
             }
 
         }
@@ -14783,7 +14784,7 @@ void gf_SequenceAfter2 () {
                         gv_roles[gv_visitation[lv_a]][0] = 2;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTNeutralRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         lv_z[4] = true;
@@ -14819,7 +14820,7 @@ void gf_SequenceAfter2 () {
                             gv_immuneChance[gv_visitation[lv_a]] = 0;
                             lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                             gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                            gf_RTMafiaRoleText(gv_visitation[lv_a]);
+                            gf_RTRoleCard(gv_visitation[lv_a]);
                             gv_specialCasePlayer[gv_visitation[lv_a]][17] += 1;
                             gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                             lv_z[4] = true;
@@ -14840,7 +14841,7 @@ void gf_SequenceAfter2 () {
                                 gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
                                 gv_immuneChance[gv_visitation[lv_a]] = 0;
                                 gf_BHCrime(lv_a, 7);
-                                gf_RTTriadRoleText(gv_visitation[lv_a]);
+                                gf_RTRoleCard(gv_visitation[lv_a]);
                                 gv_specialCasePlayer[gv_visitation[lv_a]][17] += 1;
                                 gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                                 lv_z[4] = true;
@@ -14870,7 +14871,7 @@ void gf_SequenceAfter2 () {
                                     gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
                                     gv_shots[gv_visitation[lv_a]] = 1;
                                     gv_votes[gv_visitation[lv_a]] = 1;
-                                    gf_RTNeutralRoleText(gv_visitation[lv_a]);
+                                    gf_RTRoleCard(gv_visitation[lv_a]);
                                     gv_specialCasePlayer[gv_visitation[lv_a]][17] += 1;
                                     gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                                     lv_z[4] = true;
@@ -14901,7 +14902,7 @@ void gf_SequenceAfter2 () {
                                         gv_votes[gv_visitation[lv_a]] = 1;
                                     }
 
-                                    gf_RTTownRoleText(gv_visitation[lv_a]);
+                                    gf_RTRoleCard(gv_visitation[lv_a]);
                                     gv_specialCasePlayer[gv_visitation[lv_a]][17] += 1;
                                     gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                                     lv_z[4] = true;
@@ -14960,7 +14961,7 @@ void gf_SequenceAfter2 () {
                 gv_roles[gv_visitation[lv_a]][0] = 7;
                 lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                 gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                gf_RTTownRoleText(gv_visitation[lv_a]);
+                gf_RTRoleCard(gv_visitation[lv_a]);
                 gv_specialCasePlayer[gv_visitation[lv_a]][17] += 1;
                 gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                 gv_immune[gv_visitation[lv_a]][0] = false;
@@ -14999,7 +15000,7 @@ void gf_SequenceAfter2 () {
                     }
                 }
                 gv_e4BB8AE6999AE58F98E8BAAB[lv_a] = true;
-                gf_RTTownRoleText(lv_a);
+                gf_RTRoleCard(lv_a);
             }
             else {
                 if ((gv_visitation[lv_a] == lv_a) && (gv_witched[lv_a] == 0)) {
@@ -15022,7 +15023,7 @@ void gf_SequenceAfter2 () {
                     }
                     gv_e4BB8AE6999AE58F98E8BAAB[lv_a] = true;
                     gf_BHCrime(lv_a, 7);
-                    gf_RTTownRoleText(lv_a);
+                    gf_RTRoleCard(lv_a);
                 }
 
             }
@@ -15075,7 +15076,7 @@ void gf_SequenceAfter2 () {
                         gv_immune[gv_visitation[lv_a]][0] = false;
                         gv_immuneChance[gv_visitation[lv_a]] = 0;
                         gf_FlashScreen(Color(50.20, 100.00, 0.00), gv_visitation[lv_a], 1.0, 2.0);
-                        gf_RTTownRoleText(gv_visitation[lv_a]);
+                        gf_RTRoleCard(gv_visitation[lv_a]);
                         lv_z[4] = true;
                     }
                 }
@@ -15104,7 +15105,7 @@ void gf_SequenceAfter2 () {
                     gv_immune[gv_visitation[lv_a]][0] = false;
                     gv_immuneChance[gv_visitation[lv_a]] = 0;
                     gf_FlashScreen(Color(50.20, 100.00, 0.00), gv_visitation[lv_a], 1.0, 2.0);
-                    gf_RTTownRoleText(gv_visitation[lv_a]);
+                    gf_RTRoleCard(gv_visitation[lv_a]);
                     lv_z[4] = true;
                 }
                 else {
@@ -15216,7 +15217,7 @@ void gf_SequenceAfter2 () {
                     gv_votes[gv_visitation[gv_cultConverter]] = 1;
                 }
 
-                gf_RTNeutralRoleText(gv_visitation[gv_cultConverter]);
+                gf_RTRoleCard(gv_visitation[gv_cultConverter]);
                 lv_z[4] = true;
             }
             else {
@@ -15278,7 +15279,7 @@ void gf_SequenceAfter2 () {
                             gv_votes[gv_visitation[lv_a]] = 1;
                         }
 
-                        gf_RTNeutralRoleText(gv_visitation[lv_a]);
+                        gf_RTRoleCard(gv_visitation[lv_a]);
                         lv_z[4] = true;
                     }
                     else {
@@ -15373,7 +15374,7 @@ void gf_SequenceAfter2 () {
                             gv_e4BB8AE6999AE58F98E8BAAB[lv_a] = true;
                             gv_immune[gv_visitation[lv_a]][0] = false;
                             gv_immuneChance[gv_visitation[lv_a]] = 0;
-                            gf_RTTownRoleText(lv_a);
+                            gf_RTRoleCard(lv_a);
                             gf_RefreshRoleBox();
                             if ((gv_roles[gv_visitation[lv_a]][0] == 24)) {
                                 gv_specialCasePlayer[lv_a][56] += 1;
@@ -15422,7 +15423,7 @@ void gf_SequenceAfter2 () {
                     }
                     else {
                         gv_roles[lv_a][0] = gv_roles[gv_visitation[lv_a]][0];
-                        gf_RTTownRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gf_RefreshRoleBox();
                         if ((gv_roles[gv_visitation[lv_a]][0] == 24)) {
                             gv_specialCasePlayer[lv_a][56] += 1;
@@ -15588,19 +15589,19 @@ void gf_SequenceAfter2 () {
             }
 
             if ((gv_roles[lv_a][1] == 1)) {
-                gf_RTTownRoleText(lv_a);
+                gf_RTRoleCard(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 2)) {
-                gf_RTMafiaRoleText(lv_a);
+                gf_RTRoleCard(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3)) {
-                gf_RTNeutralRoleText(lv_a);
+                gf_RTRoleCard(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 5)) {
-                gf_RTTriadRoleText(lv_a);
+                gf_RTRoleCard(lv_a);
             }
 
             gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
@@ -15620,7 +15621,7 @@ void gf_SequenceAfter2 () {
         if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 7) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_diedAtNight[lv_a] == false)) {
             if ((gv_e5A4B1E5BF86E8ADA6E5918A[lv_a] >= 2)) {
                 gv_roles[lv_a][0] = 3;
-                gf_RTNeutralRoleText(lv_a);
+                gf_RTRoleCard(lv_a);
                 gf_CBSystemMessage(StringExternal("Param/Value/E67D7F35"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
                 gv_remembered[lv_a][1] = 3;
                 gv_remembered[lv_a][0] = 3;
@@ -15860,7 +15861,7 @@ void gf_SequenceAfter2 () {
             if ((gv_roleOptions[3][6][0] == true)) {
                 gv_roles[lv_a][0] = 3;
                 gf_CBSystemMessage((StringExternal("Param/Value/0E565869") + TextWithColor(StringToText(gv_name[gv_goalTarget[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_goalTarget[lv_a]])) + StringExternal("Param/Value/8E94060F") + gv_roleNameArray[3][3] + StringExternal("Param/Value/965A0352")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
-                gf_RTNeutralRoleText(lv_a);
+                gf_RTRoleCard(lv_a);
                 gv_specialCasePlayer[lv_a][17] += 1;
                 gf_RefreshRoleBox();
             }
@@ -34092,7 +34093,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTMafiaRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[2] == 1)) {
@@ -34112,7 +34113,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTMafiaRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[2] == 1)) {
@@ -34136,7 +34137,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 2;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTMafiaRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         gf_CBSystemMessage((StringExternal("Param/Value/4DC14E89") + gv_roleNameArray[2][2] + StringExternal("Param/Value/9F99F50E")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
@@ -34148,7 +34149,7 @@ void gf_RSConversions () {
                             gv_roles[lv_a][0] = 1;
                             lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                             gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                            gf_RTMafiaRoleText(lv_a);
+                            gf_RTRoleCard(lv_a);
                             gv_specialCasePlayer[lv_a][17] += 1;
                             gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                             if ((lv_x[2] == 1)) {
@@ -34169,7 +34170,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTMafiaRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[2] == 1)) {
@@ -34189,7 +34190,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTMafiaRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[2] == 1)) {
@@ -34209,7 +34210,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTMafiaRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[2] == 1)) {
@@ -34229,7 +34230,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTMafiaRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[2] == 1)) {
@@ -34250,7 +34251,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTMafiaRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[2] == 1)) {
@@ -34270,7 +34271,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTMafiaRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[2] == 1)) {
@@ -34290,7 +34291,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTMafiaRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[2] == 1)) {
@@ -34310,7 +34311,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTMafiaRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[2] == 1)) {
@@ -34330,7 +34331,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTMafiaRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[2] == 1)) {
@@ -34350,7 +34351,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTMafiaRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[2] == 1)) {
@@ -34374,7 +34375,7 @@ void gf_RSConversions () {
                             gv_roles[lv_a][0] = 1;
                             lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                             gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                            gf_RTMafiaRoleText(lv_a);
+                            gf_RTRoleCard(lv_a);
                             gv_specialCasePlayer[lv_a][17] += 1;
                             gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                             if ((lv_x[2] == 1)) {
@@ -34398,7 +34399,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTTriadRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[12] == 1)) {
@@ -34418,7 +34419,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTTriadRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[12] == 1)) {
@@ -34442,7 +34443,7 @@ void gf_RSConversions () {
                             gv_roles[lv_a][0] = 1;
                             lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                             gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                            gf_RTMafiaRoleText(lv_a);
+                            gf_RTRoleCard(lv_a);
                             gv_specialCasePlayer[lv_a][17] += 1;
                             gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                             if ((lv_x[2] == 1)) {
@@ -34467,7 +34468,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 2;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTTriadRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         gf_CBSystemMessage((StringExternal("Param/Value/551C2446") + gv_roleNameArray[5][2] + StringExternal("Param/Value/41484F15")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
@@ -34479,7 +34480,7 @@ void gf_RSConversions () {
                             gv_roles[lv_a][0] = 1;
                             lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                             gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                            gf_RTTriadRoleText(lv_a);
+                            gf_RTRoleCard(lv_a);
                             gv_specialCasePlayer[lv_a][17] += 1;
                             gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                             if ((lv_x[12] == 1)) {
@@ -34500,7 +34501,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTTriadRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[12] == 1)) {
@@ -34520,7 +34521,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTTriadRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[12] == 1)) {
@@ -34540,7 +34541,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTTriadRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[12] == 1)) {
@@ -34560,7 +34561,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTTriadRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[12] == 1)) {
@@ -34581,7 +34582,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTTriadRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[12] == 1)) {
@@ -34601,7 +34602,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTTriadRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[12] == 1)) {
@@ -34621,7 +34622,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTTriadRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[12] == 1)) {
@@ -34641,7 +34642,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTTriadRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[12] == 1)) {
@@ -34665,7 +34666,7 @@ void gf_RSConversions () {
                             gv_roles[lv_a][0] = 1;
                             lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                             gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                            gf_RTTriadRoleText(lv_a);
+                            gf_RTRoleCard(lv_a);
                             gv_specialCasePlayer[lv_a][17] += 1;
                             gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                             if ((lv_x[2] == 1)) {
@@ -34686,7 +34687,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTTriadRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[12] == 1)) {
@@ -34706,7 +34707,7 @@ void gf_RSConversions () {
                         gv_roles[lv_a][0] = 1;
                         lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                        gf_RTTriadRoleText(lv_a);
+                        gf_RTRoleCard(lv_a);
                         gv_specialCasePlayer[lv_a][17] += 1;
                         gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                         if ((lv_x[12] == 1)) {
@@ -34746,7 +34747,7 @@ void gf_RSConversions () {
                     gv_roles[lv_a][0] = 14;
                     lv_c = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
                     gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-                    gf_RTTownRoleText(lv_a);
+                    gf_RTRoleCard(lv_a);
                     gv_specialCasePlayer[lv_a][17] += 1;
                     gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c;
                     gf_CBSystemMessage((StringExternal("Param/Value/6BA4E45D") + gv_roleNameArray[1][14] + StringExternal("Param/Value/A5465845")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 100.00));
@@ -41488,6 +41489,30 @@ text gf_RTMakeWinList (int lp_category, int lp_role) {
     return (lv_t[0] + StringExternal("Param/Value/6B340F03") + lv_t[1]);
 }
 
+// 角色卡统一入口（shw236 阶段二）
+// 原图把「渲染哪个池的卡片」硬编码在 67 个调用点上；这里改成按玩家当前所属池派发，
+// 于是四个池函数成为池专属，调用点不再需要知道池的存在（新角色也照此调用）。
+void gf_RTRoleCard (int lp_player) {
+    if ((gv_roles[lp_player][1] == 1)) {
+        gf_RTTownRoleText(lp_player);
+    }
+    else {
+        if ((gv_roles[lp_player][1] == 2)) {
+            gf_RTMafiaRoleText(lp_player);
+        }
+        else {
+            if ((gv_roles[lp_player][1] == 3)) {
+                gf_RTNeutralRoleText(lp_player);
+            }
+            else {
+                if ((gv_roles[lp_player][1] == 5)) {
+                    gf_RTTriadRoleText(lp_player);
+                }
+            }
+        }
+    }
+}
+
 void gf_RTTownRoleText (int lp_player) {
     // Variable Declarations
     int lv_a;
@@ -42089,69 +42114,9 @@ void gf_RTTownRoleText (int lp_player) {
         SoundPlay(SoundLink("Hercules_What", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
     }
 
-    if (((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 31))) {
-        gv_roleBoxText[lv_a][0] = (StringExternal("Param/Value/CE62498E") + lv_t[2] + StringExternal("Param/Value/D7C97124"));
-        gv_roleBoxText[lv_a][6] = gf_RTMakeWinList(gv_roles[lv_a][1], gv_roles[lv_a][0]);
-        gv_roleBoxText[lv_a][4] = StringExternal("Param/Value/SHWBOX4");
-        gv_roleBoxText[lv_a][1] = StringExternal("Param/Value/SHWBOX1");
-        gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/SHWBOX3");
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/SHWBOX6"));
-        if ((gv_roleOptions[3][31][0] == true)) {
-            gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310"));
-        }
 
-        if ((gv_roleOptions[3][31][1] == true)) {
-            gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/SHWBOX5"));
-        }
 
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/SHWBOX7"));
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/SHWBOX8"));
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/SHWBOX9"));
-        gv_roleBoxText[lv_a][3] = StringExternal("Param/Value/D19448B8");
-        SoundPlay(SoundLink("Hercules_What", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
-    }
 
-    if (((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 32))) {
-        gv_roleBoxText[lv_a][0] = (StringExternal("Param/Value/CE62498E") + lv_t[2] + StringExternal("Param/Value/D7C97124"));
-        gv_roleBoxText[lv_a][6] = gf_RTMakeWinList(gv_roles[lv_a][1], gv_roles[lv_a][0]);
-        gv_roleBoxText[lv_a][4] = StringExternal("Param/Value/TXBOX4");
-        gv_roleBoxText[lv_a][1] = StringExternal("Param/Value/TXBOX1");
-        gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/TXBOX2");
-        if ((gv_roleOptions[3][32][0] == true)) {
-            gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310"));
-        }
-
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXBOXNOIGN"));
-        if ((gv_roleOptions[3][32][3] == true)) {
-            gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXSTRIKE5"));
-        }
-        else {
-            if ((gv_roleOptions[3][32][2] == true)) {
-                gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXSTRIKE4"));
-            }
-            else {
-                gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXSTRIKE3"));
-            }
-
-        }
-
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXBOXGUESS"));
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXBOXGOD"));
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXBOXFIXED"));
-gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/TXBOXVISIT"));
-        gv_txStrikes[lv_a] = 3;
-        if ((gv_roleOptions[3][32][3] == true)) {
-            gv_txStrikes[lv_a] = 5;
-        }
-        else {
-            if ((gv_roleOptions[3][32][2] == true)) {
-                gv_txStrikes[lv_a] = 4;
-            }
-
-        }
-        gv_roleBoxText[lv_a][3] = StringExternal("Param/Value/D19448B8");
-        SoundPlay(SoundLink("Carrier_Attack", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
-    }
 
     if ((gv_roles[lv_a][0] == 14)) {
         if ((gv_bankRoleAchievements[lv_a][1][14] == 0)) {
@@ -68143,19 +68108,19 @@ bool gt_Change_Func (bool testConds, bool runActions) {
                 }
 
                 if ((gv_roles[lv_a][1] == 1)) {
-                    gf_RTTownRoleText(lv_a);
+                    gf_RTRoleCard(lv_a);
                 }
 
                 if ((gv_roles[lv_a][1] == 2)) {
-                    gf_RTMafiaRoleText(lv_a);
+                    gf_RTRoleCard(lv_a);
                 }
 
                 if ((gv_roles[lv_a][1] == 3)) {
-                    gf_RTNeutralRoleText(lv_a);
+                    gf_RTRoleCard(lv_a);
                 }
 
                 if ((gv_roles[lv_a][1] == 5)) {
-                    gf_RTTriadRoleText(lv_a);
+                    gf_RTRoleCard(lv_a);
                 }
 
                 gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c[0];
@@ -68365,7 +68330,7 @@ bool gt_Stumpify_Func (bool testConds, bool runActions) {
             gv_roles[lv_a][0] = lv_b;
             lv_c[0] = gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10];
             gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = true;
-            gf_RTTownRoleText(lv_a);
+            gf_RTRoleCard(lv_a);
             gv_roleOptions[gv_roles[lv_a][1]][gv_roles[lv_a][0]][10] = lv_c[0];
             gf_RefreshRoleBox();
         }
@@ -85832,10 +85797,10 @@ bool gt_ASE4B889E9BB91E7A1AEE5AE9A_Func (bool testConds, bool runActions) {
 
                     }
                     if ((lv_a == 2)) {
-                        gf_RTMafiaRoleText(EventPlayer());
+                        gf_RTRoleCard(EventPlayer());
                     }
                     else {
-                        gf_RTTriadRoleText(EventPlayer());
+                        gf_RTRoleCard(EventPlayer());
                     }
                     gf_RefreshRoleBox();
                     gf_ASE8A792E889B2E98089E9A1B9E585B3E997AD(EventPlayer());
