@@ -209,6 +209,8 @@ python3 tools/release.py tag                         # 发版后打 git tag（= 
   **版本号唯一真源仍是 `patch-notes.txt` 的 `@release`**。
 - 备线的地图名走打包器 `--name`：它在**第 ⑥ 步**与补丁说明同一趟写进 `DocumentHeader`（含 enUS/zhCN 两份副本）+ zhCN；**别事后单独调 `bh_meta set`** —— 那会第二次写 zhCN，白胖约 300 KB。
 - 守卫：`build` 拒绝把比线上更旧的版本投回去、拒绝重复投同一版（修包重投用 `--force`）；往还有版本在审的同一条目再投会先警告（平台会怎么处理未验证）；`tag` 要求工作区干净且 tag 名与 `@release` 一致。
+- **改过名的线，上传会被平台拒**：报错文案是「发布名称必须与各个地区的前一个版本名称相同」——英文原文 `Publish names must match the previous version for all locales`，**locales = 语言槽，不是服务器大区**（暴雪中译误导）。包内 `DocInfo/Name` 只有 enUS + zhCN 两个槽、`--name` 也只覆盖这两槽；平台另存着每个 locale 的旧名。
+  解法：在编辑器 `文件 → 发布…` 的**配置选项 → 更改名称 → 勾「应用到所有语言环境」**改名后再上传（2026-09-14 实测通过）。重启编辑器 / 清缓存 / 改包内名字都没用；实在不行按线上旧名重出包（`--name "<旧名>"`），或新建条目。`.SC2Map` 里没有战网 Document ID（`CaptionId` 恒为 1，是分类 id）。
 - 推 main 时打包器会提醒：**补丁说明要覆盖自「主线 live 版本」以来的全部改动**（主线玩家跳过了中间几版）。
 
 ## 环境
