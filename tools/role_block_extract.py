@@ -80,6 +80,31 @@ FAMILIES = {
         "params": None,
     },
     # 夜间族按函数拆开跑：便于逐函数提交与回退（标记按家族名区分，天然幂等）
+    # 白天技能按钮族（shw245）：主语是**表达式** `EventPlayer()`（不是循环变量）⇒ 不带参数，
+    # 函数体原样引用同一表达式，语义不变（不传值 ⇒ 不存在"写不回传"的问题）。
+    "ability": {
+        "funcs": ["gt_ASAbilityButton_Func"],
+        "tag": {"gt_ASAbilityButton_Func": "Y"},
+        "params": None,
+    },
+    # 角色开关按钮族（shw245）：技能开关的 按钮本体 / 打开 / 关闭 三个宿主各一档
+    "switch": {
+        "funcs": ["gt_ASSwitchButton_Func", "gt_ASSwitchOn_Func", "gt_ASSwitchOff_Func"],
+        "tag": {"gt_ASSwitchButton_Func": "W", "gt_ASSwitchOn_Func": "W1", "gt_ASSwitchOff_Func": "W2"},
+        "params": None,
+    },
+    # 白天 -change 变更命令（shw245）
+    "change": {
+        "funcs": ["gt_Change_Func"],
+        "tag": {"gt_Change_Func": "C"},
+        "params": None,
+    },
+    # 自设面板选项计算（shw245）：GUI 的真函数体在 auto_ 包装里
+    "options": {
+        "funcs": ["auto_gf_OSComputeOptions_TriggerFunc"],
+        "tag": {"auto_gf_OSComputeOptions_TriggerFunc": "O"},
+        "params": None,
+    },
     "prep": {"funcs": ["gf_SequencePrep"], "tag": {"gf_SequencePrep": "P"}, "params": None},
     "bullshit": {"funcs": ["gf_SequenceBullshit"], "tag": {"gf_SequenceBullshit": "U"}, "params": None},
     "kills": {"funcs": ["gf_SequenceKills"], "tag": {"gf_SequenceKills": "K"}, "params": None},

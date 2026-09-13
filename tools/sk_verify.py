@@ -40,8 +40,16 @@ KEYWORDS = set("""if else for while do return break continue true false null con
 struct enum include void bool int string text fixed byte short unit point region playergroup
 unitgroup bank trigger timer order soundlink color doodad actor""".split())
 LIB_PREFIXES = ("c_", "libNtve_")
+# ⚠ 类型表必须**保全**：`sound[2] gv_music;` 这种（类型后面直接跟维度）漏掉 `sound` 就会把
+#   合法全局当"未声明"误报（shw245 实测 3 处）。下面这份是本文档出现过的全部类型；
+#   另配 DECL_GENERIC 兜底，任何「小写标识符开头的两段式声明」都认。
 TYPES = (r"void|bool|int|string|text|fixed|unit|point|region|playergroup|unitgroup|bank|trigger|"
-         r"timer|order|soundlink|color|doodad|actor")
+         r"timer|order|soundlink|sound|color|doodad|actor|abilcmd|catalogentry|transmissionsource|"
+         r"conversation|revealer|wave|wav|beam|wavetarget|texttag|mover|rect|byte|short")
+DECL_GENERIC = re.compile(
+    r"^(?:const\s+)?([a-z][A-Za-z0-9_]*)(?:\[[^\]]*\])*\s+([A-Za-z_]\w*)\s*"
+    r"(?:\[[^\]]*\])*\s*(?:=(?!=)|;)\s*$")
+NOT_TYPE = {"if", "else", "for", "while", "return", "do", "break", "continue", "true", "false", "null"}
 FUNC_DEF = re.compile(rf"^({TYPES}) (\w+) \(([^)]*)\) \{{$")
 DECL_ONE = re.compile(rf"^(?:const\s+)?(?:{TYPES})(?:\[[^\]]*\])* (\w+)\s*(?:\[[^\]]*\])*\s*(?:=|;)")
 IDENT = re.compile(r"(?<![A-Za-z0-9_])([A-Za-z_]\w*)")
@@ -93,8 +101,11 @@ def decl_region(lines, f):
             continue
         m = DECL_ONE.match(t)
         if not m:
-            break
-        names.add(m.group(1))
+            g = DECL_GENERIC.match(t)
+            if not g or g.group(1) in NOT_TYPE:
+                break
+            m = g
+        names.add(m.group(1) if m.re is DECL_ONE else m.group(2))
         k += 1
     return names, k
 
@@ -108,7 +119,12 @@ def file_scope(lines):
             if m:
                 funcs.add(m.group(2))
             g = DECL_ONE.match(code)
-            if g and "(" not in code:
+            if not g and "(" not in code:
+                gg = DECL_GENERIC.match(strip_comment(code).strip())
+                g = gg if gg and gg.group(1) not in NOT_TYPE else None
+                if g:
+                    globals_.add(g.group(2))
+            elif g and "(" not in code:
                 globals_.add(g.group(1))
         depth += code.count("{") - code.count("}")
     return funcs, globals_
