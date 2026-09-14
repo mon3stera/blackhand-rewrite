@@ -165,7 +165,7 @@ python3 tools/boot2_build.py --out work/boot2-shw<NNN>.SC2Map
 
 ## 10. 实测清单
 
-1. 出正式包 + **solo 包**（临时把 `c_bhSoloBuild` / `c_bhSoloFill` 置 `true` 打包，**打完立即还原为 `false`**，并从包内回读确认）。
+1. 出正式包 + **solo 包**：`python3 tools/boot2_build.py --out work/boot2-<name>-solo.SC2Map --solo`（只改包内 `c_bhSoloBuild` / `c_bhSoloFill`，工作区源码保持 `false`；打包器会回读断言两边都对）。
 2. 部署到 `D:\StarCraft II\Maps\Test\` 的**新文件名**，双端 `md5` + 字节数核对。
 3. `File → Test Document` 进图；异常看 `Documents\StarCraft II\GameLogs\*ScriptError.txt` **最近一次**。
 4. 必看：角色卡五栏、开局面板按钮、夜间结算与播报、审判/处决路径、胜利画面。

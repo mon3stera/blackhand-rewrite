@@ -16,6 +16,7 @@ shw154 事故沉淀：少了样式表那件 → 名字里的斜体标签找不�
 
 用法：
     python3 tools/boot2_build.py --out work/boot2-shw141.SC2Map
+    python3 tools/boot2_build.py --out work/boot2-shw141-solo.SC2Map --solo
     python3 tools/boot2_build.py --out work/boot2-xxx.SC2Map --strings-only-preview
     python3 tools/boot2_build.py --out work/boot2-shw141.SC2Map --base work/boot2-shw136.SC2Map
 
@@ -259,6 +260,40 @@ def put(archive, name, data, label=''):
     return True
 
 
+# 工作区脚本必须保持正式值 false。solo 包只在写入包内的副本上改，禁止改源码。
+SOLO_DECL = {
+    'c_bhSoloBuild': 'const bool c_bhSoloBuild = {val};',
+    'c_bhSoloFill': 'const bool c_bhSoloFill = {val};',
+}
+
+
+def solo_decl_values(src: str) -> dict[str, str]:
+    found = {}
+    for name in SOLO_DECL:
+        m = re.search(rf'const bool {name} = (true|false);', src)
+        if m:
+            found[name] = m.group(1)
+    return found
+
+
+def apply_solo_patch(src: str) -> str:
+    """把两处常量改成 true，只动内存副本。源文件必须已经是 false。"""
+    found = solo_decl_values(src)
+    want = {'c_bhSoloBuild': 'false', 'c_bhSoloFill': 'false'}
+    if found != want:
+        raise SystemExit(
+            f'✗ 工作区脚本 solo 常量是 {found}，必须保持 {want}。'
+            f'solo 包请加 --solo，不要改源码'
+        )
+    out = src
+    for name, tmpl in SOLO_DECL.items():
+        old, new = tmpl.format(val='false'), tmpl.format(val='true')
+        if out.count(old) != 1:
+            raise SystemExit(f'✗ {name} 声明不是恰好 1 处，拒绝打补丁')
+        out = out.replace(old, new, 1)
+    return out
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument('--out', required=True, help='输出地图（用新文件名，编辑器会锁住已打开的）')
@@ -271,6 +306,8 @@ def main() -> int:
                     help='覆盖包内地图名（DocInfo/Name）—— 多发布线用，例如试验线「黑手：Revision Preview」')
     ap.add_argument('--desc-prepend', help='在地图详情（DocInfo/DescLong）开头插入一段（多发布线用，如预览版说明）')
     ap.add_argument('--desc-append', help='在地图详情（DocInfo/DescLong）结尾追加一段')
+    ap.add_argument('--solo', action='store_true',
+                    help='单人测试包：只把写入包内的 c_bhSoloBuild / c_bhSoloFill 改成 true，不动工作区源码')
     args = ap.parse_args()
 
     out = Path(args.out)
@@ -351,11 +388,37 @@ def main() -> int:
     out.write_bytes(base.read_bytes())
     print(f"1) 基线 {base.name} → {out.name}")
 
-    # 2) 直写脚本
-    put(out, 'CustomLogic.galaxy', galaxy.read_text(encoding='utf-8').encode('utf-8'))
+    # 2) 直写脚本（--solo 只改这份内存副本，工作区源码保持正式值 false）
+    src_text = galaxy.read_text(encoding='utf-8')
+    src_flags = solo_decl_values(src_text)
+    if src_flags != {'c_bhSoloBuild': 'false', 'c_bhSoloFill': 'false'}:
+        print(f'✗ 工作区脚本 solo 常量是 {src_flags}，必须保持 false（solo 包加 --solo，不要改源码）')
+        return 1
+
+    if args.solo:
+        if 'solo' not in out.name.lower():
+            print(f'⚠ --solo 但输出文件名 {out.name!r} 不含 solo，容易和正式包搞混')
+        src_text = apply_solo_patch(src_text)
+
+    put(out, 'CustomLogic.galaxy', src_text.encode('utf-8'))
     back = sc2map.read(out, 'CustomLogic.galaxy').decode('utf-8')
     assert back.count('BankWait(') >= 2, '包内脚本缺 BankWait'
-    print(f"2) CustomLogic.galaxy 写入 {len(back.splitlines())} 行（BankWait ×{back.count('BankWait(')}）")
+    packed_flags = solo_decl_values(back)
+    expect_flags = (
+        {'c_bhSoloBuild': 'true', 'c_bhSoloFill': 'true'} if args.solo
+        else {'c_bhSoloBuild': 'false', 'c_bhSoloFill': 'false'}
+    )
+    if packed_flags != expect_flags:
+        print(f'✗ 包内 solo 常量是 {packed_flags}，期望 {expect_flags}')
+        return 1
+
+    disk_flags = solo_decl_values(galaxy.read_text(encoding='utf-8'))
+    if disk_flags != {'c_bhSoloBuild': 'false', 'c_bhSoloFill': 'false'}:
+        print(f'✗ 打包后工作区源码 solo 常量变成了 {disk_flags}，必须仍是 false')
+        return 1
+
+    print(f"2) CustomLogic.galaxy 写入 {len(back.splitlines())} 行（BankWait ×{back.count('BankWait(')}）"
+          f"{'  [solo 包：c_bhSoloBuild/Fill=true，源码未改]' if args.solo else ''}")
 
     # 3) 样式表（斜体等自定义样式的定义处）
     assert STYLE_SRC.exists(), f'样式表不存在: {STYLE_SRC}'

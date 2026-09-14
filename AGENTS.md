@@ -169,6 +169,7 @@ git add -A && git -c user.name="mon3stera" -c user.email="mon3stera@users.norepl
 
 ```bash
 python3 tools/boot2_build.py --out work/boot2-<name>.SC2Map      # 八件套 + 全部回读断言
+python3 tools/boot2_build.py --out work/boot2-<name>-solo.SC2Map --solo  # 单人测试包：只改包内开关，不动源码
 ```
 
 八件套（BankList 那件的根因见记忆）：①复制基线 `work/boot2-user.SC2Map`（**不要覆盖**）②直写工作区脚本（打包前自动跑 `galaxy_lint.py`，不过不打包）③并入样式表 `work/blackhand/NewFontStyles.SC2Style`（斜体 `ModItalic` 的定义处；漏 = 名字里的 `<i>` 改写后无样式可查、不斜体，shw88–153 一直是这个状态）④并入包内字体 `work/blackhand/fonts/` → `Fonts\*.ttf`（斜体字面，OFL 许可文本一起分发；漏 = 斜体回落到游戏字体）⑤自加贴图 `data/*.dds` → 包内**根目录**（自加胜利图；漏 = 结算画面按图名找不到贴图，shw100–168 一直缺 shw98 那两张）⑥**补丁说明 + 加载页面**：`tools/bh_meta.py` 读 `work/blackhand/patch-notes.txt` 写进 `DocumentInfo`（版本表）+ `DocumentHeader`（条目表），并把 zhCN 行交给下一步合并；同一次写入里还会按 `AUTH_NOTICE` 删掉地图详情页（`DocInfo/DescLong`）里原作者授权后已作废的「未取得授权…会立刻下架」句（与补丁说明共用一个 `set_notes`，避免多写一次 `DocumentHeader` 白胖 8.8 KB） ⑦合并 `strings-*.txt` → 包内 **zhCN** 表（漏 = 界面满是 `Param/Value/XXX` 原始键；`sc2map.GAME_STRINGS` 指的是 enUS，别拿它校验）⑧`banklist_fix.py` 写回 `BankList.xml`（漏 = 每局清档）。
