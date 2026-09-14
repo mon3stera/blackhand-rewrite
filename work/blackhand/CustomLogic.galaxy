@@ -11829,6 +11829,18 @@ void gf_SequenceBullshit () {
     gf_DEBUG("Finished ClusterFuck stage 1");
     lv_a = 1;
     for ( ; ( (autoE0DDEEB7_ai >= 0 && lv_a <= autoE0DDEEB7_ae) || (autoE0DDEEB7_ai < 0 && lv_a >= autoE0DDEEB7_ae) ) ; lv_a += autoE0DDEEB7_ai ) {
+        // shw277：反爱限制者必须在 Roleblockers 写完之后接管访问。
+        // ClusterFuck 内 11723 那段在限制落地前跑，随后 gf_BHBlock 又把 visitation 清 0，
+        // 导致开膛手 / 连环爱手选项1 / 纵火者选项4 都空过。
+        if ((gv_roleblocked[lv_a] != 0) && (gv_jailed[lv_a] == 0) && (((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 1) && (gv_roleOptions[3][1][1] == true)) || ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 5) && (gv_roleOptions[3][5][4] == true)) || ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 20) && (gv_roleOptions[3][20][1] == true)))) {
+            gf_BHVisit(lv_a, gv_roleblocked[lv_a]);
+            gv_action[lv_a][1] = 0;
+            gv_action[lv_a][0] = gv_visitation[lv_a];
+            if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 20)) {
+                gv_kcRB[lv_a] = true;
+            }
+        }
+
         if (((gv_visitation[lv_a] < 1) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 10)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 13)) || (((gv_roles[lv_a][1] == 2) || (gv_roles[lv_a][1] == 5)) && (gv_roles[lv_a][0] == 9)) || ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 7)))) {
             gf_SKU_1_fayi(lv_a);
         }

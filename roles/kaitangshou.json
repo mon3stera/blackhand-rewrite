@@ -27,7 +27,7 @@
   },
   "restrict": {
    "text": "可被限制。主机开关「反爱限制者」默认开：被舞娘/陪侍/三合会限制时接管访问，当夜只爱死限制者（取代原目标），不清理、不扣清理次数。关开关则被限制当夜空过。陪侍/三合会同一处理。结算自读 gv_roleblocked。",
-   "guard_at": "gf_SequenceBullshit 限制接管块（与连环爱手并列）"
+   "guard_at": "gf_SequenceBullshit 算 location 前（Roleblockers 之后；shw277）"
   },
   "guessage": {
    "text": "可猜：审查页中立项下标 19 → 20；原 19/20 的 31/32 后移到 20/21。",
