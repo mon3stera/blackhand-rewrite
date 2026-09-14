@@ -91466,9 +91466,14 @@ void gf_SKK_3_kaitangshou (int lv_a) {
 
 void gf_ESRipperKill (int lp_target, int lp_killer, int lp_mode) {
     int lv_a;
+    bool lv_clean;
     text lv_msg;
     playergroup autoKCPG_g;
     int autoKCPG_var;
+    lv_clean = false;
+    if ((lp_mode == 0) && (gv_e5BC80E585B3[lp_killer] == true) && (gv_shots[lp_killer] > 0) && (gv_kcRB[lp_killer] == false)) {
+        lv_clean = true;
+    }
     if ((gv_zuosi[lp_target] == false) && ((gv_immuneChance[lp_target] > 0) || (gv_immune[lp_target][0] == true))) {
         if ((gv_immuneChance[lp_target] > 0)) {
             gv_immuneChance[lp_target] = (gv_immuneChance[lp_target] - 1);
@@ -91479,6 +91484,8 @@ void gf_ESRipperKill (int lp_target, int lp_killer, int lp_mode) {
         return;
     }
     if ((gv_nightSequence == true)) {
+        SoundPlay(SoundLink("Spectre_What", -1), PlayerGroupAll(), 100.0, 0.0);
+        Wait(1.5, c_timeGame);
         if ((lp_mode == 0)) {
             lv_msg = StringExternal("Param/Value/KCNIGHT0");
             SoundPlay(SoundLink("Zealot_AttackImpact", -1), PlayerGroupAll(), 90.0, 0.0);
@@ -91517,16 +91524,35 @@ void gf_ESRipperKill (int lp_target, int lp_killer, int lp_mode) {
         return;
     }
     gv_deathMethod[lp_target] = (gv_deathMethod[lp_target] + "R");
-    if ((lp_mode == 0)) {
-        gv_deathText[lp_target] = (gv_deathText[lp_target] + StringExternal("Param/Value/KCDEATH0"));
-    }
-    else {
-        if ((lp_mode == 1)) {
-            gv_deathText[lp_target] = (gv_deathText[lp_target] + StringExternal("Param/Value/KCDEATH1"));
+    if ((gv_nightSequence == true) || (gv_deathDescriptions == true)) {
+        lv_a = RandomInt(1, 2);
+        if ((lp_mode == 0)) {
+            if ((lv_clean == true)) {
+                if ((lv_a == 1)) {
+                    gv_deathText[lp_target] = (gv_deathText[lp_target] + StringExternal("Param/Value/KCDEATHC0"));
+                }
+                else {
+                    gv_deathText[lp_target] = (gv_deathText[lp_target] + StringExternal("Param/Value/KCDEATHC1"));
+                }
+            }
+            else {
+                if ((lv_a == 1)) {
+                    gv_deathText[lp_target] = (gv_deathText[lp_target] + StringExternal("Param/Value/KCDEATH0"));
+                }
+                else {
+                    gv_deathText[lp_target] = (gv_deathText[lp_target] + StringExternal("Param/Value/KCDEATH0B"));
+                }
+            }
         }
         else {
-            gv_deathText[lp_target] = (gv_deathText[lp_target] + StringExternal("Param/Value/KCDEATH2"));
+            if ((lv_a == 1)) {
+                gv_deathText[lp_target] = (gv_deathText[lp_target] + StringExternal("Param/Value/KCDEATH1"));
+            }
+            else {
+                gv_deathText[lp_target] = (gv_deathText[lp_target] + StringExternal("Param/Value/KCDEATH2"));
+            }
         }
+        gv_deathDesc[lp_target] = true;
     }
     gv_placedNote[lp_target] = gv_deathNote[lp_killer];
     gv_diedAtNight[lp_target] = true;
@@ -91538,7 +91564,7 @@ void gf_ESRipperKill (int lp_target, int lp_killer, int lp_mode) {
         gf_CBSystemMessage(StringExternal("Param/Value/70E941A2"), lp_target, lp_target, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
     }
     gf_BHCrimeMurder(lp_killer);
-    if ((lp_mode == 0) && (gv_e5BC80E585B3[lp_killer] == true) && (gv_shots[lp_killer] > 0) && (gv_kcRB[lp_killer] == false)) {
+    if ((lv_clean == true)) {
         gv_janitized[lp_target] = lp_killer;
         gf_CBSystemMessage(StringExternal("Param/Value/KCISO"), lp_killer, lp_killer, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
     }

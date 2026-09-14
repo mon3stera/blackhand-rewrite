@@ -167,8 +167,11 @@ Param/Value/KCNIGHT0=<s val="ModLeftSize16Bold"><c val="FF0000">你听到空旷�
 Param/Value/KCNIGHT1=<s val="ModLeftSize16Bold"><c val="FF0000">你听到深夜石板路上的脚步戛然而止，随后是一声呛咳...</c></s>
 Param/Value/KCNIGHT2=<s val="ModLeftSize16Bold"><c val="FF0000">你听到近处一阵短暂的扭打，随后归于死寂...</c></s>
 Param/Value/KCDEATH0=死者独自倒在空无一人的房间里，身上只有一道精准的刀口。
-Param/Value/KCDEATH1=死者倒在别人家的门口，像是撞上了不该遇见的人。
-Param/Value/KCDEATH2=死者身上有近距离搏斗的痕迹，喉间被一刀切断。
+Param/Value/KCDEATH0B=死者在幽暗的房间中被利刃割喉毙命。
+Param/Value/KCDEATHC0=死者的尸体遭到严重损毁，面部血肉模糊已无法辨认。
+Param/Value/KCDEATHC1=死者的遗体遭到了残忍而精准的深度肢解，所有能证明身份的证物与随身笔记均不翼而飞。
+Param/Value/KCDEATH1=死者在夜行途中撞破了暗巷里的阴影，利刃精准地割开了其喉咙，甚至没来得及发出呼救。
+Param/Value/KCDEATH2=死者倒在访问对象门前的血泊中，背后遭到了致命的利刃突刺，显然成为了无辜的目击者。
 Param/Value/KCDM=死者死于开膛手的行刺手法。
 Param/Value/KCSHREV=<s val="ModLeftSize16Bold"><c val="FFFF88">你的目标是一个 </c><c val="B81212">开膛手</c><c val="FFFF88">!</c></s>
 Param/Value/KCRESTRICT=<s val="ModLeftSize16Bold"><c val="FF88FF">限制你的人今晚走进了你的刀口...</c></s>

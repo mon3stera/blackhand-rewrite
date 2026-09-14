@@ -201,7 +201,8 @@ MUST_HAVE_KEYS = [
   'Param/Value/KCTIP', 'Param/Value/KCSEL1', 'Param/Value/KCSEL2',
   'Param/Value/KCCLR', 'Param/Value/KCISO', 'Param/Value/KCNIGHT0',
   'Param/Value/KCNIGHT1', 'Param/Value/KCNIGHT2', 'Param/Value/KCDEATH0',
-  'Param/Value/KCDEATH1', 'Param/Value/KCDEATH2', 'Param/Value/KCDM',
+  'Param/Value/KCDEATH1', 'Param/Value/KCDEATH2', 'Param/Value/KCDEATH0B',
+  'Param/Value/KCDEATHC0', 'Param/Value/KCDEATHC1', 'Param/Value/KCDM',
   'Param/Value/KCSHREV', 'Param/Value/KCMODE1', 'Param/Value/KCMODE1B',
   'Param/Value/KCMODE2', 'Param/Value/KCRESTRICT',]
 
