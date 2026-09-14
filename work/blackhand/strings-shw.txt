@@ -91,6 +91,7 @@ Param/Value/SHWSLOTF=<s val="ModLeftSize16Bold"><c val="FF0000">这个槽位还�
 Param/Value/SHWMLCULT=<n/>- 你的目标免疫于协教徒的转化
 // shw263 篡位者 (3/19)
 Param/Value/CWNAME=<c val="C9A44A">篡位者</c>
+Param/Value/CWCARD=<c val="C9A44A">
 Param/Value/CWDESC=盘踞在市政厅阴影中的野心家，以恐惧为薪柴，企图将整个法庭据为己有。<n/><n/><c val="BBDDFF">每晚选择一人进行陷害。警长会将其视作黑手D/三合会角色，探员会将其视为不活跃的市民。白天可使用恐慌值。</c>
 Param/Value/CWINV1=你的目标常出入公共场所
 Param/Value/CWINV2=- 他可能是g告员、法官、牧师、系命人、篡位者，也有可能只是个赌鬼。

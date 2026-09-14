@@ -7023,6 +7023,11 @@ void gf_MakeHelpMenu () {
                             libNtve_gf_SetDialogItemColor(gv_roleHelpPanelItem[lv_x][0], Color(100.00, 70.59, 11.76), PlayerGroupAll());
                         }
 
+                        if ((lv_role == 19)) {
+                            lv_t[5] = StringExternal("Param/Value/CWCARD");
+                            libNtve_gf_SetDialogItemColor(gv_roleHelpPanelItem[lv_x][0], Color(78.82, 64.31, 29.02), PlayerGroupAll());
+                        }
+
                         libNtve_gf_CreateDialogItemLabel(gv_roleHelpPanel, 36, 24, c_anchorLeft, ((30 * lv_x) - 3), 2, (lv_t[5] + StringToText(StringCase(StringSub(gv_roleNameInput[lv_category][lv_role], 1, 1), true)) + StringExternal("Param/Value/01EDEAB5")), ColorWithAlpha(0,0,0,0), false, 0.0);
                         gv_roleHelpPanelItem[lv_x][1] = DialogControlLastCreated();
                         libNtve_gf_SetDialogItemRenderPriority(gv_roleHelpPanelItem[lv_x][1], 700, PlayerGroupAll());
