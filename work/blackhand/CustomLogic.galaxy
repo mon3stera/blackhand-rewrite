@@ -7061,7 +7061,7 @@ void gf_MakeHelpMenu () {
 
                         if ((lv_role == 20)) {
                             lv_t[5] = StringExternal("Param/Value/KCCARD");
-                            libNtve_gf_SetDialogItemColor(gv_roleHelpPanelItem[lv_x][0], Color(72.16, 7.06, 7.06), PlayerGroupAll());
+                            libNtve_gf_SetDialogItemColor(gv_roleHelpPanelItem[lv_x][0], Color(75.69, 30.20, 38.82), PlayerGroupAll());
                         }
 
                         libNtve_gf_CreateDialogItemLabel(gv_roleHelpPanel, 36, 24, c_anchorLeft, ((30 * lv_x) - 3), 2, (lv_t[5] + StringToText(StringCase(StringSub(gv_roleNameInput[lv_category][lv_role], 1, 1), true)) + StringExternal("Param/Value/01EDEAB5")), ColorWithAlpha(0,0,0,0), false, 0.0);
@@ -91371,7 +91371,7 @@ void gf_RARipperActions (int lp_player) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (lv_a != lp_player)) {
             libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/KCTIP"), PlayerGroupSingle(lp_player));
             DialogControlSetVisible(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), true);
-            libNtve_gf_SetDialogItemColor(gv_actionDialogItem[lv_a][5], Color(72.16, 7.06, 7.06), PlayerGroupSingle(lp_player));
+            libNtve_gf_SetDialogItemColor(gv_actionDialogItem[lv_a][5], Color(75.69, 30.20, 38.82), PlayerGroupSingle(lp_player));
             DialogControlSetSize(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), 120, 30);
             libNtve_gf_SetDialogItemImage(gv_actionDialogItem[lv_a][5], "ActionNormal.dds", PlayerGroupSingle(lp_player));
             libNtve_gf_SetDialogItemImage2(gv_actionDialogItem[lv_a][5], "ActionHighlight.dds", PlayerGroupSingle(lp_player));

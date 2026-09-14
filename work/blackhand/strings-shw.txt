@@ -142,8 +142,8 @@ Param/Value/CWTSUBC=<c val="C9A44A">政变前夕</c> C
 Param/Value/CWTSUBD=<c val="C9A44A">政变前夕</c> D
 Param/Value/CWTBTN=<s val="ModCenterSize24Bold"><c val="C9A44A">政变前夕</c></s>
 // shw274 开膛手 (3/20)
-Param/Value/KCNAME=<c val="B81212">开膛手</c>
-Param/Value/KCCARD=<c val="B81212">
+Param/Value/KCNAME=<c val="C14D63">开膛手</c>
+Param/Value/KCCARD=<c val="C14D63">
 Param/Value/KCDESC=出没于无人问津的街巷，专挑孤立无援的猎物下手。<n/><n/><c val="BBDDFF">每晚选择一人。若目标当晚无人访问，则爱死目标；否则随机爱死一名访问目标的人。</c>
 Param/Value/KCBOX1=- 每晚选择一人。若目标当晚无人访问，则爱死目标；否则随机爱死一名访问目标的人。
 Param/Value/KCBOX2=<n/>- 当无人访问而爱死目标时，你可以使用开关选择是否清理他。<n/>- 你可以清理两次。
@@ -158,7 +158,7 @@ Param/Value/KCCLR=<s val="ModLeftSize16Bold">你取消了今晚的行动。</s>
 Param/Value/KCMODE1=<s val="ModLeftSize16"><c val="0080C0">当前：猎物无人访问时清理尸体（剩余 </c></s>
 Param/Value/KCMODE1B=<s val="ModLeftSize16"><c val="0080C0"> 次）。</c></s>
 Param/Value/KCMODE2=<s val="ModLeftSize16"><c val="0080C0">当前：猎物无人访问时不清理尸体（剩余 </c></s>
-Param/Value/KCISO=<s val="ModLeftSize16Bold"><c val="B81212">你的猎物今晚孤立无援。你从容地完成了你的工作。</c></s>
+Param/Value/KCISO=<s val="ModLeftSize16Bold"><c val="C14D63">你的猎物今晚孤立无援。你从容地完成了你的工作。</c></s>
 Param/Value/KCSHOT0=<s val="ModLeftSize16Bold">你没有清理次数了。</s>
 Param/Value/KCSHOT1=<s val="ModLeftSize16">你还剩 </s><s val="ModLeftSize16Bold">1</s><s val="ModLeftSize16"> 次清理。</s>
 Param/Value/KCSHOTN=<s val="ModLeftSize16">你还剩 </s>
@@ -173,7 +173,7 @@ Param/Value/KCDEATHC1=死者的遗体遭到了残忍而精准的深度肢解，�
 Param/Value/KCDEATH1=死者在夜行途中撞破了暗巷里的阴影，利刃精准地割开了其喉咙，甚至没来得及发出呼救。
 Param/Value/KCDEATH2=死者倒在访问对象门前的血泊中，背后遭到了致命的利刃突刺，显然成为了无辜的目击者。
 Param/Value/KCDM=死者死于开膛手的行刺手法。
-Param/Value/KCSHREV=<s val="ModLeftSize16Bold"><c val="FFFF88">你的目标是一个 </c><c val="B81212">开膛手</c><c val="FFFF88">!</c></s>
+Param/Value/KCSHREV=<s val="ModLeftSize16Bold"><c val="FFFF88">你的目标是一个 </c><c val="C14D63">开膛手</c><c val="FFFF88">!</c></s>
 Param/Value/KCRESTRICT=<s val="ModLeftSize16Bold"><c val="FF88FF">限制你的人今晚走进了你的刀口...</c></s>
 Param/Value/BE08890E=- 由此，他会是个D徒/暴徒、门徒/仆从，连环爱手、开膛手，但也可能只是个义警。
 Param/Value/94249CFE=<c val="004080">点击来改变你的开关状态<n/>限定：瘟疫散布者 冤魂 小丑 影武者 开膛手</c>
