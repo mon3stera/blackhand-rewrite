@@ -1857,6 +1857,7 @@ trigger gt_resurrect;
 trigger gt_Admin;
 trigger gt_Shut;
 trigger gt_Exeq;
+trigger gt_BHTrial;
 trigger gt_Kick;
 trigger gt_BnetKick;
 trigger gt_ModMessage;
@@ -63679,6 +63680,118 @@ void gt_Exeq_Init () {
 }
 
 //--------------------------------------------------------------------------------------------------
+// Trigger: BH Trial（测试：白天把指定活人直接送上审判台）
+//--------------------------------------------------------------------------------------------------
+bool gt_BHTrial_Func (bool testConds, bool runActions) {
+    // Variable Declarations
+    int lv_a;
+    int lv_hit;
+    int lv_x;
+
+    // Automatic Variable Declarations
+    const int autoBHTRIALA_ae = 15;
+    const int autoBHTRIALA_ai = 1;
+    const int autoBHTRIALB_ae = 15;
+    const int autoBHTRIALB_ai = 1;
+    const int autoBHTRIALC_ae = 15;
+    const int autoBHTRIALC_ai = 1;
+    playergroup autoBHTRIALG_g;
+    int autoBHTRIALG_var;
+
+    // Variable Initialization
+
+    // Conditions
+    if (testConds) {
+        if (!((StringSub(EventChatMessage(false), 1, 7) == "-trial "))) {
+            return false;
+        }
+
+        if (!((c_bhSoloBuild == true) || (gv_oP[EventPlayer()][3] == true))) {
+            return false;
+        }
+    }
+
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((gv_gameStarted == false) || (gv_gameOver == true) || (gv_isNight == true) || (gv_trialOn == true)) {
+        return true;
+    }
+
+    lv_a = 1;
+    for ( ; ( (autoBHTRIALA_ai >= 0 && lv_a <= autoBHTRIALA_ae) || (autoBHTRIALA_ai < 0 && lv_a >= autoBHTRIALA_ae) ) ; lv_a += autoBHTRIALA_ai ) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && ((gv_oP[lv_a][3] == false) || (gv_oP[EventPlayer()][1] == true))) {
+            if ((StringSub(StringCase(EventChatMessage(false), false), 8, (StringLength(EventChatMessage(false)) + 0)) == StringCase(gv_number[lv_a], false)) && (lv_x < StringLength(gv_number[lv_a]))) {
+                lv_x = StringLength(gv_number[lv_a]);
+                lv_hit = lv_a;
+            }
+
+        }
+
+    }
+    if ((lv_hit == 0)) {
+        lv_a = 1;
+        for ( ; ( (autoBHTRIALB_ai >= 0 && lv_a <= autoBHTRIALB_ae) || (autoBHTRIALB_ai < 0 && lv_a >= autoBHTRIALB_ae) ) ; lv_a += autoBHTRIALB_ai ) {
+            if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && ((gv_oP[lv_a][3] == false) || (gv_oP[EventPlayer()][1] == true))) {
+                if ((StringSub(StringCase(EventChatMessage(false), false), 8, (StringLength(EventChatMessage(false)) + 0)) == StringCase(gv_colorName[lv_a], false)) && (lv_x < StringLength(gv_colorName[lv_a]))) {
+                    lv_x = StringLength(gv_colorName[lv_a]);
+                    lv_hit = lv_a;
+                }
+
+            }
+
+        }
+    }
+
+    if ((lv_hit == 0)) {
+        lv_a = 1;
+        for ( ; ( (autoBHTRIALC_ai >= 0 && lv_a <= autoBHTRIALC_ae) || (autoBHTRIALC_ai < 0 && lv_a >= autoBHTRIALC_ae) ) ; lv_a += autoBHTRIALC_ai ) {
+            if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && ((gv_oP[lv_a][3] == false) || (gv_oP[EventPlayer()][1] == true))) {
+                if ((StringSub(StringCase(EventChatMessage(false), false), 8, (StringLength(EventChatMessage(false)) + 0)) == StringCase(gv_name[lv_a], false)) && (lv_x < StringLength(gv_name[lv_a]))) {
+                    lv_x = StringLength(gv_name[lv_a]);
+                    lv_hit = lv_a;
+                }
+
+            }
+
+        }
+    }
+
+    if ((lv_hit != 0) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_hit) == true)) {
+        gf_ASStopVote();
+        gf_TBEndTimer();
+        DialogSetVisible(gv_voteInfo, gv_currentPlayers, false);
+        gv_trialOn = true;
+        gv_voteOn = false;
+        UIClearMessages(PlayerGroupAll(), c_messageAreaDirective);
+        autoBHTRIALG_g = PlayerGroupAll();
+        autoBHTRIALG_var = -1;
+        while (true) {
+            autoBHTRIALG_var = PlayerGroupNextPlayer(autoBHTRIALG_g, autoBHTRIALG_var);
+            if (autoBHTRIALG_var < 0) { break; }
+            gf_CBAllowDisallowChatting(autoBHTRIALG_var, ge_Allow_Disallow);
+        }
+        if ((gv_trialPausesDay == true)) {
+            gv_tempLength = GameTimeOfDayGetLength();
+            TimerPause(gv_overtimer, true);
+            GameTimeOfDaySetLength(90001.0);
+        }
+
+        gf_Trial(lv_hit);
+    }
+
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_BHTrial_Init () {
+    gt_BHTrial = TriggerCreate("gt_BHTrial_Func");
+    TriggerAddEventChatMessage(gt_BHTrial, c_playerAny, "-trial ", false);
+}
+
+//--------------------------------------------------------------------------------------------------
 // Trigger: Kick
 //--------------------------------------------------------------------------------------------------
 bool gt_Kick_Func (bool testConds, bool runActions) {
@@ -80178,6 +80291,7 @@ void SH_InitTriggers () {
     gt_Admin_Init();
     gt_Shut_Init();
     gt_Exeq_Init();
+    gt_BHTrial_Init();
     gt_Kick_Init();
     gt_BnetKick_Init();
     gt_ModMessage_Init();
