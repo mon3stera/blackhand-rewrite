@@ -19,7 +19,7 @@
    "text": "受影响：夜间栽赃走 gf_BHVisitAction 写 gv_visitation，女巫/巴士司机会改写实际栽赃对象。卡面写明。"
   },
   "investigate": {
-   "text": "上门栽赃：观察者/监视者/侦探能看到访问。警长查被栽赃者视为黑手D；探员查视为市民类（gv_cuanweiFramed，不走 gv_framed）。篡位者本人探员线索 CWINV1/2。图鉴犯罪 = CWCRIME 非法闯入。",
+   "text": "上门陷害：观察者/监视者/侦探能看到访问。警长查被陷害者视为黑手D/三合会（CWSHREV）；探员查视为不活跃市民（市民 1/1）。篡位者本人探员线索与法官同组出入公共场所（4F1EBF4B 已加入篡位者）。图鉴犯罪 = 腐败；夜间不写非法闯入。揭示技能后 gf_BHCrime(..., 7) 留下腐败案底，与审计官相同。",
    "investigator": true
   },
   "restrict": {

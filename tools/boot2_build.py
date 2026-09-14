@@ -169,7 +169,8 @@ MUST_HAVE_KEYS = [
     'Param/Value/SHWMLCULT',  # shw262：共济会长老角色卡「目标免疫协教转化」
     'Param/Value/CWNAME', 'Param/Value/CWDESC', 'Param/Value/CWINV1', 'Param/Value/CWINV2',
     'Param/Value/CWBOX1', 'Param/Value/CWBOX2', 'Param/Value/CWBOX4', 'Param/Value/CWBOX4ID',
-    'Param/Value/CWWIN', 'Param/Value/CWTIP',
+    'Param/Value/CWWIN', 'Param/Value/CWTIP', 'Param/Value/CWCRIME', 'Param/Value/CWSHREV',
+    'Param/Value/CWNATG', 'Param/Value/CWDARKG', 'Param/Value/CWDARKI',
     'Param/Value/SHWREV',
     'Param/Value/TXSW',
     'Param/Value/TXREVSH',
