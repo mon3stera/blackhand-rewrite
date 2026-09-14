@@ -151,6 +151,21 @@ def build(src: Path, out: Path) -> None:
     setn(17, "Italic")
 
     scale_upem(font, UPM_DST)
+    # Noto 默认 winAscent+Descent ≈ 1.45em。下拉列表（事件记录过滤）按这套行高把字
+    # 缩进格子，看起来比行动面板小一圈；收成约 1.03em，下拉和面板就会接近。
+    upm = font["head"].unitsPerEm
+    ascent = int(round(upm * 0.90))
+    descent = int(round(upm * 0.13))
+    font["hhea"].ascent = ascent
+    font["hhea"].descent = -descent
+    font["hhea"].lineGap = 0
+    os2 = font["OS/2"]
+    os2.sTypoAscender = ascent
+    os2.sTypoDescender = -descent
+    os2.sTypoLineGap = 0
+    os2.usWinAscent = ascent
+    os2.usWinDescent = descent
+
     out.parent.mkdir(parents=True, exist_ok=True)
     font.recalcBBoxes = True
     font.save(str(out))
