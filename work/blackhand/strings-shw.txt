@@ -141,3 +141,36 @@ Param/Value/CWTSUBB=<c val="C9A44A">政变前夕</c> B
 Param/Value/CWTSUBC=<c val="C9A44A">政变前夕</c> C
 Param/Value/CWTSUBD=<c val="C9A44A">政变前夕</c> D
 Param/Value/CWTBTN=<s val="ModCenterSize24Bold"><c val="C9A44A">政变前夕</c></s>
+// shw274 开膛手 (3/20)
+Param/Value/KCNAME=<c val="B81212">开膛手</c>
+Param/Value/KCCARD=<c val="B81212">
+Param/Value/KCDESC=出没于无人问津的街巷，专挑孤立无援的猎物下手。<n/><n/><c val="BBDDFF">每晚选择一人。若目标当晚无人访问，则爱死目标；否则随机爱死一名访问目标的人。你在夜晚无法被爱死。</c>
+Param/Value/KCBOX1=- 每晚选择一人。若目标当晚无人访问，则爱死目标；否则随机爱死一名访问目标的人。
+Param/Value/KCBOX2=<n/>- 你在夜晚无法被爱死。<n/>- 你无法选择自己。<n/>- 你自己不算访客，但仍会上门。
+Param/Value/KCBOX3=<n/>- 猎物当晚无人访问时可用开关选择是否清理尸体（共两次）。清理后你能看到死者的遗嘱，公开侧身份被隐藏。
+Param/Value/KCBOX4=出没于无人问津的街巷，专挑孤立无援的猎物下手。
+Param/Value/KCBOX5=<n/>- 你将会反爱限制你的人：被限制当夜只爱死限制者，不清理。
+Param/Value/KCBOXS=<n/>- 你的夜间目标会被女巫或巴士司机转移。
+Param/Value/KCTIP=<s val="ModCenterSize20Bold">行刺</s>
+Param/Value/KCSEL1=<s val="ModLeftSize16">你将前去 </s><s val="ModLeftSize16Bold">
+Param/Value/KCSEL2=<s val="ModLeftSize16">你改为前去 </s><s val="ModLeftSize16Bold">
+Param/Value/KCCLR=<s val="ModLeftSize16Bold">你取消了今晚的行动。</s>
+Param/Value/KCMODE1=<s val="ModLeftSize16"><c val="0080C0">当前：猎物无人访问时清理尸体（剩余 </c></s>
+Param/Value/KCMODE1B=<s val="ModLeftSize16"><c val="0080C0"> 次）。</c></s>
+Param/Value/KCMODE2=<s val="ModLeftSize16"><c val="0080C0">当前：猎物无人访问时不清理尸体（剩余 </c></s>
+Param/Value/KCISO=<s val="ModLeftSize16Bold"><c val="B81212">你的猎物今晚孤立无援。你从容地完成了你的工作。</c></s>
+Param/Value/KCSHOT0=<s val="ModLeftSize16Bold">你没有清理次数了。</s>
+Param/Value/KCSHOT1=<s val="ModLeftSize16">你还剩 </s><s val="ModLeftSize16Bold">1</s><s val="ModLeftSize16"> 次清理。</s>
+Param/Value/KCSHOTN=<s val="ModLeftSize16">你还剩 </s>
+Param/Value/KCSHOTN2=<s val="ModLeftSize16"> 次清理。</s>
+Param/Value/KCNIGHT0=<s val="ModLeftSize16Bold"><c val="FF0000">你听到空旷街角传来利刃切入血肉的轻响...</c></s>
+Param/Value/KCNIGHT1=<s val="ModLeftSize16Bold"><c val="FF0000">你听到深夜石板路上的脚步戛然而止，随后是一声呛咳...</c></s>
+Param/Value/KCNIGHT2=<s val="ModLeftSize16Bold"><c val="FF0000">你听到近处一阵短暂的扭打，随后归于死寂...</c></s>
+Param/Value/KCDEATH0=死者独自倒在空无一人的房间里，身上只有一道精准的刀口。
+Param/Value/KCDEATH1=死者倒在别人家的门口，像是撞上了不该遇见的人。
+Param/Value/KCDEATH2=死者身上有近距离搏斗的痕迹，喉间被一刀切断。
+Param/Value/KCDM=死者死于开膛手的行刺手法。
+Param/Value/KCSHREV=<s val="ModLeftSize16Bold"><c val="FFFF88">你的目标是一个 </c><c val="B81212">开膛手</c><c val="FFFF88">!</c></s>
+Param/Value/KCRESTRICT=<s val="ModLeftSize16Bold"><c val="FF88FF">限制你的人今晚走进了你的刀口...</c></s>
+Param/Value/BE08890E=- 由此，他会是个D徒/暴徒、门徒/仆从，连环爱手、开膛手，但也可能只是个义警。
+Param/Value/94249CFE=<c val="004080">点击来改变你的开关状态<n/>限定：瘟疫散布者 冤魂 小丑 影武者 开膛手</c>

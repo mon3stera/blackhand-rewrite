@@ -1,0 +1,39 @@
+{
+ "pool": 3,
+ "role": 20,
+ "pinyin": "kaichangshou",
+ "cn": "开膛手",
+ "name_key": "KCNAME",
+ "desc_key": "KCDESC",
+ "investigator": [
+  "E6ADA6E599A81",
+  "E6ADA6E599A82"
+ ],
+ "crime_key": "9D81D408",
+ "options": [
+  {"i": 0, "exists": true, "important": 2, "default": true, "key": "8BC7A973"},
+  {"i": 1, "exists": true, "important": 2, "default": true, "key": "8B83273A"}
+ ],
+ "flag10": true,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "受影响：夜间上门走 gf_BHVisitAction 写 gv_visitation，女巫/巴士司机会改写实际目标房屋。卡面写明。结算读改写后的房屋：无人访问则爱死该房屋主人，否则随机爱死一名访问该房屋的人（不含自己）。"
+  },
+  "investigate": {
+   "text": "上门：观察者/监视者/侦探能看到访问。自己不算访客但仍上门，故观察者能看到开膛手去了目标家。探员挂武器组（与连环爱手/义警/D徒相同）。警长走「可查出连环爱手」开关，播报独立键 KCSHREV。图鉴犯罪 = 非法闯入，谋爱。",
+   "investigator": true
+  },
+  "restrict": {
+   "text": "可被限制。主机开关「反爱限制者」默认开：被舞娘/陪侍/三合会限制时接管访问，当夜只爱死限制者（取代原目标），不清理、不扣清理次数。关开关则被限制当夜空过。陪侍/三合会同一处理。结算自读 gv_roleblocked。",
+   "guard_at": "gf_SequenceBullshit 限制接管块（与连环爱手并列）"
+  },
+  "guessage": {
+   "text": "可猜：审查页中立项下标 19 → 20；原 19/20 的 31/32 后移到 20/21。",
+   "in_guess_list": true
+  }
+ },
+ "note": "中立致命。独杀可清理（两次，预先声明开关）；随机访客不做阵营过滤、永远不 AOE。胜利图暂复用 WinSerialKiller.dds。死因字母 R。",
+ "review_status": "reviewed"
+}

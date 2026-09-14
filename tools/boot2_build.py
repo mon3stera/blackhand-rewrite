@@ -193,7 +193,17 @@ MUST_HAVE_KEYS = [
  'Param/Value/SHWMGIA', 'Param/Value/SHWMGIB', 'Param/Value/SHWMGIC',
  'Param/Value/SHWMGID',
  # 角色首胜播报（shw180）
- 'Param/Value/SHWFR1', 'Param/Value/SHWFR2', 'Param/Value/SHWFR3',]
+  'Param/Value/SHWFR1', 'Param/Value/SHWFR2', 'Param/Value/SHWFR3',
+  # shw274 开膛手 (3/20)
+  'Param/Value/KCNAME', 'Param/Value/KCDESC', 'Param/Value/KCCARD',
+  'Param/Value/KCBOX1', 'Param/Value/KCBOX2', 'Param/Value/KCBOX3',
+  'Param/Value/KCBOX4', 'Param/Value/KCBOX5', 'Param/Value/KCBOXS',
+  'Param/Value/KCTIP', 'Param/Value/KCSEL1', 'Param/Value/KCSEL2',
+  'Param/Value/KCCLR', 'Param/Value/KCISO', 'Param/Value/KCNIGHT0',
+  'Param/Value/KCNIGHT1', 'Param/Value/KCNIGHT2', 'Param/Value/KCDEATH0',
+  'Param/Value/KCDEATH1', 'Param/Value/KCDEATH2', 'Param/Value/KCDM',
+  'Param/Value/KCSHREV', 'Param/Value/KCMODE1', 'Param/Value/KCMODE1B',
+  'Param/Value/KCMODE2', 'Param/Value/KCRESTRICT',]
 
 
 def parse_strings_file(path: Path) -> dict:
