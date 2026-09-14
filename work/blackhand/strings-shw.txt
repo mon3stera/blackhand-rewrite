@@ -89,3 +89,39 @@ Param/Value/SHWSLOTE=<s val="ModLeftSize16Bold"><c val="FF8800">已清空该槽�
 Param/Value/SHWSLOTF=<s val="ModLeftSize16Bold"><c val="FF0000">这个槽位还没有保存内容。</c></s>
 // shw262 共济会长老：访问目标当晚免疫协教徒转化（与医生开关同一标记）
 Param/Value/SHWMLCULT=<n/>- 你的目标免疫于协教徒的转化
+// shw263 篡位者 (3/19)
+Param/Value/CWNAME=<c val="C9A44A">篡位者</c>
+Param/Value/CWDESC=潜伏在城镇议会里的投机者，靠恐慌与栽赃窃取投票权。<n/><n/><c val="BBDDFF">每晚选择一人栽赃。警长会将其视为黑手D，探员会将其视为市民类。</c>
+Param/Value/CWINV1=- 他混迹于zf厅堂。
+Param/Value/CWINV2=- 他可能是个市长，或篡位者。
+Param/Value/CWCRIME=非法闯入
+Param/Value/CWBOX1=- 每晚选择一人栽赃：警长视为黑手D，探员视为市民类。
+Param/Value/CWBOX2=<n/>- 你初始拥有 0 点恐慌值，最多 4 点。每个白天结束后获得 1 点。
+Param/Value/CWBOX3=<n/>- 你栽赃的人被公开处死，或你的暗票改变了审判结果时，再获得 1 点。
+Param/Value/CWBOX4=<n/>- 消耗 2 点恐慌值可在审判结算时投出 1 张暗票（输入 -dark）。
+Param/Value/CWBOX5=<n/>- 消耗 4 点恐慌值可揭示自己，此后永久拥有 3 票。
+Param/Value/CWBOX6=<n/>- 你拥有一次夜间无敌机会。
+Param/Value/CWBOXS=<n/>- 你的夜间栽赃目标会被女巫或巴士司机转移。
+Param/Value/CWBOX4ID=中立 · 协恶
+Param/Value/CWWIN=你在活着看到城镇失败时胜利。
+Param/Value/CWTIP=栽赃
+Param/Value/CWSEL1=<s val="ModLeftSize16">你将栽赃 </s><s val="ModLeftSize16Bold">
+Param/Value/CWSEL2=<s val="ModLeftSize16">你改为栽赃 </s><s val="ModLeftSize16Bold">
+Param/Value/CWCLR=<s val="ModLeftSize16Bold">你取消了今晚的栽赃。</s>
+Param/Value/CWPANIC=<s val="ModLeftSize16Bold"><c val="C9A44A">当前恐慌值：</c></s>
+Param/Value/CWREVOK=<s val="ModLeftSize16Bold"><c val="C9A44A"> 揭示了自己是篡位者，并取得了议会的三票！</c></s>
+Param/Value/CWREVNO=<s val="ModLeftSize16Bold"><c val="FF0000">恐慌值不足 4 点，无法揭示。</c></s>
+Param/Value/CWREV2=<s val="ModLeftSize16Bold"><c val="FF0000">你已经揭示过了。</c></s>
+Param/Value/CWDARKOK=<s val="ModLeftSize16Bold"><c val="C9A44A">你将在本场审判结算时额外投出一张暗票。</c></s>
+Param/Value/CWDARKNO=<s val="ModLeftSize16Bold"><c val="FF0000">恐慌值不足 2 点，或当前不在审判中。</c></s>
+Param/Value/CWDARKHAS=<s val="ModLeftSize16Bold"><c val="FF8800">本场审判你已经买过暗票。</c></s>
+Param/Value/CWGAIN=<s val="ModLeftSize16Bold"><c val="C9A44A">你获得了 1 点恐慌值。</c></s>
+Param/Value/CWGAIN2=<s val="ModLeftSize16Bold"><c val="C9A44A">你的暗票改变了审判结果，获得 1 点恐慌值。</c></s>
+Param/Value/CWFRAME=<s val="ModLeftSize16Bold"><c val="C9A44A">你今晚栽赃了目标。</c></s>
+Param/Value/CWTNAME=<s val="ModCenterSize24Bold">随机：<c val="C9A44A">篡位</c></s>
+Param/Value/CWTDESC=议会的椅子上坐着市长，阴影里站着篡位者。<n/>该预设固定有一名市长与一名篡位者。<n/><s val="ModCenterSize18Bold">12-15人可用</s>
+Param/Value/CWTSUBA=<c val="C9A44A">篡位</c> A
+Param/Value/CWTSUBB=<c val="C9A44A">篡位</c> B
+Param/Value/CWTSUBC=<c val="C9A44A">篡位</c> C
+Param/Value/CWTSUBD=<c val="C9A44A">篡位</c> D
+Param/Value/CWTBTN=<s val="ModCenterSize24Bold"><c val="C9A44A">篡位</c></s>

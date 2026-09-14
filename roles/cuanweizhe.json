@@ -1,0 +1,36 @@
+{
+ "pool": 3,
+ "role": 19,
+ "pinyin": "cuanweizhe",
+ "cn": "篡位者",
+ "name_key": "CWNAME",
+ "desc_key": "CWDESC",
+ "investigator": [
+  "CWINV1",
+  "CWINV2"
+ ],
+ "crime_key": "CWCRIME",
+ "options": [],
+ "flag10": true,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "受影响：夜间栽赃走 gf_BHVisitAction 写 gv_visitation，女巫/巴士司机会改写实际栽赃对象。卡面写明。"
+  },
+  "investigate": {
+   "text": "上门栽赃：观察者/监视者/侦探能看到访问。警长查被栽赃者视为黑手D；探员查视为市民类（gv_cuanweiFramed，不走 gv_framed）。篡位者本人探员线索 CWINV1/2。图鉴犯罪 = CWCRIME 非法闯入。",
+   "investigator": true
+  },
+  "restrict": {
+   "text": "可被限制：prep 调用点带 gv_roleblocked[lv_a]==0，被舞娘限制当夜不栽赃。",
+   "guard_at": "gf_SequencePrep 调用点"
+  },
+  "guessage": {
+   "text": "可猜：审查页中立项下标 18 → 19；原 18/19 的 31/32 后移到 19/20。",
+   "in_guess_list": true
+  }
+ },
+ "note": "中立邪恶。只在自设与专用预设出现，不进随机槽。预设固定市长。",
+ "review_status": "reviewed"
+}
