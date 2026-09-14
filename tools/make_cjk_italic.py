@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""从 Noto Sans CJK SC 生成地图内置中文斜体（Blackhand CJK Italic）。
+"""从思源黑体 Medium（Noto Sans CJK SC，同一套字）生成地图内置中文斜体。
 
 游戏自带 FontStandard + fontflags=Italic 会让中文缩成一小圈（引擎换到拉丁斜体、
 CJK 走错误字号的回落）。FontGroup 在本版本不生效，所以中文斜体必须单独内置。
 
 做法（与拉丁 Lora 那条路平行）：
-  1. 抽出 Noto Sans CJK SC Regular
+  1. 抽出 Noto Sans CJK SC Medium（比 Regular 更接近游戏黑体字重）
   2. 子集：ASCII / Latin-1 / 标点 / 平假名片假名 / CJK 统一汉字 / 全角
   3. CFF → TrueType（cu2qu）
   4. 12° 切变做成真斜体（不依赖引擎 Italic 旗）
-  5. unitsPerEm 1000→870（约 1.15×），轮廓不动
+  5. unitsPerEm 1000→700（约 1.43×），轮廓不动
   6. 改名 Blackhand CJK（OFL：衍生字体不用 Noto 原名）
 
 依赖（本机无 pip）：
@@ -25,11 +25,11 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SRC = Path("/usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc")
+DEFAULT_SRC = Path("/usr/share/fonts/noto-cjk/NotoSansCJK-Medium.ttc")
 DEFAULT_OUT = ROOT / "work" / "blackhand" / "fonts" / "BH-CJK-Italic.ttf"
-SC_FACE = 2  # NotoSansCJK-Regular.ttc: 0 JP / 1 KR / 2 SC / 3 TC / 4 HK
+SC_FACE = 2  # NotoSansCJK-*.ttc: 0 JP / 1 KR / 2 SC / 3 TC / 4 HK
 ITALIC_DEG = 12
-UPM_DST = 870  # 1000 / 1.15 ≈ 870，同字号下大约放大 1.15 倍
+UPM_DST = 700  # 1000 / 1.43 ≈ 700。1.15× Regular 实机仍偏小偏细（shw270 截图），改 Medium + 1.43×
 MAX_ERR = 1.0
 
 UNICODES = (
@@ -142,7 +142,7 @@ def build(src: Path, out: Path) -> None:
         font["name"].setName(val, nid, 3, 1, 0x409)
         font["name"].setName(val, nid, 1, 0, 0)
 
-    setn(0, "Derived from Noto Sans CJK SC (SIL OFL). Modified: subset, quadratic, 12-degree italic shear. Renamed Blackhand CJK.")
+    setn(0, "Derived from Noto Sans CJK SC Medium (SIL OFL). Modified: subset, quadratic, 12-degree italic shear, upm 1000-700. Renamed Blackhand CJK.")
     setn(1, "Blackhand CJK")
     setn(2, "Italic")
     setn(4, "Blackhand CJK Italic")

@@ -2,7 +2,7 @@
     <Style name="CustomInternational" template="InternationalTemplate" height="20" textcolor="#ColorWhite"/>    
     <!-- shw165/shw270：名字斜体两条路线，都不写 height → 都继承容器字号（shw158 实证）
          ① ModItalicAuto：含中文等非拉丁字符的名字 → 地图内置 Blackhand CJK Italic
-            = Noto Sans CJK SC 切变 12° + upm 1000→870（约 1.15×）。
+            = 思源黑体 Medium（Noto Sans CJK SC，同一套字）切变 12° + upm 1000→700（约 1.43×）。
             旧写法 FontStandard+fontflags=Italic 会让中文缩成一小圈（引擎换到拉丁斜体、CJK 走错误字号回落）。
             FontGroup/CodepointRange 本版本完全不生效，所以中文必须单独内置，见 tools/make_cjk_italic.py
          ② ModItalicLatin：纯拉丁名字 → 地图内置 Blackhand Serif Italic

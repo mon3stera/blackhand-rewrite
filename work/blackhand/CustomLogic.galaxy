@@ -82136,7 +82136,7 @@ bool gt_BHItalicTest_Func (bool testConds, bool runActions) {
     }
 
     gf_CBSystemMessage(StringToText("A-<i>italic Italic 斜体测试</i>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    // shw165/shw270 自检：拉丁名走 Blackhand Serif（Lora 1.2×），中文名走 Blackhand CJK（Noto SC 切变 1.15×）
+    // shw165/shw270 自检：拉丁名走 Blackhand Serif（Lora 1.2×），中文名走 Blackhand CJK（Noto SC Medium 切变 1.43×）
     gf_CBSystemMessage(StringToText("<s val=\"ModLeftSize24Bold\">卡面·拉丁名：天选者 - <s val=\"ModItalicLatin\">Anon Chihaya</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
     gf_CBSystemMessage(StringToText("<s val=\"ModLeftSize24Bold\">卡面·中文名：天选者 - <s val=\"ModItalicAuto\">影缝</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
     gf_CBSystemMessage(StringToText("<s val=\"ModLeftSize20Bold\">20px 面板：<s val=\"ModItalicLatin\">Anon Chihaya</s> / <s val=\"ModItalicAuto\">影缝</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
