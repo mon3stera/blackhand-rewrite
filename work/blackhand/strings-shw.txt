@@ -152,8 +152,8 @@ Param/Value/KCBOX4=出没于无人问津的街巷，专挑孤立无援的猎物�
 Param/Value/KCBOX5=<n/>- 你会反爱限制你的人。
 Param/Value/KCBOXS=<n/>- 你的夜间目标会被女巫或巴士司机转移。
 Param/Value/KCTIP=<s val="ModCenterSize20Bold">行刺</s>
-Param/Value/KCSEL1=<s val="ModLeftSize16">你将前去 </s><s val="ModLeftSize16Bold">
-Param/Value/KCSEL2=<s val="ModLeftSize16">你改为前去 </s><s val="ModLeftSize16Bold">
+Param/Value/KCSEL1=<s val="ModLeftSize16">你将前去猎爱</s><s val="ModLeftSize16Bold">
+Param/Value/KCSEL2=<s val="ModLeftSize16">你改为前去猎爱</s><s val="ModLeftSize16Bold">
 Param/Value/KCCLR=<s val="ModLeftSize16Bold">你取消了今晚的行动。</s>
 Param/Value/KCMODE1=<s val="ModLeftSize16"><c val="0080C0">当前：猎物无人访问时清理尸体（剩余 </c></s>
 Param/Value/KCMODE1B=<s val="ModLeftSize16"><c val="0080C0"> 次）。</c></s>

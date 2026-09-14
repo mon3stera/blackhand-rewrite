@@ -91470,6 +91470,8 @@ void gf_ESRipperKill (int lp_target, int lp_killer, int lp_mode) {
     text lv_msg;
     playergroup autoKCPG_g;
     int autoKCPG_var;
+    int autoKCHK_ae;
+    const int autoKCHK_ai = 1;
     lv_clean = false;
     if ((lp_mode == 0) && (gv_e5BC80E585B3[lp_killer] == true) && (gv_shots[lp_killer] > 0) && (gv_kcRB[lp_killer] == false)) {
         lv_clean = true;
@@ -91485,12 +91487,22 @@ void gf_ESRipperKill (int lp_target, int lp_killer, int lp_mode) {
     }
     if ((gv_nightSequence == true)) {
         SoundPlay(SoundLink("Spectre_What", -1), PlayerGroupAll(), 100.0, 0.0);
-        Wait(1.5, c_timeGame);
+        Wait(2.5, c_timeGame);
         if ((lp_mode == 0)) {
             lv_msg = StringExternal("Param/Value/KCNIGHT0");
-            SoundPlay(SoundLink("Zealot_AttackImpact", -1), PlayerGroupAll(), 90.0, 0.0);
-            Wait(0.35, c_timeGame);
-            SoundPlay(SoundLink("Queen_AttackImpact", -1), PlayerGroupAll(), 80.0, 0.0);
+            if ((lv_clean == true)) {
+                autoKCHK_ae = RandomInt(3, 6);
+                lv_a = 1;
+                for ( ; ( (autoKCHK_ai >= 0 && lv_a <= autoKCHK_ae) || (autoKCHK_ai < 0 && lv_a >= autoKCHK_ae) ) ; lv_a += autoKCHK_ai ) {
+                    SoundPlay(SoundLink("DarkTemplar_AttackImpact", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+                    Wait(RandomFixed(0.2, 0.5), c_timeGame);
+                }
+            }
+            else {
+                SoundPlay(SoundLink("Zealot_AttackImpact", -1), PlayerGroupAll(), 90.0, 0.0);
+                Wait(0.35, c_timeGame);
+                SoundPlay(SoundLink("Queen_AttackImpact", -1), PlayerGroupAll(), 80.0, 0.0);
+            }
         }
         else {
             if ((lp_mode == 1)) {
