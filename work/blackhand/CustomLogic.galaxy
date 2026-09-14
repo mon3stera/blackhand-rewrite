@@ -82108,8 +82108,9 @@ bool gf_BHNameLatinOnly (string lp_s) {
 }
 
 string gf_BHItalicize (string lp_s) {
-    // shw163：斜体分两路——纯拉丁用地图内置 Lora 真斜体；含中文等非拉丁字符时用游戏自带字体的
-    // 合成斜体（内置字体没有中日韩字形，直引会变豆腐块；FontGroup/CodepointRange 实测不生效）。
+    // shw163/shw270：斜体分两路——纯拉丁用地图内置 Lora 真斜体（ModItalicLatin）；
+    // 含中文等非拉丁字符用地图内置 Blackhand CJK 真斜体（ModItalicAuto）。
+    // 旧写法 FontStandard+Italic 会让中文缩成一小圈；FontGroup 实测不生效，故中文也内置。
     // 两个样式都不写 height → 都继承容器字号，天然与周围同高。
     if ((gf_BHNameLatinOnly(lp_s) == true)) {
         lp_s = StringReplaceWord(lp_s, "<i>", "<s val=\"ModItalicLatin\">", c_stringReplaceAll, c_stringCase);
@@ -82135,7 +82136,7 @@ bool gt_BHItalicTest_Func (bool testConds, bool runActions) {
     }
 
     gf_CBSystemMessage(StringToText("A-<i>italic Italic 斜体测试</i>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
-    // shw165 定稿自检：拉丁名走内置 Blackhand Serif（Lora 放大 1.2×），中文名走游戏字体合成斜体
+    // shw165/shw270 自检：拉丁名走 Blackhand Serif（Lora 1.2×），中文名走 Blackhand CJK（Noto SC 切变 1.15×）
     gf_CBSystemMessage(StringToText("<s val=\"ModLeftSize24Bold\">卡面·拉丁名：天选者 - <s val=\"ModItalicLatin\">Anon Chihaya</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
     gf_CBSystemMessage(StringToText("<s val=\"ModLeftSize24Bold\">卡面·中文名：天选者 - <s val=\"ModItalicAuto\">影缝</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
     gf_CBSystemMessage(StringToText("<s val=\"ModLeftSize20Bold\">20px 面板：<s val=\"ModItalicLatin\">Anon Chihaya</s> / <s val=\"ModItalicAuto\">影缝</s></s>"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));

@@ -69,6 +69,8 @@ FONT_DIR = ROOT / 'work' / 'blackhand' / 'fonts'
 FONTS = [
     (r'Fonts\BH-Serif-Italic.ttf', 'BH-Serif-Italic.ttf'),
     (r'Fonts\Lora-OFL.txt', 'Lora-OFL.txt'),
+    (r'Fonts\BH-CJK-Italic.ttf', 'BH-CJK-Italic.ttf'),
+    (r'Fonts\NotoSansCJK-OFL.txt', 'NotoSansCJK-OFL.txt'),
 ]
 
 
