@@ -35,7 +35,7 @@ Param/Value/SHWBOX8=<n/>- -off（追击）：攻击目标一的访问目标。
 Param/Value/SHWDEATH4=死者被一把刀刺穿了。
 Param/Value/SHWDEATH5=他被劈成两半了。
 Param/Value/SHWDEATH6=死者身中数刀。
-Param/Value/94249CFE=<c val="004080">点击来改变你的开关状态<n/>限定：瘟疫散布者 冤魂 小丑 影武者</c>
+Param/Value/94249CFE=<c val="004080">点击来改变你的开关状态<n/>限定：瘟疫散布者 冤魂 小丑 影武者 开膛手</c>
 Param/Value/SHWBOX9=<n/>- -on（截击）：若目标一访问了目标二，则攻击目标一，这次攻击无视无敌和救治。<n/>- 目标一不动视作访问自己。<n/>- 在追击模式下，如果目标一访问了你，则你会直接攻击他。<n/>- 在调查角色眼中，你只会访问目标一。
 Param/Value/SHWCARD=<c val="C0C0C0">
 Param/Value/SHWBOXS=<n/>- 你能查出影武者。
@@ -141,6 +141,16 @@ Param/Value/CWTSUBB=<c val="C9A44A">政变前夕</c> B
 Param/Value/CWTSUBC=<c val="C9A44A">政变前夕</c> C
 Param/Value/CWTSUBD=<c val="C9A44A">政变前夕</c> D
 Param/Value/CWTBTN=<s val="ModCenterSize24Bold"><c val="C9A44A">政变前夕</c></s>
+Param/Value/WDTNAME=<s val="ModCenterSize24Bold">随机：<c val="8BA3B8">雾都</c></s>
+Param/Value/WDTDESC=浓雾吞没了整座城镇。街巷尽头传来利刃入肉的轻响——开膛手已出没于此，还有谁在阴影里与他共舞？<n/>该预设固定包含开膛手。<n/><s val="ModCenterSize18Bold">12-15人可用</s>
+Param/Value/WDTSUBA=<c val="8BA3B8">雾都</c> A
+Param/Value/WDTSUBB=<c val="8BA3B8">雾都</c> B
+Param/Value/WDTSUBC=<c val="8BA3B8">雾都</c> C
+Param/Value/WDTSUBD=<c val="8BA3B8">雾都</c> D
+Param/Value/WDTBTN=<s val="ModCenterSize24Bold"><c val="8BA3B8">雾都</c></s>
+Param/Value/KCSW=可查出开膛手
+Param/Value/KCSWBOX=<n/>- 你能查出开膛手。
+Param/Value/KCSWBOX0=- 你能查出开膛手。
 // shw274 开膛手 (3/20)
 Param/Value/KCNAME=<c val="C14D63">开膛手</c>
 Param/Value/KCCARD=<c val="C14D63">
@@ -178,4 +188,3 @@ Param/Value/KCRESTRICT=<s val="ModLeftSize16Bold"><c val="FF88FF">限制你的�
 Param/Value/KCACH1S=<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSize16Bold"><c val="C14D63">恐怖之秋</c></s><s val="ModCenterSize16"><c val="44FF88">!</c></s>
 Param/Value/KCACH1N=<s val="ModCenterSize16Bold"><c val="C14D63">恐怖之秋</c></s>
 Param/Value/BE08890E=- 由此，他会是个D徒/暴徒、门徒/仆从，连环爱手、开膛手，但也可能只是个义警。
-Param/Value/94249CFE=<c val="004080">点击来改变你的开关状态<n/>限定：瘟疫散布者 冤魂 小丑 影武者 开膛手</c>

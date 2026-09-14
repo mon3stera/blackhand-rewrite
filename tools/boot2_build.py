@@ -206,7 +206,12 @@ MUST_HAVE_KEYS = [
   'Param/Value/KCDEATHC0', 'Param/Value/KCDEATHC1', 'Param/Value/KCDM',
   'Param/Value/KCSHREV', 'Param/Value/KCMODE1', 'Param/Value/KCMODE1B',
   'Param/Value/KCMODE2', 'Param/Value/KCRESTRICT',
-  'Param/Value/KCACH1S', 'Param/Value/KCACH1N',]
+  'Param/Value/KCACH1S', 'Param/Value/KCACH1N',
+  'Param/Value/KCSW', 'Param/Value/KCSWBOX', 'Param/Value/KCSWBOX0',
+  # shw276 随机：雾都
+  'Param/Value/WDTNAME', 'Param/Value/WDTDESC', 'Param/Value/WDTBTN',
+  'Param/Value/WDTSUBA', 'Param/Value/WDTSUBB', 'Param/Value/WDTSUBC',
+  'Param/Value/WDTSUBD',]
 
 
 def parse_strings_file(path: Path) -> dict:
