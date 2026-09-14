@@ -144,12 +144,12 @@ Param/Value/CWTBTN=<s val="ModCenterSize24Bold"><c val="C9A44A">政变前夕</c>
 // shw274 开膛手 (3/20)
 Param/Value/KCNAME=<c val="B81212">开膛手</c>
 Param/Value/KCCARD=<c val="B81212">
-Param/Value/KCDESC=出没于无人问津的街巷，专挑孤立无援的猎物下手。<n/><n/><c val="BBDDFF">每晚选择一人。若目标当晚无人访问，则爱死目标；否则随机爱死一名访问目标的人。你在夜晚无法被爱死。</c>
+Param/Value/KCDESC=出没于无人问津的街巷，专挑孤立无援的猎物下手。<n/><n/><c val="BBDDFF">每晚选择一人。若目标当晚无人访问，则爱死目标；否则随机爱死一名访问目标的人。</c>
 Param/Value/KCBOX1=- 每晚选择一人。若目标当晚无人访问，则爱死目标；否则随机爱死一名访问目标的人。
-Param/Value/KCBOX2=<n/>- 你在夜晚无法被爱死。<n/>- 你无法选择自己。<n/>- 你自己不算访客，但仍会上门。
+Param/Value/KCBOX2=<n/>- 当无人访问而爱死目标时，你可以使用开关选择是否清理他。<n/>- 你可以清理两次。
 Param/Value/KCBOX3=<n/>- 猎物当晚无人访问时可用开关选择是否清理尸体（共两次）。清理后你能看到死者的遗嘱，公开侧身份被隐藏。
 Param/Value/KCBOX4=出没于无人问津的街巷，专挑孤立无援的猎物下手。
-Param/Value/KCBOX5=<n/>- 你将会反爱限制你的人：被限制当夜只爱死限制者，不清理。
+Param/Value/KCBOX5=<n/>- 你会反爱限制你的人。
 Param/Value/KCBOXS=<n/>- 你的夜间目标会被女巫或巴士司机转移。
 Param/Value/KCTIP=<s val="ModCenterSize20Bold">行刺</s>
 Param/Value/KCSEL1=<s val="ModLeftSize16">你将前去 </s><s val="ModLeftSize16Bold">

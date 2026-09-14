@@ -39116,14 +39116,12 @@ void gf_RTNeutralRoleText (int lp_player) {
         gv_roleBoxText[lv_a][4] = StringExternal("Param/Value/KCBOX4");
         gv_roleBoxText[lv_a][1] = StringExternal("Param/Value/KCBOX1");
         gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/KCBOX2");
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/KCBOX3"));
         if ((gv_roleOptions[3][20][0] == true)) {
-            gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310"));
+            gv_roleBoxText[lv_a][2] = (StringExternal("Param/Value/4467A310") + gv_roleBoxText[lv_a][2]);
         }
         if ((gv_roleOptions[3][20][1] == true)) {
             gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/KCBOX5"));
         }
-        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/KCBOXS"));
         gv_roleBoxText[lv_a][3] = StringExternal("Param/Value/D19448B8");
         SoundPlay(SoundLink("Zealot_Attack", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
     }
