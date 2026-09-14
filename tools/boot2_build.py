@@ -106,7 +106,7 @@ DDS_ASSETS = [
     ('WinCorruptInquisitor.dds', 'WinCorruptInquisitor.dds'),
     ('WinShadow.dds', 'WinShadow.dds'),
     ('WinChosen.dds', 'WinChosen.dds'),
-    ('WinUsurper.dds', 'WinUsurper.dds'),
+    ('WinDemagogue.dds', 'WinDemagogue.dds'),
 ]
 
 
@@ -171,6 +171,8 @@ MUST_HAVE_KEYS = [
     'Param/Value/CWNAME', 'Param/Value/CWCARD', 'Param/Value/CWDESC', 'Param/Value/CWINV1', 'Param/Value/CWINV2',
     'Param/Value/CWBOX1', 'Param/Value/CWBOX2', 'Param/Value/CWBOX4', 'Param/Value/CWBOX4ID',
     'Param/Value/CWWIN', 'Param/Value/CWTIP', 'Param/Value/CWCRIME', 'Param/Value/CWSHREV',
+    'Param/Value/CWTNAME', 'Param/Value/CWTDESC', 'Param/Value/CWTBTN',
+    'Param/Value/CWTSUBA', 'Param/Value/CWTSUBB', 'Param/Value/CWTSUBC', 'Param/Value/CWTSUBD',
     'Param/Value/CWNATG', 'Param/Value/CWDARKG', 'Param/Value/CWDARKI',
     'Param/Value/SHWREV',
     'Param/Value/TXSW',
@@ -182,7 +184,7 @@ MUST_HAVE_KEYS = [
  'Param/Value/TXACH1', 'Param/Value/TXACH2', 'Param/Value/TXACH3',
  # 影武者成就「影缝」(shw152)
  'Param/Value/SHACH1', 'Param/Value/SHACH2', 'Param/Value/SHACH3',
- # 篡位者成就 全票当选/罢免案/无声喝彩 (70/71/72)
+ # 煽动家成就 全票当选/罢免案/无声喝彩 (70/71/72)
  'Param/Value/CWACHP', 'Param/Value/CWACH1S', 'Param/Value/CWACH1N',
  'Param/Value/CWACH2S', 'Param/Value/CWACH2N', 'Param/Value/CWACH3S', 'Param/Value/CWACH3N',
  # 斜体名字跟随公屏放大：gf_CBMagnifyText 的替换源/目标标签（shw155）

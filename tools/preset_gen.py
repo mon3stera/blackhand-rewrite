@@ -33,17 +33,26 @@ ALIAS = {
     '观察者': (1, 31),
     '???': (8, 1),
     '天选者': (3, 32),
+    '煽动家': (3, 19),
     '篡位者': (3, 19),
+    '党徒': (2, 1),
+    'D徒': (2, 1),
+    '造假者': (5, 5),
+    '造假': (5, 5),
+    '审计官': (3, 11),
+    '审ji官': (3, 11),
+    '征募官': (1, 23),
 }
 
 # 池3 固定角色 → 中立子层（致命=默认；其余两集合来自随机槽 4/13、4/14 的选项清单）
-NEUTRAL_EVIL_ROLES = {(3, 8), (3, 12), (3, 4), (3, 11), (3, 19)}     # 协教徒、法官、女巫、审ji官、篡位者
+NEUTRAL_EVIL_ROLES = {(3, 8), (3, 12), (3, 4), (3, 11), (3, 19)}     # 协教徒、法官、女巫、审ji官、煽动家
 NEUTRAL_MILD_ROLES = {(3, 2), (3, 3), (3, 6), (3, 7), (3, 17)}  # 生存者、小丑、处刑者、失忆者、赌鬼
 
 # 随机槽的规格友好名 → 源码槽名（源码名见 roleNameArray[4][N] 去空格）
 SLOT_ALIAS = {
     '城镇政府': '城镇zf',
     '黑手随机': '黑手D随机',
+    '黑手党随机': '黑手D随机',
     '中立邪恶': '中立协恶',
     '中立致命': '中立致命',
 }
@@ -116,6 +125,11 @@ def name_index(roles):
     for friendly, canonical in SLOT_ALIAS.items():
         if canonical in idx and friendly not in idx:
             idx[friendly] = idx[canonical]
+    for name, coord in ALIAS.items():
+        key = name.replace(' ', '')
+        if key in idx and idx[key] != coord:
+            raise SystemExit(f'ALIAS 重名: {key} = {idx[key]} 与 {coord}')
+        idx[key] = coord
     return idx
 
 
