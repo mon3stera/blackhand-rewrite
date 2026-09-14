@@ -1153,6 +1153,7 @@ void gf_ESMafiaKill ();
 void gf_ESTriadKill ();
 void gf_ESSerialKillerKill (int lp_player, int lp_killer);
 void gf_ESShadowKill (int lp_player, int lp_killer);
+void gf_SHWAttemptKill (int lp_target, int lp_killer); // shw276b 影武者击爱先过保镖互砍
 void gf_ESArsonistBurn (int lp_killer);
 void gf_ESMassMurdererSpree (int lp_killer, int lp_target);
 void gf_ESMassMurdererAngerIssue (int lp_killer, int lp_target);
@@ -12450,7 +12451,7 @@ void gf_SequenceKills () {
 
             if ((gv_e5BC80E585B3[lv_a] == true)) {
                 if ((gv_visitation[lv_tShadow] == gv_action[lv_a][1]) || (gv_visitation[lv_tShadow] == lv_tShadow) || (gv_visitation[lv_tShadow] == 0)) { // shw222 截击不再反击上门者（截击无视无敌，反击过强）
-                    gf_ESShadowKill(lv_tShadow, lv_a);
+                    gf_SHWAttemptKill(lv_tShadow, lv_a);
                 }
 
             }
@@ -12458,12 +12459,12 @@ void gf_SequenceKills () {
                 gv_shwMode2Used[lv_a] = 1; // shw152 成就「影缝」：本夜以模式二出手
                 if ((gv_visitation[lv_tShadow] != 0) && (gv_visitation[lv_tShadow] != lv_tShadow) && (gv_visitation[lv_tShadow] != lv_a)) {
                     if ((gv_diedAtNight[gv_visitation[lv_tShadow]] == false)) {
-                        gf_ESShadowKill(gv_visitation[lv_tShadow], lv_a);
+                        gf_SHWAttemptKill(gv_visitation[lv_tShadow], lv_a);
                     }
 
                 }
                 else {
-                    gf_ESShadowKill(lv_tShadow, lv_a);
+                    gf_SHWAttemptKill(lv_tShadow, lv_a);
                 }
 
             }
@@ -82406,6 +82407,23 @@ DialogControlRemoveAllItems(gv_rolesMenusItem[2], PlayerGroupAll());
     DialogControlSetEnabled(gv_optionsPanelItem[27], PlayerGroupSingle(gv_host), false);
     DialogControlSetEnabled(gv_optionsPanelItem[29], PlayerGroupSingle(gv_host), false);
     DialogControlSetEnabled(gv_optionsPanelItem[31], PlayerGroupSingle(gv_host), false);
+}
+void gf_SHWAttemptKill (int lp_target, int lp_killer) {
+    gv_damage[lp_target] += 1;
+    if ((gv_guarded[lp_target] != 0) && (lp_target != lp_killer)) {
+        gv_damage[lp_target] -= 1;
+        gv_damage[gv_guarded[lp_target]] += 1;
+        gv_damage[lp_killer] += 1;
+        gf_CBSystemMessage(StringExternal("Param/Value/309996E1"), lp_killer, lp_killer, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+        gf_FlashScreen(Color(70.59, 0.00, 0.00), lp_killer, 3.0, 30.0);
+        gf_FlashScreen(Color(0.00, 100.00, 0.00), lp_target, 3.0, 0.0);
+        gf_CBSystemMessage(StringExternal("Param/Value/A326298C"), lp_target, lp_target, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+        gf_ESBodyguardKill(lp_killer, gv_guarded[lp_target]);
+        gv_guarded[lp_target] = 0;
+    }
+    else {
+        gf_ESShadowKill(lp_target, lp_killer);
+    }
 }
 void gf_ESShadowKill (int lp_player, int lp_killer) {
     // Variable Declarations
