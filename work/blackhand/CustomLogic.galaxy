@@ -81,7 +81,7 @@ fixed[16][9][41] gv_bankSaveWeights;
 string[16][41][6] gv_bankSaveStrings;
 int[16][2] gv_bankSpecialIntegers;
 int[16][9][21] gv_bankRoleAchievements;
-int[16][74] gv_bankOtherAchievements;
+int[16][75] gv_bankOtherAchievements;
 int[16] gv_checka;
 int[16][3] gv_confessem;
 string[16] gv_checka2;
@@ -143,6 +143,8 @@ bool gv_cwHadMayor;
 bool gv_cwMayorExeq;
 int[16] gv_janitized;
 bool[16] gv_kcRB;
+bool[16] gv_kcKillWN;
+bool[16] gv_kcKillPS;
 bool[16] gv_doused;
 bool[16][16] gv_jestered;
 int[16] gv_switched;
@@ -14096,11 +14098,11 @@ int gf_CheckEnd () {
             return 13;
         }
 
-        if ((lv_x[0] <= (lv_x[2] + (lv_x[5] + (lv_x[16] + (lv_x[17] + (lv_x[21] + lv_x[26])))))) && (lv_x[1] <= lv_x[2]) && (lv_x[15] <= lv_x[2]) && (((lv_x[6] < lv_x[2]) && (gv_roleOptions[3][1][2] == false)) || ((lv_x[6] <= lv_x[2]) && (gv_roleOptions[3][1][2] == true))) && (lv_x[13] <= lv_x[2]) && (lv_x[14] <= lv_x[2]) && (lv_x[18] <= lv_x[2]) && (lv_x[24] <= lv_x[2]) && (lv_x[25] <= lv_x[2]) && (lv_x[19] <= lv_x[2]) && (lv_x[20] <= lv_x[2]) && (lv_x[27] <= lv_x[2]) && (lv_x[2] > 0)) {
+        if ((lv_x[0] <= (lv_x[2] + (lv_x[5] + (lv_x[16] + (lv_x[17] + (lv_x[21] + lv_x[26])))))) && (lv_x[1] <= lv_x[2]) && (lv_x[15] <= lv_x[2]) && (((lv_x[6] < lv_x[2]) && (gv_roleOptions[3][1][2] == false)) || ((lv_x[6] <= lv_x[2]) && (gv_roleOptions[3][1][2] == true))) && (lv_x[13] <= lv_x[2]) && (lv_x[14] <= lv_x[2]) && (lv_x[18] <= lv_x[2]) && (lv_x[24] <= lv_x[2]) && (lv_x[25] <= lv_x[2]) && (lv_x[19] <= lv_x[2]) && (lv_x[20] <= lv_x[2]) && (lv_x[27] == 0) && (lv_x[2] > 0)) {
             return 3;
         }
 
-        if ((lv_x[0] <= (lv_x[27] + (lv_x[5] + (lv_x[16] + (lv_x[17] + (lv_x[21] + lv_x[26])))))) && (lv_x[1] <= lv_x[27]) && (lv_x[15] <= lv_x[27]) && (lv_x[2] < lv_x[27]) && (lv_x[6] < lv_x[27]) && (lv_x[13] <= lv_x[27]) && (lv_x[14] <= lv_x[27]) && (lv_x[18] <= lv_x[27]) && (lv_x[24] <= lv_x[27]) && (lv_x[25] <= lv_x[27]) && (lv_x[19] <= lv_x[27]) && (lv_x[20] <= lv_x[27]) && (lv_x[27] > 0)) {
+        if ((lv_x[0] <= (lv_x[27] + (lv_x[5] + (lv_x[16] + (lv_x[17] + (lv_x[21] + lv_x[26])))))) && (lv_x[1] <= lv_x[27]) && (lv_x[15] <= lv_x[27]) && (lv_x[2] == 0) && (lv_x[6] < lv_x[27]) && (lv_x[13] <= lv_x[27]) && (lv_x[14] <= lv_x[27]) && (lv_x[18] <= lv_x[27]) && (lv_x[24] <= lv_x[27]) && (lv_x[25] <= lv_x[27]) && (lv_x[19] <= lv_x[27]) && (lv_x[20] <= lv_x[27]) && (lv_x[27] > 0)) {
             return 21;
         }
 
@@ -14330,6 +14332,8 @@ bool auto_gf_EndGame_TriggerFunc (bool testConds, bool runActions) {
     int autoCWACH71_var;
     playergroup autoCWACH72_g;
     int autoCWACH72_var;
+    playergroup autoKCACH73_g;
+    int autoKCACH73_var;
     playergroup autoSHWFR_g;
     int autoSHWFR_var;
 
@@ -15180,6 +15184,19 @@ bool auto_gf_EndGame_TriggerFunc (bool testConds, bool runActions) {
                     gf_CBSystemMessage((StringExternal("Param/Value/CWACHP") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/CWACH3S")), autoCWACH72_var, lv_a, 0, SoundLink("UI_BnetGameFound", -1), Color(0,0,0));
                 }
                 gf_GiveBonus(lv_a, 200);
+            }
+
+            // shw275 成就「恐怖之秋」：开膛手(3/20) 本局爱死至少一名舞娘和一名陪侍
+            if ((gv_bankOtherAchievements[lv_a][73] == 0) && (PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true) && (gv_originalRole[lv_a][1] == 3) && (gv_originalRole[lv_a][0] == 20) && (gv_kcKillWN[lv_a] == true) && (gv_kcKillPS[lv_a] == true)) {
+                gv_bankOtherAchievements[lv_a][73] = 1;
+                autoKCACH73_g = gv_currentPlayers;
+                autoKCACH73_var = -1;
+                while (true) {
+                    autoKCACH73_var = PlayerGroupNextPlayer(autoKCACH73_g, autoKCACH73_var);
+                    if (autoKCACH73_var < 0) { break; }
+                    gf_CBSystemMessage((StringExternal("Param/Value/CWACHP") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/KCACH1S")), autoKCACH73_var, lv_a, 0, SoundLink("UI_BnetGameFound", -1), Color(0,0,0));
+                }
+                gf_GiveBonus(lv_a, 175);
             }
 
             gf_DEBUG(("Most InnerL OK  --" + IntToString(lv_a)));
@@ -16171,7 +16188,7 @@ bool auto_gf_CAssembleMainBank_TriggerFunc (bool testConds, bool runActions) {
     const int autoBB6D3424_ai = 1;
     const int auto6EA2A789_ae = 20;
     const int auto6EA2A789_ai = 1;
-    const int auto4ED0B346_ae = 73;
+    const int auto4ED0B346_ae = 74;
     const int auto4ED0B346_ai = 1;
     const int auto6C58849E_ae = 19;
     const int auto6C58849E_ai = 1;
@@ -16476,7 +16493,7 @@ bool auto_gf_CDisassembleMainBank_TriggerFunc (bool testConds, bool runActions) 
     const int autoB01F6BD7_ai = 1;
     const int auto6CA74BDE_ae = 20;
     const int auto6CA74BDE_ai = 1;
-    const int autoD26F95A3_ae = 73;
+    const int autoD26F95A3_ae = 74;
     const int autoD26F95A3_ai = 1;
     const int autoADBA8FFC_ae = 3;
     const int autoADBA8FFC_ai = 1;
@@ -18430,7 +18447,7 @@ void gf_ETRipperWin () {
             }
 
         }
-        gf_WinScreen("WinSerialKiller.dds", lv_a);
+        gf_WinScreen("WinRipper.dds", lv_a);
     }
     Wait(5.0, c_timeGame);
 }
@@ -36114,8 +36131,38 @@ text gf_RTMakeWinList (int lp_category, int lp_role) {
 
     }
 
-    if ((lp_category == 3) && ((lp_role == 1) || (lp_role == 20))) {
+    if ((lp_category == 3) && (lp_role == 1)) {
         lv_s[lv_y] = StringExternal("Param/Value/6A9F1F6D");
+        lv_y += 1;
+        if ((gv_roleChance[3][2] > 0.0)) {
+            lv_s[lv_y] = StringExternal("Param/Value/53E6B753");
+            lv_y += 1;
+        }
+
+        if ((gv_roleChance[3][4] > 0.0)) {
+            lv_s[lv_y] = StringExternal("Param/Value/D2BB2A1E");
+            lv_y += 1;
+        }
+
+        if ((gv_roleChance[3][11] > 0.0)) {
+            lv_s[lv_y] = StringExternal("Param/Value/8B2A8C1F");
+            lv_y += 1;
+        }
+
+        if ((gv_roleChance[3][12] > 0.0)) {
+            lv_s[lv_y] = StringExternal("Param/Value/2B584EE7");
+            lv_y += 1;
+        }
+
+        if ((gv_roleChance[3][13] > 0.0)) {
+            lv_s[lv_y] = StringExternal("Param/Value/56891975");
+            lv_y += 1;
+        }
+
+    }
+
+    if ((lp_category == 3) && (lp_role == 20)) {
+        lv_s[lv_y] = StringExternal("Param/Value/KCNAME");
         lv_y += 1;
         if ((gv_roleChance[3][2] > 0.0)) {
             lv_s[lv_y] = StringExternal("Param/Value/53E6B753");
@@ -36808,6 +36855,16 @@ text gf_RTMakeWinList (int lp_category, int lp_role) {
 
         if ((gv_roleChance[3][15] > 0.0)) {
             lv_s[lv_y] = StringExternal("Param/Value/DEC53405");
+            lv_y += 1;
+        }
+
+        if ((lp_role == 1) && (gv_roleChance[3][20] > 0.0)) {
+            lv_s[lv_y] = StringExternal("Param/Value/KCNAME");
+            lv_y += 1;
+        }
+
+        if ((lp_role == 20) && (gv_roleChance[3][1] > 0.0)) {
+            lv_s[lv_y] = StringExternal("Param/Value/8D79AA72");
             lv_y += 1;
         }
 
@@ -52135,7 +52192,7 @@ bool gt_AccountIDHandler_Func (bool testConds, bool runActions) {
     int auto1350D98A_var;
     const int auto1792A69C_ae = 20;
     const int auto1792A69C_ai = 1;
-    const int auto2B9E0491_ae = 73;
+    const int auto2B9E0491_ae = 74;
     const int auto2B9E0491_ai = 1;
     playergroup auto9E352062_g;
     int auto9E352062_var;
@@ -53762,7 +53819,7 @@ bool gt_Stats_Func (bool testConds, bool runActions) {
     const int auto7357CED9_ai = 1;
     const int autoD85D5D59_ae = 15;
     const int autoD85D5D59_ai = 1;
-    const int auto69BE7284_ae = 73;
+    const int auto69BE7284_ae = 74;
     const int auto69BE7284_ai = 1;
     int autoE7789229_val;
     const int auto292129B5_ae = 5;
@@ -54106,6 +54163,9 @@ bool gt_Stats_Func (bool testConds, bool runActions) {
                     }
                     else if (autoE7789229_val == 72) {
                         lv_x = StringExternal("Param/Value/CWACH3N");
+                    }
+                    else if (autoE7789229_val == 73) {
+                        lv_x = StringExternal("Param/Value/KCACH1N");
                     }
                     else {
                         lv_x = null;
@@ -55411,6 +55471,9 @@ bool gt_Achieve_Func (bool testConds, bool runActions) {
             }
             else if (autoD1168222_val == 72) {
                 lv_x = StringExternal("Param/Value/CWACH3N");
+            }
+            else if (autoD1168222_val == 73) {
+                lv_x = StringExternal("Param/Value/KCACH1N");
             }
             else {
                 lv_x = null;
@@ -91576,6 +91639,12 @@ void gf_ESRipperKill (int lp_target, int lp_killer, int lp_mode) {
         gf_CBSystemMessage(StringExternal("Param/Value/70E941A2"), lp_target, lp_target, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
     }
     gf_BHCrimeMurder(lp_killer);
+    if (((gv_originalRole[lp_target][1] == 1) && (gv_originalRole[lp_target][0] == 5)) || ((gv_roles[lp_target][1] == 1) && (gv_roles[lp_target][0] == 5))) {
+        gv_kcKillWN[lp_killer] = true;
+    }
+    if (((gv_originalRole[lp_target][1] == 2) && (gv_originalRole[lp_target][0] == 3)) || ((gv_roles[lp_target][1] == 2) && (gv_roles[lp_target][0] == 3))) {
+        gv_kcKillPS[lp_killer] = true;
+    }
     if ((lv_clean == true)) {
         gv_janitized[lp_target] = lp_killer;
         gf_CBSystemMessage(StringExternal("Param/Value/KCISO"), lp_killer, lp_killer, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));

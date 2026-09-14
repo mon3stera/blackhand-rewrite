@@ -144,7 +144,7 @@ Param/Value/CWTBTN=<s val="ModCenterSize24Bold"><c val="C9A44A">政变前夕</c>
 // shw274 开膛手 (3/20)
 Param/Value/KCNAME=<c val="C14D63">开膛手</c>
 Param/Value/KCCARD=<c val="C14D63">
-Param/Value/KCDESC=出没于无人问津的街巷，专挑孤立无援的猎物下手。<n/><n/><c val="BBDDFF">每晚选择一人。若目标当晚无人访问，则爱死目标；否则随机爱死一名访问目标的人。</c>
+Param/Value/KCDESC=一个出没于无人问津的街巷的爱手，专挑孤立无援的猎物下手。<n/><n/><c val="BBDDFF">每晚选择一人。若目标当晚无人访问，则爱死目标；否则随机爱死一名访问目标的人。</c>
 Param/Value/KCBOX1=- 每晚选择一人。若目标当晚无人访问，则爱死目标；否则随机爱死一名访问目标的人。
 Param/Value/KCBOX2=<n/>- 当无人访问而爱死目标时，你可以使用开关选择是否清理他。<n/>- 你可以清理两次。
 Param/Value/KCBOX3=<n/>- 猎物当晚无人访问时可用开关选择是否清理尸体（共两次）。清理后你能看到死者的遗嘱，公开侧身份被隐藏。
@@ -175,5 +175,7 @@ Param/Value/KCDEATH2=死者倒在访问对象门前的血泊中，背后遭到�
 Param/Value/KCDM=死者死于开膛手的行刺手法。
 Param/Value/KCSHREV=<s val="ModLeftSize16Bold"><c val="FFFF88">你的目标是一个 </c><c val="C14D63">开膛手</c><c val="FFFF88">!</c></s>
 Param/Value/KCRESTRICT=<s val="ModLeftSize16Bold"><c val="FF88FF">限制你的人今晚走进了你的刀口...</c></s>
+Param/Value/KCACH1S=<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSize16Bold"><c val="C14D63">恐怖之秋</c></s><s val="ModCenterSize16"><c val="44FF88">!</c></s>
+Param/Value/KCACH1N=<s val="ModCenterSize16Bold"><c val="C14D63">恐怖之秋</c></s>
 Param/Value/BE08890E=- 由此，他会是个D徒/暴徒、门徒/仆从，连环爱手、开膛手，但也可能只是个义警。
 Param/Value/94249CFE=<c val="004080">点击来改变你的开关状态<n/>限定：瘟疫散布者 冤魂 小丑 影武者 开膛手</c>

@@ -109,6 +109,7 @@ DDS_ASSETS = [
     ('WinShadow.dds', 'WinShadow.dds'),
     ('WinChosen.dds', 'WinChosen.dds'),
     ('WinDemagogue.dds', 'WinDemagogue.dds'),
+    ('WinRipper.dds', 'WinRipper.dds'),
 ]
 
 
@@ -204,7 +205,8 @@ MUST_HAVE_KEYS = [
   'Param/Value/KCDEATH1', 'Param/Value/KCDEATH2', 'Param/Value/KCDEATH0B',
   'Param/Value/KCDEATHC0', 'Param/Value/KCDEATHC1', 'Param/Value/KCDM',
   'Param/Value/KCSHREV', 'Param/Value/KCMODE1', 'Param/Value/KCMODE1B',
-  'Param/Value/KCMODE2', 'Param/Value/KCRESTRICT',]
+  'Param/Value/KCMODE2', 'Param/Value/KCRESTRICT',
+  'Param/Value/KCACH1S', 'Param/Value/KCACH1N',]
 
 
 def parse_strings_file(path: Path) -> dict:
