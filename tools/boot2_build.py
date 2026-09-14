@@ -106,6 +106,7 @@ DDS_ASSETS = [
     ('WinCorruptInquisitor.dds', 'WinCorruptInquisitor.dds'),
     ('WinShadow.dds', 'WinShadow.dds'),
     ('WinChosen.dds', 'WinChosen.dds'),
+    ('WinUsurper.dds', 'WinUsurper.dds'),
 ]
 
 

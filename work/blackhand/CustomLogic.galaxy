@@ -13781,7 +13781,7 @@ int gf_CheckEnd () {
 
     }
 
-    if ((lv_x[0] >= 1) && (lv_x[1] == 0) && (lv_x[15] == 0) && (lv_x[2] == 0) && (lv_x[5] == 0) && (lv_x[21] == 0) && (lv_x[6] == 0) && (lv_x[13] == 0) && (lv_x[14] == 0) && (lv_x[16] == 0) && (lv_x[17] == 0) && (lv_x[18] == 0) && (lv_x[24] == 0) && (lv_x[25] == 0) && (lv_x[19] == 0) && (lv_x[20] == 0) && (lv_x[21] == 0)) {
+    if ((lv_x[0] >= 1) && (lv_x[1] == 0) && (lv_x[15] == 0) && (lv_x[2] == 0) && (lv_x[5] == 0) && (lv_x[21] == 0) && (lv_x[6] == 0) && (lv_x[13] == 0) && (lv_x[14] == 0) && (lv_x[16] == 0) && (lv_x[17] == 0) && (lv_x[18] == 0) && (lv_x[24] == 0) && (lv_x[25] == 0) && (lv_x[19] == 0) && (lv_x[20] == 0) && (lv_x[21] == 0) && (lv_x[26] == 0)) {
         if ((gv_roleOptions[1][1][1] == true) && (lv_x[11] == lv_x[0])) {
             gv_specialCaseFlag[0] = 1;
         }
@@ -13873,15 +13873,15 @@ int gf_CheckEnd () {
         return 3;
     }
 
-    if ((lv_x[0] == 0) && (lv_x[1] == 0) && (lv_x[15] == 0) && (lv_x[2] == 0) && (lv_x[3] >= 1) && (lv_x[7] == 0) && (lv_x[5] == 0) && (lv_x[21] == 0) && (lv_x[6] == 0) && (lv_x[9] == 0) && (lv_x[13] == 0) && (lv_x[14] == 0) && (lv_x[16] == 0) && (lv_x[17] == 0) && (lv_x[19] == 0) && (lv_x[20] == 0) && (lv_x[18] == 0) && (lv_x[24] == 0) && (lv_x[25] == 0)) {
+    if ((lv_x[0] == 0) && (lv_x[1] == 0) && (lv_x[15] == 0) && (lv_x[2] == 0) && (lv_x[3] >= 1) && (lv_x[7] == 0) && (lv_x[5] == 0) && (lv_x[21] == 0) && (lv_x[6] == 0) && (lv_x[9] == 0) && (lv_x[13] == 0) && (lv_x[14] == 0) && (lv_x[16] == 0) && (lv_x[17] == 0) && (lv_x[19] == 0) && (lv_x[20] == 0) && (lv_x[18] == 0) && (lv_x[24] == 0) && (lv_x[25] == 0) && (lv_x[26] == 0)) {
         return 5;
     }
 
-    if ((lv_x[0] == 0) && (lv_x[1] == 0) && (lv_x[15] == 0) && (lv_x[2] == 0) && (lv_x[3] == 0) && (lv_x[7] == 0) && (lv_x[5] == 0) && (lv_x[21] == 0) && (lv_x[6] == 0) && (lv_x[9] == 0) && (lv_x[12] == 0) && (lv_x[13] == 0) && (lv_x[20] == 0) && (lv_x[14] == 0) && (lv_x[16] == 0) && (lv_x[17] == 0) && (lv_x[19] == 0) && (lv_x[18] == 0) && (lv_x[24] == 0) && (lv_x[25] == 0) && (lv_x[23] == 0)) {
+    if ((lv_x[0] == 0) && (lv_x[1] == 0) && (lv_x[15] == 0) && (lv_x[2] == 0) && (lv_x[3] == 0) && (lv_x[7] == 0) && (lv_x[5] == 0) && (lv_x[21] == 0) && (lv_x[6] == 0) && (lv_x[9] == 0) && (lv_x[12] == 0) && (lv_x[13] == 0) && (lv_x[20] == 0) && (lv_x[14] == 0) && (lv_x[16] == 0) && (lv_x[17] == 0) && (lv_x[19] == 0) && (lv_x[18] == 0) && (lv_x[24] == 0) && (lv_x[25] == 0) && (lv_x[23] == 0) && (lv_x[26] == 0)) {
         return 4;
     }
 
-    if ((lv_x[0] == 0) && (lv_x[1] == 0) && (lv_x[15] == 0) && (lv_x[2] == 0) && (lv_x[7] >= 1) && (lv_x[5] == 0) && (lv_x[21] == 0) && (lv_x[6] == 0) && (lv_x[9] == 0) && (lv_x[13] == 0) && (lv_x[14] == 0) && (lv_x[16] == 0) && (lv_x[20] == 0) && (lv_x[17] == 0) && (lv_x[18] == 0) && (lv_x[24] == 0) && (lv_x[25] == 0) && (lv_x[19] == 0)) {
+    if ((lv_x[0] == 0) && (lv_x[1] == 0) && (lv_x[15] == 0) && (lv_x[2] == 0) && (lv_x[7] >= 1) && (lv_x[5] == 0) && (lv_x[21] == 0) && (lv_x[6] == 0) && (lv_x[9] == 0) && (lv_x[13] == 0) && (lv_x[14] == 0) && (lv_x[16] == 0) && (lv_x[20] == 0) && (lv_x[17] == 0) && (lv_x[18] == 0) && (lv_x[24] == 0) && (lv_x[25] == 0) && (lv_x[19] == 0) && (lv_x[26] == 0)) {
         return 6;
     }
 
@@ -13893,11 +13893,11 @@ int gf_CheckEnd () {
         return 8;
     }
 
-    if ((lv_x[0] == 0) && (lv_x[1] == 0) && (lv_x[15] == 0) && (lv_x[2] == 0) && (lv_x[5] == 0) && (lv_x[21] == 0) && (lv_x[6] == 0) && (lv_x[20] == 0) && (lv_x[9] >= 1) && (lv_x[13] == 0) && (lv_x[14] == 0) && (lv_x[16] == 0) && (lv_x[17] == 0) && (lv_x[18] == 0) && (lv_x[24] == 0) && (lv_x[25] == 0) && (lv_x[19] == 0)) {
+    if ((lv_x[0] == 0) && (lv_x[1] == 0) && (lv_x[15] == 0) && (lv_x[2] == 0) && (lv_x[5] == 0) && (lv_x[21] == 0) && (lv_x[6] == 0) && (lv_x[20] == 0) && (lv_x[9] >= 1) && (lv_x[13] == 0) && (lv_x[14] == 0) && (lv_x[16] == 0) && (lv_x[17] == 0) && (lv_x[18] == 0) && (lv_x[24] == 0) && (lv_x[25] == 0) && (lv_x[19] == 0) && (lv_x[26] == 0)) {
         return 9;
     }
 
-    if ((lv_x[0] == 0) && (lv_x[1] == 0) && (lv_x[15] == 0) && (lv_x[2] == 0) && (lv_x[3] == 0) && (lv_x[7] == 0) && (lv_x[5] == 0) && (lv_x[21] == 0) && (lv_x[6] == 0) && (lv_x[9] == 0) && (lv_x[12] >= 1) && (lv_x[13] == 0) && (lv_x[14] == 0) && (lv_x[16] == 0) && (lv_x[20] == 0) && (lv_x[17] == 0) && (lv_x[18] == 0) && (lv_x[24] == 0) && (lv_x[25] == 0) && (lv_x[19] == 0)) {
+    if ((lv_x[0] == 0) && (lv_x[1] == 0) && (lv_x[15] == 0) && (lv_x[2] == 0) && (lv_x[3] == 0) && (lv_x[7] == 0) && (lv_x[5] == 0) && (lv_x[21] == 0) && (lv_x[6] == 0) && (lv_x[9] == 0) && (lv_x[12] >= 1) && (lv_x[13] == 0) && (lv_x[14] == 0) && (lv_x[16] == 0) && (lv_x[20] == 0) && (lv_x[17] == 0) && (lv_x[18] == 0) && (lv_x[24] == 0) && (lv_x[25] == 0) && (lv_x[19] == 0) && (lv_x[26] == 0)) {
         return 10;
     }
 
@@ -13929,7 +13929,7 @@ int gf_CheckEnd () {
         return 11;
     }
 
-    if ((lv_x[0] == 0) && (lv_x[1] == 0) && (lv_x[15] == 0) && (lv_x[2] == 0) && (lv_x[5] == 0) && (lv_x[6] == 0) && (lv_x[13] == 0) && (lv_x[14] == 0) && (lv_x[16] >= 1) && (lv_x[17] == 0) && (lv_x[21] == 0) && (lv_x[18] == 0) && (lv_x[24] == 0) && (lv_x[25] == 0) && (lv_x[20] == 0) && (lv_x[19] == 0)) {
+    if ((lv_x[0] == 0) && (lv_x[1] == 0) && (lv_x[15] == 0) && (lv_x[2] == 0) && (lv_x[5] == 0) && (lv_x[6] == 0) && (lv_x[13] == 0) && (lv_x[14] == 0) && (lv_x[16] >= 1) && (lv_x[17] == 0) && (lv_x[21] == 0) && (lv_x[18] == 0) && (lv_x[24] == 0) && (lv_x[25] == 0) && (lv_x[20] == 0) && (lv_x[19] == 0) && (lv_x[26] == 0)) {
         return 14;
     }
 
@@ -14078,7 +14078,7 @@ int gf_CheckEnd () {
             return 16;
         }
 
-        if ((lv_x[0] == 0) && (lv_x[1] == 0) && (lv_x[2] == 0) && (lv_x[3] == 0) && (lv_x[5] == 0) && (lv_x[6] == 0) && (lv_x[7] == 0) && (lv_x[9] == 0) && (lv_x[12] == 0) && (lv_x[13] == 0) && (lv_x[14] == 0) && (lv_x[15] == 0) && (lv_x[16] == 0) && (lv_x[17] == 0) && (lv_x[18] == 0) && (lv_x[24] == 0) && (lv_x[25] == 0) && (lv_x[19] == 0) && (lv_x[20] == 0) && (lv_x[21] == 0) && (lv_x[23] > 0)) {
+        if ((lv_x[0] == 0) && (lv_x[1] == 0) && (lv_x[2] == 0) && (lv_x[3] == 0) && (lv_x[5] == 0) && (lv_x[6] == 0) && (lv_x[7] == 0) && (lv_x[9] == 0) && (lv_x[12] == 0) && (lv_x[13] == 0) && (lv_x[14] == 0) && (lv_x[15] == 0) && (lv_x[16] == 0) && (lv_x[17] == 0) && (lv_x[18] == 0) && (lv_x[24] == 0) && (lv_x[25] == 0) && (lv_x[19] == 0) && (lv_x[20] == 0) && (lv_x[21] == 0) && (lv_x[23] > 0) && (lv_x[26] == 0)) {
             return 20;
         }
 
@@ -18793,6 +18793,8 @@ void gf_ETJudgeWin () {
     // Variable Declarations
     int lv_a;
     bool[6] lv_b;
+    int lv_jg;
+    int lv_cw;
 
     // Automatic Variable Declarations
     const int auto1819DFB0_ae = 15;
@@ -18804,6 +18806,19 @@ void gf_ETJudgeWin () {
 
     // Implementation
     SoundPlay(SoundLink("GameMusicTerr22222", -1), PlayerGroupAll(), 100.0, 0.0);
+    lv_jg = 0;
+    lv_cw = 0;
+    lv_a = 1;
+    for ( ; ( (auto1819DFB0_ai >= 0 && lv_a <= auto1819DFB0_ae) || (auto1819DFB0_ai < 0 && lv_a >= auto1819DFB0_ae) ) ; lv_a += auto1819DFB0_ai ) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] == 3)) {
+            if ((gv_roles[lv_a][0] == 12)) {
+                lv_jg = 1;
+            }
+            if ((gv_roles[lv_a][0] == 19)) {
+                lv_cw = 1;
+            }
+        }
+    }
     lv_a = 1;
     for ( ; ( (auto1819DFB0_ai >= 0 && lv_a <= auto1819DFB0_ae) || (auto1819DFB0_ai < 0 && lv_a >= auto1819DFB0_ae) ) ; lv_a += auto1819DFB0_ai ) {
         if ((((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 2)) || ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 16)) || ((gv_e8B58CE9ACBCE782B9E695B0[lv_a] >= 3) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 17)) || ((gv_executed[lv_a] == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 3)) || ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 4)) || ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 6) && (gv_executionWin[lv_a] == true) && ((gv_roleOptions[3][6][2] == false) || (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true))) || ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 7)) || ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 11)) || ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] == 3) && ((gv_roles[lv_a][0] == 12) || (gv_roles[lv_a][0] == 19))))) {
@@ -18842,7 +18857,12 @@ void gf_ETJudgeWin () {
             }
 
         }
-        gf_WinScreen("WinJudge.dds", lv_a);
+        if ((lv_cw == 1) && (lv_jg == 0)) {
+            gf_WinScreen("WinUsurper.dds", lv_a);
+        }
+        else {
+            gf_WinScreen("WinJudge.dds", lv_a);
+        }
     }
     Wait(5.0, c_timeGame);
 }
