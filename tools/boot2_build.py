@@ -182,6 +182,9 @@ MUST_HAVE_KEYS = [
  'Param/Value/TXACH1', 'Param/Value/TXACH2', 'Param/Value/TXACH3',
  # 影武者成就「影缝」(shw152)
  'Param/Value/SHACH1', 'Param/Value/SHACH2', 'Param/Value/SHACH3',
+ # 篡位者成就 全票当选/罢免案/无声喝彩 (70/71/72)
+ 'Param/Value/CWACHP', 'Param/Value/CWACH1S', 'Param/Value/CWACH1N',
+ 'Param/Value/CWACH2S', 'Param/Value/CWACH2N', 'Param/Value/CWACH3S', 'Param/Value/CWACH3N',
  # 斜体名字跟随公屏放大：gf_CBMagnifyText 的替换源/目标标签（shw155）
  'Param/Value/SHWMGIA', 'Param/Value/SHWMGIB', 'Param/Value/SHWMGIC',
  'Param/Value/SHWMGID',

@@ -126,6 +126,13 @@ Param/Value/CWFULL=<s val="ModLeftSize16Bold"><c val="C9A44A">时机已到，市
 Param/Value/CWSHREV=<s val="ModLeftSize16Bold"><c val="FFFF88">你的目标是一个</c><c val="FF0000">黑手D</c><c val="FFFF88">/</c><c val="3366FF">三合会</c><c val="FFFF88">角色!</c></s>
 Param/Value/CWGAIN=<s val="ModLeftSize16Bold"><c val="C9A44A">你获得了 1 点恐慌值。</c></s>
 Param/Value/CWFRAME=<s val="ModLeftSize16Bold"><c val="C9A44A">你今晚陷害了目标。</c></s>
+Param/Value/CWACHP=<s val="ModCenterSize16">
+Param/Value/CWACH1S=<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSize16Bold"><c val="C9A44A">全票当选</c></s><s val="ModCenterSize16"><c val="44FF88">!</c></s>
+Param/Value/CWACH1N=<s val="ModCenterSize16Bold"><c val="C9A44A">全票当选</c></s>
+Param/Value/CWACH2S=<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSize16Bold"><c val="C9A44A">罢免案</c></s><s val="ModCenterSize16"><c val="44FF88">!</c></s>
+Param/Value/CWACH2N=<s val="ModCenterSize16Bold"><c val="C9A44A">罢免案</c></s>
+Param/Value/CWACH3S=<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSize16Bold"><c val="C9A44A">无声喝彩</c></s><s val="ModCenterSize16"><c val="44FF88">!</c></s>
+Param/Value/CWACH3N=<s val="ModCenterSize16Bold"><c val="C9A44A">无声喝彩</c></s>
 Param/Value/CWTNAME=<s val="ModCenterSize24Bold">随机：<c val="C9A44A">篡位</c></s>
 Param/Value/CWTDESC=议会的椅子上坐着市长，阴影里站着篡位者。<n/>该预设固定有一名市长与一名篡位者。<n/><s val="ModCenterSize18Bold">12-15人可用</s>
 Param/Value/CWTSUBA=<c val="C9A44A">篡位</c> A
