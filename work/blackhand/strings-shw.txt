@@ -87,3 +87,5 @@ Param/Value/SHWSLOTC=<s val="ModLeftSize16Bold"><c val="00FF00">已保存到槽�
 Param/Value/SHWSLOTD=<s val="ModLeftSize16Bold"><c val="00FF00">已载入槽位的设置。</c></s>
 Param/Value/SHWSLOTE=<s val="ModLeftSize16Bold"><c val="FF8800">已清空该槽位。</c></s>
 Param/Value/SHWSLOTF=<s val="ModLeftSize16Bold"><c val="FF0000">这个槽位还没有保存内容。</c></s>
+// shw262 共济会长老：访问目标当晚免疫协教徒转化（与医生开关同一标记）
+Param/Value/SHWMLCULT=<n/>- 你的目标免疫于协教徒的转化

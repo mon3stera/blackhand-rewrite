@@ -165,6 +165,7 @@ MUST_HAVE_KEYS = [
     'Param/Value/SHWZFRC',   # shw214：城镇zf「不包括 征募官」
     # 警长的「可查出X」开关与播报、影武者/天选者/堕落审判者的卡片特性行（shw149）
     'Param/Value/SHWBOXS',
+    'Param/Value/SHWMLCULT',  # shw262：共济会长老角色卡「目标免疫协教转化」
     'Param/Value/SHWREV',
     'Param/Value/TXSW',
     'Param/Value/TXREVSH',
