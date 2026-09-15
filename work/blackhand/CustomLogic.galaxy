@@ -49617,10 +49617,6 @@ void gf_BHRoleOptPaint () {
     int lv_bit;
     int lv_maxTop;
 
-    DialogControlSetSize(gv_rolePanelItem[0], PlayerGroupAll(), 500, 315);
-    DialogControlSetPosition(gv_rolePanelItem[12], PlayerGroupAll(), c_anchorTopLeft, 50, 370);
-    DialogControlSetPosition(gv_rolePanelItem[13], PlayerGroupAll(), c_anchorTopRight, 50, 370);
-
     if ((gv_roleCategory != gv_roleOptPaintCat) || (gv_roleSelection != gv_roleOptPaintRole)) {
         gv_roleOptTop = 0;
         gv_roleOptPaintCat = gv_roleCategory;
@@ -49705,12 +49701,24 @@ void gf_BHRoleOptPaint () {
         }
 
     }
+    if ((lv_n > 5)) {
+        DialogControlSetSize(gv_rolePanelItem[0], PlayerGroupAll(), 500, 280);
+        DialogControlSetPosition(gv_rolePanelItem[12], PlayerGroupAll(), c_anchorTopLeft, 50, 335);
+        DialogControlSetPosition(gv_rolePanelItem[13], PlayerGroupAll(), c_anchorTopRight, 50, 335);
+    }
+    else {
+        DialogControlSetSize(gv_rolePanelItem[0], PlayerGroupAll(), 500, 315);
+        DialogControlSetPosition(gv_rolePanelItem[12], PlayerGroupAll(), c_anchorTopLeft, 50, 370);
+        DialogControlSetPosition(gv_rolePanelItem[13], PlayerGroupAll(), c_anchorTopRight, 50, 370);
+    }
+
     if ((gv_roleOptSlider != c_invalidDialogControlId)) {
         if ((lv_n > 5)) {
             gv_roleOptPainting = true;
             libNtve_gf_SetDialogItemMinimumValue(gv_roleOptSlider, 0.0, PlayerGroupAll());
             libNtve_gf_SetDialogItemMaximumValue(gv_roleOptSlider, IntToFixed(lv_maxTop), PlayerGroupAll());
             libNtve_gf_SetDialogItemCurrentValue(gv_roleOptSlider, IntToFixed(gv_roleOptTop), PlayerGroupAll());
+            DialogControlSetPosition(gv_roleOptSlider, PlayerGroupAll(), c_anchorTopLeft, 50, 365);
             DialogControlSetVisible(gv_roleOptSlider, PlayerGroupAll(), true);
             DialogControlSetEnabled(gv_roleOptSlider, PlayerGroupSingle(gv_host), true);
             gv_roleOptPainting = false;
@@ -49970,8 +49978,8 @@ void gf_OSInitializeOptionsScreen () {
     gv_roleOptSlider = DialogControlLastCreated();
     libNtve_gf_SetDialogItemMinimumValue(gv_roleOptSlider, 0.0, PlayerGroupAll());
     libNtve_gf_SetDialogItemMaximumValue(gv_roleOptSlider, 1.0, PlayerGroupAll());
-    DialogControlSetSize(gv_roleOptSlider, PlayerGroupAll(), 400, 20);
-    DialogControlSetPosition(gv_roleOptSlider, PlayerGroupAll(), c_anchorBottomLeft, 30, 210);
+    DialogControlSetSize(gv_roleOptSlider, PlayerGroupAll(), 300, 20);
+    DialogControlSetPosition(gv_roleOptSlider, PlayerGroupAll(), c_anchorTopLeft, 50, 365);
     DialogControlSetVisible(gv_roleOptSlider, PlayerGroupAll(), false);
     DialogControlSetEnabled(gv_roleOptSlider, PlayerGroupAll(), false);
 
