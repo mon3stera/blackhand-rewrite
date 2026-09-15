@@ -40,12 +40,15 @@ CRIME = "gv_e78AAFE7BDAAE4BA8BE5AE9E"
 WRAPPERS = [
     ("gf_BHVisit", "int lp_player, int lp_target", "访问：全脚本唯一的 gv_visitation 写入口",
      ["    gv_visitation[lp_player] = lp_target;"]),
+    ("gf_BHVisit2", "int lp_player, int lp_target", "第二访问槽：全脚本唯一的 gv_visitation2 写入口",
+     ["    gv_visitation2[lp_player] = lp_target;"]),
     ("gf_BHVisitAction", "int lp_player", "登门访问「行动面板选的目标一」（原图最常见的写法）",
      ["    gf_BHVisit(lp_player, gv_action[lp_player][0]);"]),
     ("gf_BHVisitSelf", "int lp_player", "访问自己＝不登门（不被观察、不触发访问派生判定）",
      ["    gf_BHVisit(lp_player, lp_player);"]),
-    ("gf_BHVisitNone", "int lp_player", "当晚不访问任何人",
-     ["    gf_BHVisit(lp_player, 0);"]),
+    ("gf_BHVisitNone", "int lp_player", "当晚不访问任何人（两槽一起清）",
+     ["    gf_BHVisit(lp_player, 0);",
+      "    gf_BHVisit2(lp_player, 0);"]),
     ("gf_BHSetBlocker", "int lp_target, int lp_blocker", "限制：只写「谁被谁限制」，不动访问",
      ["    gv_roleblocked[lp_target] = lp_blocker;"]),
     ("gf_BHUnblock", "int lp_target", "解除限制",
@@ -151,7 +154,7 @@ def wrapper_span(text):
     return (start, end if end > 0 else len(text))
 
 
-ARRAYS = ("gv_visitation", "gv_roleblocked", CRIME)
+ARRAYS = ("gv_visitation", "gv_visitation2", "gv_roleblocked", CRIME)
 
 
 def scan_lvalue(text, i):
@@ -241,6 +244,9 @@ def rewrite_span(text, verify, report):
                 call = f"gf_BHVisitNone({p});"
             else:
                 call = f"gf_BHVisit({p}, {rhs});"
+
+        elif lhs == "gv_visitation2" and len(idxs) == 1:
+            call = f"gf_BHVisit2({idxs[0]}, {rhs});"
 
         elif lhs == "gv_roleblocked" and len(idxs) == 1:
             t = idxs[0]

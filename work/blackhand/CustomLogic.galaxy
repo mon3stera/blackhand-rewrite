@@ -122,6 +122,7 @@ int[16][4] gv_variableOptions;
 int[16][2] gv_action;
 int[16] gv_suggest;
 int[16] gv_visitation;
+int[16] gv_visitation2; // shw278：第二访问槽（调查表象仍写 gv_visitation；实际落点/第二目标走这里）
 int[16] gv_mafiaKillVotes;
 int[16] gv_triadKillVotes;
 int gv_mafiaTarget;
@@ -237,6 +238,7 @@ bool gf_BHRestrictAllowed (int lp_target);
 
 // BH:SYS 阶段一：系统写侧口子
 void gf_BHVisit (int lp_player, int lp_target);
+void gf_BHVisit2 (int lp_player, int lp_target); // 第二访问槽；限制/清空走 gf_BHVisitNone
 void gf_BHVisitAction (int lp_player);
 void gf_BHVisitSelf (int lp_player);
 void gf_BHVisitNone (int lp_player);
@@ -12474,9 +12476,11 @@ void gf_SequenceKills () {
                         gf_SHWAttemptKill(gv_visitation[lv_tShadow], lv_a);
                     }
 
+                    gf_BHVisit2(lv_a, gv_visitation[lv_tShadow]); // shw278：侦探看到「本想去目标一、实际去被击爱的人」
                 }
                 else {
                     gf_SHWAttemptKill(lv_tShadow, lv_a);
+                    gf_BHVisit2(lv_a, lv_tShadow);
                 }
 
             }
@@ -82752,6 +82756,13 @@ void gf_BHVisit (int lp_player, int lp_target) {
     gv_visitation[lp_player] = lp_target;
 }
 
+// 第二访问槽：全脚本唯一的 gv_visitation2 写入口。
+// 监视/观察/老兵仍只读 gv_visitation；侦探跟踪在 vis2≠0 且 vis2≠vis 时走「本想去 / 最终去」双播报。
+// 新的双访问角色：slot 0 = 调查表象，slot 2 = 实际落点或第二目标。不要直接赋值。
+void gf_BHVisit2 (int lp_player, int lp_target) {
+    gv_visitation2[lp_player] = lp_target;
+}
+
 // 登门访问「行动面板选的目标一」（原图最常见的写法）
 void gf_BHVisitAction (int lp_player) {
     gf_BHVisit(lp_player, gv_action[lp_player][0]);
@@ -82762,9 +82773,10 @@ void gf_BHVisitSelf (int lp_player) {
     gf_BHVisit(lp_player, lp_player);
 }
 
-// 当晚不访问任何人
+// 当晚不访问任何人（两槽一起清；限制 gf_BHBlock 也走这里）
 void gf_BHVisitNone (int lp_player) {
     gf_BHVisit(lp_player, 0);
+    gf_BHVisit2(lp_player, 0);
 }
 
 // 限制：只写「谁被谁限制」，不动访问
@@ -87101,12 +87113,18 @@ else {
                 }
             }
             else {
-                if ((gv_visitation[gv_visitation[lv_a]] == gv_action[gv_visitation[lv_a]][0])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/E5532DC0") + StringToText(gv_number[gv_visitation[gv_visitation[lv_a]]]) + StringExternal("Param/Value/C1652170") + TextWithColor(StringToText(gv_name[gv_visitation[gv_visitation[lv_a]]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_visitation[gv_visitation[lv_a]]])) + StringExternal("Param/Value/EF7F1D1F")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                if ((gv_visitation2[gv_visitation[lv_a]] != 0) && (gv_visitation2[gv_visitation[lv_a]] != gv_visitation[gv_visitation[lv_a]])) {
+                    gf_CBSystemMessage((StringExternal("Param/Value/A5E3465E") + StringToText(gv_number[gv_visitation[gv_visitation[lv_a]]]) + StringExternal("Param/Value/532393DB") + TextWithColor(StringToText(gv_name[gv_visitation[gv_visitation[lv_a]]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_visitation[gv_visitation[lv_a]]])) + StringExternal("Param/Value/CA91A4DC")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                    gf_CBSystemMessage((StringExternal("Param/Value/9597EB5A") + StringToText(gv_number[gv_visitation2[gv_visitation[lv_a]]]) + StringExternal("Param/Value/AF4BF321") + TextWithColor(StringToText(gv_name[gv_visitation2[gv_visitation[lv_a]]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_visitation2[gv_visitation[lv_a]]])) + StringExternal("Param/Value/C4513841")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
                 }
                 else {
-                    gf_CBSystemMessage((StringExternal("Param/Value/A5E3465E") + StringToText(gv_number[gv_action[gv_visitation[lv_a]][0]]) + StringExternal("Param/Value/532393DB") + TextWithColor(StringToText(gv_name[gv_action[gv_visitation[lv_a]][0]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_action[gv_visitation[lv_a]][0]])) + StringExternal("Param/Value/CA91A4DC")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                    gf_CBSystemMessage((StringExternal("Param/Value/9597EB5A") + StringToText(gv_number[gv_visitation[gv_visitation[lv_a]]]) + StringExternal("Param/Value/AF4BF321") + TextWithColor(StringToText(gv_name[gv_visitation[gv_visitation[lv_a]]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_visitation[gv_visitation[lv_a]]])) + StringExternal("Param/Value/C4513841")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                    if ((gv_visitation[gv_visitation[lv_a]] == gv_action[gv_visitation[lv_a]][0])) {
+                        gf_CBSystemMessage((StringExternal("Param/Value/E5532DC0") + StringToText(gv_number[gv_visitation[gv_visitation[lv_a]]]) + StringExternal("Param/Value/C1652170") + TextWithColor(StringToText(gv_name[gv_visitation[gv_visitation[lv_a]]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_visitation[gv_visitation[lv_a]]])) + StringExternal("Param/Value/EF7F1D1F")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                    }
+                    else {
+                        gf_CBSystemMessage((StringExternal("Param/Value/A5E3465E") + StringToText(gv_number[gv_action[gv_visitation[lv_a]][0]]) + StringExternal("Param/Value/532393DB") + TextWithColor(StringToText(gv_name[gv_action[gv_visitation[lv_a]][0]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_action[gv_visitation[lv_a]][0]])) + StringExternal("Param/Value/CA91A4DC")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                        gf_CBSystemMessage((StringExternal("Param/Value/9597EB5A") + StringToText(gv_number[gv_visitation[gv_visitation[lv_a]]]) + StringExternal("Param/Value/AF4BF321") + TextWithColor(StringToText(gv_name[gv_visitation[gv_visitation[lv_a]]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_visitation[gv_visitation[lv_a]]])) + StringExternal("Param/Value/C4513841")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                    }
                 }
             }
         }
