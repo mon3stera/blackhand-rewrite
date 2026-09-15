@@ -78230,7 +78230,7 @@ bool gt_OSRoleSelect_Func (bool testConds, bool runActions) {
     // Automatic Variable Declarations
     const int autoE0C82AD9_ae = 14;
     const int autoE0C82AD9_ai = 1;
-    const int auto1EFEF7A4_ae = 5; // shw189：选项位 0..5
+    const int auto1EFEF7A4_ae = 4; // shw284：面板只有 5 行（勾选[2..6]+文案[7..11]）。shw189 改成 5 后 lv_a=5 会改到 [7]/[12]=第一行文案+权重滑条，把每个角色第一开关的字清掉。位 5+ 仍走数据/帮助条，点不到这五格。
     const int auto1EFEF7A4_ai = 1;
 
     // Variable Initialization
