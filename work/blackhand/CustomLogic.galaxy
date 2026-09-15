@@ -81,7 +81,7 @@ fixed[16][9][41] gv_bankSaveWeights;
 string[16][41][6] gv_bankSaveStrings;
 int[16][2] gv_bankSpecialIntegers;
 int[16][9][21] gv_bankRoleAchievements;
-int[16][75] gv_bankOtherAchievements;
+int[16][76] gv_bankOtherAchievements;
 int[16] gv_checka;
 int[16][3] gv_confessem;
 string[16] gv_checka2;
@@ -146,6 +146,8 @@ int[16] gv_janitized;
 bool[16] gv_kcRB;
 bool[16] gv_kcKillWN;
 bool[16] gv_kcKillPS;
+int[16] gv_kcKills;
+int[16] gv_kcCleans;
 bool[16] gv_doused;
 bool[16][16] gv_jestered;
 int[16] gv_switched;
@@ -14363,6 +14365,10 @@ bool auto_gf_EndGame_TriggerFunc (bool testConds, bool runActions) {
     int autoCWACH72_var;
     playergroup autoKCACH73_g;
     int autoKCACH73_var;
+    playergroup autoKCACH74_g;
+    int autoKCACH74_var;
+    playergroup autoKCACH75_g;
+    int autoKCACH75_var;
     playergroup autoSHWFR_g;
     int autoSHWFR_var;
 
@@ -15215,8 +15221,8 @@ bool auto_gf_EndGame_TriggerFunc (bool testConds, bool runActions) {
                 gf_GiveBonus(lv_a, 200);
             }
 
-            // shw275 成就「恐怖之秋」：开膛手(3/20) 本局爱死至少一名舞娘和一名陪侍
-            if ((gv_bankOtherAchievements[lv_a][73] == 0) && (PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true) && (gv_originalRole[lv_a][1] == 3) && (gv_originalRole[lv_a][0] == 20) && (gv_kcKillWN[lv_a] == true) && (gv_kcKillPS[lv_a] == true)) {
+            // shw279 成就「恐怖之秋」：开膛手(3/20) 取胜 + 本局至少爱死五人
+            if ((gv_bankOtherAchievements[lv_a][73] == 0) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_won[lv_a] == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 20) && (gv_kcKills[lv_a] >= 5)) {
                 gv_bankOtherAchievements[lv_a][73] = 1;
                 autoKCACH73_g = gv_currentPlayers;
                 autoKCACH73_var = -1;
@@ -15226,6 +15232,32 @@ bool auto_gf_EndGame_TriggerFunc (bool testConds, bool runActions) {
                     gf_CBSystemMessage((StringExternal("Param/Value/CWACHP") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/KCACH1S")), autoKCACH73_var, lv_a, 0, SoundLink("UI_BnetGameFound", -1), Color(0,0,0));
                 }
                 gf_GiveBonus(lv_a, 175);
+            }
+
+            // shw279 成就「双重事件」：开膛手(3/20) 本局爱死至少一名舞娘和一名陪侍
+            if ((gv_bankOtherAchievements[lv_a][74] == 0) && (PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true) && (gv_originalRole[lv_a][1] == 3) && (gv_originalRole[lv_a][0] == 20) && (gv_kcKillWN[lv_a] == true) && (gv_kcKillPS[lv_a] == true)) {
+                gv_bankOtherAchievements[lv_a][74] = 1;
+                autoKCACH74_g = gv_currentPlayers;
+                autoKCACH74_var = -1;
+                while (true) {
+                    autoKCACH74_var = PlayerGroupNextPlayer(autoKCACH74_g, autoKCACH74_var);
+                    if (autoKCACH74_var < 0) { break; }
+                    gf_CBSystemMessage((StringExternal("Param/Value/CWACHP") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/KCACH2S")), autoKCACH74_var, lv_a, 0, SoundLink("UI_BnetGameFound", -1), Color(0,0,0));
+                }
+                gf_GiveBonus(lv_a, 175);
+            }
+
+            // shw279 成就「"来自地狱"」：开膛手(3/20) 取胜 + 本局成功清理两次
+            if ((gv_bankOtherAchievements[lv_a][75] == 0) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_won[lv_a] == true) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 20) && (gv_kcCleans[lv_a] >= 2)) {
+                gv_bankOtherAchievements[lv_a][75] = 1;
+                autoKCACH75_g = gv_currentPlayers;
+                autoKCACH75_var = -1;
+                while (true) {
+                    autoKCACH75_var = PlayerGroupNextPlayer(autoKCACH75_g, autoKCACH75_var);
+                    if (autoKCACH75_var < 0) { break; }
+                    gf_CBSystemMessage((StringExternal("Param/Value/CWACHP") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/KCACH3S")), autoKCACH75_var, lv_a, 0, SoundLink("UI_BnetGameFound", -1), Color(0,0,0));
+                }
+                gf_GiveBonus(lv_a, 200);
             }
 
             gf_DEBUG(("Most InnerL OK  --" + IntToString(lv_a)));
@@ -16217,7 +16249,7 @@ bool auto_gf_CAssembleMainBank_TriggerFunc (bool testConds, bool runActions) {
     const int autoBB6D3424_ai = 1;
     const int auto6EA2A789_ae = 20;
     const int auto6EA2A789_ai = 1;
-    const int auto4ED0B346_ae = 74;
+    const int auto4ED0B346_ae = 75;
     const int auto4ED0B346_ai = 1;
     const int auto6C58849E_ae = 19;
     const int auto6C58849E_ai = 1;
@@ -16522,7 +16554,7 @@ bool auto_gf_CDisassembleMainBank_TriggerFunc (bool testConds, bool runActions) 
     const int autoB01F6BD7_ai = 1;
     const int auto6CA74BDE_ae = 20;
     const int auto6CA74BDE_ai = 1;
-    const int autoD26F95A3_ae = 74;
+    const int autoD26F95A3_ae = 75;
     const int autoD26F95A3_ai = 1;
     const int autoADBA8FFC_ae = 3;
     const int autoADBA8FFC_ai = 1;
@@ -52237,7 +52269,7 @@ bool gt_AccountIDHandler_Func (bool testConds, bool runActions) {
     int auto1350D98A_var;
     const int auto1792A69C_ae = 20;
     const int auto1792A69C_ai = 1;
-    const int auto2B9E0491_ae = 74;
+    const int auto2B9E0491_ae = 75;
     const int auto2B9E0491_ai = 1;
     playergroup auto9E352062_g;
     int auto9E352062_var;
@@ -53864,7 +53896,7 @@ bool gt_Stats_Func (bool testConds, bool runActions) {
     const int auto7357CED9_ai = 1;
     const int autoD85D5D59_ae = 15;
     const int autoD85D5D59_ai = 1;
-    const int auto69BE7284_ae = 74;
+    const int auto69BE7284_ae = 75;
     const int auto69BE7284_ai = 1;
     int autoE7789229_val;
     const int auto292129B5_ae = 5;
@@ -54211,6 +54243,12 @@ bool gt_Stats_Func (bool testConds, bool runActions) {
                     }
                     else if (autoE7789229_val == 73) {
                         lv_x = StringExternal("Param/Value/KCACH1N");
+                    }
+                    else if (autoE7789229_val == 74) {
+                        lv_x = StringExternal("Param/Value/KCACH2N");
+                    }
+                    else if (autoE7789229_val == 75) {
+                        lv_x = StringExternal("Param/Value/KCACH3N");
                     }
                     else {
                         lv_x = null;
@@ -55519,6 +55557,12 @@ bool gt_Achieve_Func (bool testConds, bool runActions) {
             }
             else if (autoD1168222_val == 73) {
                 lv_x = StringExternal("Param/Value/KCACH1N");
+            }
+            else if (autoD1168222_val == 74) {
+                lv_x = StringExternal("Param/Value/KCACH2N");
+            }
+            else if (autoD1168222_val == 75) {
+                lv_x = StringExternal("Param/Value/KCACH3N");
             }
             else {
                 lv_x = null;
@@ -91849,6 +91893,10 @@ void gf_SKN_3_kaitangshou (int lv_a) {
     if ((gv_dayNumber == 1)) {
         gv_shots[lv_a] = 2;
         gv_e5BC80E585B3[lv_a] = true;
+        gv_kcKills[lv_a] = 0;
+        gv_kcCleans[lv_a] = 0;
+        gv_kcKillWN[lv_a] = false;
+        gv_kcKillPS[lv_a] = false;
     }
     gf_RARipperActions(lv_a);
     if ((gv_roleOptions[3][20][0] == true)) {
@@ -92092,6 +92140,7 @@ void gf_ESRipperKill (int lp_target, int lp_killer, int lp_mode) {
         gf_CBSystemMessage(StringExternal("Param/Value/70E941A2"), lp_target, lp_target, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
     }
     gf_BHCrimeMurder(lp_killer);
+    gv_kcKills[lp_killer] += 1;
     if (((gv_originalRole[lp_target][1] == 1) && (gv_originalRole[lp_target][0] == 5)) || ((gv_roles[lp_target][1] == 1) && (gv_roles[lp_target][0] == 5))) {
         gv_kcKillWN[lp_killer] = true;
     }
@@ -92100,6 +92149,7 @@ void gf_ESRipperKill (int lp_target, int lp_killer, int lp_mode) {
     }
     if ((lv_clean == true)) {
         gv_janitized[lp_target] = lp_killer;
+        gv_kcCleans[lp_killer] += 1;
         gf_BHCrime(lp_killer, 2);
         gf_CBSystemMessage(StringExternal("Param/Value/KCISO"), lp_killer, lp_killer, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
     }

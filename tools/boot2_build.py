@@ -207,6 +207,8 @@ MUST_HAVE_KEYS = [
   'Param/Value/KCSHREV', 'Param/Value/KCMODE1', 'Param/Value/KCMODE1B',
   'Param/Value/KCMODE2', 'Param/Value/KCRESTRICT',
   'Param/Value/KCACH1S', 'Param/Value/KCACH1N',
+  'Param/Value/KCACH2S', 'Param/Value/KCACH2N',
+  'Param/Value/KCACH3S', 'Param/Value/KCACH3N',
   'Param/Value/KCSW', 'Param/Value/KCSWBOX', 'Param/Value/KCSWBOX0',
   # shw276 随机：雾都
   'Param/Value/WDTNAME', 'Param/Value/WDTDESC', 'Param/Value/WDTBTN',

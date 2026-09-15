@@ -187,4 +187,8 @@ Param/Value/KCSHREV=<s val="ModLeftSize16Bold"><c val="FFFF88">你的目标是�
 Param/Value/KCRESTRICT=<s val="ModLeftSize16Bold"><c val="FF88FF">限制你的人今晚走进了你的刀口...</c></s>
 Param/Value/KCACH1S=<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSize16Bold"><c val="C14D63">恐怖之秋</c></s><s val="ModCenterSize16"><c val="44FF88">!</c></s>
 Param/Value/KCACH1N=<s val="ModCenterSize16Bold"><c val="C14D63">恐怖之秋</c></s>
+Param/Value/KCACH2S=<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSize16Bold"><c val="C14D63">双重事件</c></s><s val="ModCenterSize16"><c val="44FF88">!</c></s>
+Param/Value/KCACH2N=<s val="ModCenterSize16Bold"><c val="C14D63">双重事件</c></s>
+Param/Value/KCACH3S=<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSize16Bold"><c val="C14D63">"来自地狱"</c></s><s val="ModCenterSize16"><c val="44FF88">!</c></s>
+Param/Value/KCACH3N=<s val="ModCenterSize16Bold"><c val="C14D63">"来自地狱"</c></s>
 Param/Value/BE08890E=- 由此，他会是个D徒/暴徒、门徒/仆从，连环爱手、开膛手，但也可能只是个义警。
