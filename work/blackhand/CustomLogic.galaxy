@@ -242,6 +242,7 @@ void gf_BHVisit2 (int lp_player, int lp_target); // 第二访问槽；限制/清
 void gf_BHVisitAction (int lp_player);
 void gf_BHVisitSelf (int lp_player);
 void gf_BHVisitNone (int lp_player);
+bool gf_BHWentTo (int lp_player, int lp_house); // vis 或 vis2 是否落到这户（0 不算）
 void gf_BHSetBlocker (int lp_target, int lp_blocker);
 void gf_BHUnblock (int lp_target);
 void gf_BHBlock (int lp_target, int lp_blocker);
@@ -1591,6 +1592,7 @@ void gf_SKP_1_jiandie (int lv_a);
 void gf_SKP_1_jiandie_2 (int lv_a);
 void gf_SKK_1_bashisiji (int lv_a);
 void gf_SKK_1_bashisiji_2 (int lv_a, int lv_x, int lv_y);
+void gf_SKK_veteranVis2 (int lv_a);
 void gf_SKK_1_yujing (int lv_a);
 void gf_SKK_1_yijing (int lv_a);
 void gf_SKK_3_lianhuanshashou (int lv_a);
@@ -12230,6 +12232,10 @@ void gf_SequenceKills () {
 
             if ((gv_visitation[lv_a] != 0) && (gv_visitation[gv_visitation[lv_a]] != 0) && (gv_veteranEligible[lv_a] == true) && (gv_roles[gv_visitation[lv_a]][1] == 1) && (gv_roles[gv_visitation[lv_a]][0] == 17) && (gv_jailed[gv_visitation[lv_a]] == 0) && (PlayerGroupHasPlayer(gv_alivePlayers, gv_visitation[lv_a]) == true) && (gv_seqKillsVetHit[lv_a] == false) && (((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 9)) || (lv_x == 1))) {
                 gf_SKK_1_bashisiji(lv_a);
+            }
+
+            if ((lv_x == 1)) {
+                gf_SKK_veteranVis2(lv_a); // shw278：vis2 落到警戒老兵家也打（影武者追击的被击爱者）
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 9)) {
@@ -82779,6 +82785,24 @@ void gf_BHVisitNone (int lp_player) {
     gf_BHVisit2(lp_player, 0);
 }
 
+// 读侧：vis 或 vis2 是否落到这户。lp_house==0 恒假（空槽不算访问）。
+// 影武者目标二不走 vis2，因此这里看不到截击的目标二。
+bool gf_BHWentTo (int lp_player, int lp_house) {
+    if ((lp_house == 0)) {
+        return false;
+    }
+
+    if ((gv_visitation[lp_player] == lp_house)) {
+        return true;
+    }
+
+    if ((gv_visitation2[lp_player] == lp_house)) {
+        return true;
+    }
+
+    return false;
+}
+
 // 限制：只写「谁被谁限制」，不动访问
 void gf_BHSetBlocker (int lp_target, int lp_blocker) {
     gv_roleblocked[lp_target] = lp_blocker;
@@ -86657,7 +86681,7 @@ if ((gv_action[lv_a][0] > 0) && (gv_diedAtNight[lv_a] == false)) {
     lv_b = 0;
     lv_i = 1;
     while (lv_i <= 15) {
-        if ((lv_i != lv_a) && (gv_visitation[lv_i] == gv_action[lv_a][0])) {
+        if ((lv_i != lv_a) && (gf_BHWentTo(lv_i, gv_action[lv_a][0]) == true)) {
             if ((lv_b > 0)) {
                 lv_t = (lv_t + StringExternal("Param/Value/GCZSEP"));
             }
@@ -87177,7 +87201,7 @@ void gf_SKF_1_jianshizhe (int lv_a) {
 lv_c = false;
 lv_b = 1;
 for ( ; ( (autoCC8F6D48_ai >= 0 && lv_b <= autoCC8F6D48_ae) || (autoCC8F6D48_ai < 0 && lv_b >= autoCC8F6D48_ae) ) ; lv_b += autoCC8F6D48_ai ) {
-    if (((gv_visitation[lv_b] == gv_visitation[lv_a]) || (((gv_action[lv_b][0] == gv_visitation[lv_a]) || (gv_action[lv_b][1] == gv_visitation[lv_a])) && (gv_visitation[lv_b] != 0) && (gv_roles[lv_b][1] == 1) && (gv_roles[lv_b][0] == 9))) && ((gv_immune[lv_b][2] == false) || (gv_roleOptions[1][16][0] == true)) && (lv_b != lv_a)) {
+    if (((gf_BHWentTo(lv_b, gv_visitation[lv_a]) == true) || (((gv_action[lv_b][0] == gv_visitation[lv_a]) || (gv_action[lv_b][1] == gv_visitation[lv_a])) && (gv_visitation[lv_b] != 0) && (gv_roles[lv_b][1] == 1) && (gv_roles[lv_b][0] == 9))) && ((gv_immune[lv_b][2] == false) || (gv_roleOptions[1][16][0] == true)) && (lv_b != lv_a)) {
         lv_c = true;
         gf_CBSystemMessage((StringExternal("Param/Value/5BD56677") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/EA77273A") + TextWithColor(StringToText(gv_name[lv_b]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_b])) + StringExternal("Param/Value/8369C8B9")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
     }
@@ -88559,6 +88583,31 @@ if ((lv_x == 1)) {
 else {
     gf_BHVisit(lv_a, lv_y);
 }
+}
+
+// shw278：vis2 落到正在警戒的退伍军人家时，临时把 vis 改成 vis2 再走原警戒结算，然后还原。
+// vis2==vis 或 vis2==0 直接 return，避免和第一槽打两次。
+void gf_SKK_veteranVis2 (int lv_a) {
+    int lv_saved;
+    int lv_house;
+
+    if ((gv_veteranEligible[lv_a] != true) || (gv_seqKillsVetHit[lv_a] == true)) {
+        return;
+    }
+
+    lv_house = gv_visitation2[lv_a];
+    if ((lv_house == 0) || (lv_house == gv_visitation[lv_a])) {
+        return;
+    }
+
+    if ((gv_visitation[lv_house] == 0) || (gv_roles[lv_house][1] != 1) || (gv_roles[lv_house][0] != 17) || (gv_jailed[lv_house] != 0) || (PlayerGroupHasPlayer(gv_alivePlayers, lv_house) == false)) {
+        return;
+    }
+
+    lv_saved = gv_visitation[lv_a];
+    gf_BHVisit(lv_a, lv_house);
+    gf_SKK_1_bashisiji(lv_a);
+    gf_BHVisit(lv_a, lv_saved);
 }
 
 // 阶段三抽取（shw238）：城镇 1/13 ← 原 gf_SequenceKills 行12719

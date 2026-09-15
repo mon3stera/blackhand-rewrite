@@ -36,7 +36,7 @@ Param/Value/SHWDEATH4=死者被一把刀刺穿了。
 Param/Value/SHWDEATH5=他被劈成两半了。
 Param/Value/SHWDEATH6=死者身中数刀。
 Param/Value/94249CFE=<c val="004080">点击来改变你的开关状态<n/>限定：瘟疫散布者 冤魂 小丑 影武者 开膛手</c>
-Param/Value/SHWBOX9=<n/>- -on（截击）：若目标一访问了目标二，则攻击目标一，这次攻击无视无敌和救治。<n/>- 目标一不动视作访问自己。<n/>- 在追击模式下，如果目标一访问了你，则你会直接攻击他。<n/>- 监视者和观察者只会看到你访问目标一。<n/>- 侦探跟踪追击时，会看到你本想访问目标一、实际去了被击爱的人。
+Param/Value/SHWBOX9=<n/>- -on（截击）：若目标一访问了目标二，则攻击目标一，这次攻击无视无敌和救治。<n/>- 目标一不动视作访问自己。<n/>- 在追击模式下，如果目标一访问了你，则你会直接攻击他。
 Param/Value/SHWCARD=<c val="C0C0C0">
 Param/Value/SHWBOXS=<n/>- 你能查出影武者。
 Param/Value/SHWBOXS0=- 你能查出影武者。
