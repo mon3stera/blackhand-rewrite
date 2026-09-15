@@ -142,7 +142,7 @@ Param/Value/CWTSUBC=<c val="C9A44A">政变前夕</c> C
 Param/Value/CWTSUBD=<c val="C9A44A">政变前夕</c> D
 Param/Value/CWTBTN=<s val="ModCenterSize24Bold"><c val="C9A44A">政变前夕</c></s>
 Param/Value/WDTNAME=<s val="ModCenterSize24Bold">随机：<c val="8BA3B8">雾都</c></s>
-Param/Value/WDTDESC=浓雾吞没了整座城镇。街巷尽头传来利刃入肉的轻响——开膛手已出没于此，还有谁在阴影里与他共舞？<n/>该预设固定包含开膛手。<n/><s val="ModCenterSize18Bold">12-15人可用</s>
+Param/Value/WDTDESC=浓雾吞没了整座城镇。开膛手已出没于此，还有谁在阴影里与他共舞？<n/>该预设固定包含开膛手。<n/><s val="ModCenterSize18Bold">12-15人可用</s>
 Param/Value/WDTSUBA=<c val="8BA3B8">雾都</c> A
 Param/Value/WDTSUBB=<c val="8BA3B8">雾都</c> B
 Param/Value/WDTSUBC=<c val="8BA3B8">雾都</c> C
