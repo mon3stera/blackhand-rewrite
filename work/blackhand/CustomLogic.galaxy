@@ -271,7 +271,7 @@ text[9][41][12] gv_roleOptionsText;
 fixed[9][41] gv_roleChance;
 fixed[9][41] gv_roleExpectedCount;
 int[16] gv_categoriesArray;
-bool[7] gv_bigRoleAssigned;
+bool[9] gv_bigRoleAssigned; // shw283：0..6 原图独有；[7] 堕落审判者 3/13；[8] 天选者 3/32
 bool gv_chooseNames;
 bool gv_success;
 int[16][2] gv_semifinalRole;
@@ -47288,6 +47288,8 @@ void gf_OSLoadBase64 (int lp_player) {
     gv_bigRoleAssigned[4] = false;
     gv_bigRoleAssigned[5] = false;
     gv_bigRoleAssigned[6] = false;
+    gv_bigRoleAssigned[7] = false;
+    gv_bigRoleAssigned[8] = false;
     lv_a = 1;
     for ( ; ( (auto7F5DDD70_ai >= 0 && lv_a <= auto7F5DDD70_ae) || (auto7F5DDD70_ai < 0 && lv_a >= auto7F5DDD70_ae) ) ; lv_a += auto7F5DDD70_ai ) {
         gv_rolesArray[lv_a] = 0;
@@ -77331,6 +77333,8 @@ bool gt_OSVariantsMenuConfirm_Func (bool testConds, bool runActions) {
     gv_bigRoleAssigned[4] = false;
     gv_bigRoleAssigned[5] = false;
     gv_bigRoleAssigned[6] = false;
+    gv_bigRoleAssigned[7] = false;
+    gv_bigRoleAssigned[8] = false;
     lv_a = 1;
     for ( ; ( (autoDED98CA8_ai >= 0 && lv_a <= autoDED98CA8_ae) || (autoDED98CA8_ai < 0 && lv_a >= autoDED98CA8_ae) ) ; lv_a += autoDED98CA8_ai ) {
         gv_rolesArray[lv_a] = 0;
@@ -77639,6 +77643,14 @@ bool gt_OSVariantsMenuConfirm_Func (bool testConds, bool runActions) {
             gv_bigRoleAssigned[6] = true;
         }
 
+        if ((gv_categoriesArray[lv_a] == 3) && (gv_rolesArray[lv_a] == 13)) {
+            gv_bigRoleAssigned[7] = true;
+        }
+
+        if ((gv_categoriesArray[lv_a] == 3) && (gv_rolesArray[lv_a] == 32)) {
+            gv_bigRoleAssigned[8] = true;
+        }
+
     }
     if ((gv_variantSelection == 13) && (gv_subvariantSelection == 3)) {
         gf_VE59490E4BABAE8A1973(); // shw218 唐人街[高阶]
@@ -77861,7 +77873,7 @@ bool gt_OSRoleManipulate_Func (bool testConds, bool runActions) {
     }
 
     if ((EventDialogControl() == gv_rolesMenusItem[3]) && (gv_roleSelection != 0) && (gv_roleCategory != 0)) {
-        if ((((gv_roleCategory == 1) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 14) && (gv_bigRoleAssigned[2] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 20) && (gv_bigRoleAssigned[4] == true)) || ((gv_roleCategory == 2) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[0] == true)) || ((gv_roleCategory == 5) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[5] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 10) && (gv_bigRoleAssigned[3] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[6] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 19) && (gv_bigRoleAssigned[1] == true)))) {
+        if ((((gv_roleCategory == 1) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 14) && (gv_bigRoleAssigned[2] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 20) && (gv_bigRoleAssigned[4] == true)) || ((gv_roleCategory == 2) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[0] == true)) || ((gv_roleCategory == 5) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[5] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 10) && (gv_bigRoleAssigned[3] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[6] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 19) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 13) && (gv_bigRoleAssigned[7] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 32) && (gv_bigRoleAssigned[8] == true)))) {
         }
         else {
             if ((((gv_rolesAssigned < PlayerGroupCount(gv_currentPlayers)) && (PlayerGroupCount(gv_players) > 1)) || ((gv_rolesAssigned < 15) && (PlayerGroupCount(gv_players) == 1)))) {
@@ -77936,6 +77948,14 @@ bool gt_OSRoleManipulate_Func (bool testConds, bool runActions) {
                     gv_bigRoleAssigned[6] = true;
                 }
 
+                if ((gv_roleCategory == 3) && (gv_roleSelection == 13)) {
+                    gv_bigRoleAssigned[7] = true;
+                }
+
+                if ((gv_roleCategory == 3) && (gv_roleSelection == 32)) {
+                    gv_bigRoleAssigned[8] = true;
+                }
+
                 gv_categoriesArray[gv_rolesAssigned] = gv_roleCategory;
                 gv_rolesArray[gv_rolesAssigned] = gv_roleSelection;
                 DialogControlAddItem(gv_rolesMenusItem[2], PlayerGroupAll(), (StringExternal("Param/Value/81CB2E41") + gv_roleNameArray[gv_categoriesArray[gv_rolesAssigned]][gv_rolesArray[gv_rolesAssigned]] + StringExternal("Param/Value/B23135F9")));
@@ -77951,7 +77971,7 @@ bool gt_OSRoleManipulate_Func (bool testConds, bool runActions) {
                 else {
                     DialogControlSetEnabled(gv_rolesMenusItem[9], PlayerGroupSingle(gv_host), false);
                 }
-                if ((((gv_roleCategory == 1) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 23) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 14) && (gv_bigRoleAssigned[2] == true)) || ((gv_roleCategory == 2) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[0] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 20) && (gv_bigRoleAssigned[4] == true)) || ((gv_roleCategory == 5) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[5] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 10) && (gv_bigRoleAssigned[3] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[6] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 19) && (gv_bigRoleAssigned[1] == true)))) {
+                if ((((gv_roleCategory == 1) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 23) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 14) && (gv_bigRoleAssigned[2] == true)) || ((gv_roleCategory == 2) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[0] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 20) && (gv_bigRoleAssigned[4] == true)) || ((gv_roleCategory == 5) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[5] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 10) && (gv_bigRoleAssigned[3] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[6] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 19) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 13) && (gv_bigRoleAssigned[7] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 32) && (gv_bigRoleAssigned[8] == true)))) {
                     DialogControlSetEnabled(gv_rolesMenusItem[3], PlayerGroupSingle(gv_host), false);
                 }
                 else {
@@ -78005,6 +78025,14 @@ bool gt_OSRoleManipulate_Func (bool testConds, bool runActions) {
 
             if ((gv_categoriesArray[lv_x] == 1) && (gv_rolesArray[lv_x] == 19)) {
                 gv_bigRoleAssigned[1] = false;
+            }
+
+            if ((gv_categoriesArray[lv_x] == 3) && (gv_rolesArray[lv_x] == 13)) {
+                gv_bigRoleAssigned[7] = false;
+            }
+
+            if ((gv_categoriesArray[lv_x] == 3) && (gv_rolesArray[lv_x] == 32)) {
+                gv_bigRoleAssigned[8] = false;
             }
 
             if ((gv_rolesAssigned != lv_x)) {
@@ -78081,7 +78109,7 @@ bool gt_OSRoleManipulate_Func (bool testConds, bool runActions) {
         else {
             DialogControlSetEnabled(gv_rolesMenusItem[9], PlayerGroupSingle(gv_host), false);
         }
-        if ((((gv_roleCategory == 1) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 15) && (gv_bigRoleAssigned[2] == true)) || ((gv_roleCategory == 2) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[0] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 20) && (gv_bigRoleAssigned[4] == true)) || ((gv_roleCategory == 5) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[5] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 10) && (gv_bigRoleAssigned[3] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[6] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 19) && (gv_bigRoleAssigned[1] == true)))) {
+        if ((((gv_roleCategory == 1) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 15) && (gv_bigRoleAssigned[2] == true)) || ((gv_roleCategory == 2) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[0] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 20) && (gv_bigRoleAssigned[4] == true)) || ((gv_roleCategory == 5) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[5] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 10) && (gv_bigRoleAssigned[3] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[6] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 19) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 13) && (gv_bigRoleAssigned[7] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 32) && (gv_bigRoleAssigned[8] == true)))) {
             DialogControlSetEnabled(gv_rolesMenusItem[3], PlayerGroupSingle(gv_host), false);
         }
         else {
@@ -78773,7 +78801,7 @@ bool gt_OSRoleSelect_Func (bool testConds, bool runActions) {
 
     }
 
-    if ((((gv_roleCategory == 1) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 23) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 14) && (gv_bigRoleAssigned[2] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 20) && (gv_bigRoleAssigned[4] == true)) || ((gv_roleCategory == 2) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[0] == true)) || ((gv_roleCategory == 5) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[5] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 10) && (gv_bigRoleAssigned[3] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[6] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 19) && (gv_bigRoleAssigned[1] == true)) || (gv_variantSelection == 1) || (gv_variantSelection == 4) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12) || (gv_variantSelection == 31) || (gv_variantSelection == 32) || (gv_variantSelection == 33) || (gv_variantSelection == 35) || (gv_variantSelection == 36))) {
+    if ((((gv_roleCategory == 1) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 23) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 14) && (gv_bigRoleAssigned[2] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 20) && (gv_bigRoleAssigned[4] == true)) || ((gv_roleCategory == 2) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[0] == true)) || ((gv_roleCategory == 5) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[5] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 10) && (gv_bigRoleAssigned[3] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[6] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 19) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 13) && (gv_bigRoleAssigned[7] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 32) && (gv_bigRoleAssigned[8] == true)) || (gv_variantSelection == 1) || (gv_variantSelection == 4) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12) || (gv_variantSelection == 31) || (gv_variantSelection == 32) || (gv_variantSelection == 33) || (gv_variantSelection == 35) || (gv_variantSelection == 36))) {
         DialogControlSetEnabled(gv_rolesMenusItem[3], PlayerGroupSingle(gv_host), false);
     }
     else {
