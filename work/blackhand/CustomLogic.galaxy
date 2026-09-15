@@ -87201,7 +87201,7 @@ void gf_SKF_1_jianshizhe (int lv_a) {
 lv_c = false;
 lv_b = 1;
 for ( ; ( (autoCC8F6D48_ai >= 0 && lv_b <= autoCC8F6D48_ae) || (autoCC8F6D48_ai < 0 && lv_b >= autoCC8F6D48_ae) ) ; lv_b += autoCC8F6D48_ai ) {
-    if (((gf_BHWentTo(lv_b, gv_visitation[lv_a]) == true) || (((gv_action[lv_b][0] == gv_visitation[lv_a]) || (gv_action[lv_b][1] == gv_visitation[lv_a])) && (gv_visitation[lv_b] != 0) && (gv_roles[lv_b][1] == 1) && (gv_roles[lv_b][0] == 9))) && ((gv_immune[lv_b][2] == false) || (gv_roleOptions[1][16][0] == true)) && (lv_b != lv_a)) {
+    if ((gf_BHWentTo(lv_b, gv_visitation[lv_a]) == true) && ((gv_immune[lv_b][2] == false) || (gv_roleOptions[1][16][0] == true)) && (lv_b != lv_a)) {
         lv_c = true;
         gf_CBSystemMessage((StringExternal("Param/Value/5BD56677") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/EA77273A") + TextWithColor(StringToText(gv_name[lv_b]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_b])) + StringExternal("Param/Value/8369C8B9")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
     }
@@ -87225,7 +87225,7 @@ void gf_SKF_3_zonghuozhe (int lv_a) {
 lv_c = false;
 lv_b = 1;
 for ( ; ( (auto83AFD728_ai >= 0 && lv_b <= auto83AFD728_ae) || (auto83AFD728_ai < 0 && lv_b >= auto83AFD728_ae) ) ; lv_b += auto83AFD728_ai ) {
-    if (((gv_visitation[lv_b] == gv_visitation[lv_a]) || (((gv_action[lv_b][0] == gv_visitation[lv_a]) || (gv_action[lv_b][1] == gv_visitation[lv_a])) && (gv_visitation[lv_b] != 0) && (gv_roles[lv_b][1] == 1) && (gv_roles[lv_b][0] == 9))) && (lv_b != lv_a)) {
+    if ((gf_BHWentTo(lv_b, gv_visitation[lv_a]) == true) && (lv_b != lv_a)) {
         lv_c = true;
         gf_CBSystemMessage(StringExternal("Param/Value/0E49E605"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
         gf_CBSystemMessage((StringExternal("Param/Value/7CB7B623") + IntToText(gv_playerSpot[lv_b]) + StringExternal("Param/Value/32602D7B") + TextWithColor(StringToText(gv_name[lv_b]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_b])) + StringExternal("Param/Value/442845A2")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
@@ -87306,7 +87306,7 @@ else {
 lv_c = false;
 lv_b = 1;
 for ( ; ( (autoB51992E6_ai >= 0 && lv_b <= autoB51992E6_ae) || (autoB51992E6_ai < 0 && lv_b >= autoB51992E6_ae) ) ; lv_b += autoB51992E6_ai ) {
-    if (((gv_visitation[lv_b] == gv_visitation[lv_a]) || (((gv_action[lv_b][0] == gv_visitation[lv_a]) || (gv_action[lv_b][1] == gv_visitation[lv_a])) && (gv_visitation[lv_b] != 0) && (gv_roles[lv_b][1] == 1) && (gv_roles[lv_b][0] == 9))) && (gv_immune[lv_b][2] == false) && (lv_b != lv_a)) {
+    if ((gf_BHWentTo(lv_b, gv_visitation[lv_a]) == true) && (gv_immune[lv_b][2] == false) && (lv_b != lv_a)) {
         lv_c = true;
         gf_CBSystemMessage((StringExternal("Param/Value/B34CDE3A") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/61F7A5F3") + TextWithColor(StringToText(gv_name[lv_b]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_b])) + StringExternal("Param/Value/AA577C99")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
     }
@@ -87382,7 +87382,7 @@ else {
 lv_c = false;
 lv_b = 1;
 for ( ; ( (auto8C070C7F_ai >= 0 && lv_b <= auto8C070C7F_ae) || (auto8C070C7F_ai < 0 && lv_b >= auto8C070C7F_ae) ) ; lv_b += auto8C070C7F_ai ) {
-    if (((gv_visitation[lv_b] == gv_visitation[lv_a]) || (((gv_action[lv_b][0] == gv_visitation[lv_a]) || (gv_action[lv_b][1] == gv_visitation[lv_a])) && (gv_visitation[lv_b] != 0) && (gv_roles[lv_b][1] == 1) && (gv_roles[lv_b][0] == 9))) && (gv_immune[lv_b][2] == false) && (lv_b != lv_a)) {
+    if ((gf_BHWentTo(lv_b, gv_visitation[lv_a]) == true) && (gv_immune[lv_b][2] == false) && (lv_b != lv_a)) {
         lv_c = true;
         gf_CBSystemMessage((StringExternal("Param/Value/72E64164") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/3D4C6616") + TextWithColor(StringToText(gv_name[lv_b]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_b])) + StringExternal("Param/Value/96DA582F")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
     }
@@ -89290,8 +89290,16 @@ gf_BHVisitAction(lv_a);
 
 // 阶段三抽取（shw238）：城镇 1/9 ← 原 gf_SequencePrep 行10737
 void gf_SKP_1_bashisiji_2 (int lv_a) {
-    // Implementation
-gf_BHVisit(lv_a, gv_action[lv_a][RandomInt(0, 1)]);
+    int lv_r;
+
+    lv_r = RandomInt(0, 1);
+    gf_BHVisit(lv_a, gv_action[lv_a][lv_r]);
+    if ((lv_r == 0)) {
+        gf_BHVisit2(lv_a, gv_action[lv_a][1]);
+    }
+    else {
+        gf_BHVisit2(lv_a, gv_action[lv_a][0]);
+    }
 }
 
 // 阶段三抽取（shw238）：城镇 1/10 ← 原 gf_SequencePrep 行10741
