@@ -93824,12 +93824,14 @@ void gf_BHSaveSlotRefresh (int lp_player) {
         TriggerEnable(gt_BHSaveSlotSel, false);
     }
 
-    DialogControlRemoveAllItems(gv_saveSlotItem[1], PlayerGroupSingle(lp_player));
+    // shw282：列表条目是按玩家组分发的。面板本身 DialogSetVisible(..., PlayerGroupAll())，
+    // 但原先 AddItem 只写给主机 ⇒ 其他人看到空槽/没名字。数据和操作仍只读 lp_player（主机）。
+    DialogControlRemoveAllItems(gv_saveSlotItem[1], PlayerGroupAll());
     lv_a = 1;
     for ( ; (lv_a <= c_bhSaveSlotCount) ; lv_a += 1 ) {
-        DialogControlAddItem(gv_saveSlotItem[1], PlayerGroupSingle(lp_player), gf_BHSaveSlotItemText(lp_player, lv_a));
+        DialogControlAddItem(gv_saveSlotItem[1], PlayerGroupAll(), gf_BHSaveSlotItemText(lp_player, lv_a));
     }
-    DialogControlSelectItem(gv_saveSlotItem[1], PlayerGroupSingle(lp_player), lv_slot);
+    DialogControlSelectItem(gv_saveSlotItem[1], PlayerGroupAll(), lv_slot);
     if ((gt_BHSaveSlotSel != null)) {
         TriggerEnable(gt_BHSaveSlotSel, true);
     }
@@ -93842,16 +93844,16 @@ void gf_BHSaveSlotRefresh (int lp_player) {
         lv_name = "";
     }
 
-    libNtve_gf_SetDialogItemEditorValue(gv_saveSlotItem[3], lv_name, PlayerGroupSingle(lp_player));
+    libNtve_gf_SetDialogItemEditorValue(gv_saveSlotItem[3], lv_name, PlayerGroupAll());
 
     // 空槽位不能载入 / 删除（shw257 起按钮编号：[4] 保存 / [5] 载入 / [6] 删除 / [7] 状态行）
     if ((gv_saveSlotCode[lp_player][lv_slot] == "") || (gv_saveSlotCode[lp_player][lv_slot] == null)) {
-        DialogControlSetEnabled(gv_saveSlotItem[5], PlayerGroupSingle(lp_player), false);
-        DialogControlSetEnabled(gv_saveSlotItem[6], PlayerGroupSingle(lp_player), false);
+        DialogControlSetEnabled(gv_saveSlotItem[5], PlayerGroupAll(), false);
+        DialogControlSetEnabled(gv_saveSlotItem[6], PlayerGroupAll(), false);
     }
     else {
-        DialogControlSetEnabled(gv_saveSlotItem[5], PlayerGroupSingle(lp_player), true);
-        DialogControlSetEnabled(gv_saveSlotItem[6], PlayerGroupSingle(lp_player), true);
+        DialogControlSetEnabled(gv_saveSlotItem[5], PlayerGroupAll(), true);
+        DialogControlSetEnabled(gv_saveSlotItem[6], PlayerGroupAll(), true);
     }
 
     // 状态行
@@ -93866,7 +93868,7 @@ void gf_BHSaveSlotRefresh (int lp_player) {
         }
     }
 
-    libNtve_gf_SetDialogItemText(gv_saveSlotItem[7], lv_text, PlayerGroupSingle(lp_player));
+    libNtve_gf_SetDialogItemText(gv_saveSlotItem[7], lv_text, PlayerGroupAll());
 }
 
 void gf_BHSaveSlotSave (int lp_player) {
