@@ -1643,6 +1643,7 @@ void gf_SKK_1_yijing (int lv_a);
 void gf_SKK_3_lianhuanshashou (int lv_a);
 void gf_SKK_3_kaitangshou (int lv_a);
 void gf_SKK_3_tangjihede (int lv_a);
+void gf_ESDQBlankShot (int lp_player, int lp_killer);
 void gf_ESRipperKill (int lp_target, int lp_killer, int lp_mode);
 void gf_SKK_3_zonghuozhe (int lv_a);
 void gf_SKK_1_gongjihuizhanglao (int lv_a);
@@ -92647,9 +92648,6 @@ void gf_SKP_3_tangjihede (int lv_a) {
 
 // 阶段三抽取（shw288）：中立 3/21 ← 原 gf_SequenceKills 行0
 void gf_SKK_3_tangjihede (int lv_a) {
-    playergroup autoDQNIGHT_g;
-    int autoDQNIGHT_var;
-
     if ((gv_visitation[lv_a] == lv_a)) {
         return;
     }
@@ -92659,15 +92657,6 @@ void gf_SKK_3_tangjihede (int lv_a) {
     gv_shots[lv_a] -= 1;
     gv_seqKillsZ[1] = true;
     gv_dqTag[gv_visitation[lv_a]] = lv_a;
-    SoundPlay(SoundLink("RaynorCommandoAttackLaunch", -1), PlayerGroupAll(), 100.0, 0.0);
-    gf_CBSystemMessage(StringExternal("Param/Value/CBB8CCD6"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-    autoDQNIGHT_g = PlayerGroupAll();
-    autoDQNIGHT_var = -1;
-    while (true) {
-        autoDQNIGHT_var = PlayerGroupNextPlayer(autoDQNIGHT_g, autoDQNIGHT_var);
-        if (autoDQNIGHT_var < 0) { break; }
-        gf_CBSystemMessage(StringExternal("Param/Value/1457B0ED"), autoDQNIGHT_var, 16, 0, SoundLink("Silent", -1), Color(0,0,0));
-    }
     if ((gv_shots[lv_a] > 1)) {
         gf_CBSystemMessage((StringExternal("Param/Value/BF759227") + IntToText(gv_shots[lv_a]) + StringExternal("Param/Value/79637826")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
     }
@@ -92676,6 +92665,45 @@ void gf_SKK_3_tangjihede (int lv_a) {
     }
     if ((gv_shots[lv_a] == 0)) {
         gf_CBSystemMessage(StringExternal("Param/Value/632C2FB3"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    }
+    gf_ESDQBlankShot(gv_visitation[lv_a], lv_a);
+}
+
+// shw288：空包枪演出 = 义警打到夜间无敌的那条（语音/枪声/红字），不伤害、不通知目标
+void gf_ESDQBlankShot (int lp_player, int lp_killer) {
+    int lv_a;
+    int autoDQSHOT_ae;
+    const int autoDQSHOT_ai = 1;
+    playergroup autoDQNIGHT_g;
+    int autoDQNIGHT_var;
+
+    if ((gv_nightSequence == true)) {
+        autoDQSHOT_ae = RandomInt(2, 3);
+        lv_a = 1;
+        for ( ; ( (autoDQSHOT_ai >= 0 && lv_a <= autoDQSHOT_ae) || (autoDQSHOT_ai < 0 && lv_a >= autoDQSHOT_ae) ) ; lv_a += autoDQSHOT_ai ) {
+            Wait(RandomFixed(0.3, 0.7), c_timeGame);
+            SoundPlay(SoundLink("RaynorCommandoAttackLaunch", -1), PlayerGroupAll(), RandomFixed(50.0, 70.0), 0.0);
+        }
+        Wait(RandomFixed(0.5, 0.75), c_timeGame);
+        SoundPlay(SoundLink("Doodad_DebrisImpact", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.1);
+        Wait(RandomFixed(0.5, 1.0), c_timeGame);
+        SoundPlay(SoundLink("Marine02AOD_Custom_Turn_Walk_Right", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+        Wait(RandomFixed(0.5, 1.0), c_timeGame);
+        SoundPlay(SoundLink("pMission_Korhal02_Raynor_123", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+        Wait(RandomFixed(0.5, 1.0), c_timeGame);
+    }
+
+    gf_CBSystemMessage(StringExternal("Param/Value/CBB8CCD6"), lp_killer, lp_killer, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    if ((gv_nightSequence == true)) {
+        autoDQNIGHT_g = PlayerGroupAll();
+        autoDQNIGHT_var = -1;
+        while (true) {
+            autoDQNIGHT_var = PlayerGroupNextPlayer(autoDQNIGHT_g, autoDQNIGHT_var);
+            if (autoDQNIGHT_var < 0) { break; }
+            gf_CBSystemMessage(StringExternal("Param/Value/9DDB0A22"), autoDQNIGHT_var, 16, 0, SoundLink("Silent", -1), Color(0,0,0));
+        }
+        Wait(RandomFixed(1.0, 2.0), c_timeGame);
+        SoundPlay(SoundLink("Marine02AOD_Custom_Turn_Walk_Right", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
     }
 }
 
