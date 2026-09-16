@@ -213,7 +213,14 @@ MUST_HAVE_KEYS = [
   # shw276 随机：雾都
   'Param/Value/WDTNAME', 'Param/Value/WDTDESC', 'Param/Value/WDTBTN',
   'Param/Value/WDTSUBA', 'Param/Value/WDTSUBB', 'Param/Value/WDTSUBC',
-  'Param/Value/WDTSUBD',]
+  'Param/Value/WDTSUBD',
+  # shw288 堂吉诃德 (3/21)
+  'Param/Value/DQNAME', 'Param/Value/DQDESC', 'Param/Value/DQCARD',
+  'Param/Value/DQBOX1', 'Param/Value/DQBOX2', 'Param/Value/DQBOX4',
+  'Param/Value/DQBOX6', 'Param/Value/DQCRIME', 'Param/Value/DQREV',
+  'Param/Value/DQNIGHT',
+  'Param/Value/DQACH2S', 'Param/Value/DQACH3',
+  'Param/Value/DQACHD',]
 
 
 def parse_strings_file(path: Path) -> dict:

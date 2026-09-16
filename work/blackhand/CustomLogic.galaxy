@@ -81,7 +81,7 @@ fixed[16][9][41] gv_bankSaveWeights;
 string[16][41][6] gv_bankSaveStrings;
 int[16][2] gv_bankSpecialIntegers;
 int[16][9][21] gv_bankRoleAchievements;
-int[16][76] gv_bankOtherAchievements;
+int[16][77] gv_bankOtherAchievements;
 int[16] gv_checka;
 int[16][3] gv_confessem;
 string[16] gv_checka2;
@@ -283,7 +283,7 @@ text[9][41][12] gv_roleOptionsText;
 fixed[9][41] gv_roleChance;
 fixed[9][41] gv_roleExpectedCount;
 int[16] gv_categoriesArray;
-bool[9] gv_bigRoleAssigned; // shw283：0..6 原图独有；[7] 堕落审判者 3/13；[8] 天选者 3/32
+bool[10] gv_bigRoleAssigned; // shw283：0..6 原图独有；[7] 堕落审判者 3/13；[8] 天选者 3/32；[9] 堂吉诃德 3/21
 bool gv_chooseNames;
 bool gv_success;
 int[16][2] gv_semifinalRole;
@@ -565,6 +565,10 @@ int[16] gv_txGuesses; // 天选者(3/32) 本局累计猜对次数（shw144：2 �
 int[16] gv_txGuessTarget; // 天选者(3/32) 猜测所绑定的雷击目标（0=无；换目标则该次猜测作废，shw148）
 int[16] gv_txGuessBad; // 天选者(3/32) 本局猜错/作废次数（shw150：成就「见微知著」要求为 0）
 int[16] gv_shwMode2Used; // 影武者(3/31) 本局曾以模式二出手（shw152：成就「影缝」要求为 0）
+bool[16] gv_dqRevealed; // shw288 堂吉诃德(3/21) 是否已揭开
+int[16] gv_dqAlign; // shw288 揭开后阵营：0无 1城镇 2黑手D+三合会 3中立致命/邪恶
+int[16] gv_dqArmor; // shw288 揭开后剩余夜间无敌次数（1→0）
+int[16] gv_dqTag; // shw288 被空包击中的人 → 开枪的堂吉诃德座位
 int[16] gv_e8B7B3E8BDA6EFBC9F;
 int[16] gv_rollE782B9E586B7E58DB4;   // shw229: 原图声明 int[2]，但 gt_rollE79A84E586B7E58DB4_Func 按 1..15 循环递减、其余处用 [EventPlayer()]，每次越界都中断该触发器（每秒一次）⇒ 扩到 16 席
 bool[16][16] gv_e69FA5E8BF87E4BA86;
@@ -1365,6 +1369,14 @@ void gf_SKR_1_shiguan (int lv_a);
 void gf_SKN_3_yuanhun (int lv_a);
 void gf_SKN_3_lianhuanshashou (int lv_a);
 void gf_SKN_3_kaitangshou (int lv_a);
+void gf_SKN_3_tangjihede (int lv_a);
+bool gf_DQHidden (int lp_player);
+int gf_DQSeenPool (int lp_player);
+int gf_DQSeenRole (int lp_player);
+text gf_DQSeenName (int lp_player);
+int gf_DQClassify (int lp_player);
+void gf_DQOnExecute (int lp_player);
+void gf_DQShareWin (int lp_end);
 void gf_RARipperActions (int lp_player);
 void gf_SKN_3_yingwuzhe (int lv_a);
 void gf_SKN_3_tianxuanzhe (int lv_a);
@@ -1604,6 +1616,7 @@ void gf_SKP_5_pucong_2 (int lv_a);
 void gf_SKP_5_wuxian_2 (int lv_a);
 void gf_SKP_3_lianhuanshashou (int lv_a);
 void gf_SKP_3_kaitangshou (int lv_a);
+void gf_SKP_3_tangjihede (int lv_a);
 void gf_SKP_3_wenyisanbuzhe (int lv_a);
 void gf_SKP_3_shengcunzhe_2 (int lv_a);
 void gf_SKP_3_xiaochou (int lv_a);
@@ -1625,6 +1638,7 @@ void gf_SKK_1_yujing (int lv_a);
 void gf_SKK_1_yijing (int lv_a);
 void gf_SKK_3_lianhuanshashou (int lv_a);
 void gf_SKK_3_kaitangshou (int lv_a);
+void gf_SKK_3_tangjihede (int lv_a);
 void gf_ESRipperKill (int lp_target, int lp_killer, int lp_mode);
 void gf_SKK_3_zonghuozhe (int lv_a);
 void gf_SKK_1_gongjihuizhanglao (int lv_a);
@@ -5393,6 +5407,12 @@ void gf_InitializeVariables () {
     gv_roleOptionsText[3][20][1] = StringExternal("Param/Value/8B83273A");
     gv_roleOptions[3][20][10] = true;
     gv_e78AAFE7BDAAE58FAFE883BD[3][20] = StringExternal("Param/Value/80338099");
+    gv_roleNameArray[3][21] = StringExternal("Param/Value/DQNAME");
+    gv_roleDescriptionArray[3][21] = StringExternal("Param/Value/DQDESC");
+    gv_roleInvestigatorArray[3][21][0] = gv_investigatorE6ADA6E599A81;
+    gv_roleInvestigatorArray[3][21][1] = gv_investigatorE6ADA6E599A82;
+    gv_roleOptions[3][21][10] = true;
+    gv_e78AAFE7BDAAE58FAFE883BD[3][21] = StringExternal("Param/Value/DQCRIME");
     gv_roleNameArray[4][1] = StringExternal("Param/Value/98018FB9");
     gv_roleDescriptionArray[4][1] = StringExternal("Param/Value/1610EA42");
     gv_roleOptionExists[4][1][0] = true;
@@ -5940,6 +5960,7 @@ void gf_InitializeOther () {
     gv_roleNameInput[3][18] = "xiaojinzhixingzhe";
     gv_roleNameInput[3][19] = "shandongjia";
     gv_roleNameInput[3][20] = "kaitangshou";
+    gv_roleNameInput[3][21] = "tangjihede";
     gv_roleNameInput[5][1] = "baotu";
     gv_roleNameInput[5][2] = "longtou";
     gv_roleNameInput[5][3] = "jiaojihua";
@@ -7105,6 +7126,11 @@ void gf_MakeHelpMenu () {
                             libNtve_gf_SetDialogItemColor(gv_roleHelpPanelItem[lv_x][0], Color(75.69, 30.20, 38.82), PlayerGroupAll());
                         }
 
+                        if ((lv_category == 3) && (lv_role == 21)) {
+                            lv_t[5] = StringExternal("Param/Value/DQCARD");
+                            libNtve_gf_SetDialogItemColor(gv_roleHelpPanelItem[lv_x][0], Color(78.82, 70.20, 41.96), PlayerGroupAll());
+                        }
+
                         libNtve_gf_CreateDialogItemLabel(gv_roleHelpPanel, 36, 24, c_anchorLeft, ((30 * lv_x) - 3), 2, (lv_t[5] + StringToText(StringCase(StringSub(gv_roleNameInput[lv_category][lv_role], 1, 1), true)) + StringExternal("Param/Value/01EDEAB5")), ColorWithAlpha(0,0,0,0), false, 0.0);
                         gv_roleHelpPanelItem[lv_x][1] = DialogControlLastCreated();
                         libNtve_gf_SetDialogItemRenderPriority(gv_roleHelpPanelItem[lv_x][1], 700, PlayerGroupAll());
@@ -7196,7 +7222,7 @@ void gf_DisplayRoles () {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
             gv_e8B7B3E8BDA6EFBC9F[lv_a] += 4;
             BankValueSetFromString(gv_bank[lv_a], "RQ", "#RQ", IntToString(gv_e8B7B3E8BDA6EFBC9F[lv_a]));
-            UIDisplayMessage(PlayerGroupSingle(lv_a), c_messageAreaDirective, (StringExternal("Param/Value/B19D7861") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]] + StringExternal("Param/Value/4C861665")));
+            UIDisplayMessage(PlayerGroupSingle(lv_a), c_messageAreaDirective, (StringExternal("Param/Value/B19D7861") + gf_DQSeenName(lv_a) + StringExternal("Param/Value/4C861665")));
         }
 
     }
@@ -7229,7 +7255,7 @@ void gf_DisplayRoles () {
     }
     lv_a = 1;
     for ( ; ( (auto7200DA0A_ai >= 0 && lv_a <= auto7200DA0A_ae) || (auto7200DA0A_ai < 0 && lv_a >= auto7200DA0A_ae) ) ; lv_a += auto7200DA0A_ai ) {
-        UIDisplayMessage(PlayerGroupSingle(lv_a), c_messageAreaDirective, (StringExternal("Param/Value/B7DEA7B8") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]] + StringExternal("Param/Value/DE81B665") + gv_roleBoxText[lv_a][4] + StringExternal("Param/Value/9BF5ADE5")));
+        UIDisplayMessage(PlayerGroupSingle(lv_a), c_messageAreaDirective, (StringExternal("Param/Value/B7DEA7B8") + gf_DQSeenName(lv_a) + StringExternal("Param/Value/DE81B665") + gv_roleBoxText[lv_a][4] + StringExternal("Param/Value/9BF5ADE5")));
     }
     Wait(3.0, c_timeGame);
     libNtve_gf_CreateDialogItemImage(gv_roleBox, 400, 550, c_anchorTopRight, 0, 0, StringToText(""), "Assets\\Textures\\ui_battlenet_settings_windowframe_sub01.dds", c_triggerImageTypeBorder, true, Color(100,100,100), c_triggerBlendModeNormal);
@@ -7262,7 +7288,7 @@ void gf_DisplayRoles () {
     libNtve_gf_SetDialogItemClickOnDown(gv_roleBoxItem[6], true, PlayerGroupAll());
     lv_a = 1;
     for ( ; ( (auto65FAF588_ai >= 0 && lv_a <= auto65FAF588_ae) || (auto65FAF588_ai < 0 && lv_a >= auto65FAF588_ae) ) ; lv_a += auto65FAF588_ai ) {
-        libNtve_gf_SetDialogItemText(gv_roleBoxItem[2], (StringExternal("Param/Value/474D74F4") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]] + StringExternal("Param/Value/5E339950") + StringExternal("Param/Value/012A76EE") + StringToText(gv_name[lv_a]) + StringExternal("Param/Value/2C65D68E")), PlayerGroupSingle(lv_a));
+        libNtve_gf_SetDialogItemText(gv_roleBoxItem[2], (StringExternal("Param/Value/474D74F4") + gf_DQSeenName(lv_a) + StringExternal("Param/Value/5E339950") + StringExternal("Param/Value/012A76EE") + StringToText(gv_name[lv_a]) + StringExternal("Param/Value/2C65D68E")), PlayerGroupSingle(lv_a));
         libNtve_gf_SetDialogItemText(gv_roleBoxItem[3], (StringExternal("Param/Value/66C04CC2") + gv_roleBoxText[lv_a][0] + StringExternal("Param/Value/ECC70246") + gv_roleBoxText[lv_a][1] + StringExternal("Param/Value/6652BFA1") + gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/3FF3BC1E") + gv_roleBoxText[lv_a][3] + StringExternal("Param/Value/C980A51C")), PlayerGroupSingle(lv_a));
         libNtve_gf_SetDialogItemTooltip(gv_roleBoxItem[3], (StringExternal("Param/Value/9A551D61") + gv_roleBoxText[lv_a][6] + StringExternal("Param/Value/ED29A62C")), PlayerGroupSingle(lv_a));
         if ((((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 7)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 14)) || (gv_roles[lv_a][1] == 2) || ((gv_roles[lv_a][1] == 3) && ((gv_roles[lv_a][0] == 8) || (gv_roles[lv_a][0] == 10))) || (gv_roles[lv_a][1] == 5))) {
@@ -7999,18 +8025,18 @@ bool auto_gf_DayTransition_TriggerFunc (bool testConds, bool runActions) {
                                     while (true) {
                                         auto4244A5D4_var = PlayerGroupNextPlayer(auto4244A5D4_g, auto4244A5D4_var);
                                         if (auto4244A5D4_var < 0) { break; }
-                                        gf_ELAddMessage((StringExternal("Param/Value/0A3DD03C") + TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/7966074E") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]] + StringExternal("Param/Value/FA512AAA")), auto4244A5D4_var, Color(25.10, 0.00, 50.20), lv_a, 0);
+                                        gf_ELAddMessage((StringExternal("Param/Value/0A3DD03C") + TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/7966074E") + gf_DQSeenName(lv_a) + StringExternal("Param/Value/FA512AAA")), auto4244A5D4_var, Color(25.10, 0.00, 50.20), lv_a, 0);
                                     }
                                 }
-                                UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, (StringExternal("Param/Value/59159E4C") + TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/F7067962") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]] + StringExternal("Param/Value/1D82B64D")));
-                                gv_deadBoxText[0] = (gv_deadBoxText[0] + StringExternal("Param/Value/0288A7D8") + StringToText(gv_number[lv_a]) + StringExternal("Param/Value/EE1DD1C4") + TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/5D670402") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]] + StringExternal("Param/Value/FD15D18A"));
+                                UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, (StringExternal("Param/Value/59159E4C") + TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/F7067962") + gf_DQSeenName(lv_a) + StringExternal("Param/Value/1D82B64D")));
+                                gv_deadBoxText[0] = (gv_deadBoxText[0] + StringExternal("Param/Value/0288A7D8") + StringToText(gv_number[lv_a]) + StringExternal("Param/Value/EE1DD1C4") + TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/5D670402") + gf_DQSeenName(lv_a) + StringExternal("Param/Value/FD15D18A"));
                                 libNtve_gf_SetDialogItemText(gv_deadBoxItem[3], gv_deadBoxText[0], PlayerGroupAll());
                                 if ((gv_suicide[lv_a] == true)) {
-                                    gv_deadBoxText[1] = (gv_deadBoxText[1] + StringExternal("Param/Value/4E3C5CB7") + StringToText(gv_number[lv_a]) + StringExternal("Param/Value/EBA65F20") + TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/CC22ED3E") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]] + StringExternal("Param/Value/CED7C809") + StringExternal("Param/Value/0F0F4739") + StringExternal("Param/Value/8884802E") + IntToText(gv_dayNumber) + StringExternal("Param/Value/145DB4FF"));
+                                    gv_deadBoxText[1] = (gv_deadBoxText[1] + StringExternal("Param/Value/4E3C5CB7") + StringToText(gv_number[lv_a]) + StringExternal("Param/Value/EBA65F20") + TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/CC22ED3E") + gf_DQSeenName(lv_a) + StringExternal("Param/Value/CED7C809") + StringExternal("Param/Value/0F0F4739") + StringExternal("Param/Value/8884802E") + IntToText(gv_dayNumber) + StringExternal("Param/Value/145DB4FF"));
                                     libNtve_gf_SetDialogItemTooltip(gv_deadBoxItem[3], gv_deadBoxText[1], PlayerGroupAll());
                                 }
                                 else {
-                                    gv_deadBoxText[1] = (gv_deadBoxText[1] + StringExternal("Param/Value/20FDC18C") + StringToText(gv_number[lv_a]) + StringExternal("Param/Value/CAABD424") + TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/7125D0A2") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]] + StringExternal("Param/Value/C9919C94") + gv_deathText[lv_a] + StringExternal("Param/Value/9EC71430") + IntToText(gv_dayNumber) + StringExternal("Param/Value/7B7E1185"));
+                                    gv_deadBoxText[1] = (gv_deadBoxText[1] + StringExternal("Param/Value/20FDC18C") + StringToText(gv_number[lv_a]) + StringExternal("Param/Value/CAABD424") + TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/7125D0A2") + gf_DQSeenName(lv_a) + StringExternal("Param/Value/C9919C94") + gv_deathText[lv_a] + StringExternal("Param/Value/9EC71430") + IntToText(gv_dayNumber) + StringExternal("Param/Value/7B7E1185"));
                                     libNtve_gf_SetDialogItemTooltip(gv_deadBoxItem[3], gv_deadBoxText[1], PlayerGroupAll());
                                 }
                             }
@@ -9025,16 +9051,16 @@ bool auto_gf_CheckVoteWin_TriggerFunc (bool testConds, bool runActions) {
                     auto8270A33F_ae = (gv_executionCount - 1);
                     lv_a = 0;
                     for ( ; ( (auto8270A33F_ai >= 0 && lv_a <= auto8270A33F_ae) || (auto8270A33F_ai < 0 && lv_a >= auto8270A33F_ae) ) ; lv_a += auto8270A33F_ai ) {
-                        gv_deadBoxText[1] = (gv_deadBoxText[1] + StringExternal("Param/Value/DDEF42B2") + StringToText(gv_number[gv_executionList[lv_a]]) + StringExternal("Param/Value/AAD54DB2") + TextWithColor(StringToText(gv_name[gv_executionList[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_executionList[lv_a]])) + StringExternal("Param/Value/D85D95C8") + gv_roleNameArray[gv_roles[gv_executionList[lv_a]][1]][gv_roles[gv_executionList[lv_a]][0]] + StringExternal("Param/Value/34EA0AE7") + StringExternal("Param/Value/1F1E5B42") + StringExternal("Param/Value/B7263B25") + IntToText(gv_dayNumber) + StringExternal("Param/Value/105B302F"));
+                        gv_deadBoxText[1] = (gv_deadBoxText[1] + StringExternal("Param/Value/DDEF42B2") + StringToText(gv_number[gv_executionList[lv_a]]) + StringExternal("Param/Value/AAD54DB2") + TextWithColor(StringToText(gv_name[gv_executionList[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_executionList[lv_a]])) + StringExternal("Param/Value/D85D95C8") + gf_DQSeenName(gv_executionList[lv_a]) + StringExternal("Param/Value/34EA0AE7") + StringExternal("Param/Value/1F1E5B42") + StringExternal("Param/Value/B7263B25") + IntToText(gv_dayNumber) + StringExternal("Param/Value/105B302F"));
                         libNtve_gf_SetDialogItemTooltip(gv_deadBoxItem[3], gv_deadBoxText[1], PlayerGroupAll());
                         auto07FDA567_g = gv_currentPlayers;
                         auto07FDA567_var = -1;
                         while (true) {
                             auto07FDA567_var = PlayerGroupNextPlayer(auto07FDA567_g, auto07FDA567_var);
                             if (auto07FDA567_var < 0) { break; }
-                            gf_ELAddMessage((StringExternal("Param/Value/08CEBA77") + TextWithColor(StringToText(gv_name[gv_executionList[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_executionList[lv_a]])) + StringExternal("Param/Value/FAA88393") + gv_roleNameArray[gv_roles[gv_executionList[lv_a]][1]][gv_roles[gv_executionList[lv_a]][0]] + StringExternal("Param/Value/7F940192")), auto07FDA567_var, Color(25.10, 0.00, 50.20), lv_a, 0);
+                            gf_ELAddMessage((StringExternal("Param/Value/08CEBA77") + TextWithColor(StringToText(gv_name[gv_executionList[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_executionList[lv_a]])) + StringExternal("Param/Value/FAA88393") + gf_DQSeenName(gv_executionList[lv_a]) + StringExternal("Param/Value/7F940192")), auto07FDA567_var, Color(25.10, 0.00, 50.20), lv_a, 0);
                         }
-                        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, (StringExternal("Param/Value/642CA6EB") + TextWithColor(StringToText(gv_name[gv_executionList[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_executionList[lv_a]])) + StringExternal("Param/Value/51987162") + gv_roleNameArray[gv_roles[gv_executionList[lv_a]][1]][gv_roles[gv_executionList[lv_a]][0]] + StringExternal("Param/Value/2E2227E4")));
+                        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, (StringExternal("Param/Value/642CA6EB") + TextWithColor(StringToText(gv_name[gv_executionList[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_executionList[lv_a]])) + StringExternal("Param/Value/51987162") + gf_DQSeenName(gv_executionList[lv_a]) + StringExternal("Param/Value/2E2227E4")));
                         if (((StringLength(gv_lastWill[gv_executionList[lv_a]][0]) >= 1) || (StringLength(gv_lastWill[gv_executionList[lv_a]][1]) >= 1))) {
                             Wait(1.0, c_timeGame);
                             auto87047C23_g = gv_currentPlayers;
@@ -11058,6 +11084,10 @@ void gf_SequencePrep () {
                 gf_SKP_1_yijing(lv_a);
             }
 
+            if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 21) && (gv_action[lv_a][0] > 0)) {
+                gf_SKP_3_tangjihede(lv_a);
+            }
+
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 17) && (gv_action[lv_a][0] > 0)) {
                 gf_SKP_3_dugui_2(lv_a);
             }
@@ -11903,7 +11933,7 @@ void gf_SequenceBullshit () {
     lv_a = 1;
     for ( ; ( (autoF597EB7E_ai >= 0 && lv_a <= autoF597EB7E_ae) || (autoF597EB7E_ai < 0 && lv_a >= autoF597EB7E_ae) ) ; lv_a += autoF597EB7E_ai ) {
         if ((gv_witched[lv_a] != 0)) {
-            gf_CBSystemMessage((StringExternal("Param/Value/5A416EF6") + TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[0])) + StringExternal("Param/Value/52C763F7") + TextWithColor(gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]], Color(75.29, 75.29, 75.29))), gv_witched[lv_a], 0, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+            gf_CBSystemMessage((StringExternal("Param/Value/5A416EF6") + TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[0])) + StringExternal("Param/Value/52C763F7") + TextWithColor(gf_DQSeenName(lv_a), Color(75.29, 75.29, 75.29))), gv_witched[lv_a], 0, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
             if ((gv_witchEligible[lv_a] != true)) {
                 gf_CBSystemMessage(StringExternal("Param/Value/66EF50DC"), gv_witched[lv_a], 0, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
             }
@@ -12368,6 +12398,10 @@ void gf_SequenceKills () {
     for ( ; ( (auto26661C53_ai >= 0 && lv_a <= auto26661C53_ae) || (auto26661C53_ai < 0 && lv_a >= auto26661C53_ae) ) ; lv_a += auto26661C53_ai ) {
         if ((gv_visitation[lv_a] != 0) && (gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 6) && (gv_shots[lv_a] != 0) && (gv_veteraned[lv_a] == false)) {
             gf_SKK_1_yijing(lv_a);
+        }
+
+        if ((gv_visitation[lv_a] != 0) && (gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 21) && (gv_shots[lv_a] != 0) && (gv_veteraned[lv_a] == false) && (gv_dqRevealed[lv_a] == false)) {
+            gf_SKK_3_tangjihede(lv_a);
         }
 
     }
@@ -14401,6 +14435,8 @@ bool auto_gf_EndGame_TriggerFunc (bool testConds, bool runActions) {
     int autoKCACH74_var;
     playergroup autoKCACH75_g;
     int autoKCACH75_var;
+    playergroup autoDQACH76_g;
+    int autoDQACH76_var;
     playergroup autoSHWFR_g;
     int autoSHWFR_var;
 
@@ -14564,6 +14600,7 @@ bool auto_gf_EndGame_TriggerFunc (bool testConds, bool runActions) {
         gf_ETE8B58CE9ACBC();
     }
 
+    gf_DQShareWin(lp_end);
     gv_e4BF9DE5AD98bug = 8888;
     if ((lp_end == 4)) {
         FogSetStartHeight(-8.0);
@@ -15292,6 +15329,20 @@ bool auto_gf_EndGame_TriggerFunc (bool testConds, bool runActions) {
                 gf_GiveBonus(lv_a, 200);
             }
 
+            // shw288 成就「与风车的三度决斗」：堂吉诃德(3/21) 三枪打完且整局未揭开
+            if ((gv_bankOtherAchievements[lv_a][76] == 0) && (PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true) && (gv_originalRole[lv_a][1] == 3) && (gv_originalRole[lv_a][0] == 21) && (gv_dqRevealed[lv_a] == false) && (gv_shots[lv_a] == 0)) {
+                gv_bankOtherAchievements[lv_a][76] = 1;
+                autoDQACH76_g = gv_currentPlayers;
+                autoDQACH76_var = -1;
+                while (true) {
+                    autoDQACH76_var = PlayerGroupNextPlayer(autoDQACH76_g, autoDQACH76_var);
+                    if (autoDQACH76_var < 0) { break; }
+                    gf_CBSystemMessage((StringExternal("Param/Value/CWACHP") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/DQACH2S")), autoDQACH76_var, lv_a, 0, SoundLink("UI_BnetGameFound", -1), Color(0,0,0));
+                    gf_CBSystemMessage(StringExternal("Param/Value/DQACHD"), autoDQACH76_var, lv_a, 0, SoundLink("Silent", -1), Color(0,0,0));
+                }
+                gf_GiveBonus(lv_a, 150);
+            }
+
             gf_DEBUG(("Most InnerL OK  --" + IntToString(lv_a)));
             gf_CAssembleMainBank(lv_a);
             gv_e4BF9DE5AD98bug = 500;
@@ -15363,7 +15414,7 @@ bool auto_gf_EndGame_TriggerFunc (bool testConds, bool runActions) {
                     while (true) {
                         autoAEAFEF83_var = PlayerGroupNextPlayer(autoAEAFEF83_g, autoAEAFEF83_var);
                         if (autoAEAFEF83_var < 0) { break; }
-                        gf_CBSystemMessage((StringExternal("Param/Value/EA102CC4") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/4DE78254") + TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/238526CD") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]] + StringExternal("Param/Value/9F3D50AD") + StringToText(PlayerHandle(lv_a)) + StringExternal("Param/Value/890076F8")), autoAEAFEF83_var, lv_a, 0, SoundLink("Silent", -1), Color(39.22, 39.22, 39.22));
+                        gf_CBSystemMessage((StringExternal("Param/Value/EA102CC4") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/4DE78254") + TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/238526CD") + gf_DQSeenName(lv_a) + StringExternal("Param/Value/9F3D50AD") + StringToText(PlayerHandle(lv_a)) + StringExternal("Param/Value/890076F8")), autoAEAFEF83_var, lv_a, 0, SoundLink("Silent", -1), Color(39.22, 39.22, 39.22));
                     }
                 }
                 else {
@@ -15372,7 +15423,7 @@ bool auto_gf_EndGame_TriggerFunc (bool testConds, bool runActions) {
                     while (true) {
                         autoC01E5F6E_var = PlayerGroupNextPlayer(autoC01E5F6E_g, autoC01E5F6E_var);
                         if (autoC01E5F6E_var < 0) { break; }
-                        gf_CBSystemMessage((StringExternal("Param/Value/99AFD217") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/E79679CC") + TextWithColor(StringToText(gv_originalName[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_originalPlayerColor[lv_a])) + StringExternal("Param/Value/6D332E66") + TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/ECDA6968") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]] + StringExternal("Param/Value/4200E3A7") + StringToText(PlayerHandle(lv_a)) + StringExternal("Param/Value/6CB5EB75")), autoC01E5F6E_var, lv_a, 0, SoundLink("Silent", -1), Color(39.22, 39.22, 39.22));
+                        gf_CBSystemMessage((StringExternal("Param/Value/99AFD217") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/E79679CC") + TextWithColor(StringToText(gv_originalName[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_originalPlayerColor[lv_a])) + StringExternal("Param/Value/6D332E66") + TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/ECDA6968") + gf_DQSeenName(lv_a) + StringExternal("Param/Value/4200E3A7") + StringToText(PlayerHandle(lv_a)) + StringExternal("Param/Value/6CB5EB75")), autoC01E5F6E_var, lv_a, 0, SoundLink("Silent", -1), Color(39.22, 39.22, 39.22));
                     }
                 }
             }
@@ -15383,7 +15434,7 @@ bool auto_gf_EndGame_TriggerFunc (bool testConds, bool runActions) {
                     while (true) {
                         autoF3FB1100_var = PlayerGroupNextPlayer(autoF3FB1100_g, autoF3FB1100_var);
                         if (autoF3FB1100_var < 0) { break; }
-                        gf_CBSystemMessage((StringExternal("Param/Value/95B599CC") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/68EF06B1") + TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/C8729CCD") + gv_roleNameArray[gv_originalRole[lv_a][1]][gv_originalRole[lv_a][0]] + StringExternal("Param/Value/98BA429F") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]] + StringExternal("Param/Value/1F34F02E") + StringToText(PlayerHandle(lv_a)) + StringExternal("Param/Value/CDBF9375")), autoF3FB1100_var, lv_a, 0, SoundLink("Silent", -1), Color(39.22, 39.22, 39.22));
+                        gf_CBSystemMessage((StringExternal("Param/Value/95B599CC") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/68EF06B1") + TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/C8729CCD") + gv_roleNameArray[gv_originalRole[lv_a][1]][gv_originalRole[lv_a][0]] + StringExternal("Param/Value/98BA429F") + gf_DQSeenName(lv_a) + StringExternal("Param/Value/1F34F02E") + StringToText(PlayerHandle(lv_a)) + StringExternal("Param/Value/CDBF9375")), autoF3FB1100_var, lv_a, 0, SoundLink("Silent", -1), Color(39.22, 39.22, 39.22));
                     }
                 }
                 else {
@@ -15392,7 +15443,7 @@ bool auto_gf_EndGame_TriggerFunc (bool testConds, bool runActions) {
                     while (true) {
                         auto67FC71EC_var = PlayerGroupNextPlayer(auto67FC71EC_g, auto67FC71EC_var);
                         if (auto67FC71EC_var < 0) { break; }
-                        gf_CBSystemMessage((StringExternal("Param/Value/B13440E5") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/1E911243") + TextWithColor(StringToText(gv_originalName[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_originalPlayerColor[lv_a])) + StringExternal("Param/Value/C1334095") + TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/FA6B58BC") + gv_roleNameArray[gv_originalRole[lv_a][1]][gv_originalRole[lv_a][0]] + StringExternal("Param/Value/77DF390F") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]] + StringExternal("Param/Value/C9972E26") + StringToText(PlayerHandle(lv_a)) + StringExternal("Param/Value/56D5B371")), auto67FC71EC_var, lv_a, 0, SoundLink("Silent", -1), Color(39.22, 39.22, 39.22));
+                        gf_CBSystemMessage((StringExternal("Param/Value/B13440E5") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/1E911243") + TextWithColor(StringToText(gv_originalName[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_originalPlayerColor[lv_a])) + StringExternal("Param/Value/C1334095") + TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/FA6B58BC") + gv_roleNameArray[gv_originalRole[lv_a][1]][gv_originalRole[lv_a][0]] + StringExternal("Param/Value/77DF390F") + gf_DQSeenName(lv_a) + StringExternal("Param/Value/C9972E26") + StringToText(PlayerHandle(lv_a)) + StringExternal("Param/Value/56D5B371")), auto67FC71EC_var, lv_a, 0, SoundLink("Silent", -1), Color(39.22, 39.22, 39.22));
                     }
                 }
             }
@@ -15459,6 +15510,7 @@ bool auto_gf_KillPlayer_TriggerFunc (bool testConds, bool runActions) {
     // Variable Initialization
 
     // Implementation
+    gv_dqTag[lp_player] = 0;
     if ((PlayerGroupHasPlayer(gv_alivePlayers, lp_player) == true)) {
         lv_intensity = gv_dayNumber;
         lv_intensity = (lv_intensity + (PlayerGroupCount(gv_players) - PlayerGroupCount(gv_alivePlayers)));
@@ -15862,7 +15914,7 @@ void gf_RefreshRoleBox () {
                     if ((gv_disguiser[lv_b] == 0)) {
                         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_b) == true)) {
                             gv_roleBoxText[lv_a][5] = ((gv_roleBoxText[lv_a][5] + StringExternal("Param/Value/EE813B28")) + TextWithColor(StringToText(gv_name[lv_b]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_b])));
-                            gv_roleBoxText[lv_a][5] = (gv_roleBoxText[lv_a][5] + (StringExternal("Param/Value/3E907493") + (gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/020463A4"))));
+                            gv_roleBoxText[lv_a][5] = (gv_roleBoxText[lv_a][5] + (StringExternal("Param/Value/3E907493") + (gf_DQSeenName(lv_b) + StringExternal("Param/Value/020463A4"))));
                         }
                         else {
                             gv_roleBoxText[lv_a][5] = ((gv_roleBoxText[lv_a][5] + StringExternal("Param/Value/4FA2AD69")) + StringToText(gv_name[lv_b]));
@@ -15872,7 +15924,7 @@ void gf_RefreshRoleBox () {
                     else {
                         if ((PlayerGroupHasPlayer(gv_alivePlayers, gv_disguiser[lv_b]) == true)) {
                             gv_roleBoxText[lv_a][5] = ((gv_roleBoxText[lv_a][5] + StringExternal("Param/Value/09E904ED")) + TextWithColor(StringToText(gv_name[gv_disguiser[lv_b]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_disguiser[lv_b]])));
-                            gv_roleBoxText[lv_a][5] = (gv_roleBoxText[lv_a][5] + (StringExternal("Param/Value/1F566BA3") + (gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/D470D669"))));
+                            gv_roleBoxText[lv_a][5] = (gv_roleBoxText[lv_a][5] + (StringExternal("Param/Value/1F566BA3") + (gf_DQSeenName(lv_b) + StringExternal("Param/Value/D470D669"))));
                         }
                         else {
                             gv_roleBoxText[lv_a][5] = ((gv_roleBoxText[lv_a][5] + StringExternal("Param/Value/2DDCA064")) + StringToText(gv_name[gv_disguiser[lv_b]]));
@@ -15909,7 +15961,7 @@ void gf_RefreshRoleBox () {
                             gv_roleBoxText[lv_a][5] = (gv_roleBoxText[lv_a][5] + (StringExternal("Param/Value/6DDEAD1B") + (gv_roleNameArray[gv_preCultRole[lv_b][1]][gv_preCultRole[lv_b][0]] + StringExternal("Param/Value/2926A427"))));
                         }
                         else {
-                            gv_roleBoxText[lv_a][5] = (gv_roleBoxText[lv_a][5] + (StringExternal("Param/Value/EBA9636D") + (gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/032D8BB8"))));
+                            gv_roleBoxText[lv_a][5] = (gv_roleBoxText[lv_a][5] + (StringExternal("Param/Value/EBA9636D") + (gf_DQSeenName(lv_b) + StringExternal("Param/Value/032D8BB8"))));
                         }
                     }
                     else {
@@ -15946,7 +15998,7 @@ void gf_RefreshRoleBox () {
                             gv_roleBoxText[lv_a][5] = (gv_roleBoxText[lv_a][5] + (StringExternal("Param/Value/D310E8DD") + (gv_roleNameArray[gv_preCultRole[lv_b][1]][gv_preCultRole[lv_b][0]] + StringExternal("Param/Value/68C6884F"))));
                         }
                         else {
-                            gv_roleBoxText[lv_a][5] = (gv_roleBoxText[lv_a][5] + (StringExternal("Param/Value/47492F5C") + (gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/3F78B205"))));
+                            gv_roleBoxText[lv_a][5] = (gv_roleBoxText[lv_a][5] + (StringExternal("Param/Value/47492F5C") + (gf_DQSeenName(lv_b) + StringExternal("Param/Value/3F78B205"))));
                         }
                     }
                     else {
@@ -15980,7 +16032,7 @@ void gf_RefreshRoleBox () {
                     if (((gv_disguiser[lv_b] == 0) || ((gv_roles[gv_disguiser[lv_b]][1] == 3) && ((gv_roles[gv_disguiser[lv_b]][0] == 8) || (gv_roles[gv_disguiser[lv_b]][0] == 10))))) {
                         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_b) == true)) {
                             gv_roleBoxText[lv_a][5] = ((gv_roleBoxText[lv_a][5] + StringExternal("Param/Value/09EC516B")) + TextWithColor(StringToText(gv_name[lv_b]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_b])));
-                            gv_roleBoxText[lv_a][5] = (gv_roleBoxText[lv_a][5] + (StringExternal("Param/Value/5A8F87A3") + (gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/4DF54014"))));
+                            gv_roleBoxText[lv_a][5] = (gv_roleBoxText[lv_a][5] + (StringExternal("Param/Value/5A8F87A3") + (gf_DQSeenName(lv_b) + StringExternal("Param/Value/4DF54014"))));
                         }
                         else {
                             gv_roleBoxText[lv_a][5] = ((gv_roleBoxText[lv_a][5] + StringExternal("Param/Value/27D29C71")) + StringToText(gv_name[lv_b]));
@@ -15990,7 +16042,7 @@ void gf_RefreshRoleBox () {
                     else {
                         if ((PlayerGroupHasPlayer(gv_alivePlayers, gv_disguiser[lv_b]) == true)) {
                             gv_roleBoxText[lv_a][5] = ((gv_roleBoxText[lv_a][5] + StringExternal("Param/Value/62F18E17")) + TextWithColor(StringToText(gv_name[gv_disguiser[lv_b]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_disguiser[lv_b]])));
-                            gv_roleBoxText[lv_a][5] = (gv_roleBoxText[lv_a][5] + (StringExternal("Param/Value/8987D82E") + (gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/05525ACD"))));
+                            gv_roleBoxText[lv_a][5] = (gv_roleBoxText[lv_a][5] + (StringExternal("Param/Value/8987D82E") + (gf_DQSeenName(lv_b) + StringExternal("Param/Value/05525ACD"))));
                         }
                         else {
                             gv_roleBoxText[lv_a][5] = ((gv_roleBoxText[lv_a][5] + StringExternal("Param/Value/E270B503")) + StringToText(gv_name[gv_disguiser[lv_b]]));
@@ -16011,7 +16063,7 @@ void gf_RefreshRoleBox () {
             }
         }
 
-        libNtve_gf_SetDialogItemText(gv_roleBoxItem[2], (StringExternal("Param/Value/23838DD3") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]] + StringExternal("Param/Value/1515F767") + StringExternal("Param/Value/B60E2F61") + StringToText(gv_name[lv_a]) + StringExternal("Param/Value/E0EFD654")), PlayerGroupSingle(lv_a));
+        libNtve_gf_SetDialogItemText(gv_roleBoxItem[2], (StringExternal("Param/Value/23838DD3") + gf_DQSeenName(lv_a) + StringExternal("Param/Value/1515F767") + StringExternal("Param/Value/B60E2F61") + StringToText(gv_name[lv_a]) + StringExternal("Param/Value/E0EFD654")), PlayerGroupSingle(lv_a));
         libNtve_gf_SetDialogItemText(gv_roleBoxItem[3], (StringExternal("Param/Value/AA19C095") + gv_roleBoxText[lv_a][0] + StringExternal("Param/Value/3AA3FEA9") + gv_roleBoxText[lv_a][1] + StringExternal("Param/Value/DF34A0FF") + gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/9E6AA92C") + gv_roleBoxText[lv_a][3] + StringExternal("Param/Value/91BC6D00")), PlayerGroupSingle(lv_a));
         libNtve_gf_SetDialogItemTooltip(gv_roleBoxItem[3], (StringExternal("Param/Value/9E66420C") + gv_roleBoxText[lv_a][6] + StringExternal("Param/Value/F895033C")), PlayerGroupSingle(lv_a));
     }
@@ -16281,7 +16333,7 @@ bool auto_gf_CAssembleMainBank_TriggerFunc (bool testConds, bool runActions) {
     const int autoBB6D3424_ai = 1;
     const int auto6EA2A789_ae = 20;
     const int auto6EA2A789_ai = 1;
-    const int auto4ED0B346_ae = 75;
+    const int auto4ED0B346_ae = 76;
     const int auto4ED0B346_ai = 1;
     const int auto6C58849E_ae = 19;
     const int auto6C58849E_ai = 1;
@@ -16586,7 +16638,7 @@ bool auto_gf_CDisassembleMainBank_TriggerFunc (bool testConds, bool runActions) 
     const int autoB01F6BD7_ai = 1;
     const int auto6CA74BDE_ae = 20;
     const int auto6CA74BDE_ai = 1;
-    const int autoD26F95A3_ae = 75;
+    const int autoD26F95A3_ae = 76;
     const int autoD26F95A3_ai = 1;
     const int autoADBA8FFC_ae = 3;
     const int autoADBA8FFC_ai = 1;
@@ -19792,6 +19844,7 @@ bool auto_gf_EExecution_TriggerFunc (bool testConds, bool runActions) {
     // Variable Initialization
 
     // Implementation
+    gf_DQOnExecute(lp_player);
     if ((gv_cuanweiFramed[lp_player] != 0) && (PlayerGroupHasPlayer(gv_alivePlayers, gv_cuanweiFramed[lp_player]) == true)) {
         gf_CWGainPanic(gv_cuanweiFramed[lp_player], 1);
     }
@@ -20089,18 +20142,18 @@ bool auto_gf_EExecution_TriggerFunc (bool testConds, bool runActions) {
 
     }
     else {
-        gv_deadBoxText[0] = (gv_deadBoxText[0] + StringExternal("Param/Value/D2D2C519") + StringToText(gv_number[lp_player]) + StringExternal("Param/Value/AA0AD62F") + TextWithColor(StringToText(gv_name[lp_player]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lp_player])) + StringExternal("Param/Value/AB968A17") + gv_roleNameArray[gv_roles[lp_player][1]][gv_roles[lp_player][0]] + StringExternal("Param/Value/2A9DEC96"));
+        gv_deadBoxText[0] = (gv_deadBoxText[0] + StringExternal("Param/Value/D2D2C519") + StringToText(gv_number[lp_player]) + StringExternal("Param/Value/AA0AD62F") + TextWithColor(StringToText(gv_name[lp_player]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lp_player])) + StringExternal("Param/Value/AB968A17") + gf_DQSeenName(lp_player) + StringExternal("Param/Value/2A9DEC96"));
         if ((gv_marshalled == false)) {
-            gv_deadBoxText[1] = (gv_deadBoxText[1] + StringExternal("Param/Value/6D541F39") + StringToText(gv_number[lp_player]) + StringExternal("Param/Value/7F4B0843") + TextWithColor(StringToText(gv_name[lp_player]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lp_player])) + StringExternal("Param/Value/B049500D") + gv_roleNameArray[gv_roles[lp_player][1]][gv_roles[lp_player][0]] + StringExternal("Param/Value/B711BC7F") + StringExternal("Param/Value/1AA47327") + StringExternal("Param/Value/20899479") + IntToText(gv_dayNumber) + StringExternal("Param/Value/5434DC52"));
+            gv_deadBoxText[1] = (gv_deadBoxText[1] + StringExternal("Param/Value/6D541F39") + StringToText(gv_number[lp_player]) + StringExternal("Param/Value/7F4B0843") + TextWithColor(StringToText(gv_name[lp_player]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lp_player])) + StringExternal("Param/Value/B049500D") + gf_DQSeenName(lp_player) + StringExternal("Param/Value/B711BC7F") + StringExternal("Param/Value/1AA47327") + StringExternal("Param/Value/20899479") + IntToText(gv_dayNumber) + StringExternal("Param/Value/5434DC52"));
             libNtve_gf_SetDialogItemTooltip(gv_deadBoxItem[3], gv_deadBoxText[1], PlayerGroupAll());
             auto5CD74377_g = gv_currentPlayers;
             auto5CD74377_var = -1;
             while (true) {
                 auto5CD74377_var = PlayerGroupNextPlayer(auto5CD74377_g, auto5CD74377_var);
                 if (auto5CD74377_var < 0) { break; }
-                gf_ELAddMessage((StringExternal("Param/Value/CDDF9F0F") + TextWithColor(StringToText(gv_name[lp_player]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lp_player])) + StringExternal("Param/Value/89D9EF6A") + gv_roleNameArray[gv_roles[lp_player][1]][gv_roles[lp_player][0]] + StringExternal("Param/Value/A5FF2358")), auto5CD74377_var, Color(25.10, 0.00, 50.20), lv_a, 0);
+                gf_ELAddMessage((StringExternal("Param/Value/CDDF9F0F") + TextWithColor(StringToText(gv_name[lp_player]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lp_player])) + StringExternal("Param/Value/89D9EF6A") + gf_DQSeenName(lp_player) + StringExternal("Param/Value/A5FF2358")), auto5CD74377_var, Color(25.10, 0.00, 50.20), lv_a, 0);
             }
-            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, (StringExternal("Param/Value/5F8DB049") + TextWithColor(StringToText(gv_name[lp_player]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lp_player])) + StringExternal("Param/Value/05CCB497") + gv_roleNameArray[gv_roles[lp_player][1]][gv_roles[lp_player][0]] + StringExternal("Param/Value/B745A03C")));
+            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, (StringExternal("Param/Value/5F8DB049") + TextWithColor(StringToText(gv_name[lp_player]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lp_player])) + StringExternal("Param/Value/05CCB497") + gf_DQSeenName(lp_player) + StringExternal("Param/Value/B745A03C")));
             libNtve_gf_SetDialogItemText(gv_deadBoxItem[3], gv_deadBoxText[0], PlayerGroupAll());
             if (((StringLength(gv_lastWill[lp_player][0]) >= 1) || (StringLength(gv_lastWill[lp_player][1]) >= 1))) {
                 Wait(1.0, c_timeGame);
@@ -20379,16 +20432,16 @@ bool auto_gf_EExecution_TriggerFunc (bool testConds, bool runActions) {
                     autoAA7E58B2_ae = (gv_executionCount - 1);
                     lv_a = 0;
                     for ( ; ( (autoAA7E58B2_ai >= 0 && lv_a <= autoAA7E58B2_ae) || (autoAA7E58B2_ai < 0 && lv_a >= autoAA7E58B2_ae) ) ; lv_a += autoAA7E58B2_ai ) {
-                        gv_deadBoxText[1] = (gv_deadBoxText[1] + StringExternal("Param/Value/69186534") + StringToText(gv_number[gv_executionList[lv_a]]) + StringExternal("Param/Value/588BC70D") + TextWithColor(StringToText(gv_name[gv_executionList[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_executionList[lv_a]])) + StringExternal("Param/Value/886ECFF2") + gv_roleNameArray[gv_roles[gv_executionList[lv_a]][1]][gv_roles[gv_executionList[lv_a]][0]] + StringExternal("Param/Value/81D361B6") + StringExternal("Param/Value/C07C0C8F") + StringExternal("Param/Value/DA20D167") + IntToText(gv_dayNumber) + StringExternal("Param/Value/B31515CD"));
+                        gv_deadBoxText[1] = (gv_deadBoxText[1] + StringExternal("Param/Value/69186534") + StringToText(gv_number[gv_executionList[lv_a]]) + StringExternal("Param/Value/588BC70D") + TextWithColor(StringToText(gv_name[gv_executionList[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_executionList[lv_a]])) + StringExternal("Param/Value/886ECFF2") + gf_DQSeenName(gv_executionList[lv_a]) + StringExternal("Param/Value/81D361B6") + StringExternal("Param/Value/C07C0C8F") + StringExternal("Param/Value/DA20D167") + IntToText(gv_dayNumber) + StringExternal("Param/Value/B31515CD"));
                         libNtve_gf_SetDialogItemTooltip(gv_deadBoxItem[3], gv_deadBoxText[1], PlayerGroupAll());
                         auto911EC0F6_g = gv_currentPlayers;
                         auto911EC0F6_var = -1;
                         while (true) {
                             auto911EC0F6_var = PlayerGroupNextPlayer(auto911EC0F6_g, auto911EC0F6_var);
                             if (auto911EC0F6_var < 0) { break; }
-                            gf_ELAddMessage((StringExternal("Param/Value/095A893A") + TextWithColor(StringToText(gv_name[gv_executionList[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_executionList[lv_a]])) + StringExternal("Param/Value/EBA71EA0") + gv_roleNameArray[gv_roles[gv_executionList[lv_a]][1]][gv_roles[gv_executionList[lv_a]][0]] + StringExternal("Param/Value/FA49A348")), auto911EC0F6_var, Color(25.10, 0.00, 50.20), lv_a, 0);
+                            gf_ELAddMessage((StringExternal("Param/Value/095A893A") + TextWithColor(StringToText(gv_name[gv_executionList[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_executionList[lv_a]])) + StringExternal("Param/Value/EBA71EA0") + gf_DQSeenName(gv_executionList[lv_a]) + StringExternal("Param/Value/FA49A348")), auto911EC0F6_var, Color(25.10, 0.00, 50.20), lv_a, 0);
                         }
-                        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, (StringExternal("Param/Value/19352ABB") + TextWithColor(StringToText(gv_name[gv_executionList[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_executionList[lv_a]])) + StringExternal("Param/Value/A3CBB333") + gv_roleNameArray[gv_roles[gv_executionList[lv_a]][1]][gv_roles[gv_executionList[lv_a]][0]] + StringExternal("Param/Value/4A56C361")));
+                        UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, (StringExternal("Param/Value/19352ABB") + TextWithColor(StringToText(gv_name[gv_executionList[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_executionList[lv_a]])) + StringExternal("Param/Value/A3CBB333") + gf_DQSeenName(gv_executionList[lv_a]) + StringExternal("Param/Value/4A56C361")));
                         if (((StringLength(gv_lastWill[gv_executionList[lv_a]][0]) >= 1) || (StringLength(gv_lastWill[gv_executionList[lv_a]][1]) >= 1))) {
                             Wait(1.0, c_timeGame);
                             autoBCBBD245_g = gv_currentPlayers;
@@ -32070,6 +32123,10 @@ void gf_RSNeutralSetup () {
                         gf_SKN_3_kaitangshou(lv_a);
                     }
 
+                    if ((gv_roles[lv_a][0] == 21)) {
+                        gf_SKN_3_tangjihede(lv_a);
+                    }
+
                     if ((gv_roles[lv_a][0] == 31)) {
                         gf_SKN_3_yingwuzhe(lv_a);
                     }
@@ -35399,7 +35456,7 @@ int gf_ASGuessRole (int lp_picked, int lp_index) {
         }
     }
     else if ((lp_picked == 4)) {
-        // 中立：18=煽动家(19)，19=开膛手(20)，20=影武者(31)，21=天选者(32)
+        // 中立：18=煽动家(19)，19=开膛手(20)，20=堂吉诃德(21)，21=影武者(31)，22=天选者(32)
         if (((lp_index >= 18) && (lp_index <= 18))) {
             lv_role = 19;
         }
@@ -35407,12 +35464,15 @@ int gf_ASGuessRole (int lp_picked, int lp_index) {
             lv_role = 20;
         }
         else if ((lp_index == 20)) {
-            lv_role = 31;
+            lv_role = 21;
         }
         else if ((lp_index == 21)) {
+            lv_role = 31;
+        }
+        else if ((lp_index == 22)) {
             lv_role = 32;
         }
-        else if ((lp_index >= 22)) {
+        else if ((lp_index >= 23)) {
             lv_role = 0;
         }
     }
@@ -35437,7 +35497,7 @@ void gf_ASE5AEA1E69FA5E98089E9A1B92 (int lp_player, int lp_picked) {
     const int autoED7EF63C_ai = 1;
     const int auto4D2826D4_ae = 13;
     const int auto4D2826D4_ai = 1;
-    const int auto8DA97E18_ae = 21;
+    const int auto8DA97E18_ae = 22;
     const int auto8DA97E18_ai = 1;
 
     // Variable Initialization
@@ -37168,6 +37228,17 @@ text gf_RTMakeWinList (int lp_category, int lp_role) {
 // 原图把「渲染哪个池的卡片」硬编码在 67 个调用点上；这里改成按玩家当前所属池派发，
 // 于是四个池函数成为池专属，调用点不再需要知道池的存在（新角色也照此调用）。
 void gf_RTRoleCard (int lp_player) {
+    int lv_savedPool;
+    int lv_savedRole;
+
+    lv_savedPool = 0;
+    lv_savedRole = 0;
+    if ((lp_player >= 1) && (gv_roles[lp_player][1] == 3) && (gv_roles[lp_player][0] == 21) && (gv_dqRevealed[lp_player] == false)) {
+        lv_savedPool = gv_roles[lp_player][1];
+        lv_savedRole = gv_roles[lp_player][0];
+        gv_roles[lp_player][1] = 1;
+        gv_roles[lp_player][0] = 6;
+    }
     if ((gv_roles[lp_player][1] == 1)) {
         gf_RTTownRoleText(lp_player);
     }
@@ -37185,6 +37256,10 @@ void gf_RTRoleCard (int lp_player) {
                 }
             }
         }
+    }
+    if ((lv_savedPool != 0)) {
+        gv_roles[lp_player][1] = lv_savedPool;
+        gv_roles[lp_player][0] = lv_savedRole;
     }
 }
 
@@ -38069,7 +38144,7 @@ void gf_RTTownRoleText (int lp_player) {
                 }
 
                 gv_roleBoxText[lv_a][5] = ((gv_roleBoxText[lv_a][5] + StringExternal("Param/Value/B36D76A8")) + TextWithColor(StringToText(gv_name[lv_b]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_b])));
-                gv_roleBoxText[lv_a][5] = (gv_roleBoxText[lv_a][5] + (StringExternal("Param/Value/FB4CE9C8") + (gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/C32DBC86"))));
+                gv_roleBoxText[lv_a][5] = (gv_roleBoxText[lv_a][5] + (StringExternal("Param/Value/FB4CE9C8") + (gf_DQSeenName(lv_b) + StringExternal("Param/Value/C32DBC86"))));
             }
 
         }
@@ -38669,7 +38744,7 @@ void gf_RTMafiaRoleText (int lp_player) {
             }
 
             gv_roleBoxText[lv_a][5] = ((gv_roleBoxText[lv_a][5] + StringExternal("Param/Value/0E88C031")) + TextWithColor(StringToText(gv_name[lv_b]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_b])));
-            gv_roleBoxText[lv_a][5] = (gv_roleBoxText[lv_a][5] + (StringExternal("Param/Value/C0B3FE64") + (gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/C4FEB113"))));
+            gv_roleBoxText[lv_a][5] = (gv_roleBoxText[lv_a][5] + (StringExternal("Param/Value/C0B3FE64") + (gf_DQSeenName(lv_b) + StringExternal("Param/Value/C4FEB113"))));
         }
 
     }
@@ -39286,6 +39361,16 @@ void gf_RTNeutralRoleText (int lp_player) {
         SoundPlay(SoundLink("Zealot_Attack", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
     }
 
+    if ((gv_roles[lv_a][0] == 21)) {
+        gv_roleBoxText[lv_a][0] = (StringExternal("Param/Value/DQCARD") + lv_t[2] + StringExternal("Param/Value/D7C97124"));
+        gv_roleBoxText[lv_a][6] = StringExternal("Param/Value/DQBOX6");
+        gv_roleBoxText[lv_a][4] = StringExternal("Param/Value/DQBOX4");
+        gv_roleBoxText[lv_a][1] = StringExternal("Param/Value/DQBOX1");
+        gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/DQBOX2");
+        gv_roleBoxText[lv_a][3] = StringExternal("Param/Value/C008B4E7");
+        SoundPlay(SoundLink("Zealot_Pissed", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
+    }
+
     if ((gv_roles[lv_a][0] == 19)) {
         gv_roleBoxText[lv_a][0] = (StringExternal("Param/Value/BEB71F4A") + lv_t[2]);
         gv_roleBoxText[lv_a][0] = (gv_roleBoxText[lv_a][0] + StringExternal("Param/Value/947D4B7A"));
@@ -39461,7 +39546,7 @@ gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value
                 }
 
                 gv_roleBoxText[lv_a][5] = ((gv_roleBoxText[lv_a][5] + StringExternal("Param/Value/17A5D6F1")) + TextWithColor(StringToText(gv_name[lv_b]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_b])));
-                gv_roleBoxText[lv_a][5] = (gv_roleBoxText[lv_a][5] + (StringExternal("Param/Value/9B353744") + (gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/4EC1C119"))));
+                gv_roleBoxText[lv_a][5] = (gv_roleBoxText[lv_a][5] + (StringExternal("Param/Value/9B353744") + (gf_DQSeenName(lv_b) + StringExternal("Param/Value/4EC1C119"))));
             }
 
         }
@@ -40031,7 +40116,7 @@ void gf_RTTriadRoleText (int lp_player) {
             }
 
             gv_roleBoxText[lv_a][5] = ((gv_roleBoxText[lv_a][5] + StringExternal("Param/Value/DD539CF6")) + TextWithColor(StringToText(gv_name[lv_b]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_b])));
-            gv_roleBoxText[lv_a][5] = (gv_roleBoxText[lv_a][5] + (StringExternal("Param/Value/C755EED3") + (gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/7BFF8530"))));
+            gv_roleBoxText[lv_a][5] = (gv_roleBoxText[lv_a][5] + (StringExternal("Param/Value/C755EED3") + (gf_DQSeenName(lv_b) + StringExternal("Param/Value/7BFF8530"))));
         }
 
     }
@@ -47317,6 +47402,7 @@ void gf_OSLoadBase64 (int lp_player) {
     gv_bigRoleAssigned[6] = false;
     gv_bigRoleAssigned[7] = false;
     gv_bigRoleAssigned[8] = false;
+    gv_bigRoleAssigned[9] = false;
     lv_a = 1;
     for ( ; ( (auto7F5DDD70_ai >= 0 && lv_a <= auto7F5DDD70_ae) || (auto7F5DDD70_ai < 0 && lv_a >= auto7F5DDD70_ae) ) ; lv_a += auto7F5DDD70_ai ) {
         gv_rolesArray[lv_a] = 0;
@@ -52491,7 +52577,7 @@ bool gt_AccountIDHandler_Func (bool testConds, bool runActions) {
     int auto1350D98A_var;
     const int auto1792A69C_ae = 20;
     const int auto1792A69C_ai = 1;
-    const int auto2B9E0491_ae = 75;
+    const int auto2B9E0491_ae = 76;
     const int auto2B9E0491_ai = 1;
     playergroup auto9E352062_g;
     int auto9E352062_var;
@@ -54118,7 +54204,7 @@ bool gt_Stats_Func (bool testConds, bool runActions) {
     const int auto7357CED9_ai = 1;
     const int autoD85D5D59_ae = 15;
     const int autoD85D5D59_ai = 1;
-    const int auto69BE7284_ae = 75;
+    const int auto69BE7284_ae = 76;
     const int auto69BE7284_ai = 1;
     int autoE7789229_val;
     const int auto292129B5_ae = 5;
@@ -54472,6 +54558,9 @@ bool gt_Stats_Func (bool testConds, bool runActions) {
                     else if (autoE7789229_val == 75) {
                         lv_x = StringExternal("Param/Value/KCACH3N");
                     }
+                    else if (autoE7789229_val == 76) {
+                        lv_x = StringExternal("Param/Value/DQACH3");
+                    }
                     else {
                         lv_x = null;
                     }
@@ -54766,7 +54855,7 @@ bool gt_Debug2_Func (bool testConds, bool runActions) {
         gf_CBSystemMessage(StringExternal("Param/Value/7A6D78CF"), EventPlayer(), 0, 0, SoundLink("UI_ObjectiveFailed", -1), Color(0,0,0));
     }
     else {
-        gf_CBSystemMessage((StringExternal("Param/Value/E5F61168") + IntToText(gv_e4BF9DE5AD98bug) + StringExternal("Param/Value/B14CD343") + IntToText(gv_e4BF9DE5AD98bug2) + StringExternal("Param/Value/33BF6124") + gv_roleNameArray[gv_roles[gv_e4BF9DE5AD98bug2][1]][gv_roles[gv_e4BF9DE5AD98bug2][0]]), EventPlayer(), 0, 0, SoundLink("UI_ObjectiveFailed", -1), Color(0,0,0));
+        gf_CBSystemMessage((StringExternal("Param/Value/E5F61168") + IntToText(gv_e4BF9DE5AD98bug) + StringExternal("Param/Value/B14CD343") + IntToText(gv_e4BF9DE5AD98bug2) + StringExternal("Param/Value/33BF6124") + gf_DQSeenName(gv_e4BF9DE5AD98bug2)), EventPlayer(), 0, 0, SoundLink("UI_ObjectiveFailed", -1), Color(0,0,0));
     }
     return true;
 }
@@ -55785,6 +55874,9 @@ bool gt_Achieve_Func (bool testConds, bool runActions) {
             }
             else if (autoD1168222_val == 75) {
                 lv_x = StringExternal("Param/Value/KCACH3N");
+            }
+            else if (autoD1168222_val == 76) {
+                lv_x = StringExternal("Param/Value/DQACH3");
             }
             else {
                 lv_x = null;
@@ -60002,7 +60094,7 @@ bool gt_Type_Func (bool testConds, bool runActions) {
                                     }
                                 }
                                 else {
-                                    gf_CBAddChat(EventPlayer(), EventChatMessage(false), gv_roleNameArray[gv_roles[EventPlayer()][1]][gv_roles[EventPlayer()][0]], true);
+                                    gf_CBAddChat(EventPlayer(), EventChatMessage(false), gf_DQSeenName(EventPlayer()), true);
                                 }
                             }
                         }
@@ -64750,7 +64842,7 @@ bool gt_MOD_Func (bool testConds, bool runActions) {
     lv_b = 1;
     for ( ; ( (auto7688D349_ai >= 0 && lv_b <= auto7688D349_ae) || (auto7688D349_ai < 0 && lv_b >= auto7688D349_ae) ) ; lv_b += auto7688D349_ai ) {
         if ((PlayerGroupHasPlayer(gv_players, lv_b) == true)) {
-            gf_CBSystemMessage((StringExternal("Param/Value/FA77941B") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/2553A6B2") + TextWithColor(StringToText(gv_name[lv_b]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_b])) + StringExternal("Param/Value/85D5BFA3") + PlayerName(lv_b) + StringExternal("Param/Value/DD5EB848") + StringToText(PlayerHandle(lv_b)) + StringExternal("Param/Value/F6303BCB") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/236AA8F0")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+            gf_CBSystemMessage((StringExternal("Param/Value/FA77941B") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/2553A6B2") + TextWithColor(StringToText(gv_name[lv_b]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_b])) + StringExternal("Param/Value/85D5BFA3") + PlayerName(lv_b) + StringExternal("Param/Value/DD5EB848") + StringToText(PlayerHandle(lv_b)) + StringExternal("Param/Value/F6303BCB") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/236AA8F0")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
         }
 
     }
@@ -64775,67 +64867,67 @@ bool gt_MOD_Func (bool testConds, bool runActions) {
         for ( ; ( (autoD5C7B15E_ai >= 0 && lv_b <= autoD5C7B15E_ae) || (autoD5C7B15E_ai < 0 && lv_b >= autoD5C7B15E_ae) ) ; lv_b += autoD5C7B15E_ai ) {
             if ((gv_aliveList[lv_b][lv_c] == true)) {
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/D1B84445") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/CEC28248") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/92A16F21") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/F15E53D2") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/148F3421") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/9858A262") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/901056EF") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/57611040") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/D608EAFF") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/1EBD610B") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/039CF82C")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/D1B84445") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/CEC28248") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/92A16F21") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/F15E53D2") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/148F3421") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/9858A262") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/901056EF") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/57611040") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/D608EAFF") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/1EBD610B") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/039CF82C")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/38CB1001") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/6B70688B") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/DE7DAD05") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/AE444B30") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/18259344") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/058856B0") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/F4E266AB") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/65E50435") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/7DDBAE23")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/38CB1001") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/6B70688B") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/DE7DAD05") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/AE444B30") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/18259344") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/058856B0") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/F4E266AB") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/65E50435") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/7DDBAE23")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/DB90E8B2") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/4D2ED1EE") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/AFD5B692") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/BB08F452") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/AA9020F1") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/DC93E5BF") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/04FEEB46") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/19E7B5C0") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/AA8A12D6")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/DB90E8B2") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/4D2ED1EE") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/AFD5B692") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/BB08F452") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/AA9020F1") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/DC93E5BF") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/04FEEB46") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/19E7B5C0") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/AA8A12D6")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/D95C5A63") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/1FDE0011") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/294A654E") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/C43D7B98") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/9A1396AC") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/816F9834") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/6E3B1E3C")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/D95C5A63") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/1FDE0011") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/294A654E") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/C43D7B98") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/9A1396AC") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/816F9834") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/6E3B1E3C")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/2A7529B7") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/5CCBE63B") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/9C96A113") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/F277E1EA") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/D76EA76F") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/9F9BF5D2") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/544D8508") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/02B6F553") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/B2454A9A")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/2A7529B7") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/5CCBE63B") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/9C96A113") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/F277E1EA") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/D76EA76F") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/9F9BF5D2") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/544D8508") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/02B6F553") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/B2454A9A")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/428EBC25") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/1DAD1B22") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/FC6BBE11") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/F411C530") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/35FE8E2E") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/E8B92880") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/FAC3D873")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/428EBC25") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/1DAD1B22") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/FC6BBE11") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/F411C530") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/35FE8E2E") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/E8B92880") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/FAC3D873")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/95A513BF") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/9463C111") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/4143E4ED") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/AC4F3EBD") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/03511772") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/B1BD196A") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/B1D98490")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/95A513BF") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/9463C111") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/4143E4ED") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/AC4F3EBD") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/03511772") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/B1BD196A") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/B1D98490")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/5EB09B8B") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/BAAD1614") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/F8E48D6F") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/4D5A5C10") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/3CD05C25")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/5EB09B8B") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/BAAD1614") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/F8E48D6F") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/4D5A5C10") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/3CD05C25")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/51985056") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/0EA0D510") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/9CF7FA12") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/9051895D") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/8096647A") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/0BF90234") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/D10F2F3D") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/5083635D") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/61DEE0BF")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/51985056") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/0EA0D510") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/9CF7FA12") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/9051895D") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/8096647A") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/0BF90234") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/D10F2F3D") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/5083635D") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/61DEE0BF")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/D819DA30") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/3A044443") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/CA782719") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/30292673") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/CCC71868") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/85C2641E") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/6B957C5E")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/D819DA30") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/3A044443") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/CA782719") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/30292673") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/CCC71868") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/85C2641E") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/6B957C5E")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/70594D16") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/E79FE36A") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/84D7DF31") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/87523A9A") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/81A7808B") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/E1082D62") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/F7224EFF")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/70594D16") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/E79FE36A") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/84D7DF31") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/87523A9A") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/81A7808B") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/E1082D62") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/F7224EFF")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/36206B09") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/C973653B") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/CA51080C") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/774D1D7C") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/AB9CF9A0")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/36206B09") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/C973653B") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/CA51080C") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/774D1D7C") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/AB9CF9A0")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/48140F93") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/DF354C1D") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/EE361F68") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/C0F668E7") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/E799D92C") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/AAE2731A") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/F2F77D40")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/48140F93") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/DF354C1D") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/EE361F68") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/C0F668E7") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/E799D92C") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/AAE2731A") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/F2F77D40")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/C3EEBB55") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/51DEA65D") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/6A2F93B3") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/47BBA75C") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/AE7895B2")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/C3EEBB55") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/51DEA65D") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/6A2F93B3") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/47BBA75C") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/AE7895B2")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/9153B120") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/B701587C") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/F8C9E538") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/166F7B1C") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/06B30B33")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/9153B120") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/B701587C") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/F8C9E538") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/166F7B1C") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/06B30B33")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/ABA0723D") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/6B398C5E") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/2ECA6B23")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/ABA0723D") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/6B398C5E") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/2ECA6B23")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
             }
@@ -64890,7 +64982,7 @@ bool gt_MOD2_Func (bool testConds, bool runActions) {
     lv_b = 1;
     for ( ; ( (auto828B28B4_ai >= 0 && lv_b <= auto828B28B4_ae) || (auto828B28B4_ai < 0 && lv_b >= auto828B28B4_ae) ) ; lv_b += auto828B28B4_ai ) {
         if ((PlayerGroupHasPlayer(gv_players, lv_b) == true)) {
-            gf_CBSystemMessage((StringExternal("Param/Value/84C87875") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/F891B470") + TextWithColor(StringToText(gv_name[lv_b]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_b])) + StringExternal("Param/Value/67176E86") + PlayerName(lv_b) + StringExternal("Param/Value/D38C683D") + StringToText(PlayerHandle(lv_b)) + StringExternal("Param/Value/52DF6C8F") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/D324D68A")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+            gf_CBSystemMessage((StringExternal("Param/Value/84C87875") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/F891B470") + TextWithColor(StringToText(gv_name[lv_b]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_b])) + StringExternal("Param/Value/67176E86") + PlayerName(lv_b) + StringExternal("Param/Value/D38C683D") + StringToText(PlayerHandle(lv_b)) + StringExternal("Param/Value/52DF6C8F") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/D324D68A")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
         }
 
     }
@@ -64915,67 +65007,67 @@ bool gt_MOD2_Func (bool testConds, bool runActions) {
         for ( ; ( (autoB299FE40_ai >= 0 && lv_b <= autoB299FE40_ae) || (autoB299FE40_ai < 0 && lv_b >= autoB299FE40_ae) ) ; lv_b += autoB299FE40_ai ) {
             if ((gv_aliveList[lv_b][lv_c] == true)) {
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/FADA9086") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/056B87B2") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/9D710E7D") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/512BD7A4") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/8F410F7F") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/793744F3") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/5AC2CA5E") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/ADBAB64F") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/77CFD385") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/B52D6193") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/ADD70AE7")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/FADA9086") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/056B87B2") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/9D710E7D") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/512BD7A4") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/8F410F7F") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/793744F3") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/5AC2CA5E") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/ADBAB64F") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/77CFD385") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/B52D6193") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/ADD70AE7")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/DABB1156") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/1030E670") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/D52EEAF5") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/C5BA4190") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/9291FC99") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/6126405D") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/091A2B27") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/7B1812B9") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/AD0E122F")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/DABB1156") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/1030E670") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/D52EEAF5") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/C5BA4190") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/9291FC99") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/6126405D") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/091A2B27") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/7B1812B9") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/AD0E122F")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/9D5FCE62") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/8D6DCFE5") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/BC29F020") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/87C52010") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/F064CCD6") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/C686CBD8") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/1FE7CBFA") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/8C8A6895") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/CF1D932E")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/9D5FCE62") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/8D6DCFE5") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/BC29F020") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/87C52010") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/F064CCD6") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/C686CBD8") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/1FE7CBFA") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/8C8A6895") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/CF1D932E")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/67567C41") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/9E5FC844") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/107CE7EA") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/ED942C66") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/FA12E5D6") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/93DF2BC7") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/39BBF83C")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/67567C41") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/9E5FC844") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/107CE7EA") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/ED942C66") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/FA12E5D6") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/93DF2BC7") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/39BBF83C")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/FDD7AC63") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/22F76102") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/5F6F51B9") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/17525FB0") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/E00BD4C6") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/C85EF2C2") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/63BF372D") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/4287CD69") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/50B953BC")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/FDD7AC63") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/22F76102") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/5F6F51B9") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/17525FB0") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/E00BD4C6") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/C85EF2C2") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/63BF372D") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/4287CD69") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/50B953BC")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/8C5C9C71") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/F0588E15") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/0C612B4A") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/9B7FA391") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/06181E86") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/47646705") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/1A08C534")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/8C5C9C71") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/F0588E15") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/0C612B4A") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/9B7FA391") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/06181E86") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/47646705") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/1A08C534")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/B7B8C1F4") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/EAAC05D4") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/4357D992") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/208DB37E") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/ABB465AB") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/AA313B32") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/5B8D0B60")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/B7B8C1F4") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/EAAC05D4") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/4357D992") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/208DB37E") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/ABB465AB") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/AA313B32") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/5B8D0B60")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/53E6D961") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/C51394FE") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/F982BD2F") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/40BD53E0") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/ACF0CC9D")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/53E6D961") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/C51394FE") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/F982BD2F") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/40BD53E0") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/ACF0CC9D")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/E771189A") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/9D283B9F") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/99C26D12") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/F26B4D07") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/9E8612F2") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/2B38B9D0") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/726AE263") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/0B3F346A") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/187688AF")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/E771189A") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/9D283B9F") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/99C26D12") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/F26B4D07") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/9E8612F2") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/2B38B9D0") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/726AE263") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/0B3F346A") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/187688AF")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/32683B5D") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/0FB67E0E") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/94E21912") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/06BEEFBC") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/335F25B5") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/A96354F9") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/224CDDFF")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/32683B5D") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/0FB67E0E") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/94E21912") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/06BEEFBC") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/335F25B5") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/A96354F9") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/224CDDFF")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/5DBC152E") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/28C9825C") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/7FE5FF5F") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/5BFC8397") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/F97831E0") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/2E80EC93") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/E990EC79")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/5DBC152E") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/28C9825C") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/7FE5FF5F") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/5BFC8397") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/F97831E0") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/2E80EC93") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/E990EC79")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/4BFB9F7E") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/5F6184FC") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/E0668B20") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/88C54F83") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/1C8BABFA")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/4BFB9F7E") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/5F6184FC") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/E0668B20") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/88C54F83") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/1C8BABFA")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/0322FCE7") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/4E4F0455") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/CCBC89EE") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/F41F32D7") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/DE8EEDAD") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/5A36EEB1") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/E1019468")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/0322FCE7") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/4E4F0455") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/CCBC89EE") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/F41F32D7") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/DE8EEDAD") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/5A36EEB1") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/E1019468")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/D2063A10") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/8FD2B92F") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/5A5EB85A") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/1D2D97CD") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/212DA61F")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/D2063A10") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/8FD2B92F") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/5A5EB85A") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/1D2D97CD") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/212DA61F")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/7C567820") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/CEAF8396") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/2B60E3A5") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/137EB22B") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/7520CD63")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/7C567820") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/CEAF8396") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/2B60E3A5") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/137EB22B") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/7520CD63")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/19C9056E") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/BB4F7FBE") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/03346E69")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/19C9056E") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/BB4F7FBE") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/03346E69")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
             }
@@ -65030,7 +65122,7 @@ bool gt_Recap_Func (bool testConds, bool runActions) {
     lv_b = 1;
     for ( ; ( (autoE2AF03C6_ai >= 0 && lv_b <= autoE2AF03C6_ae) || (autoE2AF03C6_ai < 0 && lv_b >= autoE2AF03C6_ae) ) ; lv_b += autoE2AF03C6_ai ) {
         if ((PlayerGroupHasPlayer(gv_players, lv_b) == true)) {
-            gf_CBSystemMessage((StringExternal("Param/Value/A4248395") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/6192624D") + TextWithColor(StringToText(gv_name[lv_b]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_b])) + StringExternal("Param/Value/FC306C5F") + PlayerName(lv_b) + StringExternal("Param/Value/6EF3BE5F") + StringToText(PlayerHandle(lv_b)) + StringExternal("Param/Value/F45FC7AB") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/545E406F")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+            gf_CBSystemMessage((StringExternal("Param/Value/A4248395") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/6192624D") + TextWithColor(StringToText(gv_name[lv_b]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_b])) + StringExternal("Param/Value/FC306C5F") + PlayerName(lv_b) + StringExternal("Param/Value/6EF3BE5F") + StringToText(PlayerHandle(lv_b)) + StringExternal("Param/Value/F45FC7AB") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/545E406F")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
         }
 
     }
@@ -65055,67 +65147,67 @@ bool gt_Recap_Func (bool testConds, bool runActions) {
         for ( ; ( (auto6FF1C952_ai >= 0 && lv_b <= auto6FF1C952_ae) || (auto6FF1C952_ai < 0 && lv_b >= auto6FF1C952_ae) ) ; lv_b += auto6FF1C952_ai ) {
             if ((gv_aliveList[lv_b][lv_c] == true)) {
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/7B882F53") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/977B9E72") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/A80ABC37") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/4754D855") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/2036545B") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/E528DBCD") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/5C3EC424") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/8108CF7F") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/B007F0F5") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/D0A3C7B0") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/52E474D5")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/7B882F53") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/977B9E72") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/A80ABC37") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/4754D855") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/2036545B") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/E528DBCD") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/5C3EC424") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/8108CF7F") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/B007F0F5") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/D0A3C7B0") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/52E474D5")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/63C613F4") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/8BD48D8C") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/CE317B71") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/A7309B69") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/0E5DEB20") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/7B97088C") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/FBF80435") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/DDC661B8") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/11306C52")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/63C613F4") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/8BD48D8C") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/CE317B71") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/A7309B69") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/0E5DEB20") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/7B97088C") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/FBF80435") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/DDC661B8") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/11306C52")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/273293A9") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/0A497A50") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/EDD663B8") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/BE67CC3B") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/C2090743") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/DA4CCE8D") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/1584DAE6") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/D337BC25") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/4E078B60")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/273293A9") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/0A497A50") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/EDD663B8") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/BE67CC3B") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/C2090743") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/DA4CCE8D") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/1584DAE6") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/D337BC25") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/4E078B60")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/A52FB1B3") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/B6B147AE") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/7CF8C05E") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/4C6FC224") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/5F6E18AB") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/D69DAEF2") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/A6A0A00E")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/A52FB1B3") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/B6B147AE") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/7CF8C05E") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/4C6FC224") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/5F6E18AB") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/D69DAEF2") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/A6A0A00E")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/7547D2B1") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/7757823B") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/BC66CD95") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/C7A64CDF") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/C2A4F48D") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/D2909793") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/36E5D2DC") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/B9E95440") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/DAF572BE")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/7547D2B1") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/7757823B") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/BC66CD95") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/C7A64CDF") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/C2A4F48D") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/D2909793") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/36E5D2DC") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/B9E95440") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/DAF572BE")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/794AD534") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/E666A29D") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/0938212A") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/3D5B0122") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/5CB86562") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/8D9F3899") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/D37C6371")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/794AD534") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/E666A29D") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/0938212A") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/3D5B0122") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/5CB86562") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/8D9F3899") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/D37C6371")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/E0F16925") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/4BB103BE") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/765EC46D") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/C95CD2F0") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/F74B13A4") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/3F0FE572") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/35F44C52")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/E0F16925") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/4BB103BE") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/765EC46D") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/C95CD2F0") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/F74B13A4") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/3F0FE572") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/35F44C52")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] > 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/F441621C") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/83725B6F") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/A0E8CE74") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/24090D11") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][0][lv_c]][1]][gv_roles[gv_actionList[lv_b][0][lv_c]][0]] + StringExternal("Param/Value/596F21BB")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/F441621C") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/83725B6F") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/A0E8CE74") + StringToText(gv_number[gv_actionList[lv_b][0][lv_c]]) + StringExternal("Param/Value/24090D11") + gf_DQSeenName(gv_actionList[lv_b][0][lv_c]) + StringExternal("Param/Value/596F21BB")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/1D342DA8") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/DFCBDB38") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/294AB61A") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/E59F4045") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/7D8F0A39") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/FE6C7C78") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/686CDE68") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/B43E1549") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/E9A8F02F")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/1D342DA8") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/DFCBDB38") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/294AB61A") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/E59F4045") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/7D8F0A39") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/FE6C7C78") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/686CDE68") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/B43E1549") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/E9A8F02F")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/0DDE00C1") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/00CCABEA") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/9DF07DD7") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/4B0DE720") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/173EB5F6") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/FBECE84F") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/5CC1081B")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/0DDE00C1") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/00CCABEA") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/9DF07DD7") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/4B0DE720") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/173EB5F6") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/FBECE84F") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/5CC1081B")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/340C7DE1") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/6758395B") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/13598E23") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/4486A227") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/1F718841") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/40B2136C") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/871CFB35")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/340C7DE1") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/6758395B") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/13598E23") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/4486A227") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/1F718841") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/40B2136C") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/871CFB35")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/8D014005") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/D4BCF603") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/05A657E8") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/CD8AB824") + gv_roleNameArray[gv_roles[gv_actionList[lv_b][1][lv_c]][1]][gv_roles[gv_actionList[lv_b][1][lv_c]][0]] + StringExternal("Param/Value/8B550CCE")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/8D014005") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/D4BCF603") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/05A657E8") + StringToText(gv_number[gv_actionList[lv_b][1][lv_c]]) + StringExternal("Param/Value/CD8AB824") + gf_DQSeenName(gv_actionList[lv_b][1][lv_c]) + StringExternal("Param/Value/8B550CCE")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/A149EEA3") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/A2867D11") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/723E3F75") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/1BC03710") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/2305C739") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/66FD35ED") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/D87BA6EB")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/A149EEA3") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/A2867D11") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/723E3F75") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/1BC03710") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/2305C739") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/66FD35ED") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/D87BA6EB")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] != gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/DF086853") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/65A99FF9") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/5560B7E2") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/1A5F28D1") + gv_roleNameArray[gv_roles[gv_visitList[lv_b][lv_c]][1]][gv_roles[gv_visitList[lv_b][lv_c]][0]] + StringExternal("Param/Value/72F6E14A")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/DF086853") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/65A99FF9") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/5560B7E2") + StringToText(gv_number[gv_visitList[lv_b][lv_c]]) + StringExternal("Param/Value/1A5F28D1") + gf_DQSeenName(gv_visitList[lv_b][lv_c]) + StringExternal("Param/Value/72F6E14A")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] > 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/0AE3CE49") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/94408EA6") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/946FE568") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/F4F03319") + gv_roleNameArray[gv_roles[gv_targetList[lv_b][lv_c]][1]][gv_roles[gv_targetList[lv_b][lv_c]][0]] + StringExternal("Param/Value/0A9C9F85")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/0AE3CE49") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/94408EA6") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/946FE568") + StringToText(gv_number[gv_targetList[lv_b][lv_c]]) + StringExternal("Param/Value/F4F03319") + gf_DQSeenName(gv_targetList[lv_b][lv_c]) + StringExternal("Param/Value/0A9C9F85")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
                 if ((gv_actionList[lv_b][0][lv_c] == 0) && (gv_actionList[lv_b][1][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == 0) && (gv_targetList[lv_b][lv_c] == gv_visitList[lv_b][lv_c])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/B02AC585") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/A5D2A285") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/415854CD")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+                    gf_CBSystemMessage((StringExternal("Param/Value/B02AC585") + StringToText(gv_number[lv_b]) + StringExternal("Param/Value/A5D2A285") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/415854CD")), lv_a, 0, -1, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 }
 
             }
@@ -65712,7 +65804,7 @@ if (!((gv_gameStarted == true) && ((c_bhSoloBuild == true) || (gv_oP[EventPlayer
     lv_a = 1;
     while (lv_a <= 15) {
         if ((PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true)) {
-            gf_CBSystemMessage((TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/BHREVEAL2") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]]), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+            gf_CBSystemMessage((TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/BHREVEAL2") + gf_DQSeenName(lv_a)), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
         }
         lv_a += 1;
     }
@@ -65746,7 +65838,7 @@ bool gt_LogarithmicZ2234_Func (bool testConds, bool runActions) {
         return true;
     }
 
-    gf_CBSystemMessage((StringExternal("Param/Value/01C2BA1E") + gv_roleNameArray[gv_roles[EventPlayer()][1]][gv_roles[EventPlayer()][0]]), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+    gf_CBSystemMessage((StringExternal("Param/Value/01C2BA1E") + gf_DQSeenName(EventPlayer())), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
     return true;
 }
 
@@ -65784,7 +65876,7 @@ bool gt_LogarithmicZ22322_Func (bool testConds, bool runActions) {
     lv_a = 1;
     for ( ; ( (auto8CD1881D_ai >= 0 && lv_a <= auto8CD1881D_ae) || (auto8CD1881D_ai < 0 && lv_a >= auto8CD1881D_ae) ) ; lv_a += auto8CD1881D_ai ) {
         if ((PlayerGroupHasPlayer(gv_players, lv_a) == true)) {
-            gf_CBSystemMessage((StringExternal("Param/Value/0E4CDE09") + TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/B26BC039") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]] + StringExternal("Param/Value/46A284D0")), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+            gf_CBSystemMessage((StringExternal("Param/Value/0E4CDE09") + TextWithColor(StringToText(gv_name[lv_a]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/B26BC039") + gf_DQSeenName(lv_a) + StringExternal("Param/Value/46A284D0")), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
         }
 
     }
@@ -65827,7 +65919,7 @@ bool gt_LogarithmicZ22328_Func (bool testConds, bool runActions) {
     lv_a = 1;
     for ( ; ( (auto224A7030_ai >= 0 && lv_a <= auto224A7030_ae) || (auto224A7030_ai < 0 && lv_a >= auto224A7030_ae) ) ; lv_a += auto224A7030_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
-            lv_pp = (lv_pp + (StringToText(gv_number[lv_a]) + StringExternal("Param/Value/88C5F186") + StringToText(gv_name[lv_a]) + StringExternal("Param/Value/639B9206") + gv_roleNameArray[gv_roles[lv_a][1]][gv_roles[lv_a][0]] + StringExternal("Param/Value/7648AB43")));
+            lv_pp = (lv_pp + (StringToText(gv_number[lv_a]) + StringExternal("Param/Value/88C5F186") + StringToText(gv_name[lv_a]) + StringExternal("Param/Value/639B9206") + gf_DQSeenName(lv_a) + StringExternal("Param/Value/7648AB43")));
         }
 
     }
@@ -66931,16 +67023,16 @@ bool gt_DaySequence_Func (bool testConds, bool runActions) {
                         auto8FD49C83_ae = (gv_executionCount - 1);
                         lv_a = 0;
                         for ( ; ( (auto8FD49C83_ai >= 0 && lv_a <= auto8FD49C83_ae) || (auto8FD49C83_ai < 0 && lv_a >= auto8FD49C83_ae) ) ; lv_a += auto8FD49C83_ai ) {
-                            gv_deadBoxText[1] = (gv_deadBoxText[1] + StringExternal("Param/Value/D6B4BB06") + StringToText(gv_number[gv_executionList[lv_a]]) + StringExternal("Param/Value/B56AF897") + TextWithColor(StringToText(gv_name[gv_executionList[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_executionList[lv_a]])) + StringExternal("Param/Value/4579A5F4") + gv_roleNameArray[gv_roles[gv_executionList[lv_a]][1]][gv_roles[gv_executionList[lv_a]][0]] + StringExternal("Param/Value/37710C90") + StringExternal("Param/Value/74E965C9") + StringExternal("Param/Value/85C87962") + IntToText(gv_dayNumber) + StringExternal("Param/Value/D9349E57"));
+                            gv_deadBoxText[1] = (gv_deadBoxText[1] + StringExternal("Param/Value/D6B4BB06") + StringToText(gv_number[gv_executionList[lv_a]]) + StringExternal("Param/Value/B56AF897") + TextWithColor(StringToText(gv_name[gv_executionList[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_executionList[lv_a]])) + StringExternal("Param/Value/4579A5F4") + gf_DQSeenName(gv_executionList[lv_a]) + StringExternal("Param/Value/37710C90") + StringExternal("Param/Value/74E965C9") + StringExternal("Param/Value/85C87962") + IntToText(gv_dayNumber) + StringExternal("Param/Value/D9349E57"));
                             libNtve_gf_SetDialogItemTooltip(gv_deadBoxItem[3], gv_deadBoxText[1], PlayerGroupAll());
                             auto16DEF60A_g = gv_currentPlayers;
                             auto16DEF60A_var = -1;
                             while (true) {
                                 auto16DEF60A_var = PlayerGroupNextPlayer(auto16DEF60A_g, auto16DEF60A_var);
                                 if (auto16DEF60A_var < 0) { break; }
-                                gf_ELAddMessage((StringExternal("Param/Value/96126402") + TextWithColor(StringToText(gv_name[gv_executionList[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_executionList[lv_a]])) + StringExternal("Param/Value/536ECE7D") + gv_roleNameArray[gv_roles[gv_executionList[lv_a]][1]][gv_roles[gv_executionList[lv_a]][0]] + StringExternal("Param/Value/17F39EFC")), auto16DEF60A_var, Color(25.10, 0.00, 50.20), lv_a, 0);
+                                gf_ELAddMessage((StringExternal("Param/Value/96126402") + TextWithColor(StringToText(gv_name[gv_executionList[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_executionList[lv_a]])) + StringExternal("Param/Value/536ECE7D") + gf_DQSeenName(gv_executionList[lv_a]) + StringExternal("Param/Value/17F39EFC")), auto16DEF60A_var, Color(25.10, 0.00, 50.20), lv_a, 0);
                             }
-                            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, (StringExternal("Param/Value/A2BB73A9") + TextWithColor(StringToText(gv_name[gv_executionList[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_executionList[lv_a]])) + StringExternal("Param/Value/33A67199") + gv_roleNameArray[gv_roles[gv_executionList[lv_a]][1]][gv_roles[gv_executionList[lv_a]][0]] + StringExternal("Param/Value/13B76712")));
+                            UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, (StringExternal("Param/Value/A2BB73A9") + TextWithColor(StringToText(gv_name[gv_executionList[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_executionList[lv_a]])) + StringExternal("Param/Value/33A67199") + gf_DQSeenName(gv_executionList[lv_a]) + StringExternal("Param/Value/13B76712")));
                             if (((StringLength(gv_lastWill[gv_executionList[lv_a]][0]) >= 1) || (StringLength(gv_lastWill[gv_executionList[lv_a]][1]) >= 1))) {
                                 Wait(1.0, c_timeGame);
                                 autoEE334CD3_g = gv_currentPlayers;
@@ -70807,7 +70899,7 @@ bool gt_NPNightCamera_Func (bool testConds, bool runActions) {
                         gf_NPAuthorityCamera(lv_a);
                     }
 
-                    if ((((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 2)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 6)) || ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 7)) || ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 13)))) {
+                    if ((((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 2)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 6)) || ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 7)) || ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 13)) || ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 21)))) {
                         gf_NPPanoramaCamera(lv_a);
                     }
 
@@ -72165,6 +72257,9 @@ bool gt_ASActionButtonANeutral_Func (bool testConds, bool runActions) {
         }
         if ((gv_roles[lv_source][1] == 3) && (gv_roles[lv_source][0] == 20) && (gv_action[lv_source][0] != lv_target)) {
             gf_SKA_3_kaitangshou(lv_source, lv_target);
+        }
+        if ((gv_roles[lv_source][1] == 3) && (gv_roles[lv_source][0] == 21) && (gv_action[lv_source][0] != lv_target) && (gv_variableOptions[lv_source][0] == 1)) {
+            gf_SKA_1_yijing(lv_source, lv_target);
         }
         if ((gv_roles[lv_source][1] == 3) && (gv_roles[lv_source][0] == 32) && (gv_action[lv_source][0] != lv_target)) {
             gf_SKA_3_tianxuanzhe(lv_source, lv_target);
@@ -77550,6 +77645,7 @@ bool gt_OSVariantsMenuConfirm_Func (bool testConds, bool runActions) {
     gv_bigRoleAssigned[6] = false;
     gv_bigRoleAssigned[7] = false;
     gv_bigRoleAssigned[8] = false;
+    gv_bigRoleAssigned[9] = false;
     lv_a = 1;
     for ( ; ( (autoDED98CA8_ai >= 0 && lv_a <= autoDED98CA8_ae) || (autoDED98CA8_ai < 0 && lv_a >= autoDED98CA8_ae) ) ; lv_a += autoDED98CA8_ai ) {
         gv_rolesArray[lv_a] = 0;
@@ -77866,6 +77962,10 @@ bool gt_OSVariantsMenuConfirm_Func (bool testConds, bool runActions) {
             gv_bigRoleAssigned[8] = true;
         }
 
+        if ((gv_categoriesArray[lv_a] == 3) && (gv_rolesArray[lv_a] == 21)) {
+            gv_bigRoleAssigned[9] = true;
+        }
+
     }
     if ((gv_variantSelection == 13) && (gv_subvariantSelection == 3)) {
         gf_VE59490E4BABAE8A1973(); // shw218 唐人街[高阶]
@@ -78088,7 +78188,7 @@ bool gt_OSRoleManipulate_Func (bool testConds, bool runActions) {
     }
 
     if ((EventDialogControl() == gv_rolesMenusItem[3]) && (gv_roleSelection != 0) && (gv_roleCategory != 0)) {
-        if ((((gv_roleCategory == 1) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 14) && (gv_bigRoleAssigned[2] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 20) && (gv_bigRoleAssigned[4] == true)) || ((gv_roleCategory == 2) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[0] == true)) || ((gv_roleCategory == 5) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[5] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 10) && (gv_bigRoleAssigned[3] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[6] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 19) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 13) && (gv_bigRoleAssigned[7] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 32) && (gv_bigRoleAssigned[8] == true)))) {
+        if ((((gv_roleCategory == 1) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 14) && (gv_bigRoleAssigned[2] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 20) && (gv_bigRoleAssigned[4] == true)) || ((gv_roleCategory == 2) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[0] == true)) || ((gv_roleCategory == 5) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[5] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 10) && (gv_bigRoleAssigned[3] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[6] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 19) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 13) && (gv_bigRoleAssigned[7] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 32) && (gv_bigRoleAssigned[8] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 21) && (gv_bigRoleAssigned[9] == true)))) {
         }
         else {
             if ((((gv_rolesAssigned < PlayerGroupCount(gv_currentPlayers)) && (PlayerGroupCount(gv_players) > 1)) || ((gv_rolesAssigned < 15) && (PlayerGroupCount(gv_players) == 1)))) {
@@ -78171,6 +78271,10 @@ bool gt_OSRoleManipulate_Func (bool testConds, bool runActions) {
                     gv_bigRoleAssigned[8] = true;
                 }
 
+                if ((gv_roleCategory == 3) && (gv_roleSelection == 21)) {
+                    gv_bigRoleAssigned[9] = true;
+                }
+
                 gv_categoriesArray[gv_rolesAssigned] = gv_roleCategory;
                 gv_rolesArray[gv_rolesAssigned] = gv_roleSelection;
                 DialogControlAddItem(gv_rolesMenusItem[2], PlayerGroupAll(), (StringExternal("Param/Value/81CB2E41") + gv_roleNameArray[gv_categoriesArray[gv_rolesAssigned]][gv_rolesArray[gv_rolesAssigned]] + StringExternal("Param/Value/B23135F9")));
@@ -78186,7 +78290,7 @@ bool gt_OSRoleManipulate_Func (bool testConds, bool runActions) {
                 else {
                     DialogControlSetEnabled(gv_rolesMenusItem[9], PlayerGroupSingle(gv_host), false);
                 }
-                if ((((gv_roleCategory == 1) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 23) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 14) && (gv_bigRoleAssigned[2] == true)) || ((gv_roleCategory == 2) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[0] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 20) && (gv_bigRoleAssigned[4] == true)) || ((gv_roleCategory == 5) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[5] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 10) && (gv_bigRoleAssigned[3] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[6] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 19) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 13) && (gv_bigRoleAssigned[7] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 32) && (gv_bigRoleAssigned[8] == true)))) {
+                if ((((gv_roleCategory == 1) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 23) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 14) && (gv_bigRoleAssigned[2] == true)) || ((gv_roleCategory == 2) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[0] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 20) && (gv_bigRoleAssigned[4] == true)) || ((gv_roleCategory == 5) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[5] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 10) && (gv_bigRoleAssigned[3] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[6] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 19) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 13) && (gv_bigRoleAssigned[7] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 32) && (gv_bigRoleAssigned[8] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 21) && (gv_bigRoleAssigned[9] == true)))) {
                     DialogControlSetEnabled(gv_rolesMenusItem[3], PlayerGroupSingle(gv_host), false);
                 }
                 else {
@@ -78248,6 +78352,10 @@ bool gt_OSRoleManipulate_Func (bool testConds, bool runActions) {
 
             if ((gv_categoriesArray[lv_x] == 3) && (gv_rolesArray[lv_x] == 32)) {
                 gv_bigRoleAssigned[8] = false;
+            }
+
+            if ((gv_categoriesArray[lv_x] == 3) && (gv_rolesArray[lv_x] == 21)) {
+                gv_bigRoleAssigned[9] = false;
             }
 
             if ((gv_rolesAssigned != lv_x)) {
@@ -78324,7 +78432,7 @@ bool gt_OSRoleManipulate_Func (bool testConds, bool runActions) {
         else {
             DialogControlSetEnabled(gv_rolesMenusItem[9], PlayerGroupSingle(gv_host), false);
         }
-        if ((((gv_roleCategory == 1) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 15) && (gv_bigRoleAssigned[2] == true)) || ((gv_roleCategory == 2) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[0] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 20) && (gv_bigRoleAssigned[4] == true)) || ((gv_roleCategory == 5) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[5] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 10) && (gv_bigRoleAssigned[3] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[6] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 19) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 13) && (gv_bigRoleAssigned[7] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 32) && (gv_bigRoleAssigned[8] == true)))) {
+        if ((((gv_roleCategory == 1) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 15) && (gv_bigRoleAssigned[2] == true)) || ((gv_roleCategory == 2) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[0] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 20) && (gv_bigRoleAssigned[4] == true)) || ((gv_roleCategory == 5) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[5] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 10) && (gv_bigRoleAssigned[3] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[6] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 19) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 13) && (gv_bigRoleAssigned[7] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 32) && (gv_bigRoleAssigned[8] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 21) && (gv_bigRoleAssigned[9] == true)))) {
             DialogControlSetEnabled(gv_rolesMenusItem[3], PlayerGroupSingle(gv_host), false);
         }
         else {
@@ -78930,6 +79038,10 @@ bool gt_OSRoleSelect_Func (bool testConds, bool runActions) {
                 gv_roleSelection = 20;
             }
 
+            if ((DialogControlGetSelectedItem(EventDialogControl(), gv_host) == 22)) {
+                gv_roleSelection = 21;
+            }
+
         }
 
     }
@@ -79016,7 +79128,7 @@ bool gt_OSRoleSelect_Func (bool testConds, bool runActions) {
 
     }
 
-    if ((((gv_roleCategory == 1) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 23) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 14) && (gv_bigRoleAssigned[2] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 20) && (gv_bigRoleAssigned[4] == true)) || ((gv_roleCategory == 2) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[0] == true)) || ((gv_roleCategory == 5) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[5] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 10) && (gv_bigRoleAssigned[3] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[6] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 19) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 13) && (gv_bigRoleAssigned[7] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 32) && (gv_bigRoleAssigned[8] == true)) || (gv_variantSelection == 1) || (gv_variantSelection == 4) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12) || (gv_variantSelection == 31) || (gv_variantSelection == 32) || (gv_variantSelection == 33) || (gv_variantSelection == 35) || (gv_variantSelection == 36))) {
+    if ((((gv_roleCategory == 1) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 23) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 14) && (gv_bigRoleAssigned[2] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 20) && (gv_bigRoleAssigned[4] == true)) || ((gv_roleCategory == 2) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[0] == true)) || ((gv_roleCategory == 5) && (gv_roleSelection == 2) && (gv_bigRoleAssigned[5] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 10) && (gv_bigRoleAssigned[3] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 12) && (gv_bigRoleAssigned[6] == true)) || ((gv_roleCategory == 1) && (gv_roleSelection == 19) && (gv_bigRoleAssigned[1] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 13) && (gv_bigRoleAssigned[7] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 32) && (gv_bigRoleAssigned[8] == true)) || ((gv_roleCategory == 3) && (gv_roleSelection == 21) && (gv_bigRoleAssigned[9] == true)) || (gv_variantSelection == 1) || (gv_variantSelection == 4) || (gv_variantSelection == 8) || (gv_variantSelection == 9) || (gv_variantSelection == 10) || (gv_variantSelection == 11) || (gv_variantSelection == 12) || (gv_variantSelection == 31) || (gv_variantSelection == 32) || (gv_variantSelection == 33) || (gv_variantSelection == 35) || (gv_variantSelection == 36))) {
         DialogControlSetEnabled(gv_rolesMenusItem[3], PlayerGroupSingle(gv_host), false);
     }
     else {
@@ -79313,6 +79425,7 @@ bool gt_OSMenus_Func (bool testConds, bool runActions) {
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/D89BFDF1") + gv_roleNameArray[gv_roleCategory][32] + StringExternal("Param/Value/258B2E40")));
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/D89BFDF1") + gv_roleNameArray[gv_roleCategory][19] + StringExternal("Param/Value/258B2E40")));
                 DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/D89BFDF1") + gv_roleNameArray[gv_roleCategory][20] + StringExternal("Param/Value/258B2E40")));
+                DialogControlAddItem(gv_rolesMenusItem[1], PlayerGroupAll(), (StringExternal("Param/Value/D89BFDF1") + gv_roleNameArray[gv_roleCategory][21] + StringExternal("Param/Value/258B2E40")));
             }
 
         }
@@ -86849,7 +86962,7 @@ if ((gv_e6B395E5B888E58FA0E5B182[lv_a] > 5) && ((gv_e6B395E5B888E58FA0E5B182[lv_
     lv_b = 1;
     for ( ; ( (auto14832DC9_ai >= 0 && lv_b <= auto14832DC9_ae) || (auto14832DC9_ai < 0 && lv_b >= auto14832DC9_ae) ) ; lv_b += auto14832DC9_ai ) {
         if ((PlayerGroupHasPlayer(gv_players, lv_b) == true)) {
-            gf_CBSystemMessage((StringExternal("Param/Value/0F4AA2D5") + TextWithColor(StringToText(gv_name[lv_b]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_b])) + StringExternal("Param/Value/64CFFC1E") + gv_roleNameArray[gv_roles[lv_b][1]][gv_roles[lv_b][0]] + StringExternal("Param/Value/DA7B8DCC")), lv_a, 0, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+            gf_CBSystemMessage((StringExternal("Param/Value/0F4AA2D5") + TextWithColor(StringToText(gv_name[lv_b]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_b])) + StringExternal("Param/Value/64CFFC1E") + gf_DQSeenName(lv_b) + StringExternal("Param/Value/DA7B8DCC")), lv_a, 0, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
         }
 
     }
@@ -86858,7 +86971,7 @@ if ((gv_e6B395E5B888E58FA0E5B182[lv_a] > 5) && ((gv_e6B395E5B888E58FA0E5B182[lv_
 }
 
 if ((gv_e6B395E5B888E58FA0E5B182[lv_a] > 4) && (gv_visitation[lv_a] != 0)) {
-    gf_CBSystemMessage((StringExternal("Param/Value/CC77A9F6") + gv_roleNameArray[gv_roles[gv_visitation[lv_a]][1]][gv_roles[gv_visitation[lv_a]][0]] + StringExternal("Param/Value/233FB215")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    gf_CBSystemMessage((StringExternal("Param/Value/CC77A9F6") + gf_DQSeenName(gv_visitation[lv_a]) + StringExternal("Param/Value/233FB215")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
 }
 
 if ((gv_visitation[lv_a] != 0) && (gv_e6B395E5B888E68A80E883BD[lv_a][3] == false)) {
@@ -86969,7 +87082,7 @@ if ((gv_action[lv_a][0] > 0) && (gv_diedAtNight[lv_a] == false)) {
                 lv_t = (lv_t + StringExternal("Param/Value/GCZSEP"));
             }
 
-            lv_t = (lv_t + gv_roleNameArray[gv_roles[lv_i][1]][gv_roles[lv_i][0]]);
+            lv_t = (lv_t + gf_DQSeenName(lv_i));
             lv_b += 1;
         }
 
@@ -87007,7 +87120,7 @@ if (((gv_seqAfterPlagueInteract[gv_visitation[lv_a]] == true) || (gv_immune[gv_v
             gf_CBSystemMessage((StringExternal("Param/Value/A10FCC35") + gv_roleNameArray[gv_framed[gv_visitation[lv_a]][1]][gv_framed[gv_visitation[lv_a]][0]] + StringExternal("Param/Value/7F1398F2")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
         }
         else {
-            gf_CBSystemMessage((StringExternal("Param/Value/373E8EF6") + gv_roleNameArray[gv_roles[gv_visitation[lv_a]][1]][gv_roles[gv_visitation[lv_a]][0]] + StringExternal("Param/Value/385D6DB5")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+            gf_CBSystemMessage((StringExternal("Param/Value/373E8EF6") + gf_DQSeenName(gv_visitation[lv_a]) + StringExternal("Param/Value/385D6DB5")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
         }
     }
     else {
@@ -87019,9 +87132,9 @@ if (((gv_seqAfterPlagueInteract[gv_visitation[lv_a]] == true) || (gv_immune[gv_v
 
         }
         else {
-            gf_CBSystemMessage((StringExternal("Param/Value/A22D1588") + gv_roleInvestigatorArray[gv_roles[gv_visitation[lv_a]][1]][gv_roles[gv_visitation[lv_a]][0]][0] + StringExternal("Param/Value/745ADE02")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-            if ((gv_roleInvestigatorArray[gv_roles[gv_visitation[lv_a]][1]][gv_roles[gv_visitation[lv_a]][0]][1] != null)) {
-                gf_CBSystemMessage((StringExternal("Param/Value/D294E2B2") + gv_roleInvestigatorArray[gv_roles[gv_visitation[lv_a]][1]][gv_roles[gv_visitation[lv_a]][0]][1] + StringExternal("Param/Value/FA50C39B")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+            gf_CBSystemMessage((StringExternal("Param/Value/A22D1588") + gv_roleInvestigatorArray[gf_DQSeenPool(gv_visitation[lv_a])][gf_DQSeenRole(gv_visitation[lv_a])][0] + StringExternal("Param/Value/745ADE02")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+            if ((gv_roleInvestigatorArray[gf_DQSeenPool(gv_visitation[lv_a])][gf_DQSeenRole(gv_visitation[lv_a])][1] != null)) {
+                gf_CBSystemMessage((StringExternal("Param/Value/D294E2B2") + gv_roleInvestigatorArray[gf_DQSeenPool(gv_visitation[lv_a])][gf_DQSeenRole(gv_visitation[lv_a])][1] + StringExternal("Param/Value/FA50C39B")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
             }
 
         }
@@ -87047,7 +87160,7 @@ void gf_SKF_1_lianbangtanyuan (int lv_a) {
     // Implementation
 TriggerExecute(gt_E78AAFE7BDAAE8AEB0E5BD95, false, false);
 if ((gv_roleOptions[1][27][0] == true)) {
-    gf_CBSystemMessage((StringExternal("Param/Value/14230C7D") + gv_roleNameArray[gv_roles[gv_visitation[lv_a]][1]][gv_roles[gv_visitation[lv_a]][0]] + StringExternal("Param/Value/3004D2CB")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    gf_CBSystemMessage((StringExternal("Param/Value/14230C7D") + gf_DQSeenName(gv_visitation[lv_a]) + StringExternal("Param/Value/3004D2CB")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
 }
 else {
     if ((gv_e69FA5E8BF87E4BA86[lv_a][gv_visitation[lv_a]] == true)) {
@@ -87059,7 +87172,7 @@ else {
                 gf_CBSystemMessage((StringExternal("Param/Value/5630260B") + gv_roleNameArray[1][1] + StringExternal("Param/Value/270AC812")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
             }
             else {
-                gf_CBSystemMessage((StringExternal("Param/Value/D88882E8") + gv_roleNameArray[gv_roles[gv_visitation[lv_a]][1]][gv_roles[gv_visitation[lv_a]][0]] + StringExternal("Param/Value/F84562C4")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                gf_CBSystemMessage((StringExternal("Param/Value/D88882E8") + gf_DQSeenName(gv_visitation[lv_a]) + StringExternal("Param/Value/F84562C4")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
             }
         }
     }
@@ -87148,7 +87261,7 @@ void gf_SKF_1_fayi (int lv_a, int lv_y) {
     // Implementation
 lv_fgsd = 0;
 if ((PlayerGroupHasPlayer(gv_alivePlayers, gv_visitation[lv_a]) == false)) {
-    gf_CBSystemMessage((StringExternal("Param/Value/0AF4DC68") + gv_roleNameArray[gv_roles[gv_visitation[lv_a]][1]][gv_roles[gv_visitation[lv_a]][0]] + StringExternal("Param/Value/DD766C5E")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    gf_CBSystemMessage((StringExternal("Param/Value/0AF4DC68") + gf_DQSeenName(gv_visitation[lv_a]) + StringExternal("Param/Value/DD766C5E")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
     lv_fgsd += 1;
     if ((gv_originalRole[gv_visitation[lv_a]][1] == gv_roles[gv_visitation[lv_a]][1]) && (gv_originalRole[gv_visitation[lv_a]][0] == gv_roles[gv_visitation[lv_a]][0])) {
     }
@@ -88612,7 +88725,7 @@ void gf_SKG_3_shiyizhe (int lv_a, int lv_h) {
     const int auto5575AA97_ae = 15;
     const int auto5575AA97_ai = 1;
     // Implementation
-gf_CBSystemMessage((StringExternal("Param/Value/5F610A0E") + gv_roleNameArray[gv_roles[lv_h][1]][gv_roles[lv_h][0]] + StringExternal("Param/Value/72E09ACF")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+gf_CBSystemMessage((StringExternal("Param/Value/5F610A0E") + gf_DQSeenName(lv_h) + StringExternal("Param/Value/72E09ACF")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
 if ((gv_roles[lv_a][0] == 2) && (gv_roles[lv_a][1] == 3)) {
     gv_immuneChance[lv_a] = 2;
 }
@@ -92388,6 +92501,170 @@ void gf_ESRipperKill (int lp_target, int lp_killer, int lp_mode) {
         gf_CBSystemMessage(StringExternal("Param/Value/KCISO"), lp_killer, lp_killer, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
     }
 }
+
+// shw288：堂吉诃德 3/21
+bool gf_DQHidden (int lp_player) {
+    if ((lp_player >= 1) && (gv_roles[lp_player][1] == 3) && (gv_roles[lp_player][0] == 21) && (gv_dqRevealed[lp_player] == false)) {
+        return true;
+    }
+    return false;
+}
+
+int gf_DQSeenPool (int lp_player) {
+    if ((gf_DQHidden(lp_player) == true)) {
+        return 1;
+    }
+    return gv_roles[lp_player][1];
+}
+
+int gf_DQSeenRole (int lp_player) {
+    if ((gf_DQHidden(lp_player) == true)) {
+        return 6;
+    }
+    return gv_roles[lp_player][0];
+}
+
+text gf_DQSeenName (int lp_player) {
+    return gv_roleNameArray[gf_DQSeenPool(lp_player)][gf_DQSeenRole(lp_player)];
+}
+
+int gf_DQClassify (int lp_player) {
+    int lv_pool;
+    int lv_role;
+
+    lv_pool = gv_roles[lp_player][1];
+    lv_role = gv_roles[lp_player][0];
+    if ((lv_pool == 1)) {
+        return 1;
+    }
+    if (((lv_pool == 2) || (lv_pool == 5))) {
+        return 2;
+    }
+    if ((lv_pool == 3)) {
+        if (((lv_role == 1) || (lv_role == 3) || (lv_role == 4) || (lv_role == 5) || (lv_role == 8) || (lv_role == 9) || (lv_role == 10) || (lv_role == 11) || (lv_role == 12) || (lv_role == 13) || (lv_role == 14) || (lv_role == 15) || (lv_role == 16) || (lv_role == 17) || (lv_role == 19) || (lv_role == 20) || (lv_role == 31) || (lv_role == 32))) {
+            return 3;
+        }
+        return 0;
+    }
+    return 0;
+}
+
+void gf_DQOnExecute (int lp_player) {
+    int lv_dq;
+    int lv_align;
+
+    lv_dq = gv_dqTag[lp_player];
+    if ((lv_dq <= 0)) {
+        return;
+    }
+    if ((gv_diedAtNight[lp_player] == true)) {
+        return;
+    }
+    if ((gv_dqRevealed[lv_dq] == true)) {
+        return;
+    }
+    if (!((gv_roles[lv_dq][1] == 3) && (gv_roles[lv_dq][0] == 21))) {
+        return;
+    }
+    if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_dq) == false)) {
+        return;
+    }
+    lv_align = gf_DQClassify(lp_player);
+    if ((lv_align == 0)) {
+        return;
+    }
+    gv_dqRevealed[lv_dq] = true;
+    gv_dqAlign[lv_dq] = lv_align;
+    gv_dqArmor[lv_dq] = 1;
+    gf_CBSystemMessage(StringExternal("Param/Value/DQREV"), lv_dq, lv_dq, 0, SoundLink("UI_ObjectiveComplete", -1), Color(78.82, 70.20, 41.96));
+    gf_RTRoleCard(lv_dq);
+    gf_RefreshRoleBox();
+}
+
+void gf_DQShareWin (int lp_end) {
+    int lv_a;
+    string lv_img;
+    const int autoDQSW_ae = 15;
+    const int autoDQSW_ai = 1;
+
+    lv_a = 1;
+    for ( ; ( (autoDQSW_ai >= 0 && lv_a <= autoDQSW_ae) || (autoDQSW_ai < 0 && lv_a >= autoDQSW_ae) ) ; lv_a += autoDQSW_ai ) {
+        if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 21) && (gv_dqRevealed[lv_a] == true) && (gv_dqAlign[lv_a] != 0)) {
+            if ((((gv_dqAlign[lv_a] == 1) && (lp_end == 1)) || ((gv_dqAlign[lv_a] == 2) && ((lp_end == 2) || (lp_end == 13))) || ((gv_dqAlign[lv_a] == 3) && ((lp_end == 3) || (lp_end == 4) || (lp_end == 6) || (lp_end == 7) || (lp_end == 8) || (lp_end == 11) || (lp_end == 12) || (lp_end == 14) || (lp_end == 16) || (lp_end == 17) || (lp_end == 18) || (lp_end == 21))))) {
+                gv_won[lv_a] = true;
+                SoundPlay(SoundLink("UI_MissionComplete", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
+                gf_FlashScreen(Color(78.82, 70.20, 41.96), lv_a, 2.0, 0.0);
+                libNtve_gf_SetDialogItemText(gv_endButtonItem, StringExternal("Param/Value/5D15C95A"), PlayerGroupSingle(lv_a));
+                if ((PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true)) {
+                    gv_bankGeneralIntegers[lv_a][6] += 1;
+                }
+                lv_img = "WinNeutral.dds";
+                if ((lp_end == 1)) {
+                    lv_img = "WinTown.dds";
+                }
+                else if ((lp_end == 2)) {
+                    lv_img = "WinMafia.dds";
+                }
+                else if ((lp_end == 13)) {
+                    lv_img = "WinTriad.dds";
+                }
+                gf_WinScreen(lv_img, lv_a);
+            }
+        }
+    }
+}
+
+// 阶段三抽取（shw288）：中立 3/21 ← 原 gf_RSNeutralSetup 行0
+void gf_SKN_3_tangjihede (int lv_a) {
+    if ((gv_dayNumber == 1)) {
+        gv_shots[lv_a] = 3;
+        gv_dqRevealed[lv_a] = false;
+        gv_dqAlign[lv_a] = 0;
+        gv_dqArmor[lv_a] = 0;
+    }
+    if ((gv_dqRevealed[lv_a] == true) && (gv_dqArmor[lv_a] == 1)) {
+        gv_immune[lv_a][0] = true;
+        gv_dqArmor[lv_a] = 0;
+    }
+    if ((gv_dqRevealed[lv_a] == false) && (gv_shots[lv_a] > 0) && (gv_cooldown[lv_a] == 0)) {
+        gv_variableOptions[lv_a][0] = 1;
+        gf_RAVigilanteActions(lv_a);
+    }
+    else {
+        gv_variableOptions[lv_a][0] = 0;
+        gf_RANoActions(lv_a);
+    }
+}
+
+// 阶段三抽取（shw288）：中立 3/21 ← 原 gf_SequencePrep 行0
+void gf_SKP_3_tangjihede (int lv_a) {
+    gf_BHVisitAction(lv_a);
+}
+
+// 阶段三抽取（shw288）：中立 3/21 ← 原 gf_SequenceKills 行0
+void gf_SKK_3_tangjihede (int lv_a) {
+    if ((gv_visitation[lv_a] == lv_a)) {
+        return;
+    }
+    if ((gv_seqKillsZ[1] == true)) {
+        Wait(1.0, c_timeGame);
+    }
+    gv_shots[lv_a] -= 1;
+    gv_seqKillsZ[1] = true;
+    gv_dqTag[gv_visitation[lv_a]] = lv_a;
+    SoundPlay(SoundLink("RaynorCommandoAttackLaunch", -1), PlayerGroupAll(), 100.0, 0.0);
+    gf_CBSystemMessage(StringExternal("Param/Value/DQNIGHT"), 0, 0, 0, SoundLink("Silent", -1), Color(0,0,0));
+    if ((gv_shots[lv_a] > 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/BF759227") + IntToText(gv_shots[lv_a]) + StringExternal("Param/Value/79637826")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    }
+    if ((gv_shots[lv_a] == 1)) {
+        gf_CBSystemMessage((StringExternal("Param/Value/01EDA427") + StringExternal("Param/Value/680BDF7C") + StringExternal("Param/Value/D8EEB7D2")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    }
+    if ((gv_shots[lv_a] == 0)) {
+        gf_CBSystemMessage(StringExternal("Param/Value/632C2FB3"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    }
+}
+
 
 // 阶段三抽取（shw238）：中立 3/13 ← 原 gf_RSNeutralSetup 行34547
 void gf_SKN_3_duoluoshenpanzhe (int lv_a) {

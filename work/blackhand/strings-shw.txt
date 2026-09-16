@@ -192,3 +192,19 @@ Param/Value/KCACH2N=<s val="ModCenterSize16Bold"><c val="C14D63">双重事件</c
 Param/Value/KCACH3S=<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSize16Bold"><c val="C14D63">"来自地狱"</c></s><s val="ModCenterSize16"><c val="44FF88">!</c></s>
 Param/Value/KCACH3N=<s val="ModCenterSize16Bold"><c val="C14D63">"来自地狱"</c></s>
 Param/Value/BE08890E=- 由此，他会是个D徒/暴徒、连环爱手、开膛手，但也可能只是个义警。
+
+// shw288 堂吉诃德 (3/21)
+Param/Value/DQNAME=<c val="C9B36B">堂吉诃德</c>
+Param/Value/DQDESC=没落骑士，满心以为自己肩负着清扫邪恶的使命。<n/><n/><c val="BBDDFF">每晚选择一人开枪。子弹是空包，但你会记住被击中的人。若此人被白天处决，你将觉醒并继承其阵营。</c>
+Param/Value/DQCARD=<c val="C9B36B">
+Param/Value/DQBOX1=- 每晚选择一人开枪（空包，无伤害）。
+Param/Value/DQBOX2=- 揭开前全场都视你为义警。<n/>- 被你击中的人若被白天处决，你将觉醒并加入其阵营。<n/>- 觉醒后获得一次夜间无敌。
+Param/Value/DQBOX4=你是追逐巨人幻影的没落骑士。
+Param/Value/DQBOX6=- 处决你击中的人后，与其阵营一同获胜。
+Param/Value/DQCRIME=无
+Param/Value/DQREV=<s val="ModLeftSize16Bold"><c val="C9B36B">你刺中的只是巨人的倒影……你并不是义警，你是「堂吉诃德」！你被这位受难骑士的信念所感召，决定继承他的遗志。</c></s>
+Param/Value/DQNIGHT=<s val="ModLeftSize16Bold"><c val="FF0000">你听到一声枪响...</c></s>
+Param/Value/DQACH2S=<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSize16Bold"><c val="C9B36B">与风车的三度决斗</c></s><s val="ModCenterSize16"><c val="44FF88">!</c></s>
+Param/Value/DQACH3=<s val="ModCenterSize16Bold"><c val="C9B36B">与风车的三度决斗</c></s>
+Param/Value/DQACHD=<s val="ModCenterSize16"><c val="C9B36B">你坚信他们是邪恶的巨人，你打光了所有的子弹。直到最后，你也未曾听到现实破裂的声音。</c></s>
+
