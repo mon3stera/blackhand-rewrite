@@ -191,4 +191,4 @@ Param/Value/KCACH2S=<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSi
 Param/Value/KCACH2N=<s val="ModCenterSize16Bold"><c val="C14D63">双重事件</c></s>
 Param/Value/KCACH3S=<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSize16Bold"><c val="C14D63">"来自地狱"</c></s><s val="ModCenterSize16"><c val="44FF88">!</c></s>
 Param/Value/KCACH3N=<s val="ModCenterSize16Bold"><c val="C14D63">"来自地狱"</c></s>
-Param/Value/BE08890E=- 由此，他会是个D徒/暴徒、门徒/仆从，连环爱手、开膛手，但也可能只是个义警。
+Param/Value/BE08890E=- 由此，他会是个D徒/暴徒、连环爱手、开膛手，但也可能只是个义警。
