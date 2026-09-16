@@ -217,7 +217,8 @@ MUST_HAVE_KEYS = [
   # shw288 堂吉诃德 (3/21)
   'Param/Value/DQNAME', 'Param/Value/DQDESC', 'Param/Value/DQCARD',
   'Param/Value/DQBOX1', 'Param/Value/DQBOX2', 'Param/Value/DQBOX4',
-  'Param/Value/DQBOX6', 'Param/Value/DQCRIME', 'Param/Value/DQREV',
+  'Param/Value/DQBOX6', 'Param/Value/DQALIGN', 'Param/Value/DQCRIME', 'Param/Value/DQREV',
+  'Param/Value/DQINV1', 'Param/Value/DQINV2',
   'Param/Value/DQNIGHT',
   'Param/Value/DQACH2S', 'Param/Value/DQACH3',
   'Param/Value/DQACHD',]

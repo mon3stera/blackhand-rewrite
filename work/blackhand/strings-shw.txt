@@ -195,12 +195,15 @@ Param/Value/BE08890E=- 由此，他会是个D徒/暴徒、连环爱手、开膛�
 
 // shw288 堂吉诃德 (3/21)
 Param/Value/DQNAME=<c val="C9B36B">堂吉诃德</c>
-Param/Value/DQDESC=没落骑士，满心以为自己肩负着清扫邪恶的使命。<n/><n/><c val="BBDDFF">每晚选择一人开枪。子弹是空包，但你会记住被击中的人。若此人被白天处决，你将觉醒并继承其阵营。</c>
+Param/Value/DQDESC=没落骑士，满心以为自己肩负着清扫罪恶的使命。
 Param/Value/DQCARD=<c val="C9B36B">
-Param/Value/DQBOX1=- 每晚选择一人开枪（空包，无伤害）。
-Param/Value/DQBOX2=- 揭开前全场都视你为义警。<n/>- 被你击中的人若被白天处决，你将觉醒并加入其阵营。<n/>- 觉醒后获得一次夜间无敌。
+Param/Value/DQALIGN=无</c>（<c val="AAAAAA">温和</c>）
+Param/Value/DQBOX1=无。
+Param/Value/DQBOX2=- 你以为你是个义警，并且所有人都认为你是义警，其实你是个堂吉诃德。<n/>- 你拥有和义警完全一样的能力，但是你的攻击实际上不会造成效果。<n/>- 你会认为自己的攻击攻击到了有夜间无敌的目标，并且会有对应的夜间播报。<n/>- 在一个被你攻击过的目标被处死后，你会知道自己是堂吉诃德。若他是城镇，则你会与城镇共同胜利；若他是黑手D或者三合会，则你会与这两者共同胜利；若他是中立致命或中立邪恶，则你会与任意中立角色共同胜利。<n/>- 在你觉醒后，你拥有一次夜间无敌。
 Param/Value/DQBOX4=你是追逐巨人幻影的没落骑士。
-Param/Value/DQBOX6=- 处决你击中的人后，与其阵营一同获胜。
+Param/Value/DQBOX6=处决被你击中的人后，与其阵营一同胜利。
+Param/Value/DQINV1=你的目标挥舞着破旧的骑枪，枪尖上只残留着风车的木屑与尘土——他终于从幻梦中惊醒，他是堂吉诃德。
+Param/Value/DQINV2=
 Param/Value/DQCRIME=无
 Param/Value/DQREV=<s val="ModLeftSize16Bold"><c val="C9B36B">你刺中的只是巨人的倒影……你并不是义警，你是「堂吉诃德」！你被这位受难骑士的信念所感召，决定继承他的遗志。</c></s>
 Param/Value/DQNIGHT=<s val="ModLeftSize16Bold"><c val="FF0000">你听到一声枪响...</c></s>
