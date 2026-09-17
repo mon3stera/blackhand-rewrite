@@ -248,6 +248,8 @@ bool gv_soloTest;
 int[8] gv_bhAssertCat;
 int[8] gv_bhAssertRole;
 int gv_bhAssertN;
+int[16] gv_bhAssertForceCat;
+int[16] gv_bhAssertForceRole;
 void gf_BHNotify (text lp_msg, int lp_target, soundlink lp_sound);
 bool gf_BHRestrictAllowed (int lp_target);
 
@@ -48981,7 +48983,14 @@ void gf_OSRandomize () {
                 lv_x = RandomInt(1, gv_tempPlayers);
                 if ((lv_c[lv_x] == false)) {
                     lv_l[1] += 1;
-                    if ((gv_categoriesArray[lv_x] == 4)) {
+                    if ((gv_bhAssertForceCat[lv_x] != 0)) {
+                        lv_c[lv_x] = true;
+                        gv_semifinalRole[lv_z][1] = gv_bhAssertForceCat[lv_x];
+                        gv_semifinalRole[lv_z][0] = gv_bhAssertForceRole[lv_x];
+                        gv_bhAssertForceCat[lv_x] = 0;
+                        gv_bhAssertForceRole[lv_x] = 0;
+                    }
+                    else if ((gv_categoriesArray[lv_x] == 4)) {
                         if ((gv_rolesArray[lv_x] == 1)) {
                             lv_y = RandomFixed(0.0, gv_finalWeights[3][c_bhNeutralDrawMax]);
                         }
@@ -49334,6 +49343,12 @@ void gf_BHAssertApply () {
     int lv_pool;
     int lv_role;
 
+    lv_s = 1;
+    for ( ; (lv_s <= 15) ; lv_s += 1 ) {
+        gv_bhAssertForceCat[lv_s] = 0;
+        gv_bhAssertForceRole[lv_s] = 0;
+    }
+
     lv_i = 0;
     for ( ; (lv_i < gv_bhAssertN) ; lv_i += 1 ) {
         lv_pool = gv_bhAssertCat[lv_i];
@@ -49347,47 +49362,47 @@ void gf_BHAssertApply () {
 
         }
         if ((lv_have == 0)) {
-        lv_n = 0;
-        lv_pri = -1;
-        lv_s = 1;
-        for ( ; (lv_s <= 15) ; lv_s += 1 ) {
-            if ((gv_categoriesArray[lv_s] == 4) && (gf_BHRoleFitsKind(gv_rolesArray[lv_s], lv_pool, lv_role) == true)) {
-                lv_kind = gv_rolesArray[lv_s];
-                lv_this = 2;
-                if ((lv_kind == 19)) {
-                    lv_this = 1;
-                }
+            lv_n = 0;
+            lv_pri = -1;
+            lv_s = 1;
+            for ( ; (lv_s <= 15) ; lv_s += 1 ) {
+                if ((gv_bhAssertForceCat[lv_s] == 0) && (gv_categoriesArray[lv_s] == 4) && (gf_BHRoleFitsKind(gv_rolesArray[lv_s], lv_pool, lv_role) == true)) {
+                    lv_kind = gv_rolesArray[lv_s];
+                    lv_this = 2;
+                    if ((lv_kind == 19)) {
+                        lv_this = 1;
+                    }
 
-                if ((lv_kind == 1)) {
-                    lv_this = 0;
-                }
+                    if ((lv_kind == 1)) {
+                        lv_this = 0;
+                    }
 
-                if ((lv_this > lv_pri)) {
-                    lv_pri = lv_this;
-                    lv_n = 1;
-                    lv_ok[1] = lv_s;
-                }
-                else {
-                    if ((lv_this == lv_pri)) {
-                        lv_n += 1;
-                        lv_ok[lv_n] = lv_s;
+                    if ((lv_this > lv_pri)) {
+                        lv_pri = lv_this;
+                        lv_n = 1;
+                        lv_ok[1] = lv_s;
+                    }
+                    else {
+                        if ((lv_this == lv_pri)) {
+                            lv_n += 1;
+                            lv_ok[lv_n] = lv_s;
+                        }
+
                     }
 
                 }
 
             }
-
-        }
-        if ((lv_n < 1)) {
-            gf_CBSystemMessage((StringExternal("Param/Value/BHASTNONE") + gv_roleNameArray[lv_pool][lv_role]), gv_host, gv_host, 0, SoundLink("UI_BnetError", -1), Color(0, 0, 0));
-        }
-        else {
-            lv_pick = lv_ok[RandomInt(1, lv_n)];
-            gv_categoriesArray[lv_pick] = lv_pool;
-            gv_rolesArray[lv_pick] = lv_role;
-            gv_roleOptions[lv_pool][lv_role][10] = true;
-            gf_CBSystemMessage((StringExternal("Param/Value/BHASTDONE") + gv_roleNameArray[lv_pool][lv_role]), gv_host, gv_host, 0, SoundLink("UI_TipSelect", -1), Color(0, 0, 0));
-        }
+            if ((lv_n < 1)) {
+                gf_CBSystemMessage((StringExternal("Param/Value/BHASTNONE") + gv_roleNameArray[lv_pool][lv_role]), gv_host, gv_host, 0, SoundLink("UI_BnetError", -1), Color(0, 0, 0));
+            }
+            else {
+                lv_pick = lv_ok[RandomInt(1, lv_n)];
+                gv_bhAssertForceCat[lv_pick] = lv_pool;
+                gv_bhAssertForceRole[lv_pick] = lv_role;
+                gv_roleOptions[lv_pool][lv_role][10] = true;
+                gf_CBSystemMessage((StringExternal("Param/Value/BHASTDONE") + gv_roleNameArray[lv_pool][lv_role]), gv_host, gv_host, 0, SoundLink("UI_TipSelect", -1), Color(0, 0, 0));
+            }
 
         }
 

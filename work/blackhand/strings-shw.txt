@@ -247,5 +247,5 @@ Param/Value/BHASTHAVE=阵容里已经有这个角色：
 Param/Value/BHASTBAD=无法识别这个拼音。
 Param/Value/BHASTCLR=已清空强制出现名单。
 Param/Value/BHASTFULL=最多同时登记 8 个角色。
-Param/Value/BHASTDONE=已把一个随机席改成
+Param/Value/BHASTDONE=已在随机席强制出现
 
