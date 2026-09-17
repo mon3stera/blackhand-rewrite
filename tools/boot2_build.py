@@ -231,7 +231,7 @@ MUST_HAVE_KEYS = [
   'Param/Value/QZNIGHT', 'Param/Value/QZDEATH1', 'Param/Value/QZDEATH2',
   'Param/Value/QZSELF1', 'Param/Value/QZSELF2', 'Param/Value/QZDM',
   'Param/Value/QZTIP', 'Param/Value/QZSEL1', 'Param/Value/QZSEL2',
-  'Param/Value/QZCLR',]
+  'Param/Value/QZCLR', 'Param/Value/QZYOU', 'Param/Value/QZYOUSELF',]
 
 
 def parse_strings_file(path: Path) -> dict:

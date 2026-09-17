@@ -237,5 +237,7 @@ Param/Value/QZTIP=在其住所自爆
 Param/Value/QZSEL1=你将在此人的住所自爆：
 Param/Value/QZSEL2=你改去此人的住所自爆：
 Param/Value/QZCLR=你取消了今晚的自爆。
+Param/Value/QZYOU=<s val="ModLeftSize16Bold"><c val="FF0000">你在一场毁灭性的爆破中丧生。</c></s>
+Param/Value/QZYOUSELF=<s val="ModLeftSize16Bold"><c val="FF0000">你引爆了贴身的烈性炸药，与房间里的人同归于尽。</c></s>
 Param/Value/28F034F6=- 那暗示他可能会是个退伍军人、爱人狂、小丑，或弃子/死士。
 

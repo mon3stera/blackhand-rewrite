@@ -92932,6 +92932,7 @@ void gf_ESQiziBomb (int lp_killer, int lp_target) {
     int lv_hit;
     int lv_g;
     bool[16] lv_done;
+    bool[16] lv_kill;
     const int autoQZLOC_ae = 15;
     const int autoQZLOC_ai = 1;
     playergroup autoQZN_g;
@@ -92940,6 +92941,8 @@ void gf_ESQiziBomb (int lp_killer, int lp_target) {
     lv_n = 0;
     lv_b = 1;
     for ( ; ( (autoQZLOC_ai >= 0 && lv_b <= autoQZLOC_ae) || (autoQZLOC_ai < 0 && lv_b >= autoQZLOC_ae) ) ; lv_b += autoQZLOC_ai ) {
+        lv_done[lv_b] = false;
+        lv_kill[lv_b] = false;
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_b) == true) && (lv_b != lp_killer) && (gv_location[lv_b] == lp_target) && (gv_roles[lv_b][1] != gv_roles[lp_killer][1])) {
             lv_n += 1;
         }
@@ -92966,11 +92969,8 @@ void gf_ESQiziBomb (int lp_killer, int lp_target) {
         gv_deathText[lp_killer] = (gv_deathText[lp_killer] + StringExternal("Param/Value/QZSELF2"));
     }
     gv_deathDesc[lp_killer] = true;
+    lv_kill[lp_killer] = true;
 
-    lv_b = 1;
-    for ( ; ( (autoQZLOC_ai >= 0 && lv_b <= autoQZLOC_ae) || (autoQZLOC_ai < 0 && lv_b >= autoQZLOC_ae) ) ; lv_b += autoQZLOC_ai ) {
-        lv_done[lv_b] = false;
-    }
     lv_b = 1;
     for ( ; ( (autoQZLOC_ai >= 0 && lv_b <= autoQZLOC_ae) || (autoQZLOC_ai < 0 && lv_b >= autoQZLOC_ae) ) ; lv_b += autoQZLOC_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_b) == true) && (lv_b != lp_killer) && (gv_location[lv_b] == lp_target) && (gv_roles[lv_b][1] != gv_roles[lp_killer][1]) && (lv_done[lv_b] == false)) {
@@ -92988,6 +92988,9 @@ void gf_ESQiziBomb (int lp_killer, int lp_target) {
             else {
                 if (((gv_immuneChance[lv_b] > 0) || (gv_immune[lv_b][0] == true))) {
                     gf_CBSystemMessage(StringExternal("Param/Value/A18F43D8"), lv_b, lv_b, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                    if ((gv_immuneChance[lv_b] > 0)) {
+                        gv_immuneChance[lv_b] = (gv_immuneChance[lv_b] - 1);
+                    }
                     lv_done[lv_b] = true;
                 }
                 else {
@@ -93000,6 +93003,7 @@ void gf_ESQiziBomb (int lp_killer, int lp_target) {
                     }
                     else {
                         gv_damage[lv_b] += 1;
+                        gv_specialCasePlayer[lv_b][12] += 1;
                         gv_deathMethod[lv_b] = (gv_deathMethod[lv_b] + "C");
                         lv_x = RandomInt(1, 2);
                         if ((lv_x == 1)) {
@@ -93009,15 +93013,13 @@ void gf_ESQiziBomb (int lp_killer, int lp_target) {
                             gv_deathText[lv_b] = (gv_deathText[lv_b] + StringExternal("Param/Value/QZDEATH2"));
                         }
                         gv_deathDesc[lv_b] = true;
+                        lv_kill[lv_b] = true;
                         lv_done[lv_b] = true;
                         lv_hit += 1;
                     }
                 }
             }
         }
-    }
-    if ((lv_hit > 0)) {
-        gf_BHCrimeMurder(lp_killer);
     }
 
     if ((gv_nightSequence == true)) {
@@ -93036,6 +93038,23 @@ void gf_ESQiziBomb (int lp_killer, int lp_target) {
         SoundPlay(SoundLink("Uni_DeathFXFireLarge", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
         SoundPlay(SoundLink("CivilianDeath", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
         Wait(RandomFixed(0.5, 1.0), c_timeGame);
+    }
+
+    lv_b = 1;
+    for ( ; ( (autoQZLOC_ai >= 0 && lv_b <= autoQZLOC_ae) || (autoQZLOC_ai < 0 && lv_b >= autoQZLOC_ae) ) ; lv_b += autoQZLOC_ai ) {
+        if ((lv_kill[lv_b] == true) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_b) == true)) {
+            gv_placedNote[lv_b] = gv_deathNote[lp_killer];
+            gv_diedAtNight[lv_b] = true;
+            gv_placeofDeath[lv_b] = lp_target;
+            gf_KillPlayer(lv_b, false);
+            if ((lv_b == lp_killer)) {
+                gf_CBSystemMessage(StringExternal("Param/Value/QZYOUSELF"), lv_b, lv_b, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+            }
+            else {
+                gf_CBSystemMessage(StringExternal("Param/Value/QZYOU"), lv_b, lv_b, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                gf_BHCrimeMurder(lp_killer);
+            }
+        }
     }
 }
 
