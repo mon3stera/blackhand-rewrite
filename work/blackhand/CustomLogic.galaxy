@@ -93124,19 +93124,17 @@ void gf_ESQiziBomb (int lp_killer, int lp_target) {
     }
 
     if ((gv_nightSequence == true)) {
-        // 语音 → 引信 → 语音 → 投瓶 → 炸门 → 大火 → 惨叫
+        // 语音 → 引信 → 语音 → 投瓶 → 炸门 → 大火 → 惨叫（各段等完再进下一段）
         SoundPlay(SoundLink("Reaper_What", -1), PlayerGroupAll(), 100.0, 0.0);
-        Wait(2.0, c_timeGame);
+        Wait(3.4, c_timeGame);
         SoundPlay(SoundLink("Doodad_SparkBurstLong", -1), PlayerGroupAll(), 100.0, 0.0);
-        Wait(0.45, c_timeGame);
-        SoundPlay(SoundLink("Terran_FireSmall", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
-        Wait(0.4, c_timeGame);
-        SoundPlay(SoundLink("Reaper_Pissed", -1), PlayerGroupAll(), 100.0, 0.0);
-        Wait(2.2, c_timeGame);
+        Wait(1.0, c_timeGame);
+        SoundPlay(SoundLink("Reaper_Attack", -1), PlayerGroupAll(), 100.0, 0.0);
+        Wait(3.4, c_timeGame);
         SoundPlay(SoundLink("Hellion_AttackLaunch", -1), PlayerGroupAll(), 100.0, 0.0);
-        Wait(0.45, c_timeGame);
-        SoundPlay(SoundLink("Doodad_VahallaBaseDestructibleDoorStandAStart", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
-        Wait(0.3, c_timeGame);
+        Wait(0.8, c_timeGame);
+        SoundPlay(SoundLink("Doodad_VahallaBaseDestructibleDoorStandAStart", -1), PlayerGroupAll(), 100.0, 0.0);
+        Wait(0.5, c_timeGame);
         autoQZN_g = PlayerGroupAll();
         autoQZN_var = -1;
         while (true) {
@@ -93145,11 +93143,13 @@ void gf_ESQiziBomb (int lp_killer, int lp_target) {
             gf_CBSystemMessage(StringExternal("Param/Value/QZNIGHT"), autoQZN_var, 16, 0, SoundLink("Silent", -1), Color(0,0,0));
             gf_FlashScreen(Color(100.00, 20.00, 0.00), autoQZN_var, 2.0, 40.0);
         }
-        SoundPlay(SoundLink("Terran_FireLarge", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
-        Wait(0.25, c_timeGame);
-        SoundPlay(SoundLink("Uni_DeathFXFireLarge", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
-        SoundPlay(SoundLink("CivilianDeath", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+        SoundPlay(SoundLink("Terran_FireLarge", -1), PlayerGroupAll(), 100.0, 0.0);
         Wait(0.7, c_timeGame);
+        SoundPlay(SoundLink("Uni_DeathFXFireLarge", -1), PlayerGroupAll(), 100.0, 0.0);
+        Wait(0.6, c_timeGame);
+        SoundPlay(SoundLink("CivilianDeath", -1), PlayerGroupAll(), 100.0, 0.0);
+        SoundPlay(SoundLink("CivilianFemaleDeath", -1), PlayerGroupAll(), 100.0, 0.0);
+        Wait(1.2, c_timeGame);
     }
 
     lv_b = 1;
