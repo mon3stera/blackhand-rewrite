@@ -82974,9 +82974,12 @@ void gf_ESShadowKill (int lp_player, int lp_killer) {
     // Variable Declarations
     int lv_target;
     int lv_x;
+    int lv_a;
     bool lv_c;
     playergroup auto9B99A3AA_g;
     int auto9B99A3AA_var;
+    int autoSHWKILL_ae;
+    const int autoSHWKILL_ai = 1;
 
     // Variable Initialization
     lv_target = lp_player;
@@ -83019,9 +83022,19 @@ void gf_ESShadowKill (int lp_player, int lp_killer) {
         gv_specialCasePlayer[lv_target][12] += 1;
         gv_deathMethod[lv_target] = (gv_deathMethod[lv_target] + "w");
         if ((gv_nightSequence == true)) {
+            // shw290: 语音等够时长（2.6 秒会被 DarkTemplar_What 盖掉，后面一刀出不来）
             SoundPlay(SoundLink("DarkTemplar_What", -1), PlayerGroupAll(), 100.0, 0.0);
-            Wait(2.6, c_timeGame);
-            SoundPlay(SoundLink("DarkTemplar_Attack", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+            Wait(3.8, c_timeGame);
+            SoundPlay(SoundLink("Zeratul_Ready", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+            Wait(RandomFixed(0.4, 0.7), c_timeGame);
+            autoSHWKILL_ae = RandomInt(2, 3);
+            lv_a = 1;
+            for ( ; ( (autoSHWKILL_ai >= 0 && lv_a <= autoSHWKILL_ae) || (autoSHWKILL_ai < 0 && lv_a >= autoSHWKILL_ae) ) ; lv_a += autoSHWKILL_ai ) {
+                Wait(RandomFixed(0.25, 0.45), c_timeGame);
+                SoundPlay(SoundLink("DarkTemplar_Attack", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+                SoundPlay(SoundLink("DarkTemplar_AttackImpact", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+            }
+            Wait(RandomFixed(0.3, 0.5), c_timeGame);
             auto9B99A3AA_g = PlayerGroupAll();
             auto9B99A3AA_var = -1;
             while (true) {
@@ -83085,6 +83098,20 @@ void gf_ESShadowKill (int lp_player, int lp_killer) {
 
                 }
 
+            }
+
+            if ((gv_nightSequence == true)) {
+                if ((gv_isAMan[lv_target] == true)) {
+                    SoundPlay(SoundLink("CivilianDeath", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+                }
+                else {
+                    SoundPlay(SoundLink("CivilianFemaleDeath", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+                }
+                Wait(RandomFixed(0.35, 0.6), c_timeGame);
+                SoundPlay(SoundLink("Doodad_DebrisImpact", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.1);
+                Wait(RandomFixed(0.4, 0.7), c_timeGame);
+                SoundPlay(SoundLink("FirstOfficer_Custom_Walk_End", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+                Wait(RandomFixed(0.5, 0.8), c_timeGame);
             }
 
             gf_KillPlayer(lv_target, false);
