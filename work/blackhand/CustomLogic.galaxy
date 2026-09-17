@@ -6583,6 +6583,8 @@ void gf_DefaultRoleOptions () {
     gv_roleOptions[3][20][1] = true;
     gv_bankSaveWeights[0][3][20] = 0.5;
     gv_roleWeights[3][20] = 0.5;
+    gv_bankSaveWeights[0][3][21] = 0.25;   // 堂吉诃德(3/21)：中立温和席随机，低权重
+    gv_roleWeights[3][21] = 0.25;
     gv_bankSaveWeights[0][3][31] = 0.25;   // 影武者(3/31)：中立致命席随机权重（对齐堕落审判者 0.25）
     gv_roleWeights[3][31] = 0.25;
     gv_roleOptionAllowed[4][1][0] = true;
@@ -49379,6 +49381,11 @@ void gf_OSRandomizeMatrix (int lp_a, int lp_x, fixed lp_y) {
     if ((lv_y >= gv_finalWeights[3][16]) && (lv_y < gv_finalWeights[3][17]) && (((gv_rolesArray[lv_x] == 1) && (gv_roleOptions[4][1][3] == false)) || ((gv_rolesArray[lv_x] == 14) && (gv_roleOptions[4][14][5] == false)) || ((gv_rolesArray[lv_x] == 19) && (gv_roleOptions[4][19][2] == false)))) {
         gv_roles[lv_a][1] = 3;
         gv_roles[lv_a][0] = 17;
+    }
+
+    if ((gv_roleOptions[3][21][10] == false) && (lv_y >= gv_finalWeights[3][20]) && (lv_y < gv_finalWeights[3][21]) && (((gv_rolesArray[lv_x] == 1) && (gv_roleOptions[4][1][3] == false)) || (gv_rolesArray[lv_x] == 14) || ((gv_rolesArray[lv_x] == 19) && (gv_roleOptions[4][19][2] == false)))) {
+        gv_roles[lv_a][1] = 3;
+        gv_roles[lv_a][0] = 21;
     }
 
     if ((lv_y >= gv_finalWeights[3][30]) && (lv_y < gv_finalWeights[3][31]) && (((gv_rolesArray[lv_x] == 1) && (gv_roleOptions[4][1][3] == false) && (gv_roleOptions[4][1][0] == false)) || ((gv_rolesArray[lv_x] == 12) && (gv_roleOptions[4][13][3] == false)) || ((gv_rolesArray[lv_x] == 19) && (gv_roleOptions[4][19][0] == false)))) {
