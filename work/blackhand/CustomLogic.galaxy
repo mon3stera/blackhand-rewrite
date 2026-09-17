@@ -31239,6 +31239,8 @@ void gf_RSConversions () {
     const int auto5E7FAE99_ai = 1;
     const int auto3DDA7DFB_ae = 15;
     const int auto3DDA7DFB_ai = 1;
+    const int autoSHWQZCV_ae = 15;
+    const int autoSHWQZCV_ai = 1;
 
     // Variable Initialization
 
@@ -31393,10 +31395,6 @@ void gf_RSConversions () {
                     gf_SKV_2_zaizangzhe(lv_a);
                 }
 
-                if ((gv_roles[lv_a][0] == 16)) {
-                    gf_SKV_2_qizi(lv_a);
-                }
-
             }
 
             if ((gv_roles[lv_a][1] == 5)) {
@@ -31460,14 +31458,25 @@ void gf_RSConversions () {
                     gf_SKV_5_pucong(lv_a);
                 }
 
-                if ((gv_roles[lv_a][0] == 16)) {
-                    gf_SKV_5_sishi(lv_a);
-                }
-
             }
 
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 7)) {
                 gf_SKV_1_gongjihuichengyuan(lv_a);
+            }
+
+        }
+
+    }
+    // 弃子/死士垫底：其他能变党徒/暴徒的人先转完，还没有刀口才轮到他们
+    lv_a = 1;
+    for ( ; ( (autoSHWQZCV_ai >= 0 && lv_a <= autoSHWQZCV_ae) || (autoSHWQZCV_ai < 0 && lv_a >= autoSHWQZCV_ae) ) ; lv_a += autoSHWQZCV_ai ) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
+            if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 16)) {
+                gf_SKV_2_qizi(lv_a);
+            }
+
+            if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 16)) {
+                gf_SKV_5_sishi(lv_a);
             }
 
         }
