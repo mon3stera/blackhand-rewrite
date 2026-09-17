@@ -211,3 +211,31 @@ Param/Value/DQACH2S=<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSi
 Param/Value/DQACH3=<s val="ModCenterSize16Bold"><c val="C9B36B">与风车的三度决斗</c></s>
 Param/Value/DQACHD=<s val="ModCenterSize16"><c val="C9B36B">你坚信他们是邪恶的巨人，你打光了所有的子弹。直到最后，你也未曾听到现实破裂的声音。</c></s>
 
+// shw289 弃子(2/16) / 死士(5/16)
+Param/Value/QZNAME=<c val="BB3355">弃子</c>
+Param/Value/QZDESC=一个听命教父，毫无退路的黑手党党徒，为家族玉石俱焚。
+Param/Value/QZCARD=<c val="BB3355">
+Param/Value/SSNAME=<c val="6969BB">死士</c>
+Param/Value/SSDESC=一个效忠龙头，视死如归的三合会门客，为帮会舍身取义。
+Param/Value/SSCARD=<c val="6969BB">
+Param/Value/QZBOX1=到一个目标的住所中自爆，自爆会炸死所有访问目标的人。
+Param/Value/QZBOX2=- 除开自己和同阵营之外，至少能打到一人才会引爆；打不中则炸药不会引爆，你可以再等一夜。<n/>- 你自身的自爆无法被救治、无法被保护，引爆后必定死去。<n/>- 不会误伤同阵营。<n/>- 第一夜无法行动。
+Param/Value/QZBOX4=你是听命教父、毫无退路的黑手党党徒。
+Param/Value/SSBOX4=你是效忠龙头、视死如归的三合会门客。
+Param/Value/QZBOX6=为家族玉石俱焚，与黑手D一同胜利。
+Param/Value/SSBOX6=为帮会舍身取义，与三合会一同胜利。
+Param/Value/QZCRIME=非法闯入，谋爱，破坏治安
+Param/Value/QZN1=<s val="ModLeftSize16Bold"><c val="FF88FF">为了完成你最后的任务，你必须要准备一整天...</c></s>
+Param/Value/QZFAIL=<s val="ModLeftSize16Bold"><c val="FF88FF">你没有找到值得同归于尽的目标，炸药没有引爆。</c></s>
+Param/Value/QZNIGHT=<s val="ModLeftSize16Bold"><c val="FF0000">一声震耳欲聋的爆炸撕裂了夜色，整座城镇都在剧烈颤抖……</c></s>
+Param/Value/QZDEATH1=他在一场毁灭性的爆破中丧生，现场只剩下一片焦黑的废墟。
+Param/Value/QZDEATH2=他的身体在剧烈的爆炸中粉身碎骨。
+Param/Value/QZSELF1=他引爆了贴身的烈性炸药，与房间里的人同归于尽。
+Param/Value/QZSELF2=他在废墟中化为灰烬，完成了教父/龙头交给他的最后一次任务。
+Param/Value/QZDM=死者死于剧烈爆炸。
+Param/Value/QZTIP=在其住所自爆
+Param/Value/QZSEL1=你将在此人的住所自爆：
+Param/Value/QZSEL2=你改去此人的住所自爆：
+Param/Value/QZCLR=你取消了今晚的自爆。
+Param/Value/28F034F6=- 那暗示他可能会是个退伍军人、爱人狂、小丑，或弃子/死士。
+

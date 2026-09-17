@@ -1,0 +1,35 @@
+{
+  "pool": 5,
+  "role": 16,
+  "pinyin": "sishi",
+  "cn": "死士",
+  "name_key": "SSNAME",
+  "desc_key": "SSDESC",
+  "investigator": [
+    "E7B2BEE7A59E1",
+    "E7B2BEE7A59E2"
+  ],
+  "crime_key": "QZCRIME",
+  "options": [],
+  "flag10": true,
+  "guessable": true,
+  "help_preview": null,
+  "interactions": {
+    "swap": {
+      "text": "受影响：夜间上门走 gf_BHVisitAction 写 gv_visitation，女巫/巴士司机会改写实际目标房屋。自爆按改写后的房屋做位置屠杀。"
+    },
+    "investigate": {
+      "text": "探员挂精神不稳定组（退伍军人/爱人狂/小丑，文案补弃子/死士）。警长走三合会默认「可查出三合会」。图鉴犯罪 = 非法闯入，谋爱，破坏治安。",
+      "investigator": true
+    },
+    "restrict": {
+      "text": "可被限制。被限制当夜空过（不定爆、不死）。不反爱限制者。"
+    },
+    "guessage": {
+      "text": "可猜：审查页三合会下标 14 → 16（12→14、13→15 保持）。",
+      "in_guess_list": true
+    }
+  },
+  "note": "三合会。与弃子同构位置自爆，不误伤三合会。第一夜不能行动。额外刀口，不占当夜三合会击爱。死因字母 C。独有（gv_bigRoleAssigned[11]）。",
+  "review_status": "draft"
+}

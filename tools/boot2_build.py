@@ -221,7 +221,17 @@ MUST_HAVE_KEYS = [
   'Param/Value/DQINV1', 'Param/Value/DQINV2',
   'Param/Value/DQNIGHT',
   'Param/Value/DQACH2S', 'Param/Value/DQACH3',
-  'Param/Value/DQACHD',]
+  'Param/Value/DQACHD',
+  # shw289 弃子(2/16) / 死士(5/16)
+  'Param/Value/QZNAME', 'Param/Value/QZDESC', 'Param/Value/QZCARD',
+  'Param/Value/SSNAME', 'Param/Value/SSDESC', 'Param/Value/SSCARD',
+  'Param/Value/QZBOX1', 'Param/Value/QZBOX2', 'Param/Value/QZBOX4',
+  'Param/Value/SSBOX4', 'Param/Value/QZBOX6', 'Param/Value/SSBOX6',
+  'Param/Value/QZCRIME', 'Param/Value/QZN1', 'Param/Value/QZFAIL',
+  'Param/Value/QZNIGHT', 'Param/Value/QZDEATH1', 'Param/Value/QZDEATH2',
+  'Param/Value/QZSELF1', 'Param/Value/QZSELF2', 'Param/Value/QZDM',
+  'Param/Value/QZTIP', 'Param/Value/QZSEL1', 'Param/Value/QZSEL2',
+  'Param/Value/QZCLR',]
 
 
 def parse_strings_file(path: Path) -> dict:

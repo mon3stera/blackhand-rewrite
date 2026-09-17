@@ -1,0 +1,35 @@
+{
+  "pool": 2,
+  "role": 16,
+  "pinyin": "qizi",
+  "cn": "弃子",
+  "name_key": "QZNAME",
+  "desc_key": "QZDESC",
+  "investigator": [
+    "E7B2BEE7A59E1",
+    "E7B2BEE7A59E2"
+  ],
+  "crime_key": "QZCRIME",
+  "options": [],
+  "flag10": true,
+  "guessable": true,
+  "help_preview": null,
+  "interactions": {
+    "swap": {
+      "text": "受影响：夜间上门走 gf_BHVisitAction 写 gv_visitation，女巫/巴士司机会改写实际目标房屋。自爆按改写后的房屋做位置屠杀。"
+    },
+    "investigate": {
+      "text": "探员挂精神不稳定组（退伍军人/爱人狂/小丑，文案补弃子/死士）。警长走黑手党默认「可查出黑手党」。图鉴犯罪 = 非法闯入，谋爱，破坏治安。",
+      "investigator": true
+    },
+    "restrict": {
+      "text": "可被限制。被限制当夜空过（不定爆、不死）。不反爱限制者。"
+    },
+    "guessage": {
+      "text": "可猜：审查页黑手党下标 14 → 16（12→14、13→15 保持）。",
+      "in_guess_list": true
+    }
+  },
+  "note": "黑手D。位置自爆：除自己与同阵营外至少能打到一人才引爆，否则空等；自身无法被救治/保护，引爆后必死。第一夜不能行动。额外刀口，不占当夜黑手党击爱。死因字母 C。独有（gv_bigRoleAssigned[10]）。",
+  "review_status": "draft"
+}
