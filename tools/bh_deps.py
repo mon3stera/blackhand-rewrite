@@ -30,8 +30,13 @@ import sc2map  # noqa: E402
 DOC_INFO = "DocumentInfo"
 DOC_HEADER = "DocumentHeader"
 
-# 自定义 mod：bnet 名 -> 本地相对路径
+# 自定义 mod：bnet 名 -> 本地相对路径（相对星际安装目录）
+# 原图/发布包只写 bnet:；测试包再补 file:，避免战网缓存缺失时「找不到依赖项」。
+# 现行包内名字带 CA 前缀（CA Mafia Assets A / CA mm2 / CA mm3）；旧名一并认。
 MOD_FALLBACKS = {
+    "CA Mafia Assets A": "Mods/Mafia Assets A.SC2Mod",
+    "CA mm2": "Mods/mm2.SC2Mod",
+    "CA mm3": "Mods/mm3.SC2Mod",
     "Mafia Assets A": "Mods/Mafia Assets A.SC2Mod",
     "mm2": "Mods/mm2.SC2Mod",
     "mm3": "Mods/mm3.SC2Mod",
