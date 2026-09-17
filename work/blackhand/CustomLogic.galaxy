@@ -92845,6 +92845,7 @@ void gf_RAQiziActions (int lp_player) {
     for ( ; ( (autoQZRA_ai >= 0 && lv_a <= autoQZRA_ae) || (autoQZRA_ai < 0 && lv_a >= autoQZRA_ae) ) ; lv_a += autoQZRA_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (lv_a != lp_player)) {
             libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/QZTIP"), PlayerGroupSingle(lp_player));
+            libNtve_gf_SetDialogItemText(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/0F0E5931"), PlayerGroupSingle(lp_player));
             DialogControlSetVisible(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), true);
             libNtve_gf_SetDialogItemColor(gv_actionDialogItem[lv_a][5], Color(100.00, 20.00, 20.00), PlayerGroupSingle(lp_player));
             DialogControlSetSize(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), 120, 30);
@@ -92852,6 +92853,14 @@ void gf_RAQiziActions (int lp_player) {
             libNtve_gf_SetDialogItemImage2(gv_actionDialogItem[lv_a][5], "ActionHighlight.dds", PlayerGroupSingle(lp_player));
         }
         else {
+            if ((lv_a == lp_player)) {
+                libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/937B3DB6"), PlayerGroupSingle(lp_player));
+                libNtve_gf_SetDialogItemText(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/937B3DB6"), PlayerGroupSingle(lp_player));
+                libNtve_gf_SetDialogItemColor(gv_actionDialogItem[lv_a][5], Color(50.20, 50.20, 50.20), PlayerGroupSingle(lp_player));
+                DialogControlSetSize(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), 120, 30);
+                libNtve_gf_SetDialogItemImage(gv_actionDialogItem[lv_a][5], "ActionNormal.dds", PlayerGroupSingle(lp_player));
+                libNtve_gf_SetDialogItemImage2(gv_actionDialogItem[lv_a][5], "ActionHighlight.dds", PlayerGroupSingle(lp_player));
+            }
             DialogControlSetVisible(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), false);
         }
     }
