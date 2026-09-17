@@ -241,4 +241,11 @@ Param/Value/QZCLR=你取消了今晚的自爆。
 Param/Value/QZYOU=<s val="ModLeftSize16Bold"><c val="FF0000">你在一场毁灭性的爆破中丧生。</c></s>
 Param/Value/QZYOUSELF=<s val="ModLeftSize16Bold"><c val="FF0000">你引爆了贴身的烈性炸药，与房间里的人同归于尽。</c></s>
 Param/Value/28F034F6=- 那暗示他可能会是个退伍军人、爱人狂、小丑，或弃子/死士。
+Param/Value/BHASTOK=已登记，确认选项后将强制出现：
+Param/Value/BHASTNONE=当前阵容没有能出该角色的随机位：
+Param/Value/BHASTHAVE=阵容里已经有这个角色：
+Param/Value/BHASTBAD=无法识别这个拼音。
+Param/Value/BHASTCLR=已清空强制出现名单。
+Param/Value/BHASTFULL=最多同时登记 8 个角色。
+Param/Value/BHASTDONE=已把一个随机席改成
 
