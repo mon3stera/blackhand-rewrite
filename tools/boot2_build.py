@@ -217,6 +217,9 @@ MUST_HAVE_KEYS = [
   'Param/Value/WDTNAME', 'Param/Value/WDTDESC', 'Param/Value/WDTBTN',
   'Param/Value/WDTSUBA', 'Param/Value/WDTSUBB', 'Param/Value/WDTSUBC',
   'Param/Value/WDTSUBD',
+  # 随机：决死之心
+  'Param/Value/JSXTNAME', 'Param/Value/JSXTDESC', 'Param/Value/JSXTBTN',
+  'Param/Value/JSXTSUBA', 'Param/Value/JSXTSUBB', 'Param/Value/JSXTSUBC',
   # shw288 堂吉诃德 (3/21)
   'Param/Value/DQNAME', 'Param/Value/DQDESC', 'Param/Value/DQCARD',
   'Param/Value/DQBOX1', 'Param/Value/DQBOX2', 'Param/Value/DQBOX4',

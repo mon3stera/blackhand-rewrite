@@ -45,6 +45,10 @@ ALIAS = {
     '开膛手': (3, 20),
     '连环杀手': (3, 1),
     '连环爱手': (3, 1),
+    '弃子': (2, 16),
+    '死士': (5, 16),
+    '杀人狂': (3, 9),
+    '爱人狂': (3, 9),
 }
 
 # 池3 固定角色 → 中立子层（致命=默认；其余两集合来自随机槽 4/13、4/14 的选项清单）
@@ -54,6 +58,8 @@ NEUTRAL_MILD_ROLES = {(3, 2), (3, 3), (3, 6), (3, 7), (3, 17)}  # 生存者、�
 # 随机槽的规格友好名 → 源码槽名（源码名见 roleNameArray[4][N] 去空格）
 SLOT_ALIAS = {
     '城镇政府': '城镇zf',
+    '政府': '城镇zf',
+    '保护': '城镇保护',
     '黑手随机': '黑手D随机',
     '黑手党随机': '黑手D随机',
     '中立邪恶': '中立协恶',
@@ -235,12 +241,21 @@ def build_lineup(sub_data, name_idx, spec, n):
     for label in sub_data['fixed']:
         seats.append(resolve_seat(name_idx, label))
     dec = resolve_seat(name_idx, spec['decrement'])
+    fallback = spec.get('decrement_fallback')
     while len(seats) > n:
-        if dec not in seats:
-            raise SystemExit(f'人数 {len(seats)}→{n}: 可递减角色 "{spec["decrement"]}" 已耗尽')
-        seats.reverse()
-        seats.remove(dec)
-        seats.reverse()
+        if dec in seats:
+            seats.reverse()
+            seats.remove(dec)
+            seats.reverse()
+            continue
+        if fallback:
+            dec2 = resolve_seat(name_idx, fallback)
+            if dec2 in seats:
+                seats.reverse()
+                seats.remove(dec2)
+                seats.reverse()
+                continue
+        raise SystemExit(f'人数 {len(seats)}→{n}: 可递减角色 "{spec["decrement"]}" 已耗尽')
     if len(seats) != n:
         raise SystemExit(f'该子变体无法配到 {n} 人（当前 {len(seats)}）')
 

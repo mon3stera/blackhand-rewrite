@@ -248,4 +248,10 @@ Param/Value/BHASTBAD=无法识别这个拼音。
 Param/Value/BHASTCLR=已清空强制出现名单。
 Param/Value/BHASTFULL=最多同时登记 8 个角色。
 Param/Value/BHASTDONE=已在随机席强制出现
+Param/Value/JSXTNAME=<s val="ModCenterSize24Bold">随机：<c val="BB3355">决死之心</c></s>
+Param/Value/JSXTDESC=教父给他的家人留足了退路，代价是他必须执行这最后的任务。<n/>身上背负着还不清的罪，胸前绑着滴答作响的雷——他怀揣着一颗决死之心，只为在这座城镇燃尽自己最后的价值。<n/>该设定固定有一名弃子或者死士。<n/><s val="ModCenterSize18Bold">12-15人可用</s>
+Param/Value/JSXTSUBA=<c val="BB3355">决死之心</c> A
+Param/Value/JSXTSUBB=<c val="BB3355">决死之心</c> B
+Param/Value/JSXTSUBC=<c val="BB3355">决死之心</c> C
+Param/Value/JSXTBTN=<s val="ModCenterSize24Bold"><c val="BB3355">决死之心</c></s>
 
