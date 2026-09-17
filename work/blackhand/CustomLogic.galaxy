@@ -92628,10 +92628,12 @@ void gf_ESRipperKill (int lp_target, int lp_killer, int lp_mode) {
         }
         else {
             if ((lp_mode == 1)) {
-                // 拦路：脚步戛止，呛咳
+                // 拦路：脚步戛止，撞见，出手
                 lv_msg = StringExternal("Param/Value/KCNIGHT1");
                 SoundPlay(SoundLink("SM_RaynorCommander_Custom_Walk_End", -1), PlayerGroupAll(), 90.0, 0.0);
                 Wait(0.55, c_timeGame);
+                SoundPlay(SoundLink("Hybrid_Link_on", -1), PlayerGroupAll(), 100.0, 0.0);
+                Wait(0.6, c_timeGame);
                 SoundPlay(SoundLink("Spectre_Attack", -1), PlayerGroupAll(), 100.0, 0.0);
                 Wait(1.6, c_timeGame);
                 SoundPlay(SoundLink("Roach_AttackImpactMelee", -1), PlayerGroupAll(), 85.0, 0.0);
@@ -92639,8 +92641,10 @@ void gf_ESRipperKill (int lp_target, int lp_killer, int lp_mode) {
                 SoundPlay(SoundLink("Queen_AttackImpact", -1), PlayerGroupAll(), 80.0, 0.0);
             }
             else {
-                // 目击者：短暂扭打
+                // 目击者：撞见，短暂扭打
                 lv_msg = StringExternal("Param/Value/KCNIGHT2");
+                SoundPlay(SoundLink("Hybrid_Link_on", -1), PlayerGroupAll(), 100.0, 0.0);
+                Wait(0.6, c_timeGame);
                 SoundPlay(SoundLink("Spectre_Attack", -1), PlayerGroupAll(), 100.0, 0.0);
                 Wait(1.6, c_timeGame);
                 SoundPlay(SoundLink("Zealot_AttackImpact", -1), PlayerGroupAll(), 95.0, 0.0);
