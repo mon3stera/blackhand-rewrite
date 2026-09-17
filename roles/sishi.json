@@ -10,7 +10,9 @@
     "E7B2BEE7A59E2"
   ],
   "crime_key": "QZCRIME",
-  "options": [],
+  "options": [
+    {"i": 0, "exists": true, "important": 3, "default": true, "key": "DFCC8BE6"}
+  ],
   "flag10": true,
   "guessable": true,
   "help_preview": null,
