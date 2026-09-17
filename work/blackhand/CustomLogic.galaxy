@@ -566,7 +566,7 @@ int[16] gv_txGuessTarget; // 天选者(3/32) 猜测所绑定的雷击目标（0=
 int[16] gv_txGuessBad; // 天选者(3/32) 本局猜错/作废次数（shw150：成就「见微知著」要求为 0）
 int[16] gv_shwMode2Used; // 影武者(3/31) 本局曾以模式二出手（shw152：成就「影缝」要求为 0）
 bool[16] gv_dqRevealed; // shw288 堂吉诃德(3/21) 是否已揭开
-int[16] gv_dqAlign; // shw288 揭开后阵营：0无 1城镇 2黑手D+三合会 3中立致命/邪恶
+int[16] gv_dqAlign; // shw288 揭开后阵营：0无 1城镇 2黑手D+三合会 3任意中立
 int[16] gv_dqArmor; // shw288 揭开后剩余夜间无敌次数（1→0）
 int[16] gv_dqTag; // shw288 被空包击中的人 → 开枪的堂吉诃德座位
 int[16] gv_e8B7B3E8BDA6EFBC9F;
@@ -92762,10 +92762,8 @@ text gf_DQSeenName (int lp_player) {
 
 int gf_DQClassify (int lp_player) {
     int lv_pool;
-    int lv_role;
 
     lv_pool = gv_roles[lp_player][1];
-    lv_role = gv_roles[lp_player][0];
     if ((lv_pool == 1)) {
         return 1;
     }
@@ -92773,10 +92771,7 @@ int gf_DQClassify (int lp_player) {
         return 2;
     }
     if ((lv_pool == 3)) {
-        if (((lv_role == 1) || (lv_role == 3) || (lv_role == 4) || (lv_role == 5) || (lv_role == 8) || (lv_role == 9) || (lv_role == 10) || (lv_role == 11) || (lv_role == 12) || (lv_role == 13) || (lv_role == 14) || (lv_role == 15) || (lv_role == 16) || (lv_role == 17) || (lv_role == 19) || (lv_role == 20) || (lv_role == 31) || (lv_role == 32))) {
-            return 3;
-        }
-        return 0;
+        return 3;
     }
     return 0;
 }
