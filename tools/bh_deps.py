@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
-"""给地图的 DocumentInfo 补上自定义 mod 的本地文件回退路径。
+"""测试包：把自定义三件 mod 的依赖改成编辑器手改的那种纯本地路径。
 
-原图（发布版 .s2ma）里的依赖是纯 bnet 形式：
+发布包（原图）是纯 bnet：
 
-    <Value>bnet:Mafia Assets A/1.0/179538</Value>
+    <Value>bnet:CA Mafia Assets A/1.0/187934</Value>
 
-这种形式只能由战网/街机解析；用 -run 直启（或离线）时地图加载失败，
-客户端弹「无法运行游戏」。编辑器重新保存过的地图会写成：
+测试时战网缓存经常找不到。编辑器里把依赖改成本地后，写出来的是：
 
-    <Value>bnet:Mafia Assets A/1.0/179538,file:Mods/Mafia Assets A.SC2Mod</Value>
+    <Value>file:Mods\\Mafia Assets A.SC2Mod</Value>
 
-本工具把后者补上，从而让地图在本地 Mods 目录下直接加载。
+注意两点（qz2 手改实证，qz5 写错过）：
+  1. 整段换成 file:，不要写成 bnet:…,file:…（本地 mod 的内部名对不上 CA 命名空间，模型全变占位）
+  2. 分隔符用反斜杠 Mods\\，与编辑器一致
 
-    python3 tools/bh_deps.py work/bh4.SC2Map [--check]
+    python3 tools/bh_deps.py work/boot2-xxx-solo.SC2Map [--check]
 """
 
 from __future__ import annotations
@@ -30,19 +31,37 @@ import sc2map  # noqa: E402
 DOC_INFO = "DocumentInfo"
 DOC_HEADER = "DocumentHeader"
 
-# 自定义 mod：bnet 名 -> 本地相对路径（相对星际安装目录）
-# 原图/发布包只写 bnet:；测试包再补 file:，避免战网缓存缺失时「找不到依赖项」。
-# 现行包内名字带 CA 前缀（CA Mafia Assets A / CA mm2 / CA mm3）；旧名一并认。
-MOD_FALLBACKS = {
-    "CA Mafia Assets A": "Mods/Mafia Assets A.SC2Mod",
-    "CA mm2": "Mods/mm2.SC2Mod",
-    "CA mm3": "Mods/mm3.SC2Mod",
-    "Mafia Assets A": "Mods/Mafia Assets A.SC2Mod",
-    "mm2": "Mods/mm2.SC2Mod",
-    "mm3": "Mods/mm3.SC2Mod",
+# (bnet 名, 编辑器写出的本地路径)。旧名（不带 CA）也认。
+CUSTOM_LOCAL = [
+    ("CA Mafia Assets A", r"Mods\Mafia Assets A.SC2Mod"),
+    ("CA mm2", r"Mods\mm2.SC2Mod"),
+    ("CA mm3", r"Mods\mm3.SC2Mod"),
+]
+NAME_ALIASES = {
+    "CA Mafia Assets A": ("CA Mafia Assets A", "Mafia Assets A"),
+    "CA mm2": ("CA mm2",),
+    "CA mm3": ("CA mm3",),
 }
 
-VALUE_RE = re.compile(r"<Value>(bnet:([^/]+)/[^<]*)</Value>")
+
+def local_value(path: str) -> str:
+    return f"file:{path}"
+
+
+def target_for(value: str) -> str | None:
+    """若这条依赖是自定义三件之一，返回应写成的 file:Mods\\…，否则 None。"""
+    v = value.strip()
+    for name, path in CUSTOM_LOCAL:
+        want = local_value(path)
+        names = NAME_ALIASES[name]
+        if any(v.startswith(f"bnet:{n}/") for n in names):
+            return want
+        if v.replace("/", "\\") == want:
+            return want
+        # 上一版误写成 bnet:…,file:Mods/… 也收回
+        if ",file:" in v and any(f"bnet:{n}/" in v for n in names):
+            return want
+    return None
 
 
 def fix_document_header(raw: bytes) -> tuple[bytes, list[tuple[str, str]]]:
@@ -51,39 +70,57 @@ def fix_document_header(raw: bytes) -> tuple[bytes, list[tuple[str, str]]]:
     没有长度前缀（只有前面的条数），所以直接替换整段字符串是安全的。
     """
     changed: list[tuple[str, str]] = []
-    out = raw
+    first = raw.find(b"bnet:")
+    if first < 0:
+        first = raw.find(b"file:")
+    if first < 0:
+        return raw, changed
 
-    for name, fallback in MOD_FALLBACKS.items():
-        pattern = re.compile(rb"bnet:" + re.escape(name.encode()) + rb"/[^,\x00]*")
+    parts: list[bytes] = []
+    p = first
+    while p < len(raw):
+        z = raw.find(b"\x00", p)
+        if z < 0:
+            break
+        seg = raw[p:z]
+        if not (seg.startswith(b"bnet:") or seg.startswith(b"file:")):
+            break
+        parts.append(seg)
+        p = z + 1
+    tail = raw[p:]
 
-        def repl(match: re.Match, name: str = name, fallback: str = fallback) -> bytes:
-            seg = match.group(0)
-            tail = out[match.end():match.end() + 6]
+    new_parts: list[bytes] = []
+    for seg in parts:
+        s = seg.decode("utf-8", "replace")
+        want = target_for(s)
+        if want and s != want:
+            changed.append((s, want))
+            new_parts.append(want.encode("utf-8"))
+        else:
+            new_parts.append(seg)
 
-            if tail.startswith(b",file:"):
-                return seg
+    if not changed:
+        return raw, changed
 
-            changed.append((name, f"{seg.decode()},file:{fallback}"))
-            return seg + b",file:" + fallback.encode()
+    rebuilt = raw[:first] + b"\x00".join(new_parts) + b"\x00" + tail
+    return rebuilt, changed
 
-        out = pattern.sub(repl, out)
 
-    return out, changed
+VALUE_RE = re.compile(r"<Value>([^<]*)</Value>")
 
 
 def fix_deps(map_path: Path, check_only: bool = False) -> int:
     raw = sc2map.read(map_path, DOC_INFO)
     text = raw.decode("utf-8-sig")
-    changed = []
+    changed: list[tuple[str, str]] = []
 
     def repl(match: re.Match) -> str:
-        value, name = match.group(1), match.group(2)
-
-        if name not in MOD_FALLBACKS or ",file:" in value:
+        value = match.group(1)
+        want = target_for(value)
+        if want is None or value == want:
             return match.group(0)
-
-        changed.append((name, f"{value},file:{MOD_FALLBACKS[name]}"))
-        return f"<Value>{value},file:{MOD_FALLBACKS[name]}</Value>"
+        changed.append((value, want))
+        return f"<Value>{want}</Value>"
 
     fixed = VALUE_RE.sub(repl, text)
 
@@ -92,23 +129,24 @@ def fix_deps(map_path: Path, check_only: bool = False) -> int:
     changed.extend(header_changed)
 
     if not changed:
-        print("无需修改（依赖已带本地回退，或没有目标 mod）")
+        print("无需修改（自定义 mod 已是 file:Mods\\ 本地路径）")
         return 0
 
-    for name, new in changed:
-        print(f"  + {name}: {new}")
+    for old, new in changed:
+        print(f"  {old}  →  {new}")
 
     if check_only:
         print(f"需要修改 {len(changed)} 条（--check 未写入）")
         return 1
 
     if fixed != text:
-        sc2map.write(map_path, DOC_INFO, ("\ufeff" + fixed).encode("utf-8"))
+        # 原图无 BOM；加 BOM 可能让编辑器解析依赖失败
+        sc2map.write(map_path, DOC_INFO, fixed.encode("utf-8"))
 
     if header_fixed != header_raw:
         sc2map.write(map_path, DOC_HEADER, header_fixed)
 
-    print(f"已写回 {map_path}（{len(changed)} 条依赖补上本地回退）")
+    print(f"已写回 {map_path}（{len(changed)} 条改成本地 file:Mods\\）")
     return 0
 
 

@@ -17,7 +17,7 @@ shw154 事故沉淀：少了样式表那件 → 名字里的斜体标签找不�
 用法：
     python3 tools/boot2_build.py --out work/boot2-shw141.SC2Map
     python3 tools/boot2_build.py --out work/boot2-shw141-solo.SC2Map --solo
-    # --solo 测试包会给 CA Mafia Assets A / CA mm2 / CA mm3 补 file:Mods/ 本地回退；
+    # --solo 测试包把 CA 三件改成编辑器口径的纯本地路径 file:Mods\…；
     # 发布包（默认、release.py）保持原图纯 bnet 依赖。
     python3 tools/boot2_build.py --out work/boot2-xxx.SC2Map --strings-only-preview
     python3 tools/boot2_build.py --out work/boot2-shw141.SC2Map --base work/boot2-shw136.SC2Map
@@ -359,7 +359,7 @@ def main() -> int:
     ap.add_argument('--solo', action='store_true',
                     help='单人测试包：只把写入包内的 c_bhSoloBuild / c_bhSoloFill 改成 true，不动工作区源码；并给自定义 mod 补本地 file: 依赖回退')
     ap.add_argument('--local-deps', action='store_true',
-                    help='给 CA Mafia Assets A / CA mm2 / CA mm3 补 file:Mods/… 本地回退（--solo 默认打开；发布包不要加）')
+                    help='把 CA 三件改成 file:Mods\\… 纯本地路径（--solo 默认打开；发布包不要加）')
     args = ap.parse_args()
 
     out = Path(args.out)
@@ -559,33 +559,34 @@ def main() -> int:
         print('✗ banklist_fix 失败，停止')
         return 1
 
-    # 8b) 测试包依赖：自定义三件 mod 补 file:Mods/ 回退，发布包保持纯 bnet
-    #     （战网缓存缺失时测试会「找不到依赖项」；线上发布必须仍走原图 bnet 名）
+    # 8b) 测试包依赖：自定义三件改成 file:Mods\…（编辑器手改口径）；发布包保持纯 bnet
     want_local_deps = bool(args.solo or args.local_deps)
     di_text = sc2map.read(out, 'DocumentInfo').decode('utf-8-sig')
+    local_markers = [bh_deps.local_value(path) for _, path in bh_deps.CUSTOM_LOCAL]
     if want_local_deps:
         rc = bh_deps.fix_deps(out, check_only=False)
         if rc != 0:
-            print('✗ 给测试包补本地依赖失败，停止')
+            print('✗ 给测试包改本地依赖失败，停止')
             return 1
         di_text = sc2map.read(out, 'DocumentInfo').decode('utf-8-sig')
-        missing_fb = [name for name in ('CA Mafia Assets A', 'CA mm2', 'CA mm3')
-                      if not any(f'bnet:{name}/' in line and ',file:Mods/' in line
-                                 for line in di_text.splitlines())]
-        if missing_fb:
-            print(f'✗ 测试包仍缺本地依赖回退: {missing_fb}')
+        missing_fb = [m for m in local_markers if m not in di_text]
+        leaked_bnet = [name for name, _ in bh_deps.CUSTOM_LOCAL if f'bnet:{name}/' in di_text]
+        if missing_fb or leaked_bnet:
+            print(f'✗ 测试包依赖未改成纯 file:Mods\\（缺 {missing_fb} 残留 bnet {leaked_bnet}）')
             return 1
-        print('8b) 测试包依赖：CA Mafia Assets A / CA mm2 / CA mm3 已补 file:Mods/ 本地回退')
+        print(r'8b) 测试包依赖：自定义三件已改成 file:Mods\… 纯本地路径')
     else:
         leaked = [line.strip() for line in di_text.splitlines()
-                  if ('CA Mafia Assets A' in line or 'CA mm2' in line or 'CA mm3' in line)
-                  and ',file:' in line]
-        if leaked:
-            print('✗ 发布包自定义 mod 带了 file: 本地回退（应保持纯 bnet）:')
+                  if any(m in line or m.replace('\\', '/') in line for m in local_markers)]
+        missing_bnet = [name for name, _ in bh_deps.CUSTOM_LOCAL if f'bnet:{name}/' not in di_text]
+        if leaked or missing_bnet:
+            print('✗ 发布包自定义 mod 应保持纯 bnet（不要 file:Mods\\）：')
             for line in leaked:
                 print(f'    {line}')
+            if missing_bnet:
+                print(f'    缺少 {missing_bnet}')
             return 1
-        print('8b) 发布包依赖：自定义 mod 保持纯 bnet（不写本地 file:）')
+        print('8b) 发布包依赖：自定义 mod 保持纯 bnet')
 
     b = bh_meta.budget(out) if NOTES_SRC.exists() and not args.skip_notes else None
     if b:
