@@ -60754,7 +60754,7 @@ bool gt_DeathNote_Func (bool testConds, bool runActions) {
             return false;
         }
 
-        if (!((((gv_roles[EventPlayer()][1] == 2) && ((gv_roles[EventPlayer()][0] == 1) || (gv_roles[EventPlayer()][0] == 2) || (gv_roles[EventPlayer()][0] == 8) || (gv_roles[EventPlayer()][0] == 9) || (gv_roles[EventPlayer()][0] == 14))) || ((gv_roles[EventPlayer()][1] == 5) && ((gv_roles[EventPlayer()][0] == 1) || (gv_roles[EventPlayer()][0] == 2) || (gv_roles[EventPlayer()][0] == 8) || (gv_roles[EventPlayer()][0] == 9) || (gv_roles[EventPlayer()][0] == 14))) || ((gv_roles[EventPlayer()][1] == 3) && ((gv_roles[EventPlayer()][0] == 1) || (gv_roles[EventPlayer()][0] == 4) || (gv_roles[EventPlayer()][0] == 5) || (gv_roles[EventPlayer()][0] == 9) || (gv_roles[EventPlayer()][0] == 14) || (gv_roles[EventPlayer()][0] == 15)))))) {
+        if (!((((gv_roles[EventPlayer()][1] == 2) && ((gv_roles[EventPlayer()][0] == 1) || (gv_roles[EventPlayer()][0] == 2) || (gv_roles[EventPlayer()][0] == 8) || (gv_roles[EventPlayer()][0] == 9) || (gv_roles[EventPlayer()][0] == 14) || (gv_roles[EventPlayer()][0] == 16))) || ((gv_roles[EventPlayer()][1] == 5) && ((gv_roles[EventPlayer()][0] == 1) || (gv_roles[EventPlayer()][0] == 2) || (gv_roles[EventPlayer()][0] == 8) || (gv_roles[EventPlayer()][0] == 9) || (gv_roles[EventPlayer()][0] == 14) || (gv_roles[EventPlayer()][0] == 16))) || ((gv_roles[EventPlayer()][1] == 3) && ((gv_roles[EventPlayer()][0] == 1) || (gv_roles[EventPlayer()][0] == 4) || (gv_roles[EventPlayer()][0] == 5) || (gv_roles[EventPlayer()][0] == 9) || (gv_roles[EventPlayer()][0] == 14) || (gv_roles[EventPlayer()][0] == 15) || (gv_roles[EventPlayer()][0] == 20) || (gv_roles[EventPlayer()][0] == 31)))))) {
             return false;
         }
     }
