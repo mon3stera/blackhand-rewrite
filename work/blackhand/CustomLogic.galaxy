@@ -39916,7 +39916,7 @@ void gf_RTTriadRoleText (int lp_player) {
     if ((gv_roles[lv_a][0] == 16)) {
         gv_roleBoxText[lv_a][0] = (gv_roleBoxText[lv_a][0] + StringExternal("Param/Value/E6022687"));
         gv_roleBoxText[lv_a][1] = StringExternal("Param/Value/QZBOX1");
-        gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/QZBOX2");
+        gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/SSBOX2");
         gv_roleBoxText[lv_a][4] = StringExternal("Param/Value/SSBOX4");
         gv_roleBoxText[lv_a][6] = gf_RTMakeWinList(gv_roles[lv_a][1], gv_roles[lv_a][0]);
         SoundPlay(SoundLink("Artanis_Attack", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);

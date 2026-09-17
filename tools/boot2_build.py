@@ -229,7 +229,7 @@ MUST_HAVE_KEYS = [
   'Param/Value/QZNAME', 'Param/Value/QZDESC', 'Param/Value/QZCARD',
   'Param/Value/SSNAME', 'Param/Value/SSDESC', 'Param/Value/SSCARD',
   'Param/Value/QZBOX1', 'Param/Value/QZBOX2', 'Param/Value/QZBOX4',
-  'Param/Value/SSBOX4', 'Param/Value/QZBOX6', 'Param/Value/SSBOX6',
+  'Param/Value/SSBOX2', 'Param/Value/SSBOX4', 'Param/Value/QZBOX6', 'Param/Value/SSBOX6',
   'Param/Value/QZCRIME', 'Param/Value/QZN1', 'Param/Value/QZFAIL',
   'Param/Value/QZNIGHT', 'Param/Value/QZDEATH1', 'Param/Value/QZDEATH2',
   'Param/Value/QZSELF1', 'Param/Value/QZSELF2', 'Param/Value/QZDM',
