@@ -93966,16 +93966,16 @@ void gf_ESQiziBomb (int lp_killer, int lp_target) {
     int lv_g;
     bool[16] lv_done;
     bool[16] lv_kill;
+    bool[16] lv_flash;
     const int autoQZLOC_ae = 15;
     const int autoQZLOC_ai = 1;
-    playergroup autoQZN_g;
-    int autoQZN_var;
 
     lv_n = 0;
     lv_b = 1;
     for ( ; ( (autoQZLOC_ai >= 0 && lv_b <= autoQZLOC_ae) || (autoQZLOC_ai < 0 && lv_b >= autoQZLOC_ae) ) ; lv_b += autoQZLOC_ai ) {
         lv_done[lv_b] = false;
         lv_kill[lv_b] = false;
+        lv_flash[lv_b] = false;
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_b) == true) && (lv_b != lp_killer) && (gf_QiziAtHouse(lv_b, lp_target) == true) && (gv_roles[lv_b][1] != gv_roles[lp_killer][1])) {
             lv_n += 1;
         }
@@ -94003,16 +94003,19 @@ void gf_ESQiziBomb (int lp_killer, int lp_target) {
     }
     gv_deathDesc[lp_killer] = true;
     lv_kill[lp_killer] = true;
+    lv_flash[lp_killer] = true;
 
     lv_b = 1;
     for ( ; ( (autoQZLOC_ai >= 0 && lv_b <= autoQZLOC_ae) || (autoQZLOC_ai < 0 && lv_b >= autoQZLOC_ae) ) ; lv_b += autoQZLOC_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_b) == true) && (lv_b != lp_killer) && (gf_QiziAtHouse(lv_b, lp_target) == true) && (gv_roles[lv_b][1] != gv_roles[lp_killer][1]) && (lv_done[lv_b] == false)) {
+            lv_flash[lv_b] = true;
             if ((gv_guarded[lv_b] != 0) && (gv_guarded[lv_b] != lp_killer)) {
                 lv_g = gv_guarded[lv_b];
                 gv_guarded[lv_b] = 0;
                 lv_done[lv_b] = true;
                 if ((lv_done[lv_g] == false) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_g) == true)) {
                     gv_damage[lv_g] += 1;
+                    lv_flash[lv_g] = true;
                     gf_ESBodyguardKill(lp_killer, lv_g);
                     lv_done[lv_g] = true;
                     lv_hit += 1;
@@ -94067,13 +94070,12 @@ void gf_ESQiziBomb (int lp_killer, int lp_target) {
         Wait(0.8, c_timeGame);
         SoundPlay(SoundLink("Doodad_VahallaBaseDestructibleDoorStandAStart", -1), PlayerGroupAll(), 100.0, 0.0);
         Wait(0.5, c_timeGame);
-        autoQZN_g = PlayerGroupAll();
-        autoQZN_var = -1;
-        while (true) {
-            autoQZN_var = PlayerGroupNextPlayer(autoQZN_g, autoQZN_var);
-            if (autoQZN_var < 0) { break; }
-            gf_CBSystemMessage(StringExternal("Param/Value/QZNIGHT"), autoQZN_var, 16, 0, SoundLink("Silent", -1), Color(0,0,0));
-            gf_FlashScreen(Color(100.00, 20.00, 0.00), autoQZN_var, 2.0, 40.0);
+        lv_b = 1;
+        for ( ; ( (autoQZLOC_ai >= 0 && lv_b <= autoQZLOC_ae) || (autoQZLOC_ai < 0 && lv_b >= autoQZLOC_ae) ) ; lv_b += autoQZLOC_ai ) {
+            if ((lv_flash[lv_b] == true)) {
+                gf_CBSystemMessage(StringExternal("Param/Value/QZNIGHT"), lv_b, 16, 0, SoundLink("Silent", -1), Color(0,0,0));
+                gf_FlashScreen(Color(100.00, 20.00, 0.00), lv_b, 2.0, 40.0);
+            }
         }
         SoundPlay(SoundLink("Terran_FireLarge", -1), PlayerGroupAll(), 100.0, 0.0);
         Wait(0.7, c_timeGame);
