@@ -174,6 +174,7 @@ MUST_HAVE_KEYS = [
     # 警长的「可查出X」开关与播报、影武者/天选者/堕落审判者的卡片特性行（shw149）
     'Param/Value/SHWBOXS',
     'Param/Value/SHWMLCULT',  # shw262：共济会长老角色卡「目标免疫协教转化」
+    'Param/Value/BHJAILSWAP', 'Param/Value/BHJAILSWAP0',  # 司机/欺骗者/迷惑者：目标含狱中则能力不生效
     'Param/Value/CWNAME', 'Param/Value/CWCARD', 'Param/Value/CWDESC', 'Param/Value/CWINV1', 'Param/Value/CWINV2',
     'Param/Value/CWBOX1', 'Param/Value/CWBOX2', 'Param/Value/CWBOX4', 'Param/Value/CWBOX4ID',
     'Param/Value/CWWIN', 'Param/Value/CWTIP', 'Param/Value/CWCRIME', 'Param/Value/CWSHREV',
