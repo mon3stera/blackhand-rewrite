@@ -38561,7 +38561,7 @@ void gf_RTMafiaRoleText (int lp_player) {
     }
 
     if ((gv_roles[lv_a][0] == 16)) {
-        gv_roleBoxText[lv_a][0] = (gv_roleBoxText[lv_a][0] + StringExternal("Param/Value/3CD9A6FD"));
+        gv_roleBoxText[lv_a][0] = (gv_roleBoxText[lv_a][0] + StringExternal("Param/Value/A11BF57D"));
         gv_roleBoxText[lv_a][1] = StringExternal("Param/Value/QZBOX1");
         gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/QZBOX2");
         if ((gv_roleOptions[2][16][0] == true)) {
@@ -39993,7 +39993,7 @@ void gf_RTTriadRoleText (int lp_player) {
     }
 
     if ((gv_roles[lv_a][0] == 16)) {
-        gv_roleBoxText[lv_a][0] = (gv_roleBoxText[lv_a][0] + StringExternal("Param/Value/E6022687"));
+        gv_roleBoxText[lv_a][0] = (gv_roleBoxText[lv_a][0] + StringExternal("Param/Value/B650CF1C"));
         gv_roleBoxText[lv_a][1] = StringExternal("Param/Value/QZBOX1");
         gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/SSBOX2");
         if ((gv_roleOptions[5][16][0] == true)) {
