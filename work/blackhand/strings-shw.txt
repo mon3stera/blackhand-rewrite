@@ -262,4 +262,8 @@ Param/Value/QZACH1D=<s val="ModCenterSize16"><c val="BB3355">我的任务...完�
 Param/Value/QZACH2S=<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSize16Bold"><c val="BB3355">安家落户</c></s><s val="ModCenterSize16"><c val="44FF88">!</c></s>
 Param/Value/QZACH2N=<s val="ModCenterSize16Bold"><c val="BB3355">安家落户</c></s>
 Param/Value/QZACH2D=<s val="ModCenterSize16"><c val="BB3355">教父把买命的安家费打到了你账上，而你竟然奇迹般地有命回去亲自花掉它。</c></s>
+Param/Value/558F60F0=可能是陪侍、参谋、恐吓者、绑架者、弃子、或密探。
+Param/Value/416F7C6A=可能是D徒、教父、伪装者、绑架者、弃子。
+Param/Value/C238D4D3=可能是交际花、管家、封口、审讯、死士、先锋。
+Param/Value/3830A1D5=可能是暴徒、龙头、渗透、审讯、死士。
 

@@ -5128,7 +5128,6 @@ void gf_InitializeVariables () {
     gv_roleOptionExists[2][16][0] = true;
     gv_roleOptionsImportant[2][16][0] = 3;
     gv_roleOptionsText[2][16][0] = StringExternal("Param/Value/F41B96E5");
-    gv_roleOptions[2][16][10] = true;
     gv_roleNameArray[3][1] = StringExternal("Param/Value/752B197C");
     gv_roleDescriptionArray[3][1] = StringExternal("Param/Value/872B318B");
     gv_roleInvestigatorArray[3][1][0] = gv_investigatorE6ADA6E599A81;
@@ -5921,7 +5920,6 @@ void gf_InitializeVariables () {
     gv_roleOptionExists[5][16][0] = true;
     gv_roleOptionsImportant[5][16][0] = 3;
     gv_roleOptionsText[5][16][0] = StringExternal("Param/Value/DFCC8BE6");
-    gv_roleOptions[5][16][10] = true;
     gf_DefaultRoleOptions();
     gf_InitializeNames();
     gf_InitializeOther();

@@ -13,7 +13,7 @@
   "options": [
     {"i": 0, "exists": true, "important": 3, "default": true, "key": "F41B96E5"}
   ],
-  "flag10": true,
+  "flag10": false,
   "guessable": true,
   "help_preview": null,
   "interactions": {
