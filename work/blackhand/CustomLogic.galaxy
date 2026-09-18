@@ -94072,8 +94072,8 @@ void gf_ESQiziBomb (int lp_killer, int lp_target) {
         Wait(0.5, c_timeGame);
         lv_b = 1;
         for ( ; ( (autoQZLOC_ai >= 0 && lv_b <= autoQZLOC_ae) || (autoQZLOC_ai < 0 && lv_b >= autoQZLOC_ae) ) ; lv_b += autoQZLOC_ai ) {
+            gf_CBSystemMessage(StringExternal("Param/Value/QZNIGHT"), lv_b, 16, 0, SoundLink("Silent", -1), Color(0,0,0));
             if ((lv_flash[lv_b] == true)) {
-                gf_CBSystemMessage(StringExternal("Param/Value/QZNIGHT"), lv_b, 16, 0, SoundLink("Silent", -1), Color(0,0,0));
                 gf_FlashScreen(Color(100.00, 20.00, 0.00), lv_b, 2.0, 40.0);
             }
         }
