@@ -262,6 +262,7 @@ void gf_BHVisitAction (int lp_player);
 void gf_BHVisitSelf (int lp_player);
 void gf_BHVisitNone (int lp_player);
 bool gf_BHWentTo (int lp_player, int lp_house); // vis 或 vis2 是否落到这户（0 不算）
+bool gf_QiziAtHouse (int lp_player, int lp_house); // 弃子/死士：这人是否在被炸的那一户
 void gf_BHSetBlocker (int lp_target, int lp_blocker);
 void gf_BHUnblock (int lp_target);
 void gf_BHBlock (int lp_target, int lp_blocker);
@@ -84273,6 +84274,43 @@ bool gf_BHWentTo (int lp_player, int lp_house) {
     return false;
 }
 
+// 弃子/死士爆炸占位：卡面「炸死所有访问目标的人；目标没行动视作访问自己」。
+// location==房屋（人在现场）∪ 真正上门（vis/vis2，不含女巫/狱警/绑架者/法医这种人不去现场的「访问」）。
+bool gf_QiziAtHouse (int lp_player, int lp_house) {
+    bool lv_remote;
+
+    if ((lp_house < 1) || (lp_player < 1)) {
+        return false;
+    }
+
+    if ((gv_location[lp_player] == lp_house)) {
+        return true;
+    }
+
+    if ((lp_player == lp_house) && ((gv_visitation[lp_player] < 1) || (gv_visitation[lp_player] == lp_player))) {
+        return true;
+    }
+
+    lv_remote = false;
+    if ((gv_roles[lp_player][1] == 1) && ((gv_roles[lp_player][0] == 10) || (gv_roles[lp_player][0] == 13))) {
+        lv_remote = true;
+    }
+
+    if (((gv_roles[lp_player][1] == 2) || (gv_roles[lp_player][1] == 5)) && (gv_roles[lp_player][0] == 9)) {
+        lv_remote = true;
+    }
+
+    if ((gv_roles[lp_player][1] == 3) && (gv_roles[lp_player][0] == 7)) {
+        lv_remote = true;
+    }
+
+    if ((lv_remote == false) && (gf_BHWentTo(lp_player, lp_house) == true)) {
+        return true;
+    }
+
+    return false;
+}
+
 // 限制：只写「谁被谁限制」，不动访问
 void gf_BHSetBlocker (int lp_target, int lp_blocker) {
     gv_roleblocked[lp_target] = lp_blocker;
@@ -93938,7 +93976,7 @@ void gf_ESQiziBomb (int lp_killer, int lp_target) {
     for ( ; ( (autoQZLOC_ai >= 0 && lv_b <= autoQZLOC_ae) || (autoQZLOC_ai < 0 && lv_b >= autoQZLOC_ae) ) ; lv_b += autoQZLOC_ai ) {
         lv_done[lv_b] = false;
         lv_kill[lv_b] = false;
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_b) == true) && (lv_b != lp_killer) && (gv_location[lv_b] == lp_target) && (gv_roles[lv_b][1] != gv_roles[lp_killer][1])) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_b) == true) && (lv_b != lp_killer) && (gf_QiziAtHouse(lv_b, lp_target) == true) && (gv_roles[lv_b][1] != gv_roles[lp_killer][1])) {
             lv_n += 1;
         }
     }
@@ -93968,7 +94006,7 @@ void gf_ESQiziBomb (int lp_killer, int lp_target) {
 
     lv_b = 1;
     for ( ; ( (autoQZLOC_ai >= 0 && lv_b <= autoQZLOC_ae) || (autoQZLOC_ai < 0 && lv_b >= autoQZLOC_ae) ) ; lv_b += autoQZLOC_ai ) {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_b) == true) && (lv_b != lp_killer) && (gv_location[lv_b] == lp_target) && (gv_roles[lv_b][1] != gv_roles[lp_killer][1]) && (lv_done[lv_b] == false)) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_b) == true) && (lv_b != lp_killer) && (gf_QiziAtHouse(lv_b, lp_target) == true) && (gv_roles[lv_b][1] != gv_roles[lp_killer][1]) && (lv_done[lv_b] == false)) {
             if ((gv_guarded[lv_b] != 0) && (gv_guarded[lv_b] != lp_killer)) {
                 lv_g = gv_guarded[lv_b];
                 gv_guarded[lv_b] = 0;

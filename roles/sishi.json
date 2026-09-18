@@ -18,7 +18,7 @@
   "help_preview": null,
   "interactions": {
     "swap": {
-      "text": "受影响：夜间上门走 gf_BHVisitAction 写 gv_visitation，女巫/巴士司机会改写实际目标房屋。自爆按改写后的房屋做位置屠杀。"
+      "text": "受影响：夜间上门走 gf_BHVisitAction 写 gv_visitation，女巫/巴士司机会改写实际目标房屋。自爆按改写后的房屋：现场（gv_location）∪ 真正上门（gf_BHWentTo vis/vis2，不含女巫/狱警/绑架者/法医）。"
     },
     "investigate": {
       "text": "探员挂精神不稳定组（退伍军人/爱人狂/小丑，文案补弃子/死士）。警长走三合会默认「可查出三合会」。图鉴犯罪 = 非法闯入，谋爱，破坏治安。",
