@@ -11,7 +11,7 @@
  ],
  "crime_key": "CWCRIME",
  "options": [],
- "flag10": true,
+ "flag10": false,
  "guessable": true,
  "help_preview": null,
  "interactions": {
@@ -31,6 +31,6 @@
    "in_guess_list": true
   }
  },
- "note": "中立邪恶。只在自设与专用预设出现，不进随机槽。预设固定市长。",
+ "note": "中立邪恶。全体随机 / 中立协恶 / 中立随机可抽，权重与审计官同档（3.0）。「不包括 审ji官」会一并排除。预设固定市长。",
  "review_status": "reviewed"
 }

@@ -268,4 +268,6 @@ Param/Value/C238D4D3=可能是交际花、管家、封口、审讯、死士、�
 Param/Value/3830A1D5=可能是暴徒、龙头、渗透、审讯、死士。
 Param/Value/D962C0BA=可能是警长、探员、法医、侦探、监视者、观察者或副手。
 Param/Value/1D5532BC=不包括 监视者、观察者
+Param/Value/4E68D04F=可能是女巫、协教徒、巫医、审ji官、煽动家，或法官。
+Param/Value/736A2207=不包括 审ji官、煽动家
 
