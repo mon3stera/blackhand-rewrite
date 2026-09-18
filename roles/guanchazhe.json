@@ -11,7 +11,7 @@
  ],
  "crime_key": "GCZBLANK",
  "options": [],
- "flag10": true,
+ "flag10": false,
  "guessable": true,
  "help_preview": null,
  "interactions": {
