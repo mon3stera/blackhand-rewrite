@@ -101,19 +101,26 @@ def set_notes(path, items, locale='zhCN', write_strings=True, keys_all_locales=(
     lines = gs.split('\n')
     table, added, updated = raw[table_start:], [], []
 
+    def ents_now():
+        # 每改一条长度都可能变，必须按当前表重解析，不能沿用第一次的偏移
+        # （1.112 曾因此把 DescLong 写回到带「立刻下架」的旧句，预览版追加说明也丢了）
+        return parse_entries(raw[:table_start] + table)
+
     for num, text in items:
         key = num if '/' in num else f'DocInfo/PatchNote{int(num):03d}'
         every = key in keys_all_locales
-        hit = [e for e in all_ents if e[1] == key and (every or e[2] == locale)]
+        hit = [e for e in ents_now() if e[1] == key and (every or e[2] == locale)]
 
         if hit:
             # 多语种命中时按偏移**从后往前**改，否则前一处长度变化会让后一处偏移失效
+            buf = raw[:table_start] + table
             for off, _, loc, old in sorted(hit, key=lambda e: -e[0]):
                 tag = loc.encode('ascii')[::-1]
                 old_bytes = encode(key, old, tag)
-                assert raw[off:off + len(old_bytes)] == old_bytes, f'{key} 原条目编解码不一致'
+                assert buf[off:off + len(old_bytes)] == old_bytes, f'{key} 原条目编解码不一致'
                 rel = off - table_start
                 table = table[:rel] + encode(key, text, tag) + table[rel + len(old_bytes):]
+                buf = raw[:table_start] + table
             updated.append(key)
         else:
             table = table + encode(key, text, locale.encode('ascii')[::-1])
