@@ -84274,8 +84274,8 @@ bool gf_BHWentTo (int lp_player, int lp_house) {
     return false;
 }
 
-// 弃子/死士爆炸占位：卡面「炸死所有访问目标的人；目标没行动视作访问自己」。
-// location==房屋（人在现场）∪ 真正上门（vis/vis2，不含女巫/狱警/绑架者/法医这种人不去现场的「访问」）。
+// 弃子/死士爆炸占位：同时打中目标本人（出门也打，不打进牢里）以及上门访问该户的人。
+// location==房屋 ∪ 真正上门（vis/vis2，不含女巫/狱警/绑架者/法医）。
 bool gf_QiziAtHouse (int lp_player, int lp_house) {
     bool lv_remote;
 
@@ -84283,11 +84283,15 @@ bool gf_QiziAtHouse (int lp_player, int lp_house) {
         return false;
     }
 
-    if ((gv_location[lp_player] == lp_house)) {
+    if ((lp_player == lp_house)) {
+        if ((gv_jailed[lp_player] != 0)) {
+            return false;
+        }
+
         return true;
     }
 
-    if ((lp_player == lp_house) && ((gv_visitation[lp_player] < 1) || (gv_visitation[lp_player] == lp_player))) {
+    if ((gv_location[lp_player] == lp_house)) {
         return true;
     }
 
@@ -94030,29 +94034,20 @@ void gf_ESQiziBomb (int lp_killer, int lp_target) {
                     lv_done[lv_b] = true;
                 }
                 else {
-                    if ((gv_healing[lv_b] > 0)) {
-                        gf_CBSystemMessage(StringExternal("Param/Value/F3979B0C"), lv_b, lv_b, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                        gf_FlashScreen(Color(0.00, 100.00, 0.00), lv_b, 3.0, 0.0);
-                        gv_healing[lv_b] -= 1;
-                        gv_deathMethod[lv_b] = (gv_deathMethod[lv_b] + "h");
-                        lv_done[lv_b] = true;
+                    gv_damage[lv_b] += 1;
+                    gv_specialCasePlayer[lv_b][12] += 1;
+                    gv_deathMethod[lv_b] = (gv_deathMethod[lv_b] + "C");
+                    lv_x = RandomInt(1, 2);
+                    if ((lv_x == 1)) {
+                        gv_deathText[lv_b] = (gv_deathText[lv_b] + StringExternal("Param/Value/QZDEATH1"));
                     }
                     else {
-                        gv_damage[lv_b] += 1;
-                        gv_specialCasePlayer[lv_b][12] += 1;
-                        gv_deathMethod[lv_b] = (gv_deathMethod[lv_b] + "C");
-                        lv_x = RandomInt(1, 2);
-                        if ((lv_x == 1)) {
-                            gv_deathText[lv_b] = (gv_deathText[lv_b] + StringExternal("Param/Value/QZDEATH1"));
-                        }
-                        else {
-                            gv_deathText[lv_b] = (gv_deathText[lv_b] + StringExternal("Param/Value/QZDEATH2"));
-                        }
-                        gv_deathDesc[lv_b] = true;
-                        lv_kill[lv_b] = true;
-                        lv_done[lv_b] = true;
-                        lv_hit += 1;
+                        gv_deathText[lv_b] = (gv_deathText[lv_b] + StringExternal("Param/Value/QZDEATH2"));
                     }
+                    gv_deathDesc[lv_b] = true;
+                    lv_kill[lv_b] = true;
+                    lv_done[lv_b] = true;
+                    lv_hit += 1;
                 }
             }
         }
