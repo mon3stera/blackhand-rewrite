@@ -254,4 +254,10 @@ Param/Value/JSXTSUBA=<c val="BB3355">决死之心</c> A
 Param/Value/JSXTSUBB=<c val="BB3355">决死之心</c> B
 Param/Value/JSXTSUBC=<c val="BB3355">决死之心</c> C
 Param/Value/JSXTBTN=<s val="ModCenterSize24Bold"><c val="BB3355">决死之心</c></s>
+Param/Value/QZACH1S=<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSize16Bold"><c val="BB3355">穿山甲</c></s><s val="ModCenterSize16"><c val="44FF88">!</c></s>
+Param/Value/QZACH1N=<s val="ModCenterSize16Bold"><c val="BB3355">穿山甲</c></s>
+Param/Value/QZACH1D=<s val="ModCenterSize16"><c val="BB3355">我的任务...完成了！</c></s>
+Param/Value/QZACH2S=<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSize16Bold"><c val="BB3355">安家落户</c></s><s val="ModCenterSize16"><c val="44FF88">!</c></s>
+Param/Value/QZACH2N=<s val="ModCenterSize16Bold"><c val="BB3355">安家落户</c></s>
+Param/Value/QZACH2D=<s val="ModCenterSize16"><c val="BB3355">教父把买命的安家费打到了你账上，而你竟然奇迹般地有命回去亲自花掉它。</c></s>
 
