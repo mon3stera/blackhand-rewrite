@@ -6614,8 +6614,8 @@ void gf_DefaultRoleOptions () {
     gv_roleOptions[3][18][0] = false;
     gv_bankSaveWeights[0][3][18] = 0.25;
     gv_roleWeights[3][18] = 0.75;
-    gv_bankSaveWeights[0][3][19] = 1.5;   // 煽动家(3/19)：中立协恶席随机，审计官一半
-    gv_roleWeights[3][19] = 1.5;
+    gv_bankSaveWeights[0][3][19] = 1.0;   // 煽动家(3/19)：中立协恶席随机，与观察者同档
+    gv_roleWeights[3][19] = 1.0;
     gv_roleOptionAllowed[3][20][0] = true;
     gv_roleOptionAllowed[3][20][1] = true;
     gv_roleOptions[3][20][0] = true;
