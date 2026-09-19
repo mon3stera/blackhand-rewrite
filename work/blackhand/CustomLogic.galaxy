@@ -148,6 +148,7 @@ bool[16] gv_kcKillWN;
 bool[16] gv_kcKillPS;
 int[16] gv_kcKills;
 int[16] gv_qzKills;
+int[16] gv_myxHits;
 int[16] gv_kcCleans;
 bool[16] gv_doused;
 bool[16][16] gv_jestered;
@@ -1852,7 +1853,6 @@ int gf_BHHistFaction (int lp_pool, int lp_role);
 int gf_BHHistWeight (int lp_player, int lp_pool, int lp_role);
 int gf_BHHistPickSlot (int lp_player);
 void gf_BHHistPush (int lp_player, int lp_pool, int lp_role);
-void gf_BHGrantMoxuyou (int lp_player);
 bool gf_OSRoleLessThan (int lp_aR, int lp_aC, int lp_bR, int lp_bC);
 void gf_OSInitializeOptionsScreen ();
 void gf_OSActivateOptions ();
@@ -14545,6 +14545,8 @@ bool auto_gf_EndGame_TriggerFunc (bool testConds, bool runActions) {
     int autoQZACH77_var;
     playergroup autoQZACH78_g;
     int autoQZACH78_var;
+    playergroup autoMYXACH79_g;
+    int autoMYXACH79_var;
     playergroup autoSHWFR_g;
     int autoSHWFR_var;
 
@@ -15482,6 +15484,24 @@ bool auto_gf_EndGame_TriggerFunc (bool testConds, bool runActions) {
             gf_DEBUG(("Most InnerL OK  --" + IntToString(lv_a)));
             gf_CAssembleMainBank(lv_a);
             gv_e4BF9DE5AD98bug = 500;
+        }
+
+        if ((gv_myxHits[lv_a] >= 1) && (PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true)) {
+            lv_b = 1;
+            while ((lv_b <= gv_myxHits[lv_a])) {
+                gv_bankOtherAchievements[lv_a][79] += 1;
+                lv_b += 1;
+            }
+            autoMYXACH79_g = gv_currentPlayers;
+            autoMYXACH79_var = -1;
+            while (true) {
+                autoMYXACH79_var = PlayerGroupNextPlayer(autoMYXACH79_g, autoMYXACH79_var);
+                if (autoMYXACH79_var < 0) { break; }
+                gf_CBSystemMessage((StringExternal("Param/Value/CWACHP") + TextWithColor(PlayerName(lv_a), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_a])) + StringExternal("Param/Value/MYXACHS")), autoMYXACH79_var, lv_a, 0, SoundLink("UI_BnetGameFound", -1), Color(0,0,0));
+                gf_CBSystemMessage(StringExternal("Param/Value/MYXACHD"), autoMYXACH79_var, lv_a, 0, SoundLink("Silent", -1), Color(0,0,0));
+            }
+            gf_GiveBonus(lv_a, (0 - (50 * gv_myxHits[lv_a])));
+            gf_CAssembleMainBank(lv_a);
         }
 
     }
@@ -25576,7 +25596,7 @@ void gf_ESSearcherKill (int lp_player, int lp_killer) {
     }
     else {
         if ((gv_roles[lp_killer][1] == 1) && (gv_roles[lp_killer][0] == 26) && (gv_roles[lv_target][1] == 1)) {
-            gf_BHGrantMoxuyou(lp_killer);
+            gv_myxHits[lp_killer] += 1;
         }
         gv_specialCasePlayer[lv_target][12] += 1;
         gv_deathMethod[lv_target] = (gv_deathMethod[lv_target] + "I");
@@ -49614,23 +49634,6 @@ void gf_BHHistPush (int lp_player, int lp_pool, int lp_role) {
     }
     BankValueSetFromString(gv_bank[lp_player], "I", "Hist", lv_s);
     BankSave(gv_bank[lp_player]);
-}
-
-void gf_BHGrantMoxuyou (int lp_player) {
-    playergroup lv_g;
-    int lv_p;
-
-    gv_bankOtherAchievements[lp_player][79] += 1;
-    lv_g = gv_currentPlayers;
-    lv_p = -1;
-    while (true) {
-        lv_p = PlayerGroupNextPlayer(lv_g, lv_p);
-        if (lv_p < 0) { break; }
-        gf_CBSystemMessage((StringExternal("Param/Value/CWACHP") + TextWithColor(PlayerName(lp_player), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lp_player])) + StringExternal("Param/Value/MYXACHS")), lv_p, lp_player, 0, SoundLink("UI_BnetGameFound", -1), Color(0,0,0));
-        gf_CBSystemMessage(StringExternal("Param/Value/MYXACHD"), lv_p, lp_player, 0, SoundLink("Silent", -1), Color(0,0,0));
-    }
-    gf_GiveBonus(lp_player, -50);
-    gf_CAssembleMainBank(lp_player);
 }
 
 void gf_BHAssertApply () {
@@ -93137,6 +93140,9 @@ gf_RAForesterActions(lv_a);
 // 阶段三抽取（shw238）：城镇 1/26 ← 原 gf_RSTownSetup 行33450
 void gf_SKR_1_shenchayuan (int lv_a) {
     // Implementation
+if ((gv_dayNumber == 1)) {
+    gv_myxHits[lv_a] = 0;
+}
 gf_RASearcherActions2(lv_a);
 }
 
