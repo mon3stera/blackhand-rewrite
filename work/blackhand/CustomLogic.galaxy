@@ -49587,7 +49587,7 @@ void gf_BHHistPush (int lp_player, int lp_pool, int lp_role) {
     int lv_i;
     string lv_s;
 
-    if ((lp_pool < 1) || (lp_role < 1) || (PlayerHandle(lp_player) == "")) {
+    if ((lp_pool < 1) || (lp_role < 1) || (PlayerType(lp_player) == c_playerTypeComputer)) {
         return;
     }
 
