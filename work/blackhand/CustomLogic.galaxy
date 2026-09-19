@@ -54957,26 +54957,7 @@ bool gt_AccountIDHandler_Func (bool testConds, bool runActions) {
 
         if ((gv_oP[lv_a][0] == false) && (gv_oP[lv_a][1] == false) && (gv_oP[lv_a][2] == false) && (gv_oP[lv_a][3] == false) && (gv_oP[lv_a][4] == false) && (gv_oP[lv_a][5] == false) && (gv_oP[lv_a][6] == false) && (gv_donor[lv_a] == 0) && (gv_points[lv_a] < 200)) {
             gv_noobMode[lv_a] = true;
-            gv_blacklist[lv_a][0] = "yijing";
-            gv_blacklist[lv_a][1] = "jiandie";
-            gv_blacklist[lv_a][2] = "bashisiji";
-            gv_blacklist[lv_a][3] = "qipianzhe";
-            gv_blacklist[lv_a][4] = "shizhang";
-            gv_blacklist[lv_a][5] = "yujing";
-            gv_blacklist[lv_a][6] = "gongjihuizhanglao";
-            gv_blacklist[lv_a][7] = "zhifazhang";
-            gv_blacklist[lv_a][8] = "gonggaoyuan";
-            gv_blacklist[lv_a][9] = "jiaofu";
-            gv_blacklist[lv_a][10] = "weizhuangzhe";
-            gv_blacklist[lv_a][11] = "bangjiazhe";
-            gv_blacklist[lv_a][12] = "longtou";
-            gv_blacklist[lv_a][13] = "shentouzhe";
-            gv_blacklist[lv_a][14] = "shenxunzhe";
-            gv_blacklist[lv_a][15] = "faguan";
-            gv_blacklist[lv_a][16] = "nvwu";
-            gv_blacklist[lv_a][17] = "chuxingzhe";
-            gv_blacklist[lv_a][18] = "wuyi";
-            gv_blacklist[lv_a][19] = "shenjiguan";
+            // 不再给新手塞进阶角色黑名单：教父/义警/狱警等都可以抽到，教程提示仍走 noobMode
         }
 
     }
