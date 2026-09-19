@@ -506,7 +506,7 @@ def main() -> int:
     #   命令链 = gt_Achieve_Func（管理员 -achieve <玩家> <索引>）
     #   第三处 = 解锁写入点 gv_bankOtherAchievements[玩家][索引] = 1/2/3
     print("\n[1e] 成就索引一致性（列表链 / 命令链 / 解锁写入）")
-    ACH_TOTAL = 79          # gv_bankOtherAchievements[16][79]（0..78）
+    ACH_TOTAL = 80          # gv_bankOtherAchievements[16][80]（0..79）
 
     def chain_indices(fn_name):
         """名称链所在的自动变量 = 该函数里出现次数最多的 `X == 数字`，再取它的索引集合。"""
@@ -526,7 +526,7 @@ def main() -> int:
     list_var, list_idx = chain_indices("gt_Stats_Func")
     cmd_var, cmd_idx = chain_indices("gt_Achieve_Func")
     unlock = {int(m.group(1)) for m in re.finditer(
-        r"gv_bankOtherAchievements\[\w+\]\[(\d+)\]\s*=\s*[123]", "\n".join(sc.lines))}
+        r"gv_bankOtherAchievements\[\w+\]\[(\d+)\]\s*(?:=\s*[123]|\+=\s*1)", "\n".join(sc.lines))}
 
     # 已知差异（附原因，出现新的差异才会报警）
     ACH_WHITELIST = {
