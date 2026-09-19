@@ -128,23 +128,23 @@ void gf_VJSXOptions () {
         lv_str[4] = "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0";
         gv_setupInfo[1] = StringExternal("Param/Value/JSXTSUBC");
         if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
-            lv_category = "1 4 4 4 4 4 4 4 4 2 4 4 5 4 4";
-            lv_role = "6 2 2 2 2 2 5 5 4 2 3 3 16 13 14";
+            lv_category = "1 4 4 4 4 4 4 4 4 2 2 4 4 4 4";
+            lv_role = "6 2 2 2 2 2 5 5 4 2 16 3 3 13 14";
         }
 
         if ((PlayerGroupCount(gv_currentPlayers) == 14)) {
-            lv_category = "1 4 4 4 4 4 4 4 2 4 4 5 4 4";
-            lv_role = "6 2 2 2 2 5 5 4 2 3 3 16 13 14";
+            lv_category = "1 4 4 4 4 4 4 4 2 2 4 4 4 4";
+            lv_role = "6 2 2 2 2 5 5 4 2 16 3 3 13 14";
         }
 
         if ((PlayerGroupCount(gv_currentPlayers) == 13)) {
-            lv_category = "1 4 4 4 4 4 4 2 4 4 5 4 4";
-            lv_role = "6 2 2 2 5 5 4 2 3 3 16 13 14";
+            lv_category = "1 4 4 4 4 4 4 2 2 4 4 4 4";
+            lv_role = "6 2 2 2 5 5 4 2 16 3 3 13 14";
         }
 
         if ((PlayerGroupCount(gv_currentPlayers) == 12)) {
-            lv_category = "1 4 4 4 4 4 2 4 4 5 4 4";
-            lv_role = "6 2 2 5 5 4 2 3 3 16 13 14";
+            lv_category = "1 4 4 4 4 4 2 2 4 4 4 4";
+            lv_role = "6 2 2 5 5 4 2 16 3 3 13 14";
         }
 
     }
