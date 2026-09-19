@@ -36,11 +36,11 @@
       "name": "黑手：Revision Preview",
       "note": "试验线：每版都投这里（玩家想玩最新内容来这条线）；大更新在验证通过后才推主线",
       "live": "1.111",
-      "pending": "1.112",
+      "pending": "1.113",
       "status": "待投",
-      "built": "work/boot2-1.112-preview.SC2Map",
-      "md5": "293aa531f109b1e9f74a2d0778bc4ee8",
-      "size": 22567342,
+      "built": "work/boot2-1.113-preview.SC2Map",
+      "md5": "acc0e9d6b2ea306b8b4164f9c0c26c75",
+      "size": 22571769,
       "desc_append": "<n/><n/>【预览版 Preview】本图与「黑手：升温 Revision」的存档、成就和积分互通；本图更新更快，用来先行测试新内容与修复。内容可能不稳定，遇到问题可以在原图群 256373733 或 Revision 地图群 795173021 反馈。"
     }
   ]
