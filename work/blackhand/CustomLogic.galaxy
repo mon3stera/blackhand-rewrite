@@ -6353,8 +6353,8 @@ void gf_DefaultRoleOptions () {
     gv_bankSaveWeights[0][1][29] = 0.0;
     gv_bankSaveWeights[0][1][30] = 0.0;
     gv_roleOptions[1][30][10] = true;
-    gv_bankSaveWeights[0][1][31] = 2.0;   // 观察者(1/31)：城镇随机，与监视者同档
-    gv_roleWeights[1][31] = 2.0;
+    gv_bankSaveWeights[0][1][31] = 1.0;   // 观察者(1/31)：城镇随机，监视者一半
+    gv_roleWeights[1][31] = 1.0;
     gv_roleOptionAllowed[2][1][0] = true;
     gv_roleOptions[2][1][0] = true;
     gv_bankSaveWeights[0][2][1] = 2.0;
@@ -6593,8 +6593,8 @@ void gf_DefaultRoleOptions () {
     gv_roleOptions[3][18][0] = false;
     gv_bankSaveWeights[0][3][18] = 0.25;
     gv_roleWeights[3][18] = 0.75;
-    gv_bankSaveWeights[0][3][19] = 3.0;   // 煽动家(3/19)：中立协恶席随机，与审计官同档
-    gv_roleWeights[3][19] = 3.0;
+    gv_bankSaveWeights[0][3][19] = 1.5;   // 煽动家(3/19)：中立协恶席随机，审计官一半
+    gv_roleWeights[3][19] = 1.5;
     gv_roleOptionAllowed[3][20][0] = true;
     gv_roleOptionAllowed[3][20][1] = true;
     gv_roleOptions[3][20][0] = true;
@@ -43733,7 +43733,7 @@ void gf_VOptions () {
     gv_neutralOptions = "1000 0001 1 111 10110 1001 00010 1110 11100 01000 11110 01100";
     gv_randomOptions = "00000 00000 0 11010 10000 0000 00010 1110 11100 01000 11010 01100 110000 00000 1 00111 00000 00000 100";
     gv_triadOptions = "1 10110 100 101 11 1010 10 11 10 100 10100";
-    gv_townWeights = "0 1.5 3 1.5 2 1.5 0.5 1.25 0.75 0.5 1 2 1.5 1 1 1 1 0 1 1 0.25 0 1.1 1.5 1 2 2 0 0 0 1"; // 末位 观察者(1/31)，与本串监视者同档
+    gv_townWeights = "0 1.5 3 1.5 2 1.5 0.5 1.25 0.75 0.5 1 2 1.5 1 1 1 1 0 1 1 0.25 0 1.1 1.5 1 2 2 0 0 0 1"; // 末位 观察者(1/31)=1.0
     gv_mafiaWeights = "2 1 1.5 1.5 1 1 1 0.5 0.5 1 1 0 0 1 0 0.5";
     gv_neutralWeights = "2 1 1.5 0.75 0.25 1.5 1 0 1 0 1.5 1 0 0.25 1.75 0.5 0.5 0 0";
     gv_triadWeights = "2 1 1.5 1.5 1 1 1 0.5 0.5 1 1 0 0 1 0 0.5";
