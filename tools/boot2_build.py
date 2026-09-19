@@ -243,7 +243,9 @@ MUST_HAVE_KEYS = [
   'Param/Value/BHASTBAD', 'Param/Value/BHASTCLR', 'Param/Value/BHASTFULL',
   'Param/Value/BHASTDONE',
   'Param/Value/QZACH1S', 'Param/Value/QZACH1N', 'Param/Value/QZACH1D',
-  'Param/Value/QZACH2S', 'Param/Value/QZACH2N', 'Param/Value/QZACH2D',]
+  'Param/Value/QZACH2S', 'Param/Value/QZACH2N', 'Param/Value/QZACH2D',
+  'Param/Value/SHWWILLBTN', 'Param/Value/SHWWILLTIP',
+  'Param/Value/SHWWILLEMPTY',]
 
 
 def parse_strings_file(path: Path) -> dict:
