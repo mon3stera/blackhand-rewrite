@@ -221,7 +221,7 @@ MUST_HAVE_KEYS = [
   # 随机：决死之心
   'Param/Value/JSXTNAME', 'Param/Value/JSXTDESC', 'Param/Value/JSXTBTN',
   'Param/Value/JSXTSUBA', 'Param/Value/JSXTSUBB', 'Param/Value/JSXTSUBC',
-  # shw288 堂吉诃德 (3/21)
+  # shw288 唐吉诃德 (3/21)
   'Param/Value/DQNAME', 'Param/Value/DQDESC', 'Param/Value/DQCARD',
   'Param/Value/DQBOX1', 'Param/Value/DQBOX2', 'Param/Value/DQBOX4',
   'Param/Value/DQBOX6', 'Param/Value/DQALIGN', 'Param/Value/DQCRIME', 'Param/Value/DQREV',
