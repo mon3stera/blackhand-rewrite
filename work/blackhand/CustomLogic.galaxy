@@ -49585,6 +49585,7 @@ int gf_BHHistPickSlot (int lp_player) {
 
 void gf_BHHistPush (int lp_player, int lp_pool, int lp_role) {
     int lv_i;
+    string lv_s;
 
     if ((lp_pool < 1) || (lp_role < 1) || (PlayerHandle(lp_player) == "")) {
         return;
@@ -49599,6 +49600,15 @@ void gf_BHHistPush (int lp_player, int lp_pool, int lp_role) {
 
     gv_histPool[lp_player][0] = lp_pool;
     gv_histRole[lp_player][0] = lp_role;
+    // 发完身份立刻写 I/Hist，不等终局 Assemble（很多人没打完就退）
+    lv_s = "";
+    lv_i = 0;
+    for ( ; lv_i <= 4 ; lv_i += 1 ) {
+        lv_s = (lv_s + (" " + IntToString(gv_histPool[lp_player][lv_i])));
+        lv_s = (lv_s + (" " + IntToString(gv_histRole[lp_player][lv_i])));
+    }
+    BankValueSetFromString(gv_bank[lp_player], "I", "Hist", lv_s);
+    BankSave(gv_bank[lp_player]);
 }
 
 void gf_BHAssertApply () {
