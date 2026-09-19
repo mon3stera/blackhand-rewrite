@@ -508,6 +508,11 @@ bank[16] gv_key;
 string[16][26] gv_blacklist;
 int[16] gv_blacklist2;
 string[16][25] gv_prefer;
+int[16][5] gv_histPool;   // 近 5 局开局池号，[0]=上一局，0=无记录
+int[16][5] gv_histRole;   // 近 5 局开局角色号
+bool[16] gv_bhHistSlotTaken;
+bool[16] gv_bhHistSlotReserved;
+int gv_bhHistMyPreferSlot;
 int[16] gv_donor;
 int[16] gv_donation;
 doodad[25] gv_houseList;
@@ -987,6 +992,15 @@ void SH_InitGlobals () {
             gv_prefer[init_i][init_j] = "";
         }
     }
+    for (init_i = 0; init_i <= 15; init_i += 1) {
+        for (init_j = 0; init_j <= 4; init_j += 1) {
+            gv_histPool[init_i][init_j] = 0;
+            gv_histRole[init_i][init_j] = 0;
+        }
+        gv_bhHistSlotTaken[init_i] = false;
+        gv_bhHistSlotReserved[init_i] = false;
+    }
+    gv_bhHistMyPreferSlot = 0;
     gv_lastWillBox = c_invalidDialogId;
     for (init_i = 0; init_i <= 2; init_i += 1) {
         gv_lastWillBoxItem[init_i] = c_invalidDialogControlId;
@@ -1833,6 +1847,10 @@ void gf_OSRandomize ();
 void gf_OSRandomizeMatrix (int lp_a, int lp_x, fixed lp_y);
 bool gf_BHRoleFitsKind (int lp_kind, int lp_pool, int lp_role);
 void gf_BHAssertApply ();
+int gf_BHHistFaction (int lp_pool, int lp_role);
+int gf_BHHistWeight (int lp_player, int lp_pool, int lp_role);
+int gf_BHHistPickSlot (int lp_player);
+void gf_BHHistPush (int lp_player, int lp_pool, int lp_role);
 bool gf_OSRoleLessThan (int lp_aR, int lp_aC, int lp_bR, int lp_bC);
 void gf_OSInitializeOptionsScreen ();
 void gf_OSActivateOptions ();
@@ -16580,6 +16598,13 @@ bool auto_gf_CAssembleMainBank_TriggerFunc (bool testConds, bool runActions) {
         if ((lv_str[7] != "") || (BankKeyExists(gv_bank[lp_player], "I", "Blacklist") == true)) {
             BankValueSetFromString(gv_bank[lp_player], "I", "Blacklist", lv_str[7]);
         }
+        lv_str[8] = "";
+        lv_b = 0;
+        for ( ; lv_b <= 4 ; lv_b += 1 ) {
+            lv_str[8] = (lv_str[8] + (" " + IntToString(gv_histPool[lp_player][lv_b])));
+            lv_str[8] = (lv_str[8] + (" " + IntToString(gv_histRole[lp_player][lv_b])));
+        }
+        BankValueSetFromString(gv_bank[lp_player], "I", "Hist", lv_str[8]);
         BankValueSetFromString(gv_bank[lp_player], "I", "Reports", lv_str[9]);
         BankValueSetFromString(gv_bank[lp_player], "Checker", "Points", lv_str[0]);
         BankValueSetFromString(gv_bank[lp_player], "Checker", "Math", IntToString(gv_checka[lp_player]));
@@ -16807,6 +16832,12 @@ bool auto_gf_CDisassembleMainBank_TriggerFunc (bool testConds, bool runActions) 
     lv_b = 0;
     for ( ; ( (autoADBA8FFC_ai >= 0 && lv_b <= autoADBA8FFC_ae) || (autoADBA8FFC_ai < 0 && lv_b >= autoADBA8FFC_ae) ) ; lv_b += autoADBA8FFC_ai ) {
         gv_bankReportIntegers[lp_player][lv_b] = StringToInt(StringWord(lv_str[9], (lv_b + 1)));
+    }
+    lv_str[8] = BankValueGetAsString(gv_bank[lp_player], "I", "Hist");
+    lv_b = 0;
+    for ( ; lv_b <= 4 ; lv_b += 1 ) {
+        gv_histPool[lp_player][lv_b] = StringToInt(StringWord(lv_str[8], ((lv_b * 2) + 1)));
+        gv_histRole[lp_player][lv_b] = StringToInt(StringWord(lv_str[8], ((lv_b * 2) + 2)));
     }
     if ((gv_bankOtherAchievements[lp_player][10] == 1)) {
         gv_bankOtherAchievements[lp_player][10] = 0;
@@ -48321,69 +48352,34 @@ bool auto_gf_OSComputeOptions_TriggerFunc (bool testConds, bool runActions) {
                     }
                 }
                 if ((lv_t[lv_a][1] == false)) {
-                    lv_x = RandomInt(1, gv_tempPlayers);
-                    if ((lv_t[lv_x][0] == false)) {
+                    lv_x = 0;
+                    lv_bhP = 0;
+                    for ( ; lv_bhP <= 14 ; lv_bhP += 1 ) {
+                        if ((gv_prefer[lv_a][lv_bhP] != "") && (lv_x == 0)) {
+                            lv_b = 1;
+                            for ( ; lv_b <= gv_tempPlayers ; lv_b += 1 ) {
+                                if ((lv_t[lv_b][0] == false) && (gv_prefer[lv_a][lv_bhP] == gv_roleNameInput[gv_semifinalRole[lv_b][1]][gv_semifinalRole[lv_b][0]])) {
+                                    lv_x = lv_b;
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                    if ((lv_x == 0)) {
+                        lv_b = 1;
+                        for ( ; lv_b <= 15 ; lv_b += 1 ) {
+                            gv_bhHistSlotTaken[lv_b] = lv_t[lv_b][0];
+                            gv_bhHistSlotReserved[lv_b] = lv_bhReserved[lv_b];
+                        }
+                        gv_bhHistMyPreferSlot = lv_bhPreferSlot[lv_a];
+                        lv_x = gf_BHHistPickSlot(lv_a);
+                    }
+
+                    if ((lv_x >= 1) && (lv_t[lv_x][0] == false)) {
                         lv_zzz = true;
-                        if ((lv_bhPreferSlot[lv_a] != 0)) {
-                            lv_x = lv_bhPreferSlot[lv_a];
-                        }
-
-                        if ((lv_ll < 250)) {
-                            lv_ll += 1;
-                            if ((gv_prefer[lv_a][0] != "")) {
-                                lv_bhOK = false;
-                                lv_b = 1;
-                                for ( ; lv_b <= gv_tempPlayers ; lv_b += 1 ) {
-                                    if ((lv_t[lv_b][0] == false)) {
-                                        lv_bhP = 0;
-                                        for ( ; lv_bhP <= 14 ; lv_bhP += 1 ) {
-                                            if ((gv_prefer[lv_a][lv_bhP] == gv_roleNameInput[gv_semifinalRole[lv_b][1]][gv_semifinalRole[lv_b][0]])) {
-                                                lv_bhOK = true;
-                                            }
-
-                                        }
-
-                                    }
-
-                                }
-
-                                if ((lv_bhOK == true)) {
-                                    lv_zzz = false;
-                                    lv_b = 0;
-                                    for ( ; ( (autoD5AB48FF_ai >= 0 && lv_b <= autoD5AB48FF_ae) || (autoD5AB48FF_ai < 0 && lv_b >= autoD5AB48FF_ae) ) ; lv_b += autoD5AB48FF_ai ) {
-                                        if ((gv_prefer[lv_a][lv_b] == gv_roleNameInput[gv_semifinalRole[lv_x][1]][gv_semifinalRole[lv_x][0]])) {
-                                            lv_zzz = true;
-                                        }
-
-                                    }
-
-                                }
-
-                                else {
-                                    lv_ll += 250;
-                                }
-
-                            }
-                            else {
-                                lv_ll += 250;
-                            }
-                        }
-
-                        if ((lv_ll < 500) && (lv_ll >= 250)) {
-                            lv_ll += 1;
-                            lv_b = 0;
-                            for ( ; ( (auto11D13E2E_ai >= 0 && lv_b <= auto11D13E2E_ae) || (auto11D13E2E_ai < 0 && lv_b >= auto11D13E2E_ae) ) ; lv_b += auto11D13E2E_ai ) {
-                                if ((gv_blacklist[lv_a][lv_b] == gv_roleNameInput[gv_semifinalRole[lv_x][1]][gv_semifinalRole[lv_x][0]])) {
-                                    lv_zzz = false;
-                                }
-
-                            }
-                        }
-
-                        if ((lv_bhPreferSlot[lv_a] == 0) && (lv_bhReserved[lv_x] == true)) {
-                            lv_zzz = false;
-                        }
-
                         if ((c_bhSoloBuild == true) && (gv_prefer[lv_a][0] != "")) {
                             lv_b = 1;
                             for ( ; lv_b <= gv_tempPlayers ; lv_b += 1 ) {
@@ -48411,6 +48407,7 @@ bool auto_gf_OSComputeOptions_TriggerFunc (bool testConds, bool runActions) {
 
                             gv_originalRole[lv_a][1] = gv_roles[lv_a][1];
                             gv_originalRole[lv_a][0] = gv_roles[lv_a][0];
+                            gf_BHHistPush(lv_a, gv_originalRole[lv_a][1], gv_originalRole[lv_a][0]);
                             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 12)) {
                                 gv_cwHadMayor = true;
                             }
@@ -49412,6 +49409,196 @@ bool gf_BHRoleFitsKind (int lp_kind, int lp_pool, int lp_role) {
     }
 
     return false;
+}
+
+// 开局身份阵营：1城镇 2黑手D 3三合会 4中立致命 5中立协恶 6中立温和
+int gf_BHHistFaction (int lp_pool, int lp_role) {
+    if ((lp_pool == 1)) {
+        return 1;
+    }
+
+    if ((lp_pool == 2)) {
+        return 2;
+    }
+
+    if ((lp_pool == 5)) {
+        return 3;
+    }
+
+    if ((lp_pool == 3)) {
+        if (((lp_role == 1) || (lp_role == 5) || (lp_role == 9) || (lp_role == 14) || (lp_role == 15) || (lp_role == 20) || (lp_role == 31))) {
+            return 4;
+        }
+
+        if (((lp_role == 4) || (lp_role == 8) || (lp_role == 10) || (lp_role == 11) || (lp_role == 12) || (lp_role == 13) || (lp_role == 16) || (lp_role == 19))) {
+            return 5;
+        }
+
+        return 6;
+    }
+
+    return 0;
+}
+
+int gf_BHHistWeight (int lp_player, int lp_pool, int lp_role) {
+    int lv_i;
+    int lv_countRole;
+    int lv_countFac;
+    int lv_fac;
+    int lv_w;
+    string lv_pin;
+    fixed lv_m;
+    const int autoBHHW_ae = 4;
+    const int autoBHHW_ai = 1;
+    const int autoBHHB_ae = 25;
+    const int autoBHHB_ai = 1;
+
+    lv_countRole = 0;
+    lv_countFac = 0;
+    lv_m = 1.0;
+    lv_pin = gv_roleNameInput[lp_pool][lp_role];
+    lv_i = 0;
+    for ( ; ( (autoBHHB_ai >= 0 && lv_i <= autoBHHB_ae) || (autoBHHB_ai < 0 && lv_i >= autoBHHB_ae) ) ; lv_i += autoBHHB_ai ) {
+        if ((gv_blacklist[lp_player][lv_i] != "") && (gv_blacklist[lp_player][lv_i] == lv_pin)) {
+            return 0;
+        }
+
+    }
+
+    lv_fac = gf_BHHistFaction(lp_pool, lp_role);
+    lv_i = 0;
+    for ( ; ( (autoBHHW_ai >= 0 && lv_i <= autoBHHW_ae) || (autoBHHW_ai < 0 && lv_i >= autoBHHW_ae) ) ; lv_i += autoBHHW_ai ) {
+        if ((gv_histPool[lp_player][lv_i] == lp_pool) && (gv_histRole[lp_player][lv_i] == lp_role)) {
+            lv_countRole += 1;
+        }
+
+        if ((gv_histPool[lp_player][lv_i] != 0) && (gf_BHHistFaction(gv_histPool[lp_player][lv_i], gv_histRole[lp_player][lv_i]) == lv_fac)) {
+            lv_countFac += 1;
+        }
+
+    }
+
+    if ((gv_histPool[lp_player][0] == lp_pool) && (gv_histRole[lp_player][0] == lp_role)) {
+        lv_m = (lv_m * 0.30);
+    }
+    else {
+        lv_m = (lv_m * MaxF(0.30, (1.0 - (IntToFixed(lv_countRole) * 0.15))));
+    }
+
+    if ((gv_histPool[lp_player][0] != 0) && (gf_BHHistFaction(gv_histPool[lp_player][0], gv_histRole[lp_player][0]) == lv_fac)) {
+        lv_m = (lv_m * 0.80);
+    }
+
+    if ((lv_fac == 1)) {
+        if ((lv_countFac == 4)) {
+            lv_m = (lv_m * 0.70);
+        }
+        else {
+            if ((lv_countFac >= 5)) {
+                lv_m = (lv_m * 0.40);
+            }
+
+        }
+
+    }
+    else {
+        if ((lv_countFac >= 2)) {
+            lv_m = (lv_m * 0.50);
+        }
+
+    }
+
+    lv_w = FixedToInt(((100.0 * lv_m) + 0.5));
+    if ((lv_w < 25)) {
+        lv_w = 25;
+    }
+
+    if ((lv_w > 250)) {
+        lv_w = 250;
+    }
+
+    return lv_w;
+}
+
+int gf_BHHistPickSlot (int lp_player) {
+    int lv_i;
+    int lv_n;
+    int lv_sum;
+    int lv_r;
+    int lv_acc;
+    int lv_w;
+    int[16] lv_wslot;
+    const int autoBHPS_ae = 15;
+    const int autoBHPS_ai = 1;
+
+    lv_n = 0;
+    lv_sum = 0;
+    lv_i = 1;
+    for ( ; ( (autoBHPS_ai >= 0 && lv_i <= autoBHPS_ae) || (autoBHPS_ai < 0 && lv_i >= autoBHPS_ae) ) ; lv_i += autoBHPS_ai ) {
+        lv_wslot[lv_i] = 0;
+        if ((lv_i <= gv_tempPlayers) && (gv_bhHistSlotTaken[lv_i] == false) && ((gv_bhHistSlotReserved[lv_i] == false) || (gv_bhHistMyPreferSlot == lv_i))) {
+            lv_w = gf_BHHistWeight(lp_player, gv_semifinalRole[lv_i][1], gv_semifinalRole[lv_i][0]);
+            lv_wslot[lv_i] = lv_w;
+            lv_sum += lv_w;
+            lv_n += 1;
+        }
+
+    }
+
+    if ((lv_n <= 0)) {
+        return 0;
+    }
+
+    if ((lv_sum <= 0)) {
+        lv_r = RandomInt(1, lv_n);
+        lv_i = 1;
+        for ( ; ( (autoBHPS_ai >= 0 && lv_i <= autoBHPS_ae) || (autoBHPS_ai < 0 && lv_i >= autoBHPS_ae) ) ; lv_i += autoBHPS_ai ) {
+            if ((lv_i <= gv_tempPlayers) && (gv_bhHistSlotTaken[lv_i] == false) && ((gv_bhHistSlotReserved[lv_i] == false) || (gv_bhHistMyPreferSlot == lv_i))) {
+                lv_r -= 1;
+                if ((lv_r <= 0)) {
+                    return lv_i;
+                }
+
+            }
+
+        }
+
+        return 0;
+    }
+
+    lv_r = RandomInt(1, lv_sum);
+    lv_acc = 0;
+    lv_i = 1;
+    for ( ; ( (autoBHPS_ai >= 0 && lv_i <= autoBHPS_ae) || (autoBHPS_ai < 0 && lv_i >= autoBHPS_ae) ) ; lv_i += autoBHPS_ai ) {
+        if ((lv_wslot[lv_i] > 0)) {
+            lv_acc += lv_wslot[lv_i];
+            if ((lv_r <= lv_acc)) {
+                return lv_i;
+            }
+
+        }
+
+    }
+
+    return 0;
+}
+
+void gf_BHHistPush (int lp_player, int lp_pool, int lp_role) {
+    int lv_i;
+
+    if ((lp_pool < 1) || (lp_role < 1) || (PlayerHandle(lp_player) == "")) {
+        return;
+    }
+
+    lv_i = 4;
+    while ((lv_i >= 1)) {
+        gv_histPool[lp_player][lv_i] = gv_histPool[lp_player][lv_i - 1];
+        gv_histRole[lp_player][lv_i] = gv_histRole[lp_player][lv_i - 1];
+        lv_i -= 1;
+    }
+
+    gv_histPool[lp_player][0] = lp_pool;
+    gv_histRole[lp_player][0] = lp_role;
 }
 
 void gf_BHAssertApply () {
