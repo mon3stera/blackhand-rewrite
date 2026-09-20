@@ -114,8 +114,8 @@ DDS_ASSETS = [
     ('WinDemagogue.dds', 'WinDemagogue.dds'),
     ('WinRipper.dds', 'WinRipper.dds'),
 ]
-# 街机封面：DocumentInfo 的 Screenshot=Preview.dds、Icon=Mafia Icon.dds。
-# 基线缺 Preview.dds，所以战网条目没有预览图。源 PNG 用 tools/png2cover.py 出两张 DDS。
+# 街机封面：DocumentInfo 的 Screenshot=Preview.dds。基线缺这张图，所以战网没有缩略图。
+# 列表小图标仍用原图 Mafia Icon.dds，不要覆盖。源 PNG 用 tools/png2cover.py 出 Preview DDS。
 COVER_DEFAULT = 'Cover2'
 
 
@@ -133,22 +133,13 @@ def write_dds(archive: Path) -> list[str]:
 
 
 def write_cover(archive: Path, stem: str) -> list[str]:
-    """写入 Preview.dds（街机大图）与 Mafia Icon.dds（列表小图）。"""
+    """只写入 Preview.dds（街机缩略图）。Mafia Icon.dds 保持原图。"""
     preview = DDS_DIR / f'{stem}-Preview.dds'
-    icon = DDS_DIR / f'{stem}-Icon.dds'
     assert preview.exists(), f'封面 Preview 不存在: {preview}（先跑 python3 tools/png2cover.py data/{stem}.png）'
-    assert icon.exists(), f'封面 Icon 不存在: {icon}'
-    mapping = [
-        ('Preview.dds', preview),
-        ('Mafia Icon.dds', icon),
-    ]
-    done = []
-    for member, src in mapping:
-        data = src.read_bytes()
-        put(archive, member, data)
-        assert sc2map.read(archive, member) == data, f'封面回读不一致: {member}'
-        done.append(member)
-    return done
+    data = preview.read_bytes()
+    put(archive, 'Preview.dds', data)
+    assert sc2map.read(archive, 'Preview.dds') == data, '封面回读不一致: Preview.dds'
+    return ['Preview.dds']
 
 # 必须在包内 zhCN 表里能查到的自加键（缺任一 → 界面会显示原始键名）
 MUST_HAVE_KEYS = [
@@ -647,7 +638,7 @@ def main() -> int:
                            capture_output=True, text=True).stdout
     font_missing = [m for m, _ in FONTS if Path(m).name not in files]
     dds_missing = [m for m, _ in DDS_ASSETS if m not in files]
-    cover_missing = [m for m in ('Preview.dds', 'Mafia Icon.dds') if m not in files]
+    cover_missing = [m for m in ('Preview.dds',) if m not in files]
 
     print(f"   回读: zhCN {len(zh.splitlines())} 行；Triggers={'Triggers' in files}；"
           f"BankList={'BankList.xml' in files}；自加键缺失={missing or '无'}；"
@@ -675,7 +666,7 @@ def main() -> int:
         return 1
 
     if cover_missing:
-        print('✗ 街机封面缺失（Preview.dds / Mafia Icon.dds），战网条目没有预览图')
+        print('✗ 街机封面缺失（Preview.dds），战网条目没有预览图')
         return 1
 
     print(f"✓ 打包完成 {out}  ({out.stat().st_size} 字节)")
