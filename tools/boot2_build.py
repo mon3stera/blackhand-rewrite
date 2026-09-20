@@ -56,6 +56,7 @@ DEFAULT_BASE = ROOT / 'work' / 'boot2-user.SC2Map'
 DEFAULT_GALAXY = ROOT / 'work' / 'blackhand' / 'CustomLogic.galaxy'
 STRINGS_GLOB = 'work/blackhand/strings-*.txt'
 NOTES_SRC = ROOT / 'work' / 'blackhand' / 'patch-notes.txt'
+DESC_SRC = ROOT / 'work' / 'blackhand' / 'desc-long.txt'
 
 # 样式表（斜体等自定义 GameText 样式的定义处）：按 Style name 增量并入包内同名成员
 STYLE_MEMBER = 'NewFontStyles.SC2Style'
@@ -519,9 +520,12 @@ def main() -> int:
     notes_missing = []
     if NOTES_SRC.exists() and not args.skip_notes:
         overrides = {'DocInfo/Name': args.name} if args.name else {}
-        if args.desc_prepend or args.desc_append:
-            base = bh_meta.desc_long(out)          # 已清洗掉作废的「未取得授权…下架」句
-            assert base, '读不到 DocInfo/DescLong，无法按线改写地图详情'
+        if DESC_SRC.exists() or args.desc_prepend or args.desc_append:
+            if DESC_SRC.exists():
+                base = DESC_SRC.read_text(encoding='utf-8').strip()
+            else:
+                base = bh_meta.desc_long(out)      # 已清洗掉作废的「未取得授权…下架」句
+            assert base, '读不到地图详情正文，无法按线改写 DocInfo/DescLong'
             overrides['DocInfo/DescLong'] = (args.desc_prepend or '') + base + (args.desc_append or '')
         res, extra = bh_meta.apply_file(out, NOTES_SRC, defer_strings=True, overrides=overrides or None)
         print(f"6a) 补丁说明 {[v for v, _, _ in res]}；加载页面已同步 ← {NOTES_SRC.name}")
