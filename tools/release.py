@@ -243,6 +243,9 @@ def cmd_build(data: dict, cid, deploy, skip_notes: bool, force: bool) -> int:
     if skip_notes:
         cmd += ['--skip-notes']
 
+    if ch.get('cover'):
+        cmd += ['--cover', ch['cover']]
+
     print('$ ' + ' '.join(cmd[1:]), flush=True)
     rc = subprocess.run(cmd, cwd=ROOT).returncode
 

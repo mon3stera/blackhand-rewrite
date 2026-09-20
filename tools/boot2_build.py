@@ -114,6 +114,9 @@ DDS_ASSETS = [
     ('WinDemagogue.dds', 'WinDemagogue.dds'),
     ('WinRipper.dds', 'WinRipper.dds'),
 ]
+# 街机封面：DocumentInfo 的 Screenshot=Preview.dds、Icon=Mafia Icon.dds。
+# 基线缺 Preview.dds，所以战网条目没有预览图。源 PNG 用 tools/png2cover.py 出两张 DDS。
+COVER_DEFAULT = 'Cover2'
 
 
 def write_dds(archive: Path) -> list[str]:
@@ -125,6 +128,25 @@ def write_dds(archive: Path) -> list[str]:
         data = src.read_bytes()
         put(archive, member, data)
         assert sc2map.read(archive, member) == data, f'贴图回读不一致: {member}'
+        done.append(member)
+    return done
+
+
+def write_cover(archive: Path, stem: str) -> list[str]:
+    """写入 Preview.dds（街机大图）与 Mafia Icon.dds（列表小图）。"""
+    preview = DDS_DIR / f'{stem}-Preview.dds'
+    icon = DDS_DIR / f'{stem}-Icon.dds'
+    assert preview.exists(), f'封面 Preview 不存在: {preview}（先跑 python3 tools/png2cover.py data/{stem}.png）'
+    assert icon.exists(), f'封面 Icon 不存在: {icon}'
+    mapping = [
+        ('Preview.dds', preview),
+        ('Mafia Icon.dds', icon),
+    ]
+    done = []
+    for member, src in mapping:
+        data = src.read_bytes()
+        put(archive, member, data)
+        assert sc2map.read(archive, member) == data, f'封面回读不一致: {member}'
         done.append(member)
     return done
 
@@ -372,6 +394,8 @@ def main() -> int:
                     help='单人测试包：只把写入包内的 c_bhSoloBuild / c_bhSoloFill 改成 true，不动工作区源码；并给自定义 mod 补本地 file: 依赖回退')
     ap.add_argument('--local-deps', action='store_true',
                     help='把 CA 三件改成 file:Mods\\… 纯本地路径（--solo 默认打开；发布包不要加）')
+    ap.add_argument('--cover', default=COVER_DEFAULT,
+                    help='封面 stem（data/<stem>-Preview.dds + data/<stem>-Icon.dds）；默认 Cover2')
     args = ap.parse_args()
 
     out = Path(args.out)
@@ -496,6 +520,8 @@ def main() -> int:
     # 5) 自加贴图（胜利图等，写在地图根目录；漏了就是结算画面找不到贴图）
     dds = write_dds(out)
     print(f"5) 根目录贴图 {len(dds)} 张 ← {DDS_DIR.name}/: {dds}")
+    cover = write_cover(out, args.cover)
+    print(f"5b) 街机封面 {args.cover} → {cover}")
 
     # 6) 补丁说明 + 加载页面（写 DocumentHeader/DocumentInfo；zhCN 行并入下面的文案合并，
     #    因为 MPQ 每次写成员都是追加、旧数据不回收，同一成员一次构建只能写一次）
@@ -621,11 +647,12 @@ def main() -> int:
                            capture_output=True, text=True).stdout
     font_missing = [m for m, _ in FONTS if Path(m).name not in files]
     dds_missing = [m for m, _ in DDS_ASSETS if m not in files]
+    cover_missing = [m for m in ('Preview.dds', 'Mafia Icon.dds') if m not in files]
 
     print(f"   回读: zhCN {len(zh.splitlines())} 行；Triggers={'Triggers' in files}；"
           f"BankList={'BankList.xml' in files}；自加键缺失={missing or '无'}；"
           f"样式缺失={style_missing or '无'}；字体缺失={font_missing or '无'}；贴图缺失={dds_missing or '无'}；"
-          f"说明缺失={notes_missing or '无'}")
+          f"封面缺失={cover_missing or '无'}；说明缺失={notes_missing or '无'}")
 
     if missing:
         print('✗ 自加键缺失，界面会显示原始键名')
@@ -645,6 +672,10 @@ def main() -> int:
 
     if dds_missing:
         print('✗ 自加贴图缺失，结算画面按图名找不到贴图')
+        return 1
+
+    if cover_missing:
+        print('✗ 街机封面缺失（Preview.dds / Mafia Icon.dds），战网条目没有预览图')
         return 1
 
     print(f"✓ 打包完成 {out}  ({out.stat().st_size} 字节)")
