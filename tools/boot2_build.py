@@ -116,7 +116,7 @@ DDS_ASSETS = [
 ]
 # 街机封面：DocumentInfo 的 Screenshot=Preview.dds。基线缺这张图，所以战网没有缩略图。
 # 列表小图标仍用原图 Mafia Icon.dds，不要覆盖。源 PNG 用 tools/png2cover.py 出 Preview DDS。
-COVER_DEFAULT = 'Cover2'
+COVER_DEFAULT = 'Cover1'
 
 
 def write_dds(archive: Path) -> list[str]:
