@@ -48342,14 +48342,49 @@ bool auto_gf_OSComputeOptions_TriggerFunc (bool testConds, bool runActions) {
                         if (auto9CDA8901_var < 0) { break; }
                         gf_CBSystemMessage(StringExternal("Param/Value/3C860670"), auto9CDA8901_var, 0, 0, SoundLink("UI_BnetError", -1), Color(100.00, 0.00, 0.00));
                     }
-                    gv_roles[lv_a][1] = 1;
-                    gv_roles[lv_a][0] = 1;
-                    gv_originalRole[lv_a][1] = gv_roles[lv_a][1];
-                    gv_originalRole[lv_a][0] = gv_roles[lv_a][0];
-                    if ((gv_roleOptions[1][1][0] == true)) {
-                        gv_shots[lv_a] = 1;
-                    }
+                    // 超时必须发给「还没拿到身份的人」+ 剩余席，不能改已经发出去的 lv_a
+                    lv_a = 0;
+                    lv_x = 0;
+                    lv_b = 1;
+                    for ( ; lv_b <= 15 ; lv_b += 1 ) {
+                        if ((PlayerGroupHasPlayer(gv_tempPlayerGroup, lv_b) == true) && (lv_t[lv_b][1] == false) && (lv_a == 0)) {
+                            lv_a = lv_b;
+                        }
 
+                    }
+                    lv_b = 1;
+                    for ( ; lv_b <= gv_tempPlayers ; lv_b += 1 ) {
+                        if ((lv_t[lv_b][0] == false) && (lv_x == 0)) {
+                            lv_x = lv_b;
+                        }
+
+                    }
+                    if ((lv_a >= 1) && (lv_x >= 1)) {
+                        PlayerGroupRemove(lv_patrons, lv_a);
+                        PlayerGroupRemove(lv_benefactors, lv_a);
+                        lv_t[lv_x][0] = true;
+                        lv_t[lv_a][1] = true;
+                        gv_roles[lv_a][1] = gv_semifinalRole[lv_x][1];
+                        gv_roles[lv_a][0] = gv_semifinalRole[lv_x][0];
+                        gv_originalRole[lv_a][1] = gv_roles[lv_a][1];
+                        gv_originalRole[lv_a][0] = gv_roles[lv_a][0];
+                        gf_BHHistPush(lv_a, gv_originalRole[lv_a][1], gv_originalRole[lv_a][0]);
+                    }
+                    else {
+                        if ((lv_a >= 1)) {
+                            gv_roles[lv_a][1] = 1;
+                            gv_roles[lv_a][0] = 1;
+                            gv_originalRole[lv_a][1] = 1;
+                            gv_originalRole[lv_a][0] = 1;
+                            lv_t[lv_a][1] = true;
+                            if ((gv_roleOptions[1][1][0] == true)) {
+                                gv_shots[lv_a] = 1;
+                            }
+
+                        }
+
+                    }
+                    lv_f = true;
                     break;
                 }
 
@@ -48378,6 +48413,10 @@ bool auto_gf_OSComputeOptions_TriggerFunc (bool testConds, bool runActions) {
                 }
                 if ((lv_t[lv_a][1] == false)) {
                     lv_x = 0;
+                    // 预占席还空着就坐那一席，避免同名角色有多份时坐走另一份、把预占席锁死
+                    if ((lv_bhPreferSlot[lv_a] >= 1) && (lv_t[lv_bhPreferSlot[lv_a]][0] == false)) {
+                        lv_x = lv_bhPreferSlot[lv_a];
+                    }
                     lv_bhP = 0;
                     for ( ; lv_bhP <= 14 ; lv_bhP += 1 ) {
                         if ((gv_prefer[lv_a][lv_bhP] != "") && (lv_x == 0)) {
@@ -48385,6 +48424,7 @@ bool auto_gf_OSComputeOptions_TriggerFunc (bool testConds, bool runActions) {
                             for ( ; lv_b <= gv_tempPlayers ; lv_b += 1 ) {
                                 if ((lv_t[lv_b][0] == false) && (gv_prefer[lv_a][lv_bhP] == gv_roleNameInput[gv_semifinalRole[lv_b][1]][gv_semifinalRole[lv_b][0]])) {
                                     lv_x = lv_b;
+                                    break;
                                 }
 
                             }
@@ -48423,6 +48463,10 @@ bool auto_gf_OSComputeOptions_TriggerFunc (bool testConds, bool runActions) {
                             lv_t[lv_x][0] = true;
                             lv_t[lv_a][1] = true;
                             lv_f = true;
+                            if ((lv_bhPreferSlot[lv_a] >= 1) && (lv_t[lv_bhPreferSlot[lv_a]][0] == false)) {
+                                lv_bhReserved[lv_bhPreferSlot[lv_a]] = false;
+                            }
+                            lv_bhPreferSlot[lv_a] = 0;
                             gv_roles[lv_a][1] = gv_semifinalRole[lv_x][1];
                             gv_roles[lv_a][0] = gv_semifinalRole[lv_x][0];
                             if ((gv_stump[lv_a] == true)) {
@@ -49553,9 +49597,11 @@ int gf_BHHistPickSlot (int lp_player) {
     int lv_acc;
     int lv_w;
     int[16] lv_wslot;
+    bool lv_open;
     const int autoBHPS_ae = 15;
     const int autoBHPS_ai = 1;
 
+    lv_open = false;
     lv_n = 0;
     lv_sum = 0;
     lv_i = 1;
@@ -49571,14 +49617,29 @@ int gf_BHHistPickSlot (int lp_player) {
     }
 
     if ((lv_n <= 0)) {
-        return 0;
+        // 别人的 prefer 预占把剩余席锁死时，对未占用席再跑一遍（同名角色多份时会把预占席剩到最后）
+        lv_open = true;
+        lv_i = 1;
+        for ( ; ( (autoBHPS_ai >= 0 && lv_i <= autoBHPS_ae) || (autoBHPS_ai < 0 && lv_i >= autoBHPS_ae) ) ; lv_i += autoBHPS_ai ) {
+            if ((lv_i <= gv_tempPlayers) && (gv_bhHistSlotTaken[lv_i] == false)) {
+                lv_w = gf_BHHistWeight(lp_player, gv_semifinalRole[lv_i][1], gv_semifinalRole[lv_i][0]);
+                lv_wslot[lv_i] = lv_w;
+                lv_sum += lv_w;
+                lv_n += 1;
+            }
+
+        }
+        if ((lv_n <= 0)) {
+            return 0;
+        }
+
     }
 
     if ((lv_sum <= 0)) {
         lv_r = RandomInt(1, lv_n);
         lv_i = 1;
         for ( ; ( (autoBHPS_ai >= 0 && lv_i <= autoBHPS_ae) || (autoBHPS_ai < 0 && lv_i >= autoBHPS_ae) ) ; lv_i += autoBHPS_ai ) {
-            if ((lv_i <= gv_tempPlayers) && (gv_bhHistSlotTaken[lv_i] == false) && ((gv_bhHistSlotReserved[lv_i] == false) || (gv_bhHistMyPreferSlot == lv_i))) {
+            if ((lv_i <= gv_tempPlayers) && (gv_bhHistSlotTaken[lv_i] == false) && ((lv_open == true) || (gv_bhHistSlotReserved[lv_i] == false) || (gv_bhHistMyPreferSlot == lv_i))) {
                 lv_r -= 1;
                 if ((lv_r <= 0)) {
                     return lv_i;
