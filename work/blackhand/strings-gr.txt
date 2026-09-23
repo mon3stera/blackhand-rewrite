@@ -1,4 +1,4 @@
-// 感染者（中立致命）文案草稿；目前仅登记文本键，角色机制与 UI 尚未接线。
+// 感染者（中立致命 3/22）。击倒、传承、判胜与夜间私聊已接线。
 Param/Value/GRNAME=<c val="DFFF00">感染者</c>
 Param/Value/GRCARD=<c val="DFFF00">
 Param/Value/GRDESC=他相信死亡不是终点，而是下一具躯壳的开端。<n/><n/><c val="BBDDFF">每晚访问并击倒一人。你可以在夜间预先选择传承：若这一击本会击倒城镇角色，你将以自己的生命使其免于此次死亡，并成为新的感染者。</c>
@@ -24,10 +24,15 @@ Param/Value/GRIMMUNE=<s val="ModLeftSize16">目标抵挡了你的攻击。</s>
 Param/Value/GRHEALED=<s val="ModLeftSize16">目标获救了。</s>
 Param/Value/GRGUARDED=<s val="ModLeftSize16">有人挡下了你的攻击。</s>
 Param/Value/GRCHATON=<s val="ModLeftSize16"><c val="DFFF00">已进入感染者私聊。此处只有你与继任者能听见。</c></s>
-Param/Value/GRCHATOFF=<s val="ModLeftSize16">已返回普通死者频道。</s>
+Param/Value/GRCHATOFF=<s val="ModLeftSize16">已离开感染者私聊。</s>
 Param/Value/GRCHATDAY=<s val="ModLeftSize16">感染者私聊仅在夜间开放。</s>
 Param/Value/GRCHATNONE=<s val="ModLeftSize16">你尚无继任者，无法切换频道。</s>
 Param/Value/GRCHATHELP=<s val="ModLeftSize16">死后输入 -infect 进入继任者私聊；输入 -dead 返回普通死者频道。</s>
 Param/Value/GRDEATH=死者身上浮现出不自然的荧绿色纹路，仿佛有什么东西刚刚离开了他。
 Param/Value/GRDM=死者遭到感染者袭击。
 Param/Value/GRCRIME=非法闯入，谋爱
+Param/Value/GRDEATHSELF=死者的躯壳还在，意识却已经不在里面。
+Param/Value/GRDMSELF=死者把生命交给了另一个人。
+Param/Value/GRNIGHT=<s val="ModLeftSize16">夜色里掠过一道荧绿色的光。</s>
+Param/Value/GRCHATMSG=<c val="DFFF00">[传承] </c>
+Param/Value/GRSHREV=<s val="ModLeftSize16Bold"><c val="DFFF00">你的目标是感染者。</c></s>

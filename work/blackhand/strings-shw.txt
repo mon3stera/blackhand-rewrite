@@ -35,7 +35,7 @@ Param/Value/SHWBOX8=<n/>- -off（追击）：攻击目标一的访问目标。
 Param/Value/SHWDEATH4=死者被一把刀刺穿了。
 Param/Value/SHWDEATH5=他被劈成两半了。
 Param/Value/SHWDEATH6=死者身中数刀。
-Param/Value/94249CFE=<c val="004080">点击来改变你的开关状态<n/>限定：瘟疫散布者 冤魂 小丑 影武者 开膛手</c>
+Param/Value/94249CFE=<c val="004080">点击来改变你的开关状态<n/>限定：瘟疫散布者 冤魂 小丑 影武者 开膛手 感染者</c>
 // 小丑与处刑者的自设开关：默认关闭，旧存档无对应位时沿用默认值。
 Param/Value/BHJALL=<c val="FF4444">投有罪者全部死亡</c>
 Param/Value/BHJBOX=- 如果你被处刑了，所有投有罪的投票者将在次日夜晚死亡。
