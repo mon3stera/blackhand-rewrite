@@ -292,7 +292,7 @@ Param/Value/SHWWILLTIP=<c val="004080">点击把你当前的遗嘱作为聊天�
 Param/Value/SHWWILLEMPTY=<s val="ModLeftSize16Bold"><c val="FF4444">你的遗嘱是空的。</c></s>
 
 // 连环爱手：每累计实际击倒两人，下一晚狂袭两名目标并无视夜间无敌。
-Param/Value/SKBURSTBOX=<n/>- 每实际击爱两人，下一晚你可攻击两名不同的玩家；当晚两次攻击均无视夜间无敌，但仍可被救治或保镖阻挡。
+Param/Value/SKBURSTBOX=<n/>- 每实际击爱两人，下一晚可攻击两名不同的玩家；两刀无视夜间无敌，仍可被救治或保镖阻挡。<n/>- 额外的一刀不累计下次狂袭所需的击爱次数。
 Param/Value/SKBURSTREADY=<s val="ModLeftSize16Bold"><c val="FF4444">你的狂袭之夜到了：今晚可攻击两名玩家，两次攻击均无视夜间无敌！</c></s>
 Param/Value/SKBURSTFIRST=选定今晚第一个攻击目标
 Param/Value/SKBURSTSECOND=选定今晚第二个攻击目标
