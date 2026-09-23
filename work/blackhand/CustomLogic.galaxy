@@ -253,6 +253,14 @@ const int c_bhSaveRoleMax = 32;     // 保存格/I 段角色号上界（含天�
 const bool c_bhSoloFill = false;    // 虚拟补位总开关：shw179 发布收尾改回 false（测试请打 --solo 包）
 const int c_bhSoloFillMax = 6;      // solo 测试共六人（玩家 + 最多五个虚拟补位）
 
+// 感染者(3/22)：传承配对与继任者休息夜单独记录，不占其他角色的开关状态。
+bool[16] gv_grArmed;
+bool[16] gv_grTransferUsed;
+int[16] gv_grRestNight;
+int[16] gv_grParent;
+int[16] gv_grChild;
+bool[16] gv_grPrivateChat;
+
 bool gv_soloTest;
 int[8] gv_bhAssertCat;
 int[8] gv_bhAssertRole;
@@ -262,6 +270,13 @@ int[16] gv_bhAssertForceCat;
 int[16] gv_bhAssertForceRole;
 void gf_BHNotify (text lp_msg, int lp_target, soundlink lp_sound);
 bool gf_BHRestrictAllowed (int lp_target);
+void gf_SKN_3_ganranzhe (int lv_a);
+void gf_SKP_3_ganranzhe (int lv_a);
+void gf_SKK_3_ganranzhe (int lv_a);
+void gf_SKA_3_ganranzhe (int lv_source, int lv_target);
+void gf_SKW_3_ganranzhe ();
+void gf_RAGanranzheActions (int lp_player);
+void gf_ESGanranzheKill (int lp_target, int lp_killer);
 
 // BH:SYS 阶段一：系统写侧口子
 void gf_BHVisit (int lp_player, int lp_target);
@@ -11398,6 +11413,10 @@ void gf_SequencePrep () {
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 20) && (gv_action[lv_a][0] > 0)) {
                 gf_SKP_3_kaitangshou(lv_a);
+            }
+
+            if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 22) && (gv_action[lv_a][0] > 0) && (gv_grRestNight[lv_a] != gv_dayNumber)) {
+                gf_SKP_3_ganranzhe(lv_a);
             }
 
             if ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 14) && (gv_action[lv_a][0] > 0)) {
@@ -32454,6 +32473,10 @@ void gf_RSNeutralSetup () {
 
                     if ((gv_roles[lv_a][0] == 21)) {
                         gf_SKN_3_tangjihede(lv_a);
+                    }
+
+                    if ((gv_roles[lv_a][0] == 22)) {
+                        gf_SKN_3_ganranzhe(lv_a);
                     }
 
                     if ((gv_roles[lv_a][0] == 31)) {
@@ -73509,6 +73532,9 @@ bool gt_ASActionButtonANeutral_Func (bool testConds, bool runActions) {
         if ((gv_roles[lv_source][1] == 3) && (gv_roles[lv_source][0] == 20) && (gv_action[lv_source][0] != lv_target)) {
             gf_SKA_3_kaitangshou(lv_source, lv_target);
         }
+        if ((gv_roles[lv_source][1] == 3) && (gv_roles[lv_source][0] == 22) && (gv_action[lv_source][0] != lv_target) && (gv_grRestNight[lv_source] != gv_dayNumber)) {
+            gf_SKA_3_ganranzhe(lv_source, lv_target);
+        }
         if ((gv_roles[lv_source][1] == 3) && (gv_roles[lv_source][0] == 21) && (gv_action[lv_source][0] != lv_target) && (gv_variableOptions[lv_source][0] == 1)) {
             gf_SKA_1_yijing(lv_source, lv_target);
         }
@@ -75222,6 +75248,10 @@ bool gt_ASSwitchButton_Func (bool testConds, bool runActions) {
 
     if ((gv_roles[EventPlayer()][1] == 3) && (gv_roles[EventPlayer()][0] == 20)) {
         gf_SKW_3_kaitangshou();
+    }
+
+    if ((gv_roles[EventPlayer()][1] == 3) && (gv_roles[EventPlayer()][0] == 22)) {
+        gf_SKW_3_ganranzhe();
     }
 
     return true;
@@ -94344,6 +94374,110 @@ void gf_ESRipperKill (int lp_target, int lp_killer, int lp_mode) {
         gf_BHCrime(lp_killer, 2);
         gf_CBSystemMessage(StringExternal("Param/Value/KCISO"), lp_killer, lp_killer, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
     }
+}
+
+// 新增角色（非原图抽取）：感染者 3/22 夜间行动与传承模式。
+void gf_SKN_3_ganranzhe (int lv_a) {
+    if ((gv_dayNumber == 1) && (gv_grParent[lv_a] == 0)) {
+        gv_grTransferUsed[lv_a] = false;
+    }
+
+    gv_grArmed[lv_a] = false;
+    if ((gv_roleOptions[3][22][0] == true)) {
+        gv_immune[lv_a][0] = true;
+    }
+
+    if ((gv_grRestNight[lv_a] == gv_dayNumber)) {
+        gf_RANoActions(lv_a);
+        DialogControlSetEnabled(gv_switchButtonItem, PlayerGroupSingle(lv_a), false);
+        gf_CBSystemMessage(StringExternal("Param/Value/GRREST"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+        return;
+    }
+
+    gf_RAGanranzheActions(lv_a);
+}
+
+void gf_RAGanranzheActions (int lp_player) {
+    int lv_a;
+    const int autoGRRA_ae = 15;
+    const int autoGRRA_ai = 1;
+
+    DialogControlSetEnabled(gv_switchButtonItem, PlayerGroupSingle(lp_player), (gv_grTransferUsed[lp_player] == false));
+    if ((gv_grTransferUsed[lp_player] == false)) {
+        gf_CBSystemMessage(StringExternal("Param/Value/GRDISARM"), lp_player, lp_player, 0, SoundLink("Silent", -1), Color(0,0,0));
+    }
+
+    lv_a = 1;
+    for ( ; ( (autoGRRA_ai >= 0 && lv_a <= autoGRRA_ae) || (autoGRRA_ai < 0 && lv_a >= autoGRRA_ae) ) ; lv_a += autoGRRA_ai ) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (lv_a != lp_player)) {
+            libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/GRTIP"), PlayerGroupSingle(lp_player));
+            DialogControlSetVisible(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), true);
+            libNtve_gf_SetDialogItemColor(gv_actionDialogItem[lv_a][5], Color(87.45, 100.00, 0.00), PlayerGroupSingle(lp_player));
+            DialogControlSetSize(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), 120, 30);
+            libNtve_gf_SetDialogItemImage(gv_actionDialogItem[lv_a][5], "ActionNormal.dds", PlayerGroupSingle(lp_player));
+            libNtve_gf_SetDialogItemImage2(gv_actionDialogItem[lv_a][5], "ActionHighlight.dds", PlayerGroupSingle(lp_player));
+        }
+        else if ((lv_a == lp_player)) {
+            libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/GRCANCEL"), PlayerGroupSingle(lp_player));
+            libNtve_gf_SetDialogItemColor(gv_actionDialogItem[lv_a][5], Color(50.20, 50.20, 50.20), PlayerGroupSingle(lp_player));
+            DialogControlSetSize(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), 120, 30);
+            libNtve_gf_SetDialogItemImage(gv_actionDialogItem[lv_a][5], "ActionNormal.dds", PlayerGroupSingle(lp_player));
+            libNtve_gf_SetDialogItemImage2(gv_actionDialogItem[lv_a][5], "ActionHighlight.dds", PlayerGroupSingle(lp_player));
+            DialogControlSetVisible(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), (gv_action[lp_player][0] != 0));
+        }
+        else {
+            DialogControlSetVisible(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), false);
+        }
+    }
+}
+
+// 新增角色（非原图抽取）：感染者目标按钮。
+void gf_SKA_3_ganranzhe (int lv_source, int lv_target) {
+    if ((lv_target == lv_source)) {
+        if ((gv_action[lv_source][0] != 0)) {
+            DialogControlSetVisible(gv_actionDialogItem[gv_action[lv_source][0]][5], PlayerGroupSingle(lv_source), true);
+            gv_action[lv_source][0] = 0;
+            DialogControlSetVisible(gv_actionDialogItem[lv_source][5], PlayerGroupSingle(lv_source), false);
+            gf_CBSystemMessage(StringExternal("Param/Value/GRCANCEL"), lv_source, lv_source, 0, SoundLink("Silent", -1), Color(0,0,0));
+        }
+        return;
+    }
+
+    if ((gv_action[lv_source][0] != 0)) {
+        DialogControlSetVisible(gv_actionDialogItem[gv_action[lv_source][0]][5], PlayerGroupSingle(lv_source), true);
+        gf_CBSystemMessage((StringExternal("Param/Value/GRRESEL") + TextWithColor(StringToText(gv_name[lv_target]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_target]))), lv_source, lv_source, 0, SoundLink("Silent", -1), Color(0,0,0));
+    }
+    else {
+        gf_CBSystemMessage((StringExternal("Param/Value/GRSEL") + TextWithColor(StringToText(gv_name[lv_target]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_target]))), lv_source, lv_source, 0, SoundLink("Silent", -1), Color(0,0,0));
+    }
+
+    gv_action[lv_source][0] = lv_target;
+    DialogControlSetVisible(gv_actionDialogItem[lv_source][5], PlayerGroupSingle(lv_source), true);
+    DialogControlSetVisible(gv_actionDialogItem[lv_target][5], PlayerGroupSingle(lv_source), false);
+}
+
+// 新增角色（非原图抽取）：感染者传承开关。
+void gf_SKW_3_ganranzhe () {
+    int lv_player;
+    lv_player = EventPlayer();
+    if ((gv_grTransferUsed[lv_player] == true) || (gv_grRestNight[lv_player] == gv_dayNumber)) {
+        gf_CBSystemMessage(StringExternal("Param/Value/GRNOCHARGE"), lv_player, lv_player, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+        return;
+    }
+
+    gv_grArmed[lv_player] = !(gv_grArmed[lv_player]);
+    if ((gv_grArmed[lv_player] == true)) {
+        gf_CBSystemMessage(StringExternal("Param/Value/GRREADY"), lv_player, lv_player, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    }
+    else {
+        gf_CBSystemMessage(StringExternal("Param/Value/GRDISARM"), lv_player, lv_player, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    }
+}
+
+// 新增角色（非原图抽取）：感染者登记实际访问。
+void gf_SKP_3_ganranzhe (int lv_a) {
+    gf_BHVisitAction(lv_a);
+    gf_BHCrimeTrespass(lv_a);
 }
 
 // shw288：唐吉诃德 3/21

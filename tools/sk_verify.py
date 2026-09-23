@@ -219,7 +219,13 @@ def main() -> int:
 
         # 调用点：实参逐位等于参数名 + ①②④ 溯源
         # 溯源注释：生成函数定义上方 1–2 行（`// 阶段三抽取（shwNNN）：池/角色 ← 原 宿主 行N`）
-        prov = PROV.search(lines[f["start"] - 1]) or PROV.search(lines[max(0, f["start"] - 2)])
+        nearby = "\n".join(lines[max(0, f["start"] - 2):f["start"]])
+        prov = PROV.search(nearby)
+        new_role = "新增角色（非原图抽取）" in nearby
+        if prov is None and not new_role:
+            print(f"✗ {f['name']}: 缺溯源注释或新增角色标记")
+            problems += 1
+
         found = False
         for i in CALLSITES.get(f["name"], ()):
             line = lines[i]
@@ -232,6 +238,9 @@ def main() -> int:
             if got != f["params"]:
                 print(f"✗ {f['name']}: 行{i + 1} 实参 {got} ≠ 参数 {f['params']}")
                 problems += 1
+
+            if new_role or prov is None:
+                continue  # 新角色没有原图宿主；仍校验函数签名、声明与每个调用点实参
 
             host = prov.group(1)  # 溯源注释在**定义**旁（这里的 prov 每函数算一次）
             renames = PROMOTE_SPEC.get(host, [])
