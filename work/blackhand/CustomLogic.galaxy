@@ -94622,7 +94622,7 @@ void gf_SKP_3_ganranzhe (int lv_a) {
     gf_BHCrimeTrespass(lv_a);
 }
 
-// 感染者 3/22：击倒。传承只在这一击本会致死、目标是城镇、且机会未用时发生。
+// 新增角色（非原图抽取）：感染者 3/22 击倒。传承只在这一击本会致死、目标是城镇、且机会未用时发生。
 void gf_SKK_3_ganranzhe (int lv_a) {
     if ((gv_seqKillsZ[1] == true)) {
         Wait(1.0, c_timeGame);
