@@ -114,6 +114,7 @@ DDS_ASSETS = [
     ('WinChosen.dds', 'WinChosen.dds'),
     ('WinDemagogue.dds', 'WinDemagogue.dds'),
     ('WinRipper.dds', 'WinRipper.dds'),
+    ('WinGanranzhe.dds', 'WinGanranzhe.dds'),
 ]
 # 街机封面：DocumentInfo 的 Screenshot=Preview.dds。基线缺这张图，所以战网没有缩略图。
 # 列表小图标仍用原图 Mafia Icon.dds，不要覆盖。源 PNG 用 tools/png2cover.py 出 Preview DDS。
