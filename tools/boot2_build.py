@@ -260,7 +260,11 @@ MUST_HAVE_KEYS = [
   'Param/Value/QZACH2S', 'Param/Value/QZACH2N', 'Param/Value/QZACH2D',
   'Param/Value/MYXACHS', 'Param/Value/MYXACHN', 'Param/Value/MYXACHD',
   'Param/Value/SHWWILLBTN', 'Param/Value/SHWWILLTIP',
-  'Param/Value/SHWWILLEMPTY',]
+  'Param/Value/SHWWILLEMPTY',
+  'Param/Value/SKBURSTBOX', 'Param/Value/SKBURSTREADY',
+  'Param/Value/SKBURSTFIRST', 'Param/Value/SKBURSTSECOND',
+  'Param/Value/SKBURSTSET', 'Param/Value/SKBURSTEND',
+  'Param/Value/SKBURSTCANCEL',]
 
 
 def parse_strings_file(path: Path) -> dict:
