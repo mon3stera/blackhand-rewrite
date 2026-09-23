@@ -40,8 +40,8 @@ Param/Value/94249CFE=<c val="004080">点击来改变你的开关状态<n/>限定
 Param/Value/BHJALL=投有罪者全部死亡
 Param/Value/BHJBOX=- 如果你被处刑了，所有投有罪的投票者将在次日夜晚死亡。
 Param/Value/BHEKILL=目标在夜晚死亡时切换击爱者作为目标
-Param/Value/BHJANN=<c val="FFAAFF">小丑启用了开关「投有罪者全部死亡」</c>
-Param/Value/BHEANN=<c val="AACCFF">处刑者启用了开关「目标在夜晚死亡时切换击爱者作为目标」</c>
+Param/Value/BHJANN=<s val="ModLeftSize16"><c val="FFAAFF">小丑启用了开关「投有罪者全部死亡」</c></s>
+Param/Value/BHEANN=<s val="ModLeftSize16"><c val="AACCFF">处刑者启用了开关「目标在夜晚死亡时切换击爱者作为目标」</c></s>
 Param/Value/BHENEW=你的目标昨夜死亡；你现在的目标是「
 Param/Value/BHENEW2=」。
 Param/Value/SHWBOX9=<n/>- -on（截击）：若目标一访问了目标二，则攻击目标一，这次攻击无视无敌和救治。<n/>- 目标一不动视作访问自己。<n/>- 在追击模式下，如果目标一访问了你，则你会直接攻击他。
