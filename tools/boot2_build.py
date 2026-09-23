@@ -243,7 +243,19 @@ MUST_HAVE_KEYS = [
   'Param/Value/DQNIGHT',
   'Param/Value/DQACH2S', 'Param/Value/DQACH3',
   'Param/Value/DQACHD',
-  # shw289 弃子(2/16) / 死士(5/16)
+  # 感染者 (3/22)：文案登记
+   'Param/Value/GRNAME', 'Param/Value/GRCARD', 'Param/Value/GRDESC',
+   'Param/Value/GRBOX1', 'Param/Value/GRBOX2', 'Param/Value/GRBOX3',
+   'Param/Value/GRBOX4', 'Param/Value/GRBOX6', 'Param/Value/GRBOXS',
+   'Param/Value/GROPTIMM', 'Param/Value/GRTIP', 'Param/Value/GRSEL',
+   'Param/Value/GRRESEL', 'Param/Value/GRCANCEL', 'Param/Value/GRREADY',
+   'Param/Value/GRDISARM', 'Param/Value/GRNOCHARGE', 'Param/Value/GRREST',
+   'Param/Value/GRCONVERT', 'Param/Value/GRNEW', 'Param/Value/GRFAILED',
+   'Param/Value/GRIMMUNE', 'Param/Value/GRHEALED', 'Param/Value/GRGUARDED',
+   'Param/Value/GRCHATON', 'Param/Value/GRCHATOFF', 'Param/Value/GRCHATDAY',
+   'Param/Value/GRCHATNONE', 'Param/Value/GRCHATHELP', 'Param/Value/GRDEATH',
+   'Param/Value/GRDM', 'Param/Value/GRCRIME',
+   # shw289 弃子(2/16) / 死士(5/16)
   'Param/Value/QZNAME', 'Param/Value/QZDESC', 'Param/Value/QZCARD',
   'Param/Value/SSNAME', 'Param/Value/SSDESC', 'Param/Value/SSCARD',
   'Param/Value/QZBOX1', 'Param/Value/QZBOX2', 'Param/Value/QZBOX4',

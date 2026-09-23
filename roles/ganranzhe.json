@@ -1,0 +1,27 @@
+{
+  "pool": 3,
+  "role": 22,
+  "pinyin": "ganranzhe",
+  "cn": "感染者",
+  "name_key": "GRNAME",
+  "desc_key": "GRDESC",
+  "investigator": [
+    "E6ADA6E599A81",
+    "E6ADA6E599A82"
+  ],
+  "crime_key": "GRCRIME",
+  "options": [
+    {"i": 0, "exists": true, "important": 2, "default": true, "key": "GROPTIMM"}
+  ],
+  "flag10": true,
+  "guessable": true,
+  "help_preview": null,
+  "interactions": {
+    "swap": {"text": "每晚登门，目标可被女巫和巴士司机交换；攻击与传承均按实际到访目标结算。"},
+    "investigate": {"text": "访问留痕；探员属于武器类，图鉴案底非法闯入与谋爱，警长按中立致命规则判定。"},
+    "restrict": {"text": "被舞娘/陪侍限制或入狱时不可发动攻击/传承；结算读 gv_roleblocked。"},
+    "guessage": {"text": "审查页中立列表可以猜出感染者。", "in_guess_list": true}
+  },
+  "note": "中立致命；初代只能成功传承一次；继任者没有传承能力，转换当夜免于本次死亡，次夜休息。死后原角色与继任者夜间私聊并共享胜利。银行首胜索引只支持角色 0..20，不碰角色 22。",
+  "review_status": "reviewed"
+}
