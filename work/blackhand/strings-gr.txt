@@ -1,0 +1,33 @@
+// 感染者（中立致命）文案草稿；目前仅登记文本键，角色机制与 UI 尚未接线。
+Param/Value/GRNAME=<c val="DFFF00">感染者</c>
+Param/Value/GRCARD=<c val="DFFF00">
+Param/Value/GRDESC=他相信死亡不是终点，而是下一具躯壳的开端。<n/><n/><c val="BBDDFF">每晚访问并击倒一人。你可以在夜间预先选择传承：若这一击本会击倒城镇角色，你将以自己的生命使其免于此次死亡，并成为新的感染者。</c>
+Param/Value/GRBOX1=- 每晚访问并击倒一人。
+Param/Value/GRBOX2=<n/>- 你拥有夜间无敌。<n/>- 你可预先选择是否传承；仅在成功击中城镇角色时消耗一次机会，并由你代替对方死亡。<n/>- 继任者不能再次传承，转化后的下一个夜晚必须休息。
+Param/Value/GRBOX3=<n/>- 你与继任者共同胜利，即使你已死亡。<n/>- 死后仍可参与普通死者聊天；夜间可切换至与继任者的私聊。
+Param/Value/GRBOX4=死亡只会让感染找到新的宿主。
+Param/Value/GRBOX6=- 感染者一方获胜时，你与继任者共同获胜。
+Param/Value/GRBOXS=<n/>- 你的夜间目标会受到女巫或巴士司机的干扰。
+Param/Value/GROPTIMM=在夜间无敌
+Param/Value/GRTIP=<s val="ModCenterSize20Bold">感染</s>
+Param/Value/GRSEL=<s val="ModLeftSize16">你今晚将访问 </s>
+Param/Value/GRRESEL=<s val="ModLeftSize16">你改为访问 </s>
+Param/Value/GRCANCEL=<s val="ModLeftSize16">你取消了今晚的行动。</s>
+Param/Value/GRREADY=<s val="ModLeftSize16"><c val="DFFF00">传承准备就绪：若今晚成功击中城镇角色，你将以自己的生命使其成为感染者。</c></s>
+Param/Value/GRDISARM=<s val="ModLeftSize16">今晚只执行普通攻击，不会发动传承。</s>
+Param/Value/GRNOCHARGE=<s val="ModLeftSize16">你已经没有传承机会。</s>
+Param/Value/GRREST=<s val="ModLeftSize16">你刚刚获得新的躯壳。今晚必须休息，明晚才能行动。</s>
+Param/Value/GRCONVERT=<s val="ModLeftSize16Bold"><c val="DFFF00">传承成功。你的意识留在黑暗里，而你的继任者继续呼吸。</c></s>
+Param/Value/GRNEW=<s val="ModLeftSize16Bold"><c val="DFFF00">一股陌生的意识侵入了你。你没有死去，却已成为感染者。下一晚你必须休息。</c></s>
+Param/Value/GRFAILED=<s val="ModLeftSize16">传承没有发生。机会仍在，你也仍活着。</s>
+Param/Value/GRIMMUNE=<s val="ModLeftSize16">目标抵挡了你的攻击。</s>
+Param/Value/GRHEALED=<s val="ModLeftSize16">目标获救了。</s>
+Param/Value/GRGUARDED=<s val="ModLeftSize16">有人挡下了你的攻击。</s>
+Param/Value/GRCHATON=<s val="ModLeftSize16"><c val="DFFF00">已进入感染者私聊。此处只有你与继任者能听见。</c></s>
+Param/Value/GRCHATOFF=<s val="ModLeftSize16">已返回普通死者频道。</s>
+Param/Value/GRCHATDAY=<s val="ModLeftSize16">感染者私聊仅在夜间开放。</s>
+Param/Value/GRCHATNONE=<s val="ModLeftSize16">你尚无继任者，无法切换频道。</s>
+Param/Value/GRCHATHELP=<s val="ModLeftSize16">死后输入 -infect 进入继任者私聊；输入 -dead 返回普通死者频道。</s>
+Param/Value/GRDEATH=死者身上浮现出不自然的荧绿色纹路，仿佛有什么东西刚刚离开了他。
+Param/Value/GRDM=死者遭到感染者袭击。
+Param/Value/GRCRIME=非法闯入，谋爱
