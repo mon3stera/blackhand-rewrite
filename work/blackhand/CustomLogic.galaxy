@@ -90529,28 +90529,47 @@ void gf_SKG_3_chuxingzhe (int lv_a) {
     int lv_killer;
 
     // Implementation
-lv_killer = gv_bhNightKiller[gv_goalTarget[lv_a]];
-if ((gv_roleOptions[3][6][4] == true) && (lv_killer >= 1) && (lv_killer <= 15) && (lv_killer != lv_a) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_killer) == true)) {
-    gv_goalTarget[lv_a] = lv_killer;
-    gf_CBSystemMessage((StringExternal("Param/Value/BHENEW") + TextWithColor(StringToText(gv_name[lv_killer]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_killer])) + StringExternal("Param/Value/BHENEW2")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-    gf_RTRoleCard(lv_a);
-    gf_RefreshRoleBox();
-    gv_seqAfter2Wait[2] = true;
-    return;
-}
+    lv_killer = gv_bhNightKiller[gv_goalTarget[lv_a]];
+    if ((gv_roleOptions[3][6][4] == true)) {
+        gf_CBSystemMessage(StringExternal("Param/Value/BHEDEAD"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+        if ((lv_killer >= 1) && (lv_killer <= 15) && (lv_killer != lv_a) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_killer) == true)) {
+            gv_goalTarget[lv_a] = lv_killer;
+            gf_CBSystemMessage((StringExternal("Param/Value/BHENEW") + TextWithColor(StringToText(gv_name[lv_killer]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_killer])) + StringExternal("Param/Value/BHENEW2")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0,0,0));
+            gf_CBSystemMessage(StringExternal("Param/Value/BHENEW3"), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0,0,0));
+            gf_RTRoleCard(lv_a);
+            gf_RefreshRoleBox();
+            gv_seqAfter2Wait[2] = true;
+            return;
+        }
 
-if ((gv_roleOptions[3][6][0] == true)) {
-    gv_roles[lv_a][0] = 3;
-    gf_CBSystemMessage((StringExternal("Param/Value/0E565869") + TextWithColor(StringToText(gv_name[gv_goalTarget[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_goalTarget[lv_a]])) + StringExternal("Param/Value/8E94060F") + gv_roleNameArray[3][3] + StringExternal("Param/Value/965A0352")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
-    gf_RTRoleCard(lv_a);
-    gv_specialCasePlayer[lv_a][17] += 1;
-    gf_RefreshRoleBox();
-}
-else {
-    gf_CBSystemMessage((StringExternal("Param/Value/ED5FE3E6") + TextWithColor(StringToText(gv_name[gv_goalTarget[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_goalTarget[lv_a]])) + StringExternal("Param/Value/36213A2A")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0.00, 0.00, 0.00));
-    gf_ESExecutionerSuicide(lv_a);
-}
-gv_seqAfter2Wait[2] = true;
+        gf_CBSystemMessage(StringExternal("Param/Value/BHEUNKNOWN"), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0,0,0));
+    }
+
+    if ((gv_roleOptions[3][6][0] == true)) {
+        gv_roles[lv_a][0] = 3;
+        if ((gv_roleOptions[3][6][4] == true)) {
+            gf_CBSystemMessage(StringExternal("Param/Value/BHECLOWN"), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0,0,0));
+        }
+        else {
+            gf_CBSystemMessage((StringExternal("Param/Value/0E565869") + TextWithColor(StringToText(gv_name[gv_goalTarget[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_goalTarget[lv_a]])) + StringExternal("Param/Value/8E94060F") + gv_roleNameArray[3][3] + StringExternal("Param/Value/965A0352")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+        }
+
+        gf_RTRoleCard(lv_a);
+        gv_specialCasePlayer[lv_a][17] += 1;
+        gf_RefreshRoleBox();
+    }
+    else {
+        if ((gv_roleOptions[3][6][4] == true)) {
+            gf_CBSystemMessage(StringExternal("Param/Value/BHESUICIDE"), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0,0,0));
+        }
+        else {
+            gf_CBSystemMessage((StringExternal("Param/Value/ED5FE3E6") + TextWithColor(StringToText(gv_name[gv_goalTarget[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_goalTarget[lv_a]])) + StringExternal("Param/Value/36213A2A")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0.00, 0.00, 0.00));
+        }
+
+        gf_ESExecutionerSuicide(lv_a);
+    }
+
+    gv_seqAfter2Wait[2] = true;
 }
 
 // ===== BH:SK 角色块抽取（阶段三 · kills）=====

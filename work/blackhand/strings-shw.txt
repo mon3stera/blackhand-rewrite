@@ -42,8 +42,14 @@ Param/Value/BHJBOX=- 如果你被处刑了，所有投有罪的投票者将在�
 Param/Value/BHEKILL=<c val="FF4444">目标在夜晚死亡时切换击爱者作为目标</c>
 Param/Value/BHJANN=<s val="ModLeftSize16"><c val="FF4444">小丑启用了开关「投有罪者全部死亡」</c></s>
 Param/Value/BHEANN=<s val="ModLeftSize16"><c val="FF4444">处刑者启用了开关「目标在夜晚死亡时切换击爱者作为目标」</c></s>
-Param/Value/BHENEW=你的目标昨夜死亡；你现在的目标是「
-Param/Value/BHENEW2=」。
+// 处刑者换目标及无有效击倒者回退：每条独立聊天行，避免换行在单行标签中被裁切。
+Param/Value/BHEDEAD=<s val="ModLeftSize16Bold"><c val="FF0000">你的目标在昨晚遇害，剥夺了你亲手处决他的乐趣！</c></s>
+Param/Value/BHENEW=<s val="ModLeftSize16Bold"><c val="FF0000">顺着现场的蛛丝马迹，你锁定了凶手 ——「</c>
+Param/Value/BHENEW2=<c val="FF0000">」。</c></s>
+Param/Value/BHENEW3=<s val="ModLeftSize16Bold"><c val="FF0000">他夺走了你的猎物，现在他必须代替死者登上绞刑架！你的目标已变更。</c></s>
+Param/Value/BHEUNKNOWN=<s val="ModLeftSize16Bold"><c val="FF0000">你勘察了现场，但是你最终未能知道是谁害了他。</c></s>
+Param/Value/BHECLOWN=<s val="ModLeftSize16Bold"><c val="FF0000">你疯了，现在是一个小丑。</c></s>
+Param/Value/BHESUICIDE=<s val="ModLeftSize16Bold"><c val="FF0000">你悲痛欲绝，决定自尽。</c></s>
 Param/Value/SHWBOX9=<n/>- -on（截击）：若目标一访问了目标二，则攻击目标一，这次攻击无视无敌和救治。<n/>- 目标一不动视作访问自己。<n/>- 在追击模式下，如果目标一访问了你，则你会直接攻击他。
 Param/Value/SHWCARD=<c val="C0C0C0">
 Param/Value/SHWBOXS=<n/>- 你能查出影武者。
