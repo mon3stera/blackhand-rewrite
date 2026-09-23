@@ -36,6 +36,14 @@ Param/Value/SHWDEATH4=死者被一把刀刺穿了。
 Param/Value/SHWDEATH5=他被劈成两半了。
 Param/Value/SHWDEATH6=死者身中数刀。
 Param/Value/94249CFE=<c val="004080">点击来改变你的开关状态<n/>限定：瘟疫散布者 冤魂 小丑 影武者 开膛手</c>
+// 小丑与处刑者的自设开关：默认关闭，旧存档无对应位时沿用默认值。
+Param/Value/BHJALL=投有罪者全部死亡
+Param/Value/BHJBOX=- 如果你被处刑了，所有投有罪的投票者将在次日夜晚死亡。
+Param/Value/BHEKILL=目标在夜晚死亡时切换击爱者作为目标
+Param/Value/BHJANN=<c val="FFAAFF">小丑启用了开关「投有罪者全部死亡」</c>
+Param/Value/BHEANN=<c val="AACCFF">处刑者启用了开关「目标在夜晚死亡时切换击爱者作为目标」</c>
+Param/Value/BHENEW=你的目标昨夜死亡；你现在的目标是「
+Param/Value/BHENEW2=」。
 Param/Value/SHWBOX9=<n/>- -on（截击）：若目标一访问了目标二，则攻击目标一，这次攻击无视无敌和救治。<n/>- 目标一不动视作访问自己。<n/>- 在追击模式下，如果目标一访问了你，则你会直接攻击他。
 Param/Value/SHWCARD=<c val="C0C0C0">
 Param/Value/SHWBOXS=<n/>- 你能查出影武者。

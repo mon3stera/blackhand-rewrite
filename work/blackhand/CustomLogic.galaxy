@@ -152,6 +152,7 @@ int[16] gv_myxHits;
 int[16] gv_kcCleans;
 bool[16] gv_doused;
 bool[16][16] gv_jestered;
+int[16] gv_bhNightKiller; // 当夜首个实际击倒该玩家的攻击者；0 表示无法归属
 int[16] gv_switched;
 bool[16] gv_busEligible;
 bool[16][3] gv_silenced;
@@ -1139,6 +1140,7 @@ void gf_StopMusic2 (fixed lp_delay);
 int gf_CheckEnd ();
 void gf_EndGame (int lp_end);
 void gf_KillPlayer (int lp_player, bool lp_disguised);
+void gf_BHRecordNightKiller (int lp_victim, int lp_killer);
 void gf_RefreshRoleBox ();
 void gf_FlashScreen (color lp_color, int lp_player, fixed lp_duration, fixed lp_alpha);
 void gf_WinScreen (string lp_image, int lp_player);
@@ -5184,8 +5186,11 @@ void gf_InitializeVariables () {
     gv_roleInvestigatorArray[3][3][1] = gv_investigatorE7B2BEE7A59E2;
     gv_e78AAFE7BDAAE58FAFE883BD[3][3] = StringExternal("Param/Value/BBD19812");
     gv_roleOptionExists[3][3][0] = true;
+    gv_roleOptionExists[3][3][1] = true;
     gv_roleOptionsImportant[3][3][0] = 2;
+    gv_roleOptionsImportant[3][3][1] = 2;
     gv_roleOptionsText[3][3][0] = StringExternal("Param/Value/500D69DD");
+    gv_roleOptionsText[3][3][1] = StringExternal("Param/Value/BHJALL");
     gv_roleNameArray[3][4] = StringExternal("Param/Value/3E202ADE");
     gv_roleDescriptionArray[3][4] = StringExternal("Param/Value/5B56B1B6");
     gv_roleInvestigatorArray[3][4][0] = gv_investigatorE9948BE588A9E5B7A5E585B71;
@@ -5229,14 +5234,17 @@ void gf_InitializeVariables () {
     gv_roleOptionExists[3][6][1] = true;
     gv_roleOptionExists[3][6][2] = true;
     gv_roleOptionExists[3][6][3] = true;
+    gv_roleOptionExists[3][6][4] = true;
     gv_roleOptionsImportant[3][6][0] = 2;
     gv_roleOptionsImportant[3][6][1] = 2;
     gv_roleOptionsImportant[3][6][2] = 2;
     gv_roleOptionsImportant[3][6][3] = 2;
+    gv_roleOptionsImportant[3][6][4] = 2;
     gv_roleOptionsText[3][6][0] = StringExternal("Param/Value/0EB11D52");
     gv_roleOptionsText[3][6][1] = StringExternal("Param/Value/05628EA0");
     gv_roleOptionsText[3][6][2] = StringExternal("Param/Value/432914C2");
     gv_roleOptionsText[3][6][3] = StringExternal("Param/Value/B8A16CC8");
+    gv_roleOptionsText[3][6][4] = StringExternal("Param/Value/BHEKILL");
     gv_roleNameArray[3][7] = StringExternal("Param/Value/A73FA4D4");
     gv_roleDescriptionArray[3][7] = StringExternal("Param/Value/5197AA69");
     gv_roleInvestigatorArray[3][7][0] = gv_investigatorE5B882E6B091E7B1BB1;
@@ -6483,7 +6491,9 @@ void gf_DefaultRoleOptions () {
     gv_bankSaveWeights[0][3][1] = 1.0;
     gv_bankSaveWeights[0][3][2] = 1.0;
     gv_roleOptionAllowed[3][3][0] = true;
+    gv_roleOptionAllowed[3][3][1] = true;
     gv_roleOptions[3][3][0] = true;
+    gv_roleOptions[3][3][1] = false;
     gv_bankSaveWeights[0][3][3] = 2.0;
     gv_roleOptionAllowed[3][4][0] = true;
     gv_roleOptionAllowed[3][4][1] = true;
@@ -6507,10 +6517,12 @@ void gf_DefaultRoleOptions () {
     gv_roleOptionAllowed[3][6][1] = true;
     gv_roleOptionAllowed[3][6][2] = true;
     gv_roleOptionAllowed[3][6][3] = true;
+    gv_roleOptionAllowed[3][6][4] = true;
     gv_roleOptions[3][6][0] = true;
     gv_roleOptions[3][6][1] = false;
     gv_roleOptions[3][6][2] = false;
     gv_roleOptions[3][6][3] = true;
+    gv_roleOptions[3][6][4] = false;
     gv_bankSaveWeights[0][3][6] = 1.5;
     gv_roleOptionAllowed[3][7][0] = true;
     gv_roleOptionAllowed[3][7][1] = true;
@@ -10395,6 +10407,7 @@ bool auto_gf_NightTransition_TriggerFunc (bool testConds, bool runActions) {
         gv_triadKillVotes[lv_a] = 0;
         gv_cultConvertVotes[lv_a] = 0;
         gv_diedAtNight[lv_a] = false;
+        gv_bhNightKiller[lv_a] = 0;
         gv_damage[lv_a] = 0;
         gv_healing[lv_a] = 0;
         gv_e694BBE587BBE7B1BBE59E8B[lv_a] = StringToText("");
@@ -12697,7 +12710,23 @@ void gf_SequenceKills () {
                 }
 
             }
-            if ((PlayerGroupCount(lv_g) >= 1)) {
+            if ((gv_roleOptions[3][3][1] == true)) {
+                // 从既有有罪投票名单逐一结算；此开关要求全体死亡，救治不再抵消报复。
+                lv_b = 1;
+                for ( ; ( (auto1F8CE533_ai >= 0 && lv_b <= auto1F8CE533_ae) || (auto1F8CE533_ai < 0 && lv_b >= auto1F8CE533_ae) ) ; lv_b += auto1F8CE533_ai ) {
+                    if ((PlayerGroupHasPlayer(lv_g, lv_b) == true) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_b) == true)) {
+                        if ((gv_seqKillsZ[1] == true)) {
+                            Wait(1.0, c_timeGame);
+                        }
+
+                        gv_damage[lv_b] += 1;
+                        gv_healing[lv_b] = 0;
+                        gv_seqKillsZ[1] = true;
+                        gf_ESJesterSuicide(lv_b);
+                    }
+                }
+            }
+            else if ((PlayerGroupCount(lv_g) >= 1)) {
                 lv_b = PlayerGroupPlayer(lv_g, RandomInt(1, PlayerGroupCount(lv_g)));
                 if ((gv_seqKillsZ[1] == true)) {
                     Wait(1.0, c_timeGame);
@@ -15614,6 +15643,17 @@ bool auto_gf_EndGame_TriggerFunc (bool testConds, bool runActions) {
 trigger auto_gf_KillPlayer_Trigger = null;
 int auto_gf_KillPlayer_lp_player;
 bool auto_gf_KillPlayer_lp_disguised;
+
+// 只记已通过免疫、救治与保镖拦截的真实刀口；不覆盖同夜首个击倒者。
+void gf_BHRecordNightKiller (int lp_victim, int lp_killer) {
+    if ((lp_victim < 1) || (lp_victim > 15) || (lp_killer < 1) || (lp_killer > 15) || (lp_victim == lp_killer)) {
+        return;
+    }
+
+    if ((gv_bhNightKiller[lp_victim] == 0) && (PlayerGroupHasPlayer(gv_alivePlayers, lp_victim) == true)) {
+        gv_bhNightKiller[lp_victim] = lp_killer;
+    }
+}
 
 void gf_KillPlayer (int lp_player, bool lp_disguised) {
     auto_gf_KillPlayer_lp_player = lp_player;
@@ -20375,7 +20415,7 @@ bool auto_gf_EExecution_TriggerFunc (bool testConds, bool runActions) {
             gf_CBAllowDisallowChatting(autoA69F64CB_var, ge_Allow_Allow);
         }
         Wait(10.0, c_timeGame);
-        if ((gv_roles[lp_player][1] == 3) && (gv_roles[lp_player][0] == 3) && (gv_roleOptions[3][3][0] == true)) {
+        if ((gv_roles[lp_player][1] == 3) && (gv_roles[lp_player][0] == 3) && ((gv_roleOptions[3][3][0] == true) || (gv_roleOptions[3][3][1] == true))) {
             gv_jesterDeath[lp_player] = true;
             if (((gv_lynchType == 1) || (gv_lynchType == 2) || (gv_lynchType == 4))) {
                 auto72E2C8A3_g = gv_alivePlayers;
@@ -20459,7 +20499,7 @@ bool auto_gf_EExecution_TriggerFunc (bool testConds, bool runActions) {
             CameraLockInput(auto250409BE_var, false);
         }
         CameraSetBounds(PlayerGroupAll(), RegionFromId(1), true);
-        if ((gv_roles[lp_player][1] == 3) && (gv_roles[lp_player][0] == 3) && (gv_roleOptions[3][3][0] == true)) {
+        if ((gv_roles[lp_player][1] == 3) && (gv_roles[lp_player][0] == 3) && ((gv_roleOptions[3][3][0] == true) || (gv_roleOptions[3][3][1] == true))) {
             gv_jesterDeath[lp_player] = true;
             if (((gv_lynchType == 1) || (gv_lynchType == 2) || (gv_lynchType == 4))) {
                 auto6385EE28_g = gv_alivePlayers;
@@ -24978,6 +25018,7 @@ void gf_ESVeteranKill (int lp_player, int lp_killer) {
         }
         else {
             gv_diedAtNight[lv_target] = true;
+            gf_BHRecordNightKiller(lv_target, lp_killer);
             gf_KillPlayer(lv_target, false);
             if ((gv_nightSequence == false)) {
                 gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
@@ -25072,6 +25113,7 @@ void gf_ESJailorKill (int lp_player, int lp_killer) {
     gv_healing[lv_target] = 0;
     gv_e694BBE587BBE7B1BBE59E8B[lv_target] = StringExternal("Param/Value/29A456D9");
     gv_diedAtNight[lv_target] = true;
+    gf_BHRecordNightKiller(lv_target, lp_killer);
     gf_KillPlayer(lv_target, false);
     gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
     gf_CBSystemMessage(StringExternal("Param/Value/82D5B1D2"), lv_target, lv_target, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
@@ -25162,6 +25204,7 @@ void gf_ESKidnapperKill (int lp_player, int lp_killer) {
     gv_healing[lv_target] = 0;
     gv_e694BBE587BBE7B1BBE59E8B[lv_target] = StringExternal("Param/Value/63C2107C");
     gv_diedAtNight[lv_target] = true;
+    gf_BHRecordNightKiller(lv_target, lp_killer);
     gf_KillPlayer(lv_target, false);
     gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
     gf_CBSystemMessage(StringExternal("Param/Value/0B592AEA"), lv_target, lv_target, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
@@ -25252,6 +25295,7 @@ void gf_ESInterrogatorKill (int lp_player, int lp_killer) {
     gv_healing[lv_target] = 0;
     gv_e694BBE587BBE7B1BBE59E8B[lv_target] = StringExternal("Param/Value/84A64001");
     gv_diedAtNight[lv_target] = true;
+    gf_BHRecordNightKiller(lv_target, lp_killer);
     gf_KillPlayer(lv_target, false);
     gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
     gf_CBSystemMessage(StringExternal("Param/Value/B21C550F"), lv_target, lv_target, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
@@ -25517,6 +25561,7 @@ void gf_ESVigilanteKill (int lp_player, int lp_killer) {
         }
         else {
             gv_diedAtNight[lv_target] = true;
+            gf_BHRecordNightKiller(lv_target, lp_killer);
             gf_KillPlayer(lv_target, false);
             if ((gv_nightSequence == false)) {
                 gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
@@ -25785,6 +25830,7 @@ void gf_ESSearcherKill (int lp_player, int lp_killer) {
         }
         else {
             gv_diedAtNight[lv_target] = true;
+            gf_BHRecordNightKiller(lv_target, lp_killer);
             gf_KillPlayer(lv_target, false);
             if ((gv_nightSequence == false)) {
                 gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
@@ -26054,6 +26100,7 @@ void gf_ESpretender1 (int lp_player, int lp_killer) {
         }
         else {
             gv_diedAtNight[lv_target] = true;
+            gf_BHRecordNightKiller(lv_target, lp_killer);
             gf_KillPlayer(lv_target, false);
             if ((gv_roles[lp_killer][1] == 2)) {
                 gf_CBSystemMessage(StringExternal("Param/Value/15F03910"), lv_target, lv_target, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
@@ -26360,6 +26407,7 @@ void gf_ESMafiaKill () {
                         else {
                             gv_placedNote[lv_target] = gv_deathNote[gv_e9BB91E6898BE58AA9E694BB[gv_mafiaHitman]];
                             gv_diedAtNight[lv_target] = true;
+                            gf_BHRecordNightKiller(lv_target, gv_mafiaHitman);
                             gf_KillPlayer(lv_target, false);
                             if ((gv_nightSequence == false)) {
                                 gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
@@ -26579,6 +26627,7 @@ void gf_ESMafiaKill () {
                 else {
                     gv_placedNote[lv_target] = gv_deathNote[gv_e9BB91E6898BE58AA9E694BB[gv_mafiaHitman]];
                     gv_diedAtNight[lv_target] = true;
+                    gf_BHRecordNightKiller(lv_target, gv_mafiaHitman);
                     gf_KillPlayer(lv_target, false);
                     if ((gv_nightSequence == false)) {
                         gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
@@ -26597,6 +26646,7 @@ void gf_ESMafiaKill () {
 
             gv_placedNote[lv_target] = gv_deathNote[gv_mafiaHitman];
             gv_diedAtNight[lv_target] = true;
+            gf_BHRecordNightKiller(lv_target, gv_mafiaHitman);
             gf_KillPlayer(lv_target, false);
             if ((gv_nightSequence == false)) {
                 gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
@@ -26864,6 +26914,7 @@ void gf_ESTriadKill () {
 
             gv_placedNote[lv_target] = gv_deathNote[gv_triadHitman];
             gv_diedAtNight[lv_target] = true;
+            gf_BHRecordNightKiller(lv_target, gv_triadHitman);
             gf_KillPlayer(lv_target, false);
             if ((gv_nightSequence == false)) {
                 gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
@@ -27178,6 +27229,7 @@ void gf_ESSerialKillerKill (int lp_player, int lp_killer) {
 
             gv_placedNote[lv_target] = gv_deathNote[lp_killer];
             gv_diedAtNight[lv_target] = true;
+            gf_BHRecordNightKiller(lv_target, lp_killer);
             gf_KillPlayer(lv_target, false);
             if ((gv_nightSequence == false)) {
                 gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
@@ -27448,6 +27500,7 @@ void gf_ESArsonistBurn (int lp_killer) {
                 else {
                     gv_placedNote[lv_b] = gv_deathNote[lp_killer];
                     gv_diedAtNight[lv_b] = true;
+                    gf_BHRecordNightKiller(lv_b, lp_killer);
                     gf_KillPlayer(lv_b, false);
                     if ((gv_nightSequence == false)) {
                         gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_b, 5.0, 0.0);
@@ -27948,6 +28001,7 @@ void gf_ESMassMurdererSpree (int lp_killer, int lp_target) {
                     gv_placedNote[lv_b] = gv_deathNote[lp_killer];
                     gv_diedAtNight[lv_b] = true;
                     gv_placeofDeath[lv_b] = lp_target;
+                    gf_BHRecordNightKiller(lv_b, lp_killer);
                     gf_KillPlayer(lv_b, false);
                     lv_e68993E6ADBBE4BA86 += 1;
                     if ((gv_nightSequence == false)) {
@@ -28279,6 +28333,7 @@ void gf_ESMassMurdererAngerIssue (int lp_killer, int lp_target) {
             gv_placedNote[lp_target] = gv_deathNote[lp_killer];
             gv_diedAtNight[lv_b] = true;
             gv_placeofDeath[lv_b] = lp_target;
+            gf_BHRecordNightKiller(lp_target, lp_killer);
             gf_KillPlayer(lp_target, false);
             lv_e68993E6ADBBE4BA86 += 1;
             if ((gv_nightSequence == false)) {
@@ -28555,6 +28610,7 @@ void gf_ESMasonKill (int lp_player, int lp_killer) {
         }
         else {
             gv_diedAtNight[lv_target] = true;
+            gf_BHRecordNightKiller(lv_target, lp_killer);
             gf_KillPlayer(lv_target, false);
             if ((gv_nightSequence == false)) {
                 gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
@@ -28732,6 +28788,7 @@ void gf_ESDisguiserKill (int lp_player, int lp_killer) {
 
             gv_placedNote[lv_target] = gv_deathNote[lp_killer];
             gv_diedAtNight[lv_target] = true;
+            gf_BHRecordNightKiller(lv_target, lp_killer);
             gf_KillPlayer(lv_target, true);
             if ((gv_nightSequence == false)) {
                 gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
@@ -28902,6 +28959,7 @@ void gf_ESPossessio (int lp_player, int lp_killer) {
 
                 gv_placedNote[lv_target] = gv_deathNote[lp_killer];
                 gv_diedAtNight[lv_target] = true;
+                gf_BHRecordNightKiller(lv_target, lp_killer);
                 gf_KillPlayer(lv_target, true);
                 gv_e586A4E9AD82log[lv_target] = true;
                 gf_CBSystemMessage(StringExternal("Param/Value/C85135E2"), lv_target, lv_target, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
@@ -28909,6 +28967,7 @@ void gf_ESPossessio (int lp_player, int lp_killer) {
             else {
                 gv_placedNote[lv_target] = gv_deathNote[lp_killer];
                 gv_diedAtNight[lv_target] = true;
+                gf_BHRecordNightKiller(lv_target, lp_killer);
                 gf_KillPlayer(lv_target, false);
                 gv_e586A4E9AD82log[lv_target] = true;
                 gf_CBSystemMessage(StringExternal("Param/Value/4098D8D5"), lv_target, lv_target, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
@@ -29088,6 +29147,7 @@ void gf_ESInformantKill (int lp_player, int lp_killer) {
 
             gv_placedNote[lv_target] = gv_deathNote[lp_killer];
             gv_diedAtNight[lv_target] = true;
+            gf_BHRecordNightKiller(lv_target, lp_killer);
             gf_KillPlayer(lv_target, true);
             if ((gv_nightSequence == false)) {
                 gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
@@ -29305,6 +29365,7 @@ void gf_ESWitchSuicide (int lp_player, int lp_killer) {
 
             gv_placedNote[lv_target] = gv_deathNote[lp_killer];
             gv_diedAtNight[lv_target] = true;
+            gf_BHRecordNightKiller(lv_target, lp_killer);
             gf_KillPlayer(lv_target, false);
             if ((gv_nightSequence == false)) {
                 gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
@@ -29420,6 +29481,7 @@ void gf_ESLBSuicide2 (int lp_player, int lp_killer) {
 
             gv_placedNote[lv_target] = gv_deathNote[lp_killer];
             gv_diedAtNight[lv_target] = true;
+            gf_BHRecordNightKiller(lv_target, lp_killer);
             gf_KillPlayer(lv_target, false);
             if ((gv_nightSequence == false)) {
                 gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
@@ -29595,6 +29657,7 @@ void gf_ESBusDriverSuicide (int lp_player, int lp_driver) {
             }
 
             gv_diedAtNight[lv_target] = true;
+            gf_BHRecordNightKiller(lv_target, lp_driver);
             gf_KillPlayer(lv_target, false);
             if ((gv_nightSequence == false)) {
                 gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
@@ -29742,6 +29805,7 @@ void gf_ESBeguilerSuicide (int lp_player, int lp_driver) {
             }
 
             gv_diedAtNight[lv_target] = true;
+            gf_BHRecordNightKiller(lv_target, lp_driver);
             gf_KillPlayer(lv_target, false);
             if ((gv_nightSequence == false)) {
                 gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
@@ -29855,6 +29919,7 @@ void gf_ESPossessioSuicide2 (int lp_player, int lp_driver) {
             }
 
             gv_diedAtNight[lv_target] = true;
+            gf_BHRecordNightKiller(lv_target, lp_driver);
             gf_KillPlayer(lv_target, false);
             if ((gv_nightSequence == false)) {
                 gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
@@ -30058,6 +30123,7 @@ void gf_ESBodyguardKill (int lp_killer, int lp_guard) {
         else {
             gv_deathMethod[lv_target[0]] = (gv_deathMethod[lv_target[0]] + "O");
             gv_diedAtNight[lv_target[0]] = true;
+            gf_BHRecordNightKiller(lv_target[0], lp_killer);
             gf_KillPlayer(lv_target[0], false);
             gf_CBSystemMessage(StringExternal("Param/Value/900874D9"), lv_target[0], lv_target[0], 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
             if ((gv_nightSequence == false)) {
@@ -30080,6 +30146,7 @@ void gf_ESBodyguardKill (int lp_killer, int lp_guard) {
         else {
             gv_deathMethod[lv_target[1]] = (gv_deathMethod[lv_target[1]] + "G");
             gv_diedAtNight[lv_target[1]] = true;
+            gf_BHRecordNightKiller(lv_target[1], lp_guard);
             gf_KillPlayer(lv_target[1], false);
             gf_CBSystemMessage(StringExternal("Param/Value/760CC205"), lv_target[1], lv_target[1], 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
             gf_BHCrimeMurder(lp_killer);
@@ -31159,6 +31226,7 @@ void gf_ESThunderKill (int lp_target, int lp_killer) {
     }
 
     gv_diedAtNight[lv_target] = true;
+    gf_BHRecordNightKiller(lv_target, lp_killer);
     gf_KillPlayer(lv_target, false);
     if ((gv_nightSequence == false)) {
         gf_FlashScreen(Color(100.00, 0.00, 0.00), lv_target, 5.0, 0.0);
@@ -39068,7 +39136,10 @@ void gf_RTNeutralRoleText (int lp_player) {
         gv_roleBoxText[lv_a][6] = StringExternal("Param/Value/DF612145");
         gv_roleBoxText[lv_a][4] = StringExternal("Param/Value/92D93B2E");
         gv_roleBoxText[lv_a][1] = StringExternal("Param/Value/BABF06CC");
-        if ((gv_roleOptions[3][3][0] == true)) {
+        if ((gv_roleOptions[3][3][1] == true)) {
+            gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/BHJBOX");
+        }
+        else if ((gv_roleOptions[3][3][0] == true)) {
             gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/F0BF3F84");
         }
         else {
@@ -58761,6 +58832,20 @@ bool gt_Start_Func (bool testConds, bool runActions) {
         gf_CBAllowDisallowChatting(lv_a, ge_Allow_Allow);
     }
     UIClearMessages(PlayerGroupAll(), c_messageAreaDirective);
+    // 取名结束、清空旧聊天后公布开关；同时保留在系统消息记录中。
+    lv_a = 1;
+    for ( ; ( (auto5357D6D4_ai >= 0 && lv_a <= auto5357D6D4_ae) || (auto5357D6D4_ai < 0 && lv_a >= auto5357D6D4_ae) ) ; lv_a += auto5357D6D4_ai ) {
+        if ((PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true)) {
+            if ((gv_roleOptions[3][3][1] == true)) {
+                gf_CBSystemMessage(StringExternal("Param/Value/BHJANN"), lv_a, 0, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+            }
+
+            if ((gv_roleOptions[3][6][4] == true)) {
+                gf_CBSystemMessage(StringExternal("Param/Value/BHEANN"), lv_a, 0, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+            }
+        }
+    }
+
     autoB527F0EA_g = gv_currentPlayers;
     autoB527F0EA_var = -1;
     while (true) {
@@ -84433,6 +84518,8 @@ void gf_ESShadowKill (int lp_player, int lp_killer) {
                 Wait(0.7, c_timeGame);
             }
 
+            gf_BHRecordNightKiller(lv_target, lp_killer);
+
             gf_KillPlayer(lv_target, false);
             gf_BHCrimeMurder(lp_killer);
         }
@@ -90439,7 +90526,19 @@ if ((gv_e7989FE796ABE782B9E695B0[gv_visitation[lv_a]] != 0) && (gv_roleOptions[1
 
 // 阶段三抽取（shw238）：中立 3/6 ← 原 gf_SequenceAfter2 行15012
 void gf_SKG_3_chuxingzhe (int lv_a) {
+    int lv_killer;
+
     // Implementation
+lv_killer = gv_bhNightKiller[gv_goalTarget[lv_a]];
+if ((gv_roleOptions[3][6][4] == true) && (lv_killer >= 1) && (lv_killer <= 15) && (lv_killer != lv_a) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_killer) == true)) {
+    gv_goalTarget[lv_a] = lv_killer;
+    gf_CBSystemMessage((StringExternal("Param/Value/BHENEW") + TextWithColor(StringToText(gv_name[lv_killer]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_killer])) + StringExternal("Param/Value/BHENEW2")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    gf_RTRoleCard(lv_a);
+    gf_RefreshRoleBox();
+    gv_seqAfter2Wait[2] = true;
+    return;
+}
+
 if ((gv_roleOptions[3][6][0] == true)) {
     gv_roles[lv_a][0] = 3;
     gf_CBSystemMessage((StringExternal("Param/Value/0E565869") + TextWithColor(StringToText(gv_name[gv_goalTarget[lv_a]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_goalTarget[lv_a]])) + StringExternal("Param/Value/8E94060F") + gv_roleNameArray[3][3] + StringExternal("Param/Value/965A0352")), lv_a, lv_a, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
@@ -94043,6 +94142,7 @@ void gf_ESRipperKill (int lp_target, int lp_killer, int lp_mode) {
         SoundPlay(SoundLink("Lab_Intro_Doors_Close", -1), PlayerGroupAll(), 80.0, 0.0);
         Wait(0.6, c_timeGame);
     }
+    gf_BHRecordNightKiller(lp_target, lp_killer);
     gf_KillPlayer(lp_target, false);
     if ((gv_zuosi[lp_target] == true)) {
         gf_CBSystemMessage(StringExternal("Param/Value/540F1C5F"), lp_target, lp_target, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
@@ -94488,6 +94588,7 @@ void gf_ESQiziBomb (int lp_killer, int lp_target) {
             gv_placedNote[lv_b] = gv_deathNote[lp_killer];
             gv_diedAtNight[lv_b] = true;
             gv_placeofDeath[lv_b] = lp_target;
+            gf_BHRecordNightKiller(lv_b, lp_killer);
             gf_KillPlayer(lv_b, false);
             if ((lv_b == lp_killer)) {
                 gf_CBSystemMessage(StringExternal("Param/Value/QZYOUSELF"), lv_b, lv_b, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
