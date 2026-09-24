@@ -94679,6 +94679,21 @@ void gf_ESGanranzheKill (int lp_target, int lp_killer) {
         return;
     }
 
+    if ((gv_nightSequence == true)) {
+        SoundPlay(SoundLink("InfestedAbominationAttackStart", -1), PlayerGroupAll(), 50.0, 0.0);
+        Wait(1.0, c_timeGame);
+        SoundPlay(SoundLink("InfestedAbominationAttackImpact", -1), PlayerGroupAll(), 75.0, 0.0);
+        Wait(0.6, c_timeGame);
+        SoundPlay(SoundLink("Whale_VxFx_Exert_Free", -1), PlayerGroupAll(), 65.0, 0.0);
+        Wait(1.0, c_timeGame);
+        lv_a = 1;
+        for ( ; ( (autoGRES_ai >= 0 && lv_a <= autoGRES_ae) || (autoGRES_ai < 0 && lv_a >= autoGRES_ae) ) ; lv_a += autoGRES_ai ) {
+            if ((PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true)) {
+                gf_CBSystemMessage(StringExternal("Param/Value/GRNIGHT"), lv_a, 0, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+            }
+        }
+    }
+
     if ((gv_zuosi[lp_target] == false) && ((gv_immuneChance[lp_target] > 0) || (gv_immune[lp_target][0] == true))) {
         if ((gv_immuneChance[lp_target] > 0)) {
             gv_immuneChance[lp_target] = (gv_immuneChance[lp_target] - 1);
@@ -94728,8 +94743,19 @@ void gf_ESGanranzheKill (int lp_target, int lp_killer) {
         gf_CBSystemMessage(StringExternal("Param/Value/GRCHATHELP"), lp_target, lp_target, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
         if (((gv_nightSequence == true) || (gv_deathDescriptions == true))) {
             if ((gv_nightSequence == true)) {
-                SoundPlay(SoundLink("Queen_AttackImpact", -1), PlayerGroupAll(), 80.0, 0.0);
-                Wait(0.4, c_timeGame);
+                gf_FlashScreen(Color(87.45, 100.00, 0.00), lp_killer, 1.5, 15.0);
+                if ((gv_isAMan[lp_killer] == true)) {
+                    SoundPlay(SoundLink("CivilianDeath", -1), PlayerGroupAll(), 100.0, 0.0);
+                }
+                else {
+                    SoundPlay(SoundLink("CivilianFemaleDeath", -1), PlayerGroupAll(), 100.0, 0.0);
+                }
+                SoundPlay(SoundLink("DehakaMini_Death", -1), PlayerGroupAll(), 100.0, 0.0);
+                Wait(0.6, c_timeGame);
+                SoundPlay(SoundLink("InfestedAbominationAttackStart", -1), PlayerGroupAll(), 30.0, 0.0);
+                Wait(0.8, c_timeGame);
+                SoundPlay(SoundLink("Marine_Ready_NP", -1), PlayerGroupAll(), 100.0, 0.0);
+                Wait(1.5, c_timeGame);
             }
             lv_a = RandomInt(1, 2);
             if ((lv_a == 1)) {
@@ -94737,9 +94763,6 @@ void gf_ESGanranzheKill (int lp_target, int lp_killer) {
             }
             else {
                 gv_deathText[lp_killer] = (gv_deathText[lp_killer] + StringExternal("Param/Value/GRDEATHS1"));
-            }
-            if ((gv_nightSequence == true)) {
-                Wait(0.3, c_timeGame);
             }
         }
         gv_deathMethod[lp_killer] = (gv_deathMethod[lp_killer] + "f");
@@ -94755,16 +94778,17 @@ void gf_ESGanranzheKill (int lp_target, int lp_killer) {
     }
     if (((gv_nightSequence == true) || (gv_deathDescriptions == true))) {
         if ((gv_nightSequence == true)) {
-            SoundPlay(SoundLink("Zealot_AttackImpact", -1), PlayerGroupAll(), 90.0, 0.0);
-            Wait(0.35, c_timeGame);
-            SoundPlay(SoundLink("Queen_AttackImpact", -1), PlayerGroupAll(), 70.0, 0.0);
             gf_FlashScreen(Color(87.45, 100.00, 0.00), lp_target, 1.5, 15.0);
-        }
-        lv_a = 1;
-        for ( ; ( (autoGRES_ai >= 0 && lv_a <= autoGRES_ae) || (autoGRES_ai < 0 && lv_a >= autoGRES_ae) ) ; lv_a += autoGRES_ai ) {
-            if ((PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true)) {
-                gf_CBSystemMessage(StringExternal("Param/Value/GRNIGHT"), lv_a, 0, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
+            if ((gv_isAMan[lp_target] == true)) {
+                SoundPlay(SoundLink("CivilianDeath", -1), PlayerGroupAll(), 100.0, 0.0);
             }
+            else {
+                SoundPlay(SoundLink("CivilianFemaleDeath", -1), PlayerGroupAll(), 100.0, 0.0);
+            }
+            SoundPlay(SoundLink("DehakaMini_Death", -1), PlayerGroupAll(), 100.0, 0.0);
+            Wait(0.6, c_timeGame);
+            SoundPlay(SoundLink("InfestedAbominationAttackStart", -1), PlayerGroupAll(), 30.0, 0.0);
+            Wait(0.5, c_timeGame);
         }
         lv_a = RandomInt(1, 2);
         if ((lv_a == 1)) {
