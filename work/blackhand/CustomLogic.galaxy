@@ -94731,11 +94731,12 @@ void gf_ESGanranzheKill (int lp_target, int lp_killer) {
                 SoundPlay(SoundLink("Queen_AttackImpact", -1), PlayerGroupAll(), 80.0, 0.0);
                 Wait(0.4, c_timeGame);
             }
-            lv_a = 1;
-            for ( ; ( (autoGRES_ai >= 0 && lv_a <= autoGRES_ae) || (autoGRES_ai < 0 && lv_a >= autoGRES_ae) ) ; lv_a += autoGRES_ai ) {
-                if ((PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true)) {
-                    gf_CBSystemMessage(StringExternal("Param/Value/GRDEATHSELF"), lv_a, 0, 0, SoundLink("Silent", -1), Color(87.45, 100.00, 0.00));
-                }
+            lv_a = RandomInt(1, 2);
+            if ((lv_a == 1)) {
+                gv_deathText[lp_killer] = (gv_deathText[lp_killer] + StringExternal("Param/Value/GRDEATHS0"));
+            }
+            else {
+                gv_deathText[lp_killer] = (gv_deathText[lp_killer] + StringExternal("Param/Value/GRDEATHS1"));
             }
             if ((gv_nightSequence == true)) {
                 Wait(0.3, c_timeGame);
@@ -94762,9 +94763,15 @@ void gf_ESGanranzheKill (int lp_target, int lp_killer) {
         lv_a = 1;
         for ( ; ( (autoGRES_ai >= 0 && lv_a <= autoGRES_ae) || (autoGRES_ai < 0 && lv_a >= autoGRES_ae) ) ; lv_a += autoGRES_ai ) {
             if ((PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true)) {
-                gf_CBSystemMessage(StringExternal("Param/Value/GRNIGHT"), lv_a, 0, 0, SoundLink("Silent", -1), Color(87.45, 100.00, 0.00));
-                gf_CBSystemMessage(StringExternal("Param/Value/GRDEATH"), lv_a, 0, 0, SoundLink("Silent", -1), Color(87.45, 100.00, 0.00));
+                gf_CBSystemMessage(StringExternal("Param/Value/GRNIGHT"), lv_a, 0, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
             }
+        }
+        lv_a = RandomInt(1, 2);
+        if ((lv_a == 1)) {
+            gv_deathText[lp_target] = (gv_deathText[lp_target] + StringExternal("Param/Value/GRDEATH0"));
+        }
+        else {
+            gv_deathText[lp_target] = (gv_deathText[lp_target] + StringExternal("Param/Value/GRDEATH1"));
         }
         if ((gv_nightSequence == true)) {
             Wait(0.3, c_timeGame);

@@ -254,8 +254,9 @@ MUST_HAVE_KEYS = [
    'Param/Value/GRCONVERT', 'Param/Value/GRNEW', 'Param/Value/GRFAILED',
    'Param/Value/GRIMMUNE', 'Param/Value/GRHEALED', 'Param/Value/GRGUARDED',
    'Param/Value/GRCHATON', 'Param/Value/GRCHATOFF', 'Param/Value/GRCHATDAY',
-   'Param/Value/GRCHATNONE', 'Param/Value/GRCHATHELP', 'Param/Value/GRDEATH',
-   'Param/Value/GRDM', 'Param/Value/GRCRIME', 'Param/Value/GRDEATHSELF',
+   'Param/Value/GRCHATNONE', 'Param/Value/GRCHATHELP', 'Param/Value/GRDEATH0',
+   'Param/Value/GRDEATH1', 'Param/Value/GRDEATHS0', 'Param/Value/GRDEATHS1',
+   'Param/Value/GRDM', 'Param/Value/GRCRIME',
    'Param/Value/GRDMSELF', 'Param/Value/GRNIGHT', 'Param/Value/GRCHATMSG',
    'Param/Value/GRSHREV',
    # shw289 弃子(2/16) / 死士(5/16)

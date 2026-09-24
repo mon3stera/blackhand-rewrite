@@ -10,15 +10,15 @@ Param/Value/GRBOX6=- 你会与被转化者共同胜利，即使你已死亡。
 Param/Value/GRBOXS=<n/>- 你的夜间目标会受到女巫或巴士司机的干扰。
 Param/Value/GROPTIMM=在夜间无敌
 Param/Value/GRTIP=<s val="ModCenterSize20Bold">感染</s>
-Param/Value/GRSEL=<s val="ModLeftSize16">你今晚将访问 </s>
-Param/Value/GRRESEL=<s val="ModLeftSize16">你改为访问 </s>
+Param/Value/GRSEL=<s val="ModLeftSize16">你今晚将攻击 </s>
+Param/Value/GRRESEL=<s val="ModLeftSize16">你改为攻击 </s>
 Param/Value/GRCANCEL=<s val="ModLeftSize16">你取消了今晚的行动。</s>
-Param/Value/GRREADY=<s val="ModLeftSize16"><c val="DFFF00">传承准备就绪：若今晚成功击中城镇角色，你将以自己的生命使其成为感染者。</c></s>
-Param/Value/GRDISARM=<s val="ModLeftSize16">今晚只执行普通攻击，不会发动传承。</s>
+Param/Value/GRREADY=<s val="ModLeftSize16"><c val="DFFF00">若你今晚成功爱死城镇角色，你将以自己的生命为代价让其成为感染者。</c></s>
+Param/Value/GRDISARM=<s val="ModLeftSize16">今晚你的攻击不会附有转化效果。</s>
 Param/Value/GRNOCHARGE=<s val="ModLeftSize16">你已经没有传承机会。</s>
-Param/Value/GRREST=<s val="ModLeftSize16">你刚刚获得新的躯壳。今晚必须休息，明晚才能行动。</s>
-Param/Value/GRCONVERT=<s val="ModLeftSize16Bold"><c val="DFFF00">传承成功。你的意识留在黑暗里，而你的继任者继续呼吸。</c></s>
-Param/Value/GRNEW=<s val="ModLeftSize16Bold"><c val="DFFF00">一股陌生的意识侵入了你。你没有死去，却已成为感染者。下一晚你必须休息。</c></s>
+Param/Value/GRREST=<s val="ModLeftSize16">寄生组织正在重构你的神经元，今夜你无法行动。</s>
+Param/Value/GRCONVERT=<s val="ModLeftSize16">你的躯壳正在迅速干瘪枯萎，但你感知到，意志已经在新的血肉中涅槃……</s>
+Param/Value/GRNEW=<s val="ModLeftSize16">你从剧烈的窒息与抽搐中惊醒，皮肤下隐隐有荧绿色的微光在血管中搏动。<n/>你被转化为了一个感染者。</s>
 Param/Value/GRFAILED=<s val="ModLeftSize16">传承没有发生。机会仍在，你也仍活着。</s>
 Param/Value/GRIMMUNE=<s val="ModLeftSize16">目标抵挡了你的攻击。</s>
 Param/Value/GRHEALED=<s val="ModLeftSize16">目标获救了。</s>
@@ -28,11 +28,13 @@ Param/Value/GRCHATOFF=<s val="ModLeftSize16">已离开感染者私聊。</s>
 Param/Value/GRCHATDAY=<s val="ModLeftSize16">感染者私聊仅在夜间开放。</s>
 Param/Value/GRCHATNONE=<s val="ModLeftSize16">你尚无继任者，无法切换频道。</s>
 Param/Value/GRCHATHELP=<s val="ModLeftSize16">死后输入 -infect 进入继任者私聊；输入 -dead 返回普通死者频道。</s>
-Param/Value/GRDEATH=死者身上浮现出不自然的荧绿色纹路，仿佛有什么东西刚刚离开了他。
+Param/Value/GRDEATH0=他的眼眶泛着干涸的荧绿残迹，全身血肉仿佛被彻底抽离。
+Param/Value/GRDEATH1=他全身的血管化作了蛛网般微微发光的荧绿色纹路，死前似乎经历过极其剧烈的抽搐与窒息。
+Param/Value/GRDEATHS0=他的躯干如同被燃尽的枯木般严重碳化脆裂，四周散落着大量逐渐熄灭的荧绿色磷粉，面容却带着诡异的微笑。
+Param/Value/GRDEATHS1=他只留下一具灰白干瘪的人皮空壳，死者胸口向外撕裂开一个拳头大小的荧绿色空洞，内部早已空无一物。
 Param/Value/GRDM=死者遭到感染者袭击。
 Param/Value/GRCRIME=非法闯入，谋爱
-Param/Value/GRDEATHSELF=死者的躯壳还在，意识却已经不在里面。
 Param/Value/GRDMSELF=死者把生命交给了另一个人。
-Param/Value/GRNIGHT=<s val="ModLeftSize16">夜色里掠过一道荧绿色的光。</s>
+Param/Value/GRNIGHT=<s val="ModLeftSize16Bold"><c val="FF0000">远处的夜色中掠过一声极度压抑的窒息喘息，随后陷入了死一般的寂静...</c></s>
 Param/Value/GRCHATMSG=<c val="DFFF00">[传承] </c>
 Param/Value/GRSHREV=<s val="ModLeftSize16Bold"><c val="DFFF00">你的目标是感染者。</c></s>
