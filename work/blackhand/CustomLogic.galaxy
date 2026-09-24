@@ -39847,10 +39847,14 @@ void gf_RTNeutralRoleText (int lp_player) {
     if ((gv_roles[lv_a][0] == 22)) {
         gv_roleBoxText[lv_a][0] = (StringExternal("Param/Value/CE62498E") + lv_t[2] + StringExternal("Param/Value/D7C97124"));
         gv_roleBoxText[lv_a][1] = StringExternal("Param/Value/GRBOX1");
-        gv_roleBoxText[lv_a][2] = (StringExternal("Param/Value/GRBOX2") + StringExternal("Param/Value/GRBOX3") + StringExternal("Param/Value/GRBOXS"));
+        gv_roleBoxText[lv_a][2] = (StringExternal("Param/Value/GRBOX2") + StringExternal("Param/Value/GRBOX3"));
+        if ((gv_roleOptions[3][22][0] == true)) {
+            gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/4467A310"));
+        }
+        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/GRBOXS"));
         gv_roleBoxText[lv_a][4] = StringExternal("Param/Value/GRBOX4");
         gv_roleBoxText[lv_a][6] = StringExternal("Param/Value/GRBOX6");
-        gv_roleBoxText[lv_a][3] = StringExternal("Param/Value/D19448B8");
+        gv_roleBoxText[lv_a][3] = StringExternal("Param/Value/GRBOX6");
         SoundPlay(SoundLink("Zealot_Pissed", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
     }
 
