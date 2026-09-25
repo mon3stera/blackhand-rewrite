@@ -134,6 +134,40 @@ def write_dds(archive: Path) -> list[str]:
     return done
 
 
+LAUGH_SRC = DDS_DIR / 'BHLaugh.ogg'
+LAUGH_MEMBER = r'Assets\Sounds\BHLaugh.ogg'
+SOUND_DATA = r'Base.SC2Data\GameData\SoundData.xml'
+LAUGH_SOUND = """    <CSound id="BHLaugh">
+        <AssetArray File="Assets\\Sounds\\BHLaugh.ogg"/>
+        <Category value="Dialogue"/>
+        <Mode value="2D"/>
+        <LoopCount value="0"/>
+        <Volume value="0.000000,0.000000"/>
+        <DupeDestroyCount value="8"/>
+        <DupeMuteCount value="8"/>
+    </CSound>
+"""
+
+
+def write_laugh(archive: Path) -> str:
+    """把奶龙笑声打进地图，并在 SoundData 里登记 BHLaugh。"""
+    assert LAUGH_SRC.exists(), f'笑声不存在: {LAUGH_SRC}'
+    ogg = LAUGH_SRC.read_bytes()
+    put(archive, LAUGH_MEMBER, ogg)
+    assert sc2map.read(archive, LAUGH_MEMBER) == ogg, '笑声回读不一致'
+
+    xml = sc2map.read(archive, SOUND_DATA).decode('utf-8')
+    if 'id="BHLaugh"' not in xml:
+        assert xml.rstrip().endswith('</Catalog>'), 'SoundData 结尾不是 </Catalog>'
+        xml = xml.rstrip()
+        xml = xml[: -len('</Catalog>')] + LAUGH_SOUND + '</Catalog>\n'
+        put(archive, SOUND_DATA, xml.encode('utf-8'))
+        xml = sc2map.read(archive, SOUND_DATA).decode('utf-8')
+
+    assert 'id="BHLaugh"' in xml, 'SoundData 没有 BHLaugh'
+    return LAUGH_MEMBER
+
+
 def write_cover(archive: Path, stem: str) -> list[str]:
     """只写入 Preview.dds（街机缩略图）。Mafia Icon.dds 保持原图。"""
     preview = DDS_DIR / f'{stem}-Preview.dds'
@@ -543,6 +577,8 @@ def main() -> int:
     # 5) 自加贴图（胜利图等，写在地图根目录；漏了就是结算画面找不到贴图）
     dds = write_dds(out)
     print(f"5) 根目录贴图 {len(dds)} 张 ← {DDS_DIR.name}/: {dds}")
+    laugh = write_laugh(out)
+    print(f"5c) 笑声 {laugh}")
     cover = write_cover(out, args.cover)
     print(f"5b) 街机封面 {args.cover} → {cover}")
 
@@ -673,11 +709,13 @@ def main() -> int:
                            capture_output=True, text=True).stdout
     font_missing = [m for m, _ in FONTS if Path(m).name not in files]
     dds_missing = [m for m, _ in DDS_ASSETS if m not in files]
+    laugh_missing = 'BHLaugh.ogg' not in files or 'id="BHLaugh"' not in sc2map.read(out, SOUND_DATA).decode('utf-8')
     cover_missing = [m for m in ('Preview.dds',) if m not in files]
 
     print(f"   回读: zhCN {len(zh.splitlines())} 行；Triggers={'Triggers' in files}；"
           f"BankList={'BankList.xml' in files}；自加键缺失={missing or '无'}；"
           f"样式缺失={style_missing or '无'}；字体缺失={font_missing or '无'}；贴图缺失={dds_missing or '无'}；"
+          f"笑声缺失={laugh_missing}；"
           f"封面缺失={cover_missing or '无'}；说明缺失={notes_missing or '无'}")
 
     if missing:
@@ -698,6 +736,10 @@ def main() -> int:
 
     if dds_missing:
         print('✗ 自加贴图缺失，结算画面按图名找不到贴图')
+        return 1
+
+    if laugh_missing:
+        print('✗ 笑声缺失，-laugh 没有音效')
         return 1
 
     if cover_missing:
