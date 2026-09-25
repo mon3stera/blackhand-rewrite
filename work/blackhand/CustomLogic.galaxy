@@ -57749,77 +57749,77 @@ bool gt_SetupDone_Func (bool testConds, bool runActions) {
             DialogControlAddItem(gv_modelSelectItem[0], PlayerGroupSingle(lv_a), StringExternal("Param/Value/2C4D54ED"));
             libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[0], StringExternal("Param/Value/328EA66E"), PlayerGroupSingle(lv_a));
             DialogControlSelectItem(gv_modelSelectItem[0], PlayerGroupSingle(lv_a), 1);
-            if (((gv_points[lv_a] >= 6) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][7] == true) || (gv_oP[lv_a][2] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][7] == true) || (gv_oP[lv_a][2] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[0], PlayerGroupSingle(lv_a), StringExternal("Param/Value/8428E791"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[0], StringExternal("Param/Value/0EF58134"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 12) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][7] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][10] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][7] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][10] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[0], PlayerGroupSingle(lv_a), StringExternal("Param/Value/328A4346"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[0], StringExternal("Param/Value/DBFA078B"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 24) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][7] == true) || (gv_oP[lv_a][10] == true) || (gv_gifted[lv_a] == true) || (gv_oP[lv_a][2] == true))) {
+            if (((true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][7] == true) || (gv_oP[lv_a][10] == true) || (gv_gifted[lv_a] == true) || (gv_oP[lv_a][2] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[0], PlayerGroupSingle(lv_a), StringExternal("Param/Value/E5B1089B"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[0], StringExternal("Param/Value/B861A87D"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 36) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][7] == true) || (gv_oP[lv_a][2] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][7] == true) || (gv_oP[lv_a][2] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[0], PlayerGroupSingle(lv_a), StringExternal("Param/Value/7AC88794"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[0], StringExternal("Param/Value/4633354E"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 60) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[0], PlayerGroupSingle(lv_a), StringExternal("Param/Value/1BA49DAF"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[0], StringExternal("Param/Value/2433FC9A"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 84) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[0], PlayerGroupSingle(lv_a), StringExternal("Param/Value/54515445"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[0], StringExternal("Param/Value/CF753238"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 132) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][7] == true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][7] == true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[0], PlayerGroupSingle(lv_a), StringExternal("Param/Value/C01E4693"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[0], StringExternal("Param/Value/24B537FE"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 180) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][7] == true) || (gv_oP[lv_a][2] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][7] == true) || (gv_oP[lv_a][2] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[0], PlayerGroupSingle(lv_a), StringExternal("Param/Value/0D0B2D13"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[0], StringExternal("Param/Value/625E5835"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 276) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[0], PlayerGroupSingle(lv_a), StringExternal("Param/Value/912F88AE"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[0], StringExternal("Param/Value/956CDC7D"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 372) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[0], PlayerGroupSingle(lv_a), StringExternal("Param/Value/F8C83B00"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[0], StringExternal("Param/Value/A8BEE4D0"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 564) || (gv_oP[lv_a][0] == true) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][4] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][0] == true) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][4] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[0], PlayerGroupSingle(lv_a), StringExternal("Param/Value/B1F6FC5C"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[0], StringExternal("Param/Value/69518DB0"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 756) || (gv_oP[lv_a][0] == true) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][7] == true) || (gv_oP[lv_a][4] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][0] == true) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][7] == true) || (gv_oP[lv_a][4] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[0], PlayerGroupSingle(lv_a), StringExternal("Param/Value/2F4913E7"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[0], StringExternal("Param/Value/8D18F785"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 1140) || (gv_oP[lv_a][0] == true) || (gv_oP[lv_a][4] == true) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][0] == true) || (gv_oP[lv_a][4] == true) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[0], PlayerGroupSingle(lv_a), StringExternal("Param/Value/55E388F4"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[0], StringExternal("Param/Value/E234B3C3"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 1524) || (gv_oP[lv_a][1] == true) || (gv_oP[lv_a][5] == true) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][1] == true) || (gv_oP[lv_a][5] == true) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[0], PlayerGroupSingle(lv_a), StringExternal("Param/Value/5F897629"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[0], StringExternal("Param/Value/4A9D8C32"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 2292) || (gv_oP[lv_a][1] == true) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][7] == true) || (gv_oP[lv_a][5] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][1] == true) || (gv_oP[lv_a][10] == true) || (gv_oP[lv_a][7] == true) || (gv_oP[lv_a][5] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[0], PlayerGroupSingle(lv_a), StringExternal("Param/Value/C4B29CB4"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[0], StringExternal("Param/Value/75AC4BF5"), PlayerGroupSingle(lv_a));
             }
@@ -57882,83 +57882,83 @@ bool gt_SetupDone_Func (bool testConds, bool runActions) {
             DialogControlAddItem(gv_modelSelectItem[1], PlayerGroupSingle(lv_a), StringExternal("Param/Value/40E74EFF"));
             libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[1], StringExternal("Param/Value/52B91D4B"), PlayerGroupSingle(lv_a));
             DialogControlSelectItem(gv_modelSelectItem[1], PlayerGroupSingle(lv_a), 1);
-            if (((gv_points[lv_a] >= 50) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[1], PlayerGroupSingle(lv_a), StringExternal("Param/Value/482AB1B1"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[1], StringExternal("Param/Value/26B39B75"), PlayerGroupSingle(lv_a));
                 DialogControlSetVisible(gv_modelSelectItem[1], PlayerGroupSingle(lv_a), true);
             }
 
-            if (((gv_points[lv_a] >= 100) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[1], PlayerGroupSingle(lv_a), StringExternal("Param/Value/809BC199"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[1], StringExternal("Param/Value/20EAE877"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 200) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[1], PlayerGroupSingle(lv_a), StringExternal("Param/Value/E1396C88"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[1], StringExternal("Param/Value/D4146625"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 300) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[1], PlayerGroupSingle(lv_a), StringExternal("Param/Value/B14B977D"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[1], StringExternal("Param/Value/973986C4"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 500) || (gv_oP[lv_a][7] == true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][7] == true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[1], PlayerGroupSingle(lv_a), StringExternal("Param/Value/68D4C45A"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[1], StringExternal("Param/Value/869833C5"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 700) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[1], PlayerGroupSingle(lv_a), StringExternal("Param/Value/C6243224"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[1], StringExternal("Param/Value/52EAE535"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 1100) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][7] == true) || (gv_oP[lv_a][2] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][7] == true) || (gv_oP[lv_a][2] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[1], PlayerGroupSingle(lv_a), StringExternal("Param/Value/5A0A2D2C"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[1], StringExternal("Param/Value/2CC31B5E"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 1500) || (gv_oP[lv_a][7] == true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][7] == true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[1], PlayerGroupSingle(lv_a), StringExternal("Param/Value/56574C5F"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[1], StringExternal("Param/Value/223218AC"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 2300) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[1], PlayerGroupSingle(lv_a), StringExternal("Param/Value/BB418DAA"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[1], StringExternal("Param/Value/69248BD3"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 3100) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[1], PlayerGroupSingle(lv_a), StringExternal("Param/Value/9592CBB2"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[1], StringExternal("Param/Value/E3E366F9"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 4700) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][7] == true))) {
+            if (((true) || (gv_oP[lv_a][3] == true) || (gv_oP[lv_a][2] == true) || (gv_oP[lv_a][7] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[1], PlayerGroupSingle(lv_a), StringExternal("Param/Value/E75A10D5"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[1], StringExternal("Param/Value/A7C78D25"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 6300) || (gv_oP[lv_a][0] == true) || (gv_oP[lv_a][4] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][0] == true) || (gv_oP[lv_a][4] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[1], PlayerGroupSingle(lv_a), StringExternal("Param/Value/D9F680A6"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[1], StringExternal("Param/Value/141C9B4A"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 9500) || (gv_oP[lv_a][0] == true) || (gv_oP[lv_a][4] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
+            if (((true) || (gv_oP[lv_a][0] == true) || (gv_oP[lv_a][4] == true) || (gv_oP[lv_a][7] == true) || (gv_gifted[lv_a] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[1], PlayerGroupSingle(lv_a), StringExternal("Param/Value/AF067BA0"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[1], StringExternal("Param/Value/58B10869"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 12700) || (gv_oP[lv_a][0] == true) || (gv_oP[lv_a][4] == true) || (gv_oP[lv_a][7] == true))) {
+            if (((true) || (gv_oP[lv_a][0] == true) || (gv_oP[lv_a][4] == true) || (gv_oP[lv_a][7] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[1], PlayerGroupSingle(lv_a), StringExternal("Param/Value/377AA843"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[1], StringExternal("Param/Value/AD5A58DB"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 19100) || (gv_oP[lv_a][1] == true) || (gv_oP[lv_a][5] == true) || (gv_oP[lv_a][7] == true))) {
+            if (((true) || (gv_oP[lv_a][1] == true) || (gv_oP[lv_a][5] == true) || (gv_oP[lv_a][7] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[1], PlayerGroupSingle(lv_a), StringExternal("Param/Value/A0CF4C0F"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[1], StringExternal("Param/Value/E3F93A74"), PlayerGroupSingle(lv_a));
             }
 
-            if (((gv_points[lv_a] >= 25500) || (gv_oP[lv_a][1] == true) || (gv_oP[lv_a][5] == true) || (gv_oP[lv_a][7] == true))) {
+            if (((true) || (gv_oP[lv_a][1] == true) || (gv_oP[lv_a][5] == true) || (gv_oP[lv_a][7] == true))) {
                 DialogControlAddItem(gv_modelSelectItem[1], PlayerGroupSingle(lv_a), StringExternal("Param/Value/8C489B69"));
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[1], StringExternal("Param/Value/7BE98EB3"), PlayerGroupSingle(lv_a));
             }
@@ -58204,11 +58204,6 @@ bool gt_TypeName_Func (bool testConds, bool runActions) {
             gv_name[EventPlayer()] = "";
         }
 
-    }
-
-    if ((gv_name[EventPlayer()] != "") && (gv_oP[EventPlayer()][7] == false) && (gv_oP[EventPlayer()][8] == false) && (gv_points[EventPlayer()] < 5000) && (StringContains(EventChatMessage(false), "<c val=", c_stringAnywhere, c_stringNoCase) == true)) {
-        gf_CBSystemMessage(StringExternal("Param/Value/F18B2D12"), EventPlayer(), 0, 0, SoundLink("UI_GenericError", -1), Color(0,0,0));
-        gv_name[EventPlayer()] = "";
     }
 
     if ((gv_name[EventPlayer()] != "")) {
