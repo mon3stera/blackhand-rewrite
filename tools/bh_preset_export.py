@@ -22,7 +22,7 @@ import sc2map
 GALAXY = ROOT / 'work/blackhand/CustomLogic.galaxy'
 BASELINE = ROOT / 'work/boot2-user.SC2Map'
 STRINGS = 'zhCN.SC2Data/LocalizedData/GameStrings.txt'
-POOL_NAME = {1: '城镇', 2: '黑手D', 3: '中立', 4: '随机池'}
+POOL_NAME = {1: '城镇', 2: '黑手D', 3: '中立', 4: '随机池', 5: '三合会'}
 
 
 def load_strings() -> dict:
@@ -101,8 +101,8 @@ def parse(src: str, func: str) -> dict:
     out = {}
     for (idx, start), end in zip(bounds, ends):
         blk = body[start:end]
-        sub = re.search(r'GCZ\w*SUB(\w)"', blk)
-        btn = re.search(r'GCZ\w*BTN"', body)
+        sub = re.search(r'SUB([A-D])"', blk)
+        btn = re.search(r'SetDialogItemText\(gv_confirmationButtonItem\[1\], StringExternal\("Param/Value/(\w+)"\)', body)
         seq = re.search(r'lv_str\[4\] = "([^"]*)"', blk)
         per_size = {}
         for mm in re.finditer(
@@ -119,7 +119,7 @@ def parse(src: str, func: str) -> dict:
             'letter': sub.group(1) if sub else '?',
             'slot_str': seq.group(1) if seq else default_slot,
             'sizes': per_size,
-            'title_key': btn.group(0)[:-1] if btn else None,
+            'title_key': btn.group(1) if btn else None,
         }
     return out, base
 

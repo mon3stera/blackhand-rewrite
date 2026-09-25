@@ -40,7 +40,8 @@ FONT_CANDIDATES = [
     '/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc',
 ]
 
-STAR_ROLES = {('观察者',), ('影武者',), ('堕落审判者',), ('探员',), ('女巫',), ('教父',), ('陪侍',)}
+STAR_ROLES = {('观察者',), ('影武者',), ('堕落审判者',), ('探员',), ('女巫',), ('教父',), ('陪侍',),
+              ('天选者',), ('开膛手',), ('煽动家',), ('弃子',), ('死士',)}
 
 # 子变体 A/B/C/D 各给一个区分色，方便一眼分栏
 SUB_COLOR = {'A': (167, 139, 250), 'B': (96, 165, 250), 'C': (45, 212, 191), 'D': (251, 146, 60)}
@@ -202,7 +203,7 @@ def render(func: str, presets: dict, src_line: int, out: Path, strings: dict, ro
         draw.rounded_rectangle([lx, ly + 2, lx + 22, ly + 24], radius=6, fill=color)
         draw.text((lx + 30, ly), key, font=f_legend, fill=INK)
         lx += 30 + draw.textlength(key, font=f_legend) + 26
-    draw.text((26, ly + 34), '★ = 该预设的招牌角色（观察者 / 影武者 / 堕落审判者 / 探员 / 女巫 / 教父 / 陪侍）',
+    draw.text((26, ly + 34), '★ = 该预设的招牌角色',
               font=f_legend, fill=INK_DIM)
 
     img.save(out)
@@ -320,11 +321,50 @@ def render_public(func: str, presets: dict, src_line: int, out: Path, strings: d
         draw.rounded_rectangle([lx, ly + 3, lx + 24, ly + 27], radius=7, fill=color)
         draw.text((lx + 34, ly), key, font=f_legend, fill=INK)
         lx += 34 + draw.textlength(key, font=f_legend) + 28
-    draw.text((30, ly + 40), '★ = 关键角色（观察者 / 影武者 / 堕落审判者 / 探员 / 女巫 / 教父 / 陪侍）',
+    draw.text((30, ly + 40), '★ = 关键角色',
               font=f_legend, fill=INK_DIM)
 
     img.save(out)
     print(f'✓ {out.relative_to(ROOT)}  {img.size[0]}×{img.size[1]}')
+
+
+def render_fifteen(func: str, presets: dict, out: Path, strings: dict, roles: dict):
+    """每个子变体一张，只画 15 人档。"""
+    f_title = font(36)
+    f_sub = font(22)
+    f_name = font(24)
+    f_meta = font(17)
+
+    def name_of(pool, role):
+        key = roles.get((pool, role))
+        return export.clean(strings.get(f'Param/Value/{key}', key)) if key else f'池{pool}/{role}'
+
+    key = next((p['title_key'] for p in presets.values() if p.get('title_key')), None)
+    preset_name = export.clean(strings.get(f'Param/Value/{key}', key)) if key else func
+
+    for idx in sorted(presets):
+        p = presets[idx]
+        if 15 not in p['sizes']:
+            print(f'!! {func} 子变体 {p["letter"]} 没有 15 人档', file=sys.stderr)
+            continue
+        seats = [(pool, role, name_of(pool, role)) for pool, role in p['sizes'][15]]
+        tally = {}
+        for pool, _, nm in seats:
+            k = faction_of(pool, nm)
+            tally[k] = tally.get(k, 0) + 1
+        order = [k for k in ('城镇', '黑手D', '三合会', '中立', '随机') if k in tally]
+        width, height = 560, 920
+        img = Image.new('RGB', (width, height), BG)
+        draw = ImageDraw.Draw(img)
+        draw.text((24, 22), preset_name, font=f_title, fill=SUB_COLOR.get(p['letter'], INK))
+        draw.text((24, 68), '15 人', font=f_sub, fill=INK_DIM)
+        drawn = draw_panel(draw, 24, 108, width - 48, f'子变体 {p["letter"]}', f'{len(seats)} 席',
+                           seats, [(k, tally[k]) for k in order], None,
+                           f_title, f_sub, f_name, f_meta, show_meta=True)
+        img = img.crop((0, 0, width, 108 + drawn + 24))
+        path = out.with_name(f'{out.stem}-{p["letter"]}{out.suffix}')
+        img.save(path)
+        print(f'✓ {path.relative_to(ROOT)}  {img.size[0]}×{img.size[1]}')
 
 
 def main() -> int:
@@ -334,6 +374,8 @@ def main() -> int:
     ap.add_argument('--split', action='store_true', help='另外每个子变体各出一张')
     ap.add_argument('--public', action='store_true',
                     help='对外版：只画 15 人档、隐藏池/角色号与随机槽串、标出每档不含什么')
+    ap.add_argument('--fifteen', action='store_true',
+                    help='每个子变体单独一张，只画 15 人档')
     args = ap.parse_args()
 
     src = export.GALAXY.read_text(encoding='utf-8')
@@ -349,7 +391,9 @@ def main() -> int:
     if not out.is_absolute():
         out = ROOT / out
 
-    if args.public:
+    if args.fifteen:
+        render_fifteen(args.func, presets, out, strings, roles)
+    elif args.public:
         render_public(args.func, presets, base, out, strings, roles, {'src': src})
     else:
         render(args.func, presets, base, out, strings, roles, args.split)
