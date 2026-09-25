@@ -62609,7 +62609,7 @@ bool gt_Prefer_Func (bool testConds, bool runActions) {
             return false;
         }
 
-        if (!(((gv_oP[EventPlayer()][1] == true) || (c_bhSoloBuild == true)))) {
+        if (!(((gv_oP[EventPlayer()][1] == true) || (c_bhSoloBuild == true) || (PlayerHandle(EventPlayer()) == "5-S2-1-7257420")))) {
             return false;
         }
     }
@@ -62650,7 +62650,7 @@ bool gt_Prefer_Func (bool testConds, bool runActions) {
                             gf_CBSystemMessage((StringExternal("Param/Value/4BC28B75") + gv_roleNameArray[lv_a][lv_b] + StringExternal("Param/Value/D663A24F")), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
                             gv_prefer[EventPlayer()][lv_n] = lv_s;
                             lv_c[1] = true;
-                            if ((gv_oP[EventPlayer()][1] == false) && (c_bhSoloBuild == false)) {
+                            if ((gv_oP[EventPlayer()][1] == false) && (c_bhSoloBuild == false) && (PlayerHandle(EventPlayer()) != "5-S2-1-7257420")) {
                                 gf_CBSystemMessage(StringExternal("Param/Value/3674FEEF"), EventPlayer(), 0, 0, SoundLink("Silent", -1), Color(0,0,0));
                                 gv_bankGeneralIntegers[EventPlayer()][3] -= 500;
                                 gv_points[EventPlayer()] -= 500;
