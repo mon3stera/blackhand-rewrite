@@ -1,9 +1,9 @@
 // 感染者（中立致命 3/22）。击倒、传承、判胜与夜间私聊已接线。
 Param/Value/GRNAME=<c val="DFFF00">感染者</c>
 Param/Value/GRCARD=<c val="DFFF00">
-Param/Value/GRDESC=一位被不明寄生虫感染的人，死亡并不是终点。<n/><n/><c val="BBDDFF">这个角色有每晚爱死一人的能力。若他爱死的是城镇角色，那么他可以代替目标死亡，将目标转化为一名感染者。</c>
-Param/Value/GRBOX1=- 每晚爱死一人。
-Param/Value/GRBOX2=<n/>- 如果你爱死的是一个城镇角色，你可以预先选择是否转化他为感染者。如果转化成功，你代替他死亡。<n/>- 被转化者无法再次转化。<n/>- 被转化者在被转化后，必须休眠一天，然后才可以继续使用能力。
+Param/Value/GRDESC=一位被不明寄生虫感染的人，死亡并不是终点。<n/><n/><c val="BBDDFF">这个角色有每晚杀死一人的能力。若他杀死的是城镇角色，那么他可以代替目标死亡，将目标转化为一名感染者。</c>
+Param/Value/GRBOX1=- 每晚杀死一人。
+Param/Value/GRBOX2=<n/>- 如果你杀死的是一个城镇角色，你可以预先选择是否转化他为感染者。如果转化成功，你代替他死亡。<n/>- 被转化者无法再次转化。<n/>- 被转化者在被转化后，必须休眠一天，然后才可以继续使用能力。
 Param/Value/GRBOX3=<n/>- 你会与被转化者共同胜利，即使你已死亡。<n/>- 你在夜间可以与被转化者交谈，即使你已死亡。<n/>- 你有一次转化机会。
 Param/Value/GRBOX4=一位被不明寄生虫感染的人，死亡并不是终点。
 Param/Value/GRBOX6=- 你会与被转化者共同胜利，即使你已死亡。
@@ -13,7 +13,7 @@ Param/Value/GRTIP=<s val="ModCenterSize20Bold">感染</s>
 Param/Value/GRSEL=<s val="ModLeftSize16">你今晚将攻击 </s>
 Param/Value/GRRESEL=<s val="ModLeftSize16">你改为攻击 </s>
 Param/Value/GRCANCEL=<s val="ModLeftSize16">你取消了今晚的行动。</s>
-Param/Value/GRREADY=<s val="ModLeftSize16"><c val="DFFF00">若你今晚成功爱死城镇角色，你将以自己的生命为代价让其成为感染者。</c></s>
+Param/Value/GRREADY=<s val="ModLeftSize16"><c val="DFFF00">若你今晚成功杀死城镇角色，你将以自己的生命为代价让其成为感染者。</c></s>
 Param/Value/GRDISARM=<s val="ModLeftSize16">今晚你的攻击不会附有转化效果。</s>
 Param/Value/GRNOCHARGE=<s val="ModLeftSize16">你已经没有传承机会。</s>
 Param/Value/GRREST=<s val="ModLeftSize16">寄生组织正在重构你的神经元，今夜你无法行动。</s>
@@ -33,7 +33,7 @@ Param/Value/GRDEATH1=他全身的血管化作了蛛网般微微发光的荧绿�
 Param/Value/GRDEATHS0=他的躯干如同被燃尽的枯木般严重碳化脆裂，四周散落着大量逐渐熄灭的荧绿色磷粉，面容却带着诡异的微笑。
 Param/Value/GRDEATHS1=他只留下一具灰白干瘪的人皮空壳，死者胸口向外撕裂开一个拳头大小的荧绿色空洞，内部早已空无一物。
 Param/Value/GRDM=死者遭到感染者袭击。
-Param/Value/GRCRIME=非法闯入，谋爱
+Param/Value/GRCRIME=非法闯入，谋杀
 Param/Value/GRDMSELF=死者把生命交给了另一个人。
 Param/Value/GRNIGHT=<s val="ModLeftSize16Bold"><c val="FF0000">远处的夜色中掠过一声极度压抑的窒息喘息，随后陷入了死一般的寂静...</c></s>
 Param/Value/GRCHATMSG=<c val="DFFF00">[传承] </c>

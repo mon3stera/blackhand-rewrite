@@ -280,17 +280,81 @@ def loading_units(text):
 
 # 国服和谐词修正（与 boot2_build 第 7b 步共用同一份词表；只替换值，键名不动）。
 # 必须在这里做：DocumentHeader 的条目带长度前缀，只有本模块知道怎么把前缀算对。
+# 「杀」已能过审，不再把杀改成爱；见 KILL_RESTORE，打包时把旧替身改回。
 HARMONIZE_PAIRS = [
     ('黑手党', '黑手D'),
     ('间谍', 'jian谍'),
     ('政府', 'zf'),
-    ('杀', '爱'),
     ('邪', '协'),
 ]
 
+# 这些是本来的「爱」，不是「杀」的替身，还原时先挪走。
+KILL_PROTECT = (
+    '可爱了',
+    '亲爱的',
+    '挚爱',
+    '你的爱吧',
+    '相爱',
+)
+
+# 原图把「杀」整字换成「爱」。按长词优先改回，避免「爱死」被拆碎。
+KILL_RESTORE = (
+    ('审查员爱市长', '审查员杀市长'),
+    ('爱死', '杀死'),
+    ('爱手', '杀手'),
+    ('谋爱', '谋杀'),
+    ('击爱', '击杀'),
+    ('猎爱', '猎杀'),
+    ('射爱', '射杀'),
+    ('截爱', '截杀'),
+    ('爱戮', '杀戮'),
+    ('自爱', '自杀'),
+    ('爱人', '杀人'),
+    ('爱害', '杀害'),
+    ('爱光', '杀光'),
+    ('屠爱', '屠杀'),
+    ('误爱', '误杀'),
+    ('抹爱', '抹杀'),
+    ('枪爱', '枪杀'),
+    ('爱掉', '杀掉'),
+    ('爱完', '杀完'),
+    ('爱了', '杀了'),
+    ('反爱', '反杀'),
+    ('连爱', '连杀'),
+    ('封爱', '封杀'),
+    ('所爱', '所杀'),
+    ('被爱', '被杀'),
+    ('去爱', '去杀'),
+    ('错爱', '错杀'),
+)
+
+
+def restore_kills(text: str):
+    """把国服替身改回「杀」。返回 (新文本, 替换次数)。"""
+    protected = []
+
+    for i, word in enumerate(KILL_PROTECT):
+        token = f'\ue000{i}\ue001'
+        if word in text:
+            text = text.replace(word, token)
+            protected.append((token, word))
+
+    n = 0
+
+    for old, new in KILL_RESTORE:
+        c = text.count(old)
+        if c:
+            n += c
+            text = text.replace(old, new)
+
+    for token, word in protected:
+        text = text.replace(token, word)
+
+    return text, n
+
 
 def harmonize_text(text: str):
-    """替换文本里的国服敏感词，返回 (新文本, 命中统计)。"""
+    """替换文本里的国服敏感词，并把「杀」的旧替身改回。返回 (新文本, 命中统计)。"""
     stats, out = {}, []
 
     for line in text.splitlines(keepends=True):
@@ -299,7 +363,9 @@ def harmonize_text(text: str):
             continue
 
         key, _, val = line.partition('=')
-        new = val
+        new, n = restore_kills(val)
+        if n:
+            stats['杀还原'] = stats.get('杀还原', 0) + n
 
         for old, rep in HARMONIZE_PAIRS:
             if old in new:
@@ -312,12 +378,11 @@ def harmonize_text(text: str):
 
 
 def harmonize(text: str) -> str:
-    """无 '=' 的纯文本也用同一词表替换（加载页正文/补丁说明正文走这条）。"""
-    stats = {}
+    """无 '=' 的纯文本也用同一词表（加载页正文/补丁说明正文走这条）。"""
+    text, _ = restore_kills(text)
 
     for old, rep in HARMONIZE_PAIRS:
         if old in text:
-            stats[old] = text.count(old)
             text = text.replace(old, rep)
 
     return text

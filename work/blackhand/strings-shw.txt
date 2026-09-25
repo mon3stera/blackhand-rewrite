@@ -1,7 +1,7 @@
 Param/Value/SHWNAME=<c val="C0C0C0">影武者</c>
-Param/Value/SHWDESC=隐于市井的刺客，无声无息，专为灭口而行。<n/><n/><c val="BBDDFF">每晚选择两名玩家，效果取决于你的攻击模式。你将得知目标一的真实去向。</c><n/><n/><c val="AA9988">你在夜晚无法被爱死。</c>
+Param/Value/SHWDESC=隐于市井的刺客，无声无息，专为灭口而行。<n/><n/><c val="BBDDFF">每晚选择两名玩家，效果取决于你的攻击模式。你将得知目标一的真实去向。</c><n/><n/><c val="AA9988">你在夜晚无法被杀死。</c>
 Param/Value/SHWOPT2=追击无视无敌和救治
-Param/Value/SHWCRIME=非法闯入，谋爱
+Param/Value/SHWCRIME=非法闯入，谋杀
 Param/Value/SHWBOX4=你是受雇于复仇的影子，行动无声，见血封喉。
 Param/Value/SHWBOX1=- 每晚选择两名玩家，效果取决于攻击模式。
 Param/Value/SHWBOX3=- 你将得知目标一的真实去向。
@@ -28,8 +28,8 @@ Param/Value/BHREVEAL2=<c val="CCCCCC">号 :</c>
 Param/Value/SHWSW=可查出影武者
 Param/Value/SHWREV=<s val="ModLeftSize16Bold"><c val="FFFF88">你的目标是一个 </c><c val="C0C0C0">影武者</c><c val="FFFF88">!</c></s>
 Param/Value/SHWBOX6=<n/>- 目标一可以被交换或转移，而目标二无法被交换或转移。
-Param/Value/SHWMODE1=<s val="ModLeftSize16"><c val="0080C0">当前模式 -on（截击）：若目标一访问了目标二，则击爱目标一（无视无敌和救治）；目标一没有行动，同样击爱目标一。</c></s>
-Param/Value/SHWMODE2=<s val="ModLeftSize16"><c val="0080C0">当前模式 -off（追击）：击爱目标一今晚访问的人；目标一没有行动或访问了你，则击爱目标一。</c></s>
+Param/Value/SHWMODE1=<s val="ModLeftSize16"><c val="0080C0">当前模式 -on（截击）：若目标一访问了目标二，则击杀目标一（无视无敌和救治）；目标一没有行动，同样击杀目标一。</c></s>
+Param/Value/SHWMODE2=<s val="ModLeftSize16"><c val="0080C0">当前模式 -off（追击）：击杀目标一今晚访问的人；目标一没有行动或访问了你，则击杀目标一。</c></s>
 Param/Value/SHWBOX7=<n/>- 输入 -on / -off 切换攻击模式：
 Param/Value/SHWBOX8=<n/>- -off（追击）：攻击目标一的访问目标。
 Param/Value/SHWDEATH4=死者被一把刀刺穿了。
@@ -39,9 +39,9 @@ Param/Value/94249CFE=<c val="004080">点击来改变你的开关状态<n/>限定
 // 小丑与处刑者的自设开关：默认关闭，旧存档无对应位时沿用默认值。
 Param/Value/BHJALL=<c val="FF4444">投有罪者全部死亡</c>
 Param/Value/BHJBOX=- 如果你被处刑了，所有投有罪的投票者将在次日夜晚死亡。
-Param/Value/BHEKILL=<c val="FF4444">目标在夜晚死亡时切换击爱者作为目标</c>
+Param/Value/BHEKILL=<c val="FF4444">目标在夜晚死亡时切换击杀者作为目标</c>
 Param/Value/BHJANN=<s val="ModLeftSize16"><c val="FF4444">小丑启用了开关「投有罪者全部死亡」</c></s>
-Param/Value/BHEANN=<s val="ModLeftSize16"><c val="FF4444">处刑者启用了开关「目标在夜晚死亡时切换击爱者作为目标」</c></s>
+Param/Value/BHEANN=<s val="ModLeftSize16"><c val="FF4444">处刑者启用了开关「目标在夜晚死亡时切换击杀者作为目标」</c></s>
 // 处刑者换目标及无有效击倒者回退：每条独立聊天行，避免换行在单行标签中被裁切。
 Param/Value/BHEDEAD=<s val="ModLeftSize16Bold"><c val="FF0000">你的目标在昨晚遇害，剥夺了你亲手处决他的乐趣！</c></s>
 Param/Value/BHENEW=<s val="ModLeftSize16Bold"><c val="FF0000">顺着现场的蛛丝马迹，你锁定了凶手 ——「</c>
@@ -168,16 +168,16 @@ Param/Value/KCSWBOX0=- 你能查出开膛手。
 // shw274 开膛手 (3/20)
 Param/Value/KCNAME=<c val="C14D63">开膛手</c>
 Param/Value/KCCARD=<c val="C14D63">
-Param/Value/KCDESC=一个出没于无人问津的街巷的爱手，专挑孤立无援的猎物下手。<n/><n/><c val="BBDDFF">每晚选择一人。若目标当晚无人访问，则爱死目标；否则随机爱死一名访问目标的人。</c>
-Param/Value/KCBOX1=- 每晚选择一人。若目标当晚无人访问，则爱死目标；否则随机爱死一名访问目标的人。
-Param/Value/KCBOX2=<n/>- 当无人访问而爱死目标时，你可以使用开关选择是否清理他。<n/>- 你可以清理两次。
+Param/Value/KCDESC=一个出没于无人问津的街巷的杀手，专挑孤立无援的猎物下手。<n/><n/><c val="BBDDFF">每晚选择一人。若目标当晚无人访问，则杀死目标；否则随机杀死一名访问目标的人。</c>
+Param/Value/KCBOX1=- 每晚选择一人。若目标当晚无人访问，则杀死目标；否则随机杀死一名访问目标的人。
+Param/Value/KCBOX2=<n/>- 当无人访问而杀死目标时，你可以使用开关选择是否清理他。<n/>- 你可以清理两次。
 Param/Value/KCBOX3=<n/>- 猎物当晚无人访问时可用开关选择是否清理尸体（共两次）。清理后你能看到死者的遗嘱，公开侧身份被隐藏。
 Param/Value/KCBOX4=出没于无人问津的街巷，专挑孤立无援的猎物下手。
-Param/Value/KCBOX5=<n/>- 你会反爱限制你的人。
+Param/Value/KCBOX5=<n/>- 你会反杀限制你的人。
 Param/Value/KCBOXS=<n/>- 你的夜间目标会被女巫或巴士司机转移。
 Param/Value/KCTIP=<s val="ModCenterSize20Bold">行刺</s>
-Param/Value/KCSEL1=<s val="ModLeftSize16">你将前去猎爱</s><s val="ModLeftSize16Bold">
-Param/Value/KCSEL2=<s val="ModLeftSize16">你改为前去猎爱</s><s val="ModLeftSize16Bold">
+Param/Value/KCSEL1=<s val="ModLeftSize16">你将前去猎杀</s><s val="ModLeftSize16Bold">
+Param/Value/KCSEL2=<s val="ModLeftSize16">你改为前去猎杀</s><s val="ModLeftSize16Bold">
 Param/Value/KCCLR=<s val="ModLeftSize16Bold">你取消了今晚的行动。</s>
 Param/Value/KCMODE1=<s val="ModLeftSize16"><c val="0080C0">当前：猎物无人访问时清理尸体（剩余 </c></s>
 Param/Value/KCMODE1B=<s val="ModLeftSize16"><c val="0080C0"> 次）。</c></s>
@@ -205,7 +205,7 @@ Param/Value/KCACH2S=<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSi
 Param/Value/KCACH2N=<s val="ModCenterSize16Bold"><c val="C14D63">双重事件</c></s>
 Param/Value/KCACH3S=<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSize16Bold"><c val="C14D63">"来自地狱"</c></s><s val="ModCenterSize16"><c val="44FF88">!</c></s>
 Param/Value/KCACH3N=<s val="ModCenterSize16Bold"><c val="C14D63">"来自地狱"</c></s>
-Param/Value/BE08890E=- 由此，他会是个D徒/暴徒、连环爱手、开膛手，但也可能只是个义警。
+Param/Value/BE08890E=- 由此，他会是个D徒/暴徒、连环杀手、开膛手，但也可能只是个义警。
 
 // shw288 唐吉诃德 (3/21)
 Param/Value/DQNAME=<c val="C9B36B">唐吉诃德</c>
@@ -241,7 +241,7 @@ Param/Value/QZBOX4=你是听命教父、毫无退路的黑手党党徒。
 Param/Value/SSBOX4=你是效忠龙头、视死如归的三合会门客。
 Param/Value/QZBOX6=为家族玉石俱焚，与黑手D一同胜利。
 Param/Value/SSBOX6=为帮会舍身取义，与三合会一同胜利。
-Param/Value/QZCRIME=非法闯入，谋爱，破坏治安
+Param/Value/QZCRIME=非法闯入，谋杀，破坏治安
 Param/Value/QZN1=<s val="ModLeftSize16Bold"><c val="FF88FF">为了完成你最后的任务，你必须要准备一整天...</c></s>
 Param/Value/QZFAIL=<s val="ModLeftSize16Bold"><c val="FF88FF">你没有找到值得同归于尽的目标，炸药没有引爆。</c></s>
 Param/Value/QZNIGHT=<s val="ModLeftSize16Bold"><c val="FF0000">一声震耳欲聋的爆炸撕裂了夜色，整座城镇都在剧烈颤抖……</c></s>
@@ -256,7 +256,7 @@ Param/Value/QZSEL2=你改去此人的住所自爆：
 Param/Value/QZCLR=你取消了今晚的自爆。
 Param/Value/QZYOU=<s val="ModLeftSize16Bold"><c val="FF0000">你在一场毁灭性的爆破中丧生。</c></s>
 Param/Value/QZYOUSELF=<s val="ModLeftSize16Bold"><c val="FF0000">你引爆了贴身的烈性炸药，与房间里的人同归于尽。</c></s>
-Param/Value/28F034F6=- 那暗示他可能会是个退伍军人、爱人狂、小丑，或弃子/死士。
+Param/Value/28F034F6=- 那暗示他可能会是个退伍军人、杀人狂、小丑，或弃子/死士。
 Param/Value/BHASTOK=已登记，确认选项后将强制出现：
 Param/Value/BHASTNONE=当前阵容没有能出该角色的随机位：
 Param/Value/BHASTHAVE=阵容里已经有这个角色：
@@ -292,8 +292,8 @@ Param/Value/SHWWILLBTN=<s val="ModCenterSize20Bold">发遗嘱</s>
 Param/Value/SHWWILLTIP=<c val="004080">点击把你当前的遗嘱作为聊天发出。<n/>走正常发言频道，并受刷屏限制。</c>
 Param/Value/SHWWILLEMPTY=<s val="ModLeftSize16Bold"><c val="FF4444">你的遗嘱是空的。</c></s>
 
-// 连环爱手：每累计实际击倒两人，下一晚狂袭两名目标并无视夜间无敌。
-Param/Value/SKBURSTBOX=<n/>- 你每实际爱死两人，在下一晚可发动一次狂袭。狂袭允许你攻击两名不同的人，这两次攻击均无视无敌。<n/>- 狂袭提供的额外攻击次数不计入下一次狂袭所需的击爱次数。
+// 连环杀手：每累计实际击倒两人，下一晚狂袭两名目标并无视夜间无敌。
+Param/Value/SKBURSTBOX=<n/>- 你每实际杀死两人，在下一晚可发动一次狂袭。狂袭允许你攻击两名不同的人，这两次攻击均无视无敌。<n/>- 狂袭提供的额外攻击次数不计入下一次狂袭所需的击杀次数。
 Param/Value/SKBURSTREADY=<s val="ModLeftSize16Bold"><c val="FF4444">你的狂袭之夜到了：今晚可攻击两个人，两次攻击均无视夜间无敌！</c></s>
 Param/Value/SKBURSTFIRST=选定今晚第一个攻击目标
 Param/Value/SKBURSTSECOND=选定今晚第二个攻击目标
