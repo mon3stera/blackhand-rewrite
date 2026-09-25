@@ -95419,6 +95419,11 @@ bool gt_BHLaugh_Func (bool testConds, bool runActions) {
     }
 
     lv_p = EventPlayer();
+    if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_p) == false)) {
+        gf_CBSystemMessage(StringToText("死者不能大笑。"), lv_p, lv_p, 0, SoundLink("UI_BnetError", -1), Color(0,0,0));
+        return true;
+    }
+
     lv_now = TimerGetElapsed(gv_gameTimer);
     if ((gv_bhLaughUsed == true) && ((lv_now - gv_bhLaughAt) < 30.0)) {
         gf_CBSystemMessage(StringToText("还要等一会儿才能再笑。"), lv_p, lv_p, 0, SoundLink("UI_BnetError", -1), Color(0,0,0));
