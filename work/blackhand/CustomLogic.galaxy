@@ -95411,6 +95411,7 @@ void gt_TTStop_Init () {
 
 bool gt_BHLaugh_Func (bool testConds, bool runActions) {
     int lv_p;
+    int lv_a;
     fixed lv_now;
 
     if (!runActions) {
@@ -95428,6 +95429,15 @@ bool gt_BHLaugh_Func (bool testConds, bool runActions) {
     gv_bhLaughAt = lv_now;
     SoundPlay(SoundLink("BHLaugh", -1), PlayerGroupAll(), 40.0, 0.0);
     gf_BHPlayerChat(lv_p, "爽朗的大笑!");
+    lv_a = 1;
+    while (true) {
+        if ((lv_a > 15)) { break; }
+        if ((PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true) && (gv_oP[lv_a][7] == true)) {
+            gf_CBSystemMessage(StringToText(gv_name[lv_p] + " 按了大笑。"), lv_a, lv_p, 0, SoundLink("Silent", -1), Color(0,0,0));
+        }
+
+        lv_a += 1;
+    }
     return true;
 }
 
