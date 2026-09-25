@@ -269,6 +269,7 @@ Param/Value/JSXTDESC=教父给他的家人留足了退路，代价是他必须�
 Param/Value/JSXTSUBA=<c val="BB3355">决死之心</c> A
 Param/Value/JSXTSUBB=<c val="BB3355">决死之心</c> B
 Param/Value/JSXTSUBC=<c val="BB3355">决死之心</c> C
+Param/Value/JSXTSUBD=<c val="BB3355">决死之心</c> D
 Param/Value/JSXTBTN=<s val="ModCenterSize24Bold"><c val="BB3355">决死之心</c></s>
 Param/Value/QZACH1S=<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSize16Bold"><c val="BB3355">穿山甲</c></s><s val="ModCenterSize16"><c val="44FF88">!</c></s>
 Param/Value/QZACH1N=<s val="ModCenterSize16Bold"><c val="BB3355">穿山甲</c></s>
