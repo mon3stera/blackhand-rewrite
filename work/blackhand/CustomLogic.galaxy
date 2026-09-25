@@ -356,8 +356,9 @@ string gv_timelength;
 string[16] gv_save64;
 
 // ===== shw254：保存格位（多槽位 + 命名）shw254b 改版 =====
-// shw291：编号槽不再走 BASE64（中立/黑手D/三合会开关会解错）。保存时 gf_OSSaveSlot 写 I/*，再复制到 Slot<N>*；
-// 载入时 Slot<N>* → I/* → gf_CDisassembleSaveSlotBank → gf_VLoadSaveSlot。Code="BH3" 标记新格式，老 BASE64 槽仍走 OSLoadBase64。
+// shw291：编号槽不再走 BASE64（中立/黑手D/三合会开关会解错）。保存时 gf_OSSaveSlot 写内存，必须等 Assemble 真正落进 I/* 再复制到 Slot<N>*
+// （Assemble 是 TriggerExecute 不等待，立刻克隆会拷到上一份时长和全局开关）。载入同样要等 Disassemble 完成再 gf_VLoadSaveSlot，并刷新滑条/勾选。
+// Code="BH3" 标记新格式，老 BASE64 槽仍走 OSLoadBase64。
 // 存储：银行 I 段 Slot<N>Code|Name + Slot<N>TownOptions 等 13 键 + ActiveSlot（原有 Trial 单槽键保持不动，老档迁移到槽位 1）
 const int c_bhSaveSlotCount = 10; // shw258：6 → 10（用户要求）；数组第二维必须 ≥ 上限 + 1
 int gv_saveSlotFrame;
@@ -97562,8 +97563,11 @@ void gf_BHSaveSlotSave (int lp_player) {
         gv_saveSlotSel[lp_player] = 1;
     }
 
-    // 先把当前大厅写入 I/*（开关 0..11 + 权重，含中立 19–32），再整份克隆到 SlotN*
+    // 先把当前大厅写入内存（开关 0..11 + 权重 + 时长/全局开关）。
+    // gf_CAssembleSaveSlotBank 只是把组装挂进队列，函数返回时 I/* 还是上一次的。
+    // 这里直接跑组装函数，等 TimeLength/Trial 落盘后再克隆，否则编号槽存不到截图里那些全局设定。
     gf_OSSaveSlot(lp_player);
+    auto_gf_CAssembleSaveSlotBank_TriggerFunc(true, true);
     gv_saveSlotCode[lp_player][lv_slot] = "BH3";
     gf_BHSaveSlotCopyI(lp_player, lv_slot, 0);
 
@@ -97580,6 +97584,78 @@ void gf_BHSaveSlotSave (int lp_player) {
     gf_CAssembleSaveSlotBank(lp_player);
     gf_BHSaveSlotRefresh(lp_player);
     gf_CBSystemMessage(StringExternal("Param/Value/SHWSLOTC"), lp_player, 0, 0, SoundLink("UI_PTTStart", -1), Color(0.00, 50.20, 0.00));
+}
+
+// 把已载入的全局设定画回大厅滑条和勾选。下拉框由 gf_VLoadSaveSlot 自己选；这里补它没碰的控件。
+void gf_BHApplyLobbyOptions () {
+    libNtve_gf_SetDialogItemCurrentValue(gv_optionsPanelItem[1], gv_dayLength, PlayerGroupAll());
+    libNtve_gf_SetDialogItemText(gv_optionsPanelItem[9], (StringExternal("Param/Value/6A03BC8A") + FixedToText(gv_dayLength, 1) + StringExternal("Param/Value/45E1965A")), PlayerGroupAll());
+    libNtve_gf_SetDialogItemCurrentValue(gv_optionsPanelItem[2], gv_nightLength, PlayerGroupAll());
+    libNtve_gf_SetDialogItemText(gv_optionsPanelItem[10], (StringExternal("Param/Value/E51A5EF0") + FixedToText(gv_nightLength, 1) + StringExternal("Param/Value/766CAC63")), PlayerGroupAll());
+    if (((gv_lynchType == 1) || (gv_lynchType == 2) || (gv_lynchType == 4))) {
+        libNtve_gf_SetDialogItemCurrentValue(gv_optionsPanelItem[24], gv_trialLength, PlayerGroupAll());
+        libNtve_gf_SetDialogItemText(gv_optionsPanelItem[25], (StringExternal("Param/Value/43794920") + FixedToText(gv_trialLength, 1) + StringExternal("Param/Value/74AFC015")), PlayerGroupAll());
+        DialogControlSetVisible(gv_optionsPanelItem[20], PlayerGroupAll(), true);
+        DialogControlSetVisible(gv_optionsPanelItem[24], PlayerGroupAll(), true);
+        DialogControlSetVisible(gv_optionsPanelItem[25], PlayerGroupAll(), true);
+        DialogControlSetVisible(gv_optionsPanelItem[26], PlayerGroupAll(), true);
+        DialogControlSetVisible(gv_optionsPanelItem[27], PlayerGroupAll(), true);
+        DialogControlSetVisible(gv_optionsPanelItem[28], PlayerGroupAll(), true);
+        DialogControlSetVisible(gv_optionsPanelItem[29], PlayerGroupAll(), true);
+    }
+    else {
+        DialogControlSetVisible(gv_optionsPanelItem[20], PlayerGroupAll(), false);
+        DialogControlSetVisible(gv_optionsPanelItem[24], PlayerGroupAll(), false);
+        DialogControlSetVisible(gv_optionsPanelItem[25], PlayerGroupAll(), false);
+        DialogControlSetVisible(gv_optionsPanelItem[26], PlayerGroupAll(), false);
+        DialogControlSetVisible(gv_optionsPanelItem[27], PlayerGroupAll(), false);
+        DialogControlSetVisible(gv_optionsPanelItem[28], PlayerGroupAll(), false);
+        DialogControlSetVisible(gv_optionsPanelItem[29], PlayerGroupAll(), false);
+    }
+    if ((gv_willsEnabled == true)) {
+        libNtve_gf_SetDialogItemChecked(gv_optionsPanelItem[4], true, PlayerGroupAll());
+    }
+    else {
+        libNtve_gf_SetDialogItemChecked(gv_optionsPanelItem[4], false, PlayerGroupAll());
+    }
+    if ((gv_startDayWithDiscussion == true)) {
+        libNtve_gf_SetDialogItemChecked(gv_optionsPanelItem[5], true, PlayerGroupAll());
+        DialogControlSetVisible(gv_optionsPanelItem[7], PlayerGroupAll(), true);
+        DialogControlSetVisible(gv_optionsPanelItem[11], PlayerGroupAll(), true);
+        DialogControlSetVisible(gv_optionsPanelItem[14], PlayerGroupAll(), true);
+        libNtve_gf_SetDialogItemCurrentValue(gv_optionsPanelItem[7], gv_discussionLength, PlayerGroupAll());
+        libNtve_gf_SetDialogItemText(gv_optionsPanelItem[11], (StringExternal("Param/Value/F50544A2") + FixedToText(gv_discussionLength, 1) + StringExternal("Param/Value/EDA6AD72")), PlayerGroupAll());
+    }
+    else {
+        libNtve_gf_SetDialogItemChecked(gv_optionsPanelItem[5], false, PlayerGroupAll());
+        DialogControlSetVisible(gv_optionsPanelItem[7], PlayerGroupAll(), false);
+        DialogControlSetVisible(gv_optionsPanelItem[11], PlayerGroupAll(), false);
+        DialogControlSetVisible(gv_optionsPanelItem[14], PlayerGroupAll(), false);
+    }
+    if ((gv_pMAllowed == true)) {
+        libNtve_gf_SetDialogItemChecked(gv_optionsPanelItem[23], true, PlayerGroupAll());
+    }
+    else {
+        libNtve_gf_SetDialogItemChecked(gv_optionsPanelItem[23], false, PlayerGroupAll());
+    }
+    if ((gv_trialDefense == true)) {
+        libNtve_gf_SetDialogItemChecked(gv_optionsPanelItem[29], true, PlayerGroupAll());
+    }
+    else {
+        libNtve_gf_SetDialogItemChecked(gv_optionsPanelItem[29], false, PlayerGroupAll());
+    }
+    if ((gv_trialPausesDay == true)) {
+        libNtve_gf_SetDialogItemChecked(gv_optionsPanelItem[27], true, PlayerGroupAll());
+    }
+    else {
+        libNtve_gf_SetDialogItemChecked(gv_optionsPanelItem[27], false, PlayerGroupAll());
+    }
+    if ((gv_chooseNames == true)) {
+        libNtve_gf_SetDialogItemChecked(gv_optionsPanelItem[31], true, PlayerGroupAll());
+    }
+    else {
+        libNtve_gf_SetDialogItemChecked(gv_optionsPanelItem[31], false, PlayerGroupAll());
+    }
 }
 
 void gf_BHSaveSlotLoad (int lp_player) {
@@ -97611,8 +97687,10 @@ void gf_BHSaveSlotLoad (int lp_player) {
 
         gv_variantSelection = 6;
         gf_BHSaveSlotCopyI(lp_player, lv_slot, 1);
-        gf_CDisassembleSaveSlotBank(lp_player);
+        auto_gf_CDisassembleSaveSlotBank_lp_player = lp_player;
+        auto_gf_CDisassembleSaveSlotBank_TriggerFunc(true, true);
         gf_VLoadSaveSlot(lp_player, 5);
+        gf_BHApplyLobbyOptions();
         gf_CAssembleSaveSlotBank(lp_player);
     }
     else {
