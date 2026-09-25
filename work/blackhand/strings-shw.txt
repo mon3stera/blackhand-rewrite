@@ -271,6 +271,12 @@ Param/Value/JSXTSUBB=<c val="BB3355">决死之心</c> B
 Param/Value/JSXTSUBC=<c val="BB3355">决死之心</c> C
 Param/Value/JSXTSUBD=<c val="BB3355">决死之心</c> D
 Param/Value/JSXTBTN=<s val="ModCenterSize24Bold"><c val="BB3355">决死之心</c></s>
+Param/Value/CCZTNAME=<s val="ModCenterSize24Bold">随机：<c val="DFFF00">传承者</c></s>
+Param/Value/CCZTDESC=一位被无名寄生虫感染的感染者来到了小镇。然而，他与我们熟知的感染似乎不太相同...<n/>该设定固定有一名感染者。<n/><s val="ModCenterSize18Bold">12-15人可用</s>
+Param/Value/CCZTSUBA=<c val="DFFF00">传承者</c> A
+Param/Value/CCZTSUBB=<c val="DFFF00">传承者</c> B
+Param/Value/CCZTSUBC=<c val="DFFF00">传承者</c> C
+Param/Value/CCZTBTN=<s val="ModCenterSize24Bold"><c val="DFFF00">传承者</c></s>
 Param/Value/QZACH1S=<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSize16Bold"><c val="BB3355">穿山甲</c></s><s val="ModCenterSize16"><c val="44FF88">!</c></s>
 Param/Value/QZACH1N=<s val="ModCenterSize16Bold"><c val="BB3355">穿山甲</c></s>
 Param/Value/QZACH1D=<s val="ModCenterSize16"><c val="BB3355">我的任务...完成了！</c></s>
