@@ -2,17 +2,20 @@
 Param/Value/TTNAME=<c val="7EB6FF">调停者</c>
 Param/Value/TTCARD=<c val="7EB6FF">
 Param/Value/TTALIGN=<c val="7EB6FF">无（混乱）</c>
-Param/Value/TTDESC=他站在所有阵营之外，只想把这场争斗拖到自己能全身而退的那一天。<n/><n/><c val="BBDDFF">每晚选择保护一人或压制一人。白天无人站上审判台时，可以用技能按钮或 -stop 休庭一次。你有一次夜间无敌。活到第五天即达成个人胜利，对局继续，此后你失去全部能力。</c>
-Param/Value/TTBOX1=- 每晚保护或压制一名玩家。
-Param/Value/TTBOX2=<n/>- 保护使目标当晚免疫夜间攻击。<n/>- 压制与舞娘的限制相同。<n/>- 选中一列后另一列会隐藏；再点已选目标则取消。<n/>- 你有一次夜间无敌。<n/>- 白天无人在审判台时，可以用技能按钮或 -stop 休庭一次。
-Param/Value/TTBOX4=你不站在任何一边，只想走到第五天。
-Param/Value/TTBOX6=- 活到第五天即胜利。胜利后失去能力，对局继续，你与最终获胜的阵营一同结算。
+Param/Value/TTDESC=他站在所有阵营之外，只想把这场争斗拖到自己能全身而退的那一天。<n/><n/><c val="BBDDFF">每晚选择一个人，对其进行保护或压制。在白天可以使用休庭。使用保护时，目标当晚会获得夜间无敌。使用压制时，目标会被限制。白天无人在审判台上时，你可以使用 -stop 或者开关来休庭。休庭将会在15秒后跳过白天，这15秒只有你可以匿名发言，其他人无法发言或投票。你有一次休庭机会。你有一次夜间无敌机会。胜利后你会失去能力。存活直到游戏进行到第五天。</c>
+Param/Value/TTBOX1=- 每晚选择一个人，对其进行保护或压制。在白天可以使用休庭。
+Param/Value/TTBOX2=<n/>- 使用保护时，目标当晚会获得夜间无敌。<n/>- 使用压制时，目标会被限制。<n/>- 白天无人在审判台上时，你可以使用 -stop 或者开关来休庭。<n/>- 休庭将会在15秒后跳过白天，这15秒只有你可以匿名发言，其他人无法发言或投票。<n/>- 你有一次休庭机会。<n/>- 你有一次夜间无敌机会。<n/>- 胜利后你会失去能力。
+Param/Value/TTBOX4=你不站在任何一边。
+Param/Value/TTBOX6=- 存活直到游戏进行到第五天。
 Param/Value/TTCRIME=非法闯入
 Param/Value/TTPROT=<s val="ModCenterSize20Bold">保护</s>
 Param/Value/TTSUPR=<s val="ModCenterSize20Bold">压制</s>
 Param/Value/TTPROTSEL=<s val="ModLeftSize16">你今晚将保护 </s>
 Param/Value/TTSUPRSEL=<s val="ModLeftSize16">你今晚将压制 </s>
 Param/Value/TTCANCEL=<s val="ModLeftSize16">你取消了今晚的行动。</s>
+Param/Value/TTCX=<s val="ModCenterSize20Bold">取消</s>
+Param/Value/TTANON=<c val="7EB6FF">调停者</c>
+Param/Value/TTQUIET=<s val="ModLeftSize16">休庭期间你不能发言。</s>
 Param/Value/TTBLOCK=<s val="ModLeftSize16Bold"><c val="FF88FF">一位调停者接近了你，你被他的力量压制了，今晚你会被限制。</c></s>
 Param/Value/TTADJOURN=<s val="ModLeftSize16Bold"><c val="7EB6FF">一位调停者决定休庭！</c></s>
 Param/Value/TTWON=<s val="ModLeftSize16">你活到了第五天。个人胜利已经达成，你失去了保护、压制、休庭和夜间无敌。对局仍会继续。</s>
