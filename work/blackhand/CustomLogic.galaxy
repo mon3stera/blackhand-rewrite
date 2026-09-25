@@ -293,6 +293,7 @@ void gf_TTApplyProtect ();
 void gf_TTAdjourn (int lp_player);
 void gf_TTCheckDayWin ();
 void gf_TTDayButtons ();
+void gt_TTStop_Init ();
 
 // BH:SYS 阶段一：系统写侧口子
 void gf_BHVisit (int lp_player, int lp_target);
