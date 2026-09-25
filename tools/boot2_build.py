@@ -328,7 +328,12 @@ MUST_HAVE_KEYS = [
   'Param/Value/SKBURSTBOX', 'Param/Value/SKBURSTREADY',
   'Param/Value/SKBURSTFIRST', 'Param/Value/SKBURSTSECOND',
   'Param/Value/SKBURSTSET', 'Param/Value/SKBURSTEND',
-  'Param/Value/SKBURSTCANCEL',]
+  'Param/Value/SKBURSTCANCEL',
+  # 护林人 (1/22)
+  'Param/Value/HLDESC', 'Param/Value/HLBOXMORE', 'Param/Value/HLCRIME',
+  'Param/Value/HLNIGHT1', 'Param/Value/HLGONE', 'Param/Value/HLSETA', 'Param/Value/HLSETB',
+  'Param/Value/HLDIED', 'Param/Value/HLGOT', 'Param/Value/HLHEAL', 'Param/Value/HLSAVED',
+  'Param/Value/HLGUARD', 'Param/Value/HLBOUNCE', 'Param/Value/HLDEATHM', 'Param/Value/HLDEATHF',]
 
 
 def parse_strings_file(path: Path) -> dict:

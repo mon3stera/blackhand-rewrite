@@ -1,0 +1,16 @@
+// 护林人 (1/22)：名称沿用原键 563CB705
+Param/Value/HLDESC=一个年迈的护林人，守着林边的屋子。<n/><n/><c val="BBDDFF">你有 2 次机会，在夜晚给一名玩家的房屋布置陷阱。陷阱存在 2 晚，只会杀死一名非城镇的来访者。第一晚不能布置。陷阱不伤害城镇，不能无视夜间无敌，也不受巴士司机影响。多名来访者时，优先杀死黑手D，其次三合会，最后是中立。</c>
+Param/Value/HLBOXMORE=<n/>- 陷阱存在 2 晚，只会杀死一名非城镇来访者。
+Param/Value/HLCRIME=谋杀
+Param/Value/HLNIGHT1=<s val="ModLeftSize16Bold"><c val="CCCC44">第一晚不能布置陷阱。</c></s>
+Param/Value/HLGONE=<s val="ModLeftSize16Bold"><c val="CCCC44">你的陷阱已经用完。</c></s>
+Param/Value/HLSETA=<s val="ModLeftSize16Bold"><c val="66CC33">你在</c></s>
+Param/Value/HLSETB=<s val="ModLeftSize16Bold"><c val="66CC33">的房屋布置了陷阱。它会存在 2 晚。</c></s>
+Param/Value/HLDIED=<s val="ModLeftSize16Bold"><c val="FF0000">你踩中了捕兽夹，被杀死了。</c></s>
+Param/Value/HLGOT=<s val="ModLeftSize16Bold"><c val="66CC33">你的陷阱杀死了一名来访者。</c></s>
+Param/Value/HLHEAL=<s val="ModLeftSize16Bold"><c val="88FF88">医生救了你，捕兽夹没有杀死你。</c></s>
+Param/Value/HLSAVED=<s val="ModLeftSize16Bold"><c val="CCCC44">有人触发了你的陷阱，但被救下了。</c></s>
+Param/Value/HLGUARD=<s val="ModLeftSize16Bold"><c val="CCCC44">保镖挡下了瞄准你的捕兽夹。</c></s>
+Param/Value/HLBOUNCE=<s val="ModLeftSize16Bold"><c val="CCCC44">有人触发了你的陷阱，但夜间无敌挡住了它。</c></s>
+Param/Value/HLDEATHM=他踩中了埋在地板下的捕兽夹。<n/>
+Param/Value/HLDEATHF=她踩中了埋在地板下的捕兽夹。<n/>
