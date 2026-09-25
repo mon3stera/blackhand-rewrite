@@ -95137,7 +95137,7 @@ bool gt_BHLaugh_Func (bool testConds, bool runActions) {
 
     gv_bhLaughUsed[lv_p] = true;
     gv_bhLaughAt[lv_p] = lv_now;
-    SoundPlay(SoundLink("BHLaugh", -1), PlayerGroupAll(), 100.0, 0.0);
+    SoundPlay(SoundLink("BHLaugh", -1), PlayerGroupAll(), 40.0, 0.0);
     gf_BHPlayerChat(lv_p, "爽朗的大笑!");
     return true;
 }
