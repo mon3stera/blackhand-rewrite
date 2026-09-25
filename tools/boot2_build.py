@@ -260,6 +260,7 @@ MUST_HAVE_KEYS = [
    'Param/Value/GRDMSELF', 'Param/Value/GRNIGHT', 'Param/Value/GRCHATMSG',
    'Param/Value/GRSHREV',
    # 调停者 (3/23)
+   'Param/Value/TTPOOL', 'Param/Value/TTPOOLDESC',
    'Param/Value/TTNAME', 'Param/Value/TTCARD', 'Param/Value/TTALIGN',
    'Param/Value/TTDESC', 'Param/Value/TTBOX1', 'Param/Value/TTBOX2',
    'Param/Value/TTBOX4', 'Param/Value/TTBOX6', 'Param/Value/TTCRIME',
