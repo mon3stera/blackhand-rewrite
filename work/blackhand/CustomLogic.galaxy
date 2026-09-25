@@ -4423,7 +4423,7 @@ bool auto_gf_ValidateandSetup_TriggerFunc (bool testConds, bool runActions) {
             gv_verified[lv_a] = false;
         }
 
-        if ((((gv_e697A0E58F8C[lv_a] == false) && (gv_points[lv_a] > 80000)) || (StringLength(gv_bankGeneralStrings[lv_a][0]) > 12))) {
+        if ((StringLength(gv_bankGeneralStrings[lv_a][0]) > 12)) {
             gf_CBSystemMessage(StringExternal("Param/Value/521C1A14"), lv_a, 0, 0, SoundLink("Kerrigan_Death", -1), Color(0,0,0));
             Wait(1.0, c_timeGame);
             GameOver(lv_a, c_gameOverDefeat, false, true);
