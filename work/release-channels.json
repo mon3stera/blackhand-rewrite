@@ -25,8 +25,8 @@
       "pending": "1.113",
       "status": "待投",
       "built": "work/boot2-1.113.SC2Map",
-      "md5": "014805d5155228e9bcda9c411a0f993e",
-      "size": 24293030,
+      "md5": "5f2ff2f3af925f48617e5b55b91600db",
+      "size": 24293133,
       "desc_append": "<n/><n/>改版问题可以在 Revision 地图群 795173021 反馈（原图群 256373733 同样有效）。",
       "cover": "Cover1"
     },
@@ -40,8 +40,8 @@
       "pending": "1.113",
       "status": "待投",
       "built": "work/boot2-1.113-preview.SC2Map",
-      "md5": "57e8dd04e989a13eb9ba30c485b6849e",
-      "size": 24293401,
+      "md5": "19bd78a9d55c4d778753bc56c448be8b",
+      "size": 24293504,
       "desc_append": "<n/><n/>【预览版 Preview】本图与「黑手：升温 Revision」的存档、成就和积分互通；本图更新更快，用来先行测试新内容与修复。内容可能不稳定，遇到问题可以在原图群 256373733 或 Revision 地图群 795173021 反馈。",
       "cover": "Cover1"
     }
