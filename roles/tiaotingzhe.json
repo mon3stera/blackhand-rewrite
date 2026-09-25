@@ -1,0 +1,25 @@
+{
+  "pool": 3,
+  "role": 23,
+  "pinyin": "tiaotingzhe",
+  "cn": "调停者",
+  "name_key": "TTNAME",
+  "desc_key": "TTDESC",
+  "investigator": [
+    "E5B882E6B091E7B1BB1",
+    "E5B882E6B091E7B1BB2"
+  ],
+  "crime_key": "TTCRIME",
+  "options": [],
+  "flag10": true,
+  "guessable": true,
+  "help_preview": null,
+  "interactions": {
+    "swap": {"text": "每晚登门，目标可被女巫和巴士司机交换；保护与压制都按实际到访目标结算。"},
+    "investigate": {"text": "访问留痕；探员线索与生存者相同，图鉴案底为非法闯入。"},
+    "restrict": {"text": "被舞娘/陪侍限制或入狱时，保护与压制都不生效。"},
+    "guessage": {"text": "审查页中立列表可以猜出调停者。", "in_guess_list": true}
+  },
+  "note": "中立混乱。不计入致命人数，不挡住城镇或黑手的胜利。活到白天计数第五天个人胜利，之后失去保护、压制、休庭和夜间无敌，并在终局与获胜阵营共结算。一次夜间无敌走 immuneChance。休庭不在有人站上审判台时使用。",
+  "review_status": "reviewed"
+}

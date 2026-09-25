@@ -259,6 +259,15 @@ MUST_HAVE_KEYS = [
    'Param/Value/GRDM', 'Param/Value/GRCRIME',
    'Param/Value/GRDMSELF', 'Param/Value/GRNIGHT', 'Param/Value/GRCHATMSG',
    'Param/Value/GRSHREV',
+   # 调停者 (3/23)
+   'Param/Value/TTNAME', 'Param/Value/TTCARD', 'Param/Value/TTALIGN',
+   'Param/Value/TTDESC', 'Param/Value/TTBOX1', 'Param/Value/TTBOX2',
+   'Param/Value/TTBOX4', 'Param/Value/TTBOX6', 'Param/Value/TTCRIME',
+   'Param/Value/TTPROT', 'Param/Value/TTSUPR', 'Param/Value/TTPROTSEL',
+   'Param/Value/TTSUPRSEL', 'Param/Value/TTCANCEL', 'Param/Value/TTBLOCK',
+   'Param/Value/TTADJOURN', 'Param/Value/TTWON', 'Param/Value/TTLOST',
+   'Param/Value/TTSTOPTIP', 'Param/Value/TTNOSTOP', 'Param/Value/TTUSED',
+   'Param/Value/TTIMM',
    # shw289 弃子(2/16) / 死士(5/16)
   'Param/Value/QZNAME', 'Param/Value/QZDESC', 'Param/Value/QZCARD',
   'Param/Value/SSNAME', 'Param/Value/SSDESC', 'Param/Value/SSCARD',

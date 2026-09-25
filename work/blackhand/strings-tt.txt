@@ -1,0 +1,23 @@
+// 调停者（中立混乱 3/23）。第五天 = 白天公告里的天数计数到达 5。
+Param/Value/TTNAME=<c val="7EB6FF">调停者</c>
+Param/Value/TTCARD=<c val="7EB6FF">
+Param/Value/TTALIGN=<c val="7EB6FF">无（混乱）</c>
+Param/Value/TTDESC=他站在所有阵营之外，只想把这场争斗拖到自己能全身而退的那一天。<n/><n/><c val="BBDDFF">每晚选择保护一人或压制一人。白天无人站上审判台时，可以用技能按钮或 -stop 休庭一次。你有一次夜间无敌。活到第五天即达成个人胜利，对局继续，此后你失去全部能力。</c>
+Param/Value/TTBOX1=- 每晚保护或压制一名玩家。
+Param/Value/TTBOX2=<n/>- 保护使目标当晚免疫夜间攻击。<n/>- 压制与舞娘的限制相同。<n/>- 选中一列后另一列会隐藏；再点已选目标则取消。<n/>- 你有一次夜间无敌。<n/>- 白天无人在审判台时，可以用技能按钮或 -stop 休庭一次。
+Param/Value/TTBOX4=你不站在任何一边，只想走到第五天。
+Param/Value/TTBOX6=- 活到第五天即胜利。胜利后失去能力，对局继续，你与最终获胜的阵营一同结算。
+Param/Value/TTCRIME=非法闯入
+Param/Value/TTPROT=<s val="ModCenterSize20Bold">保护</s>
+Param/Value/TTSUPR=<s val="ModCenterSize20Bold">压制</s>
+Param/Value/TTPROTSEL=<s val="ModLeftSize16">你今晚将保护 </s>
+Param/Value/TTSUPRSEL=<s val="ModLeftSize16">你今晚将压制 </s>
+Param/Value/TTCANCEL=<s val="ModLeftSize16">你取消了今晚的行动。</s>
+Param/Value/TTBLOCK=<s val="ModLeftSize16Bold"><c val="FF88FF">一位调停者接近了你，你被他的力量压制了，今晚你会被限制。</c></s>
+Param/Value/TTADJOURN=<s val="ModLeftSize16Bold"><c val="7EB6FF">一位调停者决定休庭！</c></s>
+Param/Value/TTWON=<s val="ModLeftSize16">你活到了第五天。个人胜利已经达成，你失去了保护、压制、休庭和夜间无敌。对局仍会继续。</s>
+Param/Value/TTLOST=<s val="ModLeftSize16">你已经胜利，今晚无法行动。</s>
+Param/Value/TTSTOPTIP=<s val="ModCenterSize20Bold">休庭</s>
+Param/Value/TTNOSTOP=<s val="ModLeftSize16">现在不能休庭。</s>
+Param/Value/TTUSED=<s val="ModLeftSize16">你已经休过庭了。</s>
+Param/Value/TTIMM=<s val="ModLeftSize16">你有一次夜间无敌。</s>
