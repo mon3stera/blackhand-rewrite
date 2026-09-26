@@ -96543,7 +96543,7 @@ void gf_ESQiziBomb (int lp_killer, int lp_target) {
                 }
             }
             else {
-                if (((gv_immuneChance[lv_b] > 0) || (gv_immune[lv_b][0] == true))) {
+                if ((gv_immune[lv_b][0] == true)) {
                     gf_CBSystemMessage(StringExternal("Param/Value/A18F43D8"), lv_b, lv_b, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
                     if ((gv_immuneChance[lv_b] > 0)) {
                         gv_immuneChance[lv_b] = (gv_immuneChance[lv_b] - 1);
