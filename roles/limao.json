@@ -16,7 +16,7 @@
   "help_preview": null,
   "interactions": {
     "swap": {"text": "访问自己，选择记在按钮上。巴士司机、女巫、退伍军人改不到。目标当晚或次日白天死亡则互换身份。"},
-    "investigate": {"text": "不留下对目标的访问。图鉴案底为无。探员线索与生存者相同。"},
+    "investigate": {"text": "不留下对目标的访问。图鉴案底为无。探员线索与生存者同组，名单里写上狸猫。"},
     "restrict": {"text": "被舞娘/陪侍限制或入狱时，这次盯梢不生效。"},
     "guessage": {"text": "审查页中立列表可以猜出狸猫。", "in_guess_list": true}
   },
