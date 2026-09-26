@@ -98957,7 +98957,6 @@ void gf_SQTell (int lp_player) {
     int lv_n5;
     int lv_n6;
     int lv_n7;
-    text lv_msg;
     const int autoSQTL_ae = 15;
     const int autoSQTL_ai = 1;
 
@@ -98995,15 +98994,14 @@ void gf_SQTell (int lp_player) {
             }
         }
     }
-    lv_msg = StringExternal("Param/Value/SQHEAD");
-    lv_msg = (lv_msg + StringExternal("Param/Value/SQN1") + IntToText(lv_n1));
-    lv_msg = (lv_msg + StringExternal("Param/Value/SQN2") + IntToText(lv_n2));
-    lv_msg = (lv_msg + StringExternal("Param/Value/SQN3") + IntToText(lv_n3));
-    lv_msg = (lv_msg + StringExternal("Param/Value/SQN4") + IntToText(lv_n4));
-    lv_msg = (lv_msg + StringExternal("Param/Value/SQN5") + IntToText(lv_n5));
-    lv_msg = (lv_msg + StringExternal("Param/Value/SQN6") + IntToText(lv_n6));
-    lv_msg = (lv_msg + StringExternal("Param/Value/SQN7") + IntToText(lv_n7) + StringExternal("Param/Value/SQEND"));
-    gf_CBSystemMessage(lv_msg, lp_player, lp_player, 0, SoundLink("UI_TipSelect", -1), Color(50.00, 80.00, 100.00));
+    gf_CBSystemMessage(StringExternal("Param/Value/SQHEAD"), lp_player, lp_player, 0, SoundLink("UI_TipSelect", -1), Color(50.00, 80.00, 100.00));
+    gf_CBSystemMessage((StringExternal("Param/Value/SQN1") + IntToText(lv_n1) + StringExternal("Param/Value/SQTAIL")), lp_player, lp_player, 0, SoundLink("Silent", -1), Color(50.00, 80.00, 100.00));
+    gf_CBSystemMessage((StringExternal("Param/Value/SQN2") + IntToText(lv_n2) + StringExternal("Param/Value/SQTAIL")), lp_player, lp_player, 0, SoundLink("Silent", -1), Color(50.00, 80.00, 100.00));
+    gf_CBSystemMessage((StringExternal("Param/Value/SQN3") + IntToText(lv_n3) + StringExternal("Param/Value/SQTAIL")), lp_player, lp_player, 0, SoundLink("Silent", -1), Color(50.00, 80.00, 100.00));
+    gf_CBSystemMessage((StringExternal("Param/Value/SQN4") + IntToText(lv_n4) + StringExternal("Param/Value/SQTAIL")), lp_player, lp_player, 0, SoundLink("Silent", -1), Color(50.00, 80.00, 100.00));
+    gf_CBSystemMessage((StringExternal("Param/Value/SQN5") + IntToText(lv_n5) + StringExternal("Param/Value/SQTAIL")), lp_player, lp_player, 0, SoundLink("Silent", -1), Color(50.00, 80.00, 100.00));
+    gf_CBSystemMessage((StringExternal("Param/Value/SQN6") + IntToText(lv_n6) + StringExternal("Param/Value/SQTAIL")), lp_player, lp_player, 0, SoundLink("Silent", -1), Color(50.00, 80.00, 100.00));
+    gf_CBSystemMessage((StringExternal("Param/Value/SQN7") + IntToText(lv_n7) + StringExternal("Param/Value/SQTAIL")), lp_player, lp_player, 0, SoundLink("Silent", -1), Color(50.00, 80.00, 100.00));
 }
 
 // 新增角色（非原图抽取）：社区管理员第一晚清点类型，被限制也照样知道。

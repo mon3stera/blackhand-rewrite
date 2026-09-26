@@ -344,7 +344,7 @@ MUST_HAVE_KEYS = [
    'Param/Value/SQNAME', 'Param/Value/SQDESC', 'Param/Value/SQTAG',
    'Param/Value/SQABIL', 'Param/Value/SQTRAITS', 'Param/Value/SQIDENT', 'Param/Value/SQCRIME',
    'Param/Value/SQHEAD', 'Param/Value/SQN1', 'Param/Value/SQN2', 'Param/Value/SQN3',
-   'Param/Value/SQEND',
+   'Param/Value/SQTAIL',
    'Param/Value/SQN4', 'Param/Value/SQN5', 'Param/Value/SQN6', 'Param/Value/SQN7',]
 
 
