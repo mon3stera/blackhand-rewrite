@@ -1178,7 +1178,7 @@ void gf_SequencePrep ();
 void gf_SequenceBullshit ();
 void gf_SequenceKills ();
 void gf_HLForesterNight ();
-void gf_ESForesterKill (int lp_victim, int lp_forester);
+void gf_ESForesterKill (int lp_victim, int lp_forester, bool lp_intercept);
 void gf_HLResolveOne (int lp_owner, int lp_slot);
 bool gf_HLIsVictim (int lp_who, int lp_house, int lp_owner);
 bool gf_HLImmune (int lp_who);
@@ -92316,7 +92316,7 @@ bool gf_HLIsVictim (int lp_who, int lp_house, int lp_owner) {
     return true;
 }
 
-void gf_ESForesterKill (int lp_victim, int lp_forester) {
+void gf_ESForesterKill (int lp_victim, int lp_forester, bool lp_intercept) {
     gv_damage[lp_victim] += 1;
     gv_deathMethod[lp_victim] = (gv_deathMethod[lp_victim] + "T");
     if ((gv_isAMan[lp_victim] == true)) {
@@ -92331,8 +92331,15 @@ void gf_ESForesterKill (int lp_victim, int lp_forester) {
     gv_diedAtNight[lp_victim] = true;
     gf_KillPlayer(lp_victim, false);
     gf_FlashScreen(Color(100.00, 0.00, 0.00), lp_victim, 4.0, 0.0);
-    gf_CBSystemMessage(StringExternal("Param/Value/HLDIED"), lp_victim, lp_victim, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-    gf_CBSystemMessage(StringExternal("Param/Value/HLGOT"), lp_forester, lp_forester, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    if ((lp_intercept == true)) {
+        gf_CBSystemMessage(StringExternal("Param/Value/HLGUARDDIE"), lp_victim, lp_victim, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+        gf_CBSystemMessage(StringExternal("Param/Value/HLGUARDGOT"), lp_forester, lp_forester, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    }
+    else {
+        gf_CBSystemMessage(StringExternal("Param/Value/HLDIED"), lp_victim, lp_victim, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+        gf_CBSystemMessage(StringExternal("Param/Value/HLGOT"), lp_forester, lp_forester, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    }
+
     Wait(RandomFixed(0.5, 1.0), c_timeGame);
 }
 
@@ -92419,10 +92426,22 @@ void gf_HLResolveOne (int lp_owner, int lp_slot) {
     }
 
     lv_guard = gv_guarded[lv_victim];
-    if ((lv_guard != 0) && (lv_guard != lv_victim) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_guard) == true)) {
-        gf_CBSystemMessage(StringExternal("Param/Value/HLGUARD"), lv_victim, lv_victim, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-        gf_ESBodyguardKill(lp_owner, lv_guard);
+    if ((lv_guard != 0) && (lv_guard != lv_victim) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_guard) == true) && (gv_diedAtNight[lv_guard] == false)) {
         gv_guarded[lv_victim] = 0;
+        gf_CBSystemMessage(StringExternal("Param/Value/HLGUARD"), lv_victim, lv_victim, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+        if ((gf_HLImmune(lv_guard) == true)) {
+            gf_CBSystemMessage(StringExternal("Param/Value/HLBOUNCE"), lp_owner, lp_owner, 0, SoundLink("Silent", -1), Color(0,0,0));
+            return;
+        }
+
+        if ((gv_healing[lv_guard] > 0)) {
+            gv_healing[lv_guard] = (gv_healing[lv_guard] - 1);
+            gf_CBSystemMessage(StringExternal("Param/Value/HLHEAL"), lv_guard, lv_guard, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+            gf_CBSystemMessage(StringExternal("Param/Value/HLSAVED"), lp_owner, lp_owner, 0, SoundLink("Silent", -1), Color(0,0,0));
+            return;
+        }
+
+        gf_ESForesterKill(lv_guard, lp_owner, true);
         return;
     }
 
@@ -92434,7 +92453,7 @@ void gf_HLResolveOne (int lp_owner, int lp_slot) {
     }
 
     gv_veteraned[lv_victim] = true;
-    gf_ESForesterKill(lv_victim, lp_owner);
+    gf_ESForesterKill(lv_victim, lp_owner, false);
 }
 
 void gf_HLForesterNight () {
