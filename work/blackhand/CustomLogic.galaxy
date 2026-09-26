@@ -6450,7 +6450,7 @@ void gf_DefaultRoleOptions () {
     gv_roleOptions[1][21][2] = false;
     gv_roleOptions[1][21][3] = false;
     gv_bankSaveWeights[0][1][21] = 0.5;
-    gv_bankSaveWeights[0][1][22] = 0.5;
+    gv_bankSaveWeights[0][1][22] = 1.0;
     gv_roleOptionAllowed[1][23][0] = true;
     gv_roleOptionAllowed[1][23][1] = true;
     gv_roleOptionAllowed[1][23][2] = true;
@@ -6751,8 +6751,8 @@ void gf_DefaultRoleOptions () {
     gv_roleWeights[3][22] = 0.25;
     gv_bankSaveWeights[0][3][23] = 0.25;
     gv_roleWeights[3][23] = 0.25;
-    gv_bankSaveWeights[0][3][24] = 0.5;
-    gv_roleWeights[3][24] = 0.5;
+    gv_bankSaveWeights[0][3][24] = 1.0;
+    gv_roleWeights[3][24] = 1.0;
     gv_bankSaveWeights[0][3][31] = 0.25;   // 影武者(3/31)：中立致命席随机权重（对齐堕落审判者 0.25）
     gv_roleWeights[3][31] = 0.25;
     gv_roleOptionAllowed[4][1][0] = true;
@@ -44228,12 +44228,12 @@ void gf_VOptions () {
     gv_randomOptions = "00000 00000 0 11010 10000 0000 00010 1110 11100 01000 11010 01100 110000 00000 1 00111 00000 00000 100";
     gv_triadOptions = "1 10110 100 101 11 1010 10 11 10 100 10100";
     // 板子共用权重。没单独改权重的预设在 gf_VLoadSaveSlot 之后调用 gf_BHApplyBoardWeights，整表覆盖抽取权重。
-    // 城镇 1..31：市民0 警长2 医生2 探员2 舞娘1 义警0.5 共济会0.5 间谍0.5 巴士0.5 法医0.5 保镖1 市长2 狱警0.25 长老1 侦探1.5 监视1.5 退伍0.5 树桩0 执法长1 公告1 副手0.5 护林0.5 征募1.1 学徒0.5 牧师1 审查员1.5 联邦1.5 守护0 庇护0 史官0 观察者1
-    gv_townWeights = "0 2 2 2 1 0.5 0.5 0.5 0.5 0.5 1 2 0.25 1 1.5 1.5 0.5 0 1 1 0.5 0.5 1.1 0.5 1 1.5 1.5 0 0 0 1";
+    // 城镇 1..31：市民0 警长2 医生2 探员2 舞娘1 义警0.5 共济会0.5 间谍0.5 巴士0.5 法医0.5 保镖1 市长2 狱警0.25 长老1 侦探1.5 监视1.5 退伍0.5 树桩0 执法长1 公告1 副手0.5 护林1 征募1.1 学徒0.5 牧师1 审查员1.5 联邦1.5 守护0 庇护0 史官0 观察者1
+    gv_townWeights = "0 2 2 2 1 0.5 0.5 0.5 0.5 0.5 1 2 0.25 1 1.5 1.5 0.5 0 1 1 0.5 1 1.1 0.5 1 1.5 1.5 0 0 0 1";
     // 黑手D 1..16：党徒2 教父1 陪侍1.25 参谋1.5 陷害1 清理1 恐吓1 伪装0.5 绑架0.25 密探1 欺骗1 威胁0 煽动者0 门徒0.5 栽赃者0.5 弃子0.5
     gv_mafiaWeights = "2 1 1.25 1.5 1 1 1 0.5 0.25 1 1 0 0 0.5 0.5 0.5";
-    // 中立 1..32：连环2 生存1 小丑1.5 女巫0.75 纵火0.25 处刑1.5 失忆1 邪教0 杀人狂1 巫医0 审计1.5 法官1 堕落0 瘟疫0.25 冤魂1.75 系命0.5 赌鬼0.5 小金0 煽动家1 开膛手0 唐吉诃德0.25 感染者0 调停者0 狸猫0.5 空0×6 影武者1 天选者0
-    gv_neutralWeights = "2 1 1.5 0.75 0.25 1.5 1 0 1 0 1.5 1 0 0.25 1.75 0.5 0.5 0 1 0 0.25 0 0 0.5 0 0 0 0 0 0 1 0";
+    // 中立 1..32：连环2 生存1 小丑1.5 女巫0.75 纵火0.25 处刑1.5 失忆1 邪教0 杀人狂1 巫医0 审计1.5 法官1 堕落0 瘟疫0.25 冤魂1.75 系命0.5 赌鬼0.5 小金0 煽动家1 开膛手0 唐吉诃德0.25 感染者0 调停者0 狸猫1 空0×6 影武者1 天选者0
+    gv_neutralWeights = "2 1 1.5 0.75 0.25 1.5 1 0 1 0 1.5 1 0 0.25 1.75 0.5 0.5 0 1 0 0.25 0 0 1 0 0 0 0 0 0 1 0";
     // 三合会 1..16：暴徒2 龙头1 交际花1.25 管家1.5 造假1 香主1 封口1 渗透0.5 审讯0.25 先锋1 迷惑1 指使0 扰乱0 仆从0.5 诬陷0.5 死士0.5
     gv_triadWeights = "2 1 1.25 1.5 1 1 1 0.5 0.25 1 1 0 0 0.5 0.5 0.5";
 }
@@ -49749,6 +49749,10 @@ bool gf_BHRoleFitsKind (int lp_kind, int lp_pool, int lp_role) {
         return ((gv_roleOptions[1][21][0] == false) && (((lp_kind == 1) && (gv_roleOptions[4][1][2] == false)) || ((lp_kind == 2) && (gv_roleOptions[4][2][2] == false)) || (lp_kind == 5)));
     }
 
+    if ((lp_pool == 1) && (lp_role == 22)) {
+        return ((((lp_kind == 1) && (gv_roleOptions[4][1][0] == false) && (gv_roleOptions[4][1][2] == false)) || ((lp_kind == 2) && (gv_roleOptions[4][2][0] == false) && (gv_roleOptions[4][2][3] == false)) || (lp_kind == 6) || (lp_kind == 7)));
+    }
+
     if ((lp_pool == 1) && (lp_role == 26)) {
         return ((((lp_kind == 1) && (gv_roleOptions[4][1][2] == false)) || ((lp_kind == 2) && (gv_roleOptions[4][2][0] == false))));
     }
@@ -49962,7 +49966,7 @@ bool gf_BHRoleFitsKind (int lp_kind, int lp_pool, int lp_role) {
     }
 
     if ((lp_pool == 3) && (lp_role == 24)) {
-        return ((((lp_kind == 1) && (gv_roleOptions[4][1][3] == false)) || (lp_kind == 20) || (lp_kind == 19)));
+        return ((((lp_kind == 1) && (gv_roleOptions[4][1][3] == false)) || (lp_kind == 14) || ((lp_kind == 19) && (gv_roleOptions[4][19][2] == false))));
     }
 
     return false;
@@ -50408,7 +50412,7 @@ void gf_OSRandomizeMatrix (int lp_a, int lp_x, fixed lp_y) {
         gv_roles[lv_a][0] = 21;
     }
 
-    if ((lv_y >= gv_finalWeights[1][21]) && (lv_y < gv_finalWeights[1][22]) && (((gv_rolesArray[lv_x] == 1) && (gv_roleOptions[4][1][2] == false)) || ((gv_rolesArray[lv_x] == 2) && (gv_roleOptions[4][2][2] == false)) || (gv_rolesArray[lv_x] == 5))) {
+    if ((lv_y >= gv_finalWeights[1][21]) && (lv_y < gv_finalWeights[1][22]) && (((gv_rolesArray[lv_x] == 1) && (gv_roleOptions[4][1][0] == false) && (gv_roleOptions[4][1][2] == false)) || ((gv_rolesArray[lv_x] == 2) && (gv_roleOptions[4][2][0] == false) && (gv_roleOptions[4][2][3] == false)) || (gv_rolesArray[lv_x] == 6) || (gv_rolesArray[lv_x] == 7))) {
         gv_roles[lv_a][1] = 1;
         gv_roles[lv_a][0] = 22;
     }
@@ -50678,7 +50682,7 @@ void gf_OSRandomizeMatrix (int lp_a, int lp_x, fixed lp_y) {
         gv_roles[lv_a][0] = 23;
     }
 
-    if ((lv_y >= gv_finalWeights[3][23]) && (lv_y < gv_finalWeights[3][24]) && (((gv_rolesArray[lv_x] == 1) && (gv_roleOptions[4][1][3] == false)) || (gv_rolesArray[lv_x] == 20) || (gv_rolesArray[lv_x] == 19))) {
+    if ((lv_y >= gv_finalWeights[3][23]) && (lv_y < gv_finalWeights[3][24]) && (((gv_rolesArray[lv_x] == 1) && (gv_roleOptions[4][1][3] == false)) || (gv_rolesArray[lv_x] == 14) || ((gv_rolesArray[lv_x] == 19) && (gv_roleOptions[4][19][2] == false)))) {
         gv_roles[lv_a][1] = 3;
         gv_roles[lv_a][0] = 24;
     }
