@@ -38666,10 +38666,10 @@ void gf_RTTownRoleText (int lp_player) {
     }
 
     if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 22)) {
-        gv_roleBoxText[lv_a][0] = (gv_roleBoxText[lv_a][0] + StringExternal("Param/Value/79C88F4E"));
+        gv_roleBoxText[lv_a][0] = (gv_roleBoxText[lv_a][0] + StringExternal("Param/Value/C72A3BD0"));
         gv_roleBoxText[lv_a][4] = StringExternal("Param/Value/D8A60501");
-        gv_roleBoxText[lv_a][1] = (StringExternal("Param/Value/59701AD8") + StringExternal("Param/Value/HLBOXMORE"));
-        gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/1774E8F5");
+        gv_roleBoxText[lv_a][1] = StringExternal("Param/Value/HLABILITY");
+        gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/HLTRAITS");
         SoundPlay(SoundLink("Hellion_What", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
     }
 

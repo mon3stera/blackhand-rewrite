@@ -330,7 +330,7 @@ MUST_HAVE_KEYS = [
   'Param/Value/SKBURSTSET', 'Param/Value/SKBURSTEND',
   'Param/Value/SKBURSTCANCEL',
   # 护林人 (1/22)
-  'Param/Value/HLDESC', 'Param/Value/HLBOXMORE', 'Param/Value/HLCRIME',
+  'Param/Value/HLDESC', 'Param/Value/HLABILITY', 'Param/Value/HLTRAITS', 'Param/Value/HLCRIME',
   'Param/Value/HLNIGHT1', 'Param/Value/HLGONE', 'Param/Value/HLSETA', 'Param/Value/HLSETB',
   'Param/Value/HLDIED', 'Param/Value/HLGOT', 'Param/Value/HLHEAL', 'Param/Value/HLSAVED',
   'Param/Value/HLGUARD', 'Param/Value/HLGUARDDIE', 'Param/Value/HLGUARDGOT',
