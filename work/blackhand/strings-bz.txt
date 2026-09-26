@@ -24,8 +24,8 @@ Param/Value/BZNO8=这个人不能被假死。
 Param/Value/BZBLOC=你的目标没有死。
 Param/Value/BZHEAL=有人救下了你的目标。
 Param/Value/BZDIE=死于枪伤。
-Param/Value/BZLEAD=黑手党领袖
+Param/Value/BZLEAD=<c val="FF0000">黑手党</c> <c val="00CCFF">领袖</c>
 Param/Value/BZLEADD=从党徒、教父和庇护者中随机出现一名。
-Param/Value/QLLEAD=三合会领袖
+Param/Value/QLLEAD=<c val="3366FF">三合会</c> <c val="00CCFF">领袖</c>
 Param/Value/QLLEADD=从暴徒、龙头和潜龙中随机出现一名。
 Param/Value/173C6671=- 你怀疑他是个教父、龙头、庇护者或潜龙。
