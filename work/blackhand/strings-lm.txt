@@ -10,6 +10,8 @@ Param/Value/LMBOX4=一名熟练的易容大师，代号为狸猫，善于伪装�
 Param/Value/LMBOX6=- 在交换角色后，使用新的胜利目标胜利。
 Param/Value/LMCRIME=无
 Param/Value/LMBTN=<s val="ModCenterSize20Bold">盯上</s>
+Param/Value/LMCX=<s val="ModCenterSize20Bold">取消</s>
+Param/Value/LMCLEAR=<s val="ModLeftSize16">你取消了今晚的盯梢。</s>
 Param/Value/LMSEL=<s val="ModLeftSize16">你今晚盯上了 </s>
 Param/Value/LMGOTA=<s val="ModLeftSize16">旧的戏子已死，新的主角登场。你戴上了【</s>
 Param/Value/LMGOTB=<s val="ModLeftSize16">】的面具，接管了他的身份与命运。</s>

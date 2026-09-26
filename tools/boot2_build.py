@@ -338,7 +338,7 @@ MUST_HAVE_KEYS = [
   # 狸猫 (3/24)
   'Param/Value/LMNAME', 'Param/Value/LMCARD', 'Param/Value/LMALIGN', 'Param/Value/LMDESC',
   'Param/Value/LMBOX1', 'Param/Value/LMBOX2', 'Param/Value/LMBOX4', 'Param/Value/LMBOX6',
-  'Param/Value/LMCRIME', 'Param/Value/LMBTN', 'Param/Value/LMSEL',
+  'Param/Value/LMCRIME', 'Param/Value/LMBTN', 'Param/Value/LMCX', 'Param/Value/LMCLEAR', 'Param/Value/LMSEL',
   'Param/Value/LMGOTA', 'Param/Value/LMGOTB',]
 
 

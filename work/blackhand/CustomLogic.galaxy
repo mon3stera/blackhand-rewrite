@@ -98771,11 +98771,19 @@ void gf_RALimaoActions (int lp_player) {
     for ( ; ( (autoLMRA_ai >= 0 && lv_a <= autoLMRA_ae) || (autoLMRA_ai < 0 && lv_a >= autoLMRA_ae) ) ; lv_a += autoLMRA_ai ) {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (lv_a != lp_player)) {
             libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/LMBTN"), PlayerGroupSingle(lp_player));
-            DialogControlSetVisible(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), true);
+            DialogControlSetVisible(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), (gv_action[lp_player][0] != lv_a));
             libNtve_gf_SetDialogItemColor(gv_actionDialogItem[lv_a][5], Color(76.86, 47.06, 22.75), PlayerGroupSingle(lp_player));
             DialogControlSetSize(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), 120, 30);
             libNtve_gf_SetDialogItemImage(gv_actionDialogItem[lv_a][5], "ActionNormal.dds", PlayerGroupSingle(lp_player));
             libNtve_gf_SetDialogItemImage2(gv_actionDialogItem[lv_a][5], "ActionHighlight.dds", PlayerGroupSingle(lp_player));
+        }
+        else if ((lv_a == lp_player)) {
+            libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/LMCX"), PlayerGroupSingle(lp_player));
+            libNtve_gf_SetDialogItemColor(gv_actionDialogItem[lv_a][5], Color(50.20, 50.20, 50.20), PlayerGroupSingle(lp_player));
+            DialogControlSetSize(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), 120, 30);
+            libNtve_gf_SetDialogItemImage(gv_actionDialogItem[lv_a][5], "ActionNormal.dds", PlayerGroupSingle(lp_player));
+            libNtve_gf_SetDialogItemImage2(gv_actionDialogItem[lv_a][5], "ActionHighlight.dds", PlayerGroupSingle(lp_player));
+            DialogControlSetVisible(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), (gv_action[lp_player][0] != 0));
         }
         else {
             DialogControlSetVisible(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), false);
@@ -98786,6 +98794,12 @@ void gf_RALimaoActions (int lp_player) {
 // 新增角色（非原图抽取）：狸猫选择盯梢目标。
 void gf_SKA_3_limao (int lv_source, int lv_target) {
     if ((lv_target == lv_source)) {
+        if ((gv_action[lv_source][0] != 0)) {
+            DialogControlSetVisible(gv_actionDialogItem[gv_action[lv_source][0]][5], PlayerGroupSingle(lv_source), true);
+            gv_action[lv_source][0] = 0;
+            DialogControlSetVisible(gv_actionDialogItem[lv_source][5], PlayerGroupSingle(lv_source), false);
+            gf_CBSystemMessage(StringExternal("Param/Value/LMCLEAR"), lv_source, lv_source, 0, SoundLink("UI_TipSelect", -1), Color(0, 0, 0));
+        }
         return;
     }
     if ((gv_action[lv_source][0] != 0)) {
