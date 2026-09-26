@@ -1193,6 +1193,7 @@ void gf_SequencePrep ();
 void gf_SequenceBullshit ();
 void gf_SequenceKills ();
 void gf_HLForesterNight ();
+void gf_HLSnap ();
 void gf_ESForesterKill (int lp_victim, int lp_forester, bool lp_intercept);
 void gf_HLResolveOne (int lp_owner, int lp_slot);
 bool gf_HLIsVictim (int lp_who, int lp_house, int lp_owner);
@@ -92391,6 +92392,25 @@ bool gf_HLIsVictim (int lp_who, int lp_house, int lp_owner) {
     return true;
 }
 
+void gf_HLSnap () {
+    playergroup autoHLSNAP_g;
+    int autoHLSNAP_var;
+
+    if ((gv_nightSequence == false)) {
+        return;
+    }
+
+    autoHLSNAP_g = PlayerGroupAll();
+    autoHLSNAP_var = -1;
+    while (true) {
+        autoHLSNAP_var = PlayerGroupNextPlayer(autoHLSNAP_g, autoHLSNAP_var);
+        if (autoHLSNAP_var < 0) { break; }
+        gf_CBSystemMessage(StringExternal("Param/Value/HLSNAP"), autoHLSNAP_var, 16, 0, SoundLink("Silent", -1), Color(0,0,0));
+    }
+    Wait(RandomFixed(0.6, 1.2), c_timeGame);
+    SoundPlay(SoundLink("Doodad_SecurityGateDiagonalImpact", -1), PlayerGroupAll(), 100.0, 0.0);
+}
+
 void gf_ESForesterKill (int lp_victim, int lp_forester, bool lp_intercept) {
     gv_damage[lp_victim] += 1;
     gv_deathMethod[lp_victim] = (gv_deathMethod[lp_victim] + "T");
@@ -92475,6 +92495,7 @@ void gf_HLResolveOne (int lp_owner, int lp_slot) {
         }
 
         if ((lv_any == 1)) {
+            gf_HLSnap();
             gf_CBSystemMessage(StringExternal("Param/Value/HLBOUNCE"), lp_owner, lp_owner, 0, SoundLink("Silent", -1), Color(0,0,0));
         }
 
@@ -92499,6 +92520,8 @@ void gf_HLResolveOne (int lp_owner, int lp_slot) {
     if ((lv_victim < 1)) {
         return;
     }
+
+    gf_HLSnap();
 
     lv_guard = gv_guarded[lv_victim];
     if ((lv_guard != 0) && (lv_guard != lv_victim) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_guard) == true) && (gv_diedAtNight[lv_guard] == false)) {

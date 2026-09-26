@@ -7,6 +7,7 @@ Param/Value/HLNIGHT1=<s val="ModLeftSize16Bold"><c val="CCCC44">你必须花费�
 Param/Value/HLGONE=<s val="ModLeftSize16Bold"><c val="CCCC44">你的陷阱已经用完。</c></s>
 Param/Value/HLSETA=<s val="ModLeftSize16Bold"><c val="66CC33">你在</c></s>
 Param/Value/HLSETB=<s val="ModLeftSize16Bold"><c val="66CC33">的房屋布置了陷阱。它至多持续两天。</c></s>
+Param/Value/HLSNAP=<s val="ModLeftSize16"><c val="FF0000">你听到陷阱被触发的声音 ...</c></s>
 Param/Value/HLDIED=<s val="ModLeftSize16Bold"><c val="FF0000">你踩中了捕兽夹，被杀死了。</c></s>
 Param/Value/HLGOT=<s val="ModLeftSize16Bold"><c val="66CC33">你的陷阱杀死了一名来访者。</c></s>
 Param/Value/HLGUARDDIE=<s val="ModLeftSize16Bold"><c val="FF0000">你挡下了捕兽夹，被杀死了。</c></s>
