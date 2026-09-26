@@ -352,7 +352,7 @@ MUST_HAVE_KEYS = [
    'Param/Value/QLNAME', 'Param/Value/QLDESC', 'Param/Value/QLTAG',
    'Param/Value/QLBOX1', 'Param/Value/QLBOX2', 'Param/Value/QLBOX4', 'Param/Value/QLCRIME',
    'Param/Value/BZKILL', 'Param/Value/BZFAKE', 'Param/Value/BZMASK', 'Param/Value/BZMASKTIP',
-   'Param/Value/BZMASKMSG', 'Param/Value/BZTGT', 'Param/Value/BZFEIGNYOU', 'Param/Value/BZFEIGNDONE',
+   'Param/Value/BZMASKMSG', 'Param/Value/BZTGT', 'Param/Value/BZWILL', 'Param/Value/BZFEIGNYOU', 'Param/Value/BZFEIGNDONE',
    'Param/Value/BZNO8', 'Param/Value/BZBLOC', 'Param/Value/BZHEAL', 'Param/Value/BZDIE',
    'Param/Value/BZLEAD', 'Param/Value/BZLEADD', 'Param/Value/QLLEAD', 'Param/Value/QLLEADD',]
 
