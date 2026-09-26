@@ -1,0 +1,30 @@
+Param/Value/BZNAME=<c val="BB3355">庇护者</c>
+Param/Value/BZDESC=黑手党的另一位领袖。夜里可以杀人；对队友则是一场安排好的假死。
+Param/Value/BZTAG=（致命）
+Param/Value/BZBOX1=每晚杀死一人。对城镇的杀法和教父相同。杀死队友时，他对外假死：白天不能说话、不能投票、不算存活人数，判胜也不算他。夜里他仍能使用原来的能力，并留在黑手党夜聊里。假死的党徒不能去杀人。
+Param/Value/BZBOX2=你有夜间无敌，但没有调查免疫。假死的人早上显示成你选的城镇角色，死因与被枪杀相同。伪装者不能被这样处理。全场只能有一名领袖，与教父互斥。
+Param/Value/BZBOX4=你是黑手党的领袖。
+Param/Value/BZCRIME=谋杀
+Param/Value/QLNAME=<c val="E6C84A">潜龙</c>
+Param/Value/QLDESC=三合会的另一位领袖。夜里可以杀人；对队友则是一场安排好的假死。
+Param/Value/QLTAG=（致命）
+Param/Value/QLBOX1=每晚杀死一人。对城镇的杀法和龙头相同。杀死队友时，他对外假死：白天不能说话、不能投票、不算存活人数，判胜也不算他。夜里他仍能使用原来的能力，并留在三合会夜聊里。假死的暴徒不能去杀人。
+Param/Value/QLBOX2=你有夜间无敌，但没有调查免疫。假死的人早上显示成你选的城镇角色，死因与被枪杀相同。渗透者不能被这样处理。全场只能有一名领袖，与龙头互斥。
+Param/Value/QLBOX4=你是三合会的领袖。
+Param/Value/QLCRIME=谋杀
+Param/Value/BZKILL=杀死
+Param/Value/BZFAKE=假死
+Param/Value/BZMASK=伪装
+Param/Value/BZMASKTIP=点这里更换假死时对外显示的城镇角色。当前：
+Param/Value/BZMASKMSG=假死的伪装改成了
+Param/Value/BZTGT=你今晚的目标是
+Param/Value/BZFEIGNYOU=你假死了。白天不能说话、不能投票。夜里你还能使用自己的能力。
+Param/Value/BZFEIGNDONE=他假死了。早上会显示成你选的城镇角色。
+Param/Value/BZNO8=这个人不能被假死。
+Param/Value/BZBLOC=你的目标没有死。
+Param/Value/BZHEAL=有人救下了你的目标。
+Param/Value/BZDIE=死于枪伤。
+Param/Value/BZLEAD=黑手党领袖
+Param/Value/BZLEADD=从党徒、教父和庇护者中随机出现一名。
+Param/Value/QLLEAD=三合会领袖
+Param/Value/QLLEADD=从暴徒、龙头和潜龙中随机出现一名。

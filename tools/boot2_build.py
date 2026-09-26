@@ -346,7 +346,15 @@ MUST_HAVE_KEYS = [
    'Param/Value/SQHEAD', 'Param/Value/SQN1', 'Param/Value/SQN2', 'Param/Value/SQN3',
    'Param/Value/SQTAIL',
    'Param/Value/SQN4', 'Param/Value/SQN5', 'Param/Value/SQN6', 'Param/Value/SQN7',
-   'Param/Value/SQREV1', 'Param/Value/SQREV2',]
+   'Param/Value/SQREV1', 'Param/Value/SQREV2',
+   'Param/Value/BZNAME', 'Param/Value/BZDESC', 'Param/Value/BZTAG',
+   'Param/Value/BZBOX1', 'Param/Value/BZBOX2', 'Param/Value/BZBOX4', 'Param/Value/BZCRIME',
+   'Param/Value/QLNAME', 'Param/Value/QLDESC', 'Param/Value/QLTAG',
+   'Param/Value/QLBOX1', 'Param/Value/QLBOX2', 'Param/Value/QLBOX4', 'Param/Value/QLCRIME',
+   'Param/Value/BZKILL', 'Param/Value/BZFAKE', 'Param/Value/BZMASK', 'Param/Value/BZMASKTIP',
+   'Param/Value/BZMASKMSG', 'Param/Value/BZTGT', 'Param/Value/BZFEIGNYOU', 'Param/Value/BZFEIGNDONE',
+   'Param/Value/BZNO8', 'Param/Value/BZBLOC', 'Param/Value/BZHEAL', 'Param/Value/BZDIE',
+   'Param/Value/BZLEAD', 'Param/Value/BZLEADD', 'Param/Value/QLLEAD', 'Param/Value/QLLEADD',]
 
 
 def parse_strings_file(path: Path) -> dict:

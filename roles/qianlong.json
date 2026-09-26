@@ -1,0 +1,22 @@
+{
+  "pool": 5,
+  "role": 17,
+  "pinyin": "qianlong",
+  "cn": "潜龙",
+  "name_key": "QLNAME",
+  "desc_key": "QLDESC",
+  "investigator": ["E5BCBAE5A4A7E6B094E59CBA1", "E5BCBAE5A4A7E6B094E59CBA2"],
+  "crime_key": "QLCRIME",
+  "options": [],
+  "flag10": false,
+  "guessable": true,
+  "help_preview": null,
+  "interactions": {
+    "swap": {"text": "夜里 gf_BHVisit 上门，可被巴士和女巫改道。对城镇是普通枪杀；对同阵营是假死，不走 KillPlayer。"},
+    "investigate": {"text": "探员与龙头同一组。没有调查免疫。假死之后验尸官看到的是所选城镇角色，死因字母 S。"},
+    "restrict": {"text": "可被限制。被限制当夜不出门。"},
+    "guessage": {"text": "审查页三合会下标 15 → 17。", "in_guess_list": true}
+  },
+  "note": "三合会领袖变体，庇护者的镜像。与龙头互斥。随机位是池4角色22。",
+  "review_status": "draft"
+}
