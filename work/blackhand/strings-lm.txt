@@ -1,0 +1,14 @@
+// 狸猫（中立温和 3/24）
+Param/Value/LMNAME=<c val="C4783A">狸猫</c>
+Param/Value/LMCARD=<c val="C4783A">
+Param/Value/LMALIGN=<c val="C4783A">中立温和</c>
+Param/Value/LMDESC=一名熟练的易容大师，代号为狸猫，善于伪装成他人。<n/><n/><c val="BBDDFF">每晚选择一人，若此人在当晚或明日白天死亡，你与他交换角色。</c>
+Param/Value/LMBOX1=- 每晚选择一人，若此人在当晚或明日白天死亡，你与他交换角色。
+Param/Value/LMBOX2=<n/>- 在交换角色后，他原本的胜利目标保持不变，你会继承他的胜利目标。<n/>- 若目标角色的能力有使用次数，你继承他的使用次数。<n/>- 你的行动不算作访问，且无法被巴士司机、女巫和退伍军人影响。
+Param/Value/LMBOX4=一名熟练的易容大师，代号为狸猫，善于伪装成他人。
+Param/Value/LMBOX6=- 在交换角色后，使用新的胜利目标胜利。
+Param/Value/LMCRIME=无
+Param/Value/LMBTN=<s val="ModCenterSize20Bold">盯上</s>
+Param/Value/LMSEL=<s val="ModLeftSize16">你今晚盯上了 </s>
+Param/Value/LMGOTA=<s val="ModLeftSize16">旧的戏子已死，新的主角登场。你戴上了【</s>
+Param/Value/LMGOTB=<s val="ModLeftSize16">】的面具，接管了他的身份与命运。</s>

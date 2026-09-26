@@ -1,0 +1,25 @@
+{
+  "pool": 3,
+  "role": 24,
+  "pinyin": "limao",
+  "cn": "狸猫",
+  "name_key": "LMNAME",
+  "desc_key": "LMDESC",
+  "investigator": [
+    "E5B882E6B091E7B1BB1",
+    "E5B882E6B091E7B1BB2"
+  ],
+  "crime_key": "LMCRIME",
+  "options": [],
+  "flag10": true,
+  "guessable": true,
+  "help_preview": null,
+  "interactions": {
+    "swap": {"text": "访问自己，选择记在按钮上。巴士司机、女巫、退伍军人改不到。目标当晚或次日白天死亡则互换身份。"},
+    "investigate": {"text": "不留下对目标的访问。图鉴案底为无。探员线索与生存者相同。"},
+    "restrict": {"text": "被舞娘/陪侍限制或入狱时，这次盯梢不生效。"},
+    "guessage": {"text": "审查页中立列表可以猜出狸猫。", "in_guess_list": true}
+  },
+  "note": "中立温和。不计入致命人数。交换后死者公开身份是狸猫，但判胜仍用原身份；活人变成对方并继承剩余次数，立刻进入对应夜聊。小丑先记处决胜利和夜间报复，再换身份。",
+  "review_status": "reviewed"
+}

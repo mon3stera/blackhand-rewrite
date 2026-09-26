@@ -334,7 +334,12 @@ MUST_HAVE_KEYS = [
   'Param/Value/HLNIGHT1', 'Param/Value/HLGONE', 'Param/Value/HLSETA', 'Param/Value/HLSETB',
   'Param/Value/HLDIED', 'Param/Value/HLGOT', 'Param/Value/HLHEAL', 'Param/Value/HLSAVED',
   'Param/Value/HLGUARD', 'Param/Value/HLGUARDDIE', 'Param/Value/HLGUARDGOT',
-  'Param/Value/HLBOUNCE', 'Param/Value/HLDEATHM', 'Param/Value/HLDEATHF',]
+  'Param/Value/HLBOUNCE', 'Param/Value/HLDEATHM', 'Param/Value/HLDEATHF',
+  # 狸猫 (3/24)
+  'Param/Value/LMNAME', 'Param/Value/LMCARD', 'Param/Value/LMALIGN', 'Param/Value/LMDESC',
+  'Param/Value/LMBOX1', 'Param/Value/LMBOX2', 'Param/Value/LMBOX4', 'Param/Value/LMBOX6',
+  'Param/Value/LMCRIME', 'Param/Value/LMBTN', 'Param/Value/LMSEL',
+  'Param/Value/LMGOTA', 'Param/Value/LMGOTB',]
 
 
 def parse_strings_file(path: Path) -> dict:
