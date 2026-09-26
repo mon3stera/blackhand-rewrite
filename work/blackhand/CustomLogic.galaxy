@@ -49198,6 +49198,9 @@ void gf_OSGenerateChances () {
         else {
         }
         auto33D90E66_ae = c_bhNeutralDrawMax;
+        if ((gv_townMax > auto33D90E66_ae)) {
+            auto33D90E66_ae = gv_townMax;
+        }
         lv_b = 1;
         for ( ; ( (auto33D90E66_ai >= 0 && lv_b <= auto33D90E66_ae) || (auto33D90E66_ai < 0 && lv_b >= auto33D90E66_ae) ) ; lv_b += auto33D90E66_ai ) {
             if ((lv_a == 1) && (lv_b >= 1) && (lv_b <= gv_townMax)) {
@@ -49543,6 +49546,9 @@ void gf_OSRandomize () {
         else {
         }
         autoB031E22B_ae = c_bhNeutralDrawMax;   // 影武者(3/31) 起：中立池累计权重需算到 31 号
+        if ((gv_townMax > autoB031E22B_ae)) {
+            autoB031E22B_ae = gv_townMax;   // 人口普查官(1/32)：城镇累计必须写到 [32]，否则抽签上限是 0
+        }
         lv_b = 1;
         for ( ; ( (autoB031E22B_ai >= 0 && lv_b <= autoB031E22B_ae) || (autoB031E22B_ai < 0 && lv_b >= autoB031E22B_ae) ) ; lv_b += autoB031E22B_ai ) {
             if ((lv_a == 1) && (lv_b >= 1) && (lv_b <= gv_townMax)) {
