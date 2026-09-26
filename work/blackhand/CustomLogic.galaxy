@@ -99002,7 +99002,7 @@ void gf_SQTell (int lp_player) {
     lv_msg = (lv_msg + StringExternal("Param/Value/SQN4") + IntToText(lv_n4));
     lv_msg = (lv_msg + StringExternal("Param/Value/SQN5") + IntToText(lv_n5));
     lv_msg = (lv_msg + StringExternal("Param/Value/SQN6") + IntToText(lv_n6));
-    lv_msg = (lv_msg + StringExternal("Param/Value/SQN7") + IntToText(lv_n7));
+    lv_msg = (lv_msg + StringExternal("Param/Value/SQN7") + IntToText(lv_n7) + StringExternal("Param/Value/SQEND"));
     gf_CBSystemMessage(lv_msg, lp_player, lp_player, 0, SoundLink("UI_TipSelect", -1), Color(50.00, 80.00, 100.00));
 }
 
