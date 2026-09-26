@@ -287,9 +287,10 @@ def render_public(func: str, presets: dict, src_line: int, out: Path, strings: d
 
     col_w = 640
     width = 4 * col_w + 5 * 30
+    # 先按座位和选项估一个够用的高度，画完再裁到图例下面。
     panel_h = (100 + 34 + 26 * max(len(m) for _, _, m in panels)
                + max(len(s) for s, _, _ in panels) * 42 + 34 + 26 * max(len(m) for _, _, m in panels) + 40)
-    height = 190 + panel_h + 120
+    height = 190 + panel_h + 220
 
     img = Image.new('RGB', (width, height), BG)
     draw = ImageDraw.Draw(img)
@@ -307,13 +308,15 @@ def render_public(func: str, presets: dict, src_line: int, out: Path, strings: d
     draw.text(((width - tw) / 2, 138), '15 人局 · 座席顺序 = 房间里的座次', font=f_sub, fill=INK_DIM)
 
     x = 30
+    drawn_h = 0
     for idx, (seats, tally, missing) in zip(sorted(data), panels):
         letter = presets[idx]['letter']
-        draw_panel(draw, x, 190, col_w, f'{preset_name} {letter}', '', seats, tally, None,
-                   f_head, f_sub, f_name, f_meta, show_meta=False, options=missing)
+        drawn_h = max(drawn_h, draw_panel(
+            draw, x, 190, col_w, f'{preset_name} {letter}', '', seats, tally, None,
+            f_head, f_sub, f_name, f_meta, show_meta=False, options=missing))
         x += col_w + 30
 
-    ly = height - 88
+    ly = 190 + drawn_h + 28
     draw.text((30, ly), '阵营配色：', font=f_legend, fill=INK_DIM)
     lx = 30 + draw.textlength('阵营配色：', font=f_legend)
     for key in ('城镇', '黑手D', '三合会', '中立', '随机'):
@@ -324,6 +327,7 @@ def render_public(func: str, presets: dict, src_line: int, out: Path, strings: d
     draw.text((30, ly + 40), '★ = 关键角色',
               font=f_legend, fill=INK_DIM)
 
+    img = img.crop((0, 0, width, ly + 40 + 36))
     img.save(out)
     print(f'✓ {out.relative_to(ROOT)}  {img.size[0]}×{img.size[1]}')
 
