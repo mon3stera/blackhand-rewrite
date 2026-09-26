@@ -345,7 +345,8 @@ MUST_HAVE_KEYS = [
    'Param/Value/SQABIL', 'Param/Value/SQTRAITS', 'Param/Value/SQIDENT', 'Param/Value/SQCRIME',
    'Param/Value/SQHEAD', 'Param/Value/SQN1', 'Param/Value/SQN2', 'Param/Value/SQN3',
    'Param/Value/SQTAIL',
-   'Param/Value/SQN4', 'Param/Value/SQN5', 'Param/Value/SQN6', 'Param/Value/SQN7',]
+   'Param/Value/SQN4', 'Param/Value/SQN5', 'Param/Value/SQN6', 'Param/Value/SQN7',
+   'Param/Value/SQREV1', 'Param/Value/SQREV2',]
 
 
 def parse_strings_file(path: Path) -> dict:

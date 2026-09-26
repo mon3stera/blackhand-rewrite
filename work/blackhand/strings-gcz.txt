@@ -17,7 +17,7 @@ Param/Value/GCZTAIL= 访问了你的目标。
 Param/Value/GCZTAIL2= 访问了你的房屋。
 Param/Value/GCZNONE=昨晚没有人访问你的目标。
 Param/Value/GCZNOSELF=昨晚没有人访问你的房屋。
-Param/Value/F2239D82=- 你推断出他可能是侦探、监视者、密探/先锋、纵火者、影武者、观察者、社区管理员。
+Param/Value/F2239D82=- 你推断出他可能是侦探、监视者、密探/先锋、纵火者、影武者、观察者。
 // 预设：捕风捉影（菜单第32项，variantSelection=31）+ 烙印菜单名修复
 Param/Value/BHYIN01=<s val="ModCenterSize24Bold"><c val="FF3232">烙印</c></s>
 Param/Value/GCZBBTN=<s val="ModCenterSize24Bold"><c val="8822CC">捕风捉影</c></s>

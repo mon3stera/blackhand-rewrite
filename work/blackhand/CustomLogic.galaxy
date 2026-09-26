@@ -163,6 +163,7 @@ bool[16][3] gv_silenced;
 int[16] gv_guarded;
 int[16] gv_votes;
 bool[16] gv_activated;
+int[8] gv_sqCount;
 int[16] gv_disguised;
 int[16] gv_disguiser;
 int[16] gv_bussed;
@@ -1203,6 +1204,7 @@ void gf_SKP_1_hulinren_0 (int lv_a);
 void gf_SKP_1_shequguanliyuan (int lv_a);
 int gf_SQBucket (int lp_pool, int lp_role);
 void gf_SQTell (int lp_player);
+void gf_SQReveal ();
 void gf_SequenceAfter ();
 void gf_SequenceAfter2 ();
 void gf_StopMusic2 (fixed lp_delay);
@@ -2128,6 +2130,7 @@ trigger gt_ASCultSmite;
 trigger gt_ASCultSmiteveto;
 trigger gt_ASTriadTarget;
 trigger gt_ASMayorAction;
+trigger gt_SQShow;
 trigger gt_ASCryerAction;
 trigger gt_ASSwitchOn;
 trigger gt_ASSwitchOff;
@@ -5067,8 +5070,8 @@ void gf_InitializeVariables () {
     gv_roleOptions[1][30][10] = true;
     gv_roleNameArray[1][32] = StringExternal("Param/Value/SQNAME");
     gv_roleDescriptionArray[1][32] = StringExternal("Param/Value/SQDESC");
-    gv_roleInvestigatorArray[1][32][0] = gv_investigatorE9A38EE8A1A31;
-    gv_roleInvestigatorArray[1][32][1] = gv_investigatorE9A38EE8A1A32;
+    gv_roleInvestigatorArray[1][32][0] = gv_investigatorE9AD85E58A9B1;
+    gv_roleInvestigatorArray[1][32][1] = gv_investigatorE9AD85E58A9B2;
     gv_e78AAFE7BDAAE58FAFE883BD[1][32] = StringExternal("Param/Value/SQCRIME");
     gv_channelTextColor[1] = Color(78.43, 78.43, 78.43);
     gv_textBackgroundColor1[1] = Color(15.69, 7.84, 7.84);
@@ -6503,7 +6506,7 @@ void gf_DefaultRoleOptions () {
     gv_roleOptions[1][30][10] = true;
     gv_bankSaveWeights[0][1][31] = 1.0;   // 观察者(1/31)：城镇随机，监视者一半
     gv_roleWeights[1][31] = 1.0;
-    gv_bankSaveWeights[0][1][32] = 1.0;   // 社区管理员(1/32)：城镇调查，全场一名
+    gv_bankSaveWeights[0][1][32] = 1.0;   // 社区管理员(1/32)：城镇政府，全场一名
     gv_roleWeights[1][32] = 1.0;
     gv_roleOptionAllowed[2][1][0] = true;
     gv_roleOptions[2][1][0] = true;
@@ -49766,7 +49769,7 @@ bool gf_BHRoleFitsKind (int lp_kind, int lp_pool, int lp_role) {
     }
 
     if ((lp_pool == 1) && (lp_role == 32)) {
-        return ((gv_roleOptions[1][32][10] == false) && (((lp_kind == 1) && (gv_roleOptions[4][1][2] == false)) || ((lp_kind == 2) && (gv_roleOptions[4][2][2] == false)) || (lp_kind == 5)));
+        return ((gv_roleOptions[1][32][10] == false) && (((lp_kind == 1) && (gv_roleOptions[4][1][2] == false)) || ((lp_kind == 2) && (gv_roleOptions[4][2][1] == false)) || (lp_kind == 4)));
     }
 
     if ((lp_pool == 1) && (lp_role == 17)) {
@@ -50428,7 +50431,7 @@ void gf_OSRandomizeMatrix (int lp_a, int lp_x, fixed lp_y) {
         gv_roles[lv_a][0] = 31;
     }
 
-    if ((gv_roleOptions[1][32][10] == false) && (lv_y >= gv_finalWeights[1][31]) && (lv_y < gv_finalWeights[1][32]) && (((gv_rolesArray[lv_x] == 1) && (gv_roleOptions[4][1][2] == false)) || ((gv_rolesArray[lv_x] == 2) && (gv_roleOptions[4][2][2] == false)) || (gv_rolesArray[lv_x] == 5))) {
+    if ((gv_roleOptions[1][32][10] == false) && (lv_y >= gv_finalWeights[1][31]) && (lv_y < gv_finalWeights[1][32]) && (((gv_rolesArray[lv_x] == 1) && (gv_roleOptions[4][1][2] == false)) || ((gv_rolesArray[lv_x] == 2) && (gv_roleOptions[4][2][1] == false)) || (gv_rolesArray[lv_x] == 4))) {
         gv_roles[lv_a][1] = 1;
         gv_roles[lv_a][0] = 32;
     }
@@ -68051,7 +68054,7 @@ bool gt_DaySequence_Func (bool testConds, bool runActions) {
     gv_dayActions = true;
     lv_a = 1;
     for ( ; ( (auto92421FB1_ai >= 0 && lv_a <= auto92421FB1_ae) || (auto92421FB1_ai < 0 && lv_a >= auto92421FB1_ae) ) ; lv_a += auto92421FB1_ai ) {
-        if (((((gv_roles[lv_a][1] == 2) || (gv_roles[lv_a][1] == 5)) && (gv_roles[lv_a][0] == 9)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 13)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 12)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 20)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 23)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 19)) || ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 12)) || ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 19)))) {
+        if (((((gv_roles[lv_a][1] == 2) || (gv_roles[lv_a][1] == 5)) && (gv_roles[lv_a][0] == 9)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 13)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 12)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 20)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 23)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 19)) || ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 12)) || ((gv_roles[lv_a][1] == 3) && (gv_roles[lv_a][0] == 19)) || ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 32) && (gv_activated[lv_a] == false)))) {
             DialogControlSetEnabled(gv_abilityButtonItem, PlayerGroupSingle(lv_a), true);
             libNtve_gf_SetDialogItemTooltip(gv_abilityButtonItem, StringExternal("Param/Value/A1AE1E87"), PlayerGroupAll());
         }
@@ -75039,6 +75042,56 @@ void gt_ASMayorAction_Init () {
 }
 
 //--------------------------------------------------------------------------------------------------
+bool gt_SQShow_Func (bool testConds, bool runActions) {
+    if (testConds) {
+        if (!((PlayerGroupHasPlayer(gv_alivePlayers, EventPlayer()) == true))) {
+            return false;
+        }
+
+        if (!((gv_chatPrivilege[EventPlayer()] == true))) {
+            return false;
+        }
+
+        if (!((gv_gameOver == false))) {
+            return false;
+        }
+
+        if (!((gv_dayActions == true))) {
+            return false;
+        }
+
+        if (!((gv_isNight == false))) {
+            return false;
+        }
+
+        if (!((gv_activated[EventPlayer()] == false))) {
+            return false;
+        }
+
+        if (!((gv_roles[EventPlayer()][1] == 1))) {
+            return false;
+        }
+
+        if (!((gv_roles[EventPlayer()][0] == 32))) {
+            return false;
+        }
+    }
+
+    if (!runActions) {
+        return true;
+    }
+
+    gf_SQReveal();
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_SQShow_Init () {
+    gt_SQShow = TriggerCreate("gt_SQShow_Func");
+    TriggerAddEventChatMessage(gt_SQShow, c_playerAny, "-show", true);
+}
+
+//--------------------------------------------------------------------------------------------------
 // Trigger: AS - Cryer Action
 //--------------------------------------------------------------------------------------------------
 bool gt_ASCryerAction_Func (bool testConds, bool runActions) {
@@ -75537,6 +75590,10 @@ bool gt_ASAbilityButton_Func (bool testConds, bool runActions) {
 
         if ((PlayerGroupHasPlayer(gv_alivePlayers, EventPlayer()) == true) && (gv_chatPrivilege[EventPlayer()] == true) && (gv_gameOver == false) && (gv_dayActions == true) && (gv_isNight == false) && (gv_chatPrivilege[EventPlayer()] == true) && (gv_activated[EventPlayer()] == false) && (gv_roles[EventPlayer()][1] == 1) && (gv_roles[EventPlayer()][0] == 12)) {
             gf_SKY_1_shizhang();
+        }
+
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, EventPlayer()) == true) && (gv_chatPrivilege[EventPlayer()] == true) && (gv_gameOver == false) && (gv_dayActions == true) && (gv_isNight == false) && (gv_activated[EventPlayer()] == false) && (gv_roles[EventPlayer()][1] == 1) && (gv_roles[EventPlayer()][0] == 32)) {
+            gf_SQReveal();
         }
 
         if ((PlayerGroupHasPlayer(gv_alivePlayers, EventPlayer()) == true) && (gv_gameOver == false) && (gv_dayActions == true) && (gv_isNight == false) && (gv_chatPrivilege[EventPlayer()] == true) && (gv_activated[EventPlayer()] == false) && (gv_roles[EventPlayer()][1] == 1) && (gv_roles[EventPlayer()][0] == 20)) {
@@ -82958,6 +83015,7 @@ void SH_InitTriggers () {
     gt_ASCultSmiteveto_Init();
     gt_ASTriadTarget_Init();
     gt_ASMayorAction_Init();
+    gt_SQShow_Init();
     gt_ASCryerAction_Init();
     gt_ASSwitchOn_Init();
     gt_ASSwitchOff_Init();
@@ -98915,13 +98973,13 @@ int gf_SQBucket (int lp_pool, int lp_role) {
         if ((lp_role == 6)) {
             return 1;
         }
-        if ((lp_role == 2) || (lp_role == 4) || (lp_role == 10) || (lp_role == 15) || (lp_role == 16) || (lp_role == 21) || (lp_role == 26) || (lp_role == 27) || (lp_role == 31) || (lp_role == 32)) {
+        if ((lp_role == 2) || (lp_role == 4) || (lp_role == 10) || (lp_role == 15) || (lp_role == 16) || (lp_role == 21) || (lp_role == 26) || (lp_role == 27) || (lp_role == 31)) {
             return 2;
         }
         if ((lp_role == 3) || (lp_role == 5) || (lp_role == 11) || (lp_role == 22) || (lp_role == 25) || (lp_role == 28) || (lp_role == 29)) {
             return 3;
         }
-        if ((lp_role == 1) || (lp_role == 7) || (lp_role == 12) || (lp_role == 14) || (lp_role == 19) || (lp_role == 20) || (lp_role == 23)) {
+        if ((lp_role == 1) || (lp_role == 7) || (lp_role == 12) || (lp_role == 14) || (lp_role == 19) || (lp_role == 20) || (lp_role == 23) || (lp_role == 32)) {
             return 4;
         }
         if ((lp_role == 8) || (lp_role == 9) || (lp_role == 13) || (lp_role == 17)) {
@@ -98994,6 +99052,13 @@ void gf_SQTell (int lp_player) {
             }
         }
     }
+    gv_sqCount[1] = lv_n1;
+    gv_sqCount[2] = lv_n2;
+    gv_sqCount[3] = lv_n3;
+    gv_sqCount[4] = lv_n4;
+    gv_sqCount[5] = lv_n5;
+    gv_sqCount[6] = lv_n6;
+    gv_sqCount[7] = lv_n7;
     gf_CBSystemMessage(StringExternal("Param/Value/SQHEAD"), lp_player, lp_player, 0, SoundLink("UI_TipSelect", -1), Color(50.00, 80.00, 100.00));
     gf_CBSystemMessage((StringExternal("Param/Value/SQN1") + IntToText(lv_n1) + StringExternal("Param/Value/SQTAIL")), lp_player, lp_player, 0, SoundLink("Silent", -1), Color(50.00, 80.00, 100.00));
     gf_CBSystemMessage((StringExternal("Param/Value/SQN2") + IntToText(lv_n2) + StringExternal("Param/Value/SQTAIL")), lp_player, lp_player, 0, SoundLink("Silent", -1), Color(50.00, 80.00, 100.00));
@@ -99002,6 +99067,40 @@ void gf_SQTell (int lp_player) {
     gf_CBSystemMessage((StringExternal("Param/Value/SQN5") + IntToText(lv_n5) + StringExternal("Param/Value/SQTAIL")), lp_player, lp_player, 0, SoundLink("Silent", -1), Color(50.00, 80.00, 100.00));
     gf_CBSystemMessage((StringExternal("Param/Value/SQN6") + IntToText(lv_n6) + StringExternal("Param/Value/SQTAIL")), lp_player, lp_player, 0, SoundLink("Silent", -1), Color(50.00, 80.00, 100.00));
     gf_CBSystemMessage((StringExternal("Param/Value/SQN7") + IntToText(lv_n7) + StringExternal("Param/Value/SQTAIL")), lp_player, lp_player, 0, SoundLink("Silent", -1), Color(50.00, 80.00, 100.00));
+}
+
+void gf_SQReveal () {
+    playergroup autoSQREV_g;
+    int autoSQREV_var;
+
+    if ((gv_silenced[EventPlayer()][0] == true) && ((gv_onTrial != EventPlayer()) || ((gv_onTrial == EventPlayer()) && (gv_roleOptions[2][7][1] == false) && (gv_roleOptions[2][7][10] == true)) || ((gv_onTrial == EventPlayer()) && (gv_roleOptions[5][7][1] == false) && (gv_roleOptions[5][7][10] == true)))) {
+        gf_CBSystemMessage(StringExternal("Param/Value/69E6BA00"), EventPlayer(), 0, 0, SoundLink("EditorDefaultSound", -1), Color(0.00, 0.00, 0.00));
+    }
+    else {
+        if (((gv_playerVote[EventPlayer()] == 0) || ((gv_onTrial == EventPlayer()) && (gv_trialOn == true)))) {
+            gv_activated[EventPlayer()] = true;
+            DialogControlSetEnabled(gv_abilityButtonItem, PlayerGroupSingle(EventPlayer()), false);
+            gf_BHCrime(EventPlayer(), 7);
+            autoSQREV_g = gv_currentPlayers;
+            autoSQREV_var = -1;
+            while (true) {
+                autoSQREV_var = PlayerGroupNextPlayer(autoSQREV_g, autoSQREV_var);
+                if (autoSQREV_var < 0) { break; }
+                gf_CBSystemMessage((StringExternal("Param/Value/SQREV1") + TextWithColor(StringToText(gv_name[EventPlayer()]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[EventPlayer()])) + StringExternal("Param/Value/SQREV2")), autoSQREV_var, EventPlayer(), 0, SoundLink("UI_ObjectiveComplete", -1), Color(19.61, 58.82, 78.43));
+                gf_CBSystemMessage(StringExternal("Param/Value/SQHEAD"), autoSQREV_var, EventPlayer(), 0, SoundLink("Silent", -1), Color(50.00, 80.00, 100.00));
+                gf_CBSystemMessage((StringExternal("Param/Value/SQN1") + IntToText(gv_sqCount[1]) + StringExternal("Param/Value/SQTAIL")), autoSQREV_var, EventPlayer(), 0, SoundLink("Silent", -1), Color(50.00, 80.00, 100.00));
+                gf_CBSystemMessage((StringExternal("Param/Value/SQN2") + IntToText(gv_sqCount[2]) + StringExternal("Param/Value/SQTAIL")), autoSQREV_var, EventPlayer(), 0, SoundLink("Silent", -1), Color(50.00, 80.00, 100.00));
+                gf_CBSystemMessage((StringExternal("Param/Value/SQN3") + IntToText(gv_sqCount[3]) + StringExternal("Param/Value/SQTAIL")), autoSQREV_var, EventPlayer(), 0, SoundLink("Silent", -1), Color(50.00, 80.00, 100.00));
+                gf_CBSystemMessage((StringExternal("Param/Value/SQN4") + IntToText(gv_sqCount[4]) + StringExternal("Param/Value/SQTAIL")), autoSQREV_var, EventPlayer(), 0, SoundLink("Silent", -1), Color(50.00, 80.00, 100.00));
+                gf_CBSystemMessage((StringExternal("Param/Value/SQN5") + IntToText(gv_sqCount[5]) + StringExternal("Param/Value/SQTAIL")), autoSQREV_var, EventPlayer(), 0, SoundLink("Silent", -1), Color(50.00, 80.00, 100.00));
+                gf_CBSystemMessage((StringExternal("Param/Value/SQN6") + IntToText(gv_sqCount[6]) + StringExternal("Param/Value/SQTAIL")), autoSQREV_var, EventPlayer(), 0, SoundLink("Silent", -1), Color(50.00, 80.00, 100.00));
+                gf_CBSystemMessage((StringExternal("Param/Value/SQN7") + IntToText(gv_sqCount[7]) + StringExternal("Param/Value/SQTAIL")), autoSQREV_var, EventPlayer(), 0, SoundLink("Silent", -1), Color(50.00, 80.00, 100.00));
+            }
+        }
+        else {
+            gf_CBSystemMessage(StringExternal("Param/Value/F4CB279E"), EventPlayer(), 0, 0, SoundLink("EditorDefaultSound", -1), Color(0.00, 0.00, 0.00));
+        }
+    }
 }
 
 // 新增角色（非原图抽取）：社区管理员第一晚清点类型，被限制也照样知道。

@@ -6,8 +6,8 @@
  "name_key": "SQNAME",
  "desc_key": "SQDESC",
  "investigator": [
-  "E9A38EE8A1A31",
-  "E9A38EE8A1A32"
+  "E9AD85E58A9B1",
+  "E9AD85E58A9B2"
  ],
  "crime_key": "SQCRIME",
  "options": [],
@@ -19,7 +19,7 @@
    "text": "不适用：访问自己，且 busEligible/witchEligible 为 false，巴士和女巫改不了落点。清点不看访问目标。"
   },
   "investigate": {
-   "text": "无运行时案底。图鉴犯罪可能 = 无。探员线索与侦探、监视者、观察者同一组。",
+   "text": "未揭示时图鉴犯罪 = 无。揭示后记腐败。探员线索与市长、执法长同一组。",
    "investigator": true
   },
   "restrict": {
