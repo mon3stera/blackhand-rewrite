@@ -137,6 +137,7 @@ bool[16] gv_witchEligible;
 int[16][2] gv_framed;
 int[16] gv_bhFeignRole;
 int[16] gv_bhMask;
+int[40] gv_bhMaskSlot;
 int gv_bhPickPool;
 int gv_bhPickRole;
 int[16] gv_cuanweiPanic;
@@ -10779,7 +10780,7 @@ bool auto_gf_NightTransition_TriggerFunc (bool testConds, bool runActions) {
     }
     lv_a = 1;
     for ( ; ( (autoBB8A1698_ai >= 0 && lv_a <= autoBB8A1698_ae) || (autoBB8A1698_ai < 0 && lv_a >= autoBB8A1698_ae) ) ; lv_a += autoBB8A1698_ai ) {
-        if (((gv_roles[lv_a][0] == 5) || (gv_roles[lv_a][0] == 14) || (gv_roles[lv_a][0] == 15)) && ((gv_roles[lv_a][1] == 2) || (gv_roles[lv_a][1] == 5))) {
+        if (((gv_roles[lv_a][0] == 5) || (gv_roles[lv_a][0] == 14) || (gv_roles[lv_a][0] == 15) || (gv_roles[lv_a][0] == 17)) && ((gv_roles[lv_a][1] == 2) || (gv_roles[lv_a][1] == 5))) {
             gf_ASE8A792E889B2E98089E9A1B9E585B3E997AD(lv_a);
         }
 
@@ -39095,7 +39096,7 @@ void gf_RTMafiaRoleText (int lp_player) {
         gv_roleBoxText[lv_a][1] = StringExternal("Param/Value/BZBOX1");
         gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/BZBOX2");
         gv_roleBoxText[lv_a][4] = StringExternal("Param/Value/BZBOX4");
-        SoundPlay(SoundLink("Ghost_Attack", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
+        SoundPlay(SoundLink("Tychus_Attack", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
     }
 
     if ((gv_roles[lv_a][0] == 16)) {
@@ -40573,7 +40574,7 @@ void gf_RTTriadRoleText (int lp_player) {
         gv_roleBoxText[lv_a][1] = StringExternal("Param/Value/QLBOX1");
         gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/QLBOX2");
         gv_roleBoxText[lv_a][4] = StringExternal("Param/Value/QLBOX4");
-        SoundPlay(SoundLink("Ghost_Attack", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
+        SoundPlay(SoundLink("Tychus_Attack", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
     }
 
     if ((gv_roles[lv_a][0] == 16)) {
@@ -78846,6 +78847,10 @@ bool gt_ASE4B889E9BB91E998B5E5AEB9E98089E68BA9_Func (bool testConds, bool runAct
         return true;
     }
 
+    if ((gv_roles[EventPlayer()][0] == 17)) {
+        return true;
+    }
+
     if ((DialogControlGetSelectedItem(EventDialogControl(), EventPlayer()) == 1)) {
         gf_ASE4B889E9BB91E8A792E889B2E98089E68BA9E6A1862(EventPlayer());
     }
@@ -78892,6 +78897,15 @@ bool gt_ASE4B889E9BB91E7A1AEE5AE9A_Func (bool testConds, bool runActions) {
 
     lv_b = DialogControlGetSelectedItem(gv_e8A792E889B2E68EA7E4BBB6, EventPlayer());
     lv_a = gv_roles[EventPlayer()][1];
+    if ((gv_roles[EventPlayer()][0] == 17)) {
+        if ((lv_b >= 1) && (lv_b <= 39) && (gv_bhMaskSlot[lv_b] != 0)) {
+            gv_bhMask[EventPlayer()] = gv_bhMaskSlot[lv_b];
+            gf_CBSystemMessage((StringExternal("Param/Value/BZMASKMSG") + gv_roleNameArray[1][gv_bhMask[EventPlayer()]]), EventPlayer(), EventPlayer(), 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+        }
+
+        return true;
+    }
+
     if ((lv_b == 12)) {
         lv_b = 14;
     }
@@ -99267,24 +99281,27 @@ void gf_SKR_1_renkoupuchaguan (int lv_a) {
     gf_RANoActions(lv_a);
 }
 
-void gf_BHCycleMask (int lp_player) {
+void gf_BHFillMask (int lp_player) {
     int lv_i;
     int lv_n;
 
-    lv_i = (gv_bhMask[lp_player] + 1);
+    DialogSetVisible(gv_e998B5E5AEB9E6A186, PlayerGroupSingle(lp_player), true);
+    DialogControlRemoveAllItems(gv_e998B5E5AEB9E68EA7E4BBB6, PlayerGroupSingle(lp_player));
+    DialogControlRemoveAllItems(gv_e8A792E889B2E68EA7E4BBB6, PlayerGroupSingle(lp_player));
+    DialogControlAddItem(gv_e998B5E5AEB9E68EA7E4BBB6, PlayerGroupSingle(lp_player), StringExternal("Param/Value/73526AB7"));
+    lv_i = 1;
     lv_n = 0;
-    while ((lv_n < 40)) {
-        if ((lv_i > 32)) {
-            lv_i = 1;
-        }
-
+    while ((lv_i <= 32)) {
         if ((gv_roleNameArray[1][lv_i] != null)) {
-            gv_bhMask[lp_player] = lv_i;
-            return;
+            lv_n += 1;
+            gv_bhMaskSlot[lv_n] = lv_i;
+            DialogControlAddItem(gv_e8A792E889B2E68EA7E4BBB6, PlayerGroupSingle(lp_player), gv_roleNameArray[1][lv_i]);
         }
 
         lv_i += 1;
-        lv_n += 1;
+    }
+    if ((gv_bhMask[lp_player] == 0) && (lv_n >= 1)) {
+        gv_bhMask[lp_player] = gv_bhMaskSlot[1];
     }
 }
 
@@ -99296,34 +99313,19 @@ void gf_RABihuzheActions (int lp_player) {
     lv_a = 1;
     for ( ; ( (autoBHRA_ai >= 0 && lv_a <= autoBHRA_ae) || (autoBHRA_ai < 0 && lv_a >= autoBHRA_ae) ) ; lv_a += autoBHRA_ai ) {
         DialogControlSetVisible(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), false);
-        if ((lv_a == lp_player)) {
-            if ((gv_bhMask[lp_player] != 0)) {
-                libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], (StringExternal("Param/Value/BZMASKTIP") + gv_roleNameArray[1][gv_bhMask[lp_player]]), PlayerGroupSingle(lp_player));
+        if ((lv_a != lp_player) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
+            if ((gv_roles[lv_a][1] == gv_roles[lp_player][1])) {
+                libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/BZFAKE"), PlayerGroupSingle(lp_player));
+                libNtve_gf_SetDialogItemColor(gv_actionDialogItem[lv_a][5], Color(60.00, 20.00, 40.00), PlayerGroupSingle(lp_player));
             }
             else {
-                libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/BZMASK"), PlayerGroupSingle(lp_player));
+                libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/BZKILL"), PlayerGroupSingle(lp_player));
+                libNtve_gf_SetDialogItemColor(gv_actionDialogItem[lv_a][5], Color(100.00, 0.00, 0.00), PlayerGroupSingle(lp_player));
             }
-            libNtve_gf_SetDialogItemColor(gv_actionDialogItem[lv_a][5], Color(50.20, 50.20, 50.20), PlayerGroupSingle(lp_player));
             DialogControlSetSize(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), 120, 30);
             libNtve_gf_SetDialogItemImage(gv_actionDialogItem[lv_a][5], "ActionNormal.dds", PlayerGroupSingle(lp_player));
             libNtve_gf_SetDialogItemImage2(gv_actionDialogItem[lv_a][5], "ActionHighlight.dds", PlayerGroupSingle(lp_player));
             DialogControlSetVisible(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), true);
-        }
-        else {
-            if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
-                if ((gv_roles[lv_a][1] == gv_roles[lp_player][1])) {
-                    libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/BZFAKE"), PlayerGroupSingle(lp_player));
-                    libNtve_gf_SetDialogItemColor(gv_actionDialogItem[lv_a][5], Color(60.00, 20.00, 40.00), PlayerGroupSingle(lp_player));
-                }
-                else {
-                    libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/BZKILL"), PlayerGroupSingle(lp_player));
-                    libNtve_gf_SetDialogItemColor(gv_actionDialogItem[lv_a][5], Color(100.00, 0.00, 0.00), PlayerGroupSingle(lp_player));
-                }
-                DialogControlSetSize(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), 120, 30);
-                libNtve_gf_SetDialogItemImage(gv_actionDialogItem[lv_a][5], "ActionNormal.dds", PlayerGroupSingle(lp_player));
-                libNtve_gf_SetDialogItemImage2(gv_actionDialogItem[lv_a][5], "ActionHighlight.dds", PlayerGroupSingle(lp_player));
-                DialogControlSetVisible(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), true);
-            }
         }
     }
 }
@@ -99331,14 +99333,12 @@ void gf_RABihuzheActions (int lp_player) {
 void gf_BHLeaderSetup (int lv_a) {
     gv_variableOptions[lv_a][0] = 1;
     gv_immune[lv_a][0] = true;
+    gf_BHFillMask(lv_a);
     gf_RABihuzheActions(lv_a);
 }
 
 void gf_BHLeaderClick (int lv_source, int lv_target) {
     if ((lv_target == lv_source)) {
-        gf_BHCycleMask(lv_source);
-        gf_CBSystemMessage((StringExternal("Param/Value/BZMASKMSG") + gv_roleNameArray[1][gv_bhMask[lv_source]]), lv_source, lv_source, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-        gf_RABihuzheActions(lv_source);
         return;
     }
 
@@ -99352,8 +99352,7 @@ void gf_BHFeign (int lp_killer, int lp_victim) {
 
     lv_face = gv_bhMask[lp_killer];
     if ((lv_face < 1) || (lv_face > 32) || (gv_roleNameArray[1][lv_face] == null)) {
-        gf_BHCycleMask(lp_killer);
-        lv_face = gv_bhMask[lp_killer];
+        lv_face = gv_bhMaskSlot[1];
     }
 
     if ((lv_face < 1)) {
@@ -99362,7 +99361,12 @@ void gf_BHFeign (int lp_killer, int lp_victim) {
 
     gv_bhFeignRole[lp_victim] = lv_face;
     gf_BHRecordNightKiller(lp_victim, lp_killer);
-    gv_deathMethod[lp_victim] = (gv_deathMethod[lp_victim] + "S");
+    if ((gv_roles[lp_killer][1] == 5)) {
+        gv_deathMethod[lp_victim] = (gv_deathMethod[lp_victim] + "m");
+    }
+    else {
+        gv_deathMethod[lp_victim] = (gv_deathMethod[lp_victim] + "M");
+    }
     gv_deathText[lp_victim] = StringExternal("Param/Value/BZDIE");
     gv_diedAtNight[lp_victim] = true;
     PlayerGroupRemove(gv_alivePlayers, lp_victim);
@@ -99375,11 +99379,75 @@ void gf_BHFeign (int lp_killer, int lp_victim) {
 
 void gf_BHLeaderKill (int lp_killer, int lp_victim) {
     gf_BHRecordNightKiller(lp_victim, lp_killer);
-    gv_deathMethod[lp_victim] = (gv_deathMethod[lp_victim] + "S");
+    if ((gv_roles[lp_killer][1] == 5)) {
+        gv_deathMethod[lp_victim] = (gv_deathMethod[lp_victim] + "m");
+    }
+    else {
+        gv_deathMethod[lp_victim] = (gv_deathMethod[lp_victim] + "M");
+    }
     gv_deathText[lp_victim] = StringExternal("Param/Value/BZDIE");
     gv_diedAtNight[lp_victim] = true;
     gf_BHCrimeMurder(lp_killer);
     gf_KillPlayer(lp_victim, false);
+}
+
+void gf_BHMafiaShow (int lp_victim, bool lp_landed) {
+    int lv_a;
+    int lv_n;
+    playergroup lv_g;
+    int lv_p;
+
+    if ((gv_nightSequence == false)) {
+        if ((lp_landed == true)) {
+            gf_FlashScreen(Color(100.00, 0.00, 0.00), lp_victim, 5.0, 0.0);
+        }
+        return;
+    }
+
+    SoundPlay(SoundLink("Tychus_What", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+    Wait(RandomFixed(1.5, 2.5), c_timeGame);
+    lv_n = RandomInt(2, 3);
+    lv_a = 1;
+    while ((lv_a <= lv_n)) {
+        Wait(RandomFixed(0.3, 0.7), c_timeGame);
+        SoundPlay(SoundLink("RaynorAttackLaunch", -1), PlayerGroupAll(), RandomFixed(60.0, 80.0), 0.0);
+        lv_a += 1;
+    }
+    Wait(RandomFixed(1.0, 1.5), c_timeGame);
+    SoundPlay(SoundLink("Tychus_Yes", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+    Wait(RandomFixed(1.0, 1.8), c_timeGame);
+    SoundPlay(SoundLink("Doodad_DebrisImpact", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.1);
+    Wait(RandomFixed(0.5, 1.0), c_timeGame);
+    SoundPlay(SoundLink("FirstOfficer_Custom_Walk_End", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+    Wait(RandomFixed(0.5, 1.0), c_timeGame);
+    lv_g = PlayerGroupAll();
+    lv_p = -1;
+    while (true) {
+        lv_p = PlayerGroupNextPlayer(lv_g, lv_p);
+        if (lv_p < 0) { break; }
+        if ((lp_landed == true)) {
+            gf_CBSystemMessage(StringExternal("Param/Value/614A6ABC"), lv_p, 16, 0, SoundLink("Silent", -1), Color(0,0,0));
+        }
+        else {
+            gf_CBSystemMessage(StringExternal("Param/Value/D5208FE7"), lv_p, 16, 0, SoundLink("Silent", -1), Color(0,0,0));
+        }
+    }
+    if ((lp_landed == true)) {
+        gf_FlashScreen(Color(100.00, 0.00, 0.00), lp_victim, 5.0, 0.0);
+        SoundPlay(SoundLink("RaynorAttackLaunch", -1), PlayerGroupAll(), 100.0, 0.0);
+        if ((gv_isAMan[lp_victim] == true)) {
+            SoundPlay(SoundLink("CivilianDeath", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+        }
+        else {
+            SoundPlay(SoundLink("CivilianFemaleDeath", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+        }
+        Wait(RandomFixed(0.5, 1.0), c_timeGame);
+        SoundPlay(SoundLink("FirstOfficer_Custom_Walk_End", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+    }
+    else {
+        Wait(RandomFixed(1.0, 2.0), c_timeGame);
+        SoundPlay(SoundLink("FirstOfficer_Custom_Walk_End", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+    }
 }
 
 void gf_BHLeaderResolve (int lp_killer, int lp_victim) {
@@ -99393,6 +99461,7 @@ void gf_BHLeaderResolve (int lp_killer, int lp_victim) {
             gv_immuneChance[lp_victim] = (gv_immuneChance[lp_victim] - 1);
         }
 
+        gf_BHMafiaShow(lp_victim, false);
         gf_CBSystemMessage(StringExternal("Param/Value/BZBLOC"), lp_killer, lp_killer, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
         return;
     }
@@ -99404,11 +99473,12 @@ void gf_BHLeaderResolve (int lp_killer, int lp_victim) {
 
     if ((gv_healing[lp_victim] > 0)) {
         gv_healing[lp_victim] = (gv_healing[lp_victim] - 1);
+        gf_BHMafiaShow(lp_victim, false);
         gf_CBSystemMessage(StringExternal("Param/Value/BZHEAL"), lp_killer, lp_killer, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
         return;
     }
 
-    UIDisplayMessage(PlayerGroupAll(), c_messageAreaDirective, StringExternal("Param/Value/19597E03"));
+    gf_BHMafiaShow(lp_victim, true);
     if ((gv_roles[lp_victim][1] == gv_roles[lp_killer][1])) {
         gf_BHFeign(lp_killer, lp_victim);
     }
