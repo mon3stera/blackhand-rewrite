@@ -1,8 +1,8 @@
 {
  "pool": 1,
  "role": 32,
- "pinyin": "shequguanliyuan",
- "cn": "社区管理员",
+ "pinyin": "renkoupuchaguan",
+ "cn": "人口普查官",
  "name_key": "SQNAME",
  "desc_key": "SQDESC",
  "investigator": [

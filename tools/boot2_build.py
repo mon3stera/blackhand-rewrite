@@ -340,7 +340,7 @@ MUST_HAVE_KEYS = [
   'Param/Value/LMBOX1', 'Param/Value/LMBOX2', 'Param/Value/LMBOX4', 'Param/Value/LMBOX6',
   'Param/Value/LMCRIME', 'Param/Value/LMBTN', 'Param/Value/LMCX', 'Param/Value/LMCLEAR', 'Param/Value/LMSEL',
   'Param/Value/LMGOTA', 'Param/Value/LMGOTB',
-   # 社区管理员 (1/32)
+   # 人口普查官 (1/32)
    'Param/Value/SQNAME', 'Param/Value/SQDESC', 'Param/Value/SQTAG',
    'Param/Value/SQABIL', 'Param/Value/SQTRAITS', 'Param/Value/SQIDENT', 'Param/Value/SQCRIME',
    'Param/Value/SQHEAD', 'Param/Value/SQN1', 'Param/Value/SQN2', 'Param/Value/SQN3',
