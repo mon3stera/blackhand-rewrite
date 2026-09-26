@@ -1,0 +1,36 @@
+{
+ "pool": 1,
+ "role": 32,
+ "pinyin": "shequguanliyuan",
+ "cn": "社区管理员",
+ "name_key": "SQNAME",
+ "desc_key": "SQDESC",
+ "investigator": [
+  "E9A38EE8A1A31",
+  "E9A38EE8A1A32"
+ ],
+ "crime_key": "SQCRIME",
+ "options": [],
+ "flag10": false,
+ "guessable": true,
+ "help_preview": null,
+ "interactions": {
+  "swap": {
+   "text": "不适用：访问自己，且 busEligible/witchEligible 为 false，巴士和女巫改不了落点。清点不看访问目标。"
+  },
+  "investigate": {
+   "text": "无运行时案底。图鉴犯罪可能 = 无。探员线索与侦探、监视者、观察者同一组。",
+   "investigator": true
+  },
+  "restrict": {
+   "text": "被限制或监禁仍在第一晚收到人数。不读取 roleblocked / jailed。",
+   "guard_at": null
+  },
+  "guessage": {
+   "text": "可猜：审查页城镇项下标 29 → 32。",
+   "in_guess_list": true
+  }
+ },
+ "note": "全场最多一名。第一晚按真实身份清点七类人数，含自己。中立协恶、温和、混乱和学徒不计。",
+ "review_status": "reviewed"
+}

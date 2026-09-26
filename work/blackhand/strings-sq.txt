@@ -1,0 +1,16 @@
+// 社区管理员 (城镇 1/32)
+Param/Value/SQNAME=<c val="00FF00">社区管理员</c>
+Param/Value/SQDESC=一名负责登记全镇身份的社区管理员。<n/><n/><c val="BBDDFF">在你的首个夜晚，你会得知每个类型各有多少名角色。</c>
+Param/Value/SQTAG= (<c val="00FF00">调查</c>)
+Param/Value/SQABIL=- 在你的首个夜晚，你会得知每个类型各有多少名角色。
+Param/Value/SQTRAITS=- 类型有致命、调查、保护、政府、权利、支援和欺诈。<n/>- 若某个角色同时属于致命和其他类型，他总是会被看作其他类型。<n/>- 若某个角色属于权利类型，他总是会被认为是权利类型。<n/>- 你的信息无视调查免疫。<n/>- 你的信息会把自己计算在内。<n/>- 中立邪恶、中立温和、中立混乱和学徒不会被你计算。<n/>- 你总会得到你的信息，即使你被限制。
+Param/Value/SQIDENT=负责清点全镇角色的社区管理员。
+Param/Value/SQCRIME=无
+Param/Value/SQHEAD=<c val="BBDDFF">各类型人数：</c>
+Param/Value/SQN1=<n/>致命：
+Param/Value/SQN2=<n/>调查：
+Param/Value/SQN3=<n/>保护：
+Param/Value/SQN4=<n/>政府：
+Param/Value/SQN5=<n/>权利：
+Param/Value/SQN6=<n/>支援：
+Param/Value/SQN7=<n/>欺诈：

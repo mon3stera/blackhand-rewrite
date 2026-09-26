@@ -339,7 +339,12 @@ MUST_HAVE_KEYS = [
   'Param/Value/LMNAME', 'Param/Value/LMCARD', 'Param/Value/LMALIGN', 'Param/Value/LMDESC',
   'Param/Value/LMBOX1', 'Param/Value/LMBOX2', 'Param/Value/LMBOX4', 'Param/Value/LMBOX6',
   'Param/Value/LMCRIME', 'Param/Value/LMBTN', 'Param/Value/LMCX', 'Param/Value/LMCLEAR', 'Param/Value/LMSEL',
-  'Param/Value/LMGOTA', 'Param/Value/LMGOTB',]
+  'Param/Value/LMGOTA', 'Param/Value/LMGOTB',
+   # 社区管理员 (1/32)
+   'Param/Value/SQNAME', 'Param/Value/SQDESC', 'Param/Value/SQTAG',
+   'Param/Value/SQABIL', 'Param/Value/SQTRAITS', 'Param/Value/SQIDENT', 'Param/Value/SQCRIME',
+   'Param/Value/SQHEAD', 'Param/Value/SQN1', 'Param/Value/SQN2', 'Param/Value/SQN3',
+   'Param/Value/SQN4', 'Param/Value/SQN5', 'Param/Value/SQN6', 'Param/Value/SQN7',]
 
 
 def parse_strings_file(path: Path) -> dict:
