@@ -92407,8 +92407,14 @@ void gf_HLSnap () {
         if (autoHLSNAP_var < 0) { break; }
         gf_CBSystemMessage(StringExternal("Param/Value/HLSNAP"), autoHLSNAP_var, 16, 0, SoundLink("Silent", -1), Color(0,0,0));
     }
-    Wait(RandomFixed(0.6, 1.2), c_timeGame);
+    Wait(RandomFixed(1.0, 2.0), c_timeGame);
+    SoundPlay(SoundLink("UI_UnitRaceTab", -1), PlayerGroupAll(), 60.0, 0.0);
+    Wait(RandomFixed(0.3, 0.45), c_timeGame);
     SoundPlay(SoundLink("Doodad_SecurityGateDiagonalImpact", -1), PlayerGroupAll(), 100.0, 0.0);
+    SoundPlay(SoundLink("Doodad_DebrisImpact", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+    Wait(RandomFixed(0.2, 0.35), c_timeGame);
+    SoundPlay(SoundLink("Doodad_SparkBurstShort", -1), PlayerGroupAll(), 70.0, 0.0);
+    Wait(RandomFixed(0.5, 1.0), c_timeGame);
 }
 
 void gf_ESForesterKill (int lp_victim, int lp_forester, bool lp_intercept) {
@@ -92425,7 +92431,13 @@ void gf_ESForesterKill (int lp_victim, int lp_forester, bool lp_intercept) {
     gf_BHCrimeMurder(lp_forester);
     gv_diedAtNight[lp_victim] = true;
     gf_KillPlayer(lp_victim, false);
-    gf_FlashScreen(Color(100.00, 0.00, 0.00), lp_victim, 4.0, 0.0);
+    gf_FlashScreen(Color(100.00, 0.00, 0.00), lp_victim, 5.0, 0.0);
+    if ((gv_isAMan[lp_victim] == true)) {
+        SoundPlay(SoundLink("CivilianDeath", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+    }
+    else {
+        SoundPlay(SoundLink("CivilianFemaleDeath", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+    }
     if ((lp_intercept == true)) {
         gf_CBSystemMessage(StringExternal("Param/Value/HLGUARDDIE"), lp_victim, lp_victim, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
         gf_CBSystemMessage(StringExternal("Param/Value/HLGUARDGOT"), lp_forester, lp_forester, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
