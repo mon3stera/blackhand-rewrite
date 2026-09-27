@@ -49334,21 +49334,11 @@ void gf_OSGenerateChances () {
                         gv_finalWeights[lv_a][lv_b] = 0.0;
                     }
                     else {
-                        if ((lv_b == 22)) {
-                            gv_finalWeights[lv_a][lv_b] = (gv_finalWeights[lv_a][(lv_b - 1)] + 0.0);
-                        }
-                        else {
-                            gv_finalWeights[lv_a][lv_b] = (gv_finalWeights[lv_a][(lv_b - 1)] + gv_roleWeights[lv_a][lv_b]);
-                        }
+                        gv_finalWeights[lv_a][lv_b] = (gv_finalWeights[lv_a][(lv_b - 1)] + gv_roleWeights[lv_a][lv_b]);
                     }
                 }
                 else {
-                    if ((lv_b == 22)) {
-                        gv_finalWeights[lv_a][lv_b] = (gv_finalWeights[lv_a][(lv_b - 1)] + 0.0);
-                    }
-                    else {
-                        gv_finalWeights[lv_a][lv_b] = (gv_finalWeights[lv_a][(lv_b - 1)] + gv_roleWeights[lv_a][lv_b]);
-                    }
+                    gv_finalWeights[lv_a][lv_b] = (gv_finalWeights[lv_a][(lv_b - 1)] + gv_roleWeights[lv_a][lv_b]);
                 }
             }
 
