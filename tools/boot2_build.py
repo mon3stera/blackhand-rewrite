@@ -306,7 +306,6 @@ MUST_HAVE_KEYS = [
    'Param/Value/TTANON', 'Param/Value/TTQUIET', 'Param/Value/TTBLOCK',
    'Param/Value/TTADJOURN', 'Param/Value/TTWON', 'Param/Value/TTLOST',
    'Param/Value/TTSTOPTIP', 'Param/Value/TTNOSTOP', 'Param/Value/TTUSED',
-   'Param/Value/TTIMM',
    # shw289 弃子(2/16) / 死士(5/16)
   'Param/Value/QZNAME', 'Param/Value/QZDESC', 'Param/Value/QZCARD',
   'Param/Value/SSNAME', 'Param/Value/SSDESC', 'Param/Value/SSCARD',

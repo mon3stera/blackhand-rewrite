@@ -271,7 +271,6 @@ bool[16] gv_grPrivateChat;
 bool[16] gv_ttWon;
 bool[16] gv_ttStopUsed;
 int gv_ttHush;
-bool[16] gv_ttImmuneSet;
 
 bool gv_soloTest;
 int[8] gv_bhAssertCat;
@@ -96006,19 +96005,12 @@ void gf_TTPick (int lv_source, int lv_target, int lv_mode) {
 // 新增角色（非原图抽取）：调停者夜间按钮。
 void gf_SKN_3_tiaotingzhe (int lv_a) {
     if ((gv_ttWon[lv_a] == true)) {
-        gv_immuneChance[lv_a] = 0;
         gv_action[lv_a][0] = 0;
         gv_action[lv_a][1] = 0;
         gf_BHVisitNone(lv_a);
         gf_RANoActions(lv_a);
         gf_CBSystemMessage(StringExternal("Param/Value/TTLOST"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
         return;
-    }
-
-    if ((gv_ttImmuneSet[lv_a] == false)) {
-        gv_immuneChance[lv_a] = 1;
-        gv_ttImmuneSet[lv_a] = true;
-        gf_CBSystemMessage(StringExternal("Param/Value/TTIMM"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
     }
 
     gf_RATiaotingzheActions(lv_a);
@@ -96078,7 +96070,6 @@ void gf_TTMarkWin (int lp_player) {
     }
 
     gv_ttWon[lp_player] = true;
-    gv_immuneChance[lp_player] = 0;
     DialogControlSetEnabled(gv_abilityButtonItem, PlayerGroupSingle(lp_player), false);
     gf_CBSystemMessage(StringExternal("Param/Value/TTWON"), lp_player, lp_player, 0, SoundLink("UI_MissionComplete", -1), Color(0,0,0));
 }
