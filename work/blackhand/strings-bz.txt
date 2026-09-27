@@ -29,4 +29,16 @@ Param/Value/BZLEAD=<c val="FF0000">黑手党</c> <c val="00CCFF">领袖</c>
 Param/Value/BZLEADD=从党徒、教父和庇护者中随机出现一名。
 Param/Value/QLLEAD=<c val="3366FF">三合会</c> <c val="00CCFF">领袖</c>
 Param/Value/QLLEADD=从暴徒、龙头和潜龙中随机出现一名。
+Param/Value/FZNAME=<c val="FF4488">族长</c>
+Param/Value/FZDESC=黑手党的领袖。在场时，其余黑手党开局都是门徒。
+Param/Value/FZTAG= (<c val="FF0000">致命</c>，<c val="FF0000">领袖</c>)
+Param/Value/FZBOX1=每晚杀死一人。
+Param/Value/FZBOX2=- 当你在场时，所有黑手党的初始角色都是门徒。<n/>- 你拥有夜间无敌。<n/>- 当你在场时，门徒们最多只有一个可以选择成为致命角色。
+Param/Value/FZBOX4=你是黑手党的领袖。
+Param/Value/ZSNAME=<c val="9F8EFF">宗师</c>
+Param/Value/ZSDESC=三合会的领袖。在场时，其余三合会开局都是仆从。
+Param/Value/ZSTAG= (<c val="3366FF">致命</c>，<c val="3366FF">领袖</c>)
+Param/Value/ZSBOX1=每晚杀死一人。
+Param/Value/ZSBOX2=- 当你在场时，所有三合会的初始角色都是仆从。<n/>- 你拥有夜间无敌。<n/>- 当你在场时，仆从们最多只有一个可以选择成为致命角色。
+Param/Value/ZSBOX4=你是三合会的领袖。
 Param/Value/173C6671=- 你怀疑他是个教父、龙头、庇护者或潜龙。

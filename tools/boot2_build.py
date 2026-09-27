@@ -354,7 +354,11 @@ MUST_HAVE_KEYS = [
    'Param/Value/BZKILL', 'Param/Value/BZFAKE', 'Param/Value/BZMASK', 'Param/Value/BZMASKTIP',
    'Param/Value/BZMASKMSG', 'Param/Value/BZTGT', 'Param/Value/BZWILL', 'Param/Value/BZFEIGNYOU', 'Param/Value/BZFEIGNDONE',
    'Param/Value/BZNO8', 'Param/Value/BZBLOC', 'Param/Value/BZHEAL', 'Param/Value/BZDIE',
-   'Param/Value/BZLEAD', 'Param/Value/BZLEADD', 'Param/Value/QLLEAD', 'Param/Value/QLLEADD',]
+   'Param/Value/BZLEAD', 'Param/Value/BZLEADD', 'Param/Value/QLLEAD', 'Param/Value/QLLEADD',
+    'Param/Value/FZNAME', 'Param/Value/FZDESC', 'Param/Value/FZTAG',
+    'Param/Value/FZBOX1', 'Param/Value/FZBOX2', 'Param/Value/FZBOX4',
+    'Param/Value/ZSNAME', 'Param/Value/ZSDESC', 'Param/Value/ZSTAG',
+    'Param/Value/ZSBOX1', 'Param/Value/ZSBOX2', 'Param/Value/ZSBOX4',]
 
 
 def parse_strings_file(path: Path) -> dict:

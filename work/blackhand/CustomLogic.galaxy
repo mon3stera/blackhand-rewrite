@@ -39099,6 +39099,14 @@ void gf_RTMafiaRoleText (int lp_player) {
         SoundPlay(SoundLink("Tychus_Attack", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
     }
 
+    if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 18)) {
+        gv_roleBoxText[lv_a][0] = (gv_roleBoxText[lv_a][0] + StringExternal("Param/Value/FZTAG"));
+        gv_roleBoxText[lv_a][1] = StringExternal("Param/Value/FZBOX1");
+        gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/FZBOX2");
+        gv_roleBoxText[lv_a][4] = StringExternal("Param/Value/FZBOX4");
+        SoundPlay(SoundLink("Tychus_Attack", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
+    }
+
     if ((gv_roles[lv_a][0] == 16)) {
         gv_roleBoxText[lv_a][0] = (gv_roleBoxText[lv_a][0] + StringExternal("Param/Value/A11BF57D"));
         gv_roleBoxText[lv_a][1] = StringExternal("Param/Value/QZBOX1");
@@ -40574,6 +40582,14 @@ void gf_RTTriadRoleText (int lp_player) {
         gv_roleBoxText[lv_a][1] = StringExternal("Param/Value/QLBOX1");
         gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/QLBOX2");
         gv_roleBoxText[lv_a][4] = StringExternal("Param/Value/QLBOX4");
+        SoundPlay(SoundLink("Tychus_Attack", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
+    }
+
+    if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 18)) {
+        gv_roleBoxText[lv_a][0] = (gv_roleBoxText[lv_a][0] + StringExternal("Param/Value/ZSTAG"));
+        gv_roleBoxText[lv_a][1] = StringExternal("Param/Value/ZSBOX1");
+        gv_roleBoxText[lv_a][2] = StringExternal("Param/Value/ZSBOX2");
+        gv_roleBoxText[lv_a][4] = StringExternal("Param/Value/ZSBOX4");
         SoundPlay(SoundLink("Tychus_Attack", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
     }
 
