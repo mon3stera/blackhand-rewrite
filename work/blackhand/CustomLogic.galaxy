@@ -5620,8 +5620,8 @@ void gf_InitializeVariables () {
     gv_e78AAFE7BDAAE58FAFE883BD[3][22] = StringExternal("Param/Value/GRCRIME");
     gv_roleNameArray[3][23] = StringExternal("Param/Value/TTNAME");
     gv_roleDescriptionArray[3][23] = StringExternal("Param/Value/TTDESC");
-    gv_roleInvestigatorArray[3][23][0] = gv_investigatorE5B882E6B091E7B1BB1;
-    gv_roleInvestigatorArray[3][23][1] = gv_investigatorE5B882E6B091E7B1BB2;
+    gv_roleInvestigatorArray[3][23][0] = gv_investigatorE5BCBAE5A4A7E6B094E59CBA1;
+    gv_roleInvestigatorArray[3][23][1] = gv_investigatorE5BCBAE5A4A7E6B094E59CBA2;
     gv_roleOptions[3][23][10] = true;
     gv_e78AAFE7BDAAE58FAFE883BD[3][23] = StringExternal("Param/Value/TTCRIME");
     gv_roleNameArray[3][24] = StringExternal("Param/Value/LMNAME");
