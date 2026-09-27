@@ -1,4 +1,4 @@
-// 调停者（中立混乱 3/23）。第五天 = 白天公告里的天数计数到达 5。
+// 调停者（中立混乱 3/23）。第六天 = 白天公告里的天数计数到达 6。
 Param/Value/TTPOOL=<c val="AAAAAA">中立</c> <c val="00CCFF">混乱</c>
 Param/Value/TTPOOLDESC=可能是调停者。
 Param/Value/TTNAME=<c val="7EB6FF">调停者</c>
@@ -8,7 +8,7 @@ Param/Value/TTDESC=一名游走于凡间的因果之神代言人，绝不容许�
 Param/Value/TTBOX1=- 每晚选择一个人，对其进行保护或压制。在白天可以使用休庭。
 Param/Value/TTBOX2=<n/>- 使用保护时，目标当晚会获得夜间无敌。<n/>- 使用压制时，目标会被限制。<n/>- 白天无人在审判台上时，你可以使用 -stop 或者开关来休庭。<n/>- 休庭将会在15秒后跳过白天，这15秒只有你可以匿名发言，其他人无法发言或投票。<n/>- 你有一次休庭机会。<n/>- 你有一次夜间无敌机会。<n/>- 胜利后你会失去能力。
 Param/Value/TTBOX4=一名游走于凡间的因果之神代言人，绝不容许任何一方过早倾覆命运的天平。
-Param/Value/TTBOX6=- 存活直到游戏进行到第五天。
+Param/Value/TTBOX6=- 存活直到游戏进行到第六天。
 Param/Value/TTCRIME=非法闯入
 Param/Value/TTPROT=<s val="ModCenterSize20Bold">保护</s>
 Param/Value/TTSUPR=<s val="ModCenterSize20Bold">压制</s>
@@ -20,7 +20,7 @@ Param/Value/TTANON=<c val="7EB6FF">调停者</c>
 Param/Value/TTQUIET=<s val="ModLeftSize16">休庭期间你不能发言。</s>
 Param/Value/TTBLOCK=<s val="ModLeftSize16Bold"><c val="FF88FF">一位调停者接近了你，你被他的力量压制了，今晚你会被限制。</c></s>
 Param/Value/TTADJOURN=<s val="ModLeftSize16Bold"><c val="7EB6FF">一位调停者决定休庭！</c></s>
-Param/Value/TTWON=<s val="ModLeftSize16">你活到了第五天。个人胜利已经达成，你失去了保护、压制、休庭和夜间无敌。对局仍会继续。</s>
+Param/Value/TTWON=<s val="ModLeftSize16">你活到了第六天。个人胜利已经达成，你失去了保护、压制、休庭和夜间无敌。对局仍会继续。</s>
 Param/Value/TTLOST=<s val="ModLeftSize16">你已经胜利，今晚无法行动。</s>
 Param/Value/TTSTOPTIP=<s val="ModCenterSize20Bold">休庭</s>
 Param/Value/TTNOSTOP=<s val="ModLeftSize16">现在不能休庭。</s>
