@@ -1,0 +1,22 @@
+{
+  "pool": 2,
+  "role": 18,
+  "pinyin": "zuzhang",
+  "cn": "族长",
+  "name_key": "FZNAME",
+  "desc_key": "FZDESC",
+  "investigator": ["E5BCBAE5A4A7E6B094E59CBA1", "E5BCBAE5A4A7E6B094E59CBA2"],
+  "crime_key": "FZCRIME",
+  "options": [],
+  "flag10": false,
+  "guessable": true,
+  "help_preview": null,
+  "interactions": {
+    "swap": {"text": "杀人走教父同一条链路：覆盖黑手党目标，党徒执行，没有党徒时自己当杀手。"},
+    "investigate": {"text": "探员与教父同一组。没有调查免疫。"},
+    "restrict": {"text": "可被限制。被限制当夜不出刀。"},
+    "guessage": {"text": "审查页黑手党下标 16 → 18。", "in_guess_list": true}
+  },
+  "note": "黑手党领袖变体。与教父、庇护者互斥。在场时其余黑手党开局改为门徒，且最多一人能变成致命角色。随机位是池4角色21，不进全体黑手党随机。",
+  "review_status": "draft"
+}

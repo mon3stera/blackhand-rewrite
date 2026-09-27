@@ -1,0 +1,22 @@
+{
+  "pool": 5,
+  "role": 18,
+  "pinyin": "zongshi",
+  "cn": "宗师",
+  "name_key": "ZSNAME",
+  "desc_key": "ZSDESC",
+  "investigator": ["E5BCBAE5A4A7E6B094E59CBA1", "E5BCBAE5A4A7E6B094E59CBA2"],
+  "crime_key": "ZSCRIME",
+  "options": [],
+  "flag10": false,
+  "guessable": true,
+  "help_preview": null,
+  "interactions": {
+    "swap": {"text": "杀人走龙头同一条链路：覆盖三合会目标，暴徒执行，没有暴徒时自己当杀手。"},
+    "investigate": {"text": "探员与龙头同一组。没有调查免疫。"},
+    "restrict": {"text": "可被限制。被限制当夜不出刀。"},
+    "guessage": {"text": "审查页三合会下标 16 → 18。", "in_guess_list": true}
+  },
+  "note": "三合会领袖变体。与龙头、潜龙互斥。在场时其余三合会开局改为仆从，且最多一人能变成致命角色。随机位是池4角色22，不进全体三合会随机。",
+  "review_status": "draft"
+}

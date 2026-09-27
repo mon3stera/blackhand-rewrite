@@ -318,6 +318,11 @@
      "role": 17,
      "prefix": "351B78DC",
      "suffix": "953CBFCE"
+    },
+    {
+     "role": 18,
+     "prefix": "351B78DC",
+     "suffix": "953CBFCE"
     }
    ]
   },
@@ -479,6 +484,11 @@
     },
     {
      "role": 17,
+     "prefix": "D2FB1014",
+     "suffix": "603CFA9F"
+    },
+    {
+     "role": 18,
      "prefix": "D2FB1014",
      "suffix": "603CFA9F"
     }
