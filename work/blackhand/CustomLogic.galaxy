@@ -10588,7 +10588,7 @@ bool auto_gf_NightTransition_TriggerFunc (bool testConds, bool runActions) {
         }
 
         lv_d = false;
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == false)) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == false) && (gv_bhFeignRole[lv_a] == 0)) {
             gv_daysDead[lv_a][1] += 1;
         }
 
@@ -32154,7 +32154,7 @@ void gf_RSTownSetup () {
     }
     lv_a = 1;
     for ( ; ( (autoACD2F604_ai >= 0 && lv_a <= autoACD2F604_ae) || (autoACD2F604_ai < 0 && lv_a >= autoACD2F604_ae) ) ; lv_a += autoACD2F604_ai ) {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) || (gv_bhFeignRole[lv_a] != 0)) {
             if ((((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 13)) || (((gv_roles[lv_a][1] == 2) || (gv_roles[lv_a][1] == 5)) && (gv_roles[lv_a][0] == 9)))) {
                 gf_SKR_1_yujing(lv_a);
             }
@@ -32217,7 +32217,7 @@ void gf_RSTownSetup () {
     }
     lv_a = 1;
     for ( ; ( (auto01D1AA7E_ai >= 0 && lv_a <= auto01D1AA7E_ae) || (auto01D1AA7E_ai < 0 && lv_a >= auto01D1AA7E_ae) ) ; lv_a += auto01D1AA7E_ai ) {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) || (gv_bhFeignRole[lv_a] != 0)) {
             if ((gv_roles[lv_a][1] == 2) && (gv_roles[lv_a][0] == 9)) {
                 gf_SKR_2_bangjiazhe(lv_a);
             }
@@ -32248,7 +32248,7 @@ void gf_RSTownSetup () {
     }
     lv_a = 1;
     for ( ; ( (auto1E397EB5_ai >= 0 && lv_a <= auto1E397EB5_ae) || (auto1E397EB5_ai < 0 && lv_a >= auto1E397EB5_ae) ) ; lv_a += auto1E397EB5_ai ) {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) || (gv_bhFeignRole[lv_a] != 0)) {
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 9)) {
                 gf_SKR_5_shenxun(lv_a);
             }
@@ -61724,7 +61724,11 @@ void gf_BHPlayerChat (int lp_player, string lp_message) {
 
     }
     else {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lp_player) == true)) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lp_player) == true) || (gv_bhFeignRole[lp_player] != 0)) {
+            if ((gv_bhFeignRole[lp_player] != 0) && (gv_isNight == false) && (gv_gameOver == false)) {
+                gf_CBSystemMessage(StringExternal("Param/Value/BZFEIGNYOU"), lp_player, lp_player, 0, SoundLink("Silent", -1), Color(0,0,0));
+                return;
+            }
             if ((gv_silenced[lp_player][0] == true) && ((gv_onTrial != lp_player) || (gv_silenced[lp_player][1] == false))) {
                 gf_CBSystemMessage(StringExternal("Param/Value/AC9D9880"), lp_player, 0, 0, SoundLink("EditorDefaultSound", -1), Color(0.00, 0.00, 0.00));
             }
@@ -61845,7 +61849,7 @@ void gf_BHPlayerChat (int lp_player, string lp_message) {
         else {
             lv_a = 1;
             for ( ; ( (autoCB3234B1_ai >= 0 && lv_a <= autoCB3234B1_ae) || (autoCB3234B1_ai < 0 && lv_a >= autoCB3234B1_ae) ) ; lv_a += autoCB3234B1_ai ) {
-                if ((PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == false) && (gv_mute[lv_a][lp_player] == false)) {
+                if ((PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == false) && (gv_bhFeignRole[lv_a] == 0) && (gv_mute[lv_a][lp_player] == false)) {
                     lv_s = lp_message;
                     gf_CBSystemMessage((StringExternal("Param/Value/65F8EC7D") + TextWithColor(StringToText(gv_name[lp_player]), Color(33.33, 33.33, 33.33)) + StringExternal("Param/Value/F4CB1733") + StringToText(lv_s) + StringExternal("Param/Value/26F481F8")), lv_a, 0, 0, SoundLink("Silent", -1), Color(50.20, 0.00, 5.10));
                 }
@@ -73621,7 +73625,7 @@ bool gt_ASActionButtonAMafia_Func (bool testConds, bool runActions) {
 
     // Conditions
     if (testConds) {
-        if (!((PlayerGroupHasPlayer(gv_alivePlayers, EventPlayer()) == true))) {
+        if (!((PlayerGroupHasPlayer(gv_alivePlayers, EventPlayer()) == true) || (gv_bhFeignRole[EventPlayer()] != 0))) {
             return false;
         }
 
@@ -73760,7 +73764,7 @@ bool gt_ASActionButtonAMafia2_Func (bool testConds, bool runActions) {
 
     // Conditions
     if (testConds) {
-        if (!((PlayerGroupHasPlayer(gv_alivePlayers, EventPlayer()) == true))) {
+        if (!((PlayerGroupHasPlayer(gv_alivePlayers, EventPlayer()) == true) || (gv_bhFeignRole[EventPlayer()] != 0))) {
             return false;
         }
 
@@ -73905,7 +73909,7 @@ bool gt_ASActionButtonATriad_Func (bool testConds, bool runActions) {
 
     // Conditions
     if (testConds) {
-        if (!((PlayerGroupHasPlayer(gv_alivePlayers, EventPlayer()) == true))) {
+        if (!((PlayerGroupHasPlayer(gv_alivePlayers, EventPlayer()) == true) || (gv_bhFeignRole[EventPlayer()] != 0))) {
             return false;
         }
 
@@ -74050,7 +74054,7 @@ bool gt_ASActionButtonATriad2_Func (bool testConds, bool runActions) {
 
     // Conditions
     if (testConds) {
-        if (!((PlayerGroupHasPlayer(gv_alivePlayers, EventPlayer()) == true))) {
+        if (!((PlayerGroupHasPlayer(gv_alivePlayers, EventPlayer()) == true) || (gv_bhFeignRole[EventPlayer()] != 0))) {
             return false;
         }
 
@@ -75819,7 +75823,7 @@ bool gt_ASAbilityButton_Func (bool testConds, bool runActions) {
             return false;
         }
 
-        if (!((PlayerGroupHasPlayer(gv_alivePlayers, EventPlayer()) == true))) {
+        if (!((PlayerGroupHasPlayer(gv_alivePlayers, EventPlayer()) == true) || (gv_bhFeignRole[EventPlayer()] != 0))) {
             return false;
         }
 
@@ -75862,7 +75866,7 @@ bool gt_ASAbilityButton_Func (bool testConds, bool runActions) {
             gf_SKY_1_zhifazhang(lv_c);
         }
 
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, EventPlayer()) == true) && (TriggerIsEnabled(gt_Type) == true) && (gv_gameOver == false) && (gv_dayActions == true) && (gv_isNight == false) && (gv_dayAction[EventPlayer()] == false) && ((gv_roles[EventPlayer()][1] == 2) || (gv_roles[EventPlayer()][1] == 5)) && (gv_roles[EventPlayer()][0] == 9)) {
+        if (((PlayerGroupHasPlayer(gv_alivePlayers, EventPlayer()) == true) || (gv_bhFeignRole[EventPlayer()] != 0)) && (TriggerIsEnabled(gt_Type) == true) && (gv_gameOver == false) && (gv_dayActions == true) && (gv_isNight == false) && (gv_dayAction[EventPlayer()] == false) && ((gv_roles[EventPlayer()][1] == 2) || (gv_roles[EventPlayer()][1] == 5)) && (gv_roles[EventPlayer()][0] == 9)) {
             gv_dayAction[EventPlayer()] = true;
             lv_a = 1;
             for ( ; ( (auto7BC58292_ai >= 0 && lv_a <= auto7BC58292_ae) || (auto7BC58292_ai < 0 && lv_a >= auto7BC58292_ae) ) ; lv_a += auto7BC58292_ai ) {
@@ -76342,7 +76346,7 @@ bool gt_ASKidnapperAction_Func (bool testConds, bool runActions) {
 
     // Conditions
     if (testConds) {
-        if (!((PlayerGroupHasPlayer(gv_alivePlayers, EventPlayer()) == true))) {
+        if (!((PlayerGroupHasPlayer(gv_alivePlayers, EventPlayer()) == true) || (gv_bhFeignRole[EventPlayer()] != 0))) {
             return false;
         }
 
@@ -77420,7 +77424,7 @@ bool gt_ASKidnap_Func (bool testConds, bool runActions) {
 
     // Conditions
     if (testConds) {
-        if (!((PlayerGroupHasPlayer(gv_alivePlayers, EventPlayer()) == true))) {
+        if (!((PlayerGroupHasPlayer(gv_alivePlayers, EventPlayer()) == true) || (gv_bhFeignRole[EventPlayer()] != 0))) {
             return false;
         }
 
@@ -77529,7 +77533,7 @@ bool gt_ASKidnap2_Func (bool testConds, bool runActions) {
             return false;
         }
 
-        if (!((PlayerGroupHasPlayer(gv_alivePlayers, EventPlayer()) == true))) {
+        if (!((PlayerGroupHasPlayer(gv_alivePlayers, EventPlayer()) == true) || (gv_bhFeignRole[EventPlayer()] != 0))) {
             return false;
         }
 
