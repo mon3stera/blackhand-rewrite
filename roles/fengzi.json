@@ -1,0 +1,25 @@
+{
+  "pool": 1,
+  "role": 33,
+  "pinyin": "fengzi",
+  "cn": "疯子",
+  "name_key": "FENGNAME",
+  "desc_key": "FENGDESC",
+  "investigator": ["E59684E4BA8EE8A7A3E8AFBB1", "E59684E4BA8EE8A7A3E8AFBB2"],
+  "crime_key": "FENGCRIME",
+  "options": [],
+  "flag10": false,
+  "guessable": true,
+  "help_preview": null,
+  "extra_def_lines": [
+    "gv_roleWeights[1][33] = 1.0;"
+  ],
+  "interactions": {
+    "swap": {"text": "攻击不产生访问，也不造成伤害。"},
+    "investigate": {"text": "探员结果按城镇好人，不伪装成领袖。"},
+    "restrict": {"text": "没有夜间行动可被限制。"},
+    "guessage": {"text": "审查页城镇下标 30 → 33。", "in_guess_list": true}
+  },
+  "note": "城镇。自己以为是本局领袖。两边都有领袖时跟黑手党。",
+  "review_status": "draft"
+}

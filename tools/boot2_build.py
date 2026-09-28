@@ -358,7 +358,10 @@ MUST_HAVE_KEYS = [
     'Param/Value/FZBOX1', 'Param/Value/FZBOX2', 'Param/Value/FZBOX4', 'Param/Value/FZCRIME',
     'Param/Value/FZFATAL',
     'Param/Value/ZSNAME', 'Param/Value/ZSDESC', 'Param/Value/ZSTAG',
-    'Param/Value/ZSBOX1', 'Param/Value/ZSBOX2', 'Param/Value/ZSBOX4', 'Param/Value/ZSCRIME',]
+    'Param/Value/ZSBOX1', 'Param/Value/ZSBOX2', 'Param/Value/ZSBOX4', 'Param/Value/ZSCRIME',
+    'Param/Value/FENGNAME', 'Param/Value/FENGDESC', 'Param/Value/FENGTAG',
+    'Param/Value/FENGBOX1', 'Param/Value/FENGBOX2', 'Param/Value/FENGBOX4',
+    'Param/Value/FENGCRIME', 'Param/Value/FENGATK',]
 
 
 def parse_strings_file(path: Path) -> dict:
