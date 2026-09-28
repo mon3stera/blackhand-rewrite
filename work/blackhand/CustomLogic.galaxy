@@ -11399,7 +11399,7 @@ void gf_SequencePrep () {
     }
     lv_a = 1;
     for ( ; ( (autoC4579554_ai >= 0 && lv_a <= autoC4579554_ae) || (autoC4579554_ai < 0 && lv_a >= autoC4579554_ae) ) ; lv_a += autoC4579554_ai ) {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) || (gv_bhFeignRole[lv_a] != 0)) {
             if ((gv_roles[lv_a][1] == 1) && (gv_roles[lv_a][0] == 1) && (gv_action[lv_a][0] > 0)) {
                 gf_SKP_1_shimin(lv_a);
             }
