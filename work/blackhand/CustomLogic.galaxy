@@ -96513,9 +96513,6 @@ bool gf_DQHidden (int lp_player) {
 }
 
 int gf_DQSeenPool (int lp_player) {
-    if ((gv_bhFeignRole[lp_player] != 0)) {
-        return 1;
-    }
     if ((gf_DQHidden(lp_player) == true)) {
         return 1;
     }
@@ -96523,9 +96520,6 @@ int gf_DQSeenPool (int lp_player) {
 }
 
 int gf_DQSeenRole (int lp_player) {
-    if ((gv_bhFeignRole[lp_player] != 0)) {
-        return gv_bhFeignRole[lp_player];
-    }
     if ((gf_DQHidden(lp_player) == true)) {
         return 6;
     }
