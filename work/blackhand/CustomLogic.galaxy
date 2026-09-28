@@ -7542,7 +7542,7 @@ void gf_DisplayRoles () {
         if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
             gv_e8B7B3E8BDA6EFBC9F[lv_a] += 4;
             BankValueSetFromString(gv_bank[lv_a], "RQ", "#RQ", IntToString(gv_e8B7B3E8BDA6EFBC9F[lv_a]));
-            UIDisplayMessage(PlayerGroupSingle(lv_a), c_messageAreaDirective, (StringExternal("Param/Value/B19D7861") + gf_DQSeenName(lv_a) + StringExternal("Param/Value/4C861665")));
+            UIDisplayMessage(PlayerGroupSingle(lv_a), c_messageAreaDirective, (StringExternal("Param/Value/B19D7861") + gf_FZFaceName(lv_a) + StringExternal("Param/Value/4C861665")));
         }
 
     }
@@ -16582,7 +16582,7 @@ void gf_RefreshRoleBox () {
             }
         }
 
-        libNtve_gf_SetDialogItemText(gv_roleBoxItem[2], (StringExternal("Param/Value/23838DD3") + gf_DQSeenName(lv_a) + StringExternal("Param/Value/1515F767") + StringExternal("Param/Value/B60E2F61") + StringToText(gv_name[lv_a]) + StringExternal("Param/Value/E0EFD654")), PlayerGroupSingle(lv_a));
+        libNtve_gf_SetDialogItemText(gv_roleBoxItem[2], (StringExternal("Param/Value/23838DD3") + gf_FZFaceName(lv_a) + StringExternal("Param/Value/1515F767") + StringExternal("Param/Value/B60E2F61") + StringToText(gv_name[lv_a]) + StringExternal("Param/Value/E0EFD654")), PlayerGroupSingle(lv_a));
         libNtve_gf_SetDialogItemText(gv_roleBoxItem[3], (StringExternal("Param/Value/AA19C095") + gv_roleBoxText[lv_a][0] + StringExternal("Param/Value/3AA3FEA9") + gv_roleBoxText[lv_a][1] + StringExternal("Param/Value/DF34A0FF") + gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/9E6AA92C") + gv_roleBoxText[lv_a][3] + StringExternal("Param/Value/91BC6D00")), PlayerGroupSingle(lv_a));
         libNtve_gf_SetDialogItemTooltip(gv_roleBoxItem[3], (StringExternal("Param/Value/9E66420C") + gv_roleBoxText[lv_a][6] + StringExternal("Param/Value/F895033C")), PlayerGroupSingle(lv_a));
     }
@@ -100339,7 +100339,11 @@ void gf_RAFengziActions (int lp_player) {
 
 void gf_FZClick (int lv_source, int lv_target) {
     bool lv_mate;
-    int lv_lead;
+    int lv_a;
+    bool lv_hostTold;
+    text lv_msg;
+    const int autoFZCK_ae = 15;
+    const int autoFZCK_ai = 1;
 
     if ((gv_fzPool[lv_source] == 0)) {
         return;
@@ -100360,9 +100364,21 @@ void gf_FZClick (int lv_source, int lv_target) {
     }
     gv_action[lv_source][0] = lv_target;
     gf_CBSystemMessage((StringExternal("Param/Value/BZWILL") + TextWithColor(StringToText(gv_name[lv_target]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_target])) + StringExternal("Param/Value/4FC273FD")), lv_source, lv_source, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-    lv_lead = gv_fzLeader[lv_source];
-    if ((lv_lead >= 1) && ((PlayerGroupHasPlayer(gv_alivePlayers, lv_lead) == true) || (gv_bhFeignRole[lv_lead] != 0))) {
-        gf_BHNotify((TextWithColor(StringToText(gv_name[lv_source]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_source])) + StringExternal("Param/Value/FENGATK") + TextWithColor(StringToText(gv_name[lv_target]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_target])) + StringExternal("Param/Value/4FC273FD")), lv_lead, SoundLink("UI_TipSelect", -1));
+    lv_msg = (TextWithColor(StringToText(gv_name[lv_source]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_source])) + StringExternal("Param/Value/FENGATK") + TextWithColor(StringToText(gv_name[lv_target]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_target])) + StringExternal("Param/Value/4FC273FD"));
+    lv_hostTold = false;
+    lv_a = 1;
+    for ( ; ( (autoFZCK_ai >= 0 && lv_a <= autoFZCK_ae) || (autoFZCK_ai < 0 && lv_a >= autoFZCK_ae) ) ; lv_a += autoFZCK_ai ) {
+        if ((gv_roles[lv_a][1] == gv_fzPool[lv_source]) && (lv_a != lv_source) && ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) || (gv_bhFeignRole[lv_a] != 0))) {
+            if ((PlayerStatus(lv_a) == c_playerStatusActive)) {
+                gf_CBSystemMessage(lv_msg, lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+            }
+            else {
+                if ((lv_hostTold == false) && (gv_host != lv_source) && (PlayerStatus(gv_host) == c_playerStatusActive) && ((gv_roles[gv_host][1] != gv_fzPool[lv_source]) || ((PlayerGroupHasPlayer(gv_alivePlayers, gv_host) == false) && (gv_bhFeignRole[gv_host] == 0)))) {
+                    gf_CBSystemMessage(lv_msg, gv_host, gv_host, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                    lv_hostTold = true;
+                }
+            }
+        }
     }
     gf_RAFengziActions(lv_source);
 }
