@@ -31854,6 +31854,10 @@ void gf_RSConversions () {
                 gf_SKV_2_jiaofu(lv_a);
             }
 
+            if ((gv_roles[lv_a][1] == 2) && ((gv_roles[lv_a][0] == 17) || (gv_roles[lv_a][0] == 18))) {
+                gv_rsConvX[0] += 1;
+            }
+
             if ((gv_roles[lv_a][1] == 5)) {
                 gv_rsConvX[12] += 1;
             }
@@ -31864,6 +31868,10 @@ void gf_RSConversions () {
 
             if ((gv_roles[lv_a][1] == 5) && (gv_roles[lv_a][0] == 2)) {
                 gf_SKV_5_longtou(lv_a);
+            }
+
+            if ((gv_roles[lv_a][1] == 5) && ((gv_roles[lv_a][0] == 17) || (gv_roles[lv_a][0] == 18))) {
+                gv_rsConvX[10] += 1;
             }
 
         }
