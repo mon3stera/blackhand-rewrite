@@ -123,6 +123,7 @@ int[16][2] gv_action;
 int[16] gv_suggest;
 int[16] gv_visitation;
 int[16] gv_visitation2; // shw278：第二访问槽（调查表象仍写 gv_visitation；实际落点/第二目标走这里）
+int[16] gv_bhForceVisit; // -visit 记下的目标。夜开场会清空 action/visitation，结算前再写回
 int[16] gv_mafiaKillVotes;
 int[16] gv_triadKillVotes;
 int gv_mafiaTarget;
@@ -56553,6 +56554,7 @@ bool gt_visit_Func (bool testConds, bool runActions) {
     int lv_hit;
     int lv_x;
     int lv_z;
+    int lv_target;
     fixed lv_r;
 
     // Automatic Variable Declarations
@@ -56570,10 +56572,6 @@ bool gt_visit_Func (bool testConds, bool runActions) {
         if (!((StringSub(EventChatMessage(false), 1, 7) == "-visit "))) {
             return false;
         }
-
-        if (!((gv_e697A0E58F8C[EventPlayer()] == true))) {
-            return false;
-        }
     }
 
     // Actions
@@ -56581,6 +56579,12 @@ bool gt_visit_Func (bool testConds, bool runActions) {
         return true;
     }
 
+    if ((gv_e697A0E58F8C[EventPlayer()] == false) && (c_bhSoloBuild == false)) {
+        return true;
+    }
+
+    lv_hit = 0;
+    lv_x = 0;
     lv_a = 1;
     for ( ; ( (auto6ABA495C_ai >= 0 && lv_a <= auto6ABA495C_ae) || (auto6ABA495C_ai < 0 && lv_a >= auto6ABA495C_ae) ) ; lv_a += auto6ABA495C_ai ) {
         if ((PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true)) {
@@ -56623,8 +56627,19 @@ bool gt_visit_Func (bool testConds, bool runActions) {
         }
     }
 
+    lv_target = 0;
     if ((lv_hit != 0)) {
-        gf_BHVisit(lv_hit, StringToInt(StringSub(EventChatMessage(false), lv_z, StringLength(EventChatMessage(false)))));
+        lv_target = StringToInt(StringSub(EventChatMessage(false), lv_z, StringLength(EventChatMessage(false))));
+    }
+
+    if ((lv_hit != 0) && (lv_target >= 1) && (lv_target <= 15) && (PlayerGroupHasPlayer(gv_currentPlayers, lv_target) == true)) {
+        gv_bhForceVisit[lv_hit] = lv_target;
+        gv_action[lv_hit][0] = lv_target;
+        gf_BHVisit(lv_hit, lv_target);
+        gf_CBSystemMessage((StringExternal("Param/Value/VISITOK") + TextWithColor(StringToText(gv_name[lv_hit]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_hit])) + StringExternal("Param/Value/VISITOK2") + TextWithColor(StringToText(gv_name[lv_target]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lv_target])) + StringExternal("Param/Value/VISITOK3")), EventPlayer(), 0, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    }
+    else {
+        gf_CBSystemMessage(StringExternal("Param/Value/VISITBAD"), EventPlayer(), 0, 0, SoundLink("UI_BnetError", -1), Color(0,0,0));
     }
 
     return true;
@@ -99972,13 +99987,22 @@ void gf_BHLeaderResolve (int lp_killer, int lp_victim) {
 
 void gf_BHLeaderPrep () {
     int lv_a;
+    int lv_t;
     const int autoBHLP_ae = 15;
     const int autoBHLP_ai = 1;
 
     lv_a = 1;
     for ( ; ( (autoBHLP_ai >= 0 && lv_a <= autoBHLP_ae) || (autoBHLP_ai < 0 && lv_a >= autoBHLP_ae) ) ; lv_a += autoBHLP_ai ) {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][0] == 17) && ((gv_roles[lv_a][1] == 2) || (gv_roles[lv_a][1] == 5)) && (gv_action[lv_a][0] > 0) && (gv_roleblocked[lv_a] == 0) && (gv_jailed[lv_a] == 0)) {
-            gf_BHVisit(lv_a, gv_action[lv_a][0]);
+        if ((gv_bhForceVisit[lv_a] != 0)) {
+            lv_t = gv_bhForceVisit[lv_a];
+            gv_bhForceVisit[lv_a] = 0;
+            gv_action[lv_a][0] = lv_t;
+            gf_BHVisit(lv_a, lv_t);
+        }
+        else {
+            if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][0] == 17) && ((gv_roles[lv_a][1] == 2) || (gv_roles[lv_a][1] == 5)) && (gv_action[lv_a][0] > 0) && (gv_roleblocked[lv_a] == 0) && (gv_jailed[lv_a] == 0)) {
+                gf_BHVisit(lv_a, gv_action[lv_a][0]);
+            }
         }
     }
 }

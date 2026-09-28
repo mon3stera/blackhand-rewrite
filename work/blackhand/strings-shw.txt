@@ -13,6 +13,10 @@ Param/Value/SHWDEST2=你的目标一昨晚访问了「
 Param/Value/SHWDEST3=」。
 Param/Value/SHWNIGHT=<s val="ModLeftSize16Bold"><c val="9B30FF">你听见黑暗中传来一声极短的破风声，随后一切归于死寂...</c></s>
 Param/Value/SOLOON=-solo 已启用：大厅空位将在开局后补满虚拟玩家，请自行配置角色。
+Param/Value/VISITOK=已记下：
+Param/Value/VISITOK2= 今晚会访问 
+Param/Value/VISITOK3=。
+Param/Value/VISITBAD=没有记下。写法是 -visit 名字 编号，名字用电脑N或玩家名，编号是目标的玩家号。
 Param/Value/SHWSEL1=<s val="ModLeftSize16">你改为选择 </s><s val="ModLeftSize16Bold">
 Param/Value/SHWSEL2=<s val="ModLeftSize16">你将选择 </s><s val="ModLeftSize16Bold">
 Param/Value/SHWSURV=<s val="ModLeftSize16Bold"><c val="AAFF00">有人试图取你性命，但你在他的攻击下存活了。</c></s>
