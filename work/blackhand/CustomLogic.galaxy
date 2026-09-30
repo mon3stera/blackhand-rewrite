@@ -90066,7 +90066,7 @@ void gf_SKF_1_guanchazhe (int lv_a) {
     int lv_i;
     text lv_t;
     // Implementation
-if ((gv_action[lv_a][0] > 0) && (gv_diedAtNight[lv_a] == false)) {
+if ((gv_action[lv_a][0] > 0) && (gv_diedAtNight[lv_a] == false) && (gv_roleblocked[lv_a] == 0)) {
     lv_t = null;
     lv_b = 0;
     lv_i = 1;
