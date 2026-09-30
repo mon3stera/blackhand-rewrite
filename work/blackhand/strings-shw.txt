@@ -14,8 +14,26 @@ Param/Value/SHWDEST3=」。
 Param/Value/SHWNIGHT=<s val="ModLeftSize16Bold"><c val="9B30FF">你听见黑暗中传来一声极短的破风声，随后一切归于死寂...</c></s>
 Param/Value/SOLOON=-solo 已启用：大厅空位将在开局后补满虚拟玩家，请自行配置角色。
 Param/Value/VETSELF=<n/>- 当你警戒时，你算作访问自己。
-Param/Value/XMVIST=<n/>- 你的行动不算作访问他人，而算作访问自己。
-Param/Value/DLNOBLOCK=<n/>- 你无法被限制。<n/>- 当公告员发动不眠之夜大派对时，不会发生雷击。
+Param/Value/XMVIST=<n/>- 你的任何夜间行动都被视作访问自己，即使你选择的不是自己。
+Param/Value/DLNOBLOCK=<n/>- 你无法被限制。<n/>- 当公告员发动不眠之夜大派对时，不会发生雷击。<n/>- 你的任何夜间行动都被视作访问自己，即使你选择的不是自己。
+Param/Value/DTBLOCK=<s val="ModLeftSize16Bold"><c val="DDBB44">你注意到一个迷人的人接近了目标，对于他具体的访问情况，你无从得知。</c></s>
+Param/Value/DTBECAUSE=<s val="ModLeftSize16Bold"><c val="DDBB44">这是因为：</c></s>
+Param/Value/DTWHYB=<s val="ModLeftSize16Bold"><c val="DDBB44">你的目标被限制了。</c></s>
+Param/Value/DTNONE=<s val="ModLeftSize16Bold"><c val="DDBB44">你的目标没有行动。</c></s>
+Param/Value/DTWHY5=<s val="ModLeftSize16Bold"><c val="DDBB44">你的目标在夜间无法行动或是他主动选择不行动。</c></s>
+Param/Value/DTSELF=<s val="ModLeftSize16Bold"><c val="DDBB44">你的目标有所行动，但没有访问任何人。</c></s>
+Param/Value/DTWHY2=<s val="ModLeftSize16Bold"><c val="DDBB44">你的目标在夜间可以行动，但是他的行动不算作访问他人。</c></s>
+Param/Value/DTPLAN=<s val="ModLeftSize16Bold"><c val="DDBB44">你的目标本打算访问 </c>
+Param/Value/DTBUT=<c val="DDBB44">，但是实际上访问了 </c>
+Param/Value/DTEND=<c val="DDBB44">。</c></s>
+Param/Value/DTDBL1=<s val="ModLeftSize16Bold"><c val="DDBB44">你的目标先访问了 </c>
+Param/Value/DTTHEN=<c val="DDBB44">，然后访问了 </c>
+Param/Value/DTWHY4=<s val="ModLeftSize16Bold"><c val="DDBB44">你的目标的能力允许他访问不止一人。</c></s>
+Param/Value/DTWHY3=<s val="ModLeftSize16Bold"><c val="DDBB44">你的目标的访问目标受到了干扰。</c></s>
+Param/Value/DTSTAY=<c val="DDBB44">，但是实际上没有出门。</c></s>
+Param/Value/DTNOPLAN=<s val="ModLeftSize16Bold"><c val="DDBB44">你的目标本打算不行动，但是实际上访问了 </c>
+Param/Value/ZHIGNITE=<n/>- 当你点火时，你被视作访问自己。
+Param/Value/DTREASON=<n/>- 对于特殊的访问类型，你会得知你得到这个信息的原因。
 Param/Value/VISITOK=已记下：
 Param/Value/VISITOK2= 今晚会访问 
 Param/Value/VISITOK3=。

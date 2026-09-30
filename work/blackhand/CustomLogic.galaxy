@@ -582,6 +582,7 @@ int[16][5] gv_histPool;   // 近 5 局开局池号，[0]=上一局，0=无记录
 int[16][5] gv_histRole;   // 近 5 局开局角色号
 bool[16] gv_bhHistSlotTaken;
 bool[16] gv_bhHistSlotReserved;
+bool[16] gv_bhVisitMoved;
 int gv_bhHistMyPreferSlot;
 int[16] gv_donor;
 int[16] gv_donation;
@@ -1822,6 +1823,7 @@ void gf_SKF_1_lianbangtanyuan (int lv_a);
 void gf_SKF_1_jiandie (int lv_a);
 void gf_SKF_1_fayi (int lv_a, int lv_y);
 void gf_SKF_1_zhentan (int lv_a);
+text gf_BHDetName (int lp_who);
 void gf_SKF_1_shiguan (int lv_a);
 void gf_SKF_1_jianshizhe (int lv_a);
 void gf_SKF_3_zonghuozhe (int lv_a);
@@ -10643,6 +10645,7 @@ bool auto_gf_NightTransition_TriggerFunc (bool testConds, bool runActions) {
         gv_immune[lv_a][2] = false;
         gv_immune[lv_a][3] = false;
         gf_BHVisitNone(lv_a);
+        gv_bhVisitMoved[lv_a] = false;
         gf_BHUnblock(lv_a);
         gv_witched[lv_a] = 0;
         gv_witchEligible[lv_a] = true;
@@ -11165,6 +11168,15 @@ void gf_SequencePrep () {
             gv_triadHitman = lv_tie;
         }
         gf_BHVisit(gv_triadHitman, gv_triadTarget);
+    }
+
+    lv_a = 1;
+    while ((lv_a <= 15)) {
+        if ((gv_action[lv_a][0] > 0) && (gv_visitation[lv_a] == 0) && (gv_jailed[lv_a] == 0) && ((gv_roles[lv_a][1] == 2) || (gv_roles[lv_a][1] == 5)) && ((gv_roles[lv_a][0] == 1) || (gv_roles[lv_a][0] == 2) || (gv_roles[lv_a][0] == 18))) {
+            gf_BHVisitSelf(lv_a);
+        }
+
+        lv_a += 1;
     }
 
     lv_maxone = 0;
@@ -11954,6 +11966,9 @@ void gf_SequenceBullshit () {
                         gf_BHVisit(lv_a, gv_action[gv_witched[lv_a]][1]);
                         lv_zeto[lv_a][gv_visitation[lv_a]] = true;
                     }
+                    if ((gv_visitation[lv_a] != lv_x[lv_a][0])) {
+                        gv_bhVisitMoved[lv_a] = true;
+                    }
                 }
 
             }
@@ -12126,6 +12141,9 @@ void gf_SequenceBullshit () {
                 if ((gv_switched[gv_visitation[lv_a]] != 0) && (gv_jailed[gv_visitation[lv_a]] == 0) && (gv_jailed[gv_switched[gv_visitation[lv_a]]] == 0) && (gv_busEligible[lv_a] == true) && (gv_visitation[lv_a] > 0)) {
                     lv_x[lv_a][1] = gv_visitation[lv_a];
                     gf_BHVisit(lv_a, gv_switched[gv_visitation[lv_a]]);
+                    if ((gv_visitation[lv_a] != lv_x[lv_a][1])) {
+                        gv_bhVisitMoved[lv_a] = true;
+                    }
                     lv_zeto[lv_a][gv_visitation[lv_a]] = true;
                 }
 
@@ -38685,6 +38703,7 @@ void gf_RTTownRoleText (int lp_player) {
         }
 
         gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/75D617B9"));
+        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/DTREASON"));
         SoundPlay(SoundLink("Raven_What", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
     }
 
@@ -39779,6 +39798,7 @@ void gf_RTNeutralRoleText (int lp_player) {
 
         gv_roleBoxText[lv_a][3] = StringExternal("Param/Value/BA8B1073");
         gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/00A0D8A8"));
+        gv_roleBoxText[lv_a][2] = (gv_roleBoxText[lv_a][2] + StringExternal("Param/Value/ZHIGNITE"));
         SoundPlay(SoundLink("Firebat_Attack", -1), PlayerGroupSingle(lv_a), 100.0, 0.0);
     }
 
@@ -90521,53 +90541,78 @@ else {
 gv_seqAfterWait[2] = true;
 }
 
+text gf_BHDetName (int lp_who) {
+    return (StringToText(gv_number[lp_who]) + StringExternal("Param/Value/C1652170") + TextWithColor(StringToText(gv_name[lp_who]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lp_who])));
+}
+
 // 阶段三抽取（shw238）：城镇 1/15 ← 原 gf_SequenceAfter 行14219
 void gf_SKF_1_zhentan (int lv_a) {
-    // Implementation
-if ((gv_jailed[gv_visitation[lv_a]] != 0)) {
-    gf_CBSystemMessage(StringExternal("Param/Value/276B0C60"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-}
-else {
-    if ((gv_roleblocked[gv_visitation[lv_a]] != 0)) {
-        gf_CBSystemMessage((StringExternal("Param/Value/F18C4C7B") + StringToText(gv_number[gv_action[gv_visitation[lv_a]][0]]) + StringExternal("Param/Value/4440DFC0") + TextWithColor(StringToText(gv_name[gv_action[gv_visitation[lv_a]][0]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_action[gv_visitation[lv_a]][0]])) + StringExternal("Param/Value/4A50C30C")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+    int lv_who;
+    int lv_go;
+    int lv_plan;
+
+    lv_who = gv_visitation[lv_a];
+    if ((gv_jailed[lv_who] != 0)) {
+        gf_CBSystemMessage(StringExternal("Param/Value/276B0C60"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
     }
     else {
-        if ((gv_visitation[gv_visitation[lv_a]] == 0)) {
-            if (((gv_action[gv_visitation[lv_a]][0] == 0) || ((gv_immune[gv_visitation[lv_a]][2] == true) && (gv_roleOptions[1][15][0] == false)))) {
-                gf_CBSystemMessage(StringExternal("Param/Value/38F10843"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-            }
-            else {
-                gf_CBSystemMessage(StringExternal("Param/Value/0D88FE8E"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-            }
+        if ((gv_roleblocked[lv_who] != 0)) {
+            gf_CBSystemMessage(StringExternal("Param/Value/DTBLOCK"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+            gf_CBSystemMessage(StringExternal("Param/Value/DTBECAUSE"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+            gf_CBSystemMessage(StringExternal("Param/Value/DTWHYB"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
         }
         else {
-            if ((gv_visitation[gv_visitation[lv_a]] == gv_visitation[lv_a])) {
-                if ((gv_visitation[gv_visitation[lv_a]] == gv_action[gv_visitation[lv_a]][0])) {
-                    gf_CBSystemMessage(StringExternal("Param/Value/404521A5"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                }
-                else {
-                    gf_CBSystemMessage(StringExternal("Param/Value/89E22822"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                }
+            if ((gv_immune[lv_who][2] == true) && (gv_roleOptions[1][15][0] == false)) {
+                gf_CBSystemMessage(StringExternal("Param/Value/DTNONE"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                gf_CBSystemMessage(StringExternal("Param/Value/DTBECAUSE"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                gf_CBSystemMessage(StringExternal("Param/Value/DTWHY5"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
             }
             else {
-                if ((gv_visitation2[gv_visitation[lv_a]] != 0) && (gv_visitation2[gv_visitation[lv_a]] != gv_visitation[gv_visitation[lv_a]])) {
-                    gf_CBSystemMessage((StringExternal("Param/Value/A5E3465E") + StringToText(gv_number[gv_visitation[gv_visitation[lv_a]]]) + StringExternal("Param/Value/532393DB") + TextWithColor(StringToText(gv_name[gv_visitation[gv_visitation[lv_a]]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_visitation[gv_visitation[lv_a]]])) + StringExternal("Param/Value/CA91A4DC")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                    gf_CBSystemMessage((StringExternal("Param/Value/9597EB5A") + StringToText(gv_number[gv_visitation2[gv_visitation[lv_a]]]) + StringExternal("Param/Value/AF4BF321") + TextWithColor(StringToText(gv_name[gv_visitation2[gv_visitation[lv_a]]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_visitation2[gv_visitation[lv_a]]])) + StringExternal("Param/Value/C4513841")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                lv_go = gv_visitation[lv_who];
+                lv_plan = gv_action[lv_who][0];
+                if ((gv_visitation2[lv_who] != 0) && (gv_visitation2[lv_who] != lv_go)) {
+                    gf_CBSystemMessage((StringExternal("Param/Value/DTDBL1") + gf_BHDetName(lv_go) + StringExternal("Param/Value/DTTHEN") + gf_BHDetName(gv_visitation2[lv_who]) + StringExternal("Param/Value/DTEND")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                    gf_CBSystemMessage(StringExternal("Param/Value/DTBECAUSE"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                    gf_CBSystemMessage(StringExternal("Param/Value/DTWHY4"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
                 }
                 else {
-                    if ((gv_visitation[gv_visitation[lv_a]] == gv_action[gv_visitation[lv_a]][0])) {
-                        gf_CBSystemMessage((StringExternal("Param/Value/E5532DC0") + StringToText(gv_number[gv_visitation[gv_visitation[lv_a]]]) + StringExternal("Param/Value/C1652170") + TextWithColor(StringToText(gv_name[gv_visitation[gv_visitation[lv_a]]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_visitation[gv_visitation[lv_a]]])) + StringExternal("Param/Value/EF7F1D1F")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                    if ((gv_bhVisitMoved[lv_who] == true) && (lv_go != lv_plan)) {
+                        if ((lv_go == 0)) {
+                            gf_CBSystemMessage((StringExternal("Param/Value/DTPLAN") + gf_BHDetName(lv_plan) + StringExternal("Param/Value/DTSTAY")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                        }
+                        else {
+                            if ((lv_plan == 0)) {
+                                gf_CBSystemMessage((StringExternal("Param/Value/DTNOPLAN") + gf_BHDetName(lv_go) + StringExternal("Param/Value/DTEND")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                            }
+                            else {
+                                gf_CBSystemMessage((StringExternal("Param/Value/DTPLAN") + gf_BHDetName(lv_plan) + StringExternal("Param/Value/DTBUT") + gf_BHDetName(lv_go) + StringExternal("Param/Value/DTEND")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                            }
+                        }
+                        gf_CBSystemMessage(StringExternal("Param/Value/DTBECAUSE"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                        gf_CBSystemMessage(StringExternal("Param/Value/DTWHY3"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
                     }
                     else {
-                        gf_CBSystemMessage((StringExternal("Param/Value/A5E3465E") + StringToText(gv_number[gv_action[gv_visitation[lv_a]][0]]) + StringExternal("Param/Value/532393DB") + TextWithColor(StringToText(gv_name[gv_action[gv_visitation[lv_a]][0]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_action[gv_visitation[lv_a]][0]])) + StringExternal("Param/Value/CA91A4DC")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-                        gf_CBSystemMessage((StringExternal("Param/Value/9597EB5A") + StringToText(gv_number[gv_visitation[gv_visitation[lv_a]]]) + StringExternal("Param/Value/AF4BF321") + TextWithColor(StringToText(gv_name[gv_visitation[gv_visitation[lv_a]]]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[gv_visitation[gv_visitation[lv_a]]])) + StringExternal("Param/Value/C4513841")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                        if ((lv_go == lv_who) && (lv_go != 0)) {
+                            gf_CBSystemMessage(StringExternal("Param/Value/DTSELF"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                            gf_CBSystemMessage(StringExternal("Param/Value/DTBECAUSE"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                            gf_CBSystemMessage(StringExternal("Param/Value/DTWHY2"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                        }
+                        else {
+                            if ((lv_go != 0)) {
+                                gf_CBSystemMessage((StringExternal("Param/Value/E5532DC0") + gf_BHDetName(lv_go) + StringExternal("Param/Value/EF7F1D1F")), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                            }
+                            else {
+                                gf_CBSystemMessage(StringExternal("Param/Value/DTNONE"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                                gf_CBSystemMessage(StringExternal("Param/Value/DTBECAUSE"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                                gf_CBSystemMessage(StringExternal("Param/Value/DTWHY5"), lv_a, lv_a, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+                            }
+                        }
                     }
                 }
             }
         }
     }
-}
-gv_seqAfterWait[2] = true;
+    gv_seqAfterWait[2] = true;
 }
 
 // 阶段三抽取（shw238）：城镇 1/30 ← 原 gf_SequenceAfter 行14263
@@ -92725,7 +92770,14 @@ gf_BHVisitAction(lv_a);
 // 阶段三抽取（shw238）：城镇 1/6 ← 原 gf_SequencePrep 行10721
 void gf_SKP_1_yijing (int lv_a) {
     // Implementation
-gf_BHVisitAction(lv_a);
+if ((gv_dayNumber <= 1)) {
+    gv_action[lv_a][0] = 0;
+    gf_BHVisitNone(lv_a);
+}
+else {
+    gf_BHVisitAction(lv_a);
+}
+
 }
 
 // 阶段三抽取（shw238）：中立 3/17 ← 原 gf_SequencePrep 行10725
@@ -93337,10 +93389,6 @@ if ((gv_action[lv_a][0] > 0)) {
 }
 
 if ((gv_action[lv_a][1] == 1)) {
-    gf_BHVisitSelf(lv_a);
-}
-
-if ((gv_action[lv_a][0] == 0) && (gv_action[lv_a][1] == 0)) {
     gf_BHVisitSelf(lv_a);
 }
 
@@ -99477,7 +99525,6 @@ void gf_SQReveal () {
 void gf_SKP_1_renkoupuchaguan (int lv_a) {
     gv_busEligible[lv_a] = false;
     gv_witchEligible[lv_a] = false;
-    gf_BHVisitSelf(lv_a);
     if ((gv_dayNumber == 1)) {
         gf_SQTell(lv_a);
     }
