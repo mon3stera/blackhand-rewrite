@@ -13,6 +13,9 @@ Param/Value/SHWDEST2=你的目标一昨晚访问了「
 Param/Value/SHWDEST3=」。
 Param/Value/SHWNIGHT=<s val="ModLeftSize16Bold"><c val="9B30FF">你听见黑暗中传来一声极短的破风声，随后一切归于死寂...</c></s>
 Param/Value/SOLOON=-solo 已启用：大厅空位将在开局后补满虚拟玩家，请自行配置角色。
+Param/Value/VETSELF=<n/>- 当你警戒时，你算作访问自己。
+Param/Value/XMVIST=<n/>- 你的行动不算作访问他人，而算作访问自己。
+Param/Value/DLNOBLOCK=<n/>- 你无法被限制。<n/>- 当公告员发动不眠之夜大派对时，不会发生雷击。
 Param/Value/VISITOK=已记下：
 Param/Value/VISITOK2= 今晚会访问 
 Param/Value/VISITOK3=。
