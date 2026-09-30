@@ -12,7 +12,7 @@
   "guessable": true,
   "help_preview": null,
   "extra_def_lines": [
-    "gv_roleWeights[1][33] = 1.0;"
+    "gv_roleWeights[1][33] = 0.0;"
   ],
   "interactions": {
     "swap": {"text": "攻击不产生访问，也不造成伤害。"},
