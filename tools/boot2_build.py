@@ -232,6 +232,9 @@ MUST_HAVE_KEYS = [
     # shw220 影武者双目标的选择提示（目标一=跟踪、目标二=预测其访问）
     'Param/Value/SHWTRK1', 'Param/Value/SHWTRK2', 'Param/Value/SHWTRK3', 'Param/Value/SHWTRK4',
     'Param/Value/TXNAME',
+    'Param/Value/JSNAME', 'Param/Value/JSDESC', 'Param/Value/JSCARD', 'Param/Value/JSALIGN',
+    'Param/Value/JSBOX1', 'Param/Value/JSBOX2', 'Param/Value/JSBOX4', 'Param/Value/JSBOX6',
+    'Param/Value/JSCRIME', 'Param/Value/JSDM',
     # 天选者角色卡各栏（缺任一项 → 界面直接显示原始键名，shw192 事故）
     'Param/Value/TXBOX1', 'Param/Value/TXBOX2', 'Param/Value/TXBOX4',
     'Param/Value/TXBOXINV', 'Param/Value/TXBOXVISIT',

@@ -1,0 +1,28 @@
+{
+  "pool": 3,
+  "role": 25,
+  "pinyin": "jingshenbinghuanzhe",
+  "cn": "精神病患者",
+  "name_key": "JSNAME",
+  "desc_key": "JSDESC",
+  "investigator": [
+    "E5BCBAE5A4A7E6B094E59CBA1",
+    "E5BCBAE5A4A7E6B094E59CBA2"
+  ],
+  "crime_key": "JSCRIME",
+  "options": [],
+  "flag10": false,
+  "guessable": true,
+  "help_preview": null,
+  "extra_def_lines": [
+    "gv_roleWeights[3][25] = 0.25;"
+  ],
+  "interactions": {
+    "swap": {"text": "白天出手，不产生夜间访问。"},
+    "investigate": {"text": "探员线索与教父、龙头相同。图鉴案底为无。"},
+    "restrict": {"text": "没有夜间行动可被限制。"},
+    "guessage": {"text": "审查页中立列表可以猜出精神病患者。", "in_guess_list": true}
+  },
+  "note": "中立混乱。白天审判台无人时可扑向一人并立刻杀死，不走处决，当天仍可处决别人。用完技能 1/4 暴毙。判有罪只有 1/3 真处决，免死当天不能再审。杀死一名城镇和一名非城镇后胜利并立刻死亡。扑杀不吃医生和保镖。目标的系命人与处刑者按非处决死亡处理。政府替死尚未做。胜利图暂用 WinJester。",
+  "review_status": "draft"
+}
