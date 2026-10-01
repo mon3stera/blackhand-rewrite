@@ -100970,9 +100970,51 @@ void gf_JSBanMsg () {
     gf_JSTellAll(StringExternal("Param/Value/JSBAN"));
 }
 
+void gf_JSCause (int lp_player, bool lp_self) {
+    if ((gv_deathText[lp_player] != null)) {
+        return;
+    }
+
+    if ((lp_self == true)) {
+        if ((gv_isAMan[lp_player] == true)) {
+            gv_deathText[lp_player] = StringExternal("Param/Value/JSDTHM");
+        }
+        else {
+            gv_deathText[lp_player] = StringExternal("Param/Value/JSDTHF");
+        }
+    }
+    else {
+        if ((gv_isAMan[lp_player] == true)) {
+            gv_deathText[lp_player] = StringExternal("Param/Value/JSDTVM");
+        }
+        else {
+            gv_deathText[lp_player] = StringExternal("Param/Value/JSDTVF");
+        }
+    }
+
+    gv_deathDesc[lp_player] = true;
+}
+
 void gf_JSGrave (int lp_player) {
+    text lv_cause;
+
     gv_deadBoxText[0] = (gv_deadBoxText[0] + StringExternal("Param/Value/D2D2C519") + StringToText(gv_number[lp_player]) + StringExternal("Param/Value/AA0AD62F") + TextWithColor(StringToText(gv_name[lp_player]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lp_player])) + StringExternal("Param/Value/AB968A17") + gf_DQSeenName(lp_player) + StringExternal("Param/Value/2A9DEC96"));
     libNtve_gf_SetDialogItemText(gv_deadBoxItem[3], gv_deadBoxText[0], PlayerGroupAll());
+    if ((gv_deathText[lp_player] == null)) {
+        lv_cause = StringToText("");
+    }
+    else {
+        lv_cause = gv_deathText[lp_player];
+    }
+
+    if ((gv_variant == "clue")) {
+        gv_deadBoxText[1] = (gv_deadBoxText[1] + StringExternal("Param/Value/4D667E99") + StringToText(gv_number[lp_player]) + StringExternal("Param/Value/F99B5F86") + TextWithColor(StringToText(gv_name[lp_player]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lp_player])) + StringExternal("Param/Value/FBA3141C") + lv_cause + StringExternal("Param/Value/BC141813") + IntToText(gv_dayNumber) + StringExternal("Param/Value/099B9521"));
+    }
+    else {
+        gv_deadBoxText[1] = (gv_deadBoxText[1] + StringExternal("Param/Value/20FDC18C") + StringToText(gv_number[lp_player]) + StringExternal("Param/Value/CAABD424") + TextWithColor(StringToText(gv_name[lp_player]), libNtve_gf_ConvertPlayerColorToColor(gv_playerColor[lp_player])) + StringExternal("Param/Value/7125D0A2") + gf_DQSeenName(lp_player) + StringExternal("Param/Value/C9919C94") + lv_cause + StringExternal("Param/Value/9EC71430") + IntToText(gv_dayNumber) + StringExternal("Param/Value/7B7E1185"));
+    }
+
+    libNtve_gf_SetDialogItemTooltip(gv_deadBoxItem[3], gv_deadBoxText[1], PlayerGroupAll());
 }
 
 void gf_JSRecount () {
@@ -101084,6 +101126,7 @@ void gf_JSAfterDeath (int lp_dead) {
 }
 
 void gf_JSFinish (int lp_player) {
+    gf_JSCause(lp_player, true);
     gv_deathMethod[lp_player] = (gv_deathMethod[lp_player] + "Q");
     if ((gv_unit[lp_player] != null)) {
         libNtve_gf_PauseUnit(gv_unit[lp_player], false);
@@ -101164,6 +101207,7 @@ void gf_JSPerform (int lp_attacker, int lp_victim) {
     }
 
     gv_bhNightKiller[lp_victim] = lp_attacker;
+    gf_JSCause(lp_victim, false);
     gv_deathMethod[lp_victim] = (gv_deathMethod[lp_victim] + "Q");
     gf_BHCrimeMurder(lp_attacker);
     gf_JSTellAll((StringExternal("Param/Value/JSSIZE") + gf_JSWho(lp_victim) + StringExternal("Param/Value/JSKILL") + StringExternal("Param/Value/JSCLOSE")));

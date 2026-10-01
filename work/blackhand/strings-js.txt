@@ -24,4 +24,8 @@ Param/Value/JSOTHER=<s val="ModLeftSize16">你已经撕碎了一名潜伏的恶�
 Param/Value/JSUSED=<s val="ModLeftSize16">你今天已经扑过一次了。</s>
 Param/Value/JSWAIT=<s val="ModLeftSize16">审判台上有人，现在不能扑出去。</s>
 Param/Value/JSDM=尸体上有被撕碎的痕迹。
+Param/Value/JSDTVM=他被精神病患者撕碎了。
+Param/Value/JSDTVF=她被精神病患者撕碎了。
+Param/Value/JSDTHM=他精神失常，疯癫而死。
+Param/Value/JSDTHF=她精神失常，疯癫而死。
 Param/Value/28F034F6=- 那暗示他可能会是个退伍军人、爱人狂、小丑，或精神病患者。
