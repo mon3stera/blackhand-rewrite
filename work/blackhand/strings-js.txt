@@ -7,17 +7,21 @@ Param/Value/JSBOX1=- 每天当无人在审判台上时，你可以选择一个�
 Param/Value/JSBOX2=<n/>- 每天你只能使用一次你的能力。<n/>- 你每次使用技能后，都有1/4的概率立刻死亡。<n/>- 当你被判处有罪后，你只有1/3的概率被处决。<n/>- 当你处决免死后，当天你无法再被审判。<n/>- 当你胜利后，你会立刻死亡。
 Param/Value/JSBOX4=一位精神病患者，可能会随机地杀人。法律未必能制裁得了你。
 Param/Value/JSBOX6=- 杀死一个城镇角色和一个非城镇角色。
-Param/Value/JSCRIME=无
+Param/Value/JSCRIME=谋杀
 Param/Value/JSBTN=扑向一名玩家
+Param/Value/JSSIZE=<s val="ModLeftSize16Bold">
+Param/Value/JSCLOSE=</s>
+Param/Value/JSDASH= - 
 Param/Value/JSLEAP= 是一位精神病患者！他突然暴起，向 
 Param/Value/JSLEAP2= 扑了过去！
-Param/Value/JSKILL=被精神病患者撕碎了。
+Param/Value/JSKILL= 被精神病患者撕碎了。
 Param/Value/JSDIE= 在疯狂的攻击中突发急性精神崩溃，与目标一同倒在血泊中暴毙身亡。
 Param/Value/JSSPARE= 便陷入了极度疯癫抽搐，口吐白沫狂笑不止！由于其完全丧失刑事责任能力，法庭中止了本次处决！
-Param/Value/JSBAN=根据法庭的条例，今日无法再审判精神病患者。
+Param/Value/JSBAN=<s val="ModLeftSize16Bold">根据法庭的条例，今日无法再审判精神病患者。</s>
 Param/Value/JSWIN= 环顾着周围的残局，发出了凄厉至极的狂笑，随后精神失常，面带微笑离去。
-Param/Value/JSTOWN=你已经杀死了一名城镇成员。下一个目标必须是非城镇。如果随便动手，你会面临暴毙的风险！
-Param/Value/JSOTHER=你已经撕碎了一名潜伏的恶徒。下一个目标必须是城镇成员。如果随便动手，你会面临暴毙的风险！
-Param/Value/JSUSED=你今天已经扑过一次了。
-Param/Value/JSWAIT=审判台上有人，现在不能扑出去。
+Param/Value/JSTOWN=<s val="ModLeftSize16">你已经杀死了一名城镇成员。下一个目标必须是非城镇。如果随便动手，你会面临暴毙的风险！</s>
+Param/Value/JSOTHER=<s val="ModLeftSize16">你已经撕碎了一名潜伏的恶徒。下一个目标必须是城镇成员。如果随便动手，你会面临暴毙的风险！</s>
+Param/Value/JSUSED=<s val="ModLeftSize16">你今天已经扑过一次了。</s>
+Param/Value/JSWAIT=<s val="ModLeftSize16">审判台上有人，现在不能扑出去。</s>
 Param/Value/JSDM=尸体上有被撕碎的痕迹。
+Param/Value/28F034F6=- 那暗示他可能会是个退伍军人、爱人狂、小丑，或精神病患者。
