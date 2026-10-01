@@ -281,7 +281,7 @@ Param/Value/QZSEL2=你改去此人的住所自爆：
 Param/Value/QZCLR=你取消了今晚的自爆。
 Param/Value/QZYOU=<s val="ModLeftSize16Bold"><c val="FF0000">你在一场毁灭性的爆破中丧生。</c></s>
 Param/Value/QZYOUSELF=<s val="ModLeftSize16Bold"><c val="FF0000">你引爆了贴身的烈性炸药，与房间里的人同归于尽。</c></s>
-Param/Value/28F034F6=- 那暗示他可能会是个退伍军人、杀人狂、小丑，或弃子/死士。
+Param/Value/28F034F6=- 那暗示他可能会是个退伍军人、杀人狂、小丑、弃子/死士、精神病患者，或疯子。
 Param/Value/BHASTOK=已登记，确认选项后将强制出现：
 Param/Value/BHASTNONE=当前阵容没有能出该角色的随机位：
 Param/Value/BHASTHAVE=阵容里已经有这个角色：

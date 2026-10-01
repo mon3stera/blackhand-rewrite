@@ -28,4 +28,4 @@ Param/Value/JSDTVM=他被精神病患者撕碎了。
 Param/Value/JSDTVF=她被精神病患者撕碎了。
 Param/Value/JSDTHM=他精神失常，疯癫而死。
 Param/Value/JSDTHF=她精神失常，疯癫而死。
-Param/Value/28F034F6=- 那暗示他可能会是个退伍军人、爱人狂、小丑，或精神病患者。
+Param/Value/28F034F6=- 那暗示他可能会是个退伍军人、杀人狂、小丑、弃子/死士、精神病患者，或疯子。
