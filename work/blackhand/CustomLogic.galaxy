@@ -1512,6 +1512,7 @@ bool gf_FZChatHidden (int lp_speaker, int lp_listener);
 text gf_FZFaceName (int lp_player);
 void gf_RAFengziActions (int lp_player);
 void gf_FZClick (int lv_source, int lv_target);
+bool gf_FZLooksLike (int lp_pool, int lp_who);
 void gf_SKR_1_fengzi (int lv_a);
 bool gf_BHClanLeaderAlive (int lp_pool);
 bool gf_BHRoleFatal (int lp_role);
@@ -34169,7 +34170,7 @@ void gf_RAMafiosoActions (int lp_player) {
     // Implementation
     lv_a = 1;
     for ( ; ( (auto3E461F06_ai >= 0 && lv_a <= auto3E461F06_ae) || (auto3E461F06_ai < 0 && lv_a >= auto3E461F06_ae) ) ; lv_a += auto3E461F06_ai ) {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] != 2)) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gf_FZLooksLike(2, lv_a) == false)) {
             DialogControlSetVisible(gv_actionDialogItem[lv_a][1], PlayerGroupSingle(lp_player), true);
             DialogControlSetVisible(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(lp_player), true);
             libNtve_gf_SetDialogItemColor(gv_actionDialogItem[lv_a][5], Color(100.00, 0.00, 0.00), PlayerGroupSingle(lp_player));
@@ -34232,7 +34233,7 @@ void gf_RAGodfatherActions (int lp_player) {
     // Implementation
     lv_a = 1;
     for ( ; ( (autoE0247641_ai >= 0 && lv_a <= autoE0247641_ae) || (autoE0247641_ai < 0 && lv_a >= autoE0247641_ae) ) ; lv_a += autoE0247641_ai ) {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] != 2) && (gv_variableOptions[lp_player][0] == 1)) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gf_FZLooksLike(2, lv_a) == false) && (gv_variableOptions[lp_player][0] == 1)) {
             if ((gv_variableOptions[lp_player][1] == 1)) {
                 DialogControlSetVisible(gv_actionDialogItem[lv_a][1], PlayerGroupSingle(lp_player), true);
                 libNtve_gf_SetDialogItemText(gv_actionDialogItem[lv_a][1], (StringExternal("Param/Value/2605062C") + StringExternal("Param/Value/4798BD12") + StringExternal("Param/Value/E0659C8A")), PlayerGroupSingle(lp_player));
@@ -34282,7 +34283,7 @@ void gf_RAConsortActions (int lp_player) {
     // Implementation
     lv_a = 1;
     for ( ; ( (autoF274EACA_ai >= 0 && lv_a <= autoF274EACA_ae) || (autoF274EACA_ai < 0 && lv_a >= autoF274EACA_ae) ) ; lv_a += autoF274EACA_ai ) {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] != 2) && (gv_variableOptions[lp_player][0] == 0)) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gf_FZLooksLike(2, lv_a) == false) && (gv_variableOptions[lp_player][0] == 0)) {
             libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/74F4FBF3"), PlayerGroupSingle(lp_player));
             if ((gv_variableOptions[lp_player][1] == 1)) {
                 DialogControlSetVisible(gv_actionDialogItem[lv_a][1], PlayerGroupSingle(lp_player), true);
@@ -34325,7 +34326,7 @@ void gf_RAConsigliereActions (int lp_player) {
     // Implementation
     lv_a = 1;
     for ( ; ( (auto135EBECA_ai >= 0 && lv_a <= auto135EBECA_ae) || (auto135EBECA_ai < 0 && lv_a >= auto135EBECA_ae) ) ; lv_a += auto135EBECA_ai ) {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] != 2) && (gv_variableOptions[lp_player][0] == 0)) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gf_FZLooksLike(2, lv_a) == false) && (gv_variableOptions[lp_player][0] == 0)) {
             libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/A00BBA58"), PlayerGroupSingle(lp_player));
             if ((gv_variableOptions[lp_player][1] == 1)) {
                 DialogControlSetVisible(gv_actionDialogItem[lv_a][1], PlayerGroupSingle(lp_player), true);
@@ -34369,7 +34370,7 @@ void gf_RAFramerActions (int lp_player) {
     gf_ASE4B889E9BB91E8A792E889B2E98089E68BA9E6A1861(lp_player);
     lv_a = 1;
     for ( ; ( (auto273D88BD_ai >= 0 && lv_a <= auto273D88BD_ae) || (auto273D88BD_ai < 0 && lv_a >= auto273D88BD_ae) ) ; lv_a += auto273D88BD_ai ) {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] != 2) && (gv_variableOptions[lp_player][0] == 0)) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gf_FZLooksLike(2, lv_a) == false) && (gv_variableOptions[lp_player][0] == 0)) {
             libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/A95E2C2B"), PlayerGroupSingle(lp_player));
             if ((gv_variableOptions[lp_player][1] == 1)) {
                 DialogControlSetVisible(gv_actionDialogItem[lv_a][1], PlayerGroupSingle(lp_player), true);
@@ -34470,7 +34471,7 @@ void gf_RABlackmailerActions (int lp_player) {
     // Implementation
     lv_a = 1;
     for ( ; ( (autoF17E7D69_ai >= 0 && lv_a <= autoF17E7D69_ae) || (autoF17E7D69_ai < 0 && lv_a >= autoF17E7D69_ae) ) ; lv_a += autoF17E7D69_ai ) {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] != 2) && (gv_variableOptions[lp_player][0] == 0)) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gf_FZLooksLike(2, lv_a) == false) && (gv_variableOptions[lp_player][0] == 0)) {
             libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/DB9701BC"), PlayerGroupSingle(lp_player));
             if ((gv_variableOptions[lp_player][1] == 1)) {
                 DialogControlSetVisible(gv_actionDialogItem[lv_a][1], PlayerGroupSingle(lp_player), true);
@@ -34513,7 +34514,7 @@ void gf_RADisguiserActions (int lp_player) {
     // Implementation
     lv_a = 1;
     for ( ; ( (autoF58833D5_ai >= 0 && lv_a <= autoF58833D5_ae) || (autoF58833D5_ai < 0 && lv_a >= autoF58833D5_ae) ) ; lv_a += autoF58833D5_ai ) {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] != 2) && (gv_variableOptions[lp_player][0] == 1)) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gf_FZLooksLike(2, lv_a) == false) && (gv_variableOptions[lp_player][0] == 1)) {
             libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/B2FD6F2B"), PlayerGroupSingle(lp_player));
             if ((gv_variableOptions[lp_player][1] == 1)) {
                 DialogControlSetVisible(gv_actionDialogItem[lv_a][1], PlayerGroupSingle(lp_player), true);
@@ -34561,7 +34562,7 @@ void gf_RAPretenderActions (int lp_player) {
     else {
         lv_a = 1;
         for ( ; ( (autoA5816951_ai >= 0 && lv_a <= autoA5816951_ae) || (autoA5816951_ai < 0 && lv_a >= autoA5816951_ae) ) ; lv_a += autoA5816951_ai ) {
-            if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] != 2)) {
+            if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gf_FZLooksLike(2, lv_a) == false)) {
                 libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/5BA95C7A"), PlayerGroupSingle(lp_player));
                 if ((gv_variableOptions[lp_player][1] == 1)) {
                     DialogControlSetVisible(gv_actionDialogItem[lv_a][1], PlayerGroupSingle(lp_player), true);
@@ -34610,7 +34611,7 @@ void gf_RAPretenderActions2 (int lp_player) {
     else {
         lv_a = 1;
         for ( ; ( (auto25D11820_ai >= 0 && lv_a <= auto25D11820_ae) || (auto25D11820_ai < 0 && lv_a >= auto25D11820_ae) ) ; lv_a += auto25D11820_ai ) {
-            if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] != 5)) {
+            if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gf_FZLooksLike(5, lv_a) == false)) {
                 libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/7B880493"), PlayerGroupSingle(lp_player));
                 if ((gv_variableOptions[lp_player][1] == 1)) {
                     DialogControlSetVisible(gv_actionDialogItem[lv_a][1], PlayerGroupSingle(lp_player), true);
@@ -34798,7 +34799,7 @@ void gf_RABeguilerActions (int lp_player) {
     }
     lv_a = 1;
     for ( ; ( (auto6CA1CF07_ai >= 0 && lv_a <= auto6CA1CF07_ae) || (auto6CA1CF07_ai < 0 && lv_a >= auto6CA1CF07_ae) ) ; lv_a += auto6CA1CF07_ai ) {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (lv_a != lp_player) && (gv_variableOptions[lp_player][0] == 0) && (gv_variableOptions[lp_player][3] == 1) && ((gv_roles[lv_a][1] != 2) || (gv_roleOptions[2][11][4] == true))) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (lv_a != lp_player) && (gv_variableOptions[lp_player][0] == 0) && (gv_variableOptions[lp_player][3] == 1) && ((gf_FZLooksLike(2, lv_a) == false) || (gv_roleOptions[2][11][4] == true))) {
             libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/BF1B1D88"), PlayerGroupSingle(lp_player));
             if ((gv_variableOptions[lp_player][1] == 1)) {
                 DialogControlSetVisible(gv_actionDialogItem[lv_a][1], PlayerGroupSingle(lp_player), true);
@@ -34841,7 +34842,7 @@ void gf_RAEnforcerActions (int lp_player) {
     // Implementation
     lv_a = 1;
     for ( ; ( (autoC4B4C783_ai >= 0 && lv_a <= autoC4B4C783_ae) || (autoC4B4C783_ai < 0 && lv_a >= autoC4B4C783_ae) ) ; lv_a += autoC4B4C783_ai ) {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] != 5)) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gf_FZLooksLike(5, lv_a) == false)) {
             if ((gv_variableOptions[lp_player][1] > 0)) {
                 DialogControlSetVisible(gv_actionDialogItem[lv_a][1], PlayerGroupSingle(lp_player), true);
                 libNtve_gf_SetDialogItemText(gv_actionDialogItem[lv_a][1], (StringExternal("Param/Value/E7BD4BBA") + StringExternal("Param/Value/0815B19D") + StringExternal("Param/Value/BFE1A9C2")), PlayerGroupSingle(lp_player));
@@ -34898,7 +34899,7 @@ void gf_RADragonHeadActions (int lp_player) {
     // Implementation
     lv_a = 1;
     for ( ; ( (auto937A6AD3_ai >= 0 && lv_a <= auto937A6AD3_ae) || (auto937A6AD3_ai < 0 && lv_a >= auto937A6AD3_ae) ) ; lv_a += auto937A6AD3_ai ) {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] != 5) && (gv_variableOptions[lp_player][0] == 1)) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gf_FZLooksLike(5, lv_a) == false) && (gv_variableOptions[lp_player][0] == 1)) {
             if ((gv_variableOptions[lp_player][1] == 1)) {
                 DialogControlSetVisible(gv_actionDialogItem[lv_a][1], PlayerGroupSingle(lp_player), true);
                 libNtve_gf_SetDialogItemText(gv_actionDialogItem[lv_a][1], (StringExternal("Param/Value/7374813A") + StringExternal("Param/Value/6919F71E") + StringExternal("Param/Value/CC0F3B33")), PlayerGroupSingle(lp_player));
@@ -34948,7 +34949,7 @@ void gf_RALiaisonActions (int lp_player) {
     // Implementation
     lv_a = 1;
     for ( ; ( (autoBD192F29_ai >= 0 && lv_a <= autoBD192F29_ae) || (autoBD192F29_ai < 0 && lv_a >= autoBD192F29_ae) ) ; lv_a += autoBD192F29_ai ) {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] != 5) && (gv_variableOptions[lp_player][0] == 0)) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gf_FZLooksLike(5, lv_a) == false) && (gv_variableOptions[lp_player][0] == 0)) {
             libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/6FE2F9B9"), PlayerGroupSingle(lp_player));
             if ((gv_variableOptions[lp_player][1] == 1)) {
                 DialogControlSetVisible(gv_actionDialogItem[lv_a][1], PlayerGroupSingle(lp_player), true);
@@ -34991,7 +34992,7 @@ void gf_RAAdministratorActions (int lp_player) {
     // Implementation
     lv_a = 1;
     for ( ; ( (auto7B5164B6_ai >= 0 && lv_a <= auto7B5164B6_ae) || (auto7B5164B6_ai < 0 && lv_a >= auto7B5164B6_ae) ) ; lv_a += auto7B5164B6_ai ) {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] != 5) && (gv_variableOptions[lp_player][0] == 0)) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gf_FZLooksLike(5, lv_a) == false) && (gv_variableOptions[lp_player][0] == 0)) {
             libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/F468603A"), PlayerGroupSingle(lp_player));
             if ((gv_variableOptions[lp_player][1] == 1)) {
                 DialogControlSetVisible(gv_actionDialogItem[lv_a][1], PlayerGroupSingle(lp_player), true);
@@ -35035,7 +35036,7 @@ void gf_RAForgerActions (int lp_player) {
     gf_ASE4B889E9BB91E8A792E889B2E98089E68BA9E6A1861(lp_player);
     lv_a = 1;
     for ( ; ( (auto6F358416_ai >= 0 && lv_a <= auto6F358416_ae) || (auto6F358416_ai < 0 && lv_a >= auto6F358416_ae) ) ; lv_a += auto6F358416_ai ) {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] != 5) && (gv_variableOptions[lp_player][0] == 0)) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gf_FZLooksLike(5, lv_a) == false) && (gv_variableOptions[lp_player][0] == 0)) {
             libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/6374D20C"), PlayerGroupSingle(lp_player));
             if ((gv_variableOptions[lp_player][1] == 1)) {
                 DialogControlSetVisible(gv_actionDialogItem[lv_a][1], PlayerGroupSingle(lp_player), true);
@@ -35136,7 +35137,7 @@ void gf_RASilencerActions (int lp_player) {
     // Implementation
     lv_a = 1;
     for ( ; ( (auto75393E35_ai >= 0 && lv_a <= auto75393E35_ae) || (auto75393E35_ai < 0 && lv_a >= auto75393E35_ae) ) ; lv_a += auto75393E35_ai ) {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] != 5) && (gv_variableOptions[lp_player][0] == 0)) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gf_FZLooksLike(5, lv_a) == false) && (gv_variableOptions[lp_player][0] == 0)) {
             libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/FDC1BFAE"), PlayerGroupSingle(lp_player));
             if ((gv_variableOptions[lp_player][1] == 1)) {
                 DialogControlSetVisible(gv_actionDialogItem[lv_a][1], PlayerGroupSingle(lp_player), true);
@@ -35179,7 +35180,7 @@ void gf_RAInformantActions (int lp_player) {
     // Implementation
     lv_a = 1;
     for ( ; ( (autoF4B52568_ai >= 0 && lv_a <= autoF4B52568_ae) || (autoF4B52568_ai < 0 && lv_a >= autoF4B52568_ae) ) ; lv_a += autoF4B52568_ai ) {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gv_roles[lv_a][1] != 5) && (gv_variableOptions[lp_player][0] == 1)) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (gf_FZLooksLike(5, lv_a) == false) && (gv_variableOptions[lp_player][0] == 1)) {
             libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/7EE53BB3"), PlayerGroupSingle(lp_player));
             if ((gv_variableOptions[lp_player][1] == 1)) {
                 DialogControlSetVisible(gv_actionDialogItem[lv_a][1], PlayerGroupSingle(lp_player), true);
@@ -35355,7 +35356,7 @@ void gf_RADeceiverActions (int lp_player) {
     }
     lv_a = 1;
     for ( ; ( (auto0448F320_ai >= 0 && lv_a <= auto0448F320_ae) || (auto0448F320_ai < 0 && lv_a >= auto0448F320_ae) ) ; lv_a += auto0448F320_ai ) {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (lv_a != lp_player) && (gv_variableOptions[lp_player][0] == 0) && (gv_variableOptions[lp_player][3] == 1) && ((gv_roles[lv_a][1] != 5) || (gv_roleOptions[5][11][4] == true))) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (lv_a != lp_player) && (gv_variableOptions[lp_player][0] == 0) && (gv_variableOptions[lp_player][3] == 1) && ((gf_FZLooksLike(5, lv_a) == false) || (gv_roleOptions[5][11][4] == true))) {
             libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/738078AA"), PlayerGroupSingle(lp_player));
             if ((gv_variableOptions[lp_player][1] == 1)) {
                 DialogControlSetVisible(gv_actionDialogItem[lv_a][1], PlayerGroupSingle(lp_player), true);
@@ -74165,7 +74166,7 @@ bool gt_ASActionButtonAMafia2_Func (bool testConds, bool runActions) {
             gf_SKA2_2_mitan(lv_source, lv_target);
         }
 
-        if ((gv_roles[lv_source][1] == 2) && (gv_roles[lv_source][0] == 11) && (gv_action[lv_source][0] != lv_target) && (gv_variableOptions[lv_source][0] == 0) && (gv_variableOptions[lv_source][3] == 1) && ((lv_target == lv_source) || (gv_roles[lv_target][1] != 2) || (gv_roleOptions[2][11][4] == true))) {
+        if ((gv_roles[lv_source][1] == 2) && (gv_roles[lv_source][0] == 11) && (gv_action[lv_source][0] != lv_target) && (gv_variableOptions[lv_source][0] == 0) && (gv_variableOptions[lv_source][3] == 1) && ((lv_target == lv_source) || (gf_FZLooksLike(2, lv_target) == false) || (gv_roleOptions[2][11][4] == true))) {
             gf_SKA2_2_qipianzhe(lv_source, lv_target);
         }
 
@@ -74452,7 +74453,7 @@ bool gt_ASActionButtonATriad2_Func (bool testConds, bool runActions) {
             gf_SKA2_5_wuxian(lv_source, lv_target);
         }
 
-        if ((gv_roles[lv_source][1] == 5) && (gv_roles[lv_source][0] == 11) && (gv_action[lv_source][0] != lv_target) && (gv_variableOptions[lv_source][0] == 0) && (gv_variableOptions[lv_source][3] == 1) && ((lv_target == lv_source) || (gv_roles[lv_target][1] != 5) || (gv_roleOptions[5][11][4] == true))) {
+        if ((gv_roles[lv_source][1] == 5) && (gv_roles[lv_source][0] == 11) && (gv_action[lv_source][0] != lv_target) && (gv_variableOptions[lv_source][0] == 0) && (gv_variableOptions[lv_source][3] == 1) && ((lv_target == lv_source) || (gf_FZLooksLike(5, lv_target) == false) || (gv_roleOptions[5][11][4] == true))) {
             gf_SKA2_5_mihuo(lv_source, lv_target);
         }
 
@@ -74868,7 +74869,7 @@ bool gt_ASMafiaTarget_Func (bool testConds, bool runActions) {
     }
 
     if ((lv_target > 0)) {
-        if ((gv_suggest[lv_source] != lv_target) && (gv_roles[lv_target][1] != 2)) {
+        if ((gv_suggest[lv_source] != lv_target) && (gf_FZLooksLike(2, lv_target) == false)) {
             if ((lv_target == lv_source) && (gv_suggest[lv_source] != 0)) {
                 gv_mafiaKillVotes[gv_suggest[lv_source]] -= 1;
                 if ((lv_x[1] > 0) && (gv_suggest[lv_x[1]] > 0)) {
@@ -75365,7 +75366,7 @@ bool gt_ASTriadTarget_Func (bool testConds, bool runActions) {
     }
 
     if ((lv_target > 0)) {
-        if ((gv_suggest[lv_source] != lv_target) && (gv_roles[lv_target][1] != 5)) {
+        if ((gv_suggest[lv_source] != lv_target) && (gf_FZLooksLike(5, lv_target) == false)) {
             if ((lv_target == lv_source) && (gv_suggest[lv_source] != 0)) {
                 gv_triadKillVotes[gv_suggest[lv_source]] -= 1;
                 if ((lv_x[1] > 0) && (gv_suggest[lv_x[1]] > 0)) {
@@ -76215,7 +76216,7 @@ bool gt_ASAbilityButton_Func (bool testConds, bool runActions) {
             lv_a = 1;
             for ( ; ( (auto3F146436_ai >= 0 && lv_a <= auto3F146436_ae) || (auto3F146436_ai < 0 && lv_a >= auto3F146436_ae) ) ; lv_a += auto3F146436_ai ) {
                 DialogControlSetVisible(gv_actionDialogItem[lv_a][2], PlayerGroupSingle(EventPlayer()), false);
-                if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true) && (((gv_roles[EventPlayer()][1] == 2) && ((gv_roles[lv_a][1] != 2) || (gv_roleOptions[2][9][1] == true))) || ((gv_roles[EventPlayer()][1] == 5) && ((gv_roles[lv_a][1] != 5) || (gv_roleOptions[5][9][1] == true)))) && (lv_a != EventPlayer())) {
+                if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true) && (((gv_roles[EventPlayer()][1] == 2) && ((gf_FZLooksLike(2, lv_a) == false) || (gv_roleOptions[2][9][1] == true))) || ((gv_roles[EventPlayer()][1] == 5) && ((gf_FZLooksLike(5, lv_a) == false) || (gv_roleOptions[5][9][1] == true)))) && (lv_a != EventPlayer())) {
                     libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/77646EE9"), PlayerGroupSingle(EventPlayer()));
                     libNtve_gf_SetDialogItemColor(gv_actionDialogItem[lv_a][5], Color(100.00, 100.00, 100.00), PlayerGroupSingle(EventPlayer()));
                     DialogControlSetSize(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(EventPlayer()), 120, 30);
@@ -76736,7 +76737,7 @@ bool gt_ASKidnapperAction_Func (bool testConds, bool runActions) {
     lv_a = 1;
     for ( ; ( (auto473D41D4_ai >= 0 && lv_a <= auto473D41D4_ae) || (auto473D41D4_ai < 0 && lv_a >= auto473D41D4_ae) ) ; lv_a += auto473D41D4_ai ) {
         DialogControlSetVisible(gv_actionDialogItem[lv_a][2], PlayerGroupSingle(EventPlayer()), false);
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true) && (((gv_roles[EventPlayer()][1] == 2) && ((gv_roles[lv_a][1] != 2) || (gv_roleOptions[2][9][1] == true))) || ((gv_roles[EventPlayer()][1] == 5) && ((gv_roles[lv_a][1] != 5) || (gv_roleOptions[5][9][1] == true)))) && (lv_a != EventPlayer())) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true) && (PlayerGroupHasPlayer(gv_currentPlayers, lv_a) == true) && (((gv_roles[EventPlayer()][1] == 2) && ((gf_FZLooksLike(2, lv_a) == false) || (gv_roleOptions[2][9][1] == true))) || ((gv_roles[EventPlayer()][1] == 5) && ((gf_FZLooksLike(5, lv_a) == false) || (gv_roleOptions[5][9][1] == true)))) && (lv_a != EventPlayer())) {
             libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/1D1D69C8"), PlayerGroupSingle(EventPlayer()));
             libNtve_gf_SetDialogItemColor(gv_actionDialogItem[lv_a][5], Color(100.00, 100.00, 100.00), PlayerGroupSingle(EventPlayer()));
             DialogControlSetSize(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(EventPlayer()), 120, 30);
@@ -77009,7 +77010,7 @@ bool gt_ASThreatAction_Func (bool testConds, bool runActions) {
     lv_a = 1;
     for ( ; ( (autoB59EA542_ai >= 0 && lv_a <= autoB59EA542_ae) || (autoB59EA542_ai < 0 && lv_a >= autoB59EA542_ae) ) ; lv_a += autoB59EA542_ai ) {
         DialogControlSetVisible(gv_actionDialogItem[lv_a][2], PlayerGroupSingle(EventPlayer()), false);
-        if ((((gv_roles[EventPlayer()][1] == 2) && (gv_roles[lv_a][1] != 2)) || ((gv_roles[EventPlayer()][1] == 5) && (gv_roles[lv_a][1] != 5))) && (lv_a != EventPlayer())) {
+        if ((((gv_roles[EventPlayer()][1] == 2) && (gf_FZLooksLike(2, lv_a) == false)) || ((gv_roles[EventPlayer()][1] == 5) && (gf_FZLooksLike(5, lv_a) == false))) && (lv_a != EventPlayer())) {
             libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/BEFAED1B"), PlayerGroupSingle(EventPlayer()));
             libNtve_gf_SetDialogItemColor(gv_actionDialogItem[lv_a][5], Color(100.00, 100.00, 100.00), PlayerGroupSingle(EventPlayer()));
             DialogControlSetSize(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(EventPlayer()), 120, 30);
@@ -77142,7 +77143,7 @@ bool gt_ASDisturbAction_Func (bool testConds, bool runActions) {
     lv_a = 1;
     for ( ; ( (autoD3D1F727_ai >= 0 && lv_a <= autoD3D1F727_ae) || (autoD3D1F727_ai < 0 && lv_a >= autoD3D1F727_ae) ) ; lv_a += autoD3D1F727_ai ) {
         DialogControlSetVisible(gv_actionDialogItem[lv_a][2], PlayerGroupSingle(EventPlayer()), false);
-        if ((((gv_roles[EventPlayer()][1] == 2) && ((gv_roles[lv_a][1] != 2) || (gv_roleOptions[2][9][1] == true))) || ((gv_roles[EventPlayer()][1] == 5) && ((gv_roles[lv_a][1] != 5) || (gv_roleOptions[5][9][1] == true)))) && (lv_a != EventPlayer())) {
+        if ((((gv_roles[EventPlayer()][1] == 2) && ((gf_FZLooksLike(2, lv_a) == false) || (gv_roleOptions[2][9][1] == true))) || ((gv_roles[EventPlayer()][1] == 5) && ((gf_FZLooksLike(5, lv_a) == false) || (gv_roleOptions[5][9][1] == true)))) && (lv_a != EventPlayer())) {
             libNtve_gf_SetDialogItemTooltip(gv_actionDialogItem[lv_a][5], StringExternal("Param/Value/DD6E9C0B"), PlayerGroupSingle(EventPlayer()));
             libNtve_gf_SetDialogItemColor(gv_actionDialogItem[lv_a][5], Color(100.00, 100.00, 100.00), PlayerGroupSingle(EventPlayer()));
             DialogControlSetSize(gv_actionDialogItem[lv_a][5], PlayerGroupSingle(EventPlayer()), 120, 30);
@@ -77801,7 +77802,7 @@ bool gt_ASKidnap_Func (bool testConds, bool runActions) {
 
     }
     if ((lv_target > 0)) {
-        if (((gv_roles[lv_source][1] == 2) || (gv_roles[lv_source][1] == 5)) && (gv_roles[lv_source][0] == 9) && (gv_action[lv_source][0] != lv_target) && (((gv_roles[lv_source][1] == 2) && ((gv_roles[lv_target][1] != 2) || (gv_roleOptions[2][9][1] == true))) || ((gv_roles[lv_source][1] == 5) && ((gv_roles[lv_target][1] != 5) || (gv_roleOptions[5][9][1] == true))))) {
+        if (((gv_roles[lv_source][1] == 2) || (gv_roles[lv_source][1] == 5)) && (gv_roles[lv_source][0] == 9) && (gv_action[lv_source][0] != lv_target) && (((gv_roles[lv_source][1] == 2) && ((gf_FZLooksLike(2, lv_target) == false) || (gv_roleOptions[2][9][1] == true))) || ((gv_roles[lv_source][1] == 5) && ((gf_FZLooksLike(5, lv_target) == false) || (gv_roleOptions[5][9][1] == true))))) {
             lv_a = 1;
             for ( ; ( (auto803AC080_ai >= 0 && lv_a <= auto803AC080_ae) || (auto803AC080_ai < 0 && lv_a >= auto803AC080_ae) ) ; lv_a += auto803AC080_ai ) {
                 if ((gv_hiddenButton[EventPlayer()][lv_a] == true)) {
@@ -77942,7 +77943,7 @@ bool gt_ASKidnap2_Func (bool testConds, bool runActions) {
     }
 
     if ((lv_target > 0)) {
-        if (((gv_roles[lv_source][1] == 2) || (gv_roles[lv_source][1] == 5)) && (gv_roles[lv_source][0] == 9) && (gv_action[lv_source][0] != lv_target) && (((gv_roles[lv_source][1] == 2) && ((gv_roles[lv_target][1] != 2) || (gv_roleOptions[2][9][1] == true))) || ((gv_roles[lv_source][1] == 5) && ((gv_roles[lv_target][1] != 5) || (gv_roleOptions[5][9][1] == true))))) {
+        if (((gv_roles[lv_source][1] == 2) || (gv_roles[lv_source][1] == 5)) && (gv_roles[lv_source][0] == 9) && (gv_action[lv_source][0] != lv_target) && (((gv_roles[lv_source][1] == 2) && ((gf_FZLooksLike(2, lv_target) == false) || (gv_roleOptions[2][9][1] == true))) || ((gv_roles[lv_source][1] == 5) && ((gf_FZLooksLike(5, lv_target) == false) || (gv_roleOptions[5][9][1] == true))))) {
             if ((lv_target == lv_source) && (gv_action[lv_source][0] != 0)) {
                 gf_CBSystemMessage((StringExternal("Param/Value/9D8B0C5A")), lv_source, lv_source, 0, SoundLink("Silent", -1), Color(0.00, 0.00, 0.00));
                 gv_action[lv_source][0] = 0;
@@ -78035,7 +78036,7 @@ bool gt_ASThreat_Func (bool testConds, bool runActions) {
 
     }
     if ((lv_target > 0)) {
-        if (((gv_roles[lv_source][1] == 2) || (gv_roles[lv_source][1] == 5)) && (gv_roles[lv_source][0] == 12) && (gv_action[lv_source][0] != lv_target) && (((gv_roles[lv_source][1] == 2) && (gv_roles[lv_target][1] != 2)) || ((gv_roles[lv_source][1] == 5) && (gv_roles[lv_target][1] != 5)))) {
+        if (((gv_roles[lv_source][1] == 2) || (gv_roles[lv_source][1] == 5)) && (gv_roles[lv_source][0] == 12) && (gv_action[lv_source][0] != lv_target) && (((gv_roles[lv_source][1] == 2) && (gf_FZLooksLike(2, lv_target) == false)) || ((gv_roles[lv_source][1] == 5) && (gf_FZLooksLike(5, lv_target) == false)))) {
             lv_a = 1;
             for ( ; ( (autoD3CABF07_ai >= 0 && lv_a <= autoD3CABF07_ae) || (autoD3CABF07_ai < 0 && lv_a >= autoD3CABF07_ae) ) ; lv_a += autoD3CABF07_ai ) {
                 if ((gv_hiddenButton[EventPlayer()][lv_a] == true) && (gv_dayActionB[EventPlayer()] == false)) {
@@ -78138,7 +78139,7 @@ bool gt_ASThreatB_Func (bool testConds, bool runActions) {
 
     }
     if ((lv_target > 0)) {
-        if (((gv_roles[lv_source][1] == 2) || (gv_roles[lv_source][1] == 5)) && (gv_roles[lv_source][0] == 12) && (gv_action[lv_source][1] != lv_target) && (((gv_roles[lv_source][1] == 2) && (gv_roles[lv_target][1] != 2)) || ((gv_roles[lv_source][1] == 5) && (gv_roles[lv_target][1] != 5)))) {
+        if (((gv_roles[lv_source][1] == 2) || (gv_roles[lv_source][1] == 5)) && (gv_roles[lv_source][0] == 12) && (gv_action[lv_source][1] != lv_target) && (((gv_roles[lv_source][1] == 2) && (gf_FZLooksLike(2, lv_target) == false)) || ((gv_roles[lv_source][1] == 5) && (gf_FZLooksLike(5, lv_target) == false)))) {
             lv_a = 1;
             for ( ; ( (auto52C4C943_ai >= 0 && lv_a <= auto52C4C943_ae) || (auto52C4C943_ai < 0 && lv_a >= auto52C4C943_ae) ) ; lv_a += auto52C4C943_ai ) {
                 if ((gv_hiddenButton[EventPlayer()][lv_a] == true) && (gv_dayAction[EventPlayer()] == false)) {
@@ -100709,6 +100710,19 @@ bool gf_FZChatHidden (int lp_speaker, int lp_listener) {
         return true;
     }
     if ((gv_roles[lp_speaker][1] == 1) && (gv_roles[lp_speaker][0] == 33) && (gv_fzLeader[lp_speaker] != 0) && (gv_fzLeader[lp_speaker] == lp_listener)) {
+        return true;
+    }
+    return false;
+}
+
+bool gf_FZLooksLike (int lp_pool, int lp_who) {
+    if ((lp_who < 1) || (lp_who > 15)) {
+        return false;
+    }
+    if ((gv_roles[lp_who][1] == lp_pool)) {
+        return true;
+    }
+    if ((gv_roles[lp_who][1] == 1) && (gv_roles[lp_who][0] == 33) && (gv_fzPool[lp_who] == lp_pool)) {
         return true;
     }
     return false;
