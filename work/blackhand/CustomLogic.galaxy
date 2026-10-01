@@ -86204,23 +86204,23 @@ void gf_VHLZSOptions () {
         lv_str[4] = "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0";
         gv_setupInfo[1] = StringExternal("Param/Value/HLZSSUBA");
         if ((PlayerGroupCount(gv_currentPlayers) == 15)) {
-            lv_category = "4 4 4 4 4 4 4 4 4 2 4 4 4 4 4";
-            lv_role = "2 2 2 2 2 6 5 5 4 2 3 3 3 12 20";
+            lv_category = "1 4 4 4 4 4 4 4 4 2 4 4 4 4 4";
+            lv_role = "6 2 2 2 2 6 5 5 4 2 3 3 3 12 20";
         }
 
         if ((PlayerGroupCount(gv_currentPlayers) == 14)) {
-            lv_category = "4 4 4 4 4 4 4 4 2 4 4 4 4 4";
-            lv_role = "2 2 2 2 6 5 5 4 2 3 3 3 12 20";
+            lv_category = "1 4 4 4 4 4 4 4 2 4 4 4 4 4";
+            lv_role = "6 2 2 2 6 5 5 4 2 3 3 3 12 20";
         }
 
         if ((PlayerGroupCount(gv_currentPlayers) == 13)) {
-            lv_category = "4 4 4 4 4 4 4 2 4 4 4 4 4";
-            lv_role = "2 2 2 6 5 5 4 2 3 3 3 12 20";
+            lv_category = "1 4 4 4 4 4 4 2 4 4 4 4 4";
+            lv_role = "6 2 2 6 5 5 4 2 3 3 3 12 20";
         }
 
         if ((PlayerGroupCount(gv_currentPlayers) == 12)) {
-            lv_category = "4 4 4 4 4 4 2 4 4 4 4 4";
-            lv_role = "2 2 6 5 5 4 2 3 3 3 12 20";
+            lv_category = "1 4 4 4 4 4 2 4 4 4 4 4";
+            lv_role = "6 2 6 5 5 4 2 3 3 3 12 20";
         }
 
     }

@@ -389,7 +389,7 @@ def harmonize(text: str) -> str:
     return text
 
 
-def loading_body(path, lines, title='本版更新：', keep='newest'):
+def loading_body(path, lines, title='本版更新：', keep='newest', prefix='· '):
     """把给定的说明行渲染进加载页面正文（幂等：先按标记截断再追加）。
 
     说明行按「旧 → 新」传入；若整块超过编辑器上限，则**保留最新的若干条**，
@@ -411,14 +411,14 @@ def loading_body(path, lines, title='本版更新：', keep='newest'):
     for note in order:
         cand = kept + [note] if keep == 'front' else [note] + kept
 
-        if loading_units(head + mark + ''.join(f'<n/>· {t}' for t in cand)) > budget:
+        if loading_units(head + mark + ''.join(f'<n/>{prefix}{t}' for t in cand)) > budget:
             break
 
         kept = cand
 
     assert loading_units(head + mark) <= budget, '加载页面固定前言本身已超长，需先精简正文'
     dropped = len(lines) - len(kept)
-    out = head + mark + ''.join(f'<n/>· {t}' for t in kept)
+    out = head + mark + ''.join(f'<n/>{prefix}{t}' for t in kept)
 
     tail = '最新' if keep == 'newest' else '靠前'
     print(f'   加载页面 {loading_units(out)}/{LOADING_LIMIT}（{tail} {len(kept)} 条'
@@ -499,10 +499,15 @@ def apply_file(path, notes_path, defer_strings=False, overrides=None):
     多发布线（主图 / 备线）只差一个地图名时用这个口子改 `DocInfo/Name`，避免为了改名
     单独调一次 `set` —— 那会第二次写 zhCN，白胖约 300 KB。
     """
-    blocks, cur, loading_spec, loading_keep = [], None, 'none', 'newest'
+    blocks, cur, loading_spec, loading_keep, loading_lines = [], None, 'none', 'newest', []
     for raw in Path(notes_path).read_text(encoding='utf-8').splitlines():
         line = raw.rstrip()
         if not line.strip() or line.lstrip().startswith('#'):
+            continue
+        if line.startswith('@loading-line'):
+            text = line.split(None, 1)[1].strip() if len(line.split(None, 1)) > 1 else ''
+            assert text, '@loading-line 后面要写加载页上的那一行'
+            loading_lines.append(text)
             continue
         if line.startswith('@loading-keep'):
             parts = line.split()
@@ -553,7 +558,10 @@ def apply_file(path, notes_path, defer_strings=False, overrides=None):
         items += b['notes']
         out.append((b['version'], [n for n, _ in b['notes']], b['notes']))
 
-    if items and loading_spec.strip().lower() != 'none':
+    if loading_lines:
+        items.append((LOADING_KEY, loading_body(path, loading_lines, keep='front', prefix='')))
+        print(f'  加载页面: 指定 {len(loading_lines)} 条')
+    elif items and loading_spec.strip().lower() != 'none':
         shown = pick_notes(path, loading_spec, dict(items))
         items.append((LOADING_KEY, loading_body(path, shown, keep=loading_keep)))
         print(f'  加载页面: {loading_spec} → {len(shown)} 条')

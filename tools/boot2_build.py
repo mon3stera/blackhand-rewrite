@@ -706,6 +706,10 @@ def main() -> int:
                 base = bh_meta.desc_long(out)      # 已清洗掉作废的「未取得授权…下架」句
             assert base, '读不到地图详情正文，无法按线改写 DocInfo/DescLong'
             overrides['DocInfo/DescLong'] = (args.desc_prepend or '') + base + (args.desc_append or '')
+            overrides['LoadingScreen/Tip'] = (
+                '企鹅群  795173021<n/>更新日志与百科： https://mafia.melodify.cn'
+                '<n/>特别鸣谢《忘却的旋律》的网页支持'
+            )
         res, extra = bh_meta.apply_file(out, NOTES_SRC, defer_strings=True, overrides=overrides or None)
         print(f"6a) 补丁说明 {[v for v, _, _ in res]}；加载页面已同步 ← {NOTES_SRC.name}")
         if args.name:

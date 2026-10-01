@@ -12,9 +12,9 @@ Param/Value/JSBTN=扑向一名玩家
 Param/Value/JSSIZE=<s val="ModLeftSize16Bold">
 Param/Value/JSCLOSE=</s>
 Param/Value/JSDASH= - 
-Param/Value/JSLEAP= 是一位精神病患者！他突然暴起，向 
+Param/Value/JSLEAP= 是一位<c val="E85D4C">精神病患者</c>！他突然暴起，向 
 Param/Value/JSLEAP2= 扑了过去！
-Param/Value/JSKILL= 被精神病患者撕碎了。
+Param/Value/JSKILL= 被<c val="E85D4C">精神病患者</c>撕碎了。
 Param/Value/JSDIE= 在疯狂的攻击中突发急性精神崩溃，与目标一同倒在血泊中暴毙身亡。
 Param/Value/JSSPARE= 便陷入了极度疯癫抽搐，口吐白沫狂笑不止！由于其完全丧失刑事责任能力，法庭中止了本次处决！
 Param/Value/JSBAN=<s val="ModLeftSize16Bold">根据法庭的条例，今日无法再审判精神病患者。</s>
