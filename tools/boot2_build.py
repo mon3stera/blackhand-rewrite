@@ -157,6 +157,19 @@ CUSTOM_SOUNDS = [
     ('BHNightMusic', DDS_DIR / 'BHNightMusic.ogg', r'Assets\Sounds\BHNightMusic.ogg', NIGHT_SOUND),
 ]
 
+MODEL_DATA = r'Base.SC2Data\GameData\ModelData.xml'
+# 奶龙只进模型表，不新建单位或 Actor。贴图路径必须与 M3 内嵌路径一致。
+NAILONG_MODEL = """    <CModel id="Nailong" parent="Unit">
+        <Model value="Assets\\Units\\Nailong\\Nailong.m3"/>
+        <Occlusion value="Show"/>
+    </CModel>
+"""
+# (模型 id, m3 源, m3 成员, 贴图源, 贴图成员, CModel 片段)
+CUSTOM_MODELS = [
+    ('Nailong', DDS_DIR / 'Nailong.m3', r'Assets\Units\Nailong\Nailong.m3',
+     DDS_DIR / 'Nailong_Diffuse.dds', r'Assets\Textures\Nailong_Diffuse.dds', NAILONG_MODEL),
+]
+
 
 def write_sounds(archive: Path) -> list[str]:
     """把自加音效打进地图，并在 SoundData 里登记对应 CSound。"""
@@ -181,6 +194,36 @@ def write_sounds(archive: Path) -> list[str]:
 
     for sid, _, _, _ in CUSTOM_SOUNDS:
         assert f'id="{sid}"' in xml, f'SoundData 没有 {sid}'
+
+    return members
+
+
+def write_models(archive: Path) -> list[str]:
+    """把自加模型打进地图，并在 ModelData 里登记对应 CModel。"""
+    xml = sc2map.read(archive, MODEL_DATA).decode('utf-8')
+    members = []
+    added = []
+    for mid, m3, m3member, tex, texmember, _ in CUSTOM_MODELS:
+        for src, member in ((m3, m3member), (tex, texmember)):
+            assert src.exists(), f'模型源文件不存在: {src}'
+            data = src.read_bytes()
+            put(archive, member, data)
+            assert sc2map.read(archive, member) == data, f'模型回读不一致: {member}'
+            members.append(member)
+
+        if f'id="{mid}"' not in xml:
+            added.append(mid)
+
+    if added:
+        assert xml.rstrip().endswith('</Catalog>'), 'ModelData 结尾不是 </Catalog>'
+        blocks = ''.join(b for mid, _, _, _, _, b in CUSTOM_MODELS if mid in added)
+        xml = xml.rstrip()[: -len('</Catalog>')] + blocks + '</Catalog>\n'
+        put(archive, MODEL_DATA, xml.encode('utf-8'))
+        xml = sc2map.read(archive, MODEL_DATA).decode('utf-8')
+
+    for mid, _, m3member, _, texmember, _ in CUSTOM_MODELS:
+        assert f'id="{mid}"' in xml, f'ModelData 没有 {mid}'
+        assert m3member.replace('\\', '\\\\') in xml or m3member in xml, f'{mid} 的模型路径没写进 ModelData'
 
     return members
 
@@ -643,6 +686,8 @@ def main() -> int:
     print(f"5) 根目录贴图 {len(dds)} 张 ← {DDS_DIR.name}/: {dds}")
     sounds = write_sounds(out)
     print(f"5c) 自加音效 {len(sounds)} 个 ← {DDS_DIR.name}/: {[Path(m).name for m in sounds]}")
+    models = write_models(out)
+    print(f"5d) 自加模型 {len(models)} 个 ← {DDS_DIR.name}/: {[Path(m).name for m in models]}")
     cover = write_cover(out, args.cover)
     print(f"5b) 街机封面 {args.cover} → {cover}")
 
@@ -776,12 +821,16 @@ def main() -> int:
     sound_xml = sc2map.read(out, SOUND_DATA).decode('utf-8')
     sounds_missing = [sid for sid, _, member, _ in CUSTOM_SOUNDS
                       if Path(member).name not in files or f'id="{sid}"' not in sound_xml]
+    model_xml = sc2map.read(out, MODEL_DATA).decode('utf-8')
+    models_missing = [mid for mid, _, m3member, _, texmember, _ in CUSTOM_MODELS
+                      if Path(m3member).name not in files or Path(texmember).name not in files
+                      or f'id="{mid}"' not in model_xml]
     cover_missing = [m for m in ('Preview.dds',) if m not in files]
 
     print(f"   回读: zhCN {len(zh.splitlines())} 行；Triggers={'Triggers' in files}；"
           f"BankList={'BankList.xml' in files}；自加键缺失={missing or '无'}；"
           f"样式缺失={style_missing or '无'}；字体缺失={font_missing or '无'}；贴图缺失={dds_missing or '无'}；"
-          f"音效缺失={sounds_missing or '无'}；"
+          f"音效缺失={sounds_missing or '无'}；模型缺失={models_missing or '无'}；"
           f"封面缺失={cover_missing or '无'}；说明缺失={notes_missing or '无'}")
 
     if missing:
@@ -806,6 +855,10 @@ def main() -> int:
 
     if sounds_missing:
         print(f"✗ 自加音效缺失 {sounds_missing}，对应 SoundPlay 会没声音")
+        return 1
+
+    if models_missing:
+        print(f"✗ 自加模型缺失 {models_missing}，数据编辑器里看不到这个模型")
         return 1
 
     if cover_missing:
