@@ -338,4 +338,13 @@ Param/Value/SKBURSTEND=</s>
 Param/Value/SKBURSTCANCEL=<s val="ModLeftSize16"><c val="FF4444">已取消第二个目标。</c></s>
 Param/Value/NLMODEL=<s val="ModCenterSize24Bold"><c val="88FF88">奶龙</c></s>
 Param/Value/NLMODELTIP=<s val="ModCenterSize24Bold">模型选择</s><n/><s val="ModCenterSize20">没有攻击和死亡动画。</s>
+Param/Value/GPREFERUSE=写法：-gprefer 序号 拼音。例如 -gprefer 3 jiaofu。只写序号会清掉他的预占。请在开局发牌、取名字之前用。
+Param/Value/GPREFERLATE=已经发牌了，预占来不及。请在取名字之前用。
+Param/Value/GPREFERWHO=没有这个玩家。序号是大厅里的玩家号。
+Param/Value/GPREFERBAD=没有这个角色拼音。
+Param/Value/GPREFEROK=已给 
+Param/Value/GPREFEROK2= 号预占 
+Param/Value/GPREFEROK3=。名单里有这个角色才会给到他。
+Param/Value/GPREFERCLR=已清掉 
+Param/Value/GPREFERCLR2= 号的预占。
 

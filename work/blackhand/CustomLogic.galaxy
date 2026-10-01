@@ -2066,6 +2066,7 @@ trigger gt_UnhideDonation;
 trigger gt_Blacklist;
 trigger gt_E7A681E794A8E998B5E890A5;
 trigger gt_Prefer;
+trigger gt_GPrefer; // 开局取名前按玩家号给别人写预占
 trigger gt_BHAssert;
 trigger gt_TXGuess; // 天选者(3/32) -guess 猜测身份
 trigger gt_GRChat; // 感染者(3/22) -infect / -dead
@@ -53967,6 +53968,7 @@ bool gt_Init2_Func (bool testConds, bool runActions) {
     TriggerEnable(gt_UnhideDonation, true);
     TriggerEnable(gt_Blacklist, true);
     TriggerEnable(gt_Prefer, true);
+    TriggerEnable(gt_GPrefer, true);
     if ((GameAttributeGameValue("[bnet:local/0.0/179588]1") != "0001")) {
         Wait(3.0, c_timeGame);
         UIClearMessages(PlayerGroupAll(), c_messageAreaDirective);
@@ -57321,6 +57323,7 @@ bool gt_noprivilege_Func (bool testConds, bool runActions) {
 
     TriggerEnable(gt_Blacklist, false);
     TriggerEnable(gt_Prefer, false);
+    TriggerEnable(gt_GPrefer, false);
     TriggerEnable(gt_Change, false);
     TriggerEnable(gt_LogarithmicZ2232, false);
     TriggerEnable(gt_LogarithmicZ22322, false);
@@ -58326,6 +58329,7 @@ bool gt_SetupDone_Func (bool testConds, bool runActions) {
     TriggerEnable(gt_Magnify, true);
     TriggerEnable(gt_Blacklist, false);
     TriggerEnable(gt_Prefer, false);
+    TriggerEnable(gt_GPrefer, false);
     UIClearMessages(PlayerGroupAll(), c_messageAreaDirective);
     lv_a = 1;
     for ( ; ( (auto356C4CB6_ai >= 0 && lv_a <= auto356C4CB6_ae) || (auto356C4CB6_ai < 0 && lv_a >= auto356C4CB6_ae) ) ; lv_a += auto356C4CB6_ai ) {
@@ -63609,6 +63613,104 @@ void gt_Prefer_Init () {
     gt_Prefer = TriggerCreate("gt_Prefer_Func");
     TriggerEnable(gt_Prefer, false);
     TriggerAddEventChatMessage(gt_Prefer, c_playerAny, "-prefer ", false);
+}
+
+// 开局发牌前按玩家号给别人写预占。发牌（gv_gameStarted）之后预占已经吃掉，再写没用。
+bool gt_GPrefer_Func (bool testConds, bool runActions) {
+    int lv_who;
+    int lv_i;
+    int lv_j;
+    string lv_msg;
+    string lv_s;
+    text lv_r;
+
+    lv_who = 0;
+    lv_msg = "";
+    lv_s = "";
+    lv_r = null;
+
+    if (testConds) {
+        lv_msg = EventChatMessage(false);
+        if (!((StringLength(lv_msg) >= 8) && (StringSub(lv_msg, 1, 8) == "-gprefer"))) {
+            return false;
+        }
+
+        if ((StringLength(lv_msg) > 8) && (StringSub(lv_msg, 9, 9) != " ")) {
+            return false;
+        }
+
+        if (!(((gv_oP[EventPlayer()][1] == true) || (c_bhSoloBuild == true) || (EventPlayer() == gv_host) || (gv_oP[EventPlayer()][7] == true) || (PlayerHandle(EventPlayer()) == "5-S2-1-12307342")))) {
+            return false;
+        }
+    }
+
+    if (!runActions) {
+        return true;
+    }
+
+    lv_msg = EventChatMessage(false);
+    if ((gv_gameStarted == true)) {
+        gf_CBSystemMessage(StringExternal("Param/Value/GPREFERLATE"), EventPlayer(), 0, 0, SoundLink("UI_BnetError", -1), Color(0, 0, 0));
+        return true;
+    }
+
+    lv_who = StringToInt(StringWord(lv_msg, 2));
+    if ((lv_who < 1) || (lv_who > 15) || (PlayerGroupHasPlayer(gv_currentPlayers, lv_who) == false)) {
+        if ((StringLength(StringWord(lv_msg, 2)) < 1)) {
+            gf_CBSystemMessage(StringExternal("Param/Value/GPREFERUSE"), EventPlayer(), 0, 0, SoundLink("UI_TipSelect", -1), Color(0, 0, 0));
+        }
+        else {
+            gf_CBSystemMessage(StringExternal("Param/Value/GPREFERWHO"), EventPlayer(), 0, 0, SoundLink("UI_BnetError", -1), Color(0, 0, 0));
+        }
+
+        return true;
+    }
+
+    lv_s = StringCase(StringWord(lv_msg, 3), false);
+    if ((StringLength(lv_s) < 1)) {
+        lv_i = 0;
+        for ( ; lv_i <= 14 ; lv_i += 1 ) {
+            gv_prefer[lv_who][lv_i] = "";
+        }
+
+        gf_CBSystemMessage((StringExternal("Param/Value/GPREFERCLR") + IntToText(lv_who) + StringExternal("Param/Value/GPREFERCLR2")), EventPlayer(), 0, 0, SoundLink("UI_TipSelect", -1), Color(0, 0, 0));
+        return true;
+    }
+
+    lv_i = 1;
+    for ( ; lv_i <= 5 ; lv_i += 1 ) {
+        if ((lv_i != 4)) {
+            lv_j = 1;
+            for ( ; lv_j <= 33 ; lv_j += 1 ) {
+                if ((gv_roleNameArray[lv_i][lv_j] != null) && (gv_roleNameInput[lv_i][lv_j] == lv_s)) {
+                    lv_r = gv_roleNameArray[lv_i][lv_j];
+                }
+
+            }
+
+        }
+
+    }
+
+    if ((lv_r == null)) {
+        gf_CBSystemMessage(StringExternal("Param/Value/GPREFERBAD"), EventPlayer(), 0, 0, SoundLink("UI_BnetError", -1), Color(0, 0, 0));
+        return true;
+    }
+
+    lv_i = 0;
+    for ( ; lv_i <= 14 ; lv_i += 1 ) {
+        gv_prefer[lv_who][lv_i] = "";
+    }
+
+    gv_prefer[lv_who][0] = lv_s;
+    gf_CBSystemMessage((StringExternal("Param/Value/GPREFEROK") + IntToText(lv_who) + StringExternal("Param/Value/GPREFEROK2") + lv_r + StringExternal("Param/Value/GPREFEROK3")), EventPlayer(), 0, 0, SoundLink("UI_TipSelect", -1), Color(0, 0, 0));
+    return true;
+}
+
+void gt_GPrefer_Init () {
+    gt_GPrefer = TriggerCreate("gt_GPrefer_Func");
+    TriggerEnable(gt_GPrefer, false);
+    TriggerAddEventChatMessage(gt_GPrefer, c_playerAny, "-gprefer", false);
 }
 
 bool gt_BHAssert_Func (bool testConds, bool runActions) {
@@ -83677,6 +83779,7 @@ void SH_InitTriggers () {
     gt_Blacklist_Init();
     gt_E7A681E794A8E998B5E890A5_Init();
     gt_Prefer_Init();
+    gt_GPrefer_Init();
     gt_BHAssert_Init();
     gt_TXGuess_Init();
     gt_GRChat_Init();
@@ -86619,6 +86722,7 @@ bool gt_BHSolo_Func (bool testConds, bool runActions) {
 
     gv_soloTest = true;
     TriggerEnable(gt_Prefer, true);
+    TriggerEnable(gt_GPrefer, true);
     // 空位由 Init2 的虚拟补位（c_bhSoloFill）自动补「电脑N」到 c_bhSoloFillMax 席；若该开关为 false 则改由大厅手动加电脑
     gf_CBSystemMessage(StringExternal("Param/Value/SOLOON"), EventPlayer(), 0, 0, SoundLink("UI_TipSelect", -1), Color(0, 0, 0));
     return true;
