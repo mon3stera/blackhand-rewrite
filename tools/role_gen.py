@@ -531,7 +531,7 @@ def main() -> int:
     # 已知差异（附原因，出现新的差异才会报警）
     ACH_WHITELIST = {
         "cmd_missing": {57, 58, 59, 60, 61, 62, 63, 64, 65},
-        "no_name": {24},        # 列表显式排除（记忆 761：24/42 永不显示），42 在列表链里有名字
+        "no_name": set(),       # 24 百万之一已接入两条名称链；42 仍被过滤，但当前没有解锁写入
     }
 
     print(f"    列表链 gt_Stats_Func（{list_var}）：{len(list_idx)} 个索引")

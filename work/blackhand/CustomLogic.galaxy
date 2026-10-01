@@ -56044,7 +56044,7 @@ bool gt_Stats_Func (bool testConds, bool runActions) {
             lv_z[2] = 0;
             lv_d = 0;
             for ( ; ( (auto69BE7284_ai >= 0 && lv_d <= auto69BE7284_ae) || (auto69BE7284_ai < 0 && lv_d >= auto69BE7284_ae) ) ; lv_d += auto69BE7284_ai ) {
-                if ((lv_d != 24) && (lv_d != 42) && (((gv_bankOtherAchievements[lv_a][lv_d] == 1) && (lv_d != 10) && (lv_d != 23) && (lv_d != 28) && (lv_d != 36)) || ((gv_bankOtherAchievements[lv_a][lv_d] == 2) && ((lv_d == 10) || (lv_d == 23) || (lv_d == 28))) || ((gv_bankOtherAchievements[lv_a][lv_d] == 3) && ((lv_d == 36))) || ((lv_d == 79) && (gv_bankOtherAchievements[lv_a][lv_d] >= 1))) && ((lv_d <= 4) || (lv_d >= 9))) {
+                if ((lv_d != 42) && (((gv_bankOtherAchievements[lv_a][lv_d] == 1) && (lv_d != 10) && (lv_d != 23) && (lv_d != 28) && (lv_d != 36)) || ((gv_bankOtherAchievements[lv_a][lv_d] == 2) && ((lv_d == 10) || (lv_d == 23) || (lv_d == 28))) || ((gv_bankOtherAchievements[lv_a][lv_d] == 3) && ((lv_d == 36))) || ((lv_d == 79) && (gv_bankOtherAchievements[lv_a][lv_d] >= 1))) && ((lv_d <= 4) || (lv_d >= 9))) {
                     autoE7789229_val = lv_d;
                     if (autoE7789229_val == 0) {
                         lv_x = StringExternal("Param/Value/835679C2");
@@ -56105,6 +56105,9 @@ bool gt_Stats_Func (bool testConds, bool runActions) {
                     }
                     else if (autoE7789229_val == 23) {
                         lv_x = StringExternal("Param/Value/6C43B189");
+                    }
+                    else if (autoE7789229_val == 24) {
+                        lv_x = StringExternal("Param/Value/BWZYN");
                     }
                     else if (autoE7789229_val == 25) {
                         lv_x = StringExternal("Param/Value/612F9AF4");
@@ -57414,7 +57417,7 @@ bool gt_Achieve_Func (bool testConds, bool runActions) {
 
     if ((lv_hit != 0)) {
         lv_d = StringToInt(StringSub(EventChatMessage(false), lv_z, StringLength(EventChatMessage(false))));
-        if ((lv_d != 24) && (lv_d != 42) && ((lv_d <= 4) || (lv_d >= 9))) {
+        if ((lv_d != 42) && ((lv_d <= 4) || (lv_d >= 9))) {
             autoD1168222_val = lv_d;
             if (autoD1168222_val == 0) {
                 lv_x = StringExternal("Param/Value/96B1BC0C");
@@ -57475,6 +57478,9 @@ bool gt_Achieve_Func (bool testConds, bool runActions) {
             }
             else if (autoD1168222_val == 23) {
                 lv_x = StringExternal("Param/Value/5AA34F00");
+            }
+            else if (autoD1168222_val == 24) {
+                lv_x = StringExternal("Param/Value/BWZYN");
             }
             else if (autoD1168222_val == 25) {
                 lv_x = StringExternal("Param/Value/B98C14E8");
