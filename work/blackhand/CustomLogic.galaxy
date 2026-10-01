@@ -519,6 +519,7 @@ int[16] gv_lastMessage;
 string[93][3] gv_defaultNames;
 int[16] gv_points;
 int[16] gv_playerModelChoice;
+int[16] gv_nlModelItem;
 int[16] gv_playerHatChoice;
 bool[16] gv_isAMan;
 int gv_modelSelect;
@@ -16405,6 +16406,10 @@ bool auto_gf_KillPlayer_TriggerFunc (bool testConds, bool runActions) {
             libNtve_gf_CreateModelAtPoint("Alarak", lv_p);
         }
 
+        if ((gv_playerModelChoice[lp_player] == 60)) {
+            libNtve_gf_CreateModelAtPoint("Nailong", lv_p);
+        }
+
         if ((lp_disguised == false)) {
         }
         else {
@@ -16441,6 +16446,10 @@ bool auto_gf_KillPlayer_TriggerFunc (bool testConds, bool runActions) {
                 }
             }
         }
+        if ((gv_playerModelChoice[lv_i[1]] == 60)) {
+            ActorSend(gv_corpse[lp_player], libNtve_gf_SetScale(1.0, 1.0, 1.0, 0.0));
+        }
+
         if ((gv_roles[lp_player][1] == 1) && (gv_roles[lp_player][0] == 18)) {
             ActorSend(gv_corpse[lp_player], libNtve_gf_SetVisibility(false));
         }
@@ -16456,9 +16465,12 @@ bool auto_gf_KillPlayer_TriggerFunc (bool testConds, bool runActions) {
 
         }
 
-        libNtve_gf_PlayAnimation(gv_corpse[lp_player], c_animNameDefault, "Death", 0, c_animTimeDefault);
-        libNtve_gf_SetAnimationTimeScale(gv_corpse[lp_player], c_animNameDefault, 0.01);
-        libNtve_gf_SetAnimationTime(gv_corpse[lp_player], c_animNameDefault, 3.5, false);
+        if ((gv_playerModelChoice[lv_i[1]] != 60)) {
+            libNtve_gf_PlayAnimation(gv_corpse[lp_player], c_animNameDefault, "Death", 0, c_animTimeDefault);
+            libNtve_gf_SetAnimationTimeScale(gv_corpse[lp_player], c_animNameDefault, 0.01);
+            libNtve_gf_SetAnimationTime(gv_corpse[lp_player], c_animNameDefault, 3.5, false);
+        }
+
         ActorSend(gv_corpse[lp_player], libNtve_gf_SetRotation(RandomFixed(-1.0, 1.0), RandomFixed(-1.0, 1.0), 0, 0, 0, 1.0));
         gv_bankGeneralIntegers[lp_player][18] -= 1;
         gf_CAssembleMainBank(lp_player);
@@ -58546,6 +58558,10 @@ bool gt_SetupDone_Func (bool testConds, bool runActions) {
                 libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[0], StringExternal("Param/Value/2829BB54"), PlayerGroupSingle(lv_a));
             }
 
+            DialogControlAddItem(gv_modelSelectItem[0], PlayerGroupSingle(lv_a), StringExternal("Param/Value/NLMODEL"));
+            libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[0], StringExternal("Param/Value/NLMODELTIP"), PlayerGroupSingle(lv_a));
+            gv_nlModelItem[lv_a] = DialogControlGetItemCount(gv_modelSelectItem[0], lv_a);
+
             DialogControlAddItem(gv_modelSelectItem[1], PlayerGroupSingle(lv_a), StringExternal("Param/Value/40E74EFF"));
             libNtve_gf_SetDialogItemTooltip(gv_modelSelectItem[1], StringExternal("Param/Value/52B91D4B"), PlayerGroupSingle(lv_a));
             DialogControlSelectItem(gv_modelSelectItem[1], PlayerGroupSingle(lv_a), 1);
@@ -60324,6 +60340,14 @@ bool gt_CreatePlayers_Func (bool testConds, bool runActions) {
                 gv_isAMan[lv_a] = true;
             }
 
+            if ((gv_playerModelChoice[lv_a] == 60)) {
+                libNtve_gf_UnitCreateFacingPoint(1, "Civilian", 0, lv_a, gv_playerLocation[lv_a], PointFromId(1));
+                gv_isAMan[lv_a] = true;
+                UnitWeaponRemove(UnitLastCreated(), "ThrowMolotov");
+                ActorSend(libNtve_gf_MainActorofUnit(UnitLastCreated()), libNtve_gf_ModelSwap("Nailong", 0));
+                gv_playerHatChoice[lv_a] = 0;
+            }
+
             if ((gv_playerModelChoice[lv_a] == 5)) {
                 UnitSetScale(UnitLastCreated(), 200.0, 200.0, 200.0);
                 libNtve_gf_SendActorMessageToUnit(UnitLastCreated(), libNtve_gf_SetTintColor(Color(100.00, 100.00, 100.00), 1.75, 0.0));
@@ -60402,6 +60426,11 @@ bool gt_CreatePlayers_Func (bool testConds, bool runActions) {
 
             if (((gv_playerModelChoice[lv_a] == 50) || (gv_playerModelChoice[lv_a] == 52) || (gv_playerModelChoice[lv_a] == 53))) {
                 UnitSetScale(UnitLastCreated(), 95.0, 95.0, 95.0);
+            }
+
+            if ((gv_playerModelChoice[lv_a] == 60)) {
+                UnitSetScale(UnitLastCreated(), 100.0, 100.0, 100.0);
+                libNtve_gf_SendActorMessageToUnit(UnitLastCreated(), libNtve_gf_SetTintColor(Color(100.00, 100.00, 100.00), 1.0, 0.0));
             }
 
             if ((gv_playerHatChoice[lv_a] == 2)) {
@@ -61142,6 +61171,10 @@ bool gt_ModelHatSelect_Func (bool testConds, bool runActions) {
 
         if ((DialogControlGetSelectedItem(EventDialogControl(), EventPlayer()) == 27)) {
             gv_playerModelChoice[EventPlayer()] = 44;
+        }
+
+        if ((DialogControlGetSelectedItem(EventDialogControl(), EventPlayer()) == gv_nlModelItem[EventPlayer()])) {
+            gv_playerModelChoice[EventPlayer()] = 60;
         }
 
     }
@@ -66205,6 +66238,11 @@ bool gt_resurrect_Func (bool testConds, bool runActions) {
         DialogSetVisible(gv_roleBox, PlayerGroupSingle(lv_hit), true);
         gf_RefreshRoleBox();
         libNtve_gf_UnitCreateFacingPoint(1, "Civilian", 0, lv_hit, gv_playerLocation[lv_hit], PointFromId(1));
+        if ((gv_playerModelChoice[lv_hit] == 60)) {
+            UnitWeaponRemove(UnitLastCreated(), "ThrowMolotov");
+            ActorSend(libNtve_gf_MainActorofUnit(UnitLastCreated()), libNtve_gf_ModelSwap("Nailong", 0));
+        }
+
         UnitForceStatusBar(UnitLastCreated(), false);
         UnitSetState(UnitLastCreated(), c_unitStateTooltipable, false);
         UnitSetState(UnitLastCreated(), c_unitStateHighlightable, false);

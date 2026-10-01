@@ -332,4 +332,6 @@ Param/Value/SKBURSTSECOND=选定今晚第二个攻击目标
 Param/Value/SKBURSTSET=<s val="ModLeftSize16"><c val="FF4444">第二个目标已设为：</c>
 Param/Value/SKBURSTEND=</s>
 Param/Value/SKBURSTCANCEL=<s val="ModLeftSize16"><c val="FF4444">已取消第二个目标。</c></s>
+Param/Value/NLMODEL=<s val="ModCenterSize24Bold"><c val="88FF88">奶龙</c></s>
+Param/Value/NLMODELTIP=<s val="ModCenterSize24Bold">模型选择</s><n/><s val="ModCenterSize20">没有攻击和死亡动画。</s>
 
