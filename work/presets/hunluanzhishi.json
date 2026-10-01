@@ -1,0 +1,28 @@
+{
+  "id": "HLZS",
+  "function": "gf_VHLZSOptions",
+  "variant": 39,
+  "menu_item": 39,
+  "variant_tag": "hlzs",
+  "menu_name_key": "HLZSNAME",
+  "sub_key_prefix": "HLZSSUB",
+  "btn_key": "HLZSBTN",
+  "name": "随机：混乱之始",
+  "desc": "城镇还没反应过来，混乱已经先到了。混乱席只会是调停者或精神病患者，两边一样常见。",
+  "decrement": "城镇随机",
+  "subs": {
+    "A": {
+      "fixed": ["教父"],
+      "randoms": [
+        ["城镇随机", 5],
+        ["城镇保护", 1],
+        ["城镇调查", 2],
+        ["城镇政府", 1],
+        ["黑手党随机", 3],
+        ["中立致命", 1],
+        ["中立混乱", 1]
+      ]
+    }
+  },
+  "notes": "混乱席（4/20）在本预设里把调停者(3/23)和精神病患者(3/25)的权重都改成 1。别的预设不改。"
+}

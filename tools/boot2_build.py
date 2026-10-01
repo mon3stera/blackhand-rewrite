@@ -336,6 +336,9 @@ MUST_HAVE_KEYS = [
   # 随机：传承者
   'Param/Value/CCZTNAME', 'Param/Value/CCZTDESC', 'Param/Value/CCZTBTN',
   'Param/Value/CCZTSUBA', 'Param/Value/CCZTSUBB', 'Param/Value/CCZTSUBC',
+  # 随机：混乱之始
+  'Param/Value/HLZSNAME', 'Param/Value/HLZSDESC', 'Param/Value/HLZSBTN',
+  'Param/Value/HLZSSUBA',
   # shw288 唐吉诃德 (3/21)
   'Param/Value/DQNAME', 'Param/Value/DQDESC', 'Param/Value/DQCARD',
   'Param/Value/DQBOX1', 'Param/Value/DQBOX2', 'Param/Value/DQBOX4',

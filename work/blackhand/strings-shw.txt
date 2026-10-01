@@ -281,7 +281,7 @@ Param/Value/QZSEL2=你改去此人的住所自爆：
 Param/Value/QZCLR=你取消了今晚的自爆。
 Param/Value/QZYOU=<s val="ModLeftSize16Bold"><c val="FF0000">你在一场毁灭性的爆破中丧生。</c></s>
 Param/Value/QZYOUSELF=<s val="ModLeftSize16Bold"><c val="FF0000">你引爆了贴身的烈性炸药，与房间里的人同归于尽。</c></s>
-Param/Value/28F034F6=- 那暗示他可能会是个退伍军人、杀人狂、小丑、弃子/死士、精神病患者，或疯子。
+Param/Value/28F034F6=- 那暗示他可能会是个退伍军人、爱人狂、小丑、弃子/死士、精神病患者，或疯子。
 Param/Value/BHASTOK=已登记，确认选项后将强制出现：
 Param/Value/BHASTNONE=当前阵容没有能出该角色的随机位：
 Param/Value/BHASTHAVE=阵容里已经有这个角色：
@@ -302,6 +302,10 @@ Param/Value/CCZTSUBA=<c val="DFFF00">传承者</c> A
 Param/Value/CCZTSUBB=<c val="DFFF00">传承者</c> B
 Param/Value/CCZTSUBC=<c val="DFFF00">传承者</c> C
 Param/Value/CCZTBTN=<s val="ModCenterSize24Bold"><c val="DFFF00">传承者</c></s>
+Param/Value/HLZSNAME=<s val="ModCenterSize24Bold">随机：<c val="E85D4C">混乱之始</c></s>
+Param/Value/HLZSDESC=城镇还没反应过来，混乱已经先到了。<n/>混乱席只会是调停者或精神病患者，两边一样常见。<n/><s val="ModCenterSize18Bold">12-15人可用</s>
+Param/Value/HLZSSUBA=<c val="E85D4C">混乱之始</c> A
+Param/Value/HLZSBTN=<s val="ModCenterSize24Bold"><c val="E85D4C">混乱之始</c></s>
 Param/Value/QZACH1S=<c val="44FF88"> 赢得了成就 </c></s><s val="ModCenterSize16Bold"><c val="BB3355">穿山甲</c></s><s val="ModCenterSize16"><c val="44FF88">!</c></s>
 Param/Value/QZACH1N=<s val="ModCenterSize16Bold"><c val="BB3355">穿山甲</c></s>
 Param/Value/QZACH1D=<s val="ModCenterSize16"><c val="BB3355">我的任务...完成了！</c></s>
