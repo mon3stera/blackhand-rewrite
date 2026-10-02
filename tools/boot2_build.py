@@ -170,6 +170,20 @@ CUSTOM_MODELS = [
      DDS_DIR / 'Nailong_Diffuse.dds', r'Assets\Textures\Nailong_Diffuse.dds', NAILONG_MODEL),
 ]
 
+# 2D 立牌 PoC（--sprite-poc）：把「60 号外观」那个 CModel 的模型换成我们用
+# tools/m3_sprite.py 从帽子模型改出来的 1.0×1.6 卡片。**只换模型，不动脚本**，
+# 所以发布构建（不加这个开关）仍然是奶龙。验证流程：boot2_build.py --solo --sprite-poc
+# → 单人测试构建里 1 号玩家开局就用 60 号外观（见 CustomLogic 的 c_bhSoloBuild 钩子）。
+SPRITE_POC_MODEL = """    <CModel id="Nailong" parent="Unit">
+        <Model value="Assets\\Units\\BHSprite2D\\BHSprite2D.m3"/>
+        <Occlusion value="Show"/>
+    </CModel>
+"""
+SPRITE_POC_MODELS = [
+    ('Nailong', DDS_DIR / 'BHSprite.m3', r'Assets\Units\BHSprite2D\BHSprite2D.m3',
+     DDS_DIR / 'BHSprite.dds', 'BHSprite.dds', SPRITE_POC_MODEL),
+]
+
 
 def write_sounds(archive: Path) -> list[str]:
     """把自加音效打进地图，并在 SoundData 里登记对应 CSound。"""
@@ -198,12 +212,13 @@ def write_sounds(archive: Path) -> list[str]:
     return members
 
 
-def write_models(archive: Path) -> list[str]:
+def write_models(archive: Path, models: list | None = None) -> list[str]:
     """把自加模型打进地图，并在 ModelData 里登记对应 CModel。"""
+    models = CUSTOM_MODELS if models is None else models
     xml = sc2map.read(archive, MODEL_DATA).decode('utf-8')
     members = []
     added = []
-    for mid, m3, m3member, tex, texmember, _ in CUSTOM_MODELS:
+    for mid, m3, m3member, tex, texmember, _ in models:
         for src, member in ((m3, m3member), (tex, texmember)):
             assert src.exists(), f'模型源文件不存在: {src}'
             data = src.read_bytes()
@@ -216,12 +231,12 @@ def write_models(archive: Path) -> list[str]:
 
     if added:
         assert xml.rstrip().endswith('</Catalog>'), 'ModelData 结尾不是 </Catalog>'
-        blocks = ''.join(b for mid, _, _, _, _, b in CUSTOM_MODELS if mid in added)
+        blocks = ''.join(b for mid, _, _, _, _, b in models if mid in added)
         xml = xml.rstrip()[: -len('</Catalog>')] + blocks + '</Catalog>\n'
         put(archive, MODEL_DATA, xml.encode('utf-8'))
         xml = sc2map.read(archive, MODEL_DATA).decode('utf-8')
 
-    for mid, _, m3member, _, texmember, _ in CUSTOM_MODELS:
+    for mid, _, m3member, _, texmember, _ in models:
         assert f'id="{mid}"' in xml, f'ModelData 没有 {mid}'
         assert m3member.replace('\\', '\\\\') in xml or m3member in xml, f'{mid} 的模型路径没写进 ModelData'
 
@@ -561,6 +576,8 @@ def main() -> int:
                     help='单人测试包：只把写入包内的 c_bhSoloBuild / c_bhSoloFill 改成 true，不动工作区源码；并给自定义 mod 补本地 file: 依赖回退')
     ap.add_argument('--local-deps', action='store_true',
                     help='把 CA 三件改成 file:Mods\\… 纯本地路径（--solo 默认打开；发布包不要加）')
+    ap.add_argument('--sprite-poc', action='store_true',
+                    help='2D 立牌 PoC：把「60 号外观」的模型换成 data/BHSprite.m3（奶龙留到发布构建）')
     ap.add_argument('--cover', default=COVER_DEFAULT,
                     help='封面 stem（data/<stem>-Preview.dds + data/<stem>-Icon.dds）；默认 Cover2')
     args = ap.parse_args()
@@ -689,8 +706,10 @@ def main() -> int:
     print(f"5) 根目录贴图 {len(dds)} 张 ← {DDS_DIR.name}/: {dds}")
     sounds = write_sounds(out)
     print(f"5c) 自加音效 {len(sounds)} 个 ← {DDS_DIR.name}/: {[Path(m).name for m in sounds]}")
-    models = write_models(out)
-    print(f"5d) 自加模型 {len(models)} 个 ← {DDS_DIR.name}/: {[Path(m).name for m in models]}")
+    model_defs = SPRITE_POC_MODELS if args.sprite_poc else CUSTOM_MODELS
+    models = write_models(out, model_defs)
+    print(f"5d) 自加模型 {len(models)} 个 ← {DDS_DIR.name}/: {[Path(m).name for m in models]}"
+          f"{'  [2D 立牌 PoC：60 号外观]' if args.sprite_poc else ''}")
     cover = write_cover(out, args.cover)
     print(f"5b) 街机封面 {args.cover} → {cover}")
 
@@ -829,7 +848,7 @@ def main() -> int:
     sounds_missing = [sid for sid, _, member, _ in CUSTOM_SOUNDS
                       if Path(member).name not in files or f'id="{sid}"' not in sound_xml]
     model_xml = sc2map.read(out, MODEL_DATA).decode('utf-8')
-    models_missing = [mid for mid, _, m3member, _, texmember, _ in CUSTOM_MODELS
+    models_missing = [mid for mid, _, m3member, _, texmember, _ in model_defs
                       if Path(m3member).name not in files or Path(texmember).name not in files
                       or f'id="{mid}"' not in model_xml]
     cover_missing = [m for m in ('Preview.dds',) if m not in files]

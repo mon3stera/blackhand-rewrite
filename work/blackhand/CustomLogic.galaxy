@@ -60057,6 +60057,13 @@ bool gt_CreatePlayers_Func (bool testConds, bool runActions) {
         return true;
     }
 
+    // 2D 立牌 PoC：单人测试构建（c_bhSoloBuild）里 1 号玩家强制用 60 号外观，
+    // 配合 boot2_build.py --sprite-poc（该外观的模型被换成 2D 卡片 BHSprite2D）。
+    // 发布构建 c_bhSoloBuild=false ⇒ 不生效，外观仍由玩家在大厅面板自选。
+    if ((c_bhSoloBuild == true)) {
+        gv_playerModelChoice[1] = 60;
+    }
+
     DialogSetVisible(gv_repickButton, PlayerGroupAll(), false);
     DialogSetVisible(gv_shwRepickDialog, PlayerGroupAll(), false);   // shw231: 开局时随原图那颗一起收起
     lv_a = 1;
