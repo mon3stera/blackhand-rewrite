@@ -68,11 +68,16 @@ class SpriteBuilder:
             return [(-hw, -h / 2, 0), (hw, -h / 2, 0), (hw, h / 2, 0), (-hw, h / 2, 0)], (0.0, 0.0, 1.0)
         raise SystemExit(f'--plane 只能是 xz / yz / xy，收到 {plane}')
 
-    def patch_vertices(self, corners, normal) -> None:
+    def patch_vertices(self, corners, normal, flip_u: bool = False,
+                       flip_v: bool = False) -> None:
         vr = self.m3.modl_ref('vertices')
         base = self.m3.entries[vr[1]]['offset']
         stride = self.m3.vertex_stride()
         uvs = [(0.0, 1.0), (1.0, 1.0), (1.0, 0.0), (0.0, 0.0)]  # BL, BR, TR, TL（v=0 在上）
+        if flip_u:
+            uvs = [(1 - u, v) for u, v in uvs]
+        if flip_v:
+            uvs = [(u, 1 - v) for u, v in uvs]
         n_i8 = tuple(max(-127, min(127, round(c * 127))) for c in normal)
 
         def write(t: int, pos, uv) -> None:
@@ -241,13 +246,15 @@ def main() -> int:
     ap.add_argument('--lit', action='store_true', help='保留受光（默认 unshaded）')
     ap.add_argument('--single-sided', action='store_true')
     ap.add_argument('--blend', action='store_true', help='alpha 混合（默认 alpha 抠图）')
+    ap.add_argument('--flip-u', action='store_true', help='UV 水平翻转（左右反了用）')
+    ap.add_argument('--flip-v', action='store_true', help='UV 垂直翻转（上下反了用）')
     ap.add_argument('--report', action='store_true')
     args = ap.parse_args()
 
     tpl_path, tpl_data, tpl_name = load_template(args.template)
     sb = SpriteBuilder(tpl_data, tpl_path, tpl_name)
     corners, normal = sb.quad_corners(args.width, args.height, args.plane)
-    sb.patch_vertices(corners, normal)
+    sb.patch_vertices(corners, normal, args.flip_u, args.flip_v)
     sb.patch_faces()
     mn, mx, r = sb.patch_bounds(corners)
     sb.patch_material(unshaded=not args.lit, double_sided=not args.single_sided,
@@ -259,6 +266,7 @@ def main() -> int:
     print(f'  立牌 {args.width}×{args.height} 平面={args.plane} 法线={normal} '
           f'包围盒 {tuple(round(v, 3) for v in mn)}..{tuple(round(v, 3) for v in mx)} r={r:.3f}')
     print(f'  贴图={args.texture} 广告牌={"无" if args.no_billboard else args.billboard} '
+          f'{"UV翻转" if (args.flip_u or args.flip_v) else ""} '
           f'光照={"受光" if args.lit else "unshaded"} '
           f'混合={"alpha" if args.blend else "抠图"}')
 
