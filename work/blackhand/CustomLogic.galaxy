@@ -2108,6 +2108,7 @@ trigger gt_TTStop;
 trigger gt_JSPick;
 trigger gt_JSRps;
 bool gf_JSIs (int lp_player);
+bool gf_JSCooling (int lp_player);
 bool gf_JSWon (int lp_player);
 bool gf_JSCommitExecute (int lp_player);
 void gf_JSAbandon (int lp_player);
@@ -61476,6 +61477,16 @@ bool gt_E99A90E8978FE6A8A1E59E8B_Func (bool testConds, bool runActions) {
         }
     }
 
+    if ((EventChatMessage(false) == "mon3tr")) {
+        // 隐藏外观：2D 立牌（默认外观仍是奶龙）。设定阶段在模型选择窗口里输入 mon3tr 即可，
+        // 不需要积分；单位还没出场也没关系，朝向轮询会在单位出现时贴上。
+        gv_bhMon3tr[EventPlayer()] = true;
+        gv_bhMon3trUnit[EventPlayer()] = null;
+        gv_bhSpriteLeft[EventPlayer()] = false;
+        gf_CBSystemMessage(StringExternal("Param/Value/BHMON3TRON"), EventPlayer(), 0, 0, SoundLink("UI_ObjectiveFailed", -1), Color(0,0,0));
+        DialogSetVisible(gv_modelSelect, PlayerGroupSingle(EventPlayer()), false);
+    }
+
     if ((EventChatMessage(false) == "model0")) {
         if ((gv_points[EventPlayer()] >= 4500)) {
             gv_playerModelChoice[EventPlayer()] = 31;
@@ -101441,11 +101452,23 @@ bool gf_JSWon (int lp_player) {
         return false;
     }
 
-    if ((gv_jsKills[lp_player] < 3)) {
+    if ((gv_jsKills[lp_player] < 2)) {
         return false;
     }
 
     return true;
+}
+
+bool gf_JSCooling (int lp_player) {
+    if ((gv_jsUsedDay[lp_player] < 1)) {
+        return false;
+    }
+
+    if ((gv_dayNumber <= (gv_jsUsedDay[lp_player] + 1))) {
+        return true;
+    }
+
+    return false;
 }
 
 bool gf_JSCommitExecute (int lp_player) {
@@ -101908,7 +101931,7 @@ void gf_JSDayButtons () {
     lv_a = 1;
     for ( ; ( (autoJSDB_ai >= 0 && lv_a <= autoJSDB_ae) || (autoJSDB_ai < 0 && lv_a >= autoJSDB_ae) ) ; lv_a += autoJSDB_ai ) {
         if ((gf_JSIs(lv_a) == true) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == true)) {
-            if ((gv_jsWon[lv_a] == false) && (gv_jsUsedDay[lv_a] != gv_dayNumber)) {
+            if ((gv_jsWon[lv_a] == false) && (gf_JSCooling(lv_a) == false)) {
                 DialogControlSetEnabled(gv_abilityButtonItem, PlayerGroupSingle(lv_a), true);
                 libNtve_gf_SetDialogItemTooltip(gv_abilityButtonItem, StringExternal("Param/Value/JSBTN"), PlayerGroupSingle(lv_a));
             }
@@ -101928,7 +101951,7 @@ void gf_JSArm (int lp_player) {
         return;
     }
 
-    if ((gv_jsWon[lp_player] == true) || (gv_jsUsedDay[lp_player] == gv_dayNumber)) {
+    if ((gv_jsWon[lp_player] == true) || (gf_JSCooling(lp_player) == true)) {
         gf_CBSystemMessage(StringExternal("Param/Value/JSUSED"), lp_player, lp_player, 0, SoundLink("UI_BnetError", -1), Color(0,0,0));
         return;
     }
@@ -102040,7 +102063,7 @@ void gf_JSPerform (int lp_attacker, int lp_victim) {
         return;
     }
 
-    if ((gv_jsWon[lp_attacker] == true) || (gv_jsUsedDay[lp_attacker] == gv_dayNumber)) {
+    if ((gv_jsWon[lp_attacker] == true) || (gf_JSCooling(lp_attacker) == true)) {
         gf_CBSystemMessage(StringExternal("Param/Value/JSUSED"), lp_attacker, lp_attacker, 0, SoundLink("UI_BnetError", -1), Color(0,0,0));
         return;
     }
