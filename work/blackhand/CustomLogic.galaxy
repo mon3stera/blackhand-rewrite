@@ -155,6 +155,9 @@ int[3] gv_jsRpsBtn;
 bool[16] gv_jsWon;
 int[16] gv_jsKills;
 bool[16] gv_jsImmuneSet;
+int gv_jsHero;
+int gv_jsHeroVotes;
+int gv_jsHeroPhase;
 int gv_jsBusy;
 bool gv_bhClanDone;
 bool[6] gv_bhFatalTaken;
@@ -2115,6 +2118,9 @@ void gf_JSReadWill (int lp_player);
 void gf_ETJingshenWin ();
 void gt_JSPick_Init ();
 void gt_JSRps_Init ();
+void gf_JSHeroRestore ();
+void gf_JSHeroNight ();
+void gf_JSHeroDay ();
 void gf_JSRpsEnsure ();
 text gf_JSRpsHand (int lp_hand);
 bool gf_JSRps (int lp_player);
@@ -10690,6 +10696,7 @@ bool auto_gf_NightTransition_TriggerFunc (bool testConds, bool runActions) {
 
     }
     gf_DEBUG("Starting night prep code");
+    gf_JSHeroRestore();
     gf_LMResolve();
     gv_mafiaTarget = 0;
     gv_mafiaHitman = 0;
@@ -10831,6 +10838,7 @@ bool auto_gf_NightTransition_TriggerFunc (bool testConds, bool runActions) {
     gf_RSMafiaSetup2();
     gf_RSTriadSetup();
     gf_RSNeutralSetup();
+    gf_JSHeroNight();
     TriggerEnable(gt_ASActionButtonATown, true);
     TriggerEnable(gt_ASActionButtonATown2, true);
     TriggerEnable(gt_ASActionButtonBTown, true);
@@ -53662,11 +53670,7 @@ bool gt_Init2_Func (bool testConds, bool runActions) {
     // 不必等 gt_CreatePlayers_Func），用来快速二分定位 m3 的哪一处改写让引擎报
     // 「Erroneous custom model data」。
     if ((c_bhSoloBuild == true)) {
-        libNtve_gf_CreateModelAtPoint("Nailong", RegionGetCenter(RegionEntireMap()));
         libNtve_gf_CreateModelAtPoint("BHSpriteA", RegionGetCenter(RegionEntireMap()));
-        libNtve_gf_CreateModelAtPoint("BHSpriteB", RegionGetCenter(RegionEntireMap()));
-        libNtve_gf_CreateModelAtPoint("BHSpriteC", RegionGetCenter(RegionEntireMap()));
-        libNtve_gf_CreateModelAtPoint("BHSpriteD", RegionGetCenter(RegionEntireMap()));
     }
 
     libNtve_gf_SetUpgradeLevelForPlayer(0, "SOAOrbitalStrike", 1);
@@ -70018,6 +70022,7 @@ bool gt_NightSequence_Func (bool testConds, bool runActions) {
 
     Wait(4.0, c_timeGame);
     gv_dayNumber += 1;
+    gf_JSHeroDay();
     gv_nightEvents = false;
     auto7B711494_g = PlayerGroupAll();
     auto7B711494_var = -1;
@@ -101398,6 +101403,50 @@ text gf_JSRpsHand (int lp_hand) {
     return StringExternal("Param/Value/JSRPSPAPR");
 }
 
+void gf_JSHeroRestore () {
+    if ((gv_jsHeroPhase != 3) || (gv_jsHero < 1) || (gv_jsHero > 15)) {
+        return;
+    }
+
+    if ((gv_votes[gv_jsHero] == 3)) {
+        gv_votes[gv_jsHero] = gv_jsHeroVotes;
+    }
+
+    gv_jsHeroPhase = 0;
+    gv_jsHero = 0;
+}
+
+void gf_JSHeroNight () {
+    if ((gv_jsHeroPhase != 1) || (gv_jsHero < 1) || (gv_jsHero > 15)) {
+        return;
+    }
+
+    if ((PlayerGroupHasPlayer(gv_alivePlayers, gv_jsHero) == false)) {
+        gv_jsHeroPhase = 0;
+        gv_jsHero = 0;
+        return;
+    }
+
+    gv_immune[gv_jsHero][0] = true;
+    gv_jsHeroPhase = 2;
+}
+
+void gf_JSHeroDay () {
+    if ((gv_jsHeroPhase != 2) || (gv_jsHero < 1) || (gv_jsHero > 15)) {
+        return;
+    }
+
+    if ((PlayerGroupHasPlayer(gv_alivePlayers, gv_jsHero) == false)) {
+        gv_jsHeroPhase = 0;
+        gv_jsHero = 0;
+        return;
+    }
+
+    gv_jsHeroVotes = gv_votes[gv_jsHero];
+    gv_votes[gv_jsHero] = 3;
+    gv_jsHeroPhase = 3;
+}
+
 bool gf_JSRps (int lp_player) {
     int lv_a;
     int lv_n;
@@ -101488,6 +101537,21 @@ bool gf_JSRps (int lp_player) {
         }
     }
     gf_JSTellAll((StringExternal("Param/Value/JSSIZE") + gf_JSWho(lp_player) + StringExternal("Param/Value/JSRPSOUT") + gf_JSRpsHand(gv_jsRpsPick[lp_player]) + StringExternal("Param/Value/JSRPSAND") + gf_JSWho(lv_foe) + StringExternal("Param/Value/JSRPSOUT") + gf_JSRpsHand(gv_jsRpsPick[lv_foe]) + lv_end + StringExternal("Param/Value/JSCLOSE")));
+    if ((lv_lost == true)) {
+        if ((gv_jsHeroPhase == 3)) {
+            gf_JSHeroRestore();
+        }
+
+        gv_jsHero = lv_foe;
+        gv_jsHeroPhase = 1;
+        if ((gv_isAMan[lv_foe] == true)) {
+            gf_JSTellAll((StringExternal("Param/Value/JSSIZE") + gf_JSWho(lv_foe) + StringExternal("Param/Value/JSRPSHERO") + StringExternal("Param/Value/JSRPSHEROM") + StringExternal("Param/Value/JSCLOSE")));
+        }
+        else {
+            gf_JSTellAll((StringExternal("Param/Value/JSSIZE") + gf_JSWho(lv_foe) + StringExternal("Param/Value/JSRPSHERO") + StringExternal("Param/Value/JSRPSHEROF") + StringExternal("Param/Value/JSCLOSE")));
+        }
+    }
+
     return lv_lost;
 }
 
