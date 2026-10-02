@@ -4,7 +4,7 @@ Param/Value/JSDESC=一位精神病患者，可能会随机地杀人。法律未�
 Param/Value/JSCARD=<c val="E85D4C">
 Param/Value/JSALIGN=无（混乱）</c>
 Param/Value/JSBOX1=- 每天当无人在审判台上时，你可以选择一个人，你会立刻揭示自己，他死亡。
-Param/Value/JSBOX2=<n/>- 每天你只能使用一次你的能力。<n/>- 你每次使用技能后，都有1/4的概率立刻死亡。<n/>- 当你被判处有罪后，会和一名随机的投有罪者猜拳，只有你输了才会被处决。<n/>- 当你处决免死后，当天你无法再被审判。<n/>- 当你胜利后，你会立刻死亡。
+Param/Value/JSBOX2=<n/>- 每天你只能使用一次你的能力。<n/>- 你有一次无敌机会。<n/>- 当你被判处有罪后，会和一名随机的投有罪者猜拳，只有你输了才会被处决。<n/>- 当你处决免死后，当天你无法再被审判。
 Param/Value/JSRPSTITLE=<s val="ModCenterSize20Bold">选择石头、剪刀或布</s>
 Param/Value/JSRPSROCK=石头
 Param/Value/JSRPSCISS=剪刀
@@ -18,7 +18,10 @@ Param/Value/JSRPSDRAW=。平局，处决中止。
 Param/Value/JSRPSLOSE=。精神病患者输了，处决继续。
 Param/Value/JSRPSYOU=你选择了
 Param/Value/JSBOX4=一位精神病患者，可能会随机地杀人。法律未必能制裁得了你。
-Param/Value/JSBOX6=- 杀死一个城镇角色和一个非城镇角色。
+Param/Value/JSBOX6=- 使用能力杀死至少三个人，并且存活到最后。
+Param/Value/JSCOUNT=你已经用能力杀死了 
+Param/Value/JSCOUNT2= 个人。杀死至少三人并活到最后即可胜利。
+Param/Value/JSIMMUNE=你有一次无敌机会，可以挡住一次夜间攻击。
 Param/Value/JSCRIME=谋杀
 Param/Value/JSBTN=扑向一名玩家
 Param/Value/JSSIZE=<s val="ModLeftSize16Bold">
