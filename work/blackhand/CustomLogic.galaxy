@@ -53634,6 +53634,13 @@ bool gt_Init2_Func (bool testConds, bool runActions) {
         return true;
     }
 
+    // 【临时探针，验证完删除】单人测试构建在 t=0 立刻加载 60 号外观的模型（模型数据有问题会立刻崩，
+    // 不必等 gt_CreatePlayers_Func），用来快速二分定位 m3 的哪一处改写让引擎报
+    // 「Erroneous custom model data」。
+    if ((c_bhSoloBuild == true)) {
+        libNtve_gf_CreateModelAtPoint("Nailong", RegionGetCenter(RegionEntireMap()));
+    }
+
     libNtve_gf_SetUpgradeLevelForPlayer(0, "SOAOrbitalStrike", 1);
     TimerStart(gv_gameTimer, 50000.0, false, c_timeGame);
     GameSetSpeedValue(c_gameSpeedNormal);
@@ -63796,6 +63803,16 @@ bool gt_BHAssert_Func (bool testConds, bool runActions) {
         return true;
     }
 
+    // 经典随机开局前席位是空的，今日设定开局前全是类别 8 的占位。这时还不能判断能不能出，先登记，等 gf_BHAssertApply 在选完板子后查。
+    lv_have = 0;
+    lv_sidx = 1;
+    for ( ; (lv_sidx <= 15) ; lv_sidx += 1 ) {
+        if ((gv_categoriesArray[lv_sidx] != 0) && (gv_categoriesArray[lv_sidx] != 8)) {
+            lv_have = 1;
+        }
+
+    }
+
     lv_n = 0;
     lv_pri = -1;
     lv_sidx = 1;
@@ -63825,7 +63842,7 @@ bool gt_BHAssert_Func (bool testConds, bool runActions) {
         }
 
     }
-    if ((lv_n < 1)) {
+    if ((lv_n < 1) && (lv_have == 1)) {
         gf_CBSystemMessage((StringExternal("Param/Value/BHASTNONE") + gv_roleNameArray[lv_pool][lv_role]), EventPlayer(), 0, 0, SoundLink("UI_BnetError", -1), Color(0, 0, 0));
         return true;
     }
