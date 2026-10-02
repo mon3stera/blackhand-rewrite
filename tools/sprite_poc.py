@@ -58,6 +58,14 @@ def main() -> int:
     ap.add_argument('--flip-v', action='store_true')
     ap.add_argument('--no-deploy', action='store_true')
     ap.add_argument('--reuse-map', action='store_true', help='包比 m3 新就不重新打包')
+    ap.add_argument('--template', default='data/arkquad.m3',
+                    help='立牌骨架模板（默认方舟干员模型）')
+    ap.add_argument('--flip', default='1x1', help='flipbook 网格 列x行；参考模型是 16x20 精灵表')
+    ap.add_argument('--scale', type=float, default=0.35,
+                    help='整体缩放（参考骨架 4×3.5 单位，接到单位上偏大）')
+    ap.add_argument('--tex-path', default=r'Assets\Textures\BHSprite_Diffuse.dds',
+                    help='写进 m3 的贴图路径（相对包根；参考实现与奶龙都是这种，别用前导斜杠）')
+    ap.add_argument('--hat', action='store_true', help='改用旧的 HatOne 改写路径（已知引擎会拒收）')
     args = ap.parse_args()
 
     png = Path(args.png)
@@ -67,14 +75,18 @@ def main() -> int:
     else:
         print(f'贴图未变，跳过：{DDS.name}')
 
-    m3_cmd = [sys.executable, 'tools/m3_sprite.py', '--out', str(M3),
-              '--texture', '/BHSprite.dds', '--width', str(args.width),
-              '--height', str(args.height), '--plane', args.plane,
-              '--billboard', str(args.billboard)]
-
-    for flag in ('no_billboard', 'lit', 'single_sided', 'blend', 'flip_u', 'flip_v'):
-        if getattr(args, flag):
-            m3_cmd.append('--' + flag.replace('_', '-'))
+    if args.hat:
+        m3_cmd = [sys.executable, 'tools/m3_sprite.py', '--out', str(M3),
+                  '--texture', '/BHSprite.dds', '--width', str(args.width),
+                  '--height', str(args.height), '--plane', args.plane,
+                  '--billboard', str(args.billboard)]
+        for flag in ('no_billboard', 'lit', 'single_sided', 'blend', 'flip_u', 'flip_v'):
+            if getattr(args, flag):
+                m3_cmd.append('--' + flag.replace('_', '-'))
+    else:
+        m3_cmd = [sys.executable, 'tools/m3_ark_quad.py', '--template', args.template,
+                  '--out', str(M3), '--texture', args.tex_path, '--flip', args.flip,
+                  '--scale', str(args.scale)]
 
     run(m3_cmd)
     if args.reuse_map and MAP.exists() and MAP.stat().st_mtime > M3.stat().st_mtime:

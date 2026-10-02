@@ -296,6 +296,12 @@ bool[16] gv_ttStopUsed;
 int gv_ttHush;
 
 bool gv_soloTest;
+int gv_bhSpriteProbeN;         // shw2D: 贴图槽探针重发计数（0.25 秒一次）
+fixed gv_bhSpriteFace;         // shw2D: 立牌朝向（UnitGetFacing，度）
+bool[16] gv_bhSpriteLeft;      // shw2D: 每个玩家当前用的是不是镜像（朝左）模型
+int gv_bhSpriteP;              // shw2D: 朝向轮询的玩家游标（不能函数末尾声明局部，故用全局）
+bool[16] gv_bhMon3tr;          // shw2D: 隐藏外观——玩家是否开着 2D 立牌（聊天输入 -mon3tr 切换）
+unit[16] gv_bhMon3trUnit;      // shw2D: 上次给它贴立牌的单位（换了单位 = 重生过，要重贴）
 int[8] gv_bhAssertCat;
 int[8] gv_bhAssertRole;
 int[8] gv_bhAssertWho;
@@ -2032,6 +2038,7 @@ trigger gt_Stats;
 trigger gt_OptionsTimer;
 trigger gt_Debug;
 trigger gt_Debug2;
+trigger gt_BHMon3tr;
 trigger gt_visit;
 trigger gt_action;
 trigger gt_smitecount;
@@ -2108,6 +2115,7 @@ bool gf_JSSparedToday (int lp_player);
 void gf_JSBanMsg ();
 void gf_JSDayButtons ();
 void gf_JSArm (int lp_player);
+void gf_JSStreak (int lp_n);
 void gf_JSPerform (int lp_attacker, int lp_victim);
 void gf_JSNight (int lp_player);
 void gf_JSRestoreCam ();
@@ -56910,6 +56918,41 @@ bool gt_Debug2_Func (bool testConds, bool runActions) {
 }
 
 //--------------------------------------------------------------------------------------------------
+// Trigger: mon3tr（隐藏外观：明日方舟 2D 立牌，仅本地自用素材）
+//--------------------------------------------------------------------------------------------------
+bool gt_BHMon3tr_Func (bool testConds, bool runActions) {
+    // Actions
+    if (!runActions) {
+        return true;
+    }
+
+    if ((gv_unit[EventPlayer()] == null)) {
+        gf_CBSystemMessage(StringExternal("Param/Value/BHMON3TRWAIT"), EventPlayer(), 0, 0, SoundLink("UI_ObjectiveFailed", -1), Color(0,0,0));
+        return true;
+    }
+
+    if ((gv_bhMon3tr[EventPlayer()] != true)) {
+        gv_bhMon3tr[EventPlayer()] = true;
+        gv_bhMon3trUnit[EventPlayer()] = null;
+        gf_CBSystemMessage(StringExternal("Param/Value/BHMON3TRON"), EventPlayer(), 0, 0, SoundLink("UI_ObjectiveComplete", -1), Color(0,0,0));
+    }
+    else {
+        gv_bhMon3tr[EventPlayer()] = false;
+        gv_bhMon3trUnit[EventPlayer()] = null;
+        gv_bhSpriteLeft[EventPlayer()] = false;
+        ActorSend(libNtve_gf_MainActorofUnit(gv_unit[EventPlayer()]), libNtve_gf_ModelSwap("Nailong", 0));
+        gf_CBSystemMessage(StringExternal("Param/Value/BHMON3TROFF"), EventPlayer(), 0, 0, SoundLink("UI_ObjectiveFailed", -1), Color(0,0,0));
+    }
+    return true;
+}
+
+//--------------------------------------------------------------------------------------------------
+void gt_BHMon3tr_Init () {
+    gt_BHMon3tr = TriggerCreate("gt_BHMon3tr_Func");
+    TriggerAddEventChatMessage(gt_BHMon3tr, c_playerAny, "-mon3tr", true);
+}
+
+//--------------------------------------------------------------------------------------------------
 void gt_Debug2_Init () {
     gt_Debug2 = TriggerCreate("gt_Debug2_Func");
     TriggerAddEventChatMessage(gt_Debug2, c_playerAny, "-err", true);
@@ -61906,6 +61949,57 @@ bool gt_DetectLeave_Func (bool testConds, bool runActions) {
 
         }
 
+    }
+    // shw2D 探针：MakeMsgTextureSelectBySlot 的槽名（仅单人测试构建）
+    // 每 0.25 秒给 2~6 号各发一个候选槽名，连发 60 次（15 秒）。
+    // 上界 0 = 停用（免得它真生效时把 2~6 号盖成纯色，干扰走路/攻击验证）；改 60 可重开。
+    if ((c_bhSoloBuild == true) && (gv_bhSpriteProbeN < 0)) {
+        gv_bhSpriteProbeN = (gv_bhSpriteProbeN + 1);
+        if ((gv_unit[2] != null)) {
+            libNtve_gf_SendActorMessageToUnit(gv_unit[2], MakeMsgTextureSelectBySlot("diffuse", 0, "Assets\\Textures\\BHProbe_R.dds"));
+        }
+
+        if ((gv_unit[3] != null)) {
+            libNtve_gf_SendActorMessageToUnit(gv_unit[3], MakeMsgTextureSelectBySlot("Diffuse", 0, "Assets\\Textures\\BHProbe_G.dds"));
+        }
+
+        if ((gv_unit[4] != null)) {
+            libNtve_gf_SendActorMessageToUnit(gv_unit[4], MakeMsgTextureSelectBySlot("alpha1", 0, "Assets\\Textures\\BHProbe_B.dds"));
+        }
+
+        if ((gv_unit[5] != null)) {
+            libNtve_gf_SendActorMessageToUnit(gv_unit[5], MakeMsgTextureSelectBySlot("decal", 0, "Assets\\Textures\\BHProbe_W.dds"));
+        }
+
+        if ((gv_unit[6] != null)) {
+            libNtve_gf_SendActorMessageToUnit(gv_unit[6], MakeMsgTextureSelectBySlot("diffuse", 1, "Assets\\Textures\\BHProbe_Y.dds"));
+        }
+
+    }
+    // shw2D 方向 + 隐藏外观（发布构建也生效）：开着 -mon3tr 的玩家用 2D 立牌，默认朝右；
+    // 向左走时换镜像模型（免得走太空步）。判据 = UnitGetFacing 落在 (90°, 270°) ⇒ 朝 -x。
+    // 若实机发现左右反了，把下面两个常数对调即可。
+    for (gv_bhSpriteP = 1; gv_bhSpriteP <= 16; gv_bhSpriteP += 1) {
+        if (((gv_bhMon3tr[gv_bhSpriteP] == true) && (gv_unit[gv_bhSpriteP] != null))) {
+            if ((gv_bhMon3trUnit[gv_bhSpriteP] != gv_unit[gv_bhSpriteP])) {
+                gv_bhMon3trUnit[gv_bhSpriteP] = gv_unit[gv_bhSpriteP];
+                gv_bhSpriteLeft[gv_bhSpriteP] = false;
+                ActorSend(libNtve_gf_MainActorofUnit(gv_unit[gv_bhSpriteP]), libNtve_gf_ModelSwap("BHMon3tr", 0));
+            }
+            gv_bhSpriteFace = UnitGetFacing(gv_unit[gv_bhSpriteP]);
+            if ((gv_bhSpriteFace > 90.0) && (gv_bhSpriteFace < 270.0)) {
+                if ((gv_bhSpriteLeft[gv_bhSpriteP] != true)) {
+                    gv_bhSpriteLeft[gv_bhSpriteP] = true;
+                    ActorSend(libNtve_gf_MainActorofUnit(gv_unit[gv_bhSpriteP]), libNtve_gf_ModelSwap("BHMon3trL", 0));
+                }
+            }
+            else {
+                if ((gv_bhSpriteLeft[gv_bhSpriteP] == true)) {
+                    gv_bhSpriteLeft[gv_bhSpriteP] = false;
+                    ActorSend(libNtve_gf_MainActorofUnit(gv_unit[gv_bhSpriteP]), libNtve_gf_ModelSwap("BHMon3tr", 0));
+                }
+            }
+        }
     }
     return true;
 }
@@ -83788,6 +83882,7 @@ void SH_InitTriggers () {
     gt_Stats_Init();
     gt_OptionsTimer_Init();
     gt_Debug_Init();
+    gt_BHMon3tr_Init();
     gt_Debug2_Init();
     gt_visit_Init();
     gt_action_Init();
@@ -101891,6 +101986,41 @@ void gf_JSAfterDeath (int lp_dead) {
     }
 }
 
+void gf_JSStreak (int lp_n) {
+    int lv_n;
+
+    if ((lp_n < 1)) {
+        return;
+    }
+
+    lv_n = lp_n;
+    if ((lv_n > 5)) {
+        lv_n = 5;
+    }
+
+    if ((lv_n == 1)) {
+        SoundPlay(SoundLink("BHJSKill1", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+        return;
+    }
+
+    if ((lv_n == 2)) {
+        SoundPlay(SoundLink("BHJSKill2", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+        return;
+    }
+
+    if ((lv_n == 3)) {
+        SoundPlay(SoundLink("BHJSKill3", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+        return;
+    }
+
+    if ((lv_n == 4)) {
+        SoundPlay(SoundLink("BHJSKill4", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+        return;
+    }
+
+    SoundPlay(SoundLink("BHJSKill5", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+}
+
 void gf_JSPerform (int lp_attacker, int lp_victim) {
     int lv_n;
     int lv_end;
@@ -101940,26 +102070,29 @@ void gf_JSPerform (int lp_attacker, int lp_victim) {
         }
         UnitSetFacing(gv_unit[lp_attacker], AngleBetweenPoints(UnitGetPosition(gv_unit[lp_attacker]), gv_playerLocation[lp_victim]), 0.2);
         libNtve_gf_PlayAnimation(libNtve_gf_MainActorofUnit(gv_unit[lp_attacker]), c_animNameDefault, "Attack", 0, c_animTimeDefault);
-        Wait(0.25, c_timeGame);
-        SoundPlay(SoundLink("BHLaugh", -1), PlayerGroupAll(), 20.0, 0.0);
-        Wait(0.2, c_timeGame);
-        libNtve_gf_PlayAnimation(libNtve_gf_MainActorofUnit(gv_unit[lp_attacker]), c_animNameDefault, "Attack", 0, c_animTimeDefault);
         Wait(0.45, c_timeGame);
         libNtve_gf_PlayAnimation(libNtve_gf_MainActorofUnit(gv_unit[lp_attacker]), c_animNameDefault, "Attack", 0, c_animTimeDefault);
         Wait(0.45, c_timeGame);
-    }
-    else {
-        SoundPlay(SoundLink("BHLaugh", -1), PlayerGroupAll(), 20.0, 0.0);
+        libNtve_gf_PlayAnimation(libNtve_gf_MainActorofUnit(gv_unit[lp_attacker]), c_animNameDefault, "Attack", 0, c_animTimeDefault);
+        Wait(0.45, c_timeGame);
     }
 
     gv_jsKills[lp_attacker] += 1;
+    gf_JSStreak(gv_jsKills[lp_attacker]);
     gf_CBSystemMessage((StringExternal("Param/Value/JSSIZE") + StringExternal("Param/Value/JSCOUNT") + IntToText(gv_jsKills[lp_attacker]) + StringExternal("Param/Value/JSCOUNT2") + StringExternal("Param/Value/JSCLOSE")), lp_attacker, lp_attacker, 0, SoundLink("UI_TipSelect", -1), Color(0, 0, 0));
     gv_bhNightKiller[lp_victim] = lp_attacker;
     gf_JSCause(lp_victim, false);
     gv_deathMethod[lp_victim] = (gv_deathMethod[lp_victim] + "Q");
     gf_BHCrimeMurder(lp_attacker);
     gf_JSTellAll((StringExternal("Param/Value/JSSIZE") + gf_JSWho(lp_victim) + StringExternal("Param/Value/JSKILL") + StringExternal("Param/Value/JSCLOSE")));
-    gf_FlashScreen(Color(100.00, 0.00, 0.00), lp_victim, 1.5, 40.0);
+    if ((gv_isAMan[lp_victim] == true)) {
+        SoundPlay(SoundLink("CivilianDeath", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+    }
+    else {
+        SoundPlay(SoundLink("CivilianFemaleDeath", -1), PlayerGroupAll(), RandomFixed(80.0, 100.0), 0.0);
+    }
+
+    gf_FlashScreen(Color(100.00, 0.00, 0.00), lp_victim, 5.0, 0.0);
     if ((gv_unit[lp_victim] != null)) {
         libNtve_gf_PauseUnit(gv_unit[lp_victim], false);
         libNtve_gf_PlayAnimation(libNtve_gf_MainActorofUnit(gv_unit[lp_victim]), c_animNameDefault, "Death", 0, c_animTimeDefault);

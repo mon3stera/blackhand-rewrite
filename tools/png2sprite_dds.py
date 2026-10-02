@@ -13,7 +13,10 @@ A8R8G8B8；DDS 的内存序是小端 DWORD，故字节序为 B,G,R,A。
 from __future__ import annotations
 
 import argparse
+import shutil
 import struct
+import subprocess
+import tempfile
 from pathlib import Path
 
 from PIL import Image
@@ -75,24 +78,59 @@ def write_dds(img: Image.Image, out: Path, no_mips: bool) -> list[int]:
     return [l.width for l in levels]
 
 
+def write_dxt5(img: Image.Image, out: Path, size: tuple[int, int]) -> int:
+    """DXT5 压缩走 ImageMagick（B 通道 1/4；自带完整 mip 链由它写）。
+
+    A8R8G8B8 的 2048² 表加 mip 链要 21 MB，DXT5 只要 5.6 MB —— 想靠「格子加大」
+    治模糊就必须走这条路。
+    """
+    magick = shutil.which('magick') or shutil.which('convert')
+    assert magick, '没装 ImageMagick（magick/convert），无法出 DXT5'
+
+    out.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory() as td:
+        png = Path(td) / 'in.png'
+        img.save(png)
+        subprocess.run([magick, str(png), '-define', 'dds:compression=dxt5', str(out)], check=True)
+
+    data = out.read_bytes()
+    assert data[84:88] == b'DXT5', f'ImageMagick 没出 DXT5：{data[84:88]!r}'
+    mips = struct.unpack_from('<I', data, 28)[0]
+    print(f'{img.width}×{img.height} → {out}  DXT5  {len(data)} B  mips={mips}')
+    return mips
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument('src')
     ap.add_argument('dst')
-    ap.add_argument('--size', type=int, default=256, help='正方形边长（2 的幂），默认 256')
+    ap.add_argument('--size', default='256',
+                    help='边长（2 的幂）或 WxH；DXT5 时不强制正方形/2 的幂（参考 mod 的 6400x4096 也不是）')
     ap.add_argument('--no-mips', action='store_true', help='不写 mip 链')
+    ap.add_argument('--dxt5', action='store_true',
+                    help='改出 DXT5 压缩（体积 1/4，2048² 表才放得下；需要 ImageMagick）')
     args = ap.parse_args()
 
-    size = args.size
-    assert size & (size - 1) == 0, '--size 必须是 2 的幂'
+    if 'x' in args.size:
+        w, h = (int(x) for x in args.size.split('x'))
+    else:
+        w = h = int(args.size)
 
     img = Image.open(args.src).convert('RGBA')
-    img = fits_pow2(img, size)
+
+    if args.dxt5:
+        assert w % 4 == 0 and h % 4 == 0, 'DXT5 尺寸必须是 4 的倍数'
+        if img.size != (w, h):
+            img = img.resize((w, h), Image.LANCZOS)
+        write_dxt5(img, Path(args.dst), (w, h))
+        return 0
+
+    assert w == h and w & (w - 1) == 0, '未压缩路径要求正方形 2 的幂（矩形请用 --dxt5）'
+    img = fits_pow2(img, w)
 
     levels = write_dds(img, Path(args.dst), args.no_mips)
     nbytes = Path(args.dst).stat().st_size
-    print(f'{args.src} → {args.dst}  {size}×{size} A8R8G8B8  {nbytes} B  '
-          f'mips={len(levels)}')
+    print(f'{args.src} → {args.dst}  {w}×{w} A8R8G8B8  {nbytes} B  mips={len(levels)}')
     return 0
 
 

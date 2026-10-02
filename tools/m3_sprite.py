@@ -50,6 +50,8 @@ def extent_bytes(mn, mx, r) -> bytes:
 
 
 class SpriteBuilder:
+    template_vertex: int | None = None      # None = 自动挑权重合法的顶点
+
     def __init__(self, data: bytes | None = None, template: Path | None = None,
                  name: str = '<template>'):
         self.m3 = M3(template, data, name)
@@ -83,7 +85,7 @@ class SpriteBuilder:
         def write(t: int, pos, uv) -> None:
             off = base + t * stride
             if t == 0 and not hasattr(self, '_template_bw'):
-                self._template_bw = bytes(self.buf[off + 12:off + 20])   # 骨骼权重/索引沿用模板
+                self._template_bw = self._pick_bone_bytes(base, stride)
             rec = (struct.pack('<3f', *pos)                       # +0  位置
                    + self._template_bw                            # +12 骨骼权重/索引
                    + struct.pack('<3b', *n_i8) + b'\x00'          # +20 法线 + 手性
@@ -102,21 +104,56 @@ class SpriteBuilder:
         vr = self.m3.modl_ref('vertices')
         return self.m3.entries[vr[1]]['count'] // self.m3.vertex_stride()
 
-    def patch_faces(self) -> None:
+    def _pick_bone_bytes(self, base: int, stride: int) -> bytes:
+        """挑一个「骨骼权重合法」的模板顶点复制其骨骼权重/索引。
+
+        HatOne 的第 0 个顶点权重是 [1,0,0,0]（和只有 1/255），照抄会让所有顶点蒙皮退化；
+        实测第一个合法顶点是第 1 个（权重 [255,0,0,0]）。
+        """
+        if self.template_vertex is not None:
+            t = self.template_vertex
+            b = self.buf[base + t * stride + 12:base + t * stride + 16]
+            print(f'   指定模板顶点 #{t} 权重 {list(b)}')
+            return bytes(self.buf[base + t * stride + 12:base + t * stride + 20])
+        best = None
+        for t in range(self._vertex_count()):
+            b = self.buf[base + t * stride + 12:base + t * stride + 16]
+            if best is None:
+                best = b
+            if sum(b) >= 250:
+                if t:
+                    print(f'   模板顶点 #{t} 权重 {list(b)}（顶点 0 不合法，已跳过）')
+                return bytes(self.buf[base + t * stride + 12:base + t * stride + 20])
+        print('   ⚠ 模板里没有权重合法的顶点，沿用第 0 个')
+        return bytes(self.buf[base + 12:base + 20])
+
+    def patch_faces(self, solid: bool = True) -> None:
         d = self.m3.divisions()[0]
         fr = d['faces']
         e = self.m3.entries[fr[1]]
         base = e['offset']
         n = e['count']
-        idx = [0, 1, 2, 0, 2, 3] + [0] * (n - 6)
+        if solid:
+            # 全部三角形都画这块四边形：没有退化三角形（引擎可能不喜欢 0,0,0）
+            quad = [0, 1, 2, 0, 2, 3]
+            idx = [quad[i % 6] for i in range(n)]
+        else:
+            idx = [0, 1, 2, 0, 2, 3] + [0] * (n - 6)
         self.buf[base:base + 2 * n] = struct.pack(f'<{n}H', *idx)
 
-    def patch_bounds(self, corners) -> None:
+    def patch_bounds(self, corners, min_extent: float = 0.05) -> None:
         xs = [c[0] for c in corners]
         ys = [c[1] for c in corners]
         zs = [c[2] for c in corners]
-        mn = (min(xs), min(ys), min(zs))
-        mx = (max(xs), max(ys), max(zs))
+        mn = [min(xs), min(ys), min(zs)]
+        mx = [max(xs), max(ys), max(zs)]
+        for i in range(3):                    # 立牌在某个轴上厚度为 0 ⇒ 撑到 min_extent
+            if mx[i] - mn[i] < min_extent:
+                mid = (mx[i] + mn[i]) / 2.0
+                mn[i] = mid - min_extent / 2.0
+                mx[i] = mid + min_extent / 2.0
+        mn = tuple(mn)
+        mx = tuple(mx)
         # 立牌会绕 Z 转，半径按旋转后最大水平半径算
         r = ((max(abs(mn[0]), abs(mx[0])) ** 2 + max(abs(mn[1]), abs(mx[1])) ** 2
               + max(abs(mn[2]), abs(mx[2])) ** 2) ** 0.5)
@@ -246,6 +283,16 @@ def main() -> int:
     ap.add_argument('--lit', action='store_true', help='保留受光（默认 unshaded）')
     ap.add_argument('--single-sided', action='store_true')
     ap.add_argument('--blend', action='store_true', help='alpha 混合（默认 alpha 抠图）')
+    ap.add_argument('--keep-geometry', action='store_true', help='不改顶点/索引/包围盒（只换贴图）')
+    ap.add_argument('--keep-vertices', action='store_true', help='只改包围盒，不动顶点/索引')
+    ap.add_argument('--keep-bounds', action='store_true', help='只改顶点/索引，不动包围盒/MSEC')
+    ap.add_argument('--degenerate-indices', action='store_true',
+                    help='其余索引填 0（退化三角形）；默认反过来：全部三角形都画这块四边形')
+    ap.add_argument('--keep-material', action='store_true', help='不改材质 flags、不清空多余层')
+    ap.add_argument('--template-vertex', type=int, default=None,
+                    help='强制用第 N 个模板顶点的骨骼权重（默认自动挑权重和=255 的第 1 个）')
+    ap.add_argument('--min-extent', type=float, default=0.05,
+                    help='包围盒每轴最小厚度（0 厚度 AABB 可能被引擎判为错误模型数据）')
     ap.add_argument('--flip-u', action='store_true', help='UV 水平翻转（左右反了用）')
     ap.add_argument('--flip-v', action='store_true', help='UV 垂直翻转（上下反了用）')
     ap.add_argument('--report', action='store_true')
@@ -253,12 +300,17 @@ def main() -> int:
 
     tpl_path, tpl_data, tpl_name = load_template(args.template)
     sb = SpriteBuilder(tpl_data, tpl_path, tpl_name)
+    sb.template_vertex = args.template_vertex
     corners, normal = sb.quad_corners(args.width, args.height, args.plane)
-    sb.patch_vertices(corners, normal, args.flip_u, args.flip_v)
-    sb.patch_faces()
-    mn, mx, r = sb.patch_bounds(corners)
-    sb.patch_material(unshaded=not args.lit, double_sided=not args.single_sided,
-                      blend=args.blend)
+    mn, mx, r = (0.0, 0.0, 0.0), (0.0, 0.0, 0.0), 0.0
+    if not (args.keep_geometry or args.keep_vertices):
+        sb.patch_vertices(corners, normal, args.flip_u, args.flip_v)
+        sb.patch_faces(not args.degenerate_indices)
+    if not (args.keep_geometry or args.keep_bounds):
+        mn, mx, r = sb.patch_bounds(corners, args.min_extent)
+    if not args.keep_material:
+        sb.patch_material(unshaded=not args.lit, double_sided=not args.single_sided,
+                          blend=args.blend)
     sb.patch_layer(args.texture)
     sb.finish(Path(args.out), None if args.no_billboard else (0, args.billboard, 1))
 

@@ -150,11 +150,41 @@ NIGHT_SOUND = """    <CSound id="BHNightMusic" parent="MUSIC">
         <AssetArray File="Assets\\Sounds\\BHNightMusic.ogg" LoopCount="-1" FacialGroup=""/>
     </CSound>
 """
+
+
+def dialogue_csound(sid: str, filename: str) -> str:
+    """2D 对白，属性抄 BHLaugh。响度由 SoundPlay 决定，这里不加增益。"""
+    return (
+        f'    <CSound id="{sid}">\n'
+        f'        <AssetArray File="Assets\\Sounds\\{filename}"/>\n'
+        f'        <Category value="Dialogue"/>\n'
+        f'        <Mode value="2D"/>\n'
+        f'        <LoopCount value="0"/>\n'
+        f'        <Volume value="0.000000,0.000000"/>\n'
+        f'        <DupeDestroyCount value="8"/>\n'
+        f'        <DupeMuteCount value="8"/>\n'
+        f'    </CSound>\n'
+    )
+
+
+# 精神病患者连杀播报。超过五次仍播第五条，故只登记 1–5。
+JS_STREAK_SOUNDS = [
+    ('BHJSKill1', 'BHJSKill1.ogg'),
+    ('BHJSKill2', 'BHJSKill2.ogg'),
+    ('BHJSKill3', 'BHJSKill3.ogg'),
+    ('BHJSKill4', 'BHJSKill4.ogg'),
+    ('BHJSKill5', 'BHJSKill5.ogg'),
+]
+
 # 自加音效：(CSound id, 源文件, 包内成员, CSound 片段)
 # 一趟写完 SoundData —— MPQ 每次写成员都是追加、旧数据不回收，同一成员一次构建只能写一次。
 CUSTOM_SOUNDS = [
     ('BHLaugh', DDS_DIR / 'BHLaugh.ogg', r'Assets\Sounds\BHLaugh.ogg', LAUGH_SOUND),
     ('BHNightMusic', DDS_DIR / 'BHNightMusic.ogg', r'Assets\Sounds\BHNightMusic.ogg', NIGHT_SOUND),
+    *[
+        (sid, DDS_DIR / filename, rf'Assets\Sounds\{filename}', dialogue_csound(sid, filename))
+        for sid, filename in JS_STREAK_SOUNDS
+    ],
 ]
 
 MODEL_DATA = r'Base.SC2Data\GameData\ModelData.xml'
@@ -164,25 +194,32 @@ NAILONG_MODEL = """    <CModel id="Nailong" parent="Unit">
         <Occlusion value="Show"/>
     </CModel>
 """
+# 隐藏外观「2D 立牌」：Mon3tr〈斗争血脉/XI〉烘帧表（战斗小人 + 基建小人的走路帧）。
+# 默认外观仍是奶龙；游戏里聊天输入 `-mon3tr` 切换（见 CustomLogic 的 gt_BHMon3tr）。
+# 镜像那张 = 朝左走时用（脚本按 UnitGetFacing 换模型）。素材仅本地自用。
+MON3TR_MODEL = """    <CModel id="BHMon3tr" parent="Unit">
+         <Model value="Assets\\Units\\BHSprite2D\\BHSprite2D.m3"/>
+         <Occlusion value="Show"/>
+    </CModel>
+"""
+MON3TR_L_MODEL = """    <CModel id="BHMon3trL" parent="Unit">
+         <Model value="Assets\\Units\\BHSpriteL\\BHSpriteL.m3"/>
+         <Occlusion value="Show"/>
+    </CModel>
+"""
 # (模型 id, m3 源, m3 成员, 贴图源, 贴图成员, CModel 片段)
-CUSTOM_MODELS = [
+MON3TR_MODELS = [
+    ('BHMon3tr', DDS_DIR / 'BHSprite.m3', r'Assets\Units\BHSprite2D\BHSprite2D.m3',
+     DDS_DIR / 'BHMonstrBoc.dds', r'Assets\Textures\BHMonstrBoc.dds', MON3TR_MODEL),
+    ('BHMon3trL', DDS_DIR / 'BHSpriteL.m3', r'Assets\Units\BHSpriteL\BHSpriteL.m3',
+     DDS_DIR / 'BHMonstrBocL.dds', r'Assets\Textures\BHMonstrBocL.dds', MON3TR_L_MODEL),
+]
+NAILONG_MODELS = [
     ('Nailong', DDS_DIR / 'Nailong.m3', r'Assets\Units\Nailong\Nailong.m3',
      DDS_DIR / 'Nailong_Diffuse.dds', r'Assets\Textures\Nailong_Diffuse.dds', NAILONG_MODEL),
 ]
+CUSTOM_MODELS = NAILONG_MODELS + MON3TR_MODELS  # 奶龙（默认外观）+ 隐藏的 2D 立牌
 
-# 2D 立牌 PoC（--sprite-poc）：把「60 号外观」那个 CModel 的模型换成我们用
-# tools/m3_sprite.py 从帽子模型改出来的 1.0×1.6 卡片。**只换模型，不动脚本**，
-# 所以发布构建（不加这个开关）仍然是奶龙。验证流程：boot2_build.py --solo --sprite-poc
-# → 单人测试构建里 1 号玩家开局就用 60 号外观（见 CustomLogic 的 c_bhSoloBuild 钩子）。
-SPRITE_POC_MODEL = """    <CModel id="Nailong" parent="Unit">
-        <Model value="Assets\\Units\\BHSprite2D\\BHSprite2D.m3"/>
-        <Occlusion value="Show"/>
-    </CModel>
-"""
-SPRITE_POC_MODELS = [
-    ('Nailong', DDS_DIR / 'BHSprite.m3', r'Assets\Units\BHSprite2D\BHSprite2D.m3',
-     DDS_DIR / 'BHSprite.dds', 'BHSprite.dds', SPRITE_POC_MODEL),
-]
 
 
 def write_sounds(archive: Path) -> list[str]:
@@ -576,8 +613,14 @@ def main() -> int:
                     help='单人测试包：只把写入包内的 c_bhSoloBuild / c_bhSoloFill 改成 true，不动工作区源码；并给自定义 mod 补本地 file: 依赖回退')
     ap.add_argument('--local-deps', action='store_true',
                     help='把 CA 三件改成 file:Mods\\… 纯本地路径（--solo 默认打开；发布包不要加）')
+    ap.add_argument('--sprite-variants', default=None,
+                    help='逗号分隔：把 data/probe_<标签>.m3 登记成 BHSprite<大写>（探针批量对比用）')
+    ap.add_argument('--no-mon3tr', action='store_true',
+                    help='不打包隐藏的 2D 立牌模型（省 13 MB；要规避第三方素材时用）')
     ap.add_argument('--sprite-poc', action='store_true',
                     help='2D 立牌 PoC：把「60 号外观」的模型换成 data/BHSprite.m3（奶龙留到发布构建）')
+    ap.add_argument('--extra-member', action='append', default=None,
+                    help='直塞任意成员：`包内成员=源文件`，可重复（探针贴图等）')
     ap.add_argument('--cover', default=COVER_DEFAULT,
                     help='封面 stem（data/<stem>-Preview.dds + data/<stem>-Icon.dds）；默认 Cover2')
     args = ap.parse_args()
@@ -706,12 +749,25 @@ def main() -> int:
     print(f"5) 根目录贴图 {len(dds)} 张 ← {DDS_DIR.name}/: {dds}")
     sounds = write_sounds(out)
     print(f"5c) 自加音效 {len(sounds)} 个 ← {DDS_DIR.name}/: {[Path(m).name for m in sounds]}")
-    model_defs = SPRITE_POC_MODELS if args.sprite_poc else CUSTOM_MODELS
+    if args.sprite_variants:
+        model_defs = sprite_variants([x.strip() for x in args.sprite_variants.split(',') if x.strip()])
+    else:
+        model_defs = NAILONG_MODELS if args.no_mon3tr else CUSTOM_MODELS
     models = write_models(out, model_defs)
     print(f"5d) 自加模型 {len(models)} 个 ← {DDS_DIR.name}/: {[Path(m).name for m in models]}"
-          f"{'  [2D 立牌 PoC：60 号外观]' if args.sprite_poc else ''}")
+          f"{'  [只用奶龙（--no-mon3tr）]' if args.no_mon3tr else '  [奶龙 + 隐藏立牌 -mon3tr]'}"
+          f"{'  [探针变体 ' + args.sprite_variants + ']' if args.sprite_variants else ''}")
     cover = write_cover(out, args.cover)
     print(f"5b) 街机封面 {args.cover} → {cover}")
+
+    # 5e) 直塞任意成员（探针贴图一类；`包内成员=d:/路径`，可重复）
+    for spec in (args.extra_member or []):
+        member, _, src = spec.partition('=')
+        assert member and src, f'--extra-member 要写成「包内成员=源文件」：{spec!r}'
+        data = Path(src).read_bytes()
+        put(out, member, data)
+        assert sc2map.read(out, member) == data, f'额外成员回读不一致: {member}'
+        print(f"5e) 直塞成员 {member} ← {src}（{len(data)} B）")
 
     # 6) 补丁说明 + 加载页面（写 DocumentHeader/DocumentInfo；zhCN 行并入下面的文案合并，
     #    因为 MPQ 每次写成员都是追加、旧数据不回收，同一成员一次构建只能写一次）

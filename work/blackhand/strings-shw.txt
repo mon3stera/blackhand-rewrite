@@ -348,3 +348,6 @@ Param/Value/GPREFEROK3=。名单里有这个角色才会给到他。
 Param/Value/GPREFERCLR=已清掉 
 Param/Value/GPREFERCLR2= 号的预占。
 
+Param/Value/BHMON3TRON=<s val="ModCenterSize20Bold"><c val="BBDDFF">【隐藏外观】2D 立牌已开启（再输入 -mon3tr 关闭）</c></s>
+Param/Value/BHMON3TROFF=<s val="ModCenterSize20Bold"><c val="BBDDFF">【隐藏外观】已换回原外观</c></s>
+Param/Value/BHMON3TRWAIT=<s val="ModCenterSize20Bold"><c val="FF8888">【隐藏外观】等你的单位出场后再输入 -mon3tr</c></s>

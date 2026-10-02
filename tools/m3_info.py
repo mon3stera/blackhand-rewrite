@@ -242,6 +242,7 @@ class M3:
                 mat['layers'].append({
                     'slot': slot, 'chunk': lr[1], 'version': lver,
                     'texture': self.char_of(ref(self.data, lb + 4)),
+                    'textureChunk': ref(self.data, lb + 4)[1],
                     'flags': u32(self.data, lb + 36),
                     'uvMapping': u32(self.data, lb + 40),
                     'colorType': u32(self.data, lb + 44),
