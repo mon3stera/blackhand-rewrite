@@ -2109,7 +2109,6 @@ void gf_JSPerform (int lp_attacker, int lp_victim);
 void gf_JSNight (int lp_player);
 void gf_JSRestoreCam ();
 void gf_JSAfterDeath (int lp_dead);
-void gf_JSFinish (int lp_player);
 text gf_JSWho (int lp_who);
 void gf_JSTellAll (text lp_msg);
 void gf_JSReadWill (int lp_player);
@@ -101826,23 +101825,6 @@ void gf_JSAfterDeath (int lp_dead) {
             }
         }
     }
-}
-
-void gf_JSFinish (int lp_player) {
-    gf_JSCause(lp_player, true);
-    gv_deathMethod[lp_player] = (gv_deathMethod[lp_player] + "Q");
-    if ((gv_unit[lp_player] != null)) {
-        libNtve_gf_PauseUnit(gv_unit[lp_player], false);
-        libNtve_gf_PlayAnimation(libNtve_gf_MainActorofUnit(gv_unit[lp_player]), c_animNameDefault, "Death", 0, c_animTimeDefault);
-        Wait(0.8, c_timeGame);
-    }
-
-    gf_JSGrave(lp_player);
-    gf_CBAllowDisallowChatting(lp_player, ge_Allow_Disallow);
-    gf_KillPlayer(lp_player, false);
-    Wait(0.0, c_timeGame);
-    gf_JSAfterDeath(lp_player);
-    gf_JSReadWill(lp_player);
 }
 
 void gf_JSPerform (int lp_attacker, int lp_victim) {
