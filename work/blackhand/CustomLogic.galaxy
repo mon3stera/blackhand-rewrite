@@ -101533,9 +101533,6 @@ void gf_YSButtons (int lp_player) {
     }
     if ((lv_two == true)) {
         gf_CBSystemMessage(StringExternal("Param/Value/YSMSG2"), lp_player, lp_player, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-        if ((lv_cap == 1)) {
-            gf_CBSystemMessage(StringExternal("Param/Value/YSMSGN1"), lp_player, lp_player, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-        }
     }
     else {
         gf_CBSystemMessage(StringExternal("Param/Value/YSMSG1"), lp_player, lp_player, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
@@ -101637,7 +101634,6 @@ void gf_YSClaim (int lp_pool) {
     int lv_t0;
     int lv_t1;
     int lv_n;
-    int lv_cap;
     int lv_primary;
     int lv_second;
     int lv_old;
@@ -101688,18 +101684,9 @@ void gf_YSClaim (int lp_pool) {
     if ((lv_t1 > 0)) {
         lv_n += 1;
     }
-    lv_cap = (gv_ysPrevDay + gv_ysPrevNight);
-    if ((lv_cap > 2)) {
-        lv_cap = 2;
-    }
     if ((lv_n == 0)) {
         gv_ysPierce[lv_who] = true;
         gf_CBSystemMessage(StringExternal("Param/Value/YSMSGZ"), lv_who, lv_who, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-        gf_BHVisitSelf(lv_who);
-        return;
-    }
-    if ((lv_n == lv_cap)) {
-        gf_CBSystemMessage(StringExternal("Param/Value/YSMSGX"), lv_who, lv_who, 0, SoundLink("UI_GenericError", -1), Color(0,0,0));
         gf_BHVisitSelf(lv_who);
         return;
     }
