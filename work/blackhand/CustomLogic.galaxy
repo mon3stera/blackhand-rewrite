@@ -132,7 +132,6 @@ int gv_mafiaHitman;
 int gv_triadHitman;
 int gv_ysSnap;
 int gv_ysPrevNight;
-int gv_ysPrevDay;
 int gv_ysNights;
 bool gv_ysSnapInit;
 bool[16] gv_ysPierce;
@@ -101466,22 +101465,10 @@ void gf_SKT_5_zongshi_3 (int lv_a) {
     gv_immune[lv_a][0] = true;
 }
 
-// 野兽(2/19) / 霸王(5/19)：死亡人数决定今晚可选人数，出刀必须本人。
+// 野兽(2/19) / 霸王(5/19)：昨夜死亡人数决定今晚可选人数，出刀必须本人。
 void gf_YSOnNight () {
-    int lv_now;
-
-    lv_now = PlayerGroupCount(gv_alivePlayers);
-    if ((gv_ysSnapInit == false)) {
-        gv_ysPrevDay = 0;
-        gv_ysSnapInit = true;
-    }
-    else {
-        gv_ysPrevDay = (gv_ysSnap - lv_now);
-        if ((gv_ysPrevDay < 0)) {
-            gv_ysPrevDay = 0;
-        }
-    }
-    gv_ysSnap = lv_now;
+    gv_ysSnap = PlayerGroupCount(gv_alivePlayers);
+    gv_ysSnapInit = true;
     gv_ysNights += 1;
 }
 
@@ -101523,7 +101510,7 @@ void gf_YSButtons (int lp_player) {
     if ((gv_ysPierce[lp_player] == true)) {
         gf_CBSystemMessage(StringExternal("Param/Value/YSMSGP"), lp_player, lp_player, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
     }
-    lv_cap = (gv_ysPrevDay + gv_ysPrevNight);
+    lv_cap = gv_ysPrevNight;
     if ((lv_cap > 2)) {
         lv_cap = 2;
     }
