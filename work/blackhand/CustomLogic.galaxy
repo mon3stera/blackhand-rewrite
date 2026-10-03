@@ -101533,9 +101533,6 @@ void gf_YSButtons (int lp_player) {
     }
     if ((lv_two == true)) {
         gf_CBSystemMessage(StringExternal("Param/Value/YSMSG2"), lp_player, lp_player, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-        if ((lv_cap == 0)) {
-            gf_CBSystemMessage(StringExternal("Param/Value/YSMSGN0"), lp_player, lp_player, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
-        }
         if ((lv_cap == 1)) {
             gf_CBSystemMessage(StringExternal("Param/Value/YSMSGN1"), lp_player, lp_player, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
         }
@@ -101545,7 +101542,7 @@ void gf_YSButtons (int lp_player) {
     }
     lv_a = 1;
     for ( ; ( (autoYSBT_ai >= 0 && lv_a <= autoYSBT_ae) || (autoYSBT_ai < 0 && lv_a >= autoYSBT_ae) ) ; lv_a += autoYSBT_ai ) {
-        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == false) || (lv_a == lp_player)) {
+        if ((PlayerGroupHasPlayer(gv_alivePlayers, lv_a) == false) || (lv_a == lp_player) || (gv_roles[lv_a][1] == gv_roles[lp_player][1])) {
         }
         else {
             lv_y = (15 + (30 * (gv_playerSpot[lv_a] - 1)));
@@ -101678,10 +101675,10 @@ void gf_YSClaim (int lp_pool) {
     }
     lv_t0 = gv_action[lv_who][0];
     lv_t1 = gv_action[lv_who][1];
-    if ((lv_t0 > 0) && (PlayerGroupHasPlayer(gv_alivePlayers, lv_t0) == false)) {
+    if ((lv_t0 > 0) && ((PlayerGroupHasPlayer(gv_alivePlayers, lv_t0) == false) || (gv_roles[lv_t0][1] == lp_pool))) {
         lv_t0 = 0;
     }
-    if ((lv_t1 > 0) && ((lv_t1 == lv_t0) || (PlayerGroupHasPlayer(gv_alivePlayers, lv_t1) == false))) {
+    if ((lv_t1 > 0) && ((lv_t1 == lv_t0) || (PlayerGroupHasPlayer(gv_alivePlayers, lv_t1) == false) || (gv_roles[lv_t1][1] == lp_pool))) {
         lv_t1 = 0;
     }
     lv_n = 0;
@@ -101695,14 +101692,14 @@ void gf_YSClaim (int lp_pool) {
     if ((lv_cap > 2)) {
         lv_cap = 2;
     }
-    if ((lv_n == lv_cap)) {
-        gf_CBSystemMessage(StringExternal("Param/Value/YSMSGX"), lv_who, lv_who, 0, SoundLink("UI_GenericError", -1), Color(0,0,0));
-        gf_BHVisitSelf(lv_who);
-        return;
-    }
     if ((lv_n == 0)) {
         gv_ysPierce[lv_who] = true;
         gf_CBSystemMessage(StringExternal("Param/Value/YSMSGZ"), lv_who, lv_who, 0, SoundLink("UI_TipSelect", -1), Color(0,0,0));
+        gf_BHVisitSelf(lv_who);
+        return;
+    }
+    if ((lv_n == lv_cap)) {
+        gf_CBSystemMessage(StringExternal("Param/Value/YSMSGX"), lv_who, lv_who, 0, SoundLink("UI_GenericError", -1), Color(0,0,0));
         gf_BHVisitSelf(lv_who);
         return;
     }
