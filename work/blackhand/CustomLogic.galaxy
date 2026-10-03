@@ -130,6 +130,18 @@ int gv_mafiaTarget;
 int gv_triadTarget;
 int gv_mafiaHitman;
 int gv_triadHitman;
+int gv_ysSnap;
+int gv_ysPrevNight;
+int gv_ysPrevDay;
+int gv_ysNights;
+bool gv_ysSnapInit;
+bool[16] gv_ysPierce;
+int gv_ysClickSlot;
+int gv_ysPierceWho;
+int gv_ysHealT;
+int gv_ysHealTV;
+int gv_ysHeal2;
+int gv_ysHeal2V;
 bool[16][4] gv_immune;
 int[16] gv_immuneChance;
 int[16] gv_roleblocked;
@@ -101455,19 +101467,6 @@ void gf_SKT_5_zongshi_3 (int lv_a) {
 }
 
 // 野兽(2/19) / 霸王(5/19)：死亡人数决定今晚可选人数，出刀必须本人。
-int gv_ysSnap;
-int gv_ysPrevNight;
-int gv_ysPrevDay;
-int gv_ysNights;
-bool gv_ysSnapInit;
-bool[16] gv_ysPierce;
-int gv_ysClickSlot;
-int gv_ysPierceWho;
-int gv_ysHealT;
-int gv_ysHealTV;
-int gv_ysHeal2;
-int gv_ysHeal2V;
-
 void gf_YSOnNight () {
     int lv_now;
 
