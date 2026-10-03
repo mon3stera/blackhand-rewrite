@@ -1,0 +1,22 @@
+{
+  "pool": 5,
+  "role": 19,
+  "pinyin": "bawang",
+  "cn": "霸王",
+  "name_key": "BWNAME",
+  "desc_key": "BWDESC",
+  "investigator": ["E5BCBAE5A4A7E6B094E59CBA1", "E5BCBAE5A4A7E6B094E59CBA2"],
+  "crime_key": "BWCRIME",
+  "options": [],
+  "flag10": false,
+  "guessable": true,
+  "help_preview": null,
+  "interactions": {
+    "swap": {"text": "出刀走龙头击杀函数。目标先写入访问槽，交换改访问槽后再生效。"},
+    "investigate": {"text": "探员与龙头同一组。没有调查免疫。"},
+    "restrict": {"text": "可被限制。被限制当夜不出刀，暴徒也不代劳。"},
+    "guessage": {"text": "审查页三合会下标 17 → 19。", "in_guess_list": true}
+  },
+  "note": "三合会致命领袖。与龙头、潜龙、宗师互斥。在场且存活时，本阵营夜间刀只能由自己出。",
+  "review_status": "draft"
+}

@@ -41,7 +41,35 @@ Param/Value/ZSTAG= (<c val="3366FF">致命</c>，<c val="3366FF">领袖</c>)
 Param/Value/ZSBOX1=每晚杀死一人。
 Param/Value/ZSBOX2=- 当你在场时，所有三合会的初始角色都是仆从。<n/>- 你拥有夜间无敌。<n/>- 当你在场时，仆从们最多只有一个可以选择成为致命角色。<n/>- 当你在场时，仆从选完角色后可以立刻使用能力。
 Param/Value/ZSBOX4=你是三合会的领袖。
-Param/Value/173C6671=- 你怀疑他是个教父、龙头、庇护者、潜龙、族长、宗师或调停者。
+Param/Value/173C6671=- 你怀疑他是个教父、龙头、庇护者、潜龙、族长、宗师、野兽、霸王或调停者。
 Param/Value/FZCRIME=非法闯入，谋杀
 Param/Value/ZSCRIME=非法闯入，谋杀
 Param/Value/FZFATAL=已经有一名成员成为了致命角色。
+Param/Value/YSNAME=<c val="FF4488">野兽</c>
+Param/Value/YSDESC=一位残暴的家族领袖，靠绝对力量让众人臣服。<n/><n/><c val="BBDDFF">每晚杀死你选择的人。</c><n/><n/><c val="AA9988">你在第一晚无法行动。你每晚选择的人数最多两人，且必须与当天白天和昨天夜晚的死亡人数和不同；死亡人数和超过两人时视为两人。可以选择两人时，也可以只选一人，没点的人不攻击。选择零人时，下一次攻击无视救治。你拥有夜间无敌。你在场时，黑手党的刀由你亲自出，党徒不会代劳。</c>
+Param/Value/YSTAG= (<c val="FF0000">致命</c>，<c val="FF0000">领袖</c>)
+Param/Value/YSBOX1=每晚杀死你选择的人。
+Param/Value/YSBOX2=- 你在第一晚无法行动。<n/>- 你每晚选择的人数最多两人，且必须与当天白天和昨天夜晚的死亡人数和不同。死亡人数和超过两人时视为两人。<n/>- 可以选择两人时，也可以只选一人。<n/>- 选择零人时，下一次攻击无视救治。<n/>- 你拥有夜间无敌。<n/>- 你在场时，刀由你亲自出，党徒不会代劳。
+Param/Value/YSBOX4=你是靠绝对力量让众人臣服的家族领袖。
+Param/Value/YSCRIME=非法闯入，谋杀
+Param/Value/BWNAME=<c val="9F8EFF">霸王</c>
+Param/Value/BWDESC=一位残暴的帮派领袖，靠绝对力量让众人臣服。<n/><n/><c val="BBDDFF">每晚杀死你选择的人。</c><n/><n/><c val="AA9988">你在第一晚无法行动。你每晚选择的人数最多两人，且必须与当天白天和昨天夜晚的死亡人数和不同；死亡人数和超过两人时视为两人。可以选择两人时，也可以只选一人，没点的人不攻击。选择零人时，下一次攻击无视救治。你拥有夜间无敌。你在场时，三合会的刀由你亲自出，暴徒不会代劳。</c>
+Param/Value/BWTAG= (<c val="3366FF">致命</c>，<c val="3366FF">领袖</c>)
+Param/Value/BWBOX1=每晚杀死你选择的人。
+Param/Value/BWBOX2=- 你在第一晚无法行动。<n/>- 你每晚选择的人数最多两人，且必须与当天白天和昨天夜晚的死亡人数和不同。死亡人数和超过两人时视为两人。<n/>- 可以选择两人时，也可以只选一人。<n/>- 选择零人时，下一次攻击无视救治。<n/>- 你拥有夜间无敌。<n/>- 你在场时，刀由你亲自出，暴徒不会代劳。
+Param/Value/BWBOX4=你是靠绝对力量让众人臣服的帮派领袖。
+Param/Value/BWCRIME=非法闯入，谋杀
+Param/Value/YSMSG0=在空气中弥漫开足够的血腥味之前，你允许这座城镇享受最后的安宁。
+Param/Value/YSMSG2=上一天稀薄的血腥味无法满足你嗜血的欲望，今天你可以攻击两人。
+Param/Value/YSMSG1=昨天的惨烈杀戮让你暂时感到满意。今夜你决定稍作收敛，最多只攻击一人。
+Param/Value/YSMSGP=压抑的杀意在此刻彻底爆发。今晚你的攻击将会无视救治。
+Param/Value/YSMSGZ=你按住了杀意。下一次攻击将无视救治。
+Param/Value/YSMSGX=今晚你选择的人数与死亡人数相同，攻击没有出手。
+Param/Value/YSMSGN0=你今晚必须出手。
+Param/Value/YSMSGN1=但你今晚不能只攻击一人。
+Param/Value/YSSEL=你将攻击 
+Param/Value/YSUNSEL=你收回了这次攻击。
+Param/Value/YSDUP=你已经选过这个人了。
+Param/Value/YSBTN1=攻击
+Param/Value/YSBTN2=再攻击一人
+
